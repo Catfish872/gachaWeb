@@ -1,0 +1,183 @@
+/* =====================================================
+   抽卡揭晓序列动画 — 原神/崩铁式电影感揭晓
+   配合 GachaUI._showResults 使用
+   ===================================================== */
+
+/* ===== 全屏暗场入场 ===== */
+.gacha-results-overlay {
+    animation: gacha-darken 0.3s ease both;
+}
+
+@keyframes gacha-darken {
+    from { background: rgba(0, 0, 0, 0); }
+    to { background: rgba(0, 0, 0, 0.92); }
+}
+
+/* ===== 卡片 3D 翻转入场 ===== */
+.gacha-result-card {
+    perspective: 1000px;
+}
+
+.gacha-card-reveal {
+    animation: card-flip-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+@keyframes card-flip-in {
+    0% {
+        opacity: 0;
+        transform: rotateY(180deg) scale(0.4) translateY(20px);
+    }
+    60% {
+        opacity: 1;
+        transform: rotateY(0deg) scale(1.05) translateY(-4px);
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(0deg) scale(1) translateY(0);
+    }
+}
+
+/* ===== 五星卡片爆裂登场 ===== */
+.gacha-card-5star {
+    animation: card-flip-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both, rarity-burst-5 0.8s cubic-bezier(0.2, 1.5, 0.3, 1) 0.3s both;
+}
+
+/* ===== 金色光柱（五星触发，从底部冲天升起） ===== */
+.gacha-light-pillar {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    width: 200px;
+    height: 100vh;
+    transform: translateX(-50%);
+    background: linear-gradient(to top,
+        rgba(245, 158, 11, 0) 0%,
+        rgba(245, 158, 11, 0.4) 30%,
+        rgba(253, 230, 138, 0.6) 50%,
+        rgba(245, 158, 11, 0.3) 70%,
+        transparent 100%);
+    clip-path: polygon(35% 100%, 65% 100%, 100% 0, 0 0);
+    pointer-events: none;
+    z-index: 6001;
+    animation: light-pillar-rise 1s ease-out forwards;
+}
+
+@keyframes light-pillar-rise {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scaleY(0);
+        transform-origin: bottom;
+    }
+    30% {
+        opacity: 1;
+        transform: translateX(-50%) scaleY(1);
+    }
+    70% {
+        opacity: 1;
+        transform: translateX(-50%) scaleY(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) scaleY(1.1);
+    }
+}
+
+/* ===== 光柱爆裂粒子环 ===== */
+.gacha-burst-ring {
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 3px solid rgba(253, 230, 138, 0.8);
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.8);
+    pointer-events: none;
+    z-index: 6001;
+    animation: burst-ring-expand 0.8s ease-out forwards;
+}
+
+@keyframes burst-ring-expand {
+    0% {
+        width: 20px;
+        height: 20px;
+        opacity: 1;
+        border-width: 3px;
+    }
+    100% {
+        width: 400px;
+        height: 400px;
+        opacity: 0;
+        border-width: 1px;
+    }
+}
+
+/* ===== 金色粒子缓降（五星揭晓背景装饰） ===== */
+.gacha-sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fde68a, #f59e0b);
+    box-shadow: 0 0 6px #f59e0b;
+    pointer-events: none;
+    animation: sparkle-fall 2s ease-in forwards;
+}
+
+@keyframes sparkle-fall {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0);
+    }
+    20% {
+        opacity: 1;
+        transform: translateY(20px) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(120px) scale(0.3);
+    }
+}
+
+/* ===== 五星特写放大展示 ===== */
+.gacha-card-spotlight {
+    position: fixed;
+    left: 50%;
+    top: 42%;
+    transform: translate(-50%, -50%) scale(1.6);
+    z-index: 6002;
+    box-shadow: 0 0 80px rgba(245, 158, 11, 0.7), 0 0 160px rgba(245, 158, 11, 0.3);
+    animation: spotlight-pop 0.5s cubic-bezier(0.2, 1.5, 0.3, 1) both;
+}
+
+@keyframes spotlight-pop {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    100% { transform: translate(-50%, -50%) scale(1.6); opacity: 1; }
+}
+
+/* ===== 五星大字标题 ===== */
+.gacha-5star-title {
+    position: fixed;
+    left: 50%;
+    top: 68%;
+    transform: translateX(-50%);
+    z-index: 6002;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    animation: title-rise 0.6s cubic-bezier(0.2, 1.5, 0.3, 1) 0.2s both;
+}
+
+@keyframes title-rise {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px) scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}

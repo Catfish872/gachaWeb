@@ -1,0 +1,164 @@
+/* =====================================================
+   交互特效系统 — 按钮光斑/涟漪/金属扫光/通用微交互
+   ===================================================== */
+
+/* ===== 按钮鼠标光斑跟随 ===== */
+/* 用法：给按钮加 class="btn-spotlight"
+   JS 中监听 mousemove 设置 --x / --y 变量 */
+.btn-spotlight {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-spotlight::before {
+    content: '';
+    position: absolute;
+    left: var(--x, 50%);
+    top: var(--y, 50%);
+    width: 120px;
+    height: 120px;
+    margin: -60px 0 0 -60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.btn-spotlight:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 确保按钮文字在光斑之上 */
+.btn-spotlight > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== 点击涟漪 ===== */
+/* 用法：JS 点击时调用 RippleEffect.create(element, event) */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: ripple-spread 0.6s ease-out;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes ripple-spread {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* ===== 金属流动光泽（金色按钮专用） ===== */
+.btn-gold, .gacha-btn.ten {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-gold::after, .gacha-btn.ten::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+    transform: skewX(-20deg);
+    animation: metal-shine 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes metal-shine {
+    0%, 60% { left: -100%; }
+    85%, 100% { left: 150%; }
+}
+
+/* ===== 紫色按钮呼吸光（主按钮就绪感） ===== */
+.btn-pulse {
+    animation: btn-pulse-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes btn-pulse-glow {
+    0%, 100% { box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4); }
+    50% { box-shadow: 0 4px 25px rgba(124, 58, 237, 0.6), 0 0 12px rgba(168, 85, 247, 0.3); }
+}
+
+/* ===== 卡片悬浮上浮效果 ===== */
+.hover-lift {
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s;
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===== 左侧指示条滑入（关卡项 hover） ===== */
+.hover-bar-left {
+    position: relative;
+    overflow: hidden;
+}
+
+.hover-bar-left::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--primary);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.25s ease;
+}
+
+.hover-bar-left:hover::before {
+    transform: scaleY(1);
+}
+
+/* ===== 光泽扫过（卡片 hover） ===== */
+.shine-on-hover {
+    position: relative;
+    overflow: hidden;
+}
+
+.shine-on-hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1) 50%, transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+}
+
+.shine-on-hover:hover::after {
+    animation: shine-pass 0.6s ease;
+}
+
+@keyframes shine-pass {
+    to { left: 125%; }
+}
+
+/* ===== 按钮按下物理反馈 ===== */
+.btn:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+.btn-primary:active {
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3), inset 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-gold:active {
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3), inset 0 2px 6px rgba(0, 0, 0, 0.2);
+}

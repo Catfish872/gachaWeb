@@ -1,0 +1,213 @@
+/* =====================================================
+   Neon Art Layer — 参考 snake 的轻量霓虹美术覆盖层
+   目标：降低常驻动画/模糊成本，用静态色彩、边框、信息层级提升质感
+   ===================================================== */
+
+:root {
+    --neon-panel: rgba(15, 20, 45, 0.78);
+    --neon-panel-2: rgba(18, 28, 58, 0.72);
+    --neon-border: rgba(0, 255, 200, 0.22);
+    --neon-border-strong: rgba(0, 255, 200, 0.38);
+    --neon-soft: 0 0 18px rgba(0, 255, 200, 0.08), inset 0 0 36px rgba(0, 255, 200, 0.025);
+    --neon-soft-pink: 0 0 18px rgba(255, 46, 154, 0.08), inset 0 0 36px rgba(255, 46, 154, 0.025);
+}
+
+/* ===== 性能止血：列表/面板禁止常驻动画，保留 hover 和一次性抽卡揭晓 ===== */
+.home-banner::before,
+.home-banner::after,
+.banner-bg-glow::after,
+.banner-emoji,
+.btn-gold::after,
+.gacha-btn.ten::after,
+.victory .result-title,
+.battle-result-modal.victory {
+    animation: none !important;
+}
+
+/* 常规 UI 组件禁用大面积实时模糊，改用静态半透明层 */
+.card,
+.resource-chip,
+.toast,
+.modal-content,
+.home-banner,
+.home-stat-card,
+.chapter-card,
+.stage-item,
+.banner-card,
+.gacha-btn,
+.team-slot,
+.roster-card,
+.codex-card,
+.growth-char-card,
+.relic-card,
+.recharge-card,
+.unit-card,
+.battle-result-modal,
+.skill-btn,
+.relic-panel,
+.constell-panel,
+.abyss-panel,
+.abyss-result-modal {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* ===== snake 式霓虹面板：清晰边框 + 静态内发光 ===== */
+.card,
+.home-stat-card,
+.chapter-card,
+.banner-card,
+.team-slot,
+.roster-card,
+.codex-card,
+.growth-char-card,
+.relic-card,
+.recharge-card,
+.unit-card,
+.battle-result-modal {
+    background: linear-gradient(180deg, var(--neon-panel), rgba(8, 12, 30, 0.82)) !important;
+    border-color: var(--neon-border) !important;
+    box-shadow: var(--shadow-sm), var(--neon-soft) !important;
+}
+
+/* 主要操作区域用轻微紫粉边，和 snake 的 neon2 形成层级 */
+.home-banner,
+.banner-card,
+.battle-result-modal.victory {
+    border-color: rgba(255, 46, 154, 0.28) !important;
+    box-shadow: var(--shadow-md), var(--neon-soft-pink) !important;
+}
+
+/* 标题/高价值数字改成霓虹渐变，但不做持续动画 */
+.home-stat-card .stat-value,
+.stat-value,
+.recharge-price,
+.victory .result-title,
+.banner-title,
+.constell-char-name {
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 200, 0.18));
+}
+
+/* 信息卡左侧能量色条：snake 里最省性能但最有辨识度的视觉手法 */
+.home-stat-card,
+.chapter-card,
+.recharge-card,
+.stage-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.unit-card {
+    position: relative;
+    overflow: visible !important;
+}
+
+.home-stat-card::before,
+.chapter-card::before,
+.recharge-card::before,
+.stage-item::before,
+.unit-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--neon-cyan), rgba(0, 255, 200, 0));
+    box-shadow: 0 0 10px rgba(0, 255, 200, 0.36);
+    pointer-events: none;
+}
+
+.stage-item.cleared::before {
+    background: linear-gradient(180deg, #4ade80, rgba(74, 222, 128, 0));
+}
+
+.stage-type-badge.boss,
+.stage-type-badge.elite,
+.stage-type-badge.normal,
+.recharge-reward-tag,
+.filter-btn,
+.g-tab,
+.relic-filter-btn {
+    background: rgba(0, 255, 200, 0.055) !important;
+    border-color: rgba(0, 255, 200, 0.18) !important;
+    color: #d9fff7 !important;
+}
+
+.stage-type-badge.boss {
+    border-color: rgba(255, 46, 154, 0.35) !important;
+    color: #ff9ccc !important;
+}
+
+.stage-type-badge.elite {
+    border-color: rgba(255, 184, 0, 0.35) !important;
+    color: #ffe08a !important;
+}
+
+/* 按钮：减少常驻高光，保留清晰 hover */
+.btn,
+.btn-primary,
+.btn-gold,
+.gacha-btn {
+    box-shadow: 0 0 0 1px rgba(0, 255, 200, 0.12), 0 4px 14px rgba(0, 0, 0, 0.28) !important;
+}
+
+.btn:hover,
+.btn-primary:hover,
+.btn-gold:hover,
+.gacha-btn:hover,
+.stage-item:hover,
+.recharge-card:hover,
+.home-stat-card:hover,
+.roster-card:hover,
+.codex-card:hover,
+.growth-char-card:hover {
+    border-color: var(--neon-border-strong) !important;
+    box-shadow: 0 0 18px rgba(0, 255, 200, 0.16), 0 6px 18px rgba(0, 0, 0, 0.34) !important;
+}
+
+/* 稀有度只显示静态身份色，不再让卡面持续跑边框动画 */
+.rarity-5,
+.rarity-4,
+.rarity-3 {
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.rarity-5:hover {
+    box-shadow: 0 0 16px rgba(255, 184, 0, 0.2), 0 6px 18px rgba(0, 0, 0, 0.34) !important;
+}
+
+.rarity-4:hover {
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.2), 0 6px 18px rgba(0, 0, 0, 0.34) !important;
+}
+
+/* 战斗状态类保留反馈，但降低频率和阴影强度 */
+.hp-bar-fill.hp-low,
+.hp-bar-fill.danger {
+    animation-duration: 1.4s !important;
+}
+
+.energy-bar.energy-full .energy-bar-fill,
+.skill-btn.ult-skill:not(:disabled) {
+    animation-duration: 2.8s !important;
+}
+
+/* 页面切换保持轻量，不影响手感 */
+.page.active {
+    animation-duration: 0.22s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}

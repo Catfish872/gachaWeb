@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>虚空裂变 — 抽卡战斗RPG</title>
+  <meta name="description" content="本地部署的抽卡战斗RPG游戏，体验氪金爽感！">
+
+  <!-- 样式 -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/atmosphere.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/rarity.css">
+  <link rel="stylesheet" href="styles/effects.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/abyss.css">
+  <link rel="stylesheet" href="styles/neon-art.css">
+  <link rel="stylesheet" href="styles/gacha-fx.css">
+  <link rel="stylesheet" href="styles/battle-fx-polish.css">
+  <link rel="stylesheet" href="styles/dialogue.css">
+</head>
+
+<body>
+  <!-- Toast 通知容器 -->
+  <div id="toast-container"></div>
+
+  <!-- 主应用容器 -->
+  <div id="app">
+    <!-- 顶部资源栏 -->
+    <div id="header">
+      <div class="resource-chip">
+        <span class="icon">💎</span>
+        <span class="value" id="res-diamonds">0</span>
+      </div>
+      <div class="resource-chip">
+        <span class="icon">🪙</span>
+        <span class="value" id="res-gold">0</span>
+      </div>
+      <div class="resource-chip" id="stamina-chip" onclick="window.GG.UIManager.showPage('shop')" title="点击充值体力">
+        <span class="icon">⚡</span>
+        <span class="value" id="res-stamina">0/100</span>
+        <span class="stamina-timer" id="stamina-timer"></span>
+      </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div id="main-content">
+      <!-- 主页 -->
+      <div id="page-home" class="page"></div>
+
+      <!-- 关卡地图 -->
+      <div id="page-stages" class="page"></div>
+
+      <!-- 抽卡 -->
+      <div id="page-gacha" class="page"></div>
+
+      <!-- 队伍编辑 -->
+      <div id="page-team" class="page"></div>
+
+      <!-- 图鉴 -->
+      <div id="page-codex" class="page"></div>
+
+      <!-- 商城 -->
+      <div id="page-shop" class="page"></div>
+
+      <!-- 养成 -->
+      <div id="page-growth" class="page" style="display:none"></div>
+
+      <!-- 深渊 -->
+      <div id="page-abyss" class="page" style="display:none"></div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <nav id="nav-bar">
+      <button class="nav-item" data-page="home" onclick="window.GG.UIManager.showPage('home')">
+        <span class="nav-icon">🏠</span>
+        <span>主界面</span>
+      </button>
+      <button class="nav-item" data-page="stages" onclick="window.GG.UIManager.showPage('stages')">
+        <span class="nav-icon">🗺️</span>
+        <span>关卡</span>
+      </button>
+      <button class="nav-item" data-page="gacha" onclick="window.GG.UIManager.showPage('gacha')">
+        <span class="nav-icon">🎰</span>
+        <span>祈愿</span>
+      </button>
+      <button class="nav-item" data-page="team" onclick="window.GG.UIManager.showPage('team')">
+        <span class="nav-icon">⚔️</span>
+        <span>队伍</span>
+      </button>
+      <button class="nav-item" data-page="codex" onclick="window.GG.UIManager.showPage('codex')">
+        <span class="nav-icon">📖</span>
+        <span>图鉴</span>
+      </button>
+      <button class="nav-item" data-page="shop" onclick="window.GG.UIManager.showPage('shop')">
+        <span class="nav-icon">💎</span>
+        <span>商城</span>
+      </button>
+      <button class="nav-item" data-page="growth" onclick="window.GG.UIManager.showPage('growth')">
+        <span class="nav-icon">⭐</span>
+        <span>养成</span>
+      </button>
+      <button class="nav-item" data-page="abyss" onclick="window.GG.UIManager.showPage('abyss')">
+        <span class="nav-icon">🌀</span>
+        <span>深渊</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ===== 数据文件（无依赖，最先加载） ===== -->
+  <script src="js/data/abyssData.js"></script>
+  <script src="js/data/characters.js"></script>
+  <script src="js/data/skills.js"></script>
+  <script src="js/data/enemies.js"></script>
+  <script src="js/data/stages.js"></script>
+  <script src="js/data/gachaPools.js"></script>
+  <script src="js/data/shopItems.js"></script>
+  <script src="js/data/constellationData.js"></script>
+  <script src="js/data/relicData.js"></script>
+  <script src="js/data/dialogueData.js"></script>
+
+  <!-- ===== 核心工具层 ===== -->
+  <script src="js/core/EventBus.js"></script>
+  <script src="js/core/SaveSystem.js"></script>
+
+  <!-- ===== 角色属性计算 ===== -->
+  <script src="js/character/CharacterStats.js"></script>
+  <script src="js/character/CharacterProgression.js"></script>
+  <script src="js/character/ConstellationSystem.js"></script>
+  <script src="js/character/RelicSystem.js"></script>
+
+  <!-- ===== 战斗系统 ===== -->
+  <script src="js/battle/StatusSystem.js"></script>
+  <script src="js/battle/CombatEffectSystem.js"></script>
+  <script src="js/battle/effects/DefaultCombatEffects.js"></script>
+  <script src="js/battle/SkillSystem.js"></script>
+  <script src="js/battle/BattleEngine.js"></script>
+  <script src="js/battle/BattleAnimator.js"></script>
+
+  <!-- ===== 抽卡系统 ===== -->
+  <script src="js/gacha/PitySystem.js"></script>
+  <script src="js/gacha/GachaSystem.js"></script>
+
+  <!-- ===== 商城系统 ===== -->
+  <script src="js/shop/ShopSystem.js"></script>
+
+  <!-- ===== 体力 + 游戏主引擎（依赖 SaveSystem） ===== -->
+  <script src="js/core/StaminaSystem.js"></script>
+  <script src="js/core/AbyssSystem.js"></script>
+  <script src="js/core/ChapterGiftSystem.js"></script>
+  <script src="js/core/GameEngine.js"></script>
+
+  <!-- ===== UI 层 ===== -->
+  <script src="js/ui/DialogueUI.js"></script>
+  <script src="js/ui/BattleUI.js"></script>
+  <script src="js/ui/GachaUI.js"></script>
+  <script src="js/ui/TeamUI.js"></script>
+  <script src="js/ui/StageUI.js"></script>
+  <script src="js/ui/ShopUI.js"></script>
+  <script src="js/ui/AbyssUI.js"></script>
+  <script src="js/ui/GrowthUI.js"></script>
+  <script src="js/ui/UIManager.js"></script>
+
+  <!-- ===== 游戏启动 ===== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        // 先初始化底层依赖（存档必须最先）
+        window.GG.SaveSystem.load();
+        window.GG.StaminaSystem.init();
+
+        // 注册默认战斗效果（命座/被动/C6）
+        window.GG.registerDefaultCombatEffects?.();
+
+        // 初始化引擎
+        window.GG.GameEngine.init();
+        // 初始化 UI
+        window.GG.UIManager.init();
+        // 页面初始化（懒加载式）
+        window.GG.TeamUI.init();
+        window.GG.StageUI.init();
+        window.GG.ShopUI.init();
+        console.log('%c🎮 虚空裂变 已启动', 'color:#a855f7;font-weight:900;font-size:1.2rem');
+      } catch (e) {
+        console.error('[启动失败]', e);
+        document.body.innerHTML += `<div style="position:fixed;inset:0;background:#000;color:#f87171;display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px;text-align:center;font-family:monospace">
+          <div>❌ 游戏启动失败<br><small style="color:#94a3b8">${e.message}</small><br><br>
+          <button onclick="localStorage.clear();location.reload()" style="background:#7c3aed;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer">重置并重试</button></div></div>`;
+      }
+    });
+  </script>
+</body>
+
+</html>

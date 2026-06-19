@@ -1,0 +1,117 @@
+/* =====================================================
+   稀有度光效体系 — 统一的稀有度视觉语言
+   应用到：抽卡结果 / 队伍槽位 / 图鉴 / 养成 / 遗物卡
+   原神/崩铁核心质感来源
+   ===================================================== */
+
+/* ===== 静态稀有度提示：角色/遗物列表禁止常驻动画，避免大量卡片 repaint ===== */
+.rarity-5,
+.rarity-4,
+.rarity-3 {
+    position: relative;
+    overflow: hidden;
+    background-clip: padding-box;
+}
+
+.rarity-5 {
+    border: 1px solid rgba(245, 158, 11, 0.55);
+    box-shadow: 0 0 14px rgba(245, 158, 11, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.rarity-4 {
+    border: 1px solid rgba(168, 85, 247, 0.48);
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.rarity-3 {
+    border: 1px solid rgba(107, 114, 128, 0.42);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.rarity-5::before,
+.rarity-4::before,
+.rarity-3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.rarity-5::before {
+    background: linear-gradient(180deg, #fbbf24, #f59e0b, transparent);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.45);
+}
+
+.rarity-4::before {
+    background: linear-gradient(180deg, #c084fc, #a855f7, transparent);
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.35);
+}
+
+.rarity-3::before {
+    background: linear-gradient(180deg, #94a3b8, #64748b, transparent);
+}
+
+/* ===== 底部光晕（稀有度卡片通用，需叠加 .rarity-aura） ===== */
+.rarity-aura {
+    overflow: hidden;
+}
+
+.rarity-aura.r5-aura {
+    background-image: radial-gradient(ellipse at 50% 100%, rgba(245, 158, 11, 0.25) 0%, transparent 70%);
+}
+
+.rarity-aura.r4-aura {
+    background-image: radial-gradient(ellipse at 50% 100%, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+}
+
+/* ===== 五星金光爆裂（抽卡揭晓时触发） ===== */
+.rarity-burst-5 {
+    animation: rarity-burst-5 0.8s cubic-bezier(0.2, 1.5, 0.3, 1) both;
+}
+
+@keyframes rarity-burst-5 {
+    0% {
+        box-shadow: 0 0 0 rgba(245, 158, 11, 0);
+        transform: scale(0.3);
+    }
+    50% {
+        box-shadow: 0 0 60px rgba(245, 158, 11, 0.9), 0 0 120px rgba(245, 158, 11, 0.5);
+        transform: scale(1.12);
+    }
+    100% {
+        box-shadow: var(--r5-glow);
+        transform: scale(1);
+    }
+}
+
+/* ===== 四星紫光闪光（抽卡揭晓时触发） ===== */
+.rarity-burst-4 {
+    animation: rarity-burst-4 0.6s ease-out both;
+}
+
+@keyframes rarity-burst-4 {
+    0% { box-shadow: 0 0 0 rgba(168, 85, 247, 0); }
+    50% { box-shadow: 0 0 32px rgba(168, 85, 247, 0.8); }
+    100% { box-shadow: var(--r4-glow); }
+}
+
+/* ===== 星级展示（★符号带渐变） ===== */
+.star-row.r5-stars {
+    color: transparent;
+    background: var(--r5-grad);
+    background-clip: text;
+    -webkit-background-clip: text;
+    filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.6));
+}
+
+.star-row.r4-stars {
+    color: transparent;
+    background: var(--r4-grad);
+    background-clip: text;
+    -webkit-background-clip: text;
+    filter: drop-shadow(0 0 3px rgba(168, 85, 247, 0.5));
+}

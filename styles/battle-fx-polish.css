@@ -1,0 +1,145 @@
+/* =====================================================
+   Battle FX Polish — 技能名 / 状态 / 飘字高可读性修复
+   ===================================================== */
+
+/* 战斗容器允许浮层越界；真正的圆角裁剪只放在头像/内部图片区 */
+#battle-screen,
+.battle-main,
+.battle-field,
+.allies-row,
+.enemies-row,
+.unit-card {
+    overflow: visible !important;
+}
+
+/* 技能名固定到 body 后的浮层，不受角色卡裁剪影响 */
+.skill-name-fx.battle-float-layer {
+    position: fixed !important;
+    transform: translateX(-50%);
+    z-index: 10020;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px 10px;
+    min-width: max-content;
+    max-width: min(86vw, 360px);
+    border-radius: 999px;
+    font-size: 1.05rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    pointer-events: none;
+    border: 1px solid rgba(0, 255, 200, 0.58);
+    background: linear-gradient(90deg, rgba(5, 10, 25, 0.92), rgba(10, 28, 52, 0.9));
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 24px rgba(0, 255, 200, 0.38), 0 10px 28px rgba(0, 0, 0, 0.55);
+    animation: battle-skill-pop 1.05s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.skill-name-fx.battle-float-layer.ally {
+    color: #dffff8;
+    text-shadow: 0 0 10px rgba(0, 255, 200, 0.75), 0 2px 2px rgba(0, 0, 0, 0.8);
+}
+
+.skill-name-fx.battle-float-layer.enemy {
+    border-color: rgba(255, 46, 154, 0.62);
+    color: #ffe2f1;
+    background: linear-gradient(90deg, rgba(26, 8, 30, 0.94), rgba(60, 12, 42, 0.9));
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 24px rgba(255, 46, 154, 0.38), 0 10px 28px rgba(0, 0, 0, 0.55);
+    text-shadow: 0 0 10px rgba(255, 46, 154, 0.76), 0 2px 2px rgba(0, 0, 0, 0.8);
+}
+
+.skill-name-fx.battle-float-layer::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+    opacity: 0.75;
+}
+
+.skill-name-fx-icon {
+    font-size: 1.35em !important;
+    line-height: 1;
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+.skill-name-fx-text {
+    line-height: 1;
+}
+
+@keyframes battle-skill-pop {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 14px) scale(0.86);
+        filter: blur(3px);
+    }
+    16% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1.08);
+        filter: blur(0);
+    }
+    62% {
+        opacity: 1;
+        transform: translate(-50%, -8px) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -32px) scale(0.98);
+    }
+}
+
+/* 状态图标常驻显示：更大、更像战斗 buff/debuff 徽章 */
+.status-icons {
+    top: -18px !important;
+    left: -8px !important;
+    right: -8px !important;
+    z-index: 12;
+    gap: 4px !important;
+    overflow: visible !important;
+}
+
+.status-badge {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 1rem !important;
+    border-radius: 8px !important;
+    background: rgba(6, 10, 24, 0.9) !important;
+    border: 1px solid rgba(0, 255, 200, 0.36) !important;
+    box-shadow: 0 0 12px rgba(0, 255, 200, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.status-badge.status-fire,
+.damage-float.status.status-fire {
+    border-color: rgba(239, 68, 68, 0.55) !important;
+    box-shadow: 0 0 14px rgba(239, 68, 68, 0.38) !important;
+}
+
+/* 飘字：状态、伤害、治疗都更大更有层级 */
+.damage-float {
+    z-index: 10010 !important;
+    font-size: 1.35rem !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.92), 0 0 16px currentColor !important;
+}
+
+.damage-float.crit {
+    font-size: 1.8rem !important;
+    color: #ffdd57 !important;
+}
+
+.damage-float.heal {
+    color: #4ade80 !important;
+}
+
+.damage-float.status {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 1.15rem !important;
+    color: #dffff8 !important;
+    background: rgba(6, 10, 24, 0.88);
+    border: 1px solid rgba(0, 255, 200, 0.45);
+    box-shadow: 0 0 18px rgba(0, 255, 200, 0.28), 0 6px 18px rgba(0, 0, 0, 0.45);
+}

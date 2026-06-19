@@ -1,0 +1,238 @@
+/* =====================================================
+   战斗动画系统 — 纯 CSS 动画，无需图片素材
+   ===================================================== */
+
+/* ===== 1. 攻击者出击动画 ===== */
+@keyframes attacker-lunge {
+  0%   { transform: translateX(0) scale(1); }
+  40%  { transform: translateX(28px) scale(1.05); }
+  60%  { transform: translateX(22px) scale(1.08); }
+  100% { transform: translateX(0) scale(1); }
+}
+@keyframes attacker-lunge-enemy {
+  0%   { transform: translateX(0) scale(1); }
+  40%  { transform: translateX(-28px) scale(1.05); }
+  60%  { transform: translateX(-22px) scale(1.08); }
+  100% { transform: translateX(0) scale(1); }
+}
+.anim-lunge         { animation: attacker-lunge       0.4s ease-in-out; }
+.anim-lunge-enemy   { animation: attacker-lunge-enemy 0.4s ease-in-out; }
+
+/* ===== 2. 受击动画（目标） ===== */
+@keyframes hit-shake {
+  0%,100% { transform: translateX(0); }
+  15%  { transform: translateX(-6px); }
+  30%  { transform: translateX(6px); }
+  45%  { transform: translateX(-4px); }
+  60%  { transform: translateX(4px); }
+  75%  { transform: translateX(-2px); }
+}
+@keyframes hit-flash {
+  0%,100% { filter: brightness(1); }
+  25%  { filter: brightness(2.5) saturate(0); }
+  50%  { filter: brightness(1.5); }
+}
+.anim-hit {
+  animation: hit-shake 0.35s ease, hit-flash 0.35s ease;
+}
+
+/* ===== 3. 暴击受击（更强烈） ===== */
+@keyframes crit-shake {
+  0%,100% { transform: translateX(0) scale(1); }
+  10%  { transform: translateX(-10px) scale(0.95); }
+  25%  { transform: translateX(10px) scale(1.05); }
+  40%  { transform: translateX(-8px) scale(0.97); }
+  55%  { transform: translateX(6px)  scale(1.02); }
+  70%  { transform: translateX(-4px) scale(0.99); }
+}
+@keyframes crit-flash {
+  0%,100% { filter: brightness(1); }
+  15%  { filter: brightness(4) hue-rotate(15deg); }
+  40%  { filter: brightness(2.5) saturate(2); }
+}
+.anim-crit {
+  animation: crit-shake 0.5s ease, crit-flash 0.5s ease;
+}
+
+/* ===== 4. 飘字动画（伤害数字） ===== */
+@keyframes float-damage {
+  0%   { opacity: 1;   transform: translateY(0) scale(0.8); }
+  20%  { opacity: 1;   transform: translateY(-10px) scale(1.1); }
+  80%  { opacity: 0.8; transform: translateY(-40px) scale(1); }
+  100% { opacity: 0;   transform: translateY(-55px) scale(0.9); }
+}
+@keyframes float-crit-damage {
+  0%   { opacity: 1;   transform: translateY(0) scale(0.5); }
+  15%  { opacity: 1;   transform: translateY(-5px) scale(1.4); }
+  40%  { opacity: 1;   transform: translateY(-20px) scale(1.2); }
+  80%  { opacity: 0.8; transform: translateY(-55px) scale(1); }
+  100% { opacity: 0;   transform: translateY(-70px) scale(0.9); }
+}
+@keyframes float-heal {
+  0%   { opacity: 1; transform: translateY(0) scale(0.9); }
+  30%  { opacity: 1; transform: translateY(-15px) scale(1.1); }
+  100% { opacity: 0; transform: translateY(-50px) scale(1); }
+}
+
+.damage-float {
+  position: absolute;
+  pointer-events: none;
+  font-weight: 900;
+  z-index: 7001;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  animation: float-damage 1.2s ease-out forwards;
+}
+.damage-float.normal  { color: #f8f8f8; font-size: 1.4rem; }
+.damage-float.crit    { color: #fbbf24; font-size: 2rem; animation: float-crit-damage 1.4s ease-out forwards; }
+.damage-float.heal    { color: #4ade80; font-size: 1.4rem; animation: float-heal 1.2s ease-out forwards; }
+.damage-float.status  { color: #fb923c; font-size: 1.1rem; }
+.damage-float.miss    { color: #94a3b8; font-size: 1.1rem; }
+
+/* ===== 5. 元素粒子特效 ===== */
+@keyframes particle-rise {
+  0%   { opacity: 1;   transform: translateY(0) scale(1) rotate(0deg); }
+  100% { opacity: 0;   transform: translateY(-60px) scale(0.3) rotate(360deg); }
+}
+.particle {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particle-rise 0.8s ease-out forwards;
+}
+.particle.fire    { background: radial-gradient(circle, #fbbf24, #ef4444); box-shadow: 0 0 6px #ef4444; }
+.particle.water   { background: radial-gradient(circle, #93c5fd, #3b82f6); box-shadow: 0 0 6px #3b82f6; }
+.particle.wind    { background: radial-gradient(circle, #86efac, #22c55e); box-shadow: 0 0 6px #22c55e; }
+.particle.thunder { background: radial-gradient(circle, #fef08a, #eab308); box-shadow: 0 0 8px #eab308; }
+.particle.heal    { background: radial-gradient(circle, #86efac, #16a34a); box-shadow: 0 0 6px #16a34a; }
+
+/* ===== 6. 必杀技全屏特效 ===== */
+@keyframes ultimate-flash {
+  0%   { opacity: 0; }
+  10%  { opacity: 0.7; }
+  25%  { opacity: 0.3; }
+  40%  { opacity: 0.8; }
+  60%  { opacity: 0.2; }
+  100% { opacity: 0; }
+}
+@keyframes screen-shake {
+  0%,100% { transform: translate(0, 0) rotate(0); }
+  10%  { transform: translate(-4px, 2px) rotate(-0.5deg); }
+  20%  { transform: translate(4px, -2px) rotate(0.5deg); }
+  30%  { transform: translate(-3px, 1px); }
+  40%  { transform: translate(3px, -1px); }
+  50%  { transform: translate(-2px, 0); }
+}
+
+.ultimate-flash-overlay {
+  position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  animation: ultimate-flash 0.8s ease-out forwards;
+}
+.ultimate-flash-overlay.fire-ult    { background: radial-gradient(circle at center, rgba(239,68,68,0.9), rgba(120,20,0,0.6)); }
+.ultimate-flash-overlay.water-ult   { background: radial-gradient(circle at center, rgba(59,130,246,0.9), rgba(10,30,100,0.6)); }
+.ultimate-flash-overlay.wind-ult    { background: radial-gradient(circle at center, rgba(34,197,94,0.9), rgba(5,60,20,0.6)); }
+.ultimate-flash-overlay.thunder-ult { background: radial-gradient(circle at center, rgba(234,179,8,0.9), rgba(80,50,0,0.6)); }
+
+.screen-shaking { animation: screen-shake 0.5s ease-in-out; }
+
+/* ===== 7. 角色死亡动画 ===== */
+@keyframes unit-die {
+  0%   { opacity: 1; transform: scale(1); filter: grayscale(0); }
+  30%  { opacity: 0.8; transform: scale(0.95); filter: grayscale(0.5); }
+  100% { opacity: 0.2; transform: scale(0.85); filter: grayscale(1); }
+}
+.anim-dying { animation: unit-die 0.6s ease-out forwards; }
+.unit-dead  { opacity: 0.2; filter: grayscale(1); transform: scale(0.85); }
+
+/* ===== 8. 状态图标脉冲 ===== */
+@keyframes status-pulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50%     { transform: scale(1.2); opacity: 0.8; }
+}
+.status-icon { animation: status-pulse 2s ease-in-out infinite; }
+.status-icon.status-fire    { color: #ef4444; filter: drop-shadow(0 0 3px #ef4444); }
+.status-icon.status-ice     { color: #93c5fd; filter: drop-shadow(0 0 3px #93c5fd); }
+.status-icon.status-thunder { color: #eab308; filter: drop-shadow(0 0 3px #eab308); }
+.status-icon.status-heal    { color: #4ade80; filter: drop-shadow(0 0 3px #4ade80); }
+.status-icon.status-buff    { color: #a78bfa; filter: drop-shadow(0 0 3px #a78bfa); }
+.status-icon.status-debuff  { color: #f87171; filter: drop-shadow(0 0 3px #f87171); }
+.status-icon.status-shield  { color: #60a5fa; filter: drop-shadow(0 0 4px #60a5fa); }
+.status-icon.status-stun    { color: #fde047; filter: drop-shadow(0 0 3px #fef08a); }
+.status-icon.status-poison  { color: #a3e635; filter: drop-shadow(0 0 3px #84cc16); }
+
+/* ===== 9. 能量槽充能动画 ===== */
+@keyframes energy-glow {
+  0%,100% { box-shadow: 0 0 4px rgba(168,85,247,0.4); }
+  50%     { box-shadow: 0 0 12px rgba(168,85,247,0.9); }
+}
+.energy-bar-fill { transition: width 0.4s ease; }
+.energy-full .energy-bar-fill {
+  background: linear-gradient(90deg, #7c3aed, #c084fc, #7c3aed);
+  background-size: 200% 100%;
+  animation: energy-glow 1.5s ease-in-out infinite;
+}
+
+/* ===== 10. HP 条变化动画 ===== */
+.hp-bar-fill { transition: width 0.5s ease; }
+@keyframes hp-danger-pulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.6; }
+}
+.hp-bar-fill.danger { background: linear-gradient(90deg, #dc2626, #ef4444); animation: hp-danger-pulse 1s ease-in-out infinite; }
+
+/* ===== 11. 胜利/失败出现动画 ===== */
+@keyframes result-appear {
+  0%   { opacity: 0; transform: scale(0.5) rotateX(20deg); }
+  60%  { transform: scale(1.05) rotateX(-5deg); }
+  100% { opacity: 1; transform: scale(1) rotateX(0); }
+}
+.result-popup { animation: result-appear 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* ===== 12. 技能按钮按下 ===== */
+@keyframes skill-btn-press {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(0.94); }
+  70%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.skill-btn-pressed { animation: skill-btn-press 0.25s ease-out; }
+
+/* ===== 13. BOSS 登场 ===== */
+@keyframes boss-appear {
+  0%   { transform: scale(2) translateY(-30px); opacity: 0; filter: blur(10px); }
+  60%  { transform: scale(0.95) translateY(5px); opacity: 1; filter: blur(0); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.boss-appear { animation: boss-appear 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ===== 14. BOSS 二阶段触发 ===== */
+@keyframes phase2-trigger {
+  0%,100% { filter: brightness(1) hue-rotate(0deg); }
+  25%  { filter: brightness(3) hue-rotate(30deg) saturate(3); }
+  50%  { filter: brightness(2) hue-rotate(-20deg); }
+  75%  { filter: brightness(3) hue-rotate(50deg); }
+}
+.boss-phase2 { animation: phase2-trigger 0.8s ease-in-out; border-color: #ef4444 !important; box-shadow: 0 0 30px rgba(239,68,68,0.8) !important; }
+
+/* ===== 15. 抽卡结果动画 ===== */
+@keyframes gacha-card-flip {
+  0%   { transform: perspective(600px) rotateY(90deg) scale(0.8); opacity: 0; }
+  50%  { transform: perspective(600px) rotateY(-15deg) scale(1.05); opacity: 1; }
+  75%  { transform: perspective(600px) rotateY(5deg) scale(1.02); }
+  100% { transform: perspective(600px) rotateY(0) scale(1); opacity: 1; }
+}
+@keyframes five-star-sparkle {
+  0%   { box-shadow: 0 0 0 rgba(245,158,11,0); }
+  50%  { box-shadow: 0 0 40px 15px rgba(245,158,11,0.6), inset 0 0 20px rgba(245,158,11,0.3); }
+  100% { box-shadow: 0 0 15px 5px rgba(245,158,11,0.3); }
+}
+.gacha-card-reveal   { animation: gacha-card-flip 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.gacha-card-5star    { animation: five-star-sparkle 1s ease-out 0.5s both; }
+
+/* ===== 16. 通用淡入 ===== */
+@keyframes fade-in        { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up       { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slide-in-right { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+.anim-fade-in        { animation: fade-in 0.3s ease both; }
+.anim-slide-up       { animation: slide-up 0.4s ease both; }
+.anim-slide-in-right { animation: slide-in-right 0.3s ease both; }
