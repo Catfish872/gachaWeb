@@ -15,10 +15,14 @@ window.GG.StatusSystem = (function () {
         const config = registry[statusId];
         if (!config) { console.warn(`[StatusSystem] 未知状态: ${statusId}`); return; }
 
-        // 防止同类叠加（除非 config.stackable = true）
+        // 同名状态再次施加时，默认累加持续回合；声明 stackable 的状态仍保留独立实例。
         const existing = unit.statuses.find(s => s.id === statusId);
         if (existing && !config.stackable) {
-            existing.duration = Math.max(existing.duration, duration); // 刷新持续时间
+            const previousDuration = existing.duration;
+            existing.duration += duration;
+            if (value !== null) existing.value = value;
+            config.onReapply?.(unit, existing, { duration, value, previousDuration });
+            window.GG.EventBus.emit('status:applied', unit, statusId);
             return;
         }
 
@@ -167,6 +171,10 @@ window.GG.StatusSystem = (function () {
         onApply(unit, s) {
             // value 为比例：0.3 = 吸收 30% 最大HP 的伤害
             s.shieldHp = Math.floor(unit.maxHp * (s.value || 0.3));
+        },
+        onReapply(unit, s, detail) {
+            // 重复获得护盾时，持续回合累加，护盾值也补上本次新增的吸收量。
+            s.shieldHp = Math.floor(s.shieldHp || 0) + Math.floor(unit.maxHp * ((detail?.value ?? s.value) || 0.3));
         },
         // 由战斗引擎在受伤前调用 absorb
         absorb(s, damage) {

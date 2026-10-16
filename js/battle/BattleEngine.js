@@ -163,7 +163,8 @@ window.GG.BattleEngine = (function () {
                 targets.forEach(target => {
                     if (target.currentHp <= 0) return;
                     const tMods = SS().getStatModifiers(target);
-                    if (tMods.damageReduction >= 1) {
+                    const isInvincible = tMods.damageReduction >= 1 && SS().hasStatus(target, 'invincible');
+                    if (isInvincible) {
                         log.push({ type: 'miss', attacker: enemy.name, targetName: target.name, reason: '无敌' });
                         return;
                     }
@@ -188,12 +189,14 @@ window.GG.BattleEngine = (function () {
                         defenderElement: target.element,
                     });
                     let finalDmg = calc.damage;
+                    const minDamageAfterReduction = finalDmg > 0 ? Math.max(1, Math.floor(finalDmg * 0.1)) : 0;
                     const shieldStatus = target.statuses.find(s => s.id === 'shield');
                     if (shieldStatus) {
                         const shieldCfg = SS().getRegistry()['shield'];
                         finalDmg = shieldCfg.absorb(shieldStatus, finalDmg);
                     }
-                    finalDmg = Math.floor(finalDmg * (1 - tMods.damageReduction));
+                    const damageReductionMult = Math.max(0.1, 1 - Math.max(0, tMods.damageReduction || 0));
+                    finalDmg = Math.max(minDamageAfterReduction, Math.floor(finalDmg * damageReductionMult));
                     finalDmg = Math.max(0, finalDmg); // 确保伤害绝对非负
 
                     target.currentHp = Math.max(0, Math.floor(target.currentHp - finalDmg));
@@ -299,6 +302,53 @@ window.GG.BattleEngine = (function () {
         }
     }
 
+    function _getAbyssEffects(type) {
+        if (!window.GG.AbyssSystem?.getRogueEffects) return [];
+        return window.GG.AbyssSystem.getRogueEffects().filter(e => !type || e.type === type);
+    }
+
+    function _applyAbyssStatRewards(allies, abyssState) {
+        const effects = _getAbyssEffects('stat');
+        if (!effects.length) return;
+        allies.forEach(unit => {
+            if (!unit) return;
+            const savedMaxHp = Number(unit._abyssSavedMaxHp) || unit.maxHp;
+            const hpRatio = abyssState ? (savedMaxHp > 0 ? unit.currentHp / savedMaxHp : 1) : 1;
+            const statBuckets = effects.reduce((buckets, effect) => {
+                const stat = effect.stat;
+                if (!stat) return buckets;
+                buckets[stat] = (buckets[stat] || 0) + (Number(effect.value) || 0);
+                return buckets;
+            }, {});
+            if (statBuckets.atkMult) unit.stats.atk = Math.floor(unit.stats.atk * Math.max(0.1, 1 + statBuckets.atkMult));
+            if (statBuckets.defMult) unit.stats.def = Math.floor(unit.stats.def * Math.max(0.1, 1 + statBuckets.defMult));
+            if (statBuckets.maxHpMult) unit.stats.maxHp = Math.floor(unit.stats.maxHp * Math.max(0.1, 1 + statBuckets.maxHpMult));
+            if (statBuckets.criAdd) unit.stats.cri = Math.min(1, (unit.stats.cri || 0) + statBuckets.criAdd);
+            if (statBuckets.criDmgAdd) unit.stats.criDmg = (unit.stats.criDmg || 1.5) + statBuckets.criDmgAdd;
+            unit.maxHp = unit.stats.maxHp;
+            unit.currentHp = Math.max(1, Math.min(unit.maxHp, Math.floor(unit.maxHp * hpRatio)));
+            unit.baseAtk = unit.stats.atk;
+            delete unit._abyssSavedMaxHp;
+        });
+    }
+
+    function _applyAbyssBattleStartRewards(allies, enemies) {
+        if (!window.GG.AbyssSystem?.getRogueEffects) return;
+        const effects = window.GG.AbyssSystem.getRogueEffects();
+        effects.forEach(effect => {
+            if (effect.type === 'battleStartEnergy') {
+                allies.forEach(unit => { if (unit.currentHp > 0) unit.energy = Math.min(100, (unit.energy || 0) + (Number(effect.value) || 0)); });
+            } else if (effect.type === 'battleStartStatus') {
+                allies.forEach(unit => { if (unit.currentHp > 0) SS().applyStatus(unit, effect.statusId, effect.duration || 1, effect.value ?? null); });
+            } else if (effect.type === 'enemyBattleStartStatus') {
+                const alive = enemies.filter(e => e.currentHp > 0);
+                const count = Math.min(alive.length, Math.max(1, effect.count || alive.length));
+                const targets = [...alive].sort(() => Math.random() - 0.5).slice(0, count);
+                targets.forEach(unit => SS().applyStatus(unit, effect.statusId, effect.duration || 1, effect.value ?? null));
+            }
+        });
+    }
+
     // ===== 初始化战斗 =====
     // abyssState: 若为深渊继承模式，将传入上局保存的血量状态数组 [{id, currentHp, cooldowns}]
     function initBattle(stageConfig, allyData, abyssState) {
@@ -309,10 +359,16 @@ window.GG.BattleEngine = (function () {
                 if (saved) {
                     unit.currentHp = saved.currentHp;
                     unit.cooldowns = saved.cooldowns || {};
+                    unit.energy = Number.isFinite(saved.energy) ? saved.energy : (unit.energy || 0);
+                    unit._abyssSavedMaxHp = Number.isFinite(saved.maxHp) ? saved.maxHp : unit.maxHp;
                 }
             }
             return unit;
         }).filter(Boolean);
+
+        if (stageConfig?.isAbyss) {
+            _applyAbyssStatRewards(allies, abyssState);
+        }
 
         // 深渊模式动态计算膨胀系数
         const enemies = stageConfig.enemies.map(eid => {
@@ -322,6 +378,10 @@ window.GG.BattleEngine = (function () {
             }
             return createEnemyUnit(eid, scale);
         }).filter(Boolean);
+
+        if (stageConfig?.isAbyss) {
+            _applyAbyssBattleStartRewards(allies, enemies);
+        }
 
         _state = {
             allies, enemies,
@@ -532,8 +592,8 @@ window.GG.BattleEngine = (function () {
 
             // 深渊模式专属结算流程（状态继承+选项）
             if (_state.stageConfig.isAbyss) {
-                window.GG.AbyssSystem.processVictory(_state);
-                EB().emit('battle:abyss_victory', { rewards: _state.rewards, floor: _state.stageConfig.floor, state: _state });
+                const abyssResult = window.GG.AbyssSystem.processVictory(_state);
+                EB().emit('battle:abyss_victory', { rewards: _state.rewards, floor: _state.stageConfig.floor, state: _state, nextStep: abyssResult?.nextStep, choices: abyssResult?.pendingChoices || [] });
             } else {
                 EB().emit('battle:victory', _state.rewards);
             }

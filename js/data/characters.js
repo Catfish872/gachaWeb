@@ -10,7 +10,7 @@ window.GG.CharacterData = {
         growthRate: { hp: 120, atk: 9, def: 4, spd: 0 }, // 每级成长值
         skills: ['kaldi_normal', 'kaldi_skill', 'kaldi_ult'],
         passiveId: 'kaldi_passive',
-        passiveDesc: '受到伤害后，若自身处于燃烧状态，攻击力额外提升20%',
+        passiveDesc: '对处于燃烧状态的敌人造成的伤害加深 20%（独立乘区）',
         synergyIds: ['fire_duo'],
         description: '来自炎脉山脉的龙裔战士，体内流淌着远古火龙的血脉。',
         flavorText: '"烈焰不灭，我亦永恒。"',

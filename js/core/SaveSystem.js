@@ -12,6 +12,30 @@ window.GG.SaveSystem = (function () {
         return `${SAVE_KEY_PREFIX}${slotId}`;
     }
 
+    function createDefaultAbyssRogueState() {
+        return {
+            runId: null,
+            selectedRewards: [],
+            pendingChoices: [],
+            nextStep: { type: 'none', floor: 0 },
+            characterFocus: {},
+            eligibleCharacters: [],
+            temporaryCurrency: 0,
+            eventHistory: [],
+            shopStock: [],
+        };
+    }
+
+    function createDefaultAbyssProgress() {
+        return {
+            currentFloor: 1,
+            maxFloor: 0,
+            savedPartyState: null,
+            lastFreeResetTime: 0,
+            rogue: createDefaultAbyssRogueState(),
+        };
+    }
+
     // 默认存档（新玩家初始状态）
     function createDefaultSave() {
         return {
@@ -65,6 +89,36 @@ window.GG.SaveSystem = (function () {
             // 章节五星角色赠送记录 { 'ch1': { claimed: true, charId: 'kaldi', date: 0 } }
             // 每存档每章仅赠送一次
             chapterGiftClaimed: {},
+
+            // 深渊进度与肉鸽运行态（旧存档会在 _normalizeSave 自动补齐）
+            abyss: createDefaultAbyssProgress(),
+        };
+    }
+
+    function _normalizeAbyss(parsedAbyss) {
+        const base = createDefaultAbyssProgress();
+        const src = (parsedAbyss && typeof parsedAbyss === 'object') ? parsedAbyss : {};
+        const rogueSrc = (src.rogue && typeof src.rogue === 'object') ? src.rogue : {};
+        const rogueBase = createDefaultAbyssRogueState();
+        return {
+            ...base,
+            ...src,
+            currentFloor: Number.isFinite(src.currentFloor) ? Math.max(1, Math.floor(src.currentFloor)) : base.currentFloor,
+            maxFloor: Number.isFinite(src.maxFloor) ? Math.max(0, Math.floor(src.maxFloor)) : base.maxFloor,
+            savedPartyState: Array.isArray(src.savedPartyState) ? src.savedPartyState : null,
+            lastFreeResetTime: Number.isFinite(src.lastFreeResetTime) ? src.lastFreeResetTime : 0,
+            rogue: {
+                ...rogueBase,
+                ...rogueSrc,
+                selectedRewards: Array.isArray(rogueSrc.selectedRewards) ? rogueSrc.selectedRewards : [],
+                pendingChoices: Array.isArray(rogueSrc.pendingChoices) ? rogueSrc.pendingChoices : [],
+                nextStep: (rogueSrc.nextStep && typeof rogueSrc.nextStep === 'object') ? { type: rogueSrc.nextStep.type || 'none', floor: rogueSrc.nextStep.floor || 0 } : { type: 'none', floor: 0 },
+                characterFocus: (rogueSrc.characterFocus && typeof rogueSrc.characterFocus === 'object') ? rogueSrc.characterFocus : {},
+                eligibleCharacters: Array.isArray(rogueSrc.eligibleCharacters) ? rogueSrc.eligibleCharacters : [],
+                temporaryCurrency: Number.isFinite(rogueSrc.temporaryCurrency) ? rogueSrc.temporaryCurrency : 0,
+                eventHistory: Array.isArray(rogueSrc.eventHistory) ? rogueSrc.eventHistory : [],
+                shopStock: Array.isArray(rogueSrc.shopStock) ? rogueSrc.shopStock : [],
+            },
         };
     }
 
@@ -143,6 +197,7 @@ window.GG.SaveSystem = (function () {
         // 剧情对话已读记录 / 章节赠送记录（旧存档迁移补齐默认值）
         merged.dialogueSeen = (parsed.dialogueSeen && typeof parsed.dialogueSeen === 'object') ? parsed.dialogueSeen : {};
         merged.chapterGiftClaimed = (parsed.chapterGiftClaimed && typeof parsed.chapterGiftClaimed === 'object') ? parsed.chapterGiftClaimed : {};
+        merged.abyss = _normalizeAbyss(parsed.abyss);
         return merged;
     }
 

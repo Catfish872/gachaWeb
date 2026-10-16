@@ -146,9 +146,9 @@ window.GG.GameEngine = (function () {
     }
 
     function _onBattleDefeat(config) {
-        // 如果是深渊失败，清除暂存进度
+        // 如果是深渊失败，清除暂存进度与本局肉鸽构筑
         if (config?.isAbyss) {
-            window.GG.AbyssSystem?.clearPartyState();
+            window.GG.AbyssSystem?.clearRunOnDefeat?.();
         }
     }
 

@@ -25,10 +25,80 @@ window.GG.AbyssUI = (function () {
         if (page) page.style.display = 'none';
     }
 
+    function _escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>']/g, ch => {
+            if (ch === '&') return '&' + 'amp;';
+            if (ch === '<') return '&' + 'lt;';
+            if (ch === '>') return '&' + 'gt;';
+            if (ch === "'") return '&' + '#39;';
+            return ch;
+        });
+    }
+
+    function _renderFocusSummary(rogue) {
+        const ids = rogue?.eligibleCharacters || [];
+        if (!ids.length) return '<div class="abyss-rogue-card-value">当前队伍没有五星角色，本局只会出现通用回响。</div>';
+        return `<div class="abyss-focus-list">${ids.map(id => {
+            const charName = window.GG.CharacterData?.[id]?.name || id;
+            const pct = Math.round(((rogue.characterFocus?.[id] ?? (1 / ids.length)) || 0) * 100);
+            return `<div class="abyss-focus-item"><span>${_escapeHtml(charName)}</span><strong>${pct}%</strong></div>`;
+        }).join('')}</div>`;
+    }
+
+    function _renderRewardSummary(rogue) {
+        const rewards = rogue?.selectedRewards || [];
+        if (!rewards.length) return '<div class="abyss-rogue-card-value">尚未选择回响。第 3 / 6 / 9 层通关后会出现三选一构筑。</div>';
+        const latest = rewards.slice(-3).map(r => _escapeHtml(r.name || r.id)).join('、');
+        return `<div class="abyss-rogue-card-value">已选择 <strong style="color:#fbbf24">${rewards.length}</strong> 个回响<br><span style="color:#94a3b8">最近：${latest}</span></div>`;
+    }
+
+    function _rarityMeta(rarity) {
+        return window.GG.AbyssData?.rogue?.rarityMeta?.[rarity] || { label: rarity || '未知', color: '#e5e7eb', icon: '◇' };
+    }
+
+    function _renderSelectedBuffList(rogue) {
+        const rewards = rogue?.selectedRewards || [];
+        if (!rewards.length) {
+            return `
+                <div class="abyss-buff-empty">
+                    <div class="abyss-buff-empty-icon">◇</div>
+                    <div>暂未获得深渊回响</div>
+                    <small>通关构筑节点或 BOSS 奖励后，会在这里显示已选 BUFF。</small>
+                </div>`;
+        }
+
+        const grouped = rewards.reduce((map, reward) => {
+            const key = reward.id || reward.name || 'unknown';
+            if (!map.has(key)) map.set(key, { reward, count: 0 });
+            map.get(key).count++;
+            return map;
+        }, new Map());
+
+        return Array.from(grouped.values()).reverse().map(({ reward, count }) => {
+            const meta = _rarityMeta(reward.rarity);
+            return `
+                <div class="abyss-buff-item" style="--buff-color:${_escapeHtml(meta.color)}">
+                    <div class="abyss-buff-head">
+                        <div class="abyss-buff-name-wrap">
+                            <span class="abyss-buff-icon">${_escapeHtml(reward.icon || meta.icon || '◇')}</span>
+                            <span class="abyss-buff-name">${_escapeHtml(reward.name || reward.id || '未知回响')}</span>
+                        </div>
+                        <div class="abyss-buff-tags">
+                            <span class="abyss-buff-rarity">${_escapeHtml(meta.label || reward.rarity || '未知')}</span>
+                            ${count > 1 ? `<span class="abyss-buff-count">×${count}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="abyss-buff-target">${_escapeHtml(reward.target || '全队')}</div>
+                    <div class="abyss-buff-desc">${_escapeHtml(reward.description || '暂无效果描述')}</div>
+                </div>`;
+        }).join('');
+    }
+
     function _render() {
         const page = document.getElementById('page-abyss');
         if (!page) return;
         const prog = AS().getProgress();
+        const rogue = AS().getRogueState?.() || prog.rogue || {};
         const save = S().get();
         const diamonds = save.resources?.diamonds || 0;
         const isSuspended = !!prog.savedPartyState; // 有暂存状态即“挑战进行中”
@@ -40,31 +110,57 @@ window.GG.AbyssUI = (function () {
                 <div class="abyss-record">历史最高：<strong>${prog.maxFloor || 0}</strong> 层</div>
             </div>
             <div class="abyss-main-panel">
-                <div class="abyss-current-floor">
-                    <div class="label">当前挑战领域</div>
-                    <div class="value">第 <span>${prog.currentFloor}</span> 层</div>
-                </div>
-                <div class="abyss-desc">
-                    无尽的维度撕裂挑战，敌方强度将进行无限的量子膨胀。<br/>通关后角色状态自动截取，无法恢复基础生命与技能矩阵冷却。<br/>
-                    <strong>突破屏障必获得 4星/5星 极品遗物！</strong>
-                </div>
-                <div class="abyss-actions">
-                    ${isSuspended ? `
-                        <button class="abyss-btn-start" onclick="window.GG.AbyssUI.handleStart()">
-                            <span style="font-size:1.5rem">⚙️</span> 继续挑战记录
-                        </button>
-                    ` : `
-                        <button class="abyss-btn-start" onclick="window.GG.AbyssUI.handleStart()">
-                            <span style="font-size:1.5rem">⚔️</span> 开启深渊位面
-                        </button>
-                    `}
-                    
-                    <div class="abyss-reset-box">
-                        <button class="abyss-btn-reset" onclick="window.GG.AbyssUI.handleReset()">
-                            🔄 坍缩进度至第1层 
-                            <small>(${AS().canFreeReset() ? '<span style="color:#22c55e">今日免费</span>' : '100 💎'})</small>
-                        </button>
+                <div class="abyss-content-grid">
+                    <div class="abyss-primary-column">
+                        <div class="abyss-current-floor">
+                            <div class="label">当前挑战领域</div>
+                            <div class="value">第 <span>${prog.currentFloor}</span> 层</div>
+                        </div>
+                        <div class="abyss-rogue-summary">
+                            <div class="abyss-rogue-card">
+                                <div class="abyss-rogue-card-title">本局构筑</div>
+                                ${_renderRewardSummary(rogue)}
+                            </div>
+                            <div class="abyss-rogue-card">
+                                <div class="abyss-rogue-card-title">角色浓度</div>
+                                ${_renderFocusSummary(rogue)}
+                            </div>
+                        </div>
+                        <div class="abyss-desc">
+                            无尽的维度撕裂挑战，敌方强度将进行无限的量子膨胀。<br/>通关后生命、能量与技能冷却会在层间继承；第 3 / 6 / 9 层通关后选择一个深渊回响。<br/>
+                            <strong>突破屏障必获得 4星/5星 极品遗物！自动战斗遇到构筑节点会暂停等待选择。</strong>
+                        </div>
+                        <div class="abyss-actions">
+                            ${isSuspended ? `
+                                <button class="abyss-btn-start" onclick="window.GG.AbyssUI.handleStart()">
+                                    <span style="font-size:1.5rem">⚙️</span> 继续挑战记录
+                                </button>
+                            ` : `
+                                <button class="abyss-btn-start" onclick="window.GG.AbyssUI.handleStart()">
+                                    <span style="font-size:1.5rem">⚔️</span> 开启深渊位面
+                                </button>
+                            `}
+                            
+                            <div class="abyss-reset-box">
+                                <button class="abyss-btn-reset" onclick="window.GG.AbyssUI.handleReset()">
+                                    🔄 坍缩进度至第1层
+                                    <small>(${AS().canFreeReset() ? '<span style="color:#22c55e">今日免费</span>' : '100 💎'})</small>
+                                </button>
+                            </div>
+                        </div>
                     </div>
+                    <aside class="abyss-buff-panel">
+                        <div class="abyss-buff-panel-head">
+                            <div>
+                                <div class="abyss-buff-kicker">当前构筑</div>
+                                <h3>已选回响</h3>
+                            </div>
+                            <span class="abyss-buff-total">${(rogue?.selectedRewards || []).length}</span>
+                        </div>
+                        <div class="abyss-buff-list">
+                            ${_renderSelectedBuffList(rogue)}
+                        </div>
+                    </aside>
                 </div>
             </div>
         </div>`;

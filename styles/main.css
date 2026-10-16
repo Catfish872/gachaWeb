@@ -313,14 +313,15 @@ body::before {
 
 .btn-primary {
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    color: #fff;
-    box-shadow: var(--shadow-glow-primary), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+    color: #06221d;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28);
+    border-color: rgba(103, 255, 228, 0.55);
+    box-shadow: var(--shadow-glow-primary), inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
 .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
+    box-shadow: 0 0 0 1px rgba(103, 255, 228, 0.35), 0 6px 20px rgba(0, 255, 200, 0.28);
 }
 
 .btn-primary:active {
@@ -340,14 +341,16 @@ body::before {
 }
 
 .btn-ghost {
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--text-primary);
-    border-color: var(--border);
+    background: rgba(8, 18, 32, 0.78);
+    color: #e6fffb;
+    border-color: rgba(103, 255, 228, 0.42);
+    box-shadow: 0 0 0 1px rgba(0, 255, 200, 0.08), 0 4px 14px rgba(0, 0, 0, 0.28);
 }
 
 .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--border-active);
+    background: rgba(0, 255, 200, 0.14);
+    color: #ffffff;
+    border-color: rgba(103, 255, 228, 0.72);
 }
 
 .btn-danger {

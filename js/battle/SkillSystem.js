@@ -71,7 +71,17 @@ window.GG.SkillSystem = (function () {
         if (skillData.type === 'ultimate') {
             caster.energy = 0;
         } else {
-            caster.energy = Math.min(100, caster.energy + (skillData.energyGain || 15));
+            const energyCtx = runEffectHook('before_energy_gain', {
+                caster,
+                skillId,
+                skillData,
+                energyGain: skillData.energyGain || 15,
+                allies,
+                enemies,
+                log,
+                animations,
+            });
+            caster.energy = Math.min(100, caster.energy + Math.max(0, Math.floor(energyCtx.energyGain ?? (skillData.energyGain || 15))));
         }
 
         // 处理技能冷却
@@ -92,6 +102,18 @@ window.GG.SkillSystem = (function () {
 
         let hadHeal = false;
 
+        if (skillData.type === 'ultimate' && (caster.id === 'kaldi' || caster.id === 'ayla')) {
+            animations.push({
+                type: 'ultimate_special',
+                casterId: caster.id,
+                characterId: caster.id,
+                skillId,
+                targetIds: caster.id === 'ayla'
+                    ? allies.filter(u => u.currentHp > 0).map(u => u.id)
+                    : enemies.filter(u => u.currentHp > 0).map(u => u.id),
+            });
+        }
+
         // 逐条执行效果
         skillData.effects.forEach((effect, effectIdx) => {
             const targets = resolveTargets(effect.target, caster, allies, enemies);
@@ -104,9 +126,10 @@ window.GG.SkillSystem = (function () {
                 targets.forEach((target, ti) => {
                     if (target.currentHp <= 0) return;
 
-                    // 无敌检查
+                    // 无敌检查：只有真正的无敌状态可以完全免伤，普通减伤会在后续被限制为最低承伤 10%。
                     const targetMods = SS().getStatModifiers(target);
-                    if (targetMods.damageReduction >= 1) {
+                    const isInvincible = targetMods.damageReduction >= 1 && SS().hasStatus(target, 'invincible');
+                    if (isInvincible) {
                         log.push({ type: 'miss', attacker: caster.name, targetName: target.name, reason: '无敌' });
                         animations.push({ type: 'miss', targetId: target.id });
                         return;
@@ -142,13 +165,15 @@ window.GG.SkillSystem = (function () {
 
                     // 护盾吸收
                     let finalDmg = result.damage;
+                    const minDamageAfterReduction = finalDmg > 0 ? Math.max(1, Math.floor(finalDmg * 0.1)) : 0;
                     const shieldStatus = target.statuses.find(s => s.id === 'shield');
                     if (shieldStatus) {
                         const shieldCfg = SS().getRegistry()['shield'];
                         finalDmg = shieldCfg.absorb(shieldStatus, finalDmg);
                     }
-                    // 其他减伤
-                    finalDmg = Math.floor(finalDmg * (1 - targetMods.damageReduction));
+                    // 其他减伤：非无敌来源最多减到承受原始伤害的 10%。
+                    const damageReductionMult = Math.max(0.1, 1 - Math.max(0, targetMods.damageReduction || 0));
+                    finalDmg = Math.max(minDamageAfterReduction, Math.floor(finalDmg * damageReductionMult));
                     // 确保伤害非负
                     finalDmg = Math.max(0, finalDmg);
 
@@ -201,7 +226,20 @@ window.GG.SkillSystem = (function () {
             } else if (isHeal) {
                 targets.forEach(target => {
                     if (target.currentHp <= 0) return;
-                    let healAmt = Math.floor(CS().calcHeal({ atk: effectiveAtk, multiplier: effect.multiplier || 1.0 }));
+                    const healCtx = runEffectHook('before_heal_calc', {
+                        caster,
+                        target,
+                        skillId,
+                        skillData,
+                        effect,
+                        effectIndex: effectIdx,
+                        healMultiplier: effect.multiplier || 1.0,
+                        allies,
+                        enemies,
+                        log,
+                        animations,
+                    });
+                    let healAmt = Math.floor(CS().calcHeal({ atk: effectiveAtk, multiplier: healCtx.healMultiplier ?? (effect.multiplier || 1.0) }));
                     healAmt = Math.max(0, healAmt); // 确保治疗量非负
                     target.currentHp = Math.min(target.maxHp, target.currentHp + healAmt);
                     log.push({ type: 'heal', unit: target.name, amount: healAmt, skillName: skillData.name });
@@ -222,10 +260,27 @@ window.GG.SkillSystem = (function () {
                         animations,
                     });
 
-                    // 夏娜被动：治愈后自身回复治愈量15%
+                    // 夏娜被动：治愈后自身回复治愈量15%，并接入统一治疗后事件。
                     if (caster.passiveId === 'shana_passive' && target !== caster) {
                         const selfHeal = Math.floor(healAmt * 0.15);
+                        const beforeSelfHeal = caster.currentHp;
                         caster.currentHp = Math.min(caster.maxHp, caster.currentHp + selfHeal);
+                        const actualSelfHeal = caster.currentHp - beforeSelfHeal;
+                        if (actualSelfHeal > 0) {
+                            runEffectHook('after_heal', {
+                                caster,
+                                target: caster,
+                                skillId: `${skillId}_shana_passive`,
+                                skillData: { ...skillData, id: `${skillId}_shana_passive`, name: '夏娜·余温回流', type: 'passive' },
+                                effect: { type: 'heal', source: 'passive' },
+                                effectIndex: effectIdx,
+                                healAmount: actualSelfHeal,
+                                allies,
+                                enemies,
+                                log,
+                                animations,
+                            });
+                        }
                     }
                 });
 

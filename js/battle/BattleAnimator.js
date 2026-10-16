@@ -69,6 +69,64 @@ window.GG.BattleAnimator = (function () {
         setTimeout(() => overlay.remove(), _scaled(900));
     }
 
+    function _centerOf(el) {
+        if (!el) return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        const rect = el.getBoundingClientRect();
+        return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    }
+
+    function _spawnUltimateText(text, className) {
+        const banner = document.createElement('div');
+        banner.className = `ultimate-special-text ${className || ''}`;
+        banner.textContent = text;
+        document.body.appendChild(banner);
+        banner.style.animationDuration = `${_scaled(1100)}ms`;
+        setTimeout(() => banner.remove(), _scaled(1200));
+    }
+
+    function _playKaldiUltimate(anim, elementsMap) {
+        const casterEl = elementsMap[anim.casterId];
+        const origin = _centerOf(casterEl);
+        _spawnUltimateText('天焰龙破', 'kaldi');
+        const dragon = document.createElement('div');
+        dragon.className = 'ultimate-dragon-fx';
+        dragon.textContent = '🐉';
+        dragon.style.left = `${origin.x}px`;
+        dragon.style.top = `${Math.max(80, origin.y - 80)}px`;
+        dragon.style.animationDuration = `${_scaled(950)}ms`;
+        document.body.appendChild(dragon);
+        setTimeout(() => dragon.remove(), _scaled(1050));
+
+        (anim.targetIds || []).forEach((id, idx) => {
+            const targetEl = elementsMap[id];
+            if (!targetEl) return;
+            setTimeout(() => {
+                pulse(targetEl, 'anim-crit', 520);
+                spawnParticles(targetEl, 'fire', 14);
+                spawnFloatText(targetEl, '🔥 龙焰灼烧', 'status');
+            }, _scaled(160 + idx * 70));
+        });
+    }
+
+    function _playAylaUltimate(anim, elementsMap) {
+        _spawnUltimateText('极光治愈', 'ayla');
+        const veil = document.createElement('div');
+        veil.className = 'ultimate-aurora-fx';
+        veil.style.animationDuration = `${_scaled(1200)}ms`;
+        document.body.appendChild(veil);
+        setTimeout(() => veil.remove(), _scaled(1300));
+
+        (anim.targetIds || []).forEach((id, idx) => {
+            const targetEl = elementsMap[id];
+            if (!targetEl) return;
+            setTimeout(() => {
+                pulse(targetEl, 'anim-fade-in', 420);
+                spawnParticles(targetEl, 'heal', 12);
+                spawnFloatText(targetEl, '✨ 极光再生', 'heal');
+            }, _scaled(120 + idx * 80));
+        });
+    }
+
     // 处理战斗动画队列
     function playAnimation(anim, elementsMap) {
         const casterId = anim.casterId;
@@ -77,6 +135,11 @@ window.GG.BattleAnimator = (function () {
         const targetEl = elementsMap[targetId];
 
         switch (anim.type) {
+            case 'ultimate_special':
+                if (anim.characterId === 'kaldi') _playKaldiUltimate(anim, elementsMap);
+                else if (anim.characterId === 'ayla') _playAylaUltimate(anim, elementsMap);
+                break;
+
             case 'normal_hit':
                 // 攻击者冲锋
                 if (casterEl) pulse(casterEl, anim.isEnemyAttack ? 'anim-lunge-enemy' : 'anim-lunge', 400);
@@ -130,7 +193,7 @@ window.GG.BattleAnimator = (function () {
                     setTimeout(() => onComplete?.(), _scaled(600));
                 }
             }, delay);
-            delay += _scaled(anim.type === 'crit_hit' ? 250 : 200);
+            delay += _scaled(anim.type === 'ultimate_special' ? 520 : (anim.type === 'crit_hit' ? 250 : 200));
         });
         if (!animations.length) onComplete?.();
     }

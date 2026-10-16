@@ -74,6 +74,76 @@ window.GG.BattleUI = (function () {
         return result;
     }
 
+    function _escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>'"]/g, ch => {
+            if (ch === '&') return '&' + 'amp;';
+            if (ch === '<') return '&' + 'lt;';
+            if (ch === '>') return '&' + 'gt;';
+            if (ch === "'") return '&' + '#39;';
+            if (ch === '"') return '&' + 'quot;';
+            return ch;
+        });
+    }
+
+    function _rarityMeta(rarity) {
+        return window.GG.AbyssData?.rogue?.rarityMeta?.[rarity] || { label: rarity || '未知', color: '#e5e7eb', icon: '◇' };
+    }
+
+    function _groupAbyssRewards(rewards) {
+        return (rewards || []).reduce((map, reward) => {
+            const key = reward.id || reward.name || 'unknown';
+            if (!map.has(key)) map.set(key, { reward, count: 0 });
+            map.get(key).count++;
+            return map;
+        }, new Map());
+    }
+
+    function _renderAbyssEchoPanel(state) {
+        const panel = document.getElementById('battle-abyss-echo-panel');
+        if (!panel) return;
+
+        const isAbyss = !!state?.stageConfig?.isAbyss;
+        panel.hidden = !isAbyss;
+        if (!isAbyss) {
+            panel.innerHTML = '';
+            return;
+        }
+
+        const wasOpen = !!panel.querySelector('.battle-abyss-echo-details')?.open;
+        const openAttr = wasOpen ? ' open' : '';
+        const rewards = window.GG.AbyssSystem?.getSelectedRewards?.() || [];
+        if (!rewards.length) {
+            panel.innerHTML = `
+                <details class="battle-abyss-echo-details"${openAttr}>
+                    <summary class="battle-abyss-echo-summary">
+                        <span>🌀 已选回响</span>
+                        <strong>0</strong>
+                    </summary>
+                    <div class="battle-abyss-echo-empty">暂未获得回响，通关构筑节点后会在这里显示。</div>
+                </details>`;
+            return;
+        }
+
+        const listHtml = Array.from(_groupAbyssRewards(rewards).values()).reverse().map(({ reward, count }) => {
+            const meta = _rarityMeta(reward.rarity);
+            return `
+                <div class="battle-abyss-echo-item" style="--echo-color:${_escapeHtml(meta.color)}" title="${_escapeHtml(reward.description || '')}">
+                    <span class="battle-abyss-echo-icon">${_escapeHtml(reward.icon || meta.icon || '◇')}</span>
+                    <span class="battle-abyss-echo-name">${_escapeHtml(reward.name || reward.id || '未知回响')}</span>
+                    ${count > 1 ? `<span class="battle-abyss-echo-count">×${count}</span>` : ''}
+                </div>`;
+        }).join('');
+
+        panel.innerHTML = `
+            <details class="battle-abyss-echo-details"${openAttr}>
+                <summary class="battle-abyss-echo-summary">
+                    <span>🌀 已选回响</span>
+                    <strong>${rewards.length}</strong>
+                </summary>
+                <div class="battle-abyss-echo-list">${listHtml}</div>
+            </details>`;
+    }
+
     // ===== 构建战斗 DOM =====
     function _buildBattleScreen() {
         const div = document.createElement('div');
@@ -89,6 +159,7 @@ window.GG.BattleUI = (function () {
         </div>
       </div>
       <div class="action-timeline" id="action-timeline"></div>
+      <div class="battle-abyss-echo-panel" id="battle-abyss-echo-panel" hidden></div>
       <div class="battle-area">
         <div class="enemy-row" id="enemy-row"></div>
         <div class="ally-row" id="ally-row"></div>
@@ -135,6 +206,9 @@ window.GG.BattleUI = (function () {
         // 渲染技能栏
         _renderSkillBar(state);
 
+        // 渲染深渊已选回响
+        _renderAbyssEchoPanel(state);
+
         // 渲染行动时间轴
         _renderTimeline(state);
     }
@@ -154,7 +228,9 @@ window.GG.BattleUI = (function () {
         // 状态图标
         const statusIcons = (unit.statuses || []).map(s => {
             const cfg = SS().getRegistry()[s.id];
-            return `<div class="status-badge status-icon ${cfg?.colorClass || ''}" title="${cfg?.label || s.id}（${s.duration}回合）">${cfg?.icon || '?'}</div>`;
+            const duration = Number.isFinite(Number(s.duration)) ? Math.max(0, Math.ceil(Number(s.duration))) : 0;
+            const durationBadge = duration > 0 ? `<span class="status-duration">${duration}</span>` : '';
+            return `<div class="status-badge status-icon ${cfg?.colorClass || ''}" title="${cfg?.label || s.id}（${duration || s.duration}回合）"><span class="status-symbol">${cfg?.icon || '?'}</span>${durationBadge}</div>`;
         }).join('');
 
         // 头像
@@ -305,7 +381,9 @@ window.GG.BattleUI = (function () {
             if (statusIconsEl) {
                 statusIconsEl.innerHTML = (unit.statuses || []).map(s => {
                     const cfg = SS().getRegistry()[s.id];
-                    return `<div class="status-badge status-icon ${cfg?.colorClass || ''}" title="${cfg?.label || s.id}（${s.duration}回合）">${cfg?.icon || '?'}</div>`;
+                    const duration = Number.isFinite(Number(s.duration)) ? Math.max(0, Math.ceil(Number(s.duration))) : 0;
+                    const durationBadge = duration > 0 ? `<span class="status-duration">${duration}</span>` : '';
+                    return `<div class="status-badge status-icon ${cfg?.colorClass || ''}" title="${cfg?.label || s.id}（${duration || s.duration}回合）"><span class="status-symbol">${cfg?.icon || '?'}</span>${durationBadge}</div>`;
                 }).join('');
             }
         });
@@ -505,11 +583,16 @@ window.GG.BattleUI = (function () {
         setTimeout(() => {
             const isAuto = !!BE().getState()?.isAuto;
             const floor = BE().getState()?.stageConfig?.floor || data?.floor || 1;
+            const choices = Array.isArray(data?.choices) ? data.choices : [];
+            if (data?.nextStep?.type === 'reward' && choices.length) {
+                _showAbyssRewardChoices(data, floor);
+                return;
+            }
             if (isAuto) {
                 _enterNextAbyssFloor(floor);
                 return;
             }
-            _showResultModal(true, data.rewards, true);
+            _showResultModal(true, data?.rewards, true);
         }, BE().getScaledDelay?.(600) || 600);
     }
 
@@ -525,6 +608,71 @@ window.GG.BattleUI = (function () {
         const card = _unitEls[enemy.id];
         if (card) BA().pulse(card, 'boss-phase2', 800);
         _addLog({ type: 'system', message: `⚠️ ${enemy.name} 进入了狂暴模式！` });
+    }
+
+    function _rarityMeta(rarity) {
+        const meta = window.GG.AbyssData?.rogue?.rarityMeta?.[rarity] || {};
+        return {
+            label: meta.label || rarity || '白',
+            color: meta.color || '#e5e7eb',
+            icon: meta.icon || '◇',
+        };
+    }
+
+    function _renderAbyssRewardCard(choice) {
+        const meta = _rarityMeta(choice.rarity);
+        const characterName = choice.characterId ? (CD()?.[choice.characterId]?.name || choice.characterId) : '';
+        const poolText = choice.pool === 'character' && characterName ? `${characterName} 入池` : '通用选项';
+        return `
+            <button class="abyss-reward-card rarity-${_escapeHtml(choice.rarity || 'white')}" data-choice-id="${_escapeHtml(choice.choiceId || choice.id)}" style="--reward-color:${_escapeHtml(meta.color)}">
+                <div class="abyss-reward-card-top">
+                    <span class="abyss-reward-icon">${_escapeHtml(choice.icon || meta.icon)}</span>
+                    <span class="abyss-reward-rarity">${_escapeHtml(meta.icon)} ${_escapeHtml(meta.label)}</span>
+                </div>
+                <div class="abyss-reward-name">${_escapeHtml(choice.name || '未知回响')}</div>
+                <div class="abyss-reward-target">${_escapeHtml(choice.target || poolText)} · ${_escapeHtml(poolText)}</div>
+                <div class="abyss-reward-desc">${_escapeHtml(choice.description || '')}</div>
+            </button>`;
+    }
+
+    function _showAbyssRewardChoices(data, floor) {
+        EB().off('battle:victory', onVictory);
+        EB().off('battle:defeat', onDefeat);
+        EB().off('battle:abyss_victory', onAbyssVictory);
+
+        document.querySelectorAll('.battle-result-overlay').forEach(el => el.remove());
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay battle-result-overlay abyss-reward-overlay';
+        const choices = Array.isArray(data?.choices) ? data.choices : [];
+        const isBossGoldReward = choices.length > 0 && choices.every(choice => choice?.rarity === 'gold');
+        overlay.innerHTML = `
+            <div class="abyss-reward-modal">
+                <div class="abyss-reward-kicker">第 ${floor} 层通关 · ${isBossGoldReward ? '首领赏金' : '构筑节点'}</div>
+                <div class="abyss-reward-title">${isBossGoldReward ? '选择一个金色深渊回响' : '选择一个深渊回响'}</div>
+                <div class="abyss-reward-subtitle">自动战斗已暂停。选择后效果立即写入本局深渊，并对全队生效。</div>
+                <div class="abyss-reward-grid">
+                    ${choices.map(_renderAbyssRewardCard).join('')}
+                </div>
+                <div class="abyss-reward-hint">角色构筑只决定是否入池；一旦选择，奖励就是当前深渊局的全队效果。</div>
+            </div>`;
+        document.body.appendChild(overlay);
+
+        overlay.querySelectorAll('.abyss-reward-card').forEach((card, idx) => {
+            card.addEventListener('click', () => {
+                const choiceId = card.dataset.choiceId;
+                if (!choiceId || card.disabled) return;
+                overlay.querySelectorAll('.abyss-reward-card').forEach(btn => { btn.disabled = true; });
+                const result = window.GG.AbyssSystem?.chooseReward?.(choiceId, choices[idx]);
+                if (!result?.success) {
+                    overlay.querySelectorAll('.abyss-reward-card').forEach(btn => { btn.disabled = false; });
+                    window.GG.UIManager?.showToast?.(result?.error || '选择奖励失败', 'error');
+                    return;
+                }
+                window.GG.UIManager?.showToast?.(`获得深渊回响：${result.reward?.name || '未知奖励'}`, 'success');
+                overlay.remove();
+                _showResultModal(true, data?.rewards, true);
+            });
+        });
     }
 
     function _showResultModal(isVictory, rewards, isAbyss = false) {

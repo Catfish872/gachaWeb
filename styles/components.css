@@ -231,6 +231,137 @@
     padding: 8px 0;
 }
 
+/* 深渊战斗回响列表 */
+.battle-abyss-echo-panel {
+    flex-shrink: 0;
+    padding: 6px 12px 0;
+    background: rgba(0, 0, 0, 0.22);
+}
+
+.battle-abyss-echo-panel[hidden] {
+    display: none !important;
+}
+
+.battle-abyss-echo-details {
+    border: 1px solid rgba(167, 139, 250, 0.24);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.72);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+}
+
+.battle-abyss-echo-summary {
+    min-height: 32px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: #ddd6fe;
+    font-size: 0.75rem;
+    font-weight: 800;
+    cursor: pointer;
+    list-style: none;
+}
+
+.battle-abyss-echo-summary::-webkit-details-marker {
+    display: none;
+}
+
+.battle-abyss-echo-summary::after {
+    content: '展开';
+    color: #94a3b8;
+    font-size: 0.65rem;
+    font-weight: 700;
+}
+
+.battle-abyss-echo-details[open] .battle-abyss-echo-summary::after {
+    content: '收起';
+}
+
+.battle-abyss-echo-summary strong {
+    min-width: 24px;
+    height: 22px;
+    padding: 0 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    color: #0f172a;
+    background: linear-gradient(135deg, #fbbf24, #fde68a);
+    font-size: 0.75rem;
+    font-weight: 900;
+}
+
+.battle-abyss-echo-list {
+    max-height: 118px;
+    padding: 0 8px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+}
+
+.battle-abyss-echo-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.battle-abyss-echo-list::-webkit-scrollbar-thumb {
+    background: rgba(167, 139, 250, 0.55);
+    border-radius: 999px;
+}
+
+.battle-abyss-echo-item {
+    min-height: 30px;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-radius: 10px;
+    border: 1px solid color-mix(in srgb, var(--echo-color, #e5e7eb) 40%, transparent);
+    background: color-mix(in srgb, var(--echo-color, #e5e7eb) 10%, rgba(15, 23, 42, 0.82));
+    color: #f8fafc;
+    font-size: 0.72rem;
+}
+
+.battle-abyss-echo-icon {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    font-size: 0.78rem;
+}
+
+.battle-abyss-echo-name {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 800;
+}
+
+.battle-abyss-echo-count {
+    flex: 0 0 auto;
+    padding: 2px 6px;
+    border-radius: 999px;
+    color: #0f172a;
+    background: #fbbf24;
+    font-size: 0.68rem;
+    font-weight: 900;
+}
+
+.battle-abyss-echo-empty {
+    padding: 0 10px 10px;
+    color: #94a3b8;
+    font-size: 0.72rem;
+    line-height: 1.5;
+}
+
 /* 行动时间轴 */
 .action-timeline {
     display: flex;
@@ -505,6 +636,32 @@
     cursor: default;
     background: rgba(0, 0, 0, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.status-symbol {
+    line-height: 1;
+}
+
+.status-duration {
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    min-width: 12px;
+    height: 12px;
+    padding: 0 3px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    color: #ffffff;
+    font-size: 0.58rem;
+    font-weight: 900;
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+    pointer-events: none;
 }
 
 /* ===== 战斗技能栏 ===== */
