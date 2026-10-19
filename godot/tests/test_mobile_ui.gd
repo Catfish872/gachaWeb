@@ -60,7 +60,27 @@ func assert_page_fits(label: String) -> void:
 	check(viewport.encloses(app.shell.get_global_rect()), label + " shell stays within logical viewport")
 	check(viewport.encloses(scroll.get_global_rect()), label + " scroll viewport stays on screen")
 	check(scroll.size.y >= 160, label + " leaves useful page height")
+	if app.size.x > app.size.y:
+		check(app.header_resources.size.y <= 40, label + " landscape wallet uses compact single-line strip")
+		check(scroll.size.y >= app.size.y * 0.65, label + " landscape content receives at least 65 percent of height")
+		for panel in app.header_resources.get_children():
+			var resource_labels: Array[Node] = []
+			for item in descendants(panel):
+				if item is Label:
+					resource_labels.append(item)
+			check(resource_labels.size() == 1, label + " landscape resource label and value share one line")
 	check(app.main_body.get_combined_minimum_size().x <= scroll.size.x + 2, label + " content fits available width")
+	if app.current_screen == "home":
+		# Content outside the page's scroll viewport is reachable by scrolling.
+		# A button outside its own clipped hero ancestor stays truncated forever.
+		var hero: Control = app.main_body.get_child(0)
+		for node in descendants(hero):
+			if node is Button:
+				var ancestor := node.get_parent()
+				while ancestor != app.main_body:
+					if ancestor is Control and ancestor.clip_contents:
+						check(ancestor.get_global_rect().encloses(node.get_global_rect()), label + " hero clip preserves full button: " + node.text)
+					ancestor = ancestor.get_parent()
 	for node in descendants(app.main_body):
 		if node is TextureRect and node.texture != null and "/characters/" in node.texture.resource_path:
 			check(node.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED or node.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT, label + " character artwork preserves complete aspect ratio")

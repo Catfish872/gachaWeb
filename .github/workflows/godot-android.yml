@@ -39,7 +39,8 @@ jobs:
           python3 godot/tests/test_android_kvm.py
           bash godot/tools/test_all.sh
           godot --headless --path godot --script tests/test_mobile_ui.gd -- --test-session --mobile-ui
-          godot --headless --path godot --script tests/test_updates.gd -- --test-session
+          godot --headless --path godot --script tests/test_updates.gd -- --test-session --mobile-ui
+          godot --headless --path godot --script tests/test_input_dispatch.gd -- --test-session --mobile-ui
       - name: Configure Android SDK
         run: bash godot/tools/build/setup_android.sh
       - name: Export isolated x86_64 emulator test APK
@@ -98,7 +99,8 @@ jobs:
           python3 godot/tests/test_android_kvm.py
           bash godot/tools/test_all.sh
           godot --headless --path godot --script tests/test_mobile_ui.gd -- --test-session --mobile-ui
-          godot --headless --path godot --script tests/test_updates.gd -- --test-session
+          godot --headless --path godot --script tests/test_updates.gd -- --test-session --mobile-ui
+          godot --headless --path godot --script tests/test_input_dispatch.gd -- --test-session --mobile-ui
       - name: Configure SDK
         run: bash godot/tools/build/setup_android.sh
       - name: Export isolated x86_64 emulator test APK

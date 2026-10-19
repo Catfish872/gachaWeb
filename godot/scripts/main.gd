@@ -72,6 +72,7 @@ var _touch_start := Vector2.ZERO
 var _touch_previous := Vector2.ZERO
 var _touch_dragging := false
 var _touch_id := -1
+var _ui_input_dispatch := false
 
 func _ready() -> void:
 	var main_font: FontFile = FONT.duplicate()
@@ -133,6 +134,11 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if not _ready_done:
 		return
+	# GUI callbacks can remove their own ancestors. Keep the tree intact until
+	# Godot has finished propagating this native/emulated input event.
+	if not _ui_input_dispatch:
+		_ui_input_dispatch = true
+		_end_ui_input_dispatch.call_deferred()
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if not event.pressed and _touch_dragging:
 			get_viewport().set_input_as_handled()
@@ -401,9 +407,12 @@ func _update_resources() -> void:
 	var r: Dictionary = model.state.get("resources", {})
 	for item in [["星尘晶", r.get("diamonds", 0), CYAN], ["金币", r.get("gold", 0), GOLD], ["体力", "%s / %s" % [r.get("stamina", 0), r.get("maxStamina", 100)], Color("a6c9a5")]]:
 		var p := _panel(header_resources, item[2].darkened(0.7), 5 if compact else 12)
-		var col := _vbox(p, 0)
-		_label(col, item[0], 12, MUTED)
-		_label(col, str(item[1]), 16 if compact else 20, item[2])
+		if compact and size.x > size.y:
+			_label(p, "%s  %s" % [item[0], str(item[1])], 14, item[2])
+		else:
+			var col := _vbox(p, 0)
+			_label(col, item[0], 12, MUTED)
+			_label(col, str(item[1]), 16 if compact else 20, item[2])
 
 func _home() -> void:
 	var hero := _scene_panel(main_body, "res://assets/wilderness.png", 370 if not compact else 390)
@@ -422,6 +431,13 @@ func _home() -> void:
 	var actions := _responsive_box(row, compact, 12)
 	_button(actions, "继续旅程   →", func(): navigate("story"), true)
 	_button(actions, "查看当前队伍", func(): navigate("party"))
+	# Font metrics and wrapped text determine the hero's required height.
+	# The clip belongs to the art frame, so its actions must fit inside it.
+	var fit_hero := func():
+		if is_instance_valid(hero) and is_instance_valid(row):
+			hero.custom_minimum_size.y = maxf(390 if compact else 370, row.get_combined_minimum_size().y + 62)
+	row.minimum_size_changed.connect(fit_hero, CONNECT_DEFERRED)
+	fit_hero.call_deferred()
 	var grid := _grid(main_body, 1 if compact else 3)
 	_info_tile(grid, "星辰的回应", "炎龙觉醒", "五星旅者 · 焰龙卡尔迪概率提升", "前往祈愿", func(): navigate("summon"), GOLD)
 	_info_tile(grid, "裂隙之下", "深渊远征", "深入未知领域，选择专属祝福构筑", "挑战深渊", func(): navigate("abyss"), Color("b49cdd"))
@@ -1522,6 +1538,29 @@ func _center_label(parent: Node, text: String, font_size: int = 17, color: Color
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	return l
 
+func _end_ui_input_dispatch() -> void:
+	_ui_input_dispatch = false
+
+func _dispatch_ui_action(source: Control, action: Callable) -> void:
+	if source.get_meta("ui_action_pending", false):
+		return
+	if not _ui_input_dispatch:
+		action.call()
+		return
+	# One pending action per control also protects purchases from duplicate
+	# release events before the deferred action has had a chance to run.
+	source.set_meta("ui_action_pending", true)
+	_complete_ui_action.call_deferred(weakref(source), action)
+
+func _complete_ui_action(source_ref: WeakRef, action: Callable) -> void:
+	var source = source_ref.get_ref()
+	if not is_instance_valid(source) or not source.is_inside_tree() or source.is_queued_for_deletion():
+		return
+	if action.is_valid():
+		action.call()
+	if is_instance_valid(source):
+		source.remove_meta("ui_action_pending")
+
 func _button(parent: Node, text: String, action: Callable, primary: bool = false) -> Button:
 	var b := Button.new()
 	b.text = text
@@ -1539,7 +1578,7 @@ func _button(parent: Node, text: String, action: Callable, primary: bool = false
 	b.add_theme_stylebox_override("focus", _box(Color(0, 0, 0, 0), CYAN, 12))
 	b.add_theme_stylebox_override("disabled", _box(Color("111925"), Color("202b3b"), 12))
 	if action.is_valid():
-		b.pressed.connect(action)
+		b.pressed.connect(func(): _dispatch_ui_action(b, action))
 	parent.add_child(b)
 	return b
 
@@ -1664,7 +1703,7 @@ func _bind_card_tap(card: Control, action: Callable) -> void:
 				var activate: bool = gesture.down and not gesture.drag and not _touch_dragging and card.get_global_rect().has_point(event.global_position)
 				gesture.down = false
 				if activate:
-					action.call()
+					_dispatch_ui_action(card, action)
 		elif event is InputEventMouseMotion and gesture.down:
 			if event.global_position.distance_to(gesture.start) > 8:
 				gesture.drag = true)

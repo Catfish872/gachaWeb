@@ -231,6 +231,7 @@ def run(apk, output):
     # Menu is dismissed by the real Android Back event and the game stays alive.
     tap(state, 'MenuButton')
     wait_for(lambda s: s['overlay'] > 0, 'menu before Back')
+    screenshot(output, 'portrait-menu', False)
     back()
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'Back dismisses menu')
     pages = ['story', 'summon', 'party', 'growth', 'relics', 'abyss', 'shop', 'save']
@@ -251,9 +252,20 @@ def run(apk, output):
     state = wait_for(lambda s: s['window'][0] > s['window'][1] and s['logical'][0] > s['logical'][1], 'landscape adaptation')
     geometry(state)
     screenshot(output, 'landscape-home', True)
+    tap(state, 'MenuButton')
+    wait_for(lambda s: s['overlay'] > 0, 'landscape menu open')
+    screenshot(output, 'landscape-menu', True)
+    back()
+    state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'landscape menu dismissed')
     state = visit(state, 'growth')
     geometry(state)
     screenshot(output, 'landscape-growth', True)
+    assert state['scroll_max'] > 10, 'Landscape growth must expose its scrollable content'
+    x, y, w, h = state['scroll_rect']
+    before = state['scroll']
+    adb('shell', 'input', 'swipe', str(round(x + w * .85)), str(round(y + h * .8)), str(round(x + w * .85)), str(round(y + h * .2)), '600')
+    state = wait_for(lambda s: s['screen'] == 'growth' and s['scroll'] > before + 5, 'landscape growth finger scroll')
+    screenshot(output, 'landscape-growth-scrolled', True)
     back()
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'landscape Back')
     adb('shell', 'input', 'keyevent', 'KEYCODE_HOME')
