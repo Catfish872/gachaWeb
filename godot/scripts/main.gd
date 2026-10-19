@@ -63,6 +63,7 @@ var dialogue_tween: Tween
 var relic_slot_filter := "全部"
 var test_session := false
 var updater: Node
+var update_notice: Button
 var navigation_history: Array[String] = []
 var back_button: Button
 var _last_layout_size := Vector2.ZERO
@@ -111,6 +112,7 @@ func _ready() -> void:
 	_ready_done = true
 	resized.connect(_resized)
 	navigate("home")
+	updater.schedule_startup_check(test_session)
 
 func _process(delta: float) -> void:
 	if not _ready_done:
@@ -293,6 +295,11 @@ func _build_shell() -> void:
 	_button(header, "菜单", _show_navigation).name = "MenuButton"
 	header_resources = _hbox(vertical if compact else header, 6)
 	_update_resources()
+	update_notice = _button(vertical, "发现新版本 · 查看更新", _show_updates, true)
+	update_notice.name = "UpdateNotice"
+	update_notice.clip_text = true
+	update_notice.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	_refresh_update_notice()
 	var main := _responsive_box(vertical, compact, 10 if compact else 28)
 	main.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var nav := _vbox(main, 8)
@@ -363,6 +370,7 @@ func navigate(screen: String, record_history: bool = true) -> void:
 	main_body.get_parent().set_deferred("scroll_vertical", 0)
 
 func _render_screen() -> void:
+	_refresh_update_notice()
 	if current_screen != "battle": unit_cards.clear()
 	_clear(main_body)
 	_update_resources()
@@ -927,13 +935,32 @@ func _save_screen() -> void:
 
 	_update_panel()
 
+func _show_updates() -> void:
+	navigate("save")
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if current_screen == "save":
+		var panel := main_body.get_node_or_null("UpdatePanel")
+		if panel != null:
+			(main_body.get_parent() as ScrollContainer).scroll_vertical = int(panel.position.y)
+
 func _update_panel() -> void:
 	var panel := _panel(main_body, LINE, 24)
+	panel.name = "UpdatePanel"
 	var content := _vbox(panel, 14)
 	_label(content, "版本与更新", 24, TEXT)
 	var local: Dictionary = updater.local_version
 	_label(content, "当前版本 %s · 构建 %s" % [str(local.get("version_name", "未知")), str(local.get("version_code", "未知"))], 16, MUTED, true)
-	_label(content, "点击检查后连接 GitHub 查询版本，存档保留在本机。APK 将在浏览器中下载，由你确认安装。更新前建议导出存档备份。", 14, MUTED, true)
+	_label(content, "启动后自动连接 GitHub 检查一次正式版本。发现更新后可在手机浏览器下载 APK，再按 Android 提示确认安装。存档保留在本机，更新前建议导出备份。", 14, MUTED, true)
+	var auto_check := CheckBox.new()
+	auto_check.name = "AutoCheckUpdates"
+	auto_check.text = "启动时自动检查更新"
+	auto_check.custom_minimum_size.y = 48
+	auto_check.button_pressed = updater.auto_check_enabled
+	content.add_child(auto_check)
+	auto_check.toggled.connect(func(enabled: bool):
+		updater.auto_check_enabled = enabled
+		_save_preferences())
 	var status: Dictionary = updater.state
 	_label(content, str(status.get("message", "尚未检查更新")), 16, GOLD if status.get("status") == "available" else TEXT, true).name = "UpdateStatus"
 	var actions := _responsive_box(content, compact, 10)
@@ -944,15 +971,21 @@ func _update_panel() -> void:
 		if updater.open_releases() != OK:
 			_toast("无法打开浏览器，请稍后重试。", RED)).name = "OpenReleases"
 	if status.get("status") == "available":
-		# Untrusted release prose is plain Label text, never rich text or code.
-		_label(content, "发布说明", 18, GOLD)
-		_label(content, str(status.get("release_notes", "")), 15, MUTED, true).name = "UpdateReleaseNotes"
 		_button(content, "在浏览器下载 APK", func():
 			if updater.open_download() != OK:
 				_toast("无法打开下载链接，请重新检查更新。", RED), true).name = "DownloadUpdate"
+		# Untrusted release prose is plain Label text, never rich text or code.
+		_label(content, "发布说明", 18, GOLD)
+		_label(content, str(status.get("release_notes", "")), 15, MUTED, true).name = "UpdateReleaseNotes"
+
+func _refresh_update_notice() -> void:
+	if is_instance_valid(update_notice):
+		update_notice.visible = updater.state.get("status") == "available" and current_screen != "battle" and current_screen != "save"
+		update_notice.text = str(updater.state.get("message", "发现新版本")) + " · 查看更新"
 
 func _on_update_state_changed(_state: Dictionary) -> void:
-	if _ready_done and current_screen == "save":
+	_refresh_update_notice()
+	if _ready_done and current_screen == "save" and overlay.get_child_count() == 0:
 		_render_screen()
 
 func _export_dialog(slot: int = -1) -> void:
@@ -1799,6 +1832,7 @@ func _load_preferences() -> void:
 	if test_session: return
 	var config := ConfigFile.new()
 	if config.load("user://ui-settings.cfg") != OK: return
+	updater.auto_check_enabled = bool(config.get_value("updates", "auto_check", true))
 	relic_filter = str(config.get_value("relics", "rarity_filter", "全部"))
 	relic_slot_filter = str(config.get_value("relics", "slot_filter", "全部"))
 	selected_relic = str(config.get_value("relics", "selection", ""))
@@ -1808,6 +1842,7 @@ func _load_preferences() -> void:
 func _save_preferences() -> void:
 	if test_session: return
 	var config := ConfigFile.new()
+	config.set_value("updates", "auto_check", updater.auto_check_enabled)
 	config.set_value("relics", "rarity_filter", relic_filter)
 	config.set_value("relics", "slot_filter", relic_slot_filter)
 	config.set_value("relics", "selection", selected_relic)

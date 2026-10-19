@@ -1,5 +1,5 @@
 extends Node
-## Explicit, read-only release checks. The browser and user handle APK installation.
+## Read-only release checks, with an optional once-per-session startup check. The browser and user handle APK installation.
 ## data/version.json is shared with the Android export pipeline.
 ## version_code = major * 10000 + minor * 100 + patch; minor/patch are 0..99.
 
@@ -10,6 +10,7 @@ const API_URL := "https://api.github.com/repos/" + REPOSITORY + "/releases/lates
 const RELEASES_URL := "https://github.com/" + REPOSITORY + "/releases"
 const DOWNLOAD_HOST_ALLOWLIST := ["github.com"]
 const RELEASE_ASSET := "universal.apk"
+const STARTUP_DELAY_SECONDS := 3.0
 const REQUEST_TIMEOUT_SECONDS := 12.0
 const MAX_RESPONSE_BYTES := 1048576
 const MAX_RELEASE_NOTES := 6000
@@ -19,6 +20,9 @@ var local_version: Dictionary = {}
 var state: Dictionary = {"status": "idle", "message": "尚未检查更新"}
 var busy := false
 var _request: HTTPRequest
+var auto_check_enabled := true
+var _startup_scheduled := false
+var _startup_attempted := false
 
 func _ready() -> void:
 	local_version = read_local_version()
@@ -30,7 +34,20 @@ func _ready() -> void:
 	_request.max_redirects = 0
 	_request.request_completed.connect(_on_request_completed)
 	add_child(_request)
-	# No startup request, timer, persistent token, or gameplay/save-data access.
+
+func schedule_startup_check(test_session: bool = false) -> void:
+	if test_session or _startup_scheduled or _startup_attempted:
+		return
+	_startup_scheduled = true
+	get_tree().create_timer(STARTUP_DELAY_SECONDS).timeout.connect(run_startup_check)
+
+func run_startup_check() -> void:
+	if _startup_attempted:
+		return
+	_startup_attempted = true
+	if auto_check_enabled and not busy:
+		check_for_updates()
+
 
 static func parse_version(value: String) -> Dictionary:
 	var pattern := RegEx.new()
