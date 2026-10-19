@@ -34,6 +34,7 @@ jobs:
       - name: Validate version and test game
         run: |
           python3 godot/tools/build/validate_version.py
+          python3 godot/tests/test_android_build.py
           bash godot/tools/test_all.sh
           godot --headless --path godot --script tests/test_updates.gd -- --test-session
       - name: Configure Android SDK
@@ -73,6 +74,7 @@ jobs:
         run: bash godot/tools/build/install_godot.sh
       - name: Run all game tests
         run: |
+          python3 godot/tests/test_android_build.py
           bash godot/tools/test_all.sh
           godot --headless --path godot --script tests/test_updates.gd -- --test-session
       - name: Configure SDK
