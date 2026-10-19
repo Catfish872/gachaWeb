@@ -240,7 +240,8 @@ def wait_for_completed_background(output):
 
 def check_background_resume(component, output):
     results = []
-    for mode in ['settled', 'rapid']:
+    modes = ['rapid', 'settled', 'rapid_again']
+    for mode in modes:
         try:
             adb('shell', 'input', 'keyevent', 'KEYCODE_HOME')
             if mode == 'settled':
@@ -263,8 +264,8 @@ def check_background_resume(component, output):
             (output / (mode + '-resume-failure.png')).write_bytes(image)
             (output / (mode + '-resume-logcat.txt')).write_text(adb('logcat', '-d', '-v', 'threadtime'))
             (output / 'resume-results.json').write_text(json.dumps(results, indent=2))
-            if mode == 'settled':
-                # Restart solely to collect the separate rapid-case diagnostic.
+            if mode != modes[-1]:
+                # Restart solely to collect the remaining independent diagnostics.
                 # The recorded failure remains a hard gate for this whole run.
                 adb('shell', 'am', 'force-stop', PACKAGE)
                 adb('logcat', '-c')

@@ -154,31 +154,44 @@ class AndroidSmokeDriverTests(unittest.TestCase):
         self.assertFalse(smoke.background_is_stopped(activity.replace('state=STOPPED', 'state=STOPPING')))
         self.assertFalse(smoke.background_is_stopped(activity.replace('com.android.launcher3', smoke.PACKAGE)))
 
-    def test_rapid_resume_failure_remains_hard_gate(self):
+    def test_resume_order_starts_with_original_rapid_case(self):
         import tempfile
-        replies = [{'screen': 'home'}, {'overlay': 1}, {'overlay': 0}, AssertionError('fresh-frame timeout')]
-        def adb(*args, **kwargs):
-            return b'PNG evidence' if kwargs.get('binary') else 'log evidence'
-        with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'adb', side_effect=adb), patch.object(smoke, 'wait_for_completed_background'), patch.object(smoke, 'wait_for', side_effect=replies), patch.object(smoke, 'tap'), patch.object(smoke, 'back'), patch.object(smoke, 'screenshot'), patch.object(smoke.time, 'sleep'), self.assertRaises(AssertionError):
-            try:
-                smoke.check_background_resume('pkg/Activity', Path(directory))
-            finally:
-                results = json.loads((Path(directory) / 'resume-results.json').read_text())
-                self.assertEqual([item['passed'] for item in results], [True, False])
-                self.assertTrue((Path(directory) / 'rapid-resume-logcat.txt').exists())
+        events = []
+        def wait(predicate, description, *args):
+            events.append(description)
+            return {'screen': 'home', 'overlay': 0}
+        with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'adb'), patch.object(smoke, 'wait_for_completed_background', side_effect=lambda _: events.append('settled wait')), patch.object(smoke, 'wait_for', side_effect=wait), patch.object(smoke, 'tap'), patch.object(smoke, 'back'), patch.object(smoke, 'screenshot'), patch.object(smoke.time, 'sleep') as sleep:
+            smoke.check_background_resume('pkg/Activity', Path(directory))
+            results = json.loads((Path(directory) / 'resume-results.json').read_text())
+            self.assertEqual([item['mode'] for item in results], ['rapid', 'settled', 'rapid_again'])
+            self.assertTrue(all(item['passed'] for item in results))
+            self.assertEqual(events[0], 'rapid resume')
+            self.assertLess(events.index('rapid resume'), events.index('settled wait'))
+            self.assertEqual([call.args for call in sleep.call_args_list], [(1,)] * 5)
 
-    def test_settled_failure_remains_gate_after_successful_rapid_diagnostic(self):
+    def test_each_resume_failure_is_retained_and_remaining_cases_run(self):
         import tempfile
-        replies = [AssertionError('settled timeout'), {'screen': 'home'}, {'screen': 'home'}, {'overlay': 1}, {'overlay': 0}]
-        def adb(*args, **kwargs):
-            return b'PNG evidence' if kwargs.get('binary') else 'log evidence'
-        with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'adb', side_effect=adb) as commands, patch.object(smoke, 'wait_for_completed_background'), patch.object(smoke, 'wait_for', side_effect=replies), patch.object(smoke, 'tap'), patch.object(smoke, 'back'), patch.object(smoke, 'screenshot'), patch.object(smoke.time, 'sleep'), self.assertRaises(AssertionError):
-            try:
-                smoke.check_background_resume('pkg/Activity', Path(directory))
-            finally:
-                results = json.loads((Path(directory) / 'resume-results.json').read_text())
-                self.assertEqual([item['passed'] for item in results], [False, True])
-                self.assertIn(('shell', 'am', 'force-stop', smoke.PACKAGE), [call.args for call in commands.call_args_list])
+        modes = ['rapid', 'settled', 'rapid_again']
+        for failed_mode in modes:
+            with self.subTest(failed_mode=failed_mode):
+                events = []
+                def wait(predicate, description, *args):
+                    events.append(description)
+                    if description == failed_mode + ' resume':
+                        raise AssertionError('fresh-frame timeout')
+                    return {'screen': 'home', 'overlay': 0}
+                def adb(*args, **kwargs):
+                    return b'PNG evidence' if kwargs.get('binary') else 'log evidence'
+                with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'adb', side_effect=adb) as commands, patch.object(smoke, 'wait_for_completed_background'), patch.object(smoke, 'wait_for', side_effect=wait), patch.object(smoke, 'tap'), patch.object(smoke, 'back'), patch.object(smoke, 'screenshot'), patch.object(smoke.time, 'sleep'):
+                    with self.assertRaisesRegex(AssertionError, 'Background/resume failed'):
+                        smoke.check_background_resume('pkg/Activity', Path(directory))
+                    results = json.loads((Path(directory) / 'resume-results.json').read_text())
+                    self.assertEqual([item['mode'] for item in results], modes)
+                    self.assertEqual([item['passed'] for item in results], [mode != failed_mode for mode in modes])
+                    self.assertTrue((Path(directory) / (failed_mode + '-resume-logcat.txt')).exists())
+                    restarts = [call for call in commands.call_args_list if call.args == ('shell', 'am', 'force-stop', smoke.PACKAGE)]
+                    self.assertEqual(len(restarts), int(failed_mode != 'rapid_again'))
+                    self.assertIn('rapid_again resume', events)
 
     def test_emulator_export_cannot_mutate_source_presets(self):
         script = (ROOT / 'tools/android/export_smoke.sh').read_text()
