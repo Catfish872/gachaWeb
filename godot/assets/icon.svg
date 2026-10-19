@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#181633"/><stop offset="1" stop-color="#060916"/></linearGradient>
+    <linearGradient id="rim" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#8656ff"/><stop offset=".55" stop-color="#bc82ff"/><stop offset="1" stop-color="#58f4ed"/></linearGradient>
+    <linearGradient id="rift" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d7fcff"/><stop offset=".4" stop-color="#72fff2"/><stop offset="1" stop-color="#a378ff"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#night)"/>
+  <path d="M256 64 418 158 418 354 256 448 94 354 94 158Z" fill="#12162f" stroke="#34345b" stroke-width="6"/>
+  <path d="M256 91 393 170 393 342 256 421 119 342 119 170Z" fill="none" stroke="url(#rim)" stroke-width="12"/>
+  <path d="M256 117 368 182 368 330 256 395 144 330 144 182Z" fill="#0b1023" stroke="#262e50" stroke-width="3"/>
+  <path d="M304 113 217 234 263 251 191 399 310 252 263 232Z" fill="#773eff" opacity=".28" stroke="#8656ff" stroke-width="22" stroke-linejoin="round"/>
+  <path d="M304 113 217 234 263 251 191 399 310 252 263 232Z" fill="url(#rift)"/>
+  <path d="M304 113 247 238 279 251 191 399 263 251 217 234Z" fill="#efffff" opacity=".83"/>
+  <path d="M148 210 170 222 151 242 132 230Z" fill="#a77aff"/>
+  <path d="M355 284 377 296 357 318 339 306Z" fill="#65ece9"/>
+  <circle cx="190" cy="156" r="5" fill="#b998ff"/>
+  <circle cx="328" cy="359" r="4" fill="#85fff1"/>
+</svg>

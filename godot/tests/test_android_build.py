@@ -3,6 +3,8 @@
 import contextlib
 import io
 import json
+import os
+import subprocess
 from pathlib import Path
 import shutil
 import sys
@@ -22,7 +24,8 @@ class BuildValidationTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         (self.root / 'data').mkdir()
-        for name in ['project.godot', 'export_presets.cfg', 'data/version.json']:
+        (self.root / 'assets').mkdir()
+        for name in ['project.godot', 'export_presets.cfg', 'data/version.json', 'assets/icon.svg']:
             shutil.copy(ROOT / name, self.root / name)
         self.metadata = validate(self.root)
 
@@ -46,11 +49,41 @@ class BuildValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'ETC2/ASTC'):
             validate(self.root)
 
+    def test_project_icon_required(self):
+        (self.root / 'assets/icon.svg').unlink()
+        with self.assertRaisesRegex(AssertionError, 'project icon'):
+            validate(self.root)
+
     def test_export_preset_version_must_match(self):
         path = self.root / 'export_presets.cfg'
         path.write_text(path.read_text().replace('version/code=20000', 'version/code=20001', 1))
         with self.assertRaisesRegex(AssertionError, 'Preset version'):
             validate(self.root)
+
+    def test_sdk_view_pins_build_tools(self):
+        sdk = self.root / 'source-sdk'
+        java = self.root / 'java'
+        envfile = self.root / 'github-env'
+        for directory in ['build-tools/35.0.1', 'build-tools/36.0.0', 'platform-tools', 'platforms', 'cmdline-tools/latest/bin', 'licenses']:
+            (sdk / directory).mkdir(parents=True, exist_ok=True)
+        (java / 'bin').mkdir(parents=True)
+        scripts = {
+            java / 'bin/java': '#!/bin/sh\necho \'openjdk version "17.0.20"\' >&2\n',
+            sdk / 'cmdline-tools/latest/bin/sdkmanager': '#!/bin/sh\nexit 0\n',
+        }
+        for tool in ['aapt', 'apksigner', 'zipalign']:
+            scripts[sdk / 'build-tools/35.0.1' / tool] = '#!/bin/sh\nexit 0\n'
+        for path, content in scripts.items():
+            path.write_text(content)
+            path.chmod(0o755)
+        env = {**os.environ, 'JAVA_HOME': str(java), 'ANDROID_HOME': str(sdk), 'RUNNER_TEMP': str(self.root), 'XDG_CONFIG_HOME': str(self.root / 'config'), 'GITHUB_ENV': str(envfile)}
+        subprocess.run(['bash', str(ROOT / 'tools/build/setup_android.sh')], env=env, check=True, capture_output=True)
+        values = dict(line.split('=', 1) for line in envfile.read_text().splitlines())
+        facade = Path(values['ANDROID_HOME'])
+        self.assertEqual([path.name for path in (facade / 'build-tools').iterdir()], ['35.0.1'])
+        self.assertEqual(values['ANDROID_HOME'], values['ANDROID_SDK_ROOT'])
+        self.assertIn(str(facade), (self.root / 'config/godot/editor_settings-4.6.tres').read_text())
+        self.assertTrue((sdk / 'build-tools/36.0.0').is_dir())
 
     def test_apk_valid_and_rejection_fixtures(self):
         fingerprint = 'a' * 64

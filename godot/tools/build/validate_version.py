@@ -23,6 +23,8 @@ def validate(root=ROOT, tag=None):
     project = configparser.ConfigParser(interpolation=None, strict=False)
     project.read_string('[godot]\n' + (root / 'project.godot').read_text())
     assert project.get('rendering', 'textures/vram_compression/import_etc2_astc', fallback='false') == 'true', 'Android export requires ETC2/ASTC texture imports on Linux'
+    icon = json.loads(project.get('application', 'config/icon', fallback='""'))
+    assert icon.startswith('res://') and (root / icon.removeprefix('res://')).is_file(), 'A valid project icon is required for Android export'
     cfg = configparser.ConfigParser(interpolation=None)
     cfg.read(root / 'export_presets.cfg')
     for i, label, package in [(0, 'Android Debug', 'org.catfish872.voidrift.debug'), (1, 'Android Release', 'org.catfish872.voidrift')]:

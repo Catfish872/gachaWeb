@@ -12,6 +12,15 @@ MANAGER="$SDK/cmdline-tools/latest/bin/sdkmanager"
 for tool in aapt apksigner zipalign; do
   [[ -x "$SDK/build-tools/35.0.1/$tool" ]] || { echo "Missing Android tool: $tool" >&2; exit 1; }
 done
+# Godot prefers build-tools matching target SDK, even when another version was
+# installed explicitly. Expose only our pinned build-tools in a fresh SDK view.
+SOURCE_SDK="$SDK"
+SDK=$(mktemp -d "${RUNNER_TEMP:-${TMPDIR:-/tmp}}/voidrift-android-sdk.XXXXXX")
+mkdir -p "$SDK/build-tools"
+ln -s "$SOURCE_SDK/build-tools/35.0.1" "$SDK/build-tools/35.0.1"
+for directory in platform-tools platforms cmdline-tools licenses; do
+  ln -s "$SOURCE_SDK/$directory" "$SDK/$directory"
+done
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/godot"
 mkdir -p "$CONFIG"
 python3 - "$CONFIG/editor_settings-4.6.tres" "$SDK" "$JAVA_HOME" <<'PY'
@@ -22,4 +31,4 @@ path.write_text('[gd_resource type="EditorSettings" format=3]\n\n[resource]\n' +
     'export/android/android_sdk_path = ' + json.dumps(sys.argv[2]) + '\n' +
     'export/android/java_sdk_path = ' + json.dumps(sys.argv[3]) + '\n')
 PY
-if [[ -n "${GITHUB_ENV:-}" ]]; then printf 'ANDROID_HOME=%s\n' "$SDK" >> "$GITHUB_ENV"; fi
+if [[ -n "${GITHUB_ENV:-}" ]]; then printf 'ANDROID_HOME=%s\nANDROID_SDK_ROOT=%s\n' "$SDK" "$SDK" >> "$GITHUB_ENV"; fi
