@@ -1,0 +1,140 @@
+{
+  "version": 3,
+  "createdAt": 1792125166160,
+  "lastSaved": 1792125166161,
+  "resources": {
+    "diamonds": 4321,
+    "gold": 123376,
+    "stamina": 100,
+    "staminaLastUpdate": 1792125166160
+  },
+  "ownedCharacters": {
+    "ember": {
+      "level": 1,
+      "exp": 0,
+      "shards": 3,
+      "constellation": 0,
+      "awakening": 0,
+      "equippedRelics": {}
+    },
+    "zeph": {
+      "level": 1,
+      "exp": 0,
+      "shards": 1,
+      "constellation": 0,
+      "awakening": 0,
+      "equippedRelics": {}
+    },
+    "kaldi": {
+      "level": 7,
+      "exp": 80,
+      "shards": 50,
+      "constellation": 3,
+      "awakening": 0,
+      "equippedRelics": {
+        "helmet": "17921251661606e1zp"
+      }
+    }
+  },
+  "relics": [
+    {
+      "uid": "17921251661606e1zp",
+      "slotId": "helmet",
+      "rarity": 5,
+      "level": 1,
+      "mainStat": {
+        "stat": "hp_flat",
+        "name": "HP",
+        "base": 500,
+        "perLevel": 80
+      },
+      "subStats": [
+        {
+          "stat": "cri_rate",
+          "name": "暴击率",
+          "value": 0.032
+        },
+        {
+          "stat": "def_flat",
+          "name": "DEF",
+          "value": 28
+        },
+        {
+          "stat": "atk_flat",
+          "name": "ATK",
+          "value": 16
+        },
+        {
+          "stat": "cri_dmg",
+          "name": "爆伤",
+          "value": 0.043
+        }
+      ],
+      "equippedBy": "kaldi"
+    }
+  ],
+  "team": [
+    "kaldi",
+    "ember",
+    "zeph"
+  ],
+  "stageProgress": {
+    "ch1_1": {
+      "cleared": true,
+      "stars": 3,
+      "bestTurns": 6
+    }
+  },
+  "pityCounters": {
+    "standard": {
+      "count": 0,
+      "count4": 0,
+      "guaranteedFeatured": false
+    },
+    "limited_kaldi": {
+      "count": 0,
+      "count4": 0,
+      "guaranteedFeatured": false
+    }
+  },
+  "dailyMissions": {
+    "lastReset": 0,
+    "completed": []
+  },
+  "stats": {
+    "totalPulls": 0,
+    "totalBattles": 0,
+    "totalVictories": 0,
+    "totalGoldSpent": 0
+  },
+  "dialogueSeen": {
+    "ch1_1_pre": true
+  },
+  "chapterGiftClaimed": {
+    "ch1": {
+      "claimed": true,
+      "charId": "kaldi",
+      "date": 1792125166160
+    }
+  },
+  "abyss": {
+    "currentFloor": 1,
+    "maxFloor": 0,
+    "savedPartyState": null,
+    "lastFreeResetTime": 0,
+    "rogue": {
+      "runId": null,
+      "selectedRewards": [],
+      "pendingChoices": [],
+      "nextStep": {
+        "type": "none",
+        "floor": 0
+      },
+      "characterFocus": {},
+      "eligibleCharacters": [],
+      "temporaryCurrency": 0,
+      "eventHistory": [],
+      "shopStock": []
+    }
+  }
+}

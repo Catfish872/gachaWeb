@@ -1,0 +1,1809 @@
+{
+	"errors": [],
+	"method": "Real public Model/BattleModel run loop. Initial save fixtures C0, no meta upgrades. All starts use seeded random encounters and offered rewards. HP, energy, cooldowns and XP carry between fights. Policy prioritizes survival, enters rest/shop routes, buys heal then preferred blessings; equipped fixture has five randomly generated 4-star +10 relics per hero. Other fixtures do not equip drops. Difficulty3 unlock is a starting-save fixture.",
+	"profiles": [
+		{
+			"difficulty": 0,
+			"gear": false,
+			"id": "starter_lv1",
+			"level": 1,
+			"style": "balanced",
+			"team": [
+				"ember",
+				"zeph"
+			]
+		},
+		{
+			"difficulty": 0,
+			"gear": false,
+			"id": "starter_lv5",
+			"level": 5,
+			"style": "balanced",
+			"team": [
+				"ember",
+				"zeph"
+			]
+		},
+		{
+			"difficulty": 0,
+			"gear": false,
+			"id": "three_star_lv1",
+			"level": 1,
+			"style": "shield",
+			"team": [
+				"ember",
+				"tide",
+				"bolt"
+			]
+		},
+		{
+			"difficulty": 0,
+			"gear": false,
+			"id": "balanced_lv1",
+			"level": 1,
+			"style": "balanced",
+			"team": [
+				"kaldi",
+				"ayla",
+				"gus"
+			]
+		},
+		{
+			"difficulty": 3,
+			"gear": false,
+			"id": "rank3_offense_lv10",
+			"level": 10,
+			"style": "balanced",
+			"team": [
+				"kaldi",
+				"cinder",
+				"gus"
+			]
+		},
+		{
+			"difficulty": 3,
+			"gear": false,
+			"id": "rank3_shield_lv10",
+			"level": 10,
+			"style": "shield",
+			"team": [
+				"ember",
+				"tide",
+				"bolt"
+			]
+		},
+		{
+			"difficulty": 3,
+			"gear": false,
+			"id": "rank3_shana_lv10",
+			"level": 10,
+			"style": "balanced",
+			"team": [
+				"kaldi",
+				"shana",
+				"gus"
+			]
+		},
+		{
+			"difficulty": 3,
+			"gear": true,
+			"id": "rank3_equipped_lv10",
+			"level": 10,
+			"style": "balanced",
+			"team": [
+				"kaldi",
+				"ayla",
+				"gus"
+			]
+		}
+	],
+	"rows": [
+		{
+			"actions": 246,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 83,
+			"safetyEnds": 0,
+			"seed": 720000
+		},
+		{
+			"actions": 250,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 86,
+			"safetyEnds": 0,
+			"seed": 720001
+		},
+		{
+			"actions": 275,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 90,
+			"safetyEnds": 0,
+			"seed": 720002
+		},
+		{
+			"actions": 268,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 93,
+			"safetyEnds": 0,
+			"seed": 720003
+		},
+		{
+			"actions": 212,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 76,
+			"safetyEnds": 0,
+			"seed": 720004
+		},
+		{
+			"actions": 249,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 84,
+			"safetyEnds": 0,
+			"seed": 720005
+		},
+		{
+			"actions": 135,
+			"battles": 11,
+			"blessings": 7,
+			"finalLevels": {
+				"ember": 3,
+				"zeph": 3
+			},
+			"finished": true,
+			"floorsCleared": 10,
+			"metaEarned": 48,
+			"outcome": "defeat",
+			"profile": "starter_lv1",
+			"rounds": 47,
+			"safetyEnds": 0,
+			"seed": 720006
+		},
+		{
+			"actions": 136,
+			"battles": 10,
+			"blessings": 6,
+			"finalLevels": {
+				"ember": 3,
+				"zeph": 3
+			},
+			"finished": true,
+			"floorsCleared": 9,
+			"metaEarned": 35,
+			"outcome": "defeat",
+			"profile": "starter_lv1",
+			"rounds": 48,
+			"safetyEnds": 0,
+			"seed": 720007
+		},
+		{
+			"actions": 257,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 90,
+			"safetyEnds": 0,
+			"seed": 720008
+		},
+		{
+			"actions": 298,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 99,
+			"safetyEnds": 0,
+			"seed": 720009
+		},
+		{
+			"actions": 288,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 96,
+			"safetyEnds": 0,
+			"seed": 720010
+		},
+		{
+			"actions": 232,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 5,
+				"zeph": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv1",
+			"rounds": 79,
+			"safetyEnds": 0,
+			"seed": 720011
+		},
+		{
+			"actions": 172,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 64,
+			"safetyEnds": 0,
+			"seed": 720000
+		},
+		{
+			"actions": 175,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 64,
+			"safetyEnds": 0,
+			"seed": 720001
+		},
+		{
+			"actions": 226,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 78,
+			"safetyEnds": 0,
+			"seed": 720002
+		},
+		{
+			"actions": 211,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 75,
+			"safetyEnds": 0,
+			"seed": 720003
+		},
+		{
+			"actions": 173,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 63,
+			"safetyEnds": 0,
+			"seed": 720004
+		},
+		{
+			"actions": 172,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 61,
+			"safetyEnds": 0,
+			"seed": 720005
+		},
+		{
+			"actions": 203,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 69,
+			"safetyEnds": 0,
+			"seed": 720006
+		},
+		{
+			"actions": 222,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 79,
+			"safetyEnds": 0,
+			"seed": 720007
+		},
+		{
+			"actions": 203,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 70,
+			"safetyEnds": 0,
+			"seed": 720008
+		},
+		{
+			"actions": 214,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 74,
+			"safetyEnds": 0,
+			"seed": 720009
+		},
+		{
+			"actions": 214,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 74,
+			"safetyEnds": 0,
+			"seed": 720010
+		},
+		{
+			"actions": 163,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ember": 6,
+				"zeph": 6
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "starter_lv5",
+			"rounds": 59,
+			"safetyEnds": 0,
+			"seed": 720011
+		},
+		{
+			"actions": 264,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 73,
+			"safetyEnds": 0,
+			"seed": 720000
+		},
+		{
+			"actions": 281,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 75,
+			"safetyEnds": 0,
+			"seed": 720001
+		},
+		{
+			"actions": 255,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 67,
+			"safetyEnds": 0,
+			"seed": 720002
+		},
+		{
+			"actions": 304,
+			"battles": 20,
+			"blessings": 15,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 77,
+			"safetyEnds": 0,
+			"seed": 720003
+		},
+		{
+			"actions": 268,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 71,
+			"safetyEnds": 0,
+			"seed": 720004
+		},
+		{
+			"actions": 330,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 85,
+			"safetyEnds": 0,
+			"seed": 720005
+		},
+		{
+			"actions": 281,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 73,
+			"safetyEnds": 0,
+			"seed": 720006
+		},
+		{
+			"actions": 318,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 84,
+			"safetyEnds": 0,
+			"seed": 720007
+		},
+		{
+			"actions": 284,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 74,
+			"safetyEnds": 0,
+			"seed": 720008
+		},
+		{
+			"actions": 370,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 95,
+			"safetyEnds": 0,
+			"seed": 720009
+		},
+		{
+			"actions": 337,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 87,
+			"safetyEnds": 0,
+			"seed": 720010
+		},
+		{
+			"actions": 295,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 5,
+				"ember": 5,
+				"tide": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "three_star_lv1",
+			"rounds": 78,
+			"safetyEnds": 0,
+			"seed": 720011
+		},
+		{
+			"actions": 191,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 52,
+			"safetyEnds": 0,
+			"seed": 720000
+		},
+		{
+			"actions": 161,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 48,
+			"safetyEnds": 0,
+			"seed": 720001
+		},
+		{
+			"actions": 172,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 49,
+			"safetyEnds": 0,
+			"seed": 720002
+		},
+		{
+			"actions": 203,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 57,
+			"safetyEnds": 0,
+			"seed": 720003
+		},
+		{
+			"actions": 190,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 53,
+			"safetyEnds": 0,
+			"seed": 720004
+		},
+		{
+			"actions": 196,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 57,
+			"safetyEnds": 0,
+			"seed": 720005
+		},
+		{
+			"actions": 185,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 49,
+			"safetyEnds": 0,
+			"seed": 720006
+		},
+		{
+			"actions": 214,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 59,
+			"safetyEnds": 0,
+			"seed": 720007
+		},
+		{
+			"actions": 160,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 47,
+			"safetyEnds": 0,
+			"seed": 720008
+		},
+		{
+			"actions": 229,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 62,
+			"safetyEnds": 0,
+			"seed": 720009
+		},
+		{
+			"actions": 230,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 62,
+			"safetyEnds": 0,
+			"seed": 720010
+		},
+		{
+			"actions": 172,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 5,
+				"gus": 5,
+				"kaldi": 5
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 141,
+			"outcome": "victory",
+			"profile": "balanced_lv1",
+			"rounds": 47,
+			"safetyEnds": 0,
+			"seed": 720011
+		},
+		{
+			"actions": 113,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 36,
+			"safetyEnds": 0,
+			"seed": 720000
+		},
+		{
+			"actions": 79,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 29,
+			"safetyEnds": 0,
+			"seed": 720001
+		},
+		{
+			"actions": 80,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 28,
+			"safetyEnds": 0,
+			"seed": 720002
+		},
+		{
+			"actions": 108,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 36,
+			"safetyEnds": 0,
+			"seed": 720003
+		},
+		{
+			"actions": 102,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 35,
+			"safetyEnds": 0,
+			"seed": 720004
+		},
+		{
+			"actions": 105,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 35,
+			"safetyEnds": 0,
+			"seed": 720005
+		},
+		{
+			"actions": 103,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 34,
+			"safetyEnds": 0,
+			"seed": 720006
+		},
+		{
+			"actions": 112,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 34,
+			"safetyEnds": 0,
+			"seed": 720007
+		},
+		{
+			"actions": 90,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 30,
+			"safetyEnds": 0,
+			"seed": 720008
+		},
+		{
+			"actions": 127,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 40,
+			"safetyEnds": 0,
+			"seed": 720009
+		},
+		{
+			"actions": 113,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 37,
+			"safetyEnds": 0,
+			"seed": 720010
+		},
+		{
+			"actions": 113,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"cinder": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_offense_lv10",
+			"rounds": 35,
+			"safetyEnds": 0,
+			"seed": 720011
+		},
+		{
+			"actions": 166,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 52,
+			"safetyEnds": 0,
+			"seed": 720000
+		},
+		{
+			"actions": 202,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 58,
+			"safetyEnds": 0,
+			"seed": 720001
+		},
+		{
+			"actions": 187,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 53,
+			"safetyEnds": 0,
+			"seed": 720002
+		},
+		{
+			"actions": 228,
+			"battles": 20,
+			"blessings": 15,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 64,
+			"safetyEnds": 0,
+			"seed": 720003
+		},
+		{
+			"actions": 176,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 52,
+			"safetyEnds": 0,
+			"seed": 720004
+		},
+		{
+			"actions": 245,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 67,
+			"safetyEnds": 0,
+			"seed": 720005
+		},
+		{
+			"actions": 197,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 57,
+			"safetyEnds": 0,
+			"seed": 720006
+		},
+		{
+			"actions": 215,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 60,
+			"safetyEnds": 0,
+			"seed": 720007
+		},
+		{
+			"actions": 193,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 56,
+			"safetyEnds": 0,
+			"seed": 720008
+		},
+		{
+			"actions": 232,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 66,
+			"safetyEnds": 0,
+			"seed": 720009
+		},
+		{
+			"actions": 246,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 67,
+			"safetyEnds": 0,
+			"seed": 720010
+		},
+		{
+			"actions": 213,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"bolt": 10,
+				"ember": 10,
+				"tide": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shield_lv10",
+			"rounds": 61,
+			"safetyEnds": 0,
+			"seed": 720011
+		},
+		{
+			"actions": 166,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 47,
+			"safetyEnds": 0,
+			"seed": 720000
+		},
+		{
+			"actions": 110,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 34,
+			"safetyEnds": 0,
+			"seed": 720001
+		},
+		{
+			"actions": 143,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 43,
+			"safetyEnds": 0,
+			"seed": 720002
+		},
+		{
+			"actions": 155,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 45,
+			"safetyEnds": 0,
+			"seed": 720003
+		},
+		{
+			"actions": 147,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 43,
+			"safetyEnds": 0,
+			"seed": 720004
+		},
+		{
+			"actions": 153,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 45,
+			"safetyEnds": 0,
+			"seed": 720005
+		},
+		{
+			"actions": 139,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 44,
+			"safetyEnds": 0,
+			"seed": 720006
+		},
+		{
+			"actions": 151,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 44,
+			"safetyEnds": 0,
+			"seed": 720007
+		},
+		{
+			"actions": 131,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 39,
+			"safetyEnds": 0,
+			"seed": 720008
+		},
+		{
+			"actions": 184,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 53,
+			"safetyEnds": 0,
+			"seed": 720009
+		},
+		{
+			"actions": 139,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 40,
+			"safetyEnds": 0,
+			"seed": 720010
+		},
+		{
+			"actions": 126,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"gus": 10,
+				"kaldi": 10,
+				"shana": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_shana_lv10",
+			"rounds": 38,
+			"safetyEnds": 0,
+			"seed": 720011
+		},
+		{
+			"actions": 53,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 24,
+			"safetyEnds": 0,
+			"seed": 720000
+		},
+		{
+			"actions": 53,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 24,
+			"safetyEnds": 0,
+			"seed": 720001
+		},
+		{
+			"actions": 51,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 23,
+			"safetyEnds": 0,
+			"seed": 720002
+		},
+		{
+			"actions": 92,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 30,
+			"safetyEnds": 0,
+			"seed": 720003
+		},
+		{
+			"actions": 78,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 28,
+			"safetyEnds": 0,
+			"seed": 720004
+		},
+		{
+			"actions": 62,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 24,
+			"safetyEnds": 0,
+			"seed": 720005
+		},
+		{
+			"actions": 61,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 23,
+			"safetyEnds": 0,
+			"seed": 720006
+		},
+		{
+			"actions": 74,
+			"battles": 20,
+			"blessings": 14,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 26,
+			"safetyEnds": 0,
+			"seed": 720007
+		},
+		{
+			"actions": 108,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 33,
+			"safetyEnds": 0,
+			"seed": 720008
+		},
+		{
+			"actions": 75,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 25,
+			"safetyEnds": 0,
+			"seed": 720009
+		},
+		{
+			"actions": 86,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 30,
+			"safetyEnds": 0,
+			"seed": 720010
+		},
+		{
+			"actions": 73,
+			"battles": 20,
+			"blessings": 13,
+			"finalLevels": {
+				"ayla": 10,
+				"gus": 10,
+				"kaldi": 10
+			},
+			"finished": true,
+			"floorsCleared": 20,
+			"metaEarned": 238,
+			"outcome": "victory",
+			"profile": "rank3_equipped_lv10",
+			"rounds": 26,
+			"safetyEnds": 0,
+			"seed": 720011
+		}
+	],
+	"samplesPerProfile": 12,
+	"totalBattles": 1901,
+	"totalRuns": 96
+}

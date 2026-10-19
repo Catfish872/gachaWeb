@@ -1,0 +1,335 @@
+{
+  "runLength": 20,
+  "rewardFloors": [
+    1,
+    3,
+    6,
+    9,
+    10,
+    13,
+    16,
+    19
+  ],
+  "shopFloors": [
+    5,
+    15
+  ],
+  "restFloors": [
+    8,
+    18
+  ],
+  "metaUpgrades": [
+    {
+      "id": "vitality",
+      "name": "远征体魄",
+      "description": "每级使深渊全队最大生命提高 4%，最多提高 20%。",
+      "maxLevel": 5,
+      "costs": [
+        12,
+        20,
+        30,
+        45,
+        65
+      ]
+    },
+    {
+      "id": "offense",
+      "name": "战术传承",
+      "description": "每级使深渊全队攻击提高 3%，最多提高 15%。",
+      "maxLevel": 5,
+      "costs": [
+        12,
+        20,
+        30,
+        45,
+        65
+      ]
+    },
+    {
+      "id": "recovery",
+      "name": "野外医术",
+      "description": "每级在深渊胜利后为存活角色恢复 1.5% 最大生命，最多恢复 6%。",
+      "maxLevel": 4,
+      "costs": [
+        15,
+        25,
+        40,
+        60
+      ]
+    },
+    {
+      "id": "supply",
+      "name": "行前补给",
+      "description": "每级在新远征开始时增加 15 枚裂隙币，最多增加 45 枚。",
+      "maxLevel": 3,
+      "costs": [
+        10,
+        20,
+        35
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "blood_altar",
+      "title": "赤红祭坛",
+      "description": "祭坛会用生命换取力量。你能准确看见代价。",
+      "options": [
+        {
+          "id": "sacrifice",
+          "label": "献出生命",
+          "description": "全队每人消耗 20% 最大生命，获得 1 个随机蓝色祝福；每位角色须能承受代价。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "全队消耗 20% 最大生命",
+          "reward": "随机蓝色祝福",
+          "effect": {
+            "hpCost": 0.2,
+            "blessing": "blue"
+          }
+        },
+        {
+          "id": "offering",
+          "label": "投币祈愿",
+          "description": "支付 45 裂隙币，获得 1 个随机蓝色祝福。",
+          "cost": 45,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "随机蓝色祝福",
+          "effect": {
+            "blessing": "blue"
+          }
+        },
+        {
+          "id": "leave",
+          "label": "采集余烬",
+          "description": "收集散落的能量，获得 12 裂隙币。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "12 裂隙币",
+          "effect": {
+            "coins": 12
+          }
+        }
+      ]
+    },
+    {
+      "id": "lost_caravan",
+      "title": "迷失商队",
+      "description": "被困的商人愿意用补给交换你的援手。",
+      "options": [
+        {
+          "id": "escort",
+          "label": "护送商队",
+          "description": "支付 20 裂隙币补充物资，获得 8 记忆碎片。碎片立即保留。",
+          "cost": 20,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "8 永久记忆碎片",
+          "effect": {
+            "meta": 8
+          }
+        },
+        {
+          "id": "salvage",
+          "label": "抢救货物",
+          "description": "每位角色消耗 12% 最大生命，获得 75 裂隙币。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "全队消耗 12% 最大生命",
+          "reward": "75 裂隙币",
+          "effect": {
+            "hpCost": 0.12,
+            "coins": 75
+          }
+        },
+        {
+          "id": "share",
+          "label": "分享补给",
+          "description": "免费让存活角色恢复 15% 最大生命。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "恢复 15% 生命",
+          "effect": {
+            "heal": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "id": "rift_well",
+      "title": "回声之井",
+      "description": "井中回声带来两种可能；投币前即可看见概率。",
+      "options": [
+        {
+          "id": "gamble",
+          "label": "投入赌注",
+          "description": "支付 35 裂隙币：60% 获得 95 裂隙币，40% 获得 10 裂隙币。",
+          "cost": 35,
+          "currency": "runCoins",
+          "risk": "40% 概率只返还 10 币",
+          "reward": "60% 概率获得 95 币",
+          "effect": {
+            "gamble": true
+          }
+        },
+        {
+          "id": "listen",
+          "label": "静心聆听",
+          "description": "存活角色获得 25 点能量，技能冷却减少 1 回合。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "25 能量，冷却减少 1",
+          "effect": {
+            "energy": 25,
+            "cooldown": 1
+          }
+        },
+        {
+          "id": "study",
+          "label": "记录回声",
+          "description": "获得 3 记忆碎片。碎片立即保留。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "3 永久记忆碎片",
+          "effect": {
+            "meta": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "abandoned_cache",
+      "title": "遗弃的补给箱",
+      "description": "箱中剩下的资源只够选择一种用途。",
+      "options": [
+        {
+          "id": "supplies",
+          "label": "收取货币",
+          "description": "获得 50 裂隙币。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "50 裂隙币",
+          "effect": {
+            "coins": 50
+          }
+        },
+        {
+          "id": "medicine",
+          "label": "取出药剂",
+          "description": "全队恢复 25% 最大生命；倒下角色以 25% 生命复苏。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "全队恢复 / 复苏 25%",
+          "effect": {
+            "heal": 0.25,
+            "revive": true
+          }
+        },
+        {
+          "id": "research",
+          "label": "保留记录",
+          "description": "获得 5 记忆碎片。碎片立即保留。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "5 永久记忆碎片",
+          "effect": {
+            "meta": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "ancient_forge",
+      "title": "古代锻炉",
+      "description": "炉火依然旺盛，一份资源只能完成一次锻造。",
+      "options": [
+        {
+          "id": "forge",
+          "label": "锻造蓝色祝福",
+          "description": "支付 55 裂隙币，获得 1 个随机蓝色祝福。",
+          "cost": 55,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "随机蓝色祝福",
+          "effect": {
+            "blessing": "blue"
+          }
+        },
+        {
+          "id": "overload",
+          "label": "过载锻造",
+          "description": "全队消耗 25% 最大生命并支付 45 裂隙币，获得 1 个随机金色祝福。",
+          "cost": 45,
+          "currency": "runCoins",
+          "risk": "全队消耗 25% 最大生命",
+          "reward": "随机金色祝福",
+          "effect": {
+            "hpCost": 0.25,
+            "blessing": "gold"
+          }
+        },
+        {
+          "id": "collect",
+          "label": "收取燃料",
+          "description": "获得 20 裂隙币。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "20 裂隙币",
+          "effect": {
+            "coins": 20
+          }
+        }
+      ]
+    }
+  ],
+  "restOptions": [
+    {
+      "id": "recover",
+      "label": "包扎伤口",
+      "description": "全队恢复 35% 最大生命；倒下角色以 35% 生命复苏。",
+      "cost": 0,
+      "currency": "runCoins",
+      "risk": "",
+      "reward": "全队恢复 / 复苏 35%",
+      "effect": {
+        "heal": 0.35,
+        "revive": true
+      }
+    },
+    {
+      "id": "meditate",
+      "label": "集中精神",
+      "description": "全队获得 40 点能量，清空技能冷却。存活角色恢复 10% 最大生命。",
+      "cost": 0,
+      "currency": "runCoins",
+      "risk": "",
+      "reward": "40 能量，清空冷却，恢复 10%",
+      "effect": {
+        "energy": 40,
+        "cooldown": 99,
+        "heal": 0.1
+      }
+    },
+    {
+      "id": "scavenge",
+      "label": "探索营地",
+      "description": "获得 45 裂隙币。",
+      "cost": 0,
+      "currency": "runCoins",
+      "risk": "",
+      "reward": "45 裂隙币",
+      "effect": {
+        "coins": 45
+      }
+    }
+  ]
+}

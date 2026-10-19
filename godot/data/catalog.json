@@ -1,0 +1,3819 @@
+{
+  "AbyssData": {
+    "resetDiamondCost": 100,
+    "dailyFreeResets": 1,
+    "rewards": {
+      "gold": [
+        150,
+        300
+      ],
+      "exp": 200,
+      "relicRarity": [
+        4,
+        5
+      ]
+    },
+    "pools": {
+      "normal": [
+        "wolf",
+        "goblin",
+        "fire_imp",
+        "ice_wolf",
+        "dark_knight"
+      ],
+      "elite": [
+        "stone_golem",
+        "thunder_hawk"
+      ],
+      "boss": [
+        "boss_flame_lord",
+        "boss_storm_witch"
+      ]
+    },
+    "rogue": {
+      "rewardFloorsInCycle": [
+        3,
+        6,
+        9
+      ],
+      "focusMin": 0.15,
+      "focusMax": 0.45,
+      "focusGainOnPick": 0.1,
+      "rarityWeights": {
+        "white": 62,
+        "blue": 30,
+        "gold": 8
+      },
+      "rarityMeta": {
+        "white": {
+          "label": "白",
+          "color": "#e5e7eb",
+          "icon": "◇"
+        },
+        "blue": {
+          "label": "蓝",
+          "color": "#60a5fa",
+          "icon": "◆"
+        },
+        "gold": {
+          "label": "金",
+          "color": "#fbbf24",
+          "icon": "✦"
+        }
+      },
+      "rewards": [
+        {
+          "id": "common_atk_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "磨砺锋刃",
+          "icon": "⚔️",
+          "target": "全队",
+          "description": "本局深渊中，全队攻击力提高 8%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atkMult",
+              "value": 0.08
+            }
+          ]
+        },
+        {
+          "id": "common_hp_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "坚韧体魄",
+          "icon": "❤️",
+          "target": "全队",
+          "description": "本局深渊中，全队最大生命提高 10%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "maxHpMult",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "common_def_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "临战护甲",
+          "icon": "🛡️",
+          "target": "全队",
+          "description": "本局深渊中，全队防御力提高 10%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "defMult",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "common_energy_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "微光回路",
+          "icon": "🔋",
+          "target": "全队",
+          "description": "本局深渊中，非终结技获得的能量提高 15%。",
+          "effects": [
+            {
+              "type": "energyGainMult",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "id": "common_crit_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "精准校准",
+          "icon": "🎯",
+          "target": "全队",
+          "description": "本局深渊中，全队暴击率提高 8%，暴击伤害提高 15%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "criAdd",
+              "value": 0.08
+            },
+            {
+              "type": "stat",
+              "stat": "criDmgAdd",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "id": "common_open_shield_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "位面护膜",
+          "icon": "🛡️",
+          "target": "全队",
+          "description": "每场深渊战斗开始时，全队获得 2 回合护盾。",
+          "effects": [
+            {
+              "type": "battleStartStatus",
+              "statusId": "shield",
+              "duration": 2,
+              "value": 0.22
+            }
+          ]
+        },
+        {
+          "id": "common_victory_heal_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "战后整备",
+          "icon": "🏕️",
+          "target": "全队",
+          "description": "每次深渊胜利后，存活角色恢复 18% 最大生命。",
+          "effects": [
+            {
+              "type": "victoryHealPct",
+              "value": 0.18
+            }
+          ]
+        },
+        {
+          "id": "common_open_energy_gold",
+          "pool": "common",
+          "rarity": "gold",
+          "name": "星核预热",
+          "icon": "🌟",
+          "target": "全队",
+          "description": "每场深渊战斗开始时，全队获得 35 点能量。",
+          "effects": [
+            {
+              "type": "battleStartEnergy",
+              "value": 35
+            }
+          ]
+        },
+        {
+          "id": "common_guard_gold",
+          "pool": "common",
+          "rarity": "gold",
+          "name": "裂隙庇护",
+          "icon": "💠",
+          "target": "全队",
+          "description": "本局深渊中，全队受到的直接伤害降低 10%。",
+          "effects": [
+            {
+              "type": "damageTakenMult",
+              "value": -0.1
+            }
+          ]
+        },
+        {
+          "id": "common_overdrive_gold",
+          "pool": "common",
+          "rarity": "gold",
+          "name": "超频矩阵",
+          "icon": "⚡",
+          "target": "全队",
+          "description": "本局深渊中，全队攻击力提高 18%，速度提高 8%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atkMult",
+              "value": 0.18
+            },
+            {
+              "type": "stat",
+              "stat": "spdMult",
+              "value": 0.08
+            }
+          ]
+        },
+        {
+          "id": "kaldi_burn_amp_white",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "white",
+          "name": "余烬辨识",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队攻击燃烧目标时，造成的直接伤害提高 14%。",
+          "effects": [
+            {
+              "type": "damageVsStatus",
+              "statusId": "burn",
+              "value": 0.14
+            }
+          ]
+        },
+        {
+          "id": "kaldi_burn_spread_blue",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "blue",
+          "name": "龙炎蔓延",
+          "icon": "💥",
+          "target": "燃烧构筑",
+          "description": "全队造成火属性伤害后，有 35% 概率使目标燃烧 2 回合。",
+          "effects": [
+            {
+              "type": "applyStatusAfterDamage",
+              "element": "fire",
+              "statusId": "burn",
+              "duration": 2,
+              "chance": 0.35
+            }
+          ]
+        },
+        {
+          "id": "kaldi_ult_burn_blue",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "blue",
+          "name": "终焰回响",
+          "icon": "🐉",
+          "target": "终结技",
+          "description": "全队终结技伤害提高 18%；若目标燃烧，额外再提高 12%。",
+          "effects": [
+            {
+              "type": "skillTypeDamage",
+              "skillType": "ultimate",
+              "value": 0.18
+            },
+            {
+              "type": "skillTypeDamageVsStatus",
+              "skillType": "ultimate",
+              "statusId": "burn",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "id": "kaldi_burn_execute_gold",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "gold",
+          "name": "不灭炎心",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队命中燃烧目标后，追加一次攻击力 20% 的真实火属性伤害（无视防御）。每次技能每个目标触发一次。",
+          "effects": [
+            {
+              "type": "extraDamageVsStatus",
+              "statusId": "burn",
+              "multiplier": 0.2,
+              "element": "fire",
+              "trueDamage": true
+            }
+          ]
+        },
+        {
+          "id": "kaldi_start_burn_gold",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "gold",
+          "name": "焚界开幕",
+          "icon": "🌋",
+          "target": "开场压制",
+          "description": "每场深渊战斗开始时，所有敌人陷入燃烧 3 回合。",
+          "effects": [
+            {
+              "type": "enemyBattleStartStatus",
+              "statusId": "burn",
+              "duration": 3
+            }
+          ]
+        },
+        {
+          "id": "ayla_heal_amp_white",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "white",
+          "name": "霜语祷文",
+          "icon": "✨",
+          "target": "治疗构筑",
+          "description": "全队造成的治疗量提高 16%。",
+          "effects": [
+            {
+              "type": "healMult",
+              "value": 0.16
+            }
+          ]
+        },
+        {
+          "id": "ayla_regen_guard_blue",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "blue",
+          "name": "极光余辉",
+          "icon": "💚",
+          "target": "再生构筑",
+          "description": "处于再生的我方单位受到的直接伤害降低 15%。",
+          "effects": [
+            {
+              "type": "damageTakenWhileStatus",
+              "statusId": "regen",
+              "value": -0.15
+            }
+          ]
+        },
+        {
+          "id": "ayla_freeze_break_blue",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "blue",
+          "name": "碎冰棱镜",
+          "icon": "❄️",
+          "target": "冻结构筑",
+          "description": "全队攻击冰冻目标时，直接伤害提高 22%。",
+          "effects": [
+            {
+              "type": "damageVsStatus",
+              "statusId": "freeze",
+              "value": 0.22
+            }
+          ]
+        },
+        {
+          "id": "ayla_heal_regen_gold",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "gold",
+          "name": "圣女回声",
+          "icon": "🌌",
+          "target": "治疗构筑",
+          "description": "全队每次治疗后，为治疗目标附加 2 回合再生。",
+          "effects": [
+            {
+              "type": "statusAfterHeal",
+              "statusId": "regen",
+              "duration": 2
+            }
+          ]
+        },
+        {
+          "id": "ayla_open_freeze_gold",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "gold",
+          "name": "永霜帷幕",
+          "icon": "🧊",
+          "target": "控场构筑",
+          "description": "每场深渊战斗开始时，随机 1 名敌人冰冻 1 回合，全队攻击冻结目标时额外获得 15 点能量。",
+          "effects": [
+            {
+              "type": "enemyBattleStartStatus",
+              "statusId": "freeze",
+              "duration": 1,
+              "count": 1
+            },
+            {
+              "type": "energyOnHitStatus",
+              "statusId": "freeze",
+              "value": 15
+            }
+          ]
+        },
+        {
+          "id": "common_vampiric_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "汲取之刃",
+          "icon": "✦",
+          "target": "生命汲取",
+          "description": "全队造成直接伤害时，恢复实际生命伤害的 6%；生命汲取总量上限为 35%。",
+          "effects": [
+            {
+              "type": "lifesteal",
+              "value": 0.06
+            }
+          ]
+        },
+        {
+          "id": "common_shield_edge_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "壁垒反击",
+          "icon": "✦",
+          "target": "护盾构筑",
+          "description": "全队在护盾存在时，造成的直接伤害提高 12%。",
+          "effects": [
+            {
+              "type": "damageWhileShielded",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "id": "common_kill_energy_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "追猎回路",
+          "icon": "✦",
+          "target": "击破构筑",
+          "description": "全队以直接伤害击败敌人时，获得 15 点能量。",
+          "effects": [
+            {
+              "type": "energyOnKill",
+              "value": 15
+            }
+          ]
+        },
+        {
+          "id": "common_execute_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "终末猎手",
+          "icon": "✦",
+          "target": "收割构筑",
+          "description": "全队攻击生命低于或等于 35% 的目标时，直接伤害提高 18%。",
+          "effects": [
+            {
+              "type": "damageVsLowHp",
+              "value": 0.18,
+              "threshold": 0.35
+            }
+          ]
+        },
+        {
+          "id": "common_venom_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "淬毒锋刃",
+          "icon": "✦",
+          "target": "中毒构筑",
+          "description": "全队造成直接伤害后，有 25% 概率使目标中毒 2 回合。中毒最多 5 层，每层每回合造成最大生命 5% 的伤害；深渊首领为 1.5%。",
+          "effects": [
+            {
+              "type": "applyStatusAfterDamage",
+              "statusId": "poison",
+              "chance": 0.25,
+              "duration": 2
+            }
+          ]
+        },
+        {
+          "id": "common_static_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "静电传导",
+          "icon": "✦",
+          "target": "感电构筑",
+          "description": "全队造成直接伤害后，有 25% 概率使目标感电 2 回合。深渊首领受到控制时至多跳过 1 回合，随后获得 1 次行动的控制抗性。",
+          "effects": [
+            {
+              "type": "applyStatusAfterDamage",
+              "statusId": "electrify",
+              "chance": 0.25,
+              "duration": 2
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "CharacterData": {
+    "kaldi": {
+      "id": "kaldi",
+      "name": "焰龙·卡尔迪",
+      "title": "不灭炎焰",
+      "rarity": 5,
+      "element": "fire",
+      "role": "dps",
+      "baseStats": {
+        "hp": 1200,
+        "atk": 185,
+        "def": 75,
+        "spd": 98,
+        "cri": 0.18,
+        "criDmg": 1.65
+      },
+      "growthRate": {
+        "hp": 120,
+        "atk": 9,
+        "def": 4,
+        "spd": 0
+      },
+      "skills": [
+        "kaldi_normal",
+        "kaldi_skill",
+        "kaldi_ult"
+      ],
+      "passiveId": "kaldi_passive",
+      "passiveDesc": "对处于燃烧状态的敌人造成的伤害加深 20%（独立乘区）",
+      "synergyIds": [
+        "fire_duo"
+      ],
+      "description": "来自炎脉山脉的龙裔战士，体内流淌着远古火龙的血脉。",
+      "flavorText": "\"烈焰不灭，我亦永恒。\"",
+      "color": "#ef4444",
+      "colorDark": "#7f1d1d",
+      "image": "assets/characters/kaldi.png"
+    },
+    "ayla": {
+      "id": "ayla",
+      "name": "霜语·艾拉",
+      "title": "冰原圣女",
+      "rarity": 5,
+      "element": "water",
+      "role": "support",
+      "baseStats": {
+        "hp": 1050,
+        "atk": 155,
+        "def": 95,
+        "spd": 106,
+        "cri": 0.12,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 100,
+        "atk": 7,
+        "def": 5,
+        "spd": 0
+      },
+      "skills": [
+        "ayla_normal",
+        "ayla_skill",
+        "ayla_ult"
+      ],
+      "passiveId": "ayla_passive",
+      "passiveDesc": "每回合开始，为生命值最低的队友恢复 ATK×40% 的生命值",
+      "synergyIds": [
+        "water_duo"
+      ],
+      "description": "冰封北境的天才治愈师，以冰霜之力封印伤口、疗愈灵魂。",
+      "flavorText": "\"冰冻，有时是最温柔的救赎。\"",
+      "color": "#3b82f6",
+      "colorDark": "#1e3a8a",
+      "image": "assets/characters/ayla.png"
+    },
+    "gus": {
+      "id": "gus",
+      "name": "雷霆·格斯",
+      "title": "雷暴骑士",
+      "rarity": 4,
+      "element": "thunder",
+      "role": "dps",
+      "baseStats": {
+        "hp": 1000,
+        "atk": 165,
+        "def": 85,
+        "spd": 103,
+        "cri": 0.2,
+        "criDmg": 1.6
+      },
+      "growthRate": {
+        "hp": 95,
+        "atk": 8,
+        "def": 4,
+        "spd": 0
+      },
+      "skills": [
+        "gus_normal",
+        "gus_skill",
+        "gus_ult"
+      ],
+      "passiveId": "gus_passive",
+      "passiveDesc": "暴击攻击额外获得 5 点能量",
+      "synergyIds": [
+        "thunder_duo"
+      ],
+      "description": "驾驭闪电的铁骑勇士，战场上速战速决的先锋。",
+      "flavorText": "\"战斗在雷鸣结束前就应该终止。\"",
+      "color": "#eab308",
+      "colorDark": "#713f12",
+      "image": null
+    },
+    "shana": {
+      "id": "shana",
+      "name": "碧叶·夏娜",
+      "title": "森之守护者",
+      "rarity": 4,
+      "element": "wind",
+      "role": "healer",
+      "baseStats": {
+        "hp": 1100,
+        "atk": 130,
+        "def": 100,
+        "spd": 112,
+        "cri": 0.1,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 105,
+        "atk": 6,
+        "def": 5,
+        "spd": 0
+      },
+      "skills": [
+        "shana_normal",
+        "shana_skill",
+        "shana_ult"
+      ],
+      "passiveId": "shana_passive",
+      "passiveDesc": "每次治愈行动后，为自身恢复治愈量的 15%",
+      "synergyIds": [
+        "wind_duo"
+      ],
+      "description": "精灵森林的祭司，以自然之力抚慰战友的伤痛。",
+      "flavorText": "\"万物皆有愈合之道。\"",
+      "color": "#22c55e",
+      "colorDark": "#14532d",
+      "image": null
+    },
+    "lorin": {
+      "id": "lorin",
+      "name": "铁壁·洛恩",
+      "title": "绝对防线",
+      "rarity": 4,
+      "element": "water",
+      "role": "tank",
+      "baseStats": {
+        "hp": 1500,
+        "atk": 110,
+        "def": 160,
+        "spd": 88,
+        "cri": 0.08,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 150,
+        "atk": 5,
+        "def": 8,
+        "spd": 0
+      },
+      "skills": [
+        "lorin_normal",
+        "lorin_skill",
+        "lorin_ult"
+      ],
+      "passiveId": "lorin_passive",
+      "passiveDesc": "受到伤害时，若 HP > 50%，有 30% 概率格挡（减少 50% 伤害）",
+      "synergyIds": [
+        "water_duo"
+      ],
+      "description": "锻钢般意志的守护骑士，以自身为盾护卫全队。",
+      "flavorText": "\"只要我还站着，你们就倒不下。\"",
+      "color": "#60a5fa",
+      "colorDark": "#1e40af",
+      "image": null
+    },
+    "ember": {
+      "id": "ember",
+      "name": "赤炎·冈",
+      "title": "火蜥蜴战士",
+      "rarity": 3,
+      "element": "fire",
+      "role": "dps",
+      "baseStats": {
+        "hp": 850,
+        "atk": 140,
+        "def": 65,
+        "spd": 95,
+        "cri": 0.15,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 80,
+        "atk": 7,
+        "def": 3,
+        "spd": 0
+      },
+      "skills": [
+        "ember_normal",
+        "ember_skill",
+        "ember_ult"
+      ],
+      "passiveId": "ember_passive",
+      "passiveDesc": "普攻命中时有 25% 概率触发【燃烧】",
+      "synergyIds": [
+        "fire_duo"
+      ],
+      "description": "来自火山脚下的猎人，以速闪突袭著称的刺客。",
+      "flavorText": "\"快准狠，就是我的哲学。\"",
+      "color": "#f87171",
+      "colorDark": "#7f1d1d",
+      "image": null
+    },
+    "zeph": {
+      "id": "zeph",
+      "name": "流风·泽菲",
+      "title": "天际游侠",
+      "rarity": 3,
+      "element": "wind",
+      "role": "support",
+      "baseStats": {
+        "hp": 800,
+        "atk": 120,
+        "def": 70,
+        "spd": 115,
+        "cri": 0.12,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 75,
+        "atk": 6,
+        "def": 3,
+        "spd": 0
+      },
+      "skills": [
+        "zeph_normal",
+        "zeph_skill",
+        "zeph_ult"
+      ],
+      "passiveId": "zeph_passive",
+      "passiveDesc": "自身速度超过场上平均速度时，攻击力 +15%",
+      "synergyIds": [
+        "wind_duo"
+      ],
+      "description": "浪迹天涯的风系游侠，以速度与灵动著称。",
+      "flavorText": "\"风比你先到达终点。\"",
+      "color": "#86efac",
+      "colorDark": "#14532d",
+      "image": null
+    },
+    "bolt": {
+      "id": "bolt",
+      "name": "雷击·博",
+      "title": "电磁弓手",
+      "rarity": 3,
+      "element": "thunder",
+      "role": "dps",
+      "baseStats": {
+        "hp": 780,
+        "atk": 145,
+        "def": 60,
+        "spd": 100,
+        "cri": 0.18,
+        "criDmg": 1.55
+      },
+      "growthRate": {
+        "hp": 73,
+        "atk": 7,
+        "def": 3,
+        "spd": 0
+      },
+      "skills": [
+        "bolt_normal",
+        "bolt_skill",
+        "bolt_ult"
+      ],
+      "passiveId": "bolt_passive",
+      "passiveDesc": "暴击时，对目标施加【感电】状态（持续 1 回合）",
+      "synergyIds": [
+        "thunder_duo"
+      ],
+      "description": "操控闪电箭矢的神射手，精准与爆发并存。",
+      "flavorText": "\"我的箭，永远跟着电流走。\"",
+      "color": "#fde047",
+      "colorDark": "#713f12",
+      "image": null
+    },
+    "tide": {
+      "id": "tide",
+      "name": "水流·塔德",
+      "title": "潮汐守卫",
+      "rarity": 3,
+      "element": "water",
+      "role": "tank",
+      "baseStats": {
+        "hp": 1100,
+        "atk": 100,
+        "def": 130,
+        "spd": 85,
+        "cri": 0.08,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 105,
+        "atk": 5,
+        "def": 6,
+        "spd": 0
+      },
+      "skills": [
+        "tide_normal",
+        "tide_skill",
+        "tide_ult"
+      ],
+      "passiveId": "tide_passive",
+      "passiveDesc": "每回合结束时，自身回复最大 HP 的 3%",
+      "synergyIds": [
+        "water_duo"
+      ],
+      "description": "海神庙的虔诚守卫，以海浪般的韧性承受一切冲击。",
+      "flavorText": "\"浪来了，就接着。\"",
+      "color": "#93c5fd",
+      "colorDark": "#1e3a8a",
+      "image": null
+    },
+    "cinder": {
+      "id": "cinder",
+      "name": "炎息·辛德",
+      "title": "余烬法师",
+      "rarity": 3,
+      "element": "fire",
+      "role": "dps",
+      "baseStats": {
+        "hp": 820,
+        "atk": 150,
+        "def": 55,
+        "spd": 92,
+        "cri": 0.14,
+        "criDmg": 1.6
+      },
+      "growthRate": {
+        "hp": 77,
+        "atk": 8,
+        "def": 3,
+        "spd": 0
+      },
+      "skills": [
+        "cinder_normal",
+        "cinder_skill",
+        "cinder_ult"
+      ],
+      "passiveId": "cinder_passive",
+      "passiveDesc": "技能命中已【燃烧】目标时，额外造成 40% 伤害",
+      "synergyIds": [
+        "fire_duo"
+      ],
+      "description": "灰烬之中重生的火焰魔法师，以余烬烧尽一切。",
+      "flavorText": "\"烬，比火焰更持久。\"",
+      "color": "#fb923c",
+      "colorDark": "#7c2d12",
+      "image": null
+    }
+  },
+  "ElementNames": {
+    "fire": "🔥 火",
+    "water": "💧 水",
+    "wind": "🌿 风",
+    "thunder": "⚡ 雷"
+  },
+  "RoleNames": {
+    "dps": "输出",
+    "tank": "坦克",
+    "healer": "治愈",
+    "support": "辅助"
+  },
+  "RarityConfig": {
+    "3": {
+      "label": "三星",
+      "color": "#6b7280",
+      "stars": "★★★☆☆",
+      "glowColor": "rgba(107,114,128,0.3)"
+    },
+    "4": {
+      "label": "四星",
+      "color": "#a855f7",
+      "stars": "★★★★☆",
+      "glowColor": "rgba(168,85,247,0.5)"
+    },
+    "5": {
+      "label": "五星",
+      "color": "#f59e0b",
+      "stars": "★★★★★",
+      "glowColor": "rgba(245,158,11,0.5)"
+    }
+  },
+  "ConstellationCost": {
+    "3": [
+      5,
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "4": [
+      20,
+      20,
+      20,
+      20,
+      20,
+      20
+    ],
+    "5": [
+      25,
+      25,
+      25,
+      25,
+      25,
+      25
+    ]
+  },
+  "ConstellationGeneric": [
+    {
+      "level": 1,
+      "label": "锋芒初现",
+      "desc": "普通攻击造成的伤害提升 15%",
+      "buff": {
+        "normalDmgBonus": 0.15
+      }
+    },
+    {
+      "level": 2,
+      "label": "技艺精进",
+      "desc": "战技冷却缩短 1 回合（最低不低于 1 回合）",
+      "buff": {
+        "skillCdReduce": 1
+      }
+    },
+    {
+      "level": 3,
+      "label": "战技强化",
+      "desc": "战技造成的伤害提升 20%",
+      "buff": {
+        "skillDmgBonus": 0.2
+      }
+    },
+    {
+      "level": 4,
+      "label": "坚韧之躯",
+      "desc": "最大 HP 提升 15%，防御力提升 10%",
+      "buff": {
+        "hpPercent": 0.15,
+        "defPercent": 0.1
+      }
+    },
+    {
+      "level": 5,
+      "label": "必杀临界",
+      "desc": "终极技能造成的伤害提升 30%",
+      "buff": {
+        "ultDmgBonus": 0.3
+      }
+    },
+    {
+      "level": 6,
+      "label": "命运之星",
+      "desc": "（角色专属）",
+      "buff": {}
+    }
+  ],
+  "ConstellationC6": {
+    "kaldi": {
+      "label": "不灭炎心",
+      "desc": "终极技能命中已【燃烧】目标时，额外造成 ATK×80% 的火属性伤害。",
+      "buff": {
+        "c6_type": "on_ult_hit_burned",
+        "c6_bonus": 0.8
+      }
+    },
+    "ayla": {
+      "label": "极寒圣典",
+      "desc": "每次治愈行动后，为全队施加 1 层【再生】效果，持续 1 回合。",
+      "buff": {
+        "c6_type": "heal_spreads_regen"
+      }
+    },
+    "gus": {
+      "label": "雷霆极意",
+      "desc": "暴击后，有 40% 概率对同一目标追加一次普攻伤害（不消耗行动次数）。",
+      "buff": {
+        "c6_type": "crit_chain_attack",
+        "c6_chance": 0.4
+      }
+    },
+    "shana": {
+      "label": "永恒绿意",
+      "desc": "战技/终极技能治愈量超过目标最大 HP 时，溢出部分转化为护盾（持续 1 回合）。",
+      "buff": {
+        "c6_type": "overheal_shield"
+      }
+    },
+    "lorin": {
+      "label": "绝对防壁",
+      "desc": "护盾存在时，受到单次大于最大 HP 30% 的伤害时，自动触发【无敌】1 回合（每场战斗限 1 次）。",
+      "buff": {
+        "c6_type": "damage_nullify_once"
+      }
+    },
+    "ember": {
+      "label": "烈焰共鸣",
+      "desc": "普攻触发【燃烧】的概率提升至 60%，并使概率生效时额外获得 10 点能量。",
+      "buff": {
+        "c6_type": "burn_chance_up",
+        "c6_burnChance": 0.6,
+        "c6_energy": 10
+      }
+    },
+    "zeph": {
+      "label": "风之加护",
+      "desc": "自身速度超过场均时，每回合为队友中速度最低者施加 1 层【攻强】（持续 1 回合）。",
+      "buff": {
+        "c6_type": "speed_buff_ally"
+      }
+    },
+    "bolt": {
+      "label": "感电连锁",
+      "desc": "对已有【感电】状态的目标造成伤害时，伤害额外提升 35%。",
+      "buff": {
+        "c6_type": "electrify_bonus",
+        "c6_bonus": 0.35
+      }
+    },
+    "tide": {
+      "label": "潮汐壁垒",
+      "desc": "回合结束时 HP 恢复，提升至最大 HP 的 6%（原被动加倍）。",
+      "buff": {
+        "c6_type": "passive_enhance",
+        "c6_regenRate": 0.06
+      }
+    },
+    "cinder": {
+      "label": "灰中永焰",
+      "desc": "技能对已燃烧目标的额外伤害提升至 70%（原被动 40%）。",
+      "buff": {
+        "c6_type": "passive_enhance",
+        "c6_burnBonus": 0.7
+      }
+    }
+  },
+  "DialogueData": {
+    "ch1_1_pre": [
+      {
+        "speaker": "narrator",
+        "text": "流火荒原——一片被远古战火灼烧千年的大地，至今仍回荡着龙族的怒吼。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "冒险者孤身踏入荒原入口，干裂的风裹挟着灰烬扑面而来。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这就是传说中的流火荒原……空气里都是硫磺的味道。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "远处的灌木丛传来低沉的嚎叫——野狼群已经发现了入侵者。",
+        "portrait": null
+      }
+    ],
+    "ch1_1_post": [
+      {
+        "speaker": "traveler",
+        "text": "不过是几只荒原狼，还算好对付。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "击退了野狼后，旅行者望向荒原深处，隐约可见升腾的火光。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "那个方向……有什么东西在燃烧。去看看。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch1_2_pre": [
+      {
+        "speaker": "narrator",
+        "text": "荒原的中段，一排破旧的帐篷和火堆映入眼帘。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "哥布林营地……它们好像在驱赶什么东西。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "几只哥布林正围着一匹受伤的荒原狼，似乎在试图驯服它。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这些哥布林和荒原狼居然混在一起了……不能让它们壮大起来。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch1_2_post": [
+      {
+        "speaker": "narrator",
+        "text": "营地被清理干净后，旅行者在残骸中发现了一枚烧焦的铭牌。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这铭牌上刻着……龙纹？难道有龙裔在这片荒原上活动？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "铭牌的背面用古语刻着一行字——\"炎脉不灭\"。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "前方那片烈火森林……也许答案就在那里。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch1_3_pre": [
+      {
+        "speaker": "narrator",
+        "text": "烈火森林——树木本身就在燃烧，却从未化为灰烬，仿佛时间在此凝固。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "炽热的气浪令空气扭曲，每一口呼吸都像在吞咽火焰。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这地方……普通人根本无法踏入。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "忽然，一道火柱从林间冲天而起，伴随着震耳欲聋的龙吼！",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "哈哈哈！又有火精灵送上门来了！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "烈焰之中，一个身影缓缓走出——灼红的鳞甲，燃烧的双瞳。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "你是……龙裔？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "不错！焰龙·卡尔迪，炎脉山脉最后的龙裔战士。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "这片森林里的火焰精灵最近闹得很凶，正愁没人帮我收拾它们。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "你看起来还算能打，一起上吧！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch1_3_post": [
+      {
+        "speaker": "kaldi",
+        "text": "干得漂亮！你比我想象的要强不少。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你一个人住在这种地方？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "这片荒原是我的领地——更准确地说，是炎王霸占了我的领地。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "那头炎王从地下钻出来，占据了炎脉深处，我一直在寻找击退它的方法。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "炎王……听起来很危险。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "危险？哈哈！危险才值得去战斗！前面就是岩石峡谷，那里的石巨人是炎王的守门人。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "击败它们，就能打开通往炎王领地的大门。跟我来！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch1_4_pre": [
+      {
+        "speaker": "narrator",
+        "text": "岩石峡谷——两侧峭壁如刀削般耸立，地面布满裂痕，炽热的岩浆在深处流淌。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "我能感觉到……石巨人的震动就在前方。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你确定我们要挑战它们？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "我体内流淌着远古火龙的血脉，这些石头家伙算什么？",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "不过……还是小心为上。石巨人的防御可不是闹着玩的，我们配合着来。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "好，我掩护你的侧翼。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "爽快！那就——上吧！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch1_4_post": [
+      {
+        "speaker": "narrator",
+        "text": "巨大的石巨人轰然倒下，峡谷中回荡着碎石滚落的声响。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "哈哈哈！痛快！这些石头家伙也不过如此！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你的火焰……真的很强。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "你也不错，比我遇到的多数冒险者都可靠。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "卡尔迪沉默了片刻，看向峡谷深处——那是通往炎王领地的方向。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "说实话……我一个人对抗炎王，没有十足的把握。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "但如果是你的话——也许我们可以并肩作战。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "旅行者，从现在起，我焰龙·卡尔迪愿与你同行！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "烈焰与意志共鸣——焰龙·卡尔迪加入了你的队伍！",
+        "portrait": "kaldi",
+        "giftHook": true
+      },
+      {
+        "speaker": "kaldi",
+        "text": "走吧！炎王的领地就在前方，是时候夺回属于龙裔的荣耀了！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch1_5_pre": [
+      {
+        "speaker": "narrator",
+        "text": "炎脉深处，灼热的气息令人窒息，整片大地都在颤抖。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "就在那里——炎王的王座。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "巨大的身影从熔岩中浮现，炎王睁开赤红的双眼，怒视着入侵者。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "炎王！千年来你霸占了龙族的炎脉，今天——该归还了！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们一起上！",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "烈焰不灭，我亦永恒！上啊——！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch1_5_post": [
+      {
+        "speaker": "narrator",
+        "text": "炎王的咆哮渐渐消散，它的身躯化为漫天的火星飘散在空中。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "终于……炎脉回归了龙族。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "荒原的火势好像在减弱。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "炎王消逝后，这片荒原终将恢复平静。不过……",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "我感受到了来自北方的异样气息——冰原那边，似乎有更大的危机在酝酿。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "北方的冰霜雪原？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "嗯，风暴女巫的势力在扩张，那股寒意连我这龙裔都能感觉到。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "走吧，旅行者。我们的冒险才刚刚开始！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch2_1_pre": [
+      {
+        "speaker": "narrator",
+        "text": "冰霜雪原——极北之地，暴风雪掩盖了一切，连时间都被冻结。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "好冷……这种温度，普通人根本撑不了多久。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "呵，这点寒气？在我眼里跟秋天的微风差不多。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "……你身上可是在冒火。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "那倒也是。不过小心点，前面有冰狼群的气息。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "风雪中，数双幽蓝的眼睛亮起——冰狼群已经包围了过来。",
+        "portrait": null
+      }
+    ],
+    "ch2_1_post": [
+      {
+        "speaker": "kaldi",
+        "text": "这些冰狼比荒原的野狼难对付多了——它们的皮甲硬得像石头。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "但我注意到它们在刻意朝一个方向驱赶我们。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者拨开冰面的积雪，发现雪下埋着古老的符文路标，指向山脉深处。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这条路标……像是某种引导。有人在山中设下了局。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch2_2_pre": [
+      {
+        "speaker": "narrator",
+        "text": "陡峭的冰崖之上，电光在云层中穿梭，雷鹰巢穴赫然矗立。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "雷鹰——风暴女巫最忠诚的斥候。它们在这里筑巢，说明女巫的老巢不远了。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "女巫为什么要用雷鹰监视这片雪原？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "为了囚禁某个重要的人——我隐约听到过传闻。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "先解决这些雷鹰，别让它们回去报信！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch2_2_post": [
+      {
+        "speaker": "narrator",
+        "text": "雷鹰坠落冰崖，羽毛在雷电中燃烧殆尽。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "在巢穴深处发现了一张地图……这是女巫的祭坛方位！",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "让我看看……黑暗要塞、女巫祭坛……都在这条路线的尽头。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "地图边缘有人用冰蓝色的墨水潦草写下了一行字——",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "\"救救我……祭坛之下……冰霜正在吞噬一切。\"",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这是求救信号！我们必须加快速度！",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch2_3_pre": [
+      {
+        "speaker": "narrator",
+        "text": "黑暗要塞——冰与铁铸成的监狱，沉重的铁门上刻满了封印符文。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这里关押着很多人……但大多数牢房已经空了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "要塞深处传来微弱的声音，像是有人在低声吟唱。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "你听到了吗？那个声音……",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "冰霜骑士挡在了前进的道路上——它们是女巫的狱卒，绝不轻易放行。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "让开！不管谁挡路——我都要过去！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch2_3_post": [
+      {
+        "speaker": "narrator",
+        "text": "冰霜骑士化为了碎冰，沉重的铁门轰然开启。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "要塞最深处，一道冰蓝色的光芒从祭坛方向传来，伴随着更清晰的吟唱声。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "那个声音越来越清楚了……是一个女声，她在念治愈的咒文。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "冰原圣女……如果传闻是真的，那她就是风暴女巫最忌惮的存在。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "女巫囚禁她，是因为害怕她的治愈之力瓦解一切黑暗诅咒。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们一定要救出她！祭坛就在前方！",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch2_4_pre": [
+      {
+        "speaker": "narrator",
+        "text": "女巫的祭坛——巨大的冰晶从地面拔起，中央被黑暗魔力笼罩。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "冰柱之中，一个身影若隐若现——银白的长发，冰蓝色的光芒环绕全身。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "……有人来了吗？求你们……快离开这里……",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你被囚禁了？我们是来救你的！",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "ayla",
+        "text": "不行……女巫在祭坛周围布下了黑暗守卫，你们会……",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "让女巫的守卫来吧！我正愁火没地方发！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "你们……真的要为我冒险？",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "traveler",
+        "text": "放心，我们一定把你救出来！",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch2_4_post": [
+      {
+        "speaker": "narrator",
+        "text": "黑暗骑士与雷鹰在烈焰与勇气的面前彻底溃败。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "冰晶上的封印出现裂痕，银白色的身影缓缓走了出来。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "你们……真的做到了。我以为……再也不会有人来救我了。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你还好吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我没事……只是被女巫封印太久，力量有些虚弱。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我叫艾拉——冰原圣女，原本守护着北境的生灵。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "风暴女巫为什么囚禁你？",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "因为我的治愈之力……是唯一能对抗女巫黑暗诅咒的力量。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "ayla",
+        "text": "她害怕我，所以将我封印在冰晶之中。但我不会因此退缩。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "ayla",
+        "text": "你们救了我的命，我愿意用我的力量回报你们。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "ayla",
+        "text": "从今以后，我霜语·艾拉愿与你们同行！",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "narrator",
+        "text": "冰霜与温柔交织——霜语·艾拉加入了你的队伍！",
+        "portrait": "ayla",
+        "giftHook": true
+      },
+      {
+        "speaker": "ayla",
+        "text": "风暴女巫就在前方……这一次，我不再是独自面对了。",
+        "portrait": "ayla",
+        "element": "water"
+      }
+    ],
+    "ch2_5_pre": [
+      {
+        "speaker": "narrator",
+        "text": "暴风雪的中心——风暴女巫悬浮在冰晶之巅，黑暗魔力如漩涡般翻涌。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "她的声音如寒冰刺骨，回荡在整个雪原。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "\"愚蠢的蝼蚁……竟敢放走我的囚徒。\"",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "女巫，你的暴政到此为止了。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "哼，说再多大话也没用——吃我一拳！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "三人合力，一定能击败她！",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我会用治愈之力守护你们，不要害怕！",
+        "portrait": "ayla",
+        "element": "water"
+      }
+    ],
+    "ch2_5_post": [
+      {
+        "speaker": "narrator",
+        "text": "风暴女巫的身影在暴风雪中消散，她的黑暗魔力如黑烟般被净化。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "笼罩冰霜雪原千年的暴风雪，终于渐渐平息。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "北境……终于恢复平静了。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "嘿，配合得不错嘛！火焰和冰霜一起上，什么敌人都挡不住。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "谢谢你，旅行者。如果不是你，我也许永远困在那冰晶之中。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "traveler",
+        "text": "是我们一起做到的。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "ayla",
+        "text": "冰冻，有时是最温柔的救赎。而我找到了比冰更温暖的东西——你们的信任。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "好啦好啦，别煽情了！前方还有更多冒险在等着我们呢！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "火与冰的羁绊在此铸就——旅行者的故事，才刚刚开始……",
+        "portrait": null
+      }
+    ]
+  },
+  "EnemyData": {
+    "wolf": {
+      "id": "wolf",
+      "name": "荒野狼",
+      "icon": "🐺",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 20,
+        "spd": 90
+      },
+      "skills": [
+        "wolf_bite",
+        "wolf_howl"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          15,
+          30
+        ],
+        "exp": 10
+      },
+      "color": "#94a3b8"
+    },
+    "goblin": {
+      "id": "goblin",
+      "name": "哥布林战士",
+      "icon": "👺",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 350,
+        "atk": 50,
+        "def": 25,
+        "spd": 85
+      },
+      "skills": [
+        "goblin_slash",
+        "goblin_throw"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          20,
+          35
+        ],
+        "exp": 12
+      },
+      "color": "#84cc16"
+    },
+    "fire_imp": {
+      "id": "fire_imp",
+      "name": "烈火精灵",
+      "icon": "😈",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 300,
+        "atk": 60,
+        "def": 15,
+        "spd": 100
+      },
+      "skills": [
+        "imp_fireball",
+        "imp_burn"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          25,
+          40
+        ],
+        "exp": 15
+      },
+      "color": "#ef4444"
+    },
+    "stone_golem": {
+      "id": "stone_golem",
+      "name": "岩石傀儡",
+      "icon": "🗿",
+      "type": "elite",
+      "element": "wind",
+      "baseStats": {
+        "hp": 800,
+        "atk": 65,
+        "def": 80,
+        "spd": 60
+      },
+      "skills": [
+        "golem_slam",
+        "golem_guard",
+        "golem_quake"
+      ],
+      "aiPattern": "defensive",
+      "drops": {
+        "gold": [
+          50,
+          80
+        ],
+        "exp": 40
+      },
+      "color": "#a8a29e",
+      "shield": 0
+    },
+    "boss_flame_lord": {
+      "id": "boss_flame_lord",
+      "name": "炎王·阿格尼斯",
+      "icon": "🔥",
+      "type": "boss",
+      "element": "fire",
+      "baseStats": {
+        "hp": 4000,
+        "atk": 120,
+        "def": 60,
+        "spd": 85
+      },
+      "skills": [
+        "boss_slash",
+        "boss_fireball",
+        "boss_meteor_rain",
+        "boss_enrage"
+      ],
+      "aiPattern": "boss",
+      "phaseThreshold": 0.5,
+      "phase2Skills": [
+        "boss_meteor_rain",
+        "boss_enrage"
+      ],
+      "drops": {
+        "gold": [
+          200,
+          300
+        ],
+        "exp": 200
+      },
+      "color": "#dc2626",
+      "isBoss": true
+    },
+    "ice_wolf": {
+      "id": "ice_wolf",
+      "name": "冰霜雪狼",
+      "icon": "🐺",
+      "type": "normal",
+      "element": "water",
+      "baseStats": {
+        "hp": 500,
+        "atk": 70,
+        "def": 35,
+        "spd": 95
+      },
+      "skills": [
+        "wolf_bite",
+        "ice_wolf_freeze"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          30,
+          50
+        ],
+        "exp": 25
+      },
+      "color": "#93c5fd"
+    },
+    "thunder_hawk": {
+      "id": "thunder_hawk",
+      "name": "雷鹰",
+      "icon": "🦅",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 420,
+        "atk": 80,
+        "def": 25,
+        "spd": 115
+      },
+      "skills": [
+        "hawk_dive",
+        "hawk_thunder"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          30,
+          50
+        ],
+        "exp": 28
+      },
+      "color": "#fde047"
+    },
+    "dark_knight": {
+      "id": "dark_knight",
+      "name": "黑暗骑士",
+      "icon": "⚔️",
+      "type": "elite",
+      "element": "wind",
+      "baseStats": {
+        "hp": 1200,
+        "atk": 90,
+        "def": 100,
+        "spd": 75
+      },
+      "skills": [
+        "dk_slash",
+        "dk_shield",
+        "dk_deathblow"
+      ],
+      "aiPattern": "defensive",
+      "drops": {
+        "gold": [
+          80,
+          130
+        ],
+        "exp": 80
+      },
+      "color": "#6366f1"
+    },
+    "boss_storm_witch": {
+      "id": "boss_storm_witch",
+      "name": "暴风女巫·薇薇安",
+      "icon": "🧙‍♀️",
+      "type": "boss",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 5500,
+        "atk": 140,
+        "def": 55,
+        "spd": 105
+      },
+      "skills": [
+        "witch_bolt",
+        "witch_aoe",
+        "witch_summon",
+        "witch_storm"
+      ],
+      "aiPattern": "boss",
+      "phaseThreshold": 0.4,
+      "phase2Skills": [
+        "witch_storm",
+        "witch_aoe"
+      ],
+      "drops": {
+        "gold": [
+          350,
+          500
+        ],
+        "exp": 350
+      },
+      "color": "#a855f7",
+      "isBoss": true
+    }
+  },
+  "EnemySkillData": {
+    "wolf_bite": {
+      "name": "撕咬",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.1
+        }
+      ]
+    },
+    "wolf_howl": {
+      "name": "嚎叫",
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "atk_up",
+          "duration": 2,
+          "value": 0.2
+        }
+      ]
+    },
+    "goblin_slash": {
+      "name": "乱砍",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1
+        }
+      ]
+    },
+    "goblin_throw": {
+      "name": "投石",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "random",
+          "multiplier": 0.8
+        }
+      ]
+    },
+    "imp_fireball": {
+      "name": "火球",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "fire"
+        }
+      ]
+    },
+    "imp_burn": {
+      "name": "点火",
+      "effects": [
+        {
+          "type": "status",
+          "target": "random",
+          "statusId": "burn",
+          "duration": 2
+        }
+      ]
+    },
+    "golem_slam": {
+      "name": "重击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.4
+        }
+      ]
+    },
+    "golem_guard": {
+      "name": "石化防御",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "def_up",
+          "duration": 2,
+          "value": 0.4
+        }
+      ]
+    },
+    "golem_quake": {
+      "name": "地震",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 0.7
+        }
+      ]
+    },
+    "boss_slash": {
+      "name": "炎刃斩",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.3,
+          "element": "fire"
+        }
+      ]
+    },
+    "boss_fireball": {
+      "name": "炎王火球",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 0.8,
+          "element": "fire"
+        }
+      ]
+    },
+    "boss_meteor_rain": {
+      "name": "陨石雨",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.2,
+          "element": "fire"
+        }
+      ]
+    },
+    "boss_enrage": {
+      "name": "狂怒",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "atk_up",
+          "duration": 3,
+          "value": 0.5
+        }
+      ]
+    },
+    "ice_wolf_freeze": {
+      "name": "冰爪",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1
+        },
+        {
+          "type": "status",
+          "target": "single_enemy",
+          "statusId": "freeze",
+          "duration": 1,
+          "chance": 0.4
+        }
+      ]
+    },
+    "hawk_dive": {
+      "name": "俯冲",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2
+        }
+      ]
+    },
+    "hawk_thunder": {
+      "name": "雷翔",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "random",
+          "multiplier": 1,
+          "element": "thunder"
+        }
+      ]
+    },
+    "dk_slash": {
+      "name": "暗刃",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2
+        }
+      ]
+    },
+    "dk_shield": {
+      "name": "黑暗护盾",
+      "cooldown": 2,
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "shield",
+          "duration": 2,
+          "value": 0.1
+        }
+      ]
+    },
+    "dk_deathblow": {
+      "name": "死亡之击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 2
+        }
+      ]
+    },
+    "witch_bolt": {
+      "name": "闪电箭",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.3,
+          "element": "thunder"
+        }
+      ]
+    },
+    "witch_aoe": {
+      "name": "雷暴回旋",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 0.9,
+          "element": "thunder"
+        }
+      ]
+    },
+    "witch_summon": {
+      "name": "召唤雷灵",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "atk_up",
+          "duration": 2,
+          "value": 0.3
+        }
+      ]
+    },
+    "witch_storm": {
+      "name": "终极风暴",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.5,
+          "element": "thunder"
+        },
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "spd_down",
+          "duration": 2,
+          "value": 0.3
+        }
+      ]
+    }
+  },
+  "GachaPoolData": {
+    "activePools": [
+      "standard",
+      "limited_kaldi"
+    ],
+    "pools": {
+      "standard": {
+        "id": "standard",
+        "name": "群星降临",
+        "subtitle": "常驻祈愿",
+        "type": "standard",
+        "banner": "🌟",
+        "costPerPull": 160,
+        "currency": "diamonds",
+        "description": "常驻卡池，包含全部常驻角色",
+        "endTime": null,
+        "rates": {
+          "3": 0.834,
+          "4": 0.15,
+          "5": 0.016
+        },
+        "pity": {
+          "soft": 73,
+          "hard": 90,
+          "softIncrease": 0.06
+        },
+        "guaranteedFeatured": false,
+        "featuredRate5": 0.5,
+        "featuredRate4": 0.5,
+        "featured5": [
+          "kaldi",
+          "ayla"
+        ],
+        "pool5": [
+          "kaldi",
+          "ayla"
+        ],
+        "featured4": [
+          "gus",
+          "shana",
+          "lorin"
+        ],
+        "pool4": [
+          "gus",
+          "shana",
+          "lorin"
+        ],
+        "pool3": [
+          "ember",
+          "zeph",
+          "bolt",
+          "tide",
+          "cinder"
+        ],
+        "color": "#7c3aed",
+        "gradientFrom": "#1e1b4b",
+        "gradientTo": "#312e81"
+      },
+      "limited_kaldi": {
+        "id": "limited_kaldi",
+        "name": "炎龙觉醒",
+        "subtitle": "限定祈愿 · 焰龙·卡尔迪",
+        "type": "limited",
+        "banner": "🐉",
+        "costPerPull": 160,
+        "currency": "diamonds",
+        "description": "限定卡池！焰龙·卡尔迪概率提升！50%概率为UP角色，若未获得UP则下次必出。",
+        "endTime": null,
+        "rates": {
+          "3": 0.834,
+          "4": 0.15,
+          "5": 0.016
+        },
+        "pity": {
+          "soft": 73,
+          "hard": 90,
+          "softIncrease": 0.06
+        },
+        "guaranteedFeatured": true,
+        "featuredRate5": 0.5,
+        "featuredRate4": 0.5,
+        "featured5": [
+          "kaldi"
+        ],
+        "pool5": [
+          "kaldi",
+          "ayla"
+        ],
+        "featured4": [
+          "gus",
+          "shana"
+        ],
+        "pool4": [
+          "gus",
+          "shana",
+          "lorin"
+        ],
+        "pool3": [
+          "ember",
+          "zeph",
+          "bolt",
+          "tide",
+          "cinder"
+        ],
+        "color": "#dc2626",
+        "gradientFrom": "#450a0a",
+        "gradientTo": "#7f1d1d"
+      }
+    }
+  },
+  "RelicSlots": [
+    {
+      "id": "helmet",
+      "name": "头盔",
+      "icon": "🪖"
+    },
+    {
+      "id": "chest",
+      "name": "胸甲",
+      "icon": "🛡️"
+    },
+    {
+      "id": "belt",
+      "name": "腰带",
+      "icon": "🔘"
+    },
+    {
+      "id": "boots",
+      "name": "靴子",
+      "icon": "👟"
+    },
+    {
+      "id": "necklace",
+      "name": "项链",
+      "icon": "📿"
+    }
+  ],
+  "RelicMainStatPool": {
+    "helmet": [
+      {
+        "stat": "hp_flat",
+        "name": "HP",
+        "base": 500,
+        "perLevel": 80
+      }
+    ],
+    "chest": [
+      {
+        "stat": "atk_flat",
+        "name": "ATK",
+        "base": 50,
+        "perLevel": 8
+      }
+    ],
+    "belt": [
+      {
+        "stat": "def_flat",
+        "name": "DEF",
+        "base": 40,
+        "perLevel": 6
+      },
+      {
+        "stat": "atk_pct",
+        "name": "ATK%",
+        "base": 0.06,
+        "perLevel": 0.008
+      }
+    ],
+    "boots": [
+      {
+        "stat": "spd",
+        "name": "SPD",
+        "base": 6,
+        "perLevel": 0.8
+      },
+      {
+        "stat": "hp_pct",
+        "name": "HP%",
+        "base": 0.06,
+        "perLevel": 0.008
+      }
+    ],
+    "necklace": [
+      {
+        "stat": "cri_rate",
+        "name": "暴击率",
+        "base": 0.05,
+        "perLevel": 0.006
+      },
+      {
+        "stat": "cri_dmg",
+        "name": "爆伤",
+        "base": 0.08,
+        "perLevel": 0.012
+      },
+      {
+        "stat": "hp_pct",
+        "name": "HP%",
+        "base": 0.06,
+        "perLevel": 0.008
+      }
+    ]
+  },
+  "RelicSubStatPool": [
+    {
+      "stat": "atk_pct",
+      "name": "ATK%",
+      "range": [
+        0.03,
+        0.055
+      ]
+    },
+    {
+      "stat": "def_pct",
+      "name": "DEF%",
+      "range": [
+        0.035,
+        0.06
+      ]
+    },
+    {
+      "stat": "hp_pct",
+      "name": "HP%",
+      "range": [
+        0.035,
+        0.06
+      ]
+    },
+    {
+      "stat": "spd",
+      "name": "SPD",
+      "range": [
+        2,
+        5
+      ]
+    },
+    {
+      "stat": "cri_rate",
+      "name": "暴击率",
+      "range": [
+        0.025,
+        0.045
+      ]
+    },
+    {
+      "stat": "cri_dmg",
+      "name": "爆伤",
+      "range": [
+        0.04,
+        0.07
+      ]
+    },
+    {
+      "stat": "energy_rate",
+      "name": "能量恢复",
+      "range": [
+        0.04,
+        0.08
+      ]
+    },
+    {
+      "stat": "atk_flat",
+      "name": "ATK",
+      "range": [
+        15,
+        35
+      ]
+    },
+    {
+      "stat": "def_flat",
+      "name": "DEF",
+      "range": [
+        12,
+        28
+      ]
+    }
+  ],
+  "RelicRarityConfig": {
+    "3": {
+      "label": "三星",
+      "color": "#6b7280",
+      "glowColor": "rgba(107,114,128,0.2)",
+      "initSubStats": 2,
+      "dropWeight": 50
+    },
+    "4": {
+      "label": "四星",
+      "color": "#a855f7",
+      "glowColor": "rgba(168,85,247,0.3)",
+      "initSubStats": 3,
+      "dropWeight": 35
+    },
+    "5": {
+      "label": "五星",
+      "color": "#f59e0b",
+      "glowColor": "rgba(245,158,11,0.4)",
+      "initSubStats": 4,
+      "dropWeight": 15
+    }
+  },
+  "RelicSets": {},
+  "ShopData": {
+    "rechargeItems": [
+      {
+        "id": "recharge_traveler",
+        "name": "旅者补给",
+        "price": "¥6",
+        "priceDisplay": "¥6",
+        "badge": "首充推荐",
+        "icon": "🎒",
+        "color": "#22c55e",
+        "description": "适合初探旅途的探险家",
+        "rewards": [
+          {
+            "type": "diamonds",
+            "amount": 60,
+            "label": "💎 星尘晶 ×60"
+          },
+          {
+            "type": "stamina",
+            "amount": 60,
+            "label": "⚡ 体力 ×60"
+          }
+        ]
+      },
+      {
+        "id": "recharge_monthly",
+        "name": "冒险月卡",
+        "price": "¥30",
+        "priceDisplay": "¥30",
+        "badge": "超值",
+        "icon": "📅",
+        "color": "#3b82f6",
+        "description": "月卡特权，出行的必备之选",
+        "rewards": [
+          {
+            "type": "diamonds",
+            "amount": 300,
+            "label": "💎 星尘晶 ×300"
+          },
+          {
+            "type": "stamina",
+            "amount": 300,
+            "label": "⚡ 体力 ×300"
+          }
+        ]
+      },
+      {
+        "id": "recharge_hero",
+        "name": "英雄礼包",
+        "price": "¥68",
+        "priceDisplay": "¥68",
+        "badge": "热门",
+        "icon": "⚔️",
+        "color": "#f59e0b",
+        "description": "为英雄而备的战斗补给",
+        "rewards": [
+          {
+            "type": "diamonds",
+            "amount": 680,
+            "label": "💎 星尘晶 ×680"
+          },
+          {
+            "type": "stamina",
+            "amount": 680,
+            "label": "⚡ 体力 ×680"
+          },
+          {
+            "type": "gold",
+            "amount": 50000,
+            "label": "🪙 金币 ×50,000"
+          }
+        ]
+      },
+      {
+        "id": "recharge_legend",
+        "name": "传说巨擘",
+        "price": "¥128",
+        "priceDisplay": "¥128",
+        "badge": "",
+        "icon": "👑",
+        "color": "#a855f7",
+        "description": "传说级别的恢宏馈赠",
+        "rewards": [
+          {
+            "type": "diamonds",
+            "amount": 1280,
+            "label": "💎 星尘晶 ×1,280"
+          },
+          {
+            "type": "stamina",
+            "amount": 1280,
+            "label": "⚡ 体力 ×1,280"
+          },
+          {
+            "type": "gold",
+            "amount": 150000,
+            "label": "🪙 金币 ×150,000"
+          }
+        ]
+      },
+      {
+        "id": "recharge_supreme",
+        "name": "至尊套餐",
+        "price": "¥328",
+        "priceDisplay": "¥328",
+        "badge": "最划算",
+        "icon": "💎",
+        "color": "#ec4899",
+        "description": "最顶级的旅者馈赠，无与伦比",
+        "rewards": [
+          {
+            "type": "diamonds",
+            "amount": 3280,
+            "label": "💎 星尘晶 ×3,280"
+          },
+          {
+            "type": "stamina",
+            "amount": 3280,
+            "label": "⚡ 体力 ×3,280"
+          },
+          {
+            "type": "gold",
+            "amount": 500000,
+            "label": "🪙 金币 ×500,000"
+          }
+        ]
+      }
+    ],
+    "itemShop": [
+      {
+        "id": "buy_stamina_60",
+        "name": "体力水晶",
+        "icon": "⚡",
+        "price": 5000,
+        "currency": "gold",
+        "rewards": [
+          {
+            "type": "stamina",
+            "amount": 60,
+            "label": "⚡ 体力 ×60"
+          }
+        ],
+        "stock": -1
+      },
+      {
+        "id": "buy_diamonds_500",
+        "name": "星尘宝箱",
+        "icon": "💎",
+        "price": 5000,
+        "currency": "gold",
+        "rewards": [
+          {
+            "type": "diamonds",
+            "amount": 500,
+            "label": "💎 星尘晶 ×500"
+          }
+        ],
+        "stock": -1
+      }
+    ],
+    "fragmentShop": {
+      "enabled": false,
+      "items": []
+    }
+  },
+  "SkillData": {
+    "kaldi_normal": {
+      "id": "kaldi_normal",
+      "name": "炎牙斩",
+      "icon": "🔥",
+      "type": "normal",
+      "element": "fire",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "以炎龙牙斩击单体目标，造成火属性伤害。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2
+        }
+      ],
+      "animation": "slash"
+    },
+    "kaldi_skill": {
+      "id": "kaldi_skill",
+      "name": "龙炎爆裂",
+      "icon": "💥",
+      "type": "skill",
+      "element": "fire",
+      "cooldown": 3,
+      "energyGain": 20,
+      "description": "释放龙焰波，对全体敌人造成火属性伤害，并有80%概率使随机一名敌人陷入【燃烧】。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 0.75
+        },
+        {
+          "type": "status",
+          "target": "random_enemy",
+          "statusId": "burn",
+          "chance": 0.8,
+          "duration": 2
+        }
+      ],
+      "animation": "explosion"
+    },
+    "kaldi_ult": {
+      "id": "kaldi_ult",
+      "name": "天焰龙破",
+      "icon": "🐉",
+      "type": "ultimate",
+      "element": "fire",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "化身炎龙，对全体敌人造成巨大火属性伤害，并使所有敌人陷入【燃烧】。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 2.5
+        },
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "burn",
+          "chance": 1,
+          "duration": 3
+        }
+      ],
+      "animation": "mega_fire"
+    },
+    "ayla_normal": {
+      "id": "ayla_normal",
+      "name": "冰棱刺",
+      "icon": "❄️",
+      "type": "normal",
+      "element": "water",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "以冰棱击刺单体目标，造成水属性伤害。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.9
+        }
+      ],
+      "animation": "ice"
+    },
+    "ayla_skill": {
+      "id": "ayla_skill",
+      "name": "极寒封印",
+      "icon": "🌊",
+      "type": "skill",
+      "element": "water",
+      "cooldown": 3,
+      "energyGain": 20,
+      "description": "以冰寒之力封印单体敌人，造成水属性伤害并使其陷入【冰冻】（跳过下一行动）。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1
+        },
+        {
+          "type": "status",
+          "target": "single_enemy",
+          "statusId": "freeze",
+          "chance": 1,
+          "duration": 1
+        }
+      ],
+      "animation": "ice"
+    },
+    "ayla_ult": {
+      "id": "ayla_ult",
+      "name": "极光治愈",
+      "icon": "✨",
+      "type": "ultimate",
+      "element": "water",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "引导极光能量，为所有队友大量恢复生命值，并赋予【再生】效果。",
+      "effects": [
+        {
+          "type": "heal",
+          "target": "all_allies",
+          "multiplier": 1.8
+        },
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "regen",
+          "chance": 1,
+          "duration": 3
+        }
+      ],
+      "animation": "aurora"
+    },
+    "gus_normal": {
+      "id": "gus_normal",
+      "name": "雷矛突刺",
+      "icon": "⚡",
+      "type": "normal",
+      "element": "thunder",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "以雷矛突刺单体目标，造成雷属性伤害。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.1
+        }
+      ],
+      "animation": "thunder"
+    },
+    "gus_skill": {
+      "id": "gus_skill",
+      "name": "连锁闪电",
+      "icon": "🌩️",
+      "type": "skill",
+      "element": "thunder",
+      "cooldown": 2,
+      "energyGain": 20,
+      "description": "释放连锁闪电，对最多3名敌人造成雷属性伤害（每跳衰减15%）。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "chain3",
+          "multiplier": 0.85,
+          "chainDecay": 0.15
+        }
+      ],
+      "animation": "chain_lightning"
+    },
+    "gus_ult": {
+      "id": "gus_ult",
+      "name": "雷霆裁决",
+      "icon": "⚡",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "雷霆降临，对全体敌人造成巨量雷属性伤害，并使其速度降低30%（持续2回合）。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 2
+        },
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "spd_down",
+          "chance": 1,
+          "duration": 2,
+          "value": 0.3
+        }
+      ],
+      "animation": "mega_thunder"
+    },
+    "shana_normal": {
+      "id": "shana_normal",
+      "name": "自然之枝",
+      "icon": "🌿",
+      "type": "normal",
+      "element": "wind",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "以自然之力攻击单体目标，造成风属性伤害。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.9
+        }
+      ],
+      "animation": "wind"
+    },
+    "shana_skill": {
+      "id": "shana_skill",
+      "name": "绿意回春",
+      "icon": "💚",
+      "type": "skill",
+      "element": "wind",
+      "cooldown": 2,
+      "energyGain": 20,
+      "description": "以治愈之风抚慰生命值最低的队友，大量恢复其HP并赋予【再生】。",
+      "effects": [
+        {
+          "type": "heal",
+          "target": "lowest_hp_ally",
+          "multiplier": 1.5
+        },
+        {
+          "type": "status",
+          "target": "lowest_hp_ally",
+          "statusId": "regen",
+          "chance": 1,
+          "duration": 2
+        }
+      ],
+      "animation": "heal"
+    },
+    "shana_ult": {
+      "id": "shana_ult",
+      "name": "森林庇护",
+      "icon": "🌳",
+      "type": "ultimate",
+      "element": "wind",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "唤醒古老森林的护盾，为所有队友恢复HP并赋予护盾（可吸收伤害）。",
+      "effects": [
+        {
+          "type": "heal",
+          "target": "all_allies",
+          "multiplier": 1.2
+        },
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "shield",
+          "chance": 1,
+          "duration": 2,
+          "value": 0.3
+        }
+      ],
+      "animation": "forest_shield"
+    },
+    "lorin_normal": {
+      "id": "lorin_normal",
+      "name": "盾击",
+      "icon": "🛡️",
+      "type": "normal",
+      "element": "water",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "以战盾猛击单体目标，造成水属性伤害，有15%概率使其【眩晕】1回合。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.85
+        },
+        {
+          "type": "status",
+          "target": "single_enemy",
+          "statusId": "stun",
+          "chance": 0.15,
+          "duration": 1
+        }
+      ],
+      "animation": "shield_bash"
+    },
+    "lorin_skill": {
+      "id": "lorin_skill",
+      "name": "铁壁防御",
+      "icon": "🔵",
+      "type": "skill",
+      "element": "water",
+      "cooldown": 3,
+      "energyGain": 15,
+      "description": "进入防御姿态，为自身施加强力护盾，并使所有敌人的攻击目标转向自身（嘲讽）。",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "shield",
+          "chance": 1,
+          "duration": 2,
+          "value": 0.5
+        },
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "taunt",
+          "chance": 1,
+          "duration": 2
+        }
+      ],
+      "animation": "shield_up"
+    },
+    "lorin_ult": {
+      "id": "lorin_ult",
+      "name": "绝对要塞",
+      "icon": "🏰",
+      "type": "ultimate",
+      "element": "water",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "化身移动要塞，为全队施加护盾，并使自身进入【无敌】状态持续1回合。",
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "shield",
+          "chance": 1,
+          "duration": 3,
+          "value": 0.4
+        },
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "invincible",
+          "chance": 1,
+          "duration": 1
+        }
+      ],
+      "animation": "mega_shield"
+    },
+    "ember_normal": {
+      "id": "ember_normal",
+      "name": "火爪",
+      "icon": "🔥",
+      "type": "normal",
+      "element": "fire",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "以火焰爪击单体目标。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.1
+        }
+      ],
+      "animation": "slash"
+    },
+    "ember_skill": {
+      "id": "ember_skill",
+      "name": "爆炎踢",
+      "icon": "🦵",
+      "type": "skill",
+      "element": "fire",
+      "cooldown": 2,
+      "energyGain": 20,
+      "description": "强力火焰踢击单体，并必定附加【燃烧】。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.3
+        },
+        {
+          "type": "status",
+          "target": "single_enemy",
+          "statusId": "burn",
+          "chance": 1,
+          "duration": 2
+        }
+      ],
+      "animation": "explosion"
+    },
+    "ember_ult": {
+      "id": "ember_ult",
+      "name": "业火风暴",
+      "icon": "🌋",
+      "type": "ultimate",
+      "element": "fire",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "引发业火，对全体敌人造成大量火属性伤害。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.8
+        }
+      ],
+      "animation": "mega_fire"
+    },
+    "zeph_normal": {
+      "id": "zeph_normal",
+      "name": "风刃",
+      "icon": "🌿",
+      "type": "normal",
+      "element": "wind",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "以风刃斩击单体目标。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1
+        }
+      ],
+      "animation": "wind"
+    },
+    "zeph_skill": {
+      "id": "zeph_skill",
+      "name": "疾风突袭",
+      "icon": "💨",
+      "type": "skill",
+      "element": "wind",
+      "cooldown": 2,
+      "energyGain": 20,
+      "description": "疾风突袭单体目标，造成伤害并降低其速度30%（持续2回合）。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2
+        },
+        {
+          "type": "status",
+          "target": "single_enemy",
+          "statusId": "spd_down",
+          "chance": 1,
+          "duration": 2,
+          "value": 0.3
+        }
+      ],
+      "animation": "wind"
+    },
+    "zeph_ult": {
+      "id": "zeph_ult",
+      "name": "龙卷斩",
+      "icon": "🌪️",
+      "type": "ultimate",
+      "element": "wind",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "掀起龙卷风，对全体敌人造成风属性伤害。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.5
+        }
+      ],
+      "animation": "tornado"
+    },
+    "bolt_normal": {
+      "id": "bolt_normal",
+      "name": "电弧箭",
+      "icon": "⚡",
+      "type": "normal",
+      "element": "thunder",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "射出带电箭矢攻击单体目标。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.1
+        }
+      ],
+      "animation": "thunder"
+    },
+    "bolt_skill": {
+      "id": "bolt_skill",
+      "name": "穿刺电击",
+      "icon": "🎯",
+      "type": "skill",
+      "element": "thunder",
+      "cooldown": 2,
+      "energyGain": 20,
+      "description": "射出穿刺电击，无视目标40%防御，造成雷属性伤害。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "defPierce": 0.4
+        }
+      ],
+      "animation": "thunder"
+    },
+    "bolt_ult": {
+      "id": "bolt_ult",
+      "name": "电磁爆发",
+      "icon": "💥",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "引发电磁爆发，对全体敌人造成雷属性伤害并使其陷入【感电】。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.6
+        },
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "electrify",
+          "chance": 0.8,
+          "duration": 2
+        }
+      ],
+      "animation": "mega_thunder"
+    },
+    "tide_normal": {
+      "id": "tide_normal",
+      "name": "水拳",
+      "icon": "💧",
+      "type": "normal",
+      "element": "water",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "以水拳击打单体目标。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.9
+        }
+      ],
+      "animation": "ice"
+    },
+    "tide_skill": {
+      "id": "tide_skill",
+      "name": "潮汐屏障",
+      "icon": "🛡️",
+      "type": "skill",
+      "element": "water",
+      "cooldown": 3,
+      "energyGain": 15,
+      "description": "以海水为盾，为自身和HP最低的队友施加护盾。",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "shield",
+          "chance": 1,
+          "duration": 2,
+          "value": 0.4
+        },
+        {
+          "type": "status",
+          "target": "lowest_hp_ally",
+          "statusId": "shield",
+          "chance": 1,
+          "duration": 2,
+          "value": 0.3
+        }
+      ],
+      "animation": "shield_up"
+    },
+    "tide_ult": {
+      "id": "tide_ult",
+      "name": "巨浪冲击",
+      "icon": "🌊",
+      "type": "ultimate",
+      "element": "water",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "掀起滔天巨浪，对全体敌人造成水属性伤害。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.4
+        }
+      ],
+      "animation": "mega_water"
+    },
+    "cinder_normal": {
+      "id": "cinder_normal",
+      "name": "灰烬弹",
+      "icon": "🔥",
+      "type": "normal",
+      "element": "fire",
+      "cooldown": 0,
+      "energyGain": 15,
+      "description": "投掷灰烬弹攻击单体目标。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1
+        }
+      ],
+      "animation": "slash"
+    },
+    "cinder_skill": {
+      "id": "cinder_skill",
+      "name": "爆灰术",
+      "icon": "☁️",
+      "type": "skill",
+      "element": "fire",
+      "cooldown": 2,
+      "energyGain": 20,
+      "description": "引爆灰烬，造成伤害并叠加2层【燃烧】到目标上。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.1
+        },
+        {
+          "type": "status",
+          "target": "single_enemy",
+          "statusId": "burn",
+          "chance": 1,
+          "duration": 3
+        }
+      ],
+      "animation": "explosion"
+    },
+    "cinder_ult": {
+      "id": "cinder_ult",
+      "name": "灰烬柱",
+      "icon": "🌋",
+      "type": "ultimate",
+      "element": "fire",
+      "energyCost": 100,
+      "energyGain": 0,
+      "description": "召唤灰烬柱，对全体敌人造成大量火属性伤害，并强制燃烧所有目标。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.9
+        },
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "burn",
+          "chance": 1,
+          "duration": 2
+        }
+      ],
+      "animation": "mega_fire"
+    }
+  },
+  "StageData": {
+    "chapters": [
+      {
+        "id": "ch1",
+        "name": "第一章：流火荒原",
+        "description": "传说中的荒野，野兽横行，冒险者的起点。",
+        "unlocked": true,
+        "stages": [
+          {
+            "id": "ch1_1",
+            "name": "1-1 荒野入口",
+            "staminaCost": 6,
+            "waves": [
+              {
+                "enemies": [
+                  "wolf",
+                  "wolf"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                30,
+                50
+              ],
+              "exp": 20,
+              "diamonds": 0
+            },
+            "firstClearRewards": {
+              "diamonds": 15
+            }
+          },
+          {
+            "id": "ch1_2",
+            "name": "1-2 哥布林营地",
+            "staminaCost": 6,
+            "waves": [
+              {
+                "enemies": [
+                  "goblin",
+                  "wolf"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                35,
+                55
+              ],
+              "exp": 25
+            },
+            "firstClearRewards": {
+              "diamonds": 15
+            }
+          },
+          {
+            "id": "ch1_3",
+            "name": "1-3 烈火森林",
+            "staminaCost": 6,
+            "waves": [
+              {
+                "enemies": [
+                  "fire_imp",
+                  "goblin"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                40,
+                60
+              ],
+              "exp": 30
+            },
+            "firstClearRewards": {
+              "diamonds": 15
+            }
+          },
+          {
+            "id": "ch1_4",
+            "name": "1-4 岩石峡谷(精英)",
+            "staminaCost": 8,
+            "waves": [
+              {
+                "enemies": [
+                  "stone_golem"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                60,
+                90
+              ],
+              "exp": 50
+            },
+            "firstClearRewards": {
+              "diamonds": 30
+            },
+            "isElite": true
+          },
+          {
+            "id": "ch1_5",
+            "name": "1-5 炎王的领地(BOSS)",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "boss_flame_lord"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                150,
+                200
+              ],
+              "exp": 150
+            },
+            "firstClearRewards": {
+              "diamonds": 60
+            },
+            "isBoss": true
+          }
+        ]
+      },
+      {
+        "id": "ch2",
+        "name": "第二章：冰霜雪原",
+        "description": "极寒之地，暴风雪掩盖了一切，危机四伏。",
+        "unlocked": false,
+        "unlockCondition": "ch1_5",
+        "stages": [
+          {
+            "id": "ch2_1",
+            "name": "2-1 冰封平原",
+            "staminaCost": 8,
+            "waves": [
+              {
+                "enemies": [
+                  "ice_wolf",
+                  "ice_wolf"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                60,
+                90
+              ],
+              "exp": 45
+            },
+            "firstClearRewards": {
+              "diamonds": 20
+            }
+          },
+          {
+            "id": "ch2_2",
+            "name": "2-2 雷鹰巢穴",
+            "staminaCost": 8,
+            "waves": [
+              {
+                "enemies": [
+                  "thunder_hawk",
+                  "thunder_hawk"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                65,
+                95
+              ],
+              "exp": 50
+            },
+            "firstClearRewards": {
+              "diamonds": 20
+            }
+          },
+          {
+            "id": "ch2_3",
+            "name": "2-3 黑暗要塞",
+            "staminaCost": 8,
+            "waves": [
+              {
+                "enemies": [
+                  "ice_wolf",
+                  "dark_knight"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                70,
+                100
+              ],
+              "exp": 55
+            },
+            "firstClearRewards": {
+              "diamonds": 20
+            }
+          },
+          {
+            "id": "ch2_4",
+            "name": "2-4 女巫的祭坛(精英)",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "dark_knight",
+                  "thunder_hawk"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                100,
+                150
+              ],
+              "exp": 100
+            },
+            "firstClearRewards": {
+              "diamonds": 40
+            },
+            "isElite": true
+          },
+          {
+            "id": "ch2_5",
+            "name": "2-5 风暴女巫(BOSS)",
+            "staminaCost": 12,
+            "waves": [
+              {
+                "enemies": [
+                  "boss_storm_witch"
+                ]
+              }
+            ],
+            "rewards": {
+              "gold": [
+                250,
+                350
+              ],
+              "exp": 300
+            },
+            "firstClearRewards": {
+              "diamonds": 80
+            },
+            "isBoss": true
+          }
+        ]
+      }
+    ],
+    "dungeonTower": {
+      "enabled": false,
+      "floors": []
+    }
+  }
+}

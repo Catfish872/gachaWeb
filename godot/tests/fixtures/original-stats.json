@@ -1,0 +1,1022 @@
+[
+  {
+    "id": "kaldi",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1200,
+      "atk": 185,
+      "def": 75,
+      "spd": 98,
+      "cri": 0.18,
+      "criDmg": 1.65,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "kaldi",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1380,
+      "atk": 185,
+      "def": 82,
+      "spd": 98,
+      "cri": 0.18,
+      "criDmg": 1.65,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "kaldi",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 2459,
+      "atk": 323,
+      "def": 133,
+      "spd": 143,
+      "cri": 0.26353800000000005,
+      "criDmg": 2.4157650000000004,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "kaldi",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 2827,
+      "atk": 323,
+      "def": 146,
+      "spd": 143,
+      "cri": 0.26353800000000005,
+      "criDmg": 2.4157650000000004,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "kaldi",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 5376,
+      "atk": 627,
+      "def": 261,
+      "spd": 231,
+      "cri": 0.4244305843800003,
+      "criDmg": 3.890613690150003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "kaldi",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 6182,
+      "atk": 627,
+      "def": 287,
+      "spd": 231,
+      "cri": 0.4244305843800003,
+      "criDmg": 3.890613690150003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "ayla",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1050,
+      "atk": 155,
+      "def": 95,
+      "spd": 106,
+      "cri": 0.12,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "ayla",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1207,
+      "atk": 155,
+      "def": 104,
+      "spd": 106,
+      "cri": 0.12,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "ayla",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 2122,
+      "atk": 267,
+      "def": 168,
+      "spd": 155,
+      "cri": 0.17569200000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "ayla",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 2440,
+      "atk": 267,
+      "def": 184,
+      "spd": 155,
+      "cri": 0.17569200000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "ayla",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 4597,
+      "atk": 514,
+      "def": 330,
+      "spd": 249,
+      "cri": 0.2829537229200002,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "ayla",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 5286,
+      "atk": 514,
+      "def": 363,
+      "spd": 249,
+      "cri": 0.2829537229200002,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "gus",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1000,
+      "atk": 165,
+      "def": 85,
+      "spd": 103,
+      "cri": 0.2,
+      "criDmg": 1.6,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "gus",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1150,
+      "atk": 165,
+      "def": 93,
+      "spd": 103,
+      "cri": 0.2,
+      "criDmg": 1.6,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "gus",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 2020,
+      "atk": 288,
+      "def": 147,
+      "spd": 150,
+      "cri": 0.2928200000000001,
+      "criDmg": 2.3425600000000006,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "gus",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 2323,
+      "atk": 288,
+      "def": 161,
+      "spd": 150,
+      "cri": 0.2928200000000001,
+      "criDmg": 2.3425600000000006,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "gus",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 4373,
+      "atk": 558,
+      "def": 285,
+      "spd": 242,
+      "cri": 0.4715895382000004,
+      "criDmg": 3.772716305600003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "gus",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 5028,
+      "atk": 558,
+      "def": 313,
+      "spd": 242,
+      "cri": 0.4715895382000004,
+      "criDmg": 3.772716305600003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "shana",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1100,
+      "atk": 130,
+      "def": 100,
+      "spd": 112,
+      "cri": 0.1,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "shana",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1265,
+      "atk": 130,
+      "def": 110,
+      "spd": 112,
+      "cri": 0.1,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "shana",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 2225,
+      "atk": 225,
+      "def": 175,
+      "spd": 163,
+      "cri": 0.14641000000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "shana",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 2558,
+      "atk": 225,
+      "def": 192,
+      "spd": 163,
+      "cri": 0.14641000000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "shana",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 4822,
+      "atk": 433,
+      "def": 341,
+      "spd": 264,
+      "cri": 0.2357947691000002,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "shana",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 5545,
+      "atk": 433,
+      "def": 375,
+      "spd": 264,
+      "cri": 0.2357947691000002,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "lorin",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1500,
+      "atk": 110,
+      "def": 160,
+      "spd": 88,
+      "cri": 0.08,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "lorin",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1724,
+      "atk": 110,
+      "def": 176,
+      "spd": 88,
+      "cri": 0.08,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "lorin",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 3074,
+      "atk": 190,
+      "def": 281,
+      "spd": 128,
+      "cri": 0.11712800000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "lorin",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 3535,
+      "atk": 190,
+      "def": 309,
+      "spd": 128,
+      "cri": 0.11712800000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "lorin",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 6720,
+      "atk": 365,
+      "def": 547,
+      "spd": 207,
+      "cri": 0.18863581528000015,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "lorin",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 7727,
+      "atk": 365,
+      "def": 601,
+      "spd": 207,
+      "cri": 0.18863581528000015,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "ember",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 850,
+      "atk": 140,
+      "def": 65,
+      "spd": 95,
+      "cri": 0.15,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "ember",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 977,
+      "atk": 140,
+      "def": 71,
+      "spd": 95,
+      "cri": 0.15,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "ember",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1712,
+      "atk": 245,
+      "def": 112,
+      "spd": 139,
+      "cri": 0.21961500000000006,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "ember",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1968,
+      "atk": 245,
+      "def": 123,
+      "spd": 139,
+      "cri": 0.21961500000000006,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "ember",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 3701,
+      "atk": 478,
+      "def": 216,
+      "spd": 224,
+      "cri": 0.3536921536500003,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "ember",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 4256,
+      "atk": 478,
+      "def": 237,
+      "spd": 224,
+      "cri": 0.3536921536500003,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "zeph",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 800,
+      "atk": 120,
+      "def": 70,
+      "spd": 115,
+      "cri": 0.12,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "zeph",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 919,
+      "atk": 120,
+      "def": 77,
+      "spd": 115,
+      "cri": 0.12,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "zeph",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1610,
+      "atk": 210,
+      "def": 120,
+      "spd": 168,
+      "cri": 0.17569200000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "zeph",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1851,
+      "atk": 210,
+      "def": 132,
+      "spd": 168,
+      "cri": 0.17569200000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "zeph",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 3477,
+      "atk": 410,
+      "def": 228,
+      "spd": 271,
+      "cri": 0.2829537229200002,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "zeph",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 3998,
+      "atk": 410,
+      "def": 250,
+      "spd": 271,
+      "cri": 0.2829537229200002,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "bolt",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 780,
+      "atk": 145,
+      "def": 60,
+      "spd": 100,
+      "cri": 0.18,
+      "criDmg": 1.55,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "bolt",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 896,
+      "atk": 145,
+      "def": 66,
+      "spd": 100,
+      "cri": 0.18,
+      "criDmg": 1.55,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "bolt",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1569,
+      "atk": 253,
+      "def": 105,
+      "spd": 146,
+      "cri": 0.26353800000000005,
+      "criDmg": 2.269355000000001,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "bolt",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1804,
+      "atk": 253,
+      "def": 115,
+      "spd": 146,
+      "cri": 0.26353800000000005,
+      "criDmg": 2.269355000000001,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "bolt",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 3388,
+      "atk": 490,
+      "def": 205,
+      "spd": 235,
+      "cri": 0.4244305843800003,
+      "criDmg": 3.654818921050003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "bolt",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 3896,
+      "atk": 490,
+      "def": 225,
+      "spd": 235,
+      "cri": 0.4244305843800003,
+      "criDmg": 3.654818921050003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "tide",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1100,
+      "atk": 100,
+      "def": 130,
+      "spd": 85,
+      "cri": 0.08,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "tide",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1265,
+      "atk": 100,
+      "def": 143,
+      "spd": 85,
+      "cri": 0.08,
+      "criDmg": 1.5,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "tide",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 2225,
+      "atk": 175,
+      "def": 225,
+      "spd": 124,
+      "cri": 0.11712800000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "tide",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 2558,
+      "atk": 175,
+      "def": 247,
+      "spd": 124,
+      "cri": 0.11712800000000004,
+      "criDmg": 2.1961500000000007,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "tide",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 4822,
+      "atk": 341,
+      "def": 433,
+      "spd": 200,
+      "cri": 0.18863581528000015,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "tide",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 5545,
+      "atk": 341,
+      "def": 476,
+      "spd": 200,
+      "cri": 0.18863581528000015,
+      "criDmg": 3.536921536500003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "cinder",
+    "level": 1,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 820,
+      "atk": 150,
+      "def": 55,
+      "spd": 92,
+      "cri": 0.14,
+      "criDmg": 1.6,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "cinder",
+    "level": 1,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 942,
+      "atk": 150,
+      "def": 60,
+      "spd": 92,
+      "cri": 0.14,
+      "criDmg": 1.6,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "cinder",
+    "level": 5,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 1651,
+      "atk": 266,
+      "def": 98,
+      "spd": 134,
+      "cri": 0.20497400000000007,
+      "criDmg": 2.3425600000000006,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "cinder",
+    "level": 5,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 1898,
+      "atk": 266,
+      "def": 107,
+      "spd": 134,
+      "cri": 0.20497400000000007,
+      "criDmg": 2.3425600000000006,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  },
+  {
+    "id": "cinder",
+    "level": 10,
+    "constellation": 0,
+    "stats": {
+      "maxHp": 3567,
+      "atk": 523,
+      "def": 193,
+      "spd": 216,
+      "cri": 0.3301126767400003,
+      "criDmg": 3.772716305600003,
+      "normalDmgBonus": 0,
+      "skillDmgBonus": 0,
+      "ultDmgBonus": 0,
+      "skillCdReduce": 0
+    }
+  },
+  {
+    "id": "cinder",
+    "level": 10,
+    "constellation": 6,
+    "stats": {
+      "maxHp": 4102,
+      "atk": 523,
+      "def": 212,
+      "spd": 216,
+      "cri": 0.3301126767400003,
+      "criDmg": 3.772716305600003,
+      "normalDmgBonus": 0.15,
+      "skillDmgBonus": 0.2,
+      "ultDmgBonus": 0.3,
+      "skillCdReduce": 1
+    }
+  }
+]
