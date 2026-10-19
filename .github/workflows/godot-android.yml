@@ -36,6 +36,7 @@ jobs:
           python3 godot/tools/build/validate_version.py
           python3 godot/tests/test_android_build.py
           python3 godot/tests/test_android_smoke.py
+          python3 godot/tests/test_android_kvm.py
           bash godot/tools/test_all.sh
           godot --headless --path godot --script tests/test_mobile_ui.gd -- --test-session --mobile-ui
           godot --headless --path godot --script tests/test_updates.gd -- --test-session
@@ -44,6 +45,8 @@ jobs:
       - name: Export isolated x86_64 emulator test APK
         run: bash godot/tools/android/export_smoke.sh "$RUNNER_TEMP/android-smoke"
       - name: Exercise actual Android runtime with ADB
+        env:
+          ALLOW_TEMP_KVM_ACL: '1'
         run: bash godot/tools/android/run_emulator.sh "$RUNNER_TEMP/android-smoke/smoke.apk" "$RUNNER_TEMP/android-evidence"
       - name: Save Android screenshots and runtime logs
         if: ${{ always() }}
@@ -92,6 +95,7 @@ jobs:
         run: |
           python3 godot/tests/test_android_build.py
           python3 godot/tests/test_android_smoke.py
+          python3 godot/tests/test_android_kvm.py
           bash godot/tools/test_all.sh
           godot --headless --path godot --script tests/test_mobile_ui.gd -- --test-session --mobile-ui
           godot --headless --path godot --script tests/test_updates.gd -- --test-session
@@ -100,6 +104,8 @@ jobs:
       - name: Export isolated x86_64 emulator test APK
         run: bash godot/tools/android/export_smoke.sh "$RUNNER_TEMP/android-smoke"
       - name: Exercise actual Android runtime with ADB
+        env:
+          ALLOW_TEMP_KVM_ACL: '1'
         run: bash godot/tools/android/run_emulator.sh "$RUNNER_TEMP/android-smoke/smoke.apk" "$RUNNER_TEMP/android-evidence"
       - name: Save Android screenshots and runtime logs
         if: ${{ always() }}

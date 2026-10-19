@@ -2,9 +2,13 @@
 
 The Android workflow runs an API 35 x86_64 emulator with KVM, software graphics,
 and a 720 × 1280 display before exporting the ARM delivery APK. It requires
-existing read/write KVM access and existing accepted Android SDK licenses. It
-never changes host permissions or accepts new license agreements. Setup failure
-fails the workflow and preserves available logs.
+existing accepted Android SDK licenses. With the explicitly approved workflow
+opt-in, it temporarily grants only the current UID read/write access to KVM on
+a GitHub-hosted Linux runner, preserves the original ACL, and restores and
+verifies it after stopping the emulator. Existing access needs no ACL change.
+Local and self-hosted runs require existing KVM access. The script accepts no
+new license agreements. Setup or cleanup failure fails the workflow and
+preserves available logs.
 
 `export_smoke.sh OUTPUT` creates an isolated project copy, changes only that
 copy to x86_64, and installs an observation-only subclass of the production
