@@ -13,6 +13,7 @@ import struct
 import subprocess
 import sys
 import time
+import xml.etree.ElementTree as ET
 
 PACKAGE = 'org.catfish872.voidrift.debug'
 ADB = os.environ.get('ADB', 'adb')
@@ -74,6 +75,49 @@ def screenshot(output, name, landscape):
     width, height = struct.unpack('>II', data[16:24])
     assert (width > height) == landscape, (name, width, height)
     (output / f'{name}.png').write_bytes(data)
+
+
+def read_ui_hierarchy(output, name):
+    remote = '/sdcard/voidrift-smoke-ui.xml'
+    adb('shell', 'uiautomator', 'dump', '--compressed', remote, timeout=30)
+    xml = adb('shell', 'cat', remote)
+    (output / f'{name}.xml').write_text(xml)
+    return ET.fromstring(xml)
+
+
+def immersive_hint_button(root, window):
+    # Narrowly identify Android's fullscreen education, never a permission prompt.
+    titles = [n for n in root.iter('node') if n.get('package') == 'android'
+              and n.get('resource-id') == 'android:id/immersive_cling_title'
+              and n.get('text') == 'Viewing full screen']
+    if not titles:
+        return None
+    buttons = [n for n in root.iter('node') if n.get('package') == 'android'
+               and n.get('resource-id') == 'android:id/ok'
+               and n.get('text') == 'Got it'
+               and n.get('class') == 'android.widget.Button'
+               and n.get('enabled') == 'true' and n.get('clickable') == 'true']
+    assert len(buttons) == 1, 'Fullscreen education has no unique verified dismissal button'
+    match = re.fullmatch(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]', buttons[0].get('bounds', ''))
+    assert match, 'Invalid fullscreen education button bounds'
+    left, top, right, bottom = map(int, match.groups())
+    assert 0 <= left < right <= window[0] and 0 <= top < bottom <= window[1], 'Fullscreen education button lies outside display'
+    return (round((left + right) / 2), round((top + bottom) / 2))
+
+
+def dismiss_fullscreen_education(output, window):
+    hierarchy = read_ui_hierarchy(output, 'first-launch-ui')
+    point = immersive_hint_button(hierarchy, window)
+    if point is None:
+        return
+    adb('shell', 'input', 'tap', str(point[0]), str(point[1]))
+    deadline = time.monotonic() + 15
+    while time.monotonic() < deadline:
+        hierarchy = read_ui_hierarchy(output, 'after-fullscreen-education')
+        if immersive_hint_button(hierarchy, window) is None:
+            return
+        time.sleep(.5)
+    raise AssertionError('Android fullscreen education remained after verified dismissal')
 
 
 def geometry(state):
@@ -148,6 +192,8 @@ def run(apk, output):
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'Android game startup', 90)
     assert state['window'][1] > state['window'][0], 'Portrait startup expected'
     geometry(state)
+    dismiss_fullscreen_education(output, state['window'])
+    state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'home after fullscreen education')
     screenshot(output, 'portrait-home', False)
     # Menu is dismissed by the real Android Back event and the game stays alive.
     tap(state, 'MenuButton')
@@ -200,6 +246,10 @@ if __name__ == '__main__':
     try:
         run(apk, output)
     finally:
+        try:
+            read_ui_hierarchy(output, 'final-ui')
+        except (subprocess.SubprocessError, ET.ParseError, OSError) as error:
+            (output / 'final-ui-error.txt').write_text(str(error))
         image = adb('exec-out', 'screencap', '-p', binary=True, check=False)
         if image.startswith(b'\x89PNG\r\n\x1a\n'):
             (output / 'final-screen.png').write_bytes(image)

@@ -79,6 +79,30 @@ class AndroidSmokeDriverTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'adb', side_effect=['idle', 'Error: unsupported']), self.assertRaises(AssertionError):
             smoke.settle_android_configuration(Path(directory))
 
+    def fullscreen_fixture(self, package='android', text='Got it', bounds='[532,330][672,428]'):
+        import xml.etree.ElementTree as ET
+        return ET.fromstring(f'<hierarchy><node package="{package}" resource-id="android:id/immersive_cling_title" text="Viewing full screen"/><node package="{package}" resource-id="android:id/ok" text="{text}" class="android.widget.Button" enabled="true" clickable="true" bounds="{bounds}"/></hierarchy>')
+
+    def test_fullscreen_education_matches_exact_system_controls(self):
+        self.assertEqual(smoke.immersive_hint_button(self.fullscreen_fixture(), [720, 1280]), (602, 379))
+
+    def test_permission_dialog_is_never_a_dismissal_target(self):
+        self.assertIsNone(smoke.immersive_hint_button(self.fullscreen_fixture(package='com.google.android.permissioncontroller', text='Allow'), [720, 1280]))
+        self.assertIsNone(smoke.immersive_hint_button(self.fullscreen_fixture(package=smoke.PACKAGE), [720, 1280]))
+
+    def test_invalid_fullscreen_button_is_rejected(self):
+        for kwargs in [{'text': 'Allow'}, {'bounds': '[532,330][999,428]'}]:
+            with self.subTest(kwargs=kwargs), self.assertRaises(AssertionError):
+                smoke.immersive_hint_button(self.fullscreen_fixture(**kwargs), [720, 1280])
+
+    def test_fullscreen_dismissal_taps_verified_bounds_then_checks_ui(self):
+        import tempfile
+        import xml.etree.ElementTree as ET
+        with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'read_ui_hierarchy', side_effect=[self.fullscreen_fixture(), ET.fromstring('<hierarchy/>')]) as read, patch.object(smoke, 'adb') as adb:
+            smoke.dismiss_fullscreen_education(Path(directory), [720, 1280])
+        adb.assert_called_once_with('shell', 'input', 'tap', '602', '379')
+        self.assertEqual(read.call_count, 2)
+
     def test_emulator_export_cannot_mutate_source_presets(self):
         script = (ROOT / 'tools/android/export_smoke.sh').read_text()
         self.assertIn("presets = target / 'export_presets.cfg'", script)
