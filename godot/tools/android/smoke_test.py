@@ -212,6 +212,68 @@ def settle_android_configuration(output):
     raise AssertionError('Android first-boot configuration did not settle')
 
 
+def background_is_stopped(activity):
+    blocks = re.split(r'\* Hist\s+#\d+:', activity)
+    stopped = any(f'packageName={PACKAGE} ' in block and re.search(r'\bstate=STOPPED\b', block) for block in blocks[1:])
+    resumed = re.findall(r'(?:topResumedActivity|mResumedActivity|ResumedActivity)=ActivityRecord\{[^}]+\}', activity)
+    return stopped and bool(resumed) and all(PACKAGE not in item for item in resumed)
+
+
+def wait_for_completed_background(output):
+    deadline = time.monotonic() + 40
+    previous = None
+    stable_since = time.monotonic()
+    while time.monotonic() < deadline:
+        activity = adb('shell', 'dumpsys', 'activity', 'activities')
+        config = adb('shell', 'am', 'get-config')
+        signature = config if background_is_stopped(activity) else None
+        if signature is None or signature != previous:
+            previous = signature
+            stable_since = time.monotonic()
+        elif time.monotonic() - stable_since >= 5:
+            (output / 'settled-background-activity.txt').write_text(activity)
+            (output / 'settled-background-config.txt').write_text(config)
+            return
+        time.sleep(.5)
+    raise AssertionError('App did not reach STOPPED with another foreground activity and stable display')
+
+
+def check_background_resume(component, output):
+    results = []
+    for mode in ['settled', 'rapid']:
+        try:
+            adb('shell', 'input', 'keyevent', 'KEYCODE_HOME')
+            if mode == 'settled':
+                wait_for_completed_background(output)
+            else:
+                # Preserve the original one-second rapid-return regression gate.
+                time.sleep(1)
+            adb('shell', 'am', 'start', '-W', '-n', component)
+            time.sleep(1)
+            state = wait_for(lambda s: s['screen'] == 'home', mode + ' resume')
+            tap(state, 'MenuButton')
+            wait_for(lambda s: s['overlay'] > 0, 'touch after ' + mode + ' resume')
+            screenshot(output, mode + '-resume-menu', True)
+            back()
+            wait_for(lambda s: s['overlay'] == 0, 'dismiss after ' + mode + ' resume')
+            results.append({'mode': mode, 'passed': True})
+        except (AssertionError, subprocess.SubprocessError) as error:
+            results.append({'mode': mode, 'passed': False, 'error': str(error)})
+            image = adb('exec-out', 'screencap', '-p', binary=True, check=False)
+            (output / (mode + '-resume-failure.png')).write_bytes(image)
+            (output / (mode + '-resume-logcat.txt')).write_text(adb('logcat', '-d', '-v', 'threadtime'))
+            (output / 'resume-results.json').write_text(json.dumps(results, indent=2))
+            if mode == 'settled':
+                # Restart solely to collect the separate rapid-case diagnostic.
+                # The recorded failure remains a hard gate for this whole run.
+                adb('shell', 'am', 'force-stop', PACKAGE)
+                adb('logcat', '-c')
+                adb('shell', 'am', 'start', '-W', '-n', component)
+                wait_for(lambda s: s['screen'] == 'home', 'diagnostic restart', 90)
+    (output / 'resume-results.json').write_text(json.dumps(results, indent=2))
+    assert all(item['passed'] for item in results), 'Background/resume failed: ' + json.dumps(results)
+
+
 def run(apk, output):
     adb('install', '-r', str(apk))
     adb('shell', 'pm', 'clear', PACKAGE)
@@ -268,15 +330,7 @@ def run(apk, output):
     screenshot(output, 'landscape-growth-scrolled', True)
     back()
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'landscape Back')
-    adb('shell', 'input', 'keyevent', 'KEYCODE_HOME')
-    time.sleep(1)
-    adb('shell', 'am', 'start', '-W', '-n', component)
-    time.sleep(1)
-    state = wait_for(lambda s: s['screen'] == 'home', 'resume')
-    tap(state, 'MenuButton')
-    wait_for(lambda s: s['overlay'] > 0, 'touch after resume')
-    back()
-    wait_for(lambda s: s['overlay'] == 0, 'dismiss after resume')
+    check_background_resume(component, output)
     assert adb('shell', 'pidof', PACKAGE).strip(), 'Android app process disappeared'
     logs = adb('logcat', '-d', '-v', 'threadtime')
     errors = [line for line in logs.splitlines() if re.search(r'SCRIPT ERROR|Parse Error|FATAL EXCEPTION|Fatal signal|ANR in ' + re.escape(PACKAGE), line) or ('godot' in line.lower() and re.search(r'\bERROR:', line))]

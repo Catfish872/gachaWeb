@@ -148,6 +148,38 @@ class AndroidSmokeDriverTests(unittest.TestCase):
         adb.assert_called_once_with('shell', 'input', 'tap', '602', '379')
         self.assertEqual(read.call_count, 2)
 
+    def test_background_requires_stopped_app_and_other_foreground(self):
+        activity = f'topResumedActivity=ActivityRecord{{abc com.android.launcher3/.Launcher}}\n * Hist #1: ActivityRecord{{def}}\npackageName={smoke.PACKAGE} processName={smoke.PACKAGE}\nstate=STOPPED'
+        self.assertTrue(smoke.background_is_stopped(activity))
+        self.assertFalse(smoke.background_is_stopped(activity.replace('state=STOPPED', 'state=STOPPING')))
+        self.assertFalse(smoke.background_is_stopped(activity.replace('com.android.launcher3', smoke.PACKAGE)))
+
+    def test_rapid_resume_failure_remains_hard_gate(self):
+        import tempfile
+        replies = [{'screen': 'home'}, {'overlay': 1}, {'overlay': 0}, AssertionError('fresh-frame timeout')]
+        def adb(*args, **kwargs):
+            return b'PNG evidence' if kwargs.get('binary') else 'log evidence'
+        with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'adb', side_effect=adb), patch.object(smoke, 'wait_for_completed_background'), patch.object(smoke, 'wait_for', side_effect=replies), patch.object(smoke, 'tap'), patch.object(smoke, 'back'), patch.object(smoke, 'screenshot'), patch.object(smoke.time, 'sleep'), self.assertRaises(AssertionError):
+            try:
+                smoke.check_background_resume('pkg/Activity', Path(directory))
+            finally:
+                results = json.loads((Path(directory) / 'resume-results.json').read_text())
+                self.assertEqual([item['passed'] for item in results], [True, False])
+                self.assertTrue((Path(directory) / 'rapid-resume-logcat.txt').exists())
+
+    def test_settled_failure_remains_gate_after_successful_rapid_diagnostic(self):
+        import tempfile
+        replies = [AssertionError('settled timeout'), {'screen': 'home'}, {'screen': 'home'}, {'overlay': 1}, {'overlay': 0}]
+        def adb(*args, **kwargs):
+            return b'PNG evidence' if kwargs.get('binary') else 'log evidence'
+        with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'adb', side_effect=adb) as commands, patch.object(smoke, 'wait_for_completed_background'), patch.object(smoke, 'wait_for', side_effect=replies), patch.object(smoke, 'tap'), patch.object(smoke, 'back'), patch.object(smoke, 'screenshot'), patch.object(smoke.time, 'sleep'), self.assertRaises(AssertionError):
+            try:
+                smoke.check_background_resume('pkg/Activity', Path(directory))
+            finally:
+                results = json.loads((Path(directory) / 'resume-results.json').read_text())
+                self.assertEqual([item['passed'] for item in results], [False, True])
+                self.assertIn(('shell', 'am', 'force-stop', smoke.PACKAGE), [call.args for call in commands.call_args_list])
+
     def test_emulator_export_cannot_mutate_source_presets(self):
         script = (ROOT / 'tools/android/export_smoke.sh').read_text()
         self.assertIn("presets = target / 'export_presets.cfg'", script)
