@@ -16,7 +16,7 @@ jobs:
   test-debug:
     if: ${{ !startsWith(github.ref, 'refs/tags/android-v') }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       XDG_CONFIG_HOME: ${{ github.workspace }}/.ci/config
       XDG_DATA_HOME: ${{ github.workspace }}/.ci/data
@@ -35,10 +35,26 @@ jobs:
         run: |
           python3 godot/tools/build/validate_version.py
           python3 godot/tests/test_android_build.py
+          python3 godot/tests/test_android_smoke.py
           bash godot/tools/test_all.sh
+          godot --headless --path godot --script tests/test_mobile_ui.gd -- --test-session --mobile-ui
           godot --headless --path godot --script tests/test_updates.gd -- --test-session
       - name: Configure Android SDK
         run: bash godot/tools/build/setup_android.sh
+      - name: Export isolated x86_64 emulator test APK
+        run: bash godot/tools/android/export_smoke.sh "$RUNNER_TEMP/android-smoke"
+      - name: Exercise actual Android runtime with ADB
+        run: bash godot/tools/android/run_emulator.sh "$RUNNER_TEMP/android-smoke/smoke.apk" "$RUNNER_TEMP/android-evidence"
+      - name: Save Android screenshots and runtime logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: android-runtime-evidence-${{ github.job }}-${{ github.run_number }}
+          path: |
+            ${{ runner.temp }}/android-evidence/
+            ${{ runner.temp }}/android-smoke/*.log
+          if-no-files-found: warn
+          retention-days: 14
       - name: Export isolated debug APK
         run: bash godot/tools/build/export_android.sh debug "$RUNNER_TEMP/apk"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -50,7 +66,7 @@ jobs:
   signed-release:
     if: ${{ startsWith(github.ref, 'refs/tags/android-v') && github.event_name != 'pull_request' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     environment: android-release
     permissions:
       contents: write
@@ -75,10 +91,26 @@ jobs:
       - name: Run all game tests
         run: |
           python3 godot/tests/test_android_build.py
+          python3 godot/tests/test_android_smoke.py
           bash godot/tools/test_all.sh
+          godot --headless --path godot --script tests/test_mobile_ui.gd -- --test-session --mobile-ui
           godot --headless --path godot --script tests/test_updates.gd -- --test-session
       - name: Configure SDK
         run: bash godot/tools/build/setup_android.sh
+      - name: Export isolated x86_64 emulator test APK
+        run: bash godot/tools/android/export_smoke.sh "$RUNNER_TEMP/android-smoke"
+      - name: Exercise actual Android runtime with ADB
+        run: bash godot/tools/android/run_emulator.sh "$RUNNER_TEMP/android-smoke/smoke.apk" "$RUNNER_TEMP/android-evidence"
+      - name: Save Android screenshots and runtime logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: android-runtime-evidence-${{ github.job }}-${{ github.run_number }}
+          path: |
+            ${{ runner.temp }}/android-evidence/
+            ${{ runner.temp }}/android-smoke/*.log
+          if-no-files-found: warn
+          retention-days: 14
       - name: Export and verify production signature
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}

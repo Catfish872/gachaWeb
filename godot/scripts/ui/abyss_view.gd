@@ -14,7 +14,7 @@ static func render(app) -> void:
 	var active: bool = app.model.abyss_run_active()
 	var floor_number := int(abyss.get("currentFloor", 1))
 	app._page_title("深渊远征", "二十层裂隙远征 · 带着每一次探索的收获归来")
-	var tabs = app._hbox(app.main_body, 12)
+	var tabs = app._flow(app.main_body, 12)
 	app._button(tabs, "远征地图", func(): app.abyss_panel = "expedition"; app._render_screen(), app.abyss_panel == "expedition")
 	app._button(tabs, "永久成长 · %d 记忆碎片" % int(meta.get("currency", 0)), func(): app.abyss_panel = "meta"; app._render_screen(), app.abyss_panel == "meta")
 	if app.abyss_panel == "meta":
@@ -50,6 +50,7 @@ static func render(app) -> void:
 	if not active and not abyss.get("lastRun", {}).is_empty():
 		_render_summary(app, abyss.lastRun)
 	var auto_box := CheckBox.new()
+	auto_box.custom_minimum_size.y = 48
 	auto_box.text = "连续自动挑战 · 遇到任何选择时暂停"
 	auto_box.add_theme_font_size_override("font_size", 14 if app.compact else 16)
 	auto_box.button_pressed = app.abyss_auto_continue

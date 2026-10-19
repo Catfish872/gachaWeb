@@ -30,15 +30,15 @@ class BuildValidationTests(unittest.TestCase):
         self.metadata = validate(self.root)
 
     def test_matching_version_and_tag(self):
-        self.assertEqual(validate(self.root, 'android-v2.0.0')['version_code'], 20000)
+        self.assertEqual(validate(self.root, 'android-v' + self.metadata['version_name'])['version_code'], self.metadata['version_code'])
 
     def test_bad_tags(self):
-        for tag in ['v2.0.0', 'android-v2.0.1', 'android-v2.0.0-beta', 'android-v2.0.0\n']:
+        for tag in ['v' + self.metadata['version_name'], 'android-v999.0.0', 'android-v' + self.metadata['version_name'] + '-beta', 'android-v' + self.metadata['version_name'] + '\n']:
             with self.subTest(tag=tag), self.assertRaises(AssertionError):
                 validate(self.root, tag)
 
     def test_bad_metadata(self):
-        for key, value in [('version_name', '2.100.0'), ('version_name', '02.0.0'), ('version_name', '0.0.0'), ('version_code', 20001), ('version_code', 20000.0), ('repository', 'evil/repo'), ('release_asset', 'evil.apk')]:
+        for key, value in [('version_name', '2.100.0'), ('version_name', '02.0.0'), ('version_name', '0.0.0'), ('version_code', self.metadata['version_code'] + 1), ('version_code', float(self.metadata['version_code'])), ('repository', 'evil/repo'), ('release_asset', 'evil.apk')]:
             (self.root / 'data/version.json').write_text(json.dumps({**self.metadata, key: value}))
             with self.subTest(key=key, value=value), self.assertRaises(AssertionError):
                 validate(self.root)
@@ -56,7 +56,7 @@ class BuildValidationTests(unittest.TestCase):
 
     def test_export_preset_version_must_match(self):
         path = self.root / 'export_presets.cfg'
-        path.write_text(path.read_text().replace('version/code=20000', 'version/code=20001', 1))
+        path.write_text(path.read_text().replace('version/code=' + str(self.metadata['version_code']), 'version/code=' + str(self.metadata['version_code'] + 1), 1))
         with self.assertRaisesRegex(AssertionError, 'Preset version'):
             validate(self.root)
 
@@ -87,7 +87,7 @@ class BuildValidationTests(unittest.TestCase):
 
     def test_apk_valid_and_rejection_fixtures(self):
         fingerprint = 'a' * 64
-        badge = "package: name='org.catfish872.voidrift.debug' versionCode='20000' versionName='2.0.0'\nsdkVersion:'24'\ntargetSdkVersion:'36'\nuses-permission: name='android.permission.INTERNET'\n"
+        badge = f"package: name='org.catfish872.voidrift.debug' versionCode='{self.metadata['version_code']}' versionName='{self.metadata['version_name']}'\nsdkVersion:'24'\ntargetSdkVersion:'36'\nuses-permission: name='android.permission.INTERNET'\n"
         signature = 'Signer #1 certificate SHA-256 digest: ' + fingerprint + '\n'
         entries = {
             'assets/data/version.json': json.dumps(self.metadata),

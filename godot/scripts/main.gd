@@ -63,6 +63,14 @@ var dialogue_tween: Tween
 var relic_slot_filter := "全部"
 var test_session := false
 var updater: Node
+var navigation_history: Array[String] = []
+var back_button: Button
+var _last_layout_size := Vector2.ZERO
+var _touch_scroll: ScrollContainer
+var _touch_start := Vector2.ZERO
+var _touch_previous := Vector2.ZERO
+var _touch_dragging := false
+var _touch_id := -1
 
 func _ready() -> void:
 	var main_font: FontFile = FONT.duplicate()
@@ -89,6 +97,7 @@ func _ready() -> void:
 	updater.name = "UpdateChecker"
 	updater.state_changed.connect(_on_update_state_changed)
 	add_child(updater)
+	get_tree().quit_on_go_back = false
 	_load_preferences()
 	battle = load("res://scripts/battle_model.gd").new(model.catalog)
 	var owned: Dictionary = model.state.get("ownedCharacters", {})
@@ -96,7 +105,8 @@ func _ready() -> void:
 		selected_character = str(owned.keys()[0])
 	_adapt_viewport()
 	get_window().size_changed.connect(_adapt_viewport)
-	compact = size.x < 1000
+	compact = size.x < 1100 or _is_mobile()
+	_last_layout_size = size
 	_build_shell()
 	_ready_done = true
 	resized.connect(_resized)
@@ -118,38 +128,129 @@ func _process(delta: float) -> void:
 			battle_clock = 0.0
 			_do_battle_action("", "", true)
 
+func _input(event: InputEvent) -> void:
+	if not _ready_done:
+		return
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if not event.pressed and _touch_dragging:
+			get_viewport().set_input_as_handled()
+			return
+		if event.pressed and _touch_id == -1:
+			_touch_dragging = false
+	if event is InputEventScreenTouch:
+		if event.pressed and _touch_id == -1:
+			_touch_id = event.index
+			_touch_start = event.position
+			_touch_previous = event.position
+			_touch_dragging = false
+			_touch_scroll = _scroll_at(overlay if overlay.get_child_count() > 0 else shell, event.position)
+		elif not event.pressed and event.index == _touch_id:
+			if _touch_dragging:
+				get_viewport().set_input_as_handled()
+			_touch_id = -1
+			_touch_scroll = null
+	elif event is InputEventScreenDrag and event.index == _touch_id and is_instance_valid(_touch_scroll):
+		if event.position.distance_to(_touch_start) >= 10:
+			_touch_dragging = true
+		if _touch_dragging:
+			_touch_scroll.scroll_vertical -= int(event.position.y - _touch_previous.y)
+			get_viewport().set_input_as_handled()
+		_touch_previous = event.position
+
+func _scroll_at(node: Node, at: Vector2) -> ScrollContainer:
+	if node is Control and not node.is_visible_in_tree():
+		return null
+	for child in node.get_children():
+		var found := _scroll_at(child, at)
+		if found != null:
+			return found
+	if node is ScrollContainer and node.get_global_rect().has_point(at):
+		return node
+	return null
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST and _ready_done:
+		_go_back()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_ESCAPE and overlay.get_child_count() > 0:
-			if dialogue_key != "":
-				_finish_dialogue()
-			elif current_screen != "battle" or (battle_settled and not settlement_error):
-				_clear_overlay()
-		if event.keycode == KEY_SPACE and dialogue_key != "":
+		if event.keycode == KEY_ESCAPE:
+			_go_back()
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_SPACE and dialogue_key != "":
 			_next_dialogue()
+
+func _go_back() -> void:
+	if dialogue_key != "":
+		if dialogue_tween: dialogue_tween.kill()
+		dialogue_key = ""
+		dialogue_done = Callable()
+		_clear_overlay()
+		return
+	if overlay.get_child_count() > 0:
+		if settlement_error:
+			_toast("请先重试保存本场战斗结果", RED)
+			return
+		_clear_overlay()
+		return
+	if current_screen == "battle":
+		navigate("abyss" if battle_config.get("isAbyss", false) else "story")
+	elif current_screen == "abyss" and abyss_panel != "expedition":
+		abyss_panel = "expedition"
+		_render_screen()
+	elif not navigation_history.is_empty():
+		var target: String = navigation_history.pop_back()
+		navigate(target, false)
+	elif current_screen != "home":
+		navigate("home", false)
+	else:
+		_confirm("退出游戏？", "旅程已自动保存，随时可以继续。", func(): get_tree().quit())
+
+func _show_navigation() -> void:
+	var menu := _modal("前往", 520, 560)
+	var grid := _grid(menu, 3 if size.x >= 600 else 2)
+	for tab in TABS:
+		_button(grid, tab[1], func(): navigate(tab[0]), tab[0] == current_screen).name = "MenuNav_" + tab[0]
+	_button(menu, "返回游戏", _clear_overlay)
+
+func _is_mobile() -> bool:
+	return OS.has_feature("mobile") or "--mobile-ui" in OS.get_cmdline_user_args()
 
 func _adapt_viewport() -> void:
 	var window := get_window()
-	var ratio: float = float(window.size.x) / maxf(1.0, float(window.size.y))
-	var logical_width := 540 if ratio < 1.15 else 1440
+	var physical := Vector2(window.size)
+	var ratio: float = physical.x / maxf(1.0, physical.y)
+	# A phone keeps the same readable logical short edge after rotation.
+	# Desktop windows below tablet size use the same responsive layout.
+	var mobile := _is_mobile() or minf(physical.x, physical.y) < 700.0
+	var logical_width: int = 360 if ratio < 1.15 else (int(360.0 * ratio) if mobile else 1440)
 	var logical_size := Vector2i(logical_width, int(logical_width / maxf(0.3, ratio)))
 	if window.content_scale_size != logical_size:
 		window.content_scale_size = logical_size
+	if _ready_done:
+		_resized()
 
 func _resized() -> void:
 	if not _ready_done or _resize_queued:
 		return
-	if (size.x < 1000) != compact:
+	if size != _last_layout_size:
 		_resize_queued = true
 		call_deferred("_resize_layout")
 
 func _resize_layout() -> void:
 	_resize_queued = false
-	compact = size.x < 1000
+	compact = size.x < 1100 or _is_mobile()
+	_last_layout_size = size
 	_clear(shell)
 	shell.queue_free()
 	_build_shell()
 	_render_screen()
+	if dialogue_key != "":
+		_render_dialogue()
+	else:
+		for child in overlay.get_children():
+			if child.name == "ModalPanel":
+				_layout_modal(child)
 
 func _build_shell() -> void:
 	if not has_node("Backdrop"):
@@ -173,38 +274,31 @@ func _build_shell() -> void:
 	shell = MarginContainer.new()
 	shell.name = "Shell"
 	shell.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	for edge in ["left", "right"]:
-		shell.add_theme_constant_override("margin_" + edge, 24 if compact else 32)
-	for edge in ["top", "bottom"]:
-		shell.add_theme_constant_override("margin_" + edge, 20)
+	var safe := _usable_rect()
+	var inset := 12 if compact else 32
+	shell.add_theme_constant_override("margin_left", inset + int(safe.position.x))
+	shell.add_theme_constant_override("margin_right", inset + int(maxf(0, size.x - safe.end.x)))
+	shell.add_theme_constant_override("margin_top", 8 + int(safe.position.y))
+	shell.add_theme_constant_override("margin_bottom", 8 + int(maxf(0, size.y - safe.end.y)))
 	add_child(shell)
-	var vertical := _vbox(shell, 18)
-	var header := _hbox(vertical, 24)
+	var vertical := _vbox(shell, 8 if compact else 18)
+	var header := _hbox(vertical, 8)
+	back_button = _button(header, "‹ 返回", _go_back)
+	back_button.name = "BackButton"
 	var brand := _vbox(header, 2)
-	brand.custom_minimum_size.x = 210 if not compact else 150
-	_label(brand, "虚空裂变", 28, GOLD)
-	_label(brand, "VOID RIFT  /  旅者纪事", 11, MUTED)
-	var spacer := Control.new()
-	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header.add_child(spacer)
-	header_resources = _hbox(header, 10)
+	brand.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_label(brand, "虚空裂变", 22 if compact else 28, GOLD)
+	if not compact:
+		_label(brand, "VOID RIFT  /  旅者纪事", 11, MUTED)
+	_button(header, "菜单", _show_navigation).name = "MenuButton"
+	header_resources = _hbox(vertical if compact else header, 6)
 	_update_resources()
-	var divider := HSeparator.new()
-	divider.modulate = LINE
-	vertical.add_child(divider)
-	var main := _responsive_box(vertical, compact, 16 if compact else 28)
+	var main := _responsive_box(vertical, compact, 10 if compact else 28)
 	main.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	var nav := _responsive_box(main, not compact, 7 if compact else 8)
+	var nav := _vbox(main, 8)
+	nav.visible = not compact
 	if not compact:
 		nav.custom_minimum_size.x = 166
-	else:
-		var sc := ScrollContainer.new()
-		main.remove_child(nav)
-		main.add_child(sc)
-		sc.add_child(nav)
-		sc.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
-		sc.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-		sc.custom_minimum_size.y = 48
 	nav_buttons.clear()
 	for tab in TABS:
 		var b := _button(nav, tab[1] if compact else tab[2] + "   " + tab[1], func(): navigate(tab[0]))
@@ -245,7 +339,7 @@ func _build_shell() -> void:
 		toast_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(toast_layer)
 
-func navigate(screen: String) -> void:
+func navigate(screen: String, record_history: bool = true) -> void:
 	if current_screen == "battle" and settlement_error and screen != "battle":
 		_toast("请先重试保存本场战斗结果", RED)
 		return
@@ -258,10 +352,15 @@ func navigate(screen: String) -> void:
 			navigate(screen))
 		return
 	_clear_overlay()
+	if record_history and screen != current_screen and current_screen != "battle":
+		navigation_history.append(current_screen)
+		if navigation_history.size() > 30:
+			navigation_history.pop_front()
 	current_screen = screen
 	if screen == "party":
 		draft_team = model.state.get("team", []).filter(func(id): return id is String and not id.is_empty()).duplicate()
 	_render_screen()
+	main_body.get_parent().set_deferred("scroll_vertical", 0)
 
 func _render_screen() -> void:
 	if current_screen != "battle": unit_cards.clear()
@@ -291,17 +390,17 @@ func _update_resources() -> void:
 	_clear(header_resources)
 	var r: Dictionary = model.state.get("resources", {})
 	for item in [["星尘晶", r.get("diamonds", 0), CYAN], ["金币", r.get("gold", 0), GOLD], ["体力", "%s / %s" % [r.get("stamina", 0), r.get("maxStamina", 100)], Color("a6c9a5")]]:
-		var p := _panel(header_resources, item[2].darkened(0.7), 12)
+		var p := _panel(header_resources, item[2].darkened(0.7), 5 if compact else 12)
 		var col := _vbox(p, 0)
-		_label(col, item[0], 10 if compact else 12, MUTED)
-		_label(col, str(item[1]), 15 if compact else 20, item[2])
+		_label(col, item[0], 12, MUTED)
+		_label(col, str(item[1]), 16 if compact else 20, item[2])
 
 func _home() -> void:
-	var hero := _scene_panel(main_body, "res://assets/wilderness.png", 370 if not compact else 330)
+	var hero := _scene_panel(main_body, "res://assets/wilderness.png", 370 if not compact else 390)
 	var row = _vbox(hero, 10)
 	row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	row.offset_left = 32
-	row.offset_right = -32
+	row.offset_left = 16 if compact else 32
+	row.offset_right = -16 if compact else -32
 	row.offset_top = 32
 	row.offset_bottom = -30
 	_label(row, "旅 者 纪 事   ·   第一章", 13, GOLD)
@@ -310,7 +409,7 @@ func _home() -> void:
 	var sp := Control.new()
 	sp.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	row.add_child(sp)
-	var actions := _hbox(row, 12)
+	var actions := _responsive_box(row, compact, 12)
 	_button(actions, "继续旅程   →", func(): navigate("story"), true)
 	_button(actions, "查看当前队伍", func(): navigate("party"))
 	var grid := _grid(main_body, 1 if compact else 3)
@@ -328,13 +427,17 @@ func _home() -> void:
 func _story() -> void:
 	_page_title("世界探索", "循着星光，书写你的旅者纪事")
 	var chapters: Array = model.catalog.StageData.chapters
-	var tabs := _hbox(main_body, 12)
+	var tabs := _flow(main_body, 12)
 	for i in chapters.size():
 		_button(tabs, str(chapters[i].name), func(): selected_chapter = i; _render_screen(), selected_chapter == i)
 	var chapter: Dictionary = chapters[selected_chapter]
 	var banner := _scene_panel(main_body, "res://assets/wilderness.png", 195)
 	var title := _vbox(banner, 10)
-	title.position = Vector2(28, 30)
+	title.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	title.offset_left = 16
+	title.offset_right = -16
+	title.offset_top = 20
+	title.offset_bottom = -16
 	_label(title, "旅 程 章 节  /  %02d" % (selected_chapter + 1), 12, GOLD)
 	_label(title, chapter.name, 29, TEXT)
 	_label(title, chapter.description, 15, MUTED)
@@ -362,7 +465,7 @@ func _story() -> void:
 					names.append(n)
 		_label(v, "敌人  " + " · ".join(names), 13, MUTED, true)
 		_label(v, "体力 %d   ·   %d 波敌人   ·   首通星尘晶 %d" % [stage.get("staminaCost", 6), stage.get("waves", []).size(), stage.get("firstClearRewards", {}).get("diamonds", 0)], 13, MUTED)
-		var actions := _hbox(v, 10)
+		var actions := _flow(v, 10)
 		var enter := _button(actions, "再次挑战" if done else "开始探索   →", func(): _begin_stage(stage.id), unlocked)
 		enter.disabled = not unlocked
 		if done:
@@ -382,7 +485,7 @@ func _begin_stage(stage_id: String) -> void:
 func _summon() -> void:
 	_page_title("星辰祈愿", "以星尘为信，让群星回应你的呼唤")
 	var pools: Dictionary = model.catalog.GachaPoolData.pools
-	var switches := _hbox(main_body, 12)
+	var switches := _flow(main_body, 12)
 	for id in model.catalog.GachaPoolData.activePools:
 		_button(switches, pools[id].name, func(): selected_pool = str(id); _render_screen(), selected_pool == id)
 	var pool: Dictionary = pools[selected_pool]
@@ -401,7 +504,11 @@ func _summon() -> void:
 	var hero := _scene_panel(main_body, "res://assets/characters/kaldi.png" if selected_pool == "limited_kaldi" else "res://assets/characters/ayla.png", 330)
 	var v := _vbox(hero, 12)
 	v.position = Vector2(30, 30)
-	v.custom_minimum_size.x = 420 if not compact else 320
+	v.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	v.offset_left = 16
+	v.offset_right = -16
+	v.offset_top = 24
+	v.offset_bottom = -16
 	_label(v, pool.subtitle, 14, GOLD)
 	_label(v, pool.name, 48 if not compact else 38, TEXT)
 	_label(v, "★★★★★", 24, GOLD)
@@ -459,7 +566,7 @@ func _reveal_summon() -> void:
 		_center_label(v, "群星的光芒正在汇聚", 23, TEXT)
 		_center_label(v, "触碰星门，揭晓与你同行之人", 14, MUTED)
 		_button(v, "揭晓旅者", func(): summon_flipped = true; _reveal_summon(), true)
-	var actions := _hbox(box, 14)
+	var actions := _flow(box, 14)
 	_button(actions, "全部揭示", _summon_summary)
 	if summon_flipped:
 		_button(actions, "查看结果" if summon_index == summon_results.size() - 1 else "下一位   →", func():
@@ -472,13 +579,13 @@ func _reveal_summon() -> void:
 
 func _summon_summary() -> void:
 	var box := _modal("星辰之约 · 祈愿结果", 520 if summon_results.size() == 1 else 1100)
-	var grid := _grid(box, mini(summon_results.size(), 2 if compact else 5))
+	var grid := _grid(box, mini(summon_results.size(), 1 if compact else 5))
 	for r in summon_results:
 		var v := _vbox(grid, 6)
 		v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		_character_card(v, r.charId, 240 if summon_results.size() == 1 else 145, Callable())
 		_center_label(v, "新角色" if r.get("isNew", false) else "碎片 +%d" % r.get("shards", 0), 12, CYAN)
-	var repeat := _hbox(box, 12)
+	var repeat := _flow(box, 12)
 	var cost: int = int(model.catalog.GachaPoolData.pools[selected_pool].costPerPull)
 	var again := _button(repeat, "再祈愿 %d 次 · %d 星尘晶" % [summon_results.size(), cost * summon_results.size()], func(): _pull(summon_results.size()))
 	again.disabled = int(model.state.resources.diamonds) < cost * summon_results.size()
@@ -492,7 +599,7 @@ var salvage_options := {"all3Star": false, "all4Star": false, "allUnupgraded": f
 
 func _party() -> void:
 	_page_title("冒险编队", "选择三位同行者 · 点击卡片加入或移出队伍")
-	var header := _hbox(main_body, 14)
+	var header := _responsive_box(main_body, compact, 14)
 	_label(header, "当前阵容   %d / 3" % draft_team.size(), 21, GOLD)
 	var save_team := _button(header, "保存出战队伍", func():
 		if _check(model.set_team(draft_team)):
@@ -513,10 +620,10 @@ func _party() -> void:
 			_center_label(v, "◇", 50, MUTED)
 			_center_label(v, "待命席位 %d" % (i + 1), 17, MUTED)
 	_section("旅者图鉴", "全部十位旅者 · 已拥有 %d 位" % model.state.ownedCharacters.size())
-	var filters := _hbox(main_body, 8)
+	var filters := _flow(main_body, 8)
 	for el in ["全部", "fire", "water", "wind", "thunder"]:
 		_button(filters, _element_name(el), func(): character_filter = el; _render_screen(), character_filter == el)
-	var grid := _grid(main_body, 2 if compact else 4)
+	var grid := _grid(main_body, 1 if compact else 4)
 	for id in model.catalog.CharacterData:
 		var data: Dictionary = model.catalog.CharacterData[id]
 		if character_filter != "全部" and data.element != character_filter:
@@ -524,7 +631,7 @@ func _party() -> void:
 		var v := _vbox(grid, 8)
 		_character_card(v, id, 175, func(): _toggle_team(id))
 		var owned: bool = model.state.ownedCharacters.has(id)
-		var row := _hbox(v, 7)
+		var row := _responsive_box(v, compact, 7)
 		var b := _button(row, "移出队伍" if id in draft_team else ("加入队伍" if owned else "尚未获得"), func(): _toggle_team(id), id in draft_team)
 		b.disabled = not owned or run_locked
 		_button(row, "详情", func(): selected_character = id; navigate("growth"))
@@ -588,7 +695,7 @@ func _growth() -> void:
 		_label(levelv, "前往祈愿，或完成对应章节，邀请旅者加入队伍。", 15, MUTED, true)
 		_button(levelv, "前往星辰祈愿", func(): navigate("summon"), true)
 	var stats: Dictionary = model.computed_stats(selected_character) if owned else data.baseStats
-	var statgrid := _grid(details, 3)
+	var statgrid := _grid(details, 2 if compact else 3)
 	for s in [["生命", "hp"], ["攻击", "atk"], ["防御", "def"], ["速度", "spd"], ["暴击率", "cri"], ["暴击伤害", "criDmg"]]:
 		var p := _panel(statgrid, LINE, 14)
 		var v := _vbox(p, 3)
@@ -644,7 +751,7 @@ func _growth() -> void:
 
 func _relics() -> void:
 	_page_title("遗物工坊", "整理古老遗物，将力量铭刻于旅者的装备")
-	var controls := _hbox(main_body, 8)
+	var controls := _flow(main_body, 8)
 	for f in ["全部", "背包", "已装备", "三星", "四星", "五星"]:
 		_button(controls, f, func(): relic_filter = f; _save_preferences(); _render_screen(), relic_filter == f)
 	_button(controls, "批量出售", _batch_salvage)
@@ -660,7 +767,7 @@ func _relics() -> void:
 		_empty_state(main_body, "尚未获得遗物", "完成章节战斗与深渊挑战，即可收集不同部位的遗物。", "开始探索", func(): navigate("story"))
 		return
 	var row := _responsive_box(main_body, compact, 20)
-	var listing := _grid(row, 2 if compact else 3)
+	var listing := _grid(row, 1 if compact else 3)
 	listing.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var visible: Array = []
 	for relic in inventory:
@@ -726,6 +833,7 @@ func _batch_salvage() -> void:
 	_label(box, "选择满足任一条件的背包遗物。已装备的遗物将保留。", 16, MUTED, true)
 	for option in [["all3Star", "全部三星遗物"], ["all4Star", "全部四星遗物"], ["allUnupgraded", "全部未强化遗物（+0）"]]:
 		var check := CheckBox.new()
+		check.custom_minimum_size.y = 48
 		check.text = option[1]
 		check.button_pressed = salvage_options[option[0]]
 		check.toggled.connect(func(pressed): salvage_options[option[0]] = pressed; _save_preferences())
@@ -799,7 +907,7 @@ func _save_screen() -> void:
 		b.disabled = active
 		_label(v, "最后保存：" + (Time.get_datetime_string_from_unix_time(int(s.get("lastSaved", 0)) / 1000).replace("T", " ") if int(s.get("lastSaved", 0)) > 0 else "尚未保存"), 11, MUTED, true)
 		if s.get("corrupt", false): _label(v, "数据异常 · 可导入备份恢复", 13, RED, true)
-		var transfer := _hbox(v, 8)
+		var transfer := _flow(v, 8)
 		_button(transfer, "导出", func(): _export_dialog(slot)).disabled = not s.get("hasData", false) or s.get("corrupt", false)
 		_button(transfer, "导入", func(): _import_dialog(slot))
 		_button(v, "重新开始", func():
@@ -812,7 +920,7 @@ func _save_screen() -> void:
 	var v := _vbox(p, 14)
 	_label(v, "存档迁移与备份", 24, TEXT)
 	_label(v, "导出为可迁移的存档文件。导入会验证数据，并替换当前槽位。可使用原网页版本导出的第三版存档。", 16, MUTED, true)
-	var row := _hbox(v, 14)
+	var row := _flow(v, 14)
 	_button(row, "导出当前档案", _export_dialog, true)
 	_button(row, "导入存档文件", _import_dialog)
 	_button(row, "立即保存", func(): _toast("旅程已保存" if model.save_game() else "保存失败，请检查目录权限", CYAN))
@@ -948,7 +1056,7 @@ func _render_battle() -> void:
 	names.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_label(names, str(battle_config.get("name", "裂隙战斗")), 26, TEXT)
 	_label(names, "第 %d 回合   ·   第 %d 波" % [state.get("turn", 1), int(state.get("wave", 1))], 13, GOLD)
-	var head_controls := _hbox(head, 10)
+	var head_controls := _flow(head, 10)
 	_button(head_controls, "自动 · 开启" if battle_auto else "自动 · 关闭", func(): battle_auto = not battle_auto; abyss_auto_continue = abyss_auto_continue and battle_auto; _render_battle(), battle_auto)
 	_button(head_controls, "%d 倍速" % battle_speed, func(): battle_speed = 2.0 if battle_speed == 1.0 else (4.0 if battle_speed == 2.0 else 1.0); _render_battle())
 	_button(head_controls, "撤退", func(): navigate("abyss" if battle_config.get("isAbyss", false) else "story"))
@@ -1037,13 +1145,12 @@ func _battle_unit_card(parent: Node, unit: Dictionary, active_uid: String) -> vo
 	var color := _element_color(unit.get("element", "fire"))
 	var p := _panel(parent, GOLD if unit.uid == active_uid else LINE, 10)
 	p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	p.custom_minimum_size.x = 120
-	p.mouse_filter = Control.MOUSE_FILTER_STOP
-	p.gui_input.connect(func(event):
-		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and battle.state.phase == "player_turn":
-			if str(unit.uid) in battle.legal_targets(selected_skill):
-				selected_target = str(unit.uid)
-				_render_battle())
+	p.custom_minimum_size.x = 0 if compact else 120
+	p.mouse_filter = Control.MOUSE_FILTER_PASS
+	_bind_card_tap(p, func():
+		if battle.state.phase == "player_turn" and str(unit.uid) in battle.legal_targets(selected_skill):
+			selected_target = str(unit.uid)
+			_render_battle())
 	unit_cards[unit.uid] = p
 	var v := _vbox(p, 6)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1213,6 +1320,9 @@ func _play_dialogue(key: String, done: Callable) -> void:
 	_render_dialogue()
 
 func _render_dialogue() -> void:
+	if compact:
+		_render_mobile_dialogue()
+		return
 	_clear_overlay()
 	var bg := ColorRect.new()
 	bg.color = Color(0.02, 0.03, 0.06, 0.97)
@@ -1261,6 +1371,27 @@ func _render_dialogue() -> void:
 	_button(row, "跳过剧情", _finish_dialogue)
 	_button(row, "继续   →" if dialogue_index < dialogue_lines.size() - 1 else "踏上旅途   →", _next_dialogue, true)
 
+func _render_mobile_dialogue() -> void:
+	var line: Dictionary = dialogue_lines[dialogue_index]
+	var speaker := str(line.get("speaker", "narrator"))
+	var speaker_name := str(line.get("speakerName", _char_name(speaker)))
+	if speaker == "narrator": speaker_name = "旅者纪事"
+	if speaker == "traveler": speaker_name = "旅行者"
+	var v := _modal(speaker_name, 700, size.y - 24)
+	var portrait_id = line.get("portrait")
+	if portrait_id is String and model.catalog.CharacterData.has(portrait_id):
+		_portrait(v, portrait_id, 180)
+	dialogue_prose = _label(v, str(line.get("text", "")), 19, TEXT, true)
+	dialogue_prose.visible_characters = 0
+	if dialogue_tween: dialogue_tween.kill()
+	dialogue_tween = create_tween()
+	dialogue_tween.tween_property(dialogue_prose, "visible_characters", dialogue_prose.text.length(), minf(1.5, dialogue_prose.text.length() * 0.023))
+	var footer := _modal_footer(v)
+	_label(footer, "%d / %d" % [dialogue_index + 1, dialogue_lines.size()], 14, MUTED)
+	var actions := _flow(footer, 8)
+	_button(actions, "跳过剧情", _finish_dialogue)
+	_button(actions, "继续 →" if dialogue_index < dialogue_lines.size() - 1 else "踏上旅途 →", _next_dialogue, true)
+
 func _next_dialogue() -> void:
 	if dialogue_key == "": return
 	if is_instance_valid(dialogue_prose) and dialogue_prose.visible_characters >= 0 and dialogue_prose.visible_characters < dialogue_prose.text.length():
@@ -1284,6 +1415,7 @@ func _finish_dialogue() -> void:
 	if callback.is_valid(): callback.call()
 
 func _box(color: Color, border: Color = LINE, padding: int = 14) -> StyleBoxFlat:
+	padding = mini(padding, 14) if compact else padding
 	var style := StyleBoxFlat.new()
 	style.bg_color = color
 	style.border_color = border
@@ -1299,6 +1431,8 @@ func _panel(parent: Node, border: Color = LINE, padding: int = 18) -> PanelConta
 	var p := PanelContainer.new()
 	p.add_theme_stylebox_override("panel", _box(Color(0.055, 0.085, 0.135, 0.94), border, padding))
 	p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	p.mouse_filter = Control.MOUSE_FILTER_PASS
+	p.mouse_force_pass_scroll_events = true
 	parent.add_child(p)
 	return p
 
@@ -1318,6 +1452,15 @@ func _hbox(parent: Node, gap: int = 14) -> HBoxContainer:
 	parent.add_child(h)
 	return h
 
+func _flow(parent: Node, gap: int = 12) -> HFlowContainer:
+	var row := HFlowContainer.new()
+	row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_theme_constant_override("h_separation", gap)
+	row.add_theme_constant_override("v_separation", gap)
+	row.mouse_filter = Control.MOUSE_FILTER_PASS
+	parent.add_child(row)
+	return row
+
 func _grid(parent: Node, columns: int) -> GridContainer:
 	var g := GridContainer.new()
 	g.columns = columns
@@ -1330,10 +1473,10 @@ func _grid(parent: Node, columns: int) -> GridContainer:
 func _label(parent: Node, text: String, font_size: int = 17, color: Color = TEXT, wrap: bool = false) -> Label:
 	var l := Label.new()
 	l.text = text
-	l.add_theme_font_size_override("font_size", font_size)
+	l.add_theme_font_size_override("font_size", maxi(14, font_size) if compact else font_size)
 	l.add_theme_color_override("font_color", color)
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	if wrap:
+	if wrap or compact:
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	parent.add_child(l)
@@ -1347,7 +1490,10 @@ func _center_label(parent: Node, text: String, font_size: int = 17, color: Color
 func _button(parent: Node, text: String, action: Callable, primary: bool = false) -> Button:
 	var b := Button.new()
 	b.text = text
-	b.custom_minimum_size.y = 43
+	b.custom_minimum_size.y = 48
+	b.mouse_filter = Control.MOUSE_FILTER_PASS
+	b.mouse_force_pass_scroll_events = true
+	b.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	b.add_theme_font_size_override("font_size", 15)
 	b.add_theme_color_override("font_color", INK if primary else TEXT)
@@ -1380,7 +1526,7 @@ func _page_title(title: String, subtitle: String) -> void:
 	_label(v, subtitle, 14, MUTED)
 
 func _section(title: String, subtitle: String = "") -> void:
-	var row := _hbox(main_body, 14)
+	var row := _responsive_box(main_body, compact, 6 if compact else 14)
 	_label(row, title, 23, TEXT)
 	if subtitle != "":
 		var l := _label(row, subtitle, 12, MUTED, true)
@@ -1391,11 +1537,12 @@ func _scene_panel(parent: Node, path: String, height: int) -> Control:
 	p.custom_minimum_size.y = height
 	p.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	p.clip_contents = true
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	parent.add_child(p)
 	var image := TextureRect.new()
 	image.texture = load(path)
 	image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	image.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	p.add_child(image)
@@ -1433,7 +1580,7 @@ func _portrait(parent: Node, id: String, height: float, _wide: bool = false, ene
 		var t := TextureRect.new()
 		t.texture = load(path)
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED if id in ["kaldi", "ayla"] else TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		t.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		t.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		c.add_child(t)
@@ -1462,13 +1609,30 @@ func _character_card(parent: Node, id: String, art_height: int, action: Callable
 	_label(v, "等级 %d   ·   %s" % [model.state.ownedCharacters.get(id, {}).get("level", 1), model.catalog.RoleNames.get(data.get("role", ""), "")] if owned else "未拥有 · 可查看完整档案", 12, MUTED)
 	if action.is_valid():
 		p.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		p.gui_input.connect(func(event):
-			if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-				action.call())
+		_bind_card_tap(p, action)
 		_ignore_children(v)
 	if not owned:
 		p.modulate = Color(0.72, 0.75, 0.8, 0.8)
 	return p
+
+func _bind_card_tap(card: Control, action: Callable) -> void:
+	card.mouse_filter = Control.MOUSE_FILTER_PASS
+	card.mouse_force_pass_scroll_events = true
+	var gesture := {"down": false, "start": Vector2.ZERO, "drag": false}
+	card.gui_input.connect(func(event):
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				gesture.down = true
+				gesture.start = event.global_position
+				gesture.drag = false
+			else:
+				var activate: bool = gesture.down and not gesture.drag and not _touch_dragging and card.get_global_rect().has_point(event.global_position)
+				gesture.down = false
+				if activate:
+					action.call()
+		elif event is InputEventMouseMotion and gesture.down:
+			if event.global_position.distance_to(gesture.start) > 8:
+				gesture.drag = true)
 
 func _ignore_children(node: Node) -> void:
 	if node is Control:
@@ -1499,13 +1663,13 @@ func _modal(title: String, width: float = 700, height: float = 700) -> VBoxConta
 	dim.color = Color(0.015, 0.022, 0.04, 0.91)
 	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	overlay.add_child(dim)
-	var center := CenterContainer.new()
-	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	overlay.add_child(center)
 	var p := PanelContainer.new()
-	p.custom_minimum_size = Vector2(minf(width, size.x - 60), minf(height, size.y - 70))
-	p.add_theme_stylebox_override("panel", _box(PANEL, GOLD.darkened(0.55), 26))
-	center.add_child(p)
+	p.name = "ModalPanel"
+	p.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	p.set_meta("requested_size", Vector2(width, height))
+	_layout_modal(p)
+	p.add_theme_stylebox_override("panel", _box(PANEL, GOLD.darkened(0.55), 14 if compact else 26))
+	overlay.add_child(p)
 	var scroll := ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	p.add_child(scroll)
@@ -1513,6 +1677,26 @@ func _modal(title: String, width: float = 700, height: float = 700) -> VBoxConta
 	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_label(v, title, 24, GOLD)
 	return v
+
+func _usable_rect() -> Rect2:
+	var safe := Rect2(Vector2.ZERO, size)
+	if _is_mobile():
+		var physical_safe := DisplayServer.get_display_safe_area()
+		if physical_safe.size.x > 0 and physical_safe.size.y > 0:
+			var scale_factor := size / Vector2(get_window().size)
+			safe = Rect2(Vector2(physical_safe.position) * scale_factor, Vector2(physical_safe.size) * scale_factor).intersection(safe)
+	return safe
+
+func _layout_modal(panel: Control) -> void:
+	var requested: Vector2 = panel.get_meta("requested_size", Vector2(700, 700))
+	var safe := _usable_rect()
+	var available := safe.size - Vector2(24, 32)
+	var modal_size := Vector2(minf(requested.x, available.x), minf(requested.y, available.y))
+	var center_offset := safe.get_center() - size / 2
+	panel.offset_left = center_offset.x - modal_size.x / 2
+	panel.offset_right = center_offset.x + modal_size.x / 2
+	panel.offset_top = center_offset.y - modal_size.y / 2
+	panel.offset_bottom = center_offset.y + modal_size.y / 2
 
 func _confirm(title: String, message: String, accept: Callable) -> void:
 	var box := _modal(title, 660, 330)

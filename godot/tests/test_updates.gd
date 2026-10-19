@@ -10,6 +10,8 @@ func check(value, name):
 func _init():
  var local = U.read_local_version()
  check(U.valid_local_version(local), "local metadata")
+ # Keep comparison fixtures independent of the application release version.
+ local = {"version_name":"2.0.0","version_code":20000,"repository":U.REPOSITORY,"release_asset":U.RELEASE_ASSET}
  for bad in ["", "v1", "01.0.0", "2.100.0", "2.0.100", "2.0.1-01", "0.0.0", "https://bad/2.0.1"]:
   check(U.parse_version(bad).is_empty(), "invalid version " + bad)
  var tag = "android-v2.0.1"
