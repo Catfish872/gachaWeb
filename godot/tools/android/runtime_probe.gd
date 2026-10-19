@@ -14,13 +14,18 @@ func _process(delta: float) -> void:
 	var controls: Array = []
 	_probe_controls(self, controls)
 	var scroll := main_body.get_parent() as ScrollContainer
-	print("ANDROID_SMOKE " + JSON.stringify({
+	var payload := Marshalls.utf8_to_base64(JSON.stringify({
 		"seq": _probe_sequence, "modal_scrolls": _probe_scrolls(), "screen": current_screen, "window": [get_window().size.x, get_window().size.y],
 		"logical": [size.x, size.y], "overlay": overlay.get_child_count(),
 		"scroll": scroll.scroll_vertical, "scroll_max": scroll.get_v_scroll_bar().max_value - scroll.get_v_scroll_bar().page,
 		"page_width": main_body.size.x, "scroll_width": scroll.size.x,
 		"scroll_rect": _probe_rect(scroll), "buttons": controls
 	}))
+	# Android/Godot log output truncates long lines. Each ASCII record stays
+	# below 700 bytes, independent of Unicode menu labels and number of controls.
+	var chunk_count := ceili(payload.length() / 600.0)
+	for index in range(chunk_count):
+		print("ANDROID_SMOKE_CHUNK %d %d %d %d %s" % [_probe_sequence, index, chunk_count, payload.length(), payload.substr(index * 600, 600)])
 
 func _probe_rect(control: Control) -> Array:
 	var transform := get_viewport().get_screen_transform() * control.get_global_transform_with_canvas()

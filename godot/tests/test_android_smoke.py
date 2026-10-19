@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Offline regression checks for the Android runtime driver (not emulator tests)."""
+import base64
+import json
 import importlib.util
 from pathlib import Path
 import unittest
@@ -11,10 +13,53 @@ smoke = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(smoke)
 
 
+def chunk_lines(state):
+    encoded = base64.b64encode(json.dumps(state, ensure_ascii=False).encode()).decode()
+    count = (len(encoded) + 599) // 600
+    return [f"I godot: ANDROID_SMOKE_CHUNK {state['seq']} {index} {count} {len(encoded)} {encoded[index * 600:(index + 1) * 600]}" for index in range(count)]
+
+
 class AndroidSmokeDriverTests(unittest.TestCase):
     def test_reads_only_complete_probe_records(self):
-        log = 'I godot: ANDROID_SMOKE {"screen":"home"}\nI godot: ANDROID_SMOKE {truncated\n'
-        self.assertEqual(smoke.snapshots(log), [{'screen': 'home'}])
+        state = {'seq': 1, 'screen': 'home'}
+        log = '\n'.join(chunk_lines(state)) + '\nI godot: ANDROID_SMOKE_CHUNK broken'
+        self.assertEqual(smoke.snapshots(log), [state])
+
+    def menu_frame(self, seq=12):
+        return {'seq': seq, 'screen': 'home', 'overlay': 2, 'buttons': [{'name': f'MenuNav_{index}', 'text': '星辰祈愿', 'rect': [1, 2, 3, 4], 'clip': [1, 2, 3, 4]} for index in range(11)]}
+
+    def test_large_unicode_menu_reassembles_out_of_order(self):
+        state = self.menu_frame()
+        lines = chunk_lines(state)
+        self.assertGreater(len(lines), 2)
+        self.assertTrue(all(len(line.encode()) < 700 for line in lines))
+        self.assertEqual(smoke.snapshots('\n'.join(reversed(lines))), [state])
+
+    def test_missing_and_truncated_chunks_never_emit_frame(self):
+        lines = chunk_lines(self.menu_frame())
+        for broken in [lines[1:], lines[:-1], lines[:-1] + [lines[-1][:-4]]]:
+            with self.subTest(broken=broken):
+                self.assertEqual(smoke.snapshots('\n'.join(broken)), [])
+
+    def test_identical_duplicates_emit_one_frame(self):
+        state = self.menu_frame()
+        lines = chunk_lines(state)
+        self.assertEqual(smoke.snapshots('\n'.join(lines + lines)), [state])
+
+    def test_conflicting_duplicate_rejects_whole_sequence(self):
+        lines = chunk_lines(self.menu_frame())
+        duplicate = lines[0][:-1] + ('A' if lines[0][-1] != 'A' else 'B')
+        self.assertEqual(smoke.snapshots('\n'.join(lines + [duplicate])), [])
+
+    def test_frames_do_not_mix_sequences(self):
+        first, second = self.menu_frame(1), self.menu_frame(2)
+        one, two = chunk_lines(first), chunk_lines(second)
+        self.assertEqual(smoke.snapshots('\n'.join(one[:-1] + two)), [second])
+        self.assertEqual(smoke.snapshots('\n'.join(two + one)), [first, second])
+
+    def test_mismatched_envelope_sequence_rejected(self):
+        lines = [line.replace('CHUNK 12 ', 'CHUNK 13 ') for line in chunk_lines(self.menu_frame())]
+        self.assertEqual(smoke.snapshots('\n'.join(lines)), [])
 
     def test_taps_actual_button_center(self):
         state = {'window': [720, 1280], 'buttons': [{'name': 'MenuButton', 'rect': [500, 20, 100, 80]}]}
@@ -49,7 +94,7 @@ class AndroidSmokeDriverTests(unittest.TestCase):
     def test_wait_requires_two_new_matching_records(self):
         import json
         def log(*seqs):
-            return '\n'.join('ANDROID_SMOKE ' + json.dumps({'seq': seq, 'screen': 'home'}) for seq in seqs)
+            return '\n'.join(line for seq in seqs for line in chunk_lines({'seq': seq, 'screen': 'home'}))
         with patch.object(smoke, 'adb', side_effect=[log(1), log(1), log(1, 2), log(1, 2, 3)]) as adb, patch.object(smoke.time, 'sleep'):
             state = smoke.wait_for(lambda s: s['screen'] == 'home', 'fresh home')
         self.assertEqual(state['seq'], 3)

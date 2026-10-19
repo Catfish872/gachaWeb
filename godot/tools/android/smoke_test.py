@@ -5,6 +5,8 @@ This verifies launch, responsive geometry, menu touch targets, Android Back,
 scrolling, rotation and resume. Screenshots/logs are evidence for visual review;
 it is not a claim about physical-device performance or complete gameplay.
 """
+import base64
+import binascii
 import json
 import os
 from pathlib import Path
@@ -17,7 +19,7 @@ import xml.etree.ElementTree as ET
 
 PACKAGE = 'org.catfish872.voidrift.debug'
 ADB = os.environ.get('ADB', 'adb')
-MARKER = 'ANDROID_SMOKE '
+MARKER = 'ANDROID_SMOKE_CHUNK '
 
 
 def adb(*args, binary=False, check=True, timeout=40):
@@ -26,13 +28,44 @@ def adb(*args, binary=False, check=True, timeout=40):
 
 
 def snapshots(log):
-    result = []
+    """Reassemble complete, internally consistent sequence frames only."""
+    frames = {}
+    invalid = set()
     for line in log.splitlines():
-        if MARKER in line:
-            try:
-                result.append(json.loads(line.split(MARKER, 1)[1]))
-            except json.JSONDecodeError:
-                pass
+        if MARKER not in line:
+            continue
+        record = line.split(MARKER, 1)[1]
+        match = re.fullmatch(r'(\d+) (\d+) (\d+) (\d+) ([A-Za-z0-9+/=]+)', record)
+        if not match:
+            continue
+        seq, index, count, length = map(int, match.groups()[:4])
+        payload = match.group(5)
+        if not (1 <= count <= 256 and 0 <= index < count and 600 * (count - 1) < length <= 600 * count):
+            invalid.add(seq)
+            continue
+        expected_size = min(600, length - index * 600)
+        if len(payload) != expected_size:
+            invalid.add(seq)
+            continue
+        frame = frames.setdefault(seq, {'count': count, 'length': length, 'chunks': {}})
+        if frame['count'] != count or frame['length'] != length:
+            invalid.add(seq)
+            continue
+        existing = frame['chunks'].get(index)
+        if existing is not None and existing != payload:
+            invalid.add(seq)
+        frame['chunks'][index] = payload
+    result = []
+    for seq, frame in sorted(frames.items()):
+        if seq in invalid or len(frame['chunks']) != frame['count']:
+            continue
+        encoded = ''.join(frame['chunks'][index] for index in range(frame['count']))
+        try:
+            state = json.loads(base64.b64decode(encoded, validate=True).decode('utf-8'))
+        except (ValueError, binascii.Error, UnicodeDecodeError):
+            continue
+        if isinstance(state, dict) and state.get('seq') == seq:
+            result.append(state)
     return result
 
 

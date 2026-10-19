@@ -212,7 +212,9 @@ func _show_navigation() -> void:
 	var menu := _modal("前往", 520, 560)
 	var grid := _grid(menu, 3 if size.x >= 600 else 2)
 	for tab in TABS:
-		_button(grid, tab[1], func(): navigate(tab[0]), tab[0] == current_screen).name = "MenuNav_" + tab[0]
+		var destination := _button(grid, tab[1], func(): navigate(tab[0]), tab[0] == current_screen)
+		destination.name = "MenuNav_" + tab[0]
+		destination.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_button(menu, "返回游戏", _clear_overlay)
 
 func _is_mobile() -> bool:
