@@ -19,8 +19,8 @@ ADB = os.environ.get('ADB', 'adb')
 MARKER = 'ANDROID_SMOKE '
 
 
-def adb(*args, binary=False, check=True):
-    result = subprocess.run([ADB, *args], check=check, capture_output=True, timeout=40)
+def adb(*args, binary=False, check=True, timeout=40):
+    result = subprocess.run([ADB, *args], check=check, capture_output=True, timeout=timeout)
     return result.stdout if binary else result.stdout.decode('utf-8', errors='replace')
 
 
@@ -112,11 +112,35 @@ def visit(state, page):
     return wait_for(lambda s: s['screen'] == page and s['overlay'] == 0, page + ' navigation')
 
 
+def settle_android_configuration(output):
+    # sys.boot_completed precedes first-boot package/resource overlay updates.
+    # Wait for broadcasts and a stable asset/display configuration before launch,
+    # so first-run setup cannot destroy the activity while Godot initializes.
+    idle = adb('shell', 'am', 'wait-for-broadcast-idle', timeout=120)
+    (output / 'boot-idle.txt').write_text(idle)
+    deadline = time.monotonic() + 60
+    previous = None
+    stable_since = time.monotonic()
+    while time.monotonic() < deadline:
+        config = adb('shell', 'am', 'get-config')
+        signature = '\n'.join(line for line in config.splitlines() if line.startswith(('config:', 'abi:')))
+        assert signature, f'Android configuration unavailable: {config}'
+        if signature != previous:
+            previous = signature
+            stable_since = time.monotonic()
+        elif time.monotonic() - stable_since >= 5:
+            (output / 'boot-config.txt').write_text(config)
+            return
+        time.sleep(1)
+    raise AssertionError('Android first-boot configuration did not settle')
+
+
 def run(apk, output):
     adb('install', '-r', str(apk))
     adb('shell', 'pm', 'clear', PACKAGE)
     adb('shell', 'settings', 'put', 'system', 'accelerometer_rotation', '0')
     adb('shell', 'settings', 'put', 'system', 'user_rotation', '0')
+    settle_android_configuration(output)
     adb('logcat', '-c')
     component = adb('shell', 'cmd', 'package', 'resolve-activity', '--brief', PACKAGE).strip().splitlines()[-1]
     assert '/' in component, f'Cannot resolve activity: {component}'

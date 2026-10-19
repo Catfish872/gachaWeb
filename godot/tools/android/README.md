@@ -1,7 +1,7 @@
 # Android runtime smoke
 
-The Android workflow runs an API 35 x86_64 emulator with KVM, software graphics,
-and a 720 × 1280 display before exporting the ARM delivery APK. It requires
+The Android workflow runs an API 35 x86_64 emulator with KVM,
+ANGLE over SwiftShader software graphics and a 720 × 1280 display before exporting the ARM delivery APK. It requires
 existing accepted Android SDK licenses. With the explicitly approved workflow
 opt-in, it temporarily grants only the current UID read/write access to KVM on
 a GitHub-hosted Linux runner, preserves the original ACL, and restores and
@@ -30,3 +30,9 @@ It does not establish physical-device frame rate, GPU compatibility, battery
 use, every gameplay flow, or visual quality. Inspect the screenshot evidence
 and retain physical-device validation for those claims. The x86_64 probe APK
 is test-only and is never uploaded as a user delivery APK.
+
+The emulator uses the supported `swangle` backend. The deprecated
+`swiftshader_indirect` backend exposes legacy SwiftShader GLES uniform limits
+that fail Godot's compatibility shaders. Before launch, the driver waits for
+Android boot broadcasts and a stable configuration so first-boot resource
+updates finish before the activity initializes. Application errors remain fatal.

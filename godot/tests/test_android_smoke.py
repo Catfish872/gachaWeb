@@ -62,6 +62,23 @@ class AndroidSmokeDriverTests(unittest.TestCase):
             self.assertEqual(smoke.reveal_menu_target(state, 'MenuNav_growth'), shown)
         adb.assert_called_once_with('shell', 'input', 'swipe', '450', '420', '450', '180', '600')
 
+    def test_boot_configuration_waits_until_stable(self):
+        import tempfile
+        clock = [0.0]
+        def sleep(seconds):
+            clock[0] += seconds
+        replies = ['All broadcast queues are idle!', 'config: initial', 'config: settled'] + ['config: settled'] * 5
+        with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'adb', side_effect=replies) as adb, patch.object(smoke.time, 'monotonic', side_effect=lambda: clock[0]), patch.object(smoke.time, 'sleep', side_effect=sleep):
+            smoke.settle_android_configuration(Path(directory))
+            self.assertEqual((Path(directory) / 'boot-config.txt').read_text(), 'config: settled')
+        self.assertEqual(clock[0], 6.0)
+        self.assertEqual(adb.call_args_list[0].args, ('shell', 'am', 'wait-for-broadcast-idle'))
+
+    def test_missing_boot_configuration_fails(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as directory, patch.object(smoke, 'adb', side_effect=['idle', 'Error: unsupported']), self.assertRaises(AssertionError):
+            smoke.settle_android_configuration(Path(directory))
+
     def test_emulator_export_cannot_mutate_source_presets(self):
         script = (ROOT / 'tools/android/export_smoke.sh').read_text()
         self.assertIn("presets = target / 'export_presets.cfg'", script)

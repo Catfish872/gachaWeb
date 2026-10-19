@@ -82,7 +82,7 @@ hw.keyboard=yes
 AVD
 export ADB="$SDK/platform-tools/adb"
 export ANDROID_SERIAL=emulator-5554
-"$SDK/emulator/emulator" -avd voidrift-smoke -port 5554 -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -accel on -cores 2 > "$OUTPUT/emulator.log" 2>&1 &
+"$SDK/emulator/emulator" -avd voidrift-smoke -port 5554 -no-window -no-audio -no-boot-anim -no-snapshot -no-metrics -gpu swangle -accel on -cores 2 > "$OUTPUT/emulator.log" 2>&1 &
 EMULATOR_PID=$!
 for ((i=0; i<150; i++)); do
   kill -0 "$EMULATOR_PID" || { cat "$OUTPUT/emulator.log"; exit 1; }
