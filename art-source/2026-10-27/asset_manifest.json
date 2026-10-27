@@ -1,0 +1,134 @@
+[
+  {
+    "id": "abyss",
+    "name": "深渊裂隙",
+    "file": "backgrounds/abyss.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "28b577ee7564bcf1174eaaf72872b06c751bacac8e74b87a5cba0c1b080c49d1"
+  },
+  {
+    "id": "camp",
+    "name": "旅者营地",
+    "file": "backgrounds/camp.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "5101473d508e5737bfc7ce0898bc7730f21edcc500f352aee471a1400b28d46b"
+  },
+  {
+    "id": "snowfield",
+    "name": "冰霜雪原",
+    "file": "backgrounds/snowfield.png",
+    "size": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "357b194e330695d6e5e748baacc3e35375614cd917734edd54a7fefc3e7f4d77"
+  },
+  {
+    "id": "ayla",
+    "name": "霜语·艾拉",
+    "file": "characters/ayla.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "7fd47c6392edd607383dc3b43ffc52bf1d32788aeb1a85753b1a5f91f0a3504b"
+  },
+  {
+    "id": "bolt",
+    "name": "雷击·博",
+    "file": "characters/bolt.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "fedc75f05144ce79e7e2cf4bb051ed8548744a9426bf756c0e303b178d47766b"
+  },
+  {
+    "id": "cinder",
+    "name": "炎息·辛德",
+    "file": "characters/cinder.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "b0adafcca532438d5730e3a373d0b407853773d1943ad20a5e4ee90a690cb711"
+  },
+  {
+    "id": "ember",
+    "name": "赤炎·冈",
+    "file": "characters/ember.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "e3da2766b2890ea25beb9b740020ffe464029872b99883559e456fb72ab14d6e"
+  },
+  {
+    "id": "gus",
+    "name": "雷霆·格斯",
+    "file": "characters/gus.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "cf1968b54b218e61442be915e948d72bcb042ae0234c51cb51131604f74ab4ff"
+  },
+  {
+    "id": "lorin",
+    "name": "铁壁·洛恩",
+    "file": "characters/lorin.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "ad9fa618ff30fcf717ef660904aeebccafdd351daee70538bf3fb15582b0d107"
+  },
+  {
+    "id": "shana",
+    "name": "碧叶·夏娜",
+    "file": "characters/shana.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "17961699898acf129c1de6bba69f088a4f7db9f4ee720b0cef1c57f639713cb5"
+  },
+  {
+    "id": "tide",
+    "name": "水流·塔德",
+    "file": "characters/tide.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "1df0853a9b3dc5b446f708333ca6deabe46a71903bf6d4841a44bf6b72cd2f70"
+  },
+  {
+    "id": "zeph",
+    "name": "流风·泽菲",
+    "file": "characters/zeph.png",
+    "size": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "b1b5abccfe7e1adbf01446de14ce7e6d6229fa5aa772a84d3b8366c6770017b0"
+  }
+]
