@@ -271,7 +271,8 @@ func _build_shell() -> void:
 		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(bg)
 		var art := TextureRect.new()
-		art.texture = load("res://assets/wilderness.png")
+		art.name = "SceneBackdrop"
+		art.texture = load(_background_path())
 		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		art.modulate = Color(0.28, 0.32, 0.4, 0.20)
@@ -377,7 +378,17 @@ func navigate(screen: String, record_history: bool = true) -> void:
 	_render_screen()
 	main_body.get_parent().set_deferred("scroll_vertical", 0)
 
+func _background_path() -> String:
+	if current_screen == "abyss" or (current_screen == "battle" and battle_config.get("isAbyss", false)):
+		return "res://assets/backgrounds/abyss.png"
+	if current_screen in ["story", "battle"]:
+		return "res://assets/backgrounds/snowfield.png" if selected_chapter == 1 else "res://assets/wilderness.png"
+	return "res://assets/backgrounds/camp.png"
+
 func _render_screen() -> void:
+	var backdrop := get_node_or_null("SceneBackdrop") as TextureRect
+	if backdrop != null:
+		backdrop.texture = load(_background_path())
 	_refresh_update_notice()
 	if current_screen != "battle": unit_cards.clear()
 	_clear(main_body)
@@ -415,7 +426,7 @@ func _update_resources() -> void:
 			_label(col, str(item[1]), 16 if compact else 20, item[2])
 
 func _home() -> void:
-	var hero := _scene_panel(main_body, "res://assets/wilderness.png", 370 if not compact else 390)
+	var hero := _scene_panel(main_body, "res://assets/backgrounds/camp.png", 370 if not compact else 390)
 	var row = _vbox(hero, 10)
 	row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	row.offset_left = 16 if compact else 32
@@ -457,7 +468,7 @@ func _story() -> void:
 	for i in chapters.size():
 		_button(tabs, str(chapters[i].name), func(): selected_chapter = i; _render_screen(), selected_chapter == i)
 	var chapter: Dictionary = chapters[selected_chapter]
-	var banner := _scene_panel(main_body, "res://assets/wilderness.png", 195)
+	var banner := _scene_panel(main_body, _background_path(), 195)
 	var title := _vbox(banner, 10)
 	title.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	title.offset_left = 16
@@ -1380,7 +1391,7 @@ func _render_dialogue() -> void:
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	overlay.add_child(bg)
 	var art := TextureRect.new()
-	art.texture = load("res://assets/wilderness.png")
+	art.texture = load(_background_path())
 	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	art.modulate = Color(0.65, 0.65, 0.7)

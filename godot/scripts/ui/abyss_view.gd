@@ -27,7 +27,7 @@ static func render(app) -> void:
 		app._label(sv, "第 %02d 层已通关 · 下一层 %02d / 20" % [maxi(1, floor_number - 1), floor_number] if deciding else "准备挑战第 %02d 层 / 20" % floor_number, 16, VIOLET, true)
 		app._label(sv, "裂隙币 %d（本轮）   ·   记忆碎片 %d（永久）" % [int(rogue.get("temporaryCurrency", 0)), int(meta.get("currency", 0))], 14, app.GOLD, true)
 	else:
-		var hero = app._scene_panel(app.main_body, "res://assets/wilderness.png", 224 if not app.compact else 246)
+		var hero = app._scene_panel(app.main_body, "res://assets/backgrounds/abyss.png", 224 if not app.compact else 246)
 		var shade := ColorRect.new()
 		shade.color = Color(0.08, 0.04, 0.15, 0.50)
 		shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
