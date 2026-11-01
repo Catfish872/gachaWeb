@@ -78,3 +78,11 @@
 最终根因版回归：生产main SHA256恢复原发布快照 `891b0541331d6c024d4a87d70f0e1ee48a61206ce7503d86e0d8c8fd453126a1`，完整生产624文件仍为 `cdb15441bd9f33c215787c8946c5c735288aa17c15aa7b72035631c41fd7e6d7`。input_dispatch改为15项逐次系统/键盘返回；新增probe通知28项通过，覆盖普通场景与探针场景菜单、立即连续真实通知、对话关闭、实际搜索暂停同UID冻结/恢复推进与返回关闭。120ms实验已撤回；实验期间mobile测试确实发现快速返回被节流，恢复版再次复验。只读返回轨迹现保存在探针自身，生产代码无新增状态。
 
 07:53 UTC根因修复终态：恢复版mobile533、input15、probe真实通知28、driver离线48全部通过，probe解析干净。最终验证56文件hash更新为 `8f0425e27c6686499fd84205b2ad02dd9ee8c2089ae8d349c7ccdefc416d99d6`；生产hash保持不变，已更新v230-final-source-manifest.json。等待修复提交的真实AndroidCI验证。
+
+## CI24 原生验收终态（2026-11-01 08:04 UTC）
+
+commit `93fb06407f7307159a928ec892fe19fb02e534d0`、run `41286657316` 的Android原生测试通过。证据 `/tmp/v23-ci24/evidence/android-evidence/`：back-menu.json 为home/overlay0且单条notification，确认探针修复后一次系统返回只关菜单；result.json passed=true；resume-results.json的rapid、settled、rapid_again三轮均通过。
+
+新增真实搜索后台也已通过：第一次自然长扫描窗口触发HOME，探针paused在102876ms、resumed在109363ms，约6.49秒后同UID `extraction_1793520069209_1_3018856683_item_21`，扫描进度始终 `0.315789473684211`，暂停标志true→false；search-background.json covered=true。该文件reason字段保留了初始化未覆盖默认句，是报告字段未清理；covered、attempts=1、实际UID/进度及原始生命周期记录共同证明本次确已覆盖。为保持已验收提交完整，此阶段只记录该文案缺陷。
+
+该终态是Android API35 x86_64模拟器实际ADB输入与生命周期证据。签名ARM正式包及发布终态由发布代理继续负责。本QA所负责的CI23故障定位、精确修复与后续原生验证已闭合。

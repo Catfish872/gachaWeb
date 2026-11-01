@@ -1,0 +1,9 @@
+{
+  "covered": true,
+  "attempts": 1,
+  "reason": "No natural long scan with a safe remaining interval was observed",
+  "uid": "extraction_1793520069209_1_3018856683_item_21",
+  "paused_progress": 0.315789473684211,
+  "resumed_progress": 0.315789473684211,
+  "rooms_observed": 1
+}
