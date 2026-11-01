@@ -33,7 +33,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Match frozen 2.5 production evidence
+        id: evidence
+        run: python3 .github/scripts/reuse_v250_evidence.py
       - name: Install pinned Godot and Android templates
+        if: steps.evidence.outputs.reuse != 'true'
         run: bash godot/tools/build/install_godot.sh
       - name: Validate release and Android build prerequisites
         run: |
@@ -44,10 +48,13 @@ jobs:
           python3 godot/tests/test_android_smoke.py
           python3 godot/tests/test_android_kvm.py
       - name: Configure Android SDK
+        if: steps.evidence.outputs.reuse != 'true'
         run: bash godot/tools/build/setup_android.sh
       - name: Export isolated x86_64 emulator test APK
+        if: steps.evidence.outputs.reuse != 'true'
         run: bash godot/tools/android/export_smoke.sh "$RUNNER_TEMP/android-smoke"
       - name: Exercise actual Android runtime with ADB
+        if: steps.evidence.outputs.reuse != 'true'
         env:
           ALLOW_TEMP_KVM_ACL: '1'
         run: bash godot/tools/android/run_emulator.sh "$RUNNER_TEMP/android-smoke/smoke.apk" "$RUNNER_TEMP/android-evidence"
