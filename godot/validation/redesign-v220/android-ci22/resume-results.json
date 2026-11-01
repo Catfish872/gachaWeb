@@ -1,0 +1,14 @@
+[
+  {
+    "mode": "rapid",
+    "passed": true
+  },
+  {
+    "mode": "settled",
+    "passed": true
+  },
+  {
+    "mode": "rapid_again",
+    "passed": true
+  }
+]
