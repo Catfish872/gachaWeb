@@ -507,5 +507,109 @@ class WarehouseNativeFlowTests(unittest.TestCase):
             self.run_flow()
 
 
+class ServiceGuardDriverTests(unittest.TestCase):
+    def test_map_entry_accepts_guard_battle_only_after_real_arrival(self):
+        initial={'seq':10,'extraction':{'room_id':'entry','phase':'route'},'canvases':{'map':{'selected_room':'w'}},'buttons':[{'name':'ExtractionMapNode_w','adjacent':True}]}
+        entered={'seq':11,'extraction':{'room_id':'w','phase':'battle'}}
+        with patch.object(smoke,'canvas_target',return_value=initial),patch.object(smoke,'tap') as tap,patch.object(smoke,'wait_for',return_value=entered) as wait:
+            self.assertEqual(smoke.enter_map_room(initial,'w'),entered)
+            tap.assert_called_once_with(initial,'ExtractionMapNode_w')
+            predicate=wait.call_args.args[0]
+            self.assertTrue(predicate(entered))
+            self.assertFalse(predicate(dict(entered,seq=10)))
+            self.assertFalse(predicate({'seq':11,'extraction':{'room_id':'entry','phase':'battle'}}))
+            self.assertFalse(predicate({'seq':11,'extraction':{'room_id':'w','phase':'route'}}))
+
+    def test_carry_uses_exact_previously_selected_purchased_uid(self):
+        state={'inventory':{'selected_uid':'medicine','items':[{'uid':'medicine','item_id':'medkit'}]}}
+        carried={'extraction':{'loadout_ids':['medicine']},'inventory':{'items':[]}}
+        with patch.object(smoke,'tap_page') as tap,patch.object(smoke,'wait_for',return_value=carried) as wait:
+            self.assertEqual(smoke.carry_purchased_supply(state),(carried,'medicine'))
+            tap.assert_called_once_with(state,'ExtractionBring_medicine')
+            self.assertTrue(wait.call_args.args[0](carried))
+            self.assertFalse(wait.call_args.args[0]({'extraction':{'loadout_ids':['other']},'inventory':{'items':[]}}))
+
+    def test_supply_lock_real_three_taps_and_reopen_preserve_uid(self):
+        import copy,tempfile
+        state={'seq':1,'overlay':0,'buttons':[],'extraction':{'bag_ids':['medicine'],'supplies':[{'uid':'medicine','item_id':'medkit','exchange_locked':False}]}}
+        events=[]
+        def tap(q,name,*args,**kwargs):
+            events.append(name);state['seq']+=1
+            if name=='ExtractionQuickSupplies':state['overlay']=2;state['buttons']=[{'name':'ExtractionSupplyLock_medicine'}]
+            elif name=='ExtractionSupplyLock_medicine':state['extraction']['supplies'][0]['exchange_locked']=not state['extraction']['supplies'][0]['exchange_locked']
+            elif name=='ExtractionSupplyClose':state['overlay']=0;state['buttons']=[]
+        def wait(predicate,label,**kwargs):
+            self.assertTrue(predicate(state),label)
+            return copy.deepcopy(state)
+        with tempfile.TemporaryDirectory() as folder,patch.object(smoke,'tap_page',side_effect=tap),patch.object(smoke,'tap_overlay',side_effect=tap),patch.object(smoke,'wait_for',side_effect=wait),patch.object(smoke,'screenshot'):
+            final=smoke.supply_lock_input_flow(copy.deepcopy(state),'medicine',Path(folder))
+            self.assertTrue((Path(folder)/'supply-lock-persistence.json').exists())
+        self.assertEqual(events,['ExtractionQuickSupplies']+['ExtractionSupplyLock_medicine']*3+['ExtractionSupplyClose','ExtractionQuickSupplies','ExtractionSupplyClose'])
+        self.assertEqual(final['extraction']['bag_ids'],['medicine'])
+        self.assertTrue(final['extraction']['supplies'][0]['exchange_locked'])
+
+    def test_safe_room_does_not_start_battle(self):
+        state={'extraction':{'phase':'room'}}
+        with patch.object(smoke,'tap_page') as tap:
+            self.assertIs(smoke.resolve_service_guard(state,None),state)
+            tap.assert_not_called()
+
+    def test_nonservice_battle_is_not_bypassed(self):
+        with self.assertRaisesRegex(AssertionError,'non-service'):
+            smoke.resolve_service_guard({'extraction':{'phase':'battle','guard_pending':False}},None)
+
+    def test_guard_routes_through_real_battle_and_growth_controls(self):
+        start={'buttons':[],'extraction':{'phase':'battle','guard_pending':True,'room_id':'w','room_type':'workshop'}}
+        fight={'screen':'battle','battle_state':{'auto':False}}
+        won={'battle_state':{'phase':'victory'},'buttons':[{'name':'ExtractionBattleContinue'}]}
+        service={'screen':'extraction','extraction':{'phase':'room','room_id':'w','room_type':'workshop','guard_pending':False,'growth_choices':['blessing']}}
+        done={'screen':'extraction','extraction':dict(service['extraction'],growth_choices=[])}
+        frames=iter([fight,won,service,done])
+        events=[]
+        def wait(predicate,label,**kwargs):
+            q=next(frames)
+            self.assertTrue(predicate(q),label)
+            return q
+        def tap(q,name,*args,**kwargs):events.append(name)
+        with patch.object(smoke,'wait_for',side_effect=wait),patch.object(smoke,'tap_page',side_effect=tap),patch.object(smoke,'tap',side_effect=tap),patch.object(smoke,'tap_overlay',side_effect=tap),patch.object(smoke,'screenshot'):
+            self.assertEqual(smoke.resolve_service_guard(start,None),done)
+        self.assertEqual(events,['ExtractionBattle','BattleAutoToggle','ExtractionBattleContinue','ExtractionGrowth_blessing'])
+
+    def test_workshop_real_input_order_includes_local_scroll_and_cancel(self):
+        import copy
+        names=['ExtractionSort_bag','ExtractionQuickSupplies','ExtractionBuild','ExtractionAbandon','ExtractionRoomAction_study']
+        buttons=[{'name':name,'rect':[10+i*55,400,50,44],'clip':[0,0,960,540]} for i,name in enumerate(names)]
+        buttons[-1]['rect']=[20,620,100,44]
+        state={'seq':1,'window':[960,540],'logical':[960,540],'buttons':buttons,'overlay':0,'extraction':{'room_type':'workshop','room_id':'w','run_digest':'stable-run','bag_ids':['gold'],'room_actions':[{'used':False} for _ in range(3)]},'page_scrolls':[{'name':'ExtractionServiceScroll','rect':[10,180,300,170],'value':0}]}
+        events=[]
+        def tap(q,name,*args,**kwargs):
+            events.append(name);state['seq']+=1
+            if name=='ExtractionBuild':state['buttons']=[{'name':'ExtractionTab_expedition'}]
+            elif name=='ExtractionTab_expedition':state['buttons']=copy.deepcopy(buttons)
+            elif name=='ExtractionAbandon':state['overlay']=2;state['buttons']=[{'name':'ExtractionAbandonCancel'}]
+            elif name=='ExtractionAbandonCancel':state['overlay']=0;state['buttons']=copy.deepcopy(buttons)
+            elif name=='ExtractionRoomAction_study':state['extraction']['growth_choices']=['g']
+            elif name=='ExtractionGrowth_g':
+                state['extraction']['growth_choices']=[]
+                for action in state['extraction']['room_actions']:action['used']=True
+        def adb(*args):
+            self.assertEqual(args[:3],('shell','input','swipe'));events.append('finger-scroll')
+            state['seq']+=1;state['page_scrolls'][0]['value']=430
+            state['buttons'][-1]['rect']=[20,190,100,44]
+        def wait(predicate,label,**kwargs):
+            self.assertTrue(predicate(state),label)
+            return copy.deepcopy(state)
+        with patch.object(smoke,'tap',side_effect=tap),patch.object(smoke,'tap_page',side_effect=tap),patch.object(smoke,'tap_overlay',side_effect=tap),patch.object(smoke,'adb',side_effect=adb),patch.object(smoke,'wait_for',side_effect=wait),patch.object(smoke,'screenshot'):
+            final=smoke.workshop_input_flow(copy.deepcopy(state),None)
+        self.assertEqual(events,['ExtractionBuild','ExtractionTab_expedition','ExtractionAbandon','ExtractionAbandonCancel','finger-scroll','ExtractionRoomAction_study','ExtractionGrowth_g'])
+        self.assertEqual(final['extraction']['bag_ids'],['gold'])
+
+    def test_guard_defeat_cannot_restore_service_by_driver(self):
+        start={'buttons':[],'extraction':{'phase':'battle','guard_pending':True,'room_id':'w','room_type':'workshop'}}
+        with patch.object(smoke,'wait_for',side_effect=[{'battle_state':{'auto':True}},{'battle_state':{'phase':'defeat'}}]),patch.object(smoke,'tap_page'),patch.object(smoke,'tap_overlay') as continuation,patch.object(smoke,'screenshot'),self.assertRaisesRegex(AssertionError,'lost the actual'):
+            smoke.resolve_service_guard(start,None)
+        continuation.assert_not_called()
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

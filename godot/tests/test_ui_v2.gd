@@ -42,6 +42,18 @@ func press(needle: String, parent: Node = null) -> bool:
 	target.pressed.emit()
 	return true
 
+func acknowledge_reward() -> void:
+	var card=app.get_node_or_null("RogueRewardGain")
+	if card==null:return
+	for i in 5:await process_frame
+	check(card.get_meta("reward_id","")!="","earned blessing remains identifiable before automatic continuation")
+	var point:Vector2=card.get_global_rect().get_center()
+	for pressed in [true,false]:
+		var event:=InputEventMouseButton.new();event.button_index=MOUSE_BUTTON_LEFT;event.pressed=pressed;event.position=point;event.global_position=point
+		root.push_input(event,true);await process_frame
+	for i in 5:await process_frame
+	check(app.get_node_or_null("RogueRewardGain")==null,"actual tap acknowledges the awarded blessing")
+
 func frames() -> void:
 	await process_frame
 	await process_frame
@@ -152,6 +164,7 @@ func run() -> void:
 					if floor_number == 1:
 						button("连续挑战").button_pressed = false
 					press("融入构筑")
+					await acknowledge_reward()
 					check(app.model.state.abyss.rogue.selectedRewards.size() == count + 1, "Chosen blessing joins build")
 					if floor_number == 1:
 						await fit_page("active ready hub")
@@ -182,6 +195,7 @@ func run() -> void:
 								chosen = str(option.id)
 								break
 					press("NodeChoice_" + chosen)
+					await acknowledge_reward()
 				"rest":
 					var hp_before := 0
 					for member in app.model.state.abyss.savedPartyState:
@@ -208,12 +222,12 @@ func run() -> void:
 	var memory_before_end:int=app.model.state.abyss.meta.currency
 	app.navigate("abyss")
 	press("返回",app.overlay)
-	check(app.current_screen=="battle" and app.model.abyss_run_active(),"Cancelling the floor21 retreat retains the endless run")
+	check(app.current_screen=="battle" and app.model.abyss_run_active(),"Cancelling the floor21 retreat retains the ongoing run")
 	app.navigate("abyss")
 	press("确认",app.overlay)
 	check(not app.model.abyss_run_active() and app.model.state.abyss.currentFloor==1,"Explicit player retreat, not floor20, returns to start")
 	check(app.model.state.abyss.meta.currency==memory_before_end,"Explicit retreat keeps all banked memory")
-	check(app.model.state.abyss.meta.runsCompleted == 1 and app.model.state.abyss.meta.currency > 400 - upgrade_cost, "Twenty-floor milestone banks progress and unlocks next difficulty without ending run")
+	check(app.model.state.abyss.meta.runsCompleted == 0 and app.model.state.abyss.meta.currency > 400 - upgrade_cost, "Twenty-floor milestone banks progress and unlocks rank but is not a completed fifty-floor expedition")
 	check("上一轮通关" in texts(app.main_body) and "20 层" in texts(app.main_body), "Run summary remains available in hub")
 	check(not button("AbyssDifficulty_1").disabled, "Completing rank0 visibly unlocks rank1")
 	press("AbyssDifficulty_1")
@@ -243,12 +257,15 @@ func run() -> void:
 			await fit_page("portrait " + phase)
 			await capture("portrait-" + phase)
 			match phase:
-				"reward": press("融入构筑")
+				"reward":
+					press("融入构筑")
+					await acknowledge_reward()
 				"route": press("NodeChoice_event" if floor_number == 2 else ("NodeChoice_rest" if floor_number % 2 == 0 else "NodeChoice_shop"))
 				"event":
 					for option in app.model.node_options().options:
 						if option.enabled:
 							press("NodeChoice_" + str(option.id))
+							await acknowledge_reward()
 							break
 				"rest": press("NodeChoice_recover")
 				"shop": press("RunShopLeave")

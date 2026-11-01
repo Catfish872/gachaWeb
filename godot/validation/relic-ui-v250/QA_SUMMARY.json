@@ -1,0 +1,92 @@
+{
+  "scope": "relic UI v2.5 source snapshot; shared main.gd intentionally excluded until unified freeze",
+  "rendering": "Godot 4.6.3, OpenGL 4.5 Compatibility, Mesa llvmpipe",
+  "viewport_sizes": [
+    [
+      960,
+      540
+    ],
+    [
+      1170,
+      540
+    ],
+    [
+      2048,
+      945
+    ]
+  ],
+  "real_gl_checks": {
+    "loadout": 200,
+    "collection_recommendations_and_100k": 152,
+    "explicit_unproven_adoption": 14
+  },
+  "headless_regressions": {
+    "relic_presentation": 96,
+    "character_navigation": 35,
+    "v24_layout": 105,
+    "ui_v2": 441,
+    "abyss_endless_ui_v24": 435
+  },
+  "native_cancel_state_preserved": true,
+  "inventory_size": 100000,
+  "visible_card_limit": 60,
+  "inventory_pages": 1667,
+  "full_inventory_build_ms_final_gl": 519,
+  "ui_screenshots": 28,
+  "source_sha256": {
+    "scripts/ui/relic_loadout_view.gd": "0e3ade4ccdf380c072e0736f4e3a51b13943f8f591d979dd2f6fe9f25e5611b1",
+    "scripts/ui/relic_recommendations_view.gd": "8ae8ef6bf8593ea350152dec2328e12ce93d593b8283429417f79ba981dec006",
+    "scripts/ui/abyss_view.gd": "fdb052df3dd81dcdabb25ce69e5242ca7dea59e8a80cbaa69d72558e9a65aef1",
+    "tests/test_relic_loadout_ui_v250.gd": "d8a0434a8de0baa9a90fa5ddb3ae6cf169693e5a40d48bba44db119a696af9ae",
+    "tests/test_relic_collection_ui_v250.gd": "9074a09dabe6bb5994208c22271f47727e9248024d3384f6c5b3ae2f8f016380",
+    "tests/manual_relic_tap_v250.gd": "50d820b61e6857a522990a59ec467382302ece4d0dad83c2f8170ea2a2253659",
+    "tools/run_relic_ui_gl_v250.sh": "73133af8586ba3cd677489b03a25e1fca186c46042f1daf3b4d1d9b2e8bfb3b3",
+    "tests/test_relic_unproven_ui_v250.gd": "d24adb7758feacbc0c22d40bf0b6a12677384337ab94ed9db96720f2e4daff01",
+    "tests/test_abyss_active_footer_v250.gd": "3ea4b890f588f98d95c137a857f4231f916c4cb4d482c7c6c6b1e3426545c22a"
+  },
+  "adoption_contract": "Apply immutable last displayed plan after cancelling search; explicit unproven bool only. Default API still requires proof.",
+  "final_copy_note": "After final GL, pending status simplified from continue + node count to continue only; final unproven headless14 passed.",
+  "fresh_account_real_gl": {
+    "checks": 95,
+    "failures": 0,
+    "screenshots": 5,
+    "log": "validation/native-features-v250/real-gl.log",
+    "suite": "tests/test_native_features_v250.gd --require-gl",
+    "source_resources_injected": false,
+    "audio": "Dummy — rendering/transactions only, not speaker verification",
+    "owned_terminal_closed_verified": 35715307
+  },
+  "active_abyss_footer_regression": {
+    "fix": "Move locked set icon/name into existing phase heading; route and daily card unchanged; all footer actions fixed.",
+    "headless_checks": 612,
+    "real_gl_checks": 612,
+    "failures": 0,
+    "phases": [
+      "reward",
+      "route",
+      "shop",
+      "event",
+      "rest",
+      "none"
+    ],
+    "physical_viewports": [
+      [
+        1280,
+        720
+      ],
+      [
+        2340,
+        1080
+      ],
+      [
+        2048,
+        945
+      ]
+    ],
+    "before_screenshots": 18,
+    "after_screenshots": 18,
+    "evidence": "validation/abyss-active-footer-v250",
+    "original_regression_headless_checks": 242,
+    "original_regression_real_gl_checks": 242
+  }
+}

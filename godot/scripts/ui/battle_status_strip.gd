@@ -1,5 +1,6 @@
 extends Control
 ## Fixed-height, pointer-transparent status summary. Details remain in unit inspection.
+const Battle = preload("res://scripts/battle_model.gd")
 const STRIP_HEIGHT := 26.0
 const CELL_WIDTH := 58.0
 const COMPACT_CELL_WIDTH := 34.0
@@ -7,7 +8,7 @@ const COMPACT_THRESHOLD := 220.0
 const MAX_VISIBLE := 5
 const DEFINITIONS := {
  "burn":["燃烧","回合末受到燃烧伤害"], "freeze":["冰冻","无法行动"],
- "stun":["眩晕","无法行动，防御降低30%"], "electrify":["感电","无法行动"],
+ "stun":["眩晕","无法行动，防御降低30%"], "electrify":["感电","行动时可能跳过本次行动"],
  "poison":["中毒","回合末持续生命伤害，可叠层"], "regen":["再生","回合末恢复最大生命值8%"],
  "atk_up":["攻强","攻击力提升"], "def_up":["防强","防御力提升"],
  "spd_down":["减速","速度降低"], "shield":["护盾","吸收伤害"],
@@ -34,7 +35,18 @@ func _ready() -> void:
  resized.connect(_refresh_capacity)
  _refresh_capacity()
 
-func configure(statuses: Array, motion_reduced: bool = false) -> void:
+static func status_description(state: Dictionary, data: Dictionary) -> String:
+ var id := str(state.get("id", state.get("statusId", state.get("status", state.get("type", "unknown")))))
+ if id == "shock": id = "electrify"
+ if id == "electrify":
+  var chance: float = Battle.electrify_chance_for_status(data, state)
+  return "每次行动时有 %s%% 概率跳过本次行动" % ("%.1f" % (chance * 100.0)).trim_suffix(".0")
+ return str(DEFINITIONS.get(id, [id, "状态效果"])[1])
+
+func configure(statuses: Array, motion_reduced: bool = false, data: Dictionary = {}) -> void:
+ if data.is_empty():
+  var parsed = JSON.parse_string(FileAccess.get_file_as_string("res://data/catalog.json"))
+  if parsed is Dictionary: data = parsed
  reduced_motion = motion_reduced
  states = statuses.duplicate(true)
  var descriptions := PackedStringArray()
@@ -43,7 +55,7 @@ func configure(statuses: Array, motion_reduced: bool = false) -> void:
   var definition: Array = DEFINITIONS.get(id, [id, "状态效果"])
   var persistent := bool(state.get("persistent", false))
   var duration := "持续生效" if persistent else "剩余%d回合" % int(state.get("duration", state.get("turns", 0)))
-  var detail := "%s：%s；%d层；%s" % [definition[0], definition[1], int(state.get("stacks", 1)), duration]
+  var detail := "%s：%s；%d层；%s" % [definition[0], status_description(state, data), int(state.get("stacks", 1)), duration]
   if id == "shield": detail += "；耐久%d" % int(state.get("shieldHp", 0))
   if state.get("value") != null and id in ["atk_up", "def_up", "spd_down", "vulnerable"]: detail += "（%d%%）" % roundi(float(state.value)*100)
   descriptions.append(detail)
@@ -67,8 +79,8 @@ func configure(statuses: Array, motion_reduced: bool = false) -> void:
  states = grouped
  _refresh_capacity()
 
-func set_states(statuses: Array, motion_reduced: bool = false) -> void:
- configure(statuses, motion_reduced)
+func set_states(statuses: Array, motion_reduced: bool = false, data: Dictionary = {}) -> void:
+ configure(statuses, motion_reduced, data)
 
 func status_id(state: Dictionary) -> String:
  var id := str(state.get("id", state.get("statusId", state.get("status", state.get("type", "unknown")))))

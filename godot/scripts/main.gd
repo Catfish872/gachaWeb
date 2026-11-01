@@ -2,6 +2,7 @@ extends Control
 
 const CharacterAvatars = preload("res://scripts/ui/character_avatar.gd")
 const RuneTheme = preload("res://scripts/ui/rune_theme.gd")
+const SummonSequence = preload("res://scripts/ui/summon_sequence.gd")
 
 const INK := Color("080e19")
 const PANEL := Color("111b2b")
@@ -28,6 +29,7 @@ var selected_character := "kaldi"
 var selected_pool := "limited_kaldi"
 var selected_chapter := 0
 var selected_stage_id := ""
+var story_list_positions: Dictionary = {}
 var growth_panel := "stats"
 var selected_relic := ""
 var relic_filter := "全部"
@@ -83,6 +85,7 @@ var last_reward: Dictionary = {}
 var summon_results: Array = []
 var summon_index := 0
 var summon_flipped := false
+var summon_sequence: Control
 var compact := false
 var resource_clock := 0.0
 var dialogue_lines: Array = []
@@ -324,6 +327,8 @@ func _go_back() -> void:
 			ExtractionView._stop_search(self,false)
 		if settlement_error:
 			_toast("请先重试保存本场战斗结果", RED)
+			return
+		if current_screen == "extraction" and ExtractionView.handle_modal_back(self):
 			return
 		_clear_overlay()
 		return
@@ -636,7 +641,8 @@ func _story() -> void:
 	var chapters: Array = model.catalog.StageData.chapters
 	var tabs := _hbox(main_body, 8)
 	for i in chapters.size():
-		var chapter_button:=_button(tabs,str(chapters[i].name),func():selected_chapter=i;selected_stage_id="";_render_screen(),selected_chapter==i)
+		var chapter_button:=_button(tabs,str(chapters[i].name),func():_select_story_chapter(i),selected_chapter==i)
+		chapter_button.name="StoryChapter_"+str(i)
 		var chapter_open:bool=bool(chapters[i].get("unlocked",false)) or bool(model.state.stageProgress.get(chapters[i].get("unlockCondition",""),{}).get("cleared",false))
 		_button_icon(chapter_button,("fire" if i==0 else "ice") if chapter_open else "lock",selected_chapter==i)
 	var row := _responsive_box(main_body,compact,16)
@@ -644,6 +650,8 @@ func _story() -> void:
 	var stages_panel := _panel(row,LINE,10)
 	stages_panel.size_flags_stretch_ratio = 0.85
 	var stage_list := _scroll_column(stages_panel)
+	stage_list.get_parent().name="StoryStageScroll"
+	_restore_story_list(stage_list.get_parent(),selected_chapter)
 	var stage_map: Dictionary = {}
 	for stage in model.stage_list(): stage_map[stage.id]=stage
 	var chapter: Dictionary=chapters[selected_chapter]
@@ -701,6 +709,23 @@ func _story() -> void:
 		var replay:=_button(actions,"回顾剧情",func():_play_dialogue(str(selected.id)+"_pre",func():_play_dialogue(str(selected.id)+"_post",func():pass)))
 		replay.name="StoryReplay"
 		_button_icon(replay,"book")
+
+func _select_story_chapter(index:int) -> void:
+	if selected_chapter==index:return
+	selected_chapter=index
+	selected_stage_id=""
+	story_list_positions[index]=0
+	_render_screen()
+
+func _restore_story_list(scroll:ScrollContainer,chapter_index:int) -> void:
+	var desired:int=int(story_list_positions.get(chapter_index,0))
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not is_instance_valid(scroll) or not scroll.is_inside_tree():return
+	scroll.scroll_vertical=desired
+	story_list_positions[chapter_index]=scroll.scroll_vertical
+	scroll.get_v_scroll_bar().value_changed.connect(func(value:float):
+		if is_instance_valid(scroll) and scroll.is_inside_tree():story_list_positions[chapter_index]=int(value))
 
 func _begin_stage(stage_id: String) -> void:
 	var key := stage_id + "_pre"
@@ -772,6 +797,9 @@ func _pool_details() -> void:
 	_button(box, "我知道了", _clear_overlay, true).name="SummonRulesClose"
 
 func _pull(count: int) -> void:
+	# A committed sequence owns the presentation until explicitly closed.
+	if is_instance_valid(summon_sequence) and summon_sequence.is_inside_tree():
+		return
 	var r: Dictionary = model.pull(selected_pool, count)
 	if not _check(r):
 		return
@@ -782,76 +810,16 @@ func _pull(count: int) -> void:
 	_reveal_summon()
 
 func _reveal_summon() -> void:
-	var result:Dictionary=summon_results[summon_index]
-	var id:String=result.charId
-	var data:Dictionary=model.catalog.CharacterData[id]
-	var color:=_rarity_color(int(data.rarity))
-	var box:=_modal("星辰回应   %d / %d" % [summon_index+1,summon_results.size()],1060,500)
-	var row:=_responsive_box(box,compact,20)
-	if summon_flipped:
-		var art:=_portrait_environment(row,id,270)
-		art.name="SummonRevealPortrait"
-		if not extraction_reduced_motion:
-			art.modulate.a=0
-			art.create_tween().tween_property(art,"modulate:a",1.0,.28)
-			fx.burst(size*Vector2(.38,.44),color,true)
-		var copy:=_vbox(row,10);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-		_label(copy,"初次相遇" if result.get("isNew",false) else "命运重逢",14,CYAN)
-		_label(copy,str(data.name),30,color,true)
-		_label(copy,"★".repeat(int(data.rarity)),20,color)
-		var identity:=_hbox(copy,8);_rune_icon(identity,{"fire":"fire","water":"ice","wind":"leaf","thunder":"energy"}.get(str(data.element),"star"),24,color)
-		_label(identity,_element_name(str(data.element))+" · "+str(model.catalog.RoleNames.get(data.get("role",""),data.get("role",""))),15,MUTED)
-		_label(copy,"已加入旅者收藏" if result.get("isNew",false) else "角色碎片 +%d" % result.get("shards",0),17,TEXT,true)
-		var gap:=Control.new();gap.size_flags_vertical=Control.SIZE_EXPAND_FILL;copy.add_child(gap)
-		var detail:=_tab_button(copy,"旅者档案",func():_summon_character_preview(id,func():_reveal_summon()))
-		_button_icon(detail,"book")
-	else:
-		var portal:=_scene_panel(row,"res://assets/backgrounds/abyss.png",270)
-		portal.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-		var aura=load("res://scripts/ui/character_aura.gd").new();aura.tint=color;aura.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);portal.add_child(aura)
-		var center:=CenterContainer.new();center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);portal.add_child(center)
-		_rune_icon(center,"star",90,color)
-		var copy:=_vbox(row,14);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-		_label(copy,"群星回应你的呼唤",26,TEXT,true)
-		_label(copy,"点亮星门，与旅者相遇",15,MUTED,true)
-		var gap:=Control.new();gap.size_flags_vertical=Control.SIZE_EXPAND_FILL;copy.add_child(gap)
-		var reveal:=_button(copy,"揭晓旅者",func():summon_flipped=true;_reveal_summon(),true)
-		reveal.name="SummonReveal";_button_icon(reveal,"star",true)
-	var footer:=_modal_footer(box)
-	var actions:=_hbox(footer,10)
-	var all:=_tab_button(actions,"全部揭示",_summon_summary)
-	all.name="SummonSkip"
-	var spacer:=Control.new();spacer.size_flags_horizontal=Control.SIZE_EXPAND_FILL;actions.add_child(spacer)
-	if summon_flipped:
-		var next:=_button(actions,"查看结果" if summon_index==summon_results.size()-1 else "下一位",func():
-			if summon_index==summon_results.size()-1:_summon_summary()
-			else:summon_index+=1;summon_flipped=false;_reveal_summon(),true)
-		next.name="SummonNext";_button_icon(next,"next",true)
+	if summon_results.is_empty(): return
+	_clear_overlay()
+	summon_sequence = SummonSequence.new()
+	summon_sequence.setup(self, summon_results, selected_pool, extraction_reduced_motion)
+	overlay.add_child(summon_sequence)
 
 func _summon_summary() -> void:
-	var box:=_modal("星辰之约 · 祈愿结果",1060,500)
-	var grid:=_grid(box,2 if compact else (1 if summon_results.size()==1 else 5))
-	for r in summon_results:
-		var data:Dictionary=model.catalog.CharacterData[r.charId]
-		var color:=_rarity_color(int(data.rarity))
-		var card:=_panel(grid,color.darkened(.35),6)
-		card.name="SummonResult_"+str(r.charId)
-		var v:=_vbox(card,3)
-		var art:=_portrait_environment(v,str(r.charId),150 if summon_results.size()==1 else 76,"","" if summon_results.size()==1 else "face")
-		var rarity_label:=_label(art,"★".repeat(int(data.rarity)),10,color)
-		rarity_label.position=Vector2(5,3)
-		_center_label(v,str(data.name),14,color)
-		_center_label(v,"新角色" if r.get("isNew",false) else "碎片 +%d" % r.get("shards",0),12,CYAN)
-		_bind_card_tap(card,func():_summon_character_preview(str(r.charId),func():_summon_summary()))
-		_ignore_children(v)
-	var footer:=_modal_footer(box)
-	var actions:=_flow(footer,10)
-	var cost:int=int(model.catalog.GachaPoolData.pools[selected_pool].costPerPull)
-	var again:=_tab_button(actions,"再祈愿 %d 次" % summon_results.size(),func():_pull(summon_results.size()))
-	again.name="SummonAgain";again.disabled=int(model.state.resources.diamonds)<cost*summon_results.size()
-	var space:=Control.new();space.size_flags_horizontal=Control.SIZE_EXPAND_FILL;actions.add_child(space)
-	var accept:=_button(actions,"收下星辰的赠礼",func():_clear_overlay();_render_screen(),true)
-	accept.name="SummonAccept";_button_icon(accept,"check",true)
+	if not is_instance_valid(summon_sequence) or not summon_sequence.is_inside_tree():
+		_reveal_summon()
+	if is_instance_valid(summon_sequence): summon_sequence.show_summary()
 
 func _summon_character_preview(id:String,back:Callable=Callable()) -> void:
 	var data:Dictionary=model.catalog.CharacterData[id]
@@ -993,6 +961,12 @@ func _growth() -> void:
 	var tabs:=_hbox(details,5)
 	for tab in [["stats","属性"],["skills","技能"],["constellation","命座"],["gear","遗物"]]:
 		var b:=_tab_button(tabs,tab[1],func():growth_panel=tab[0];_render_screen(),growth_panel==tab[0]);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	if model.has_method("relic_set_recommendations"):
+		var recommendations:Array=model.relic_set_recommendations(selected_character)
+		if not recommendations.is_empty():
+			var recommendation:Dictionary=recommendations[0]
+			var recommended:=_button(details,"推荐套装 · "+str(recommendation.name)+(" 等 %d 套"%recommendations.size() if recommendations.size()>1 else ""),func():load("res://scripts/ui/relic_recommendations_view.gd").show_for(self,selected_character))
+			recommended.name="CharacterRecommendedRelics";recommended.icon=_relic_texture("helmet",str(recommendation.get("setId",recommendation.get("id",""))));recommended.add_theme_constant_override("icon_max_width",32);recommended.expand_icon=true;recommended.clip_text=true
 	var panel:=_panel(details,LINE,12)
 	panel.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	var body:=_scroll_column(panel,10)
@@ -1048,23 +1022,31 @@ func _growth() -> void:
 						if _check(model.unlock_constellation(selected_character)):_toast("命座已点亮",GOLD);_render_screen(),true)
 				elif i<current:_label(cv,"已点亮",12,GOLD)
 		"gear":
+			if owned:
+				var loadout:Dictionary=model.relic_loadout_snapshot(selected_character)
+				for bonus in loadout.get("activeBonuses",[]):
+					_label(body,"%s · %d 件　%s"%[str(bonus.name),int(bonus.pieces),str(bonus.description)],12,CYAN,true)
 			for slot in model.catalog.RelicSlots:
 				var cell:=_panel(body,LINE,10);var line:=_hbox(cell,10)
-				var slot_art:=_relic_art(line,str(slot.id),42);slot_art.custom_minimum_size.x=42;slot_art.size_flags_horizontal=Control.SIZE_FILL
-				var cv:=_vbox(line,3);cv.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-				_label(cv,slot.name,17,GOLD)
 				var uid=progress.get("equippedRelics",{}).get(slot.id,null)
 				var relic:=_find_relic(str(uid))
+				var slot_art:=_relic_art(line,str(slot.id),42,str(relic.get("setId","")));slot_art.custom_minimum_size.x=42;slot_art.size_flags_horizontal=Control.SIZE_FILL
+				var cv:=_vbox(line,3);cv.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+				_label(cv,str(slot.name)+(" · "+_relic_set_name(relic) if not relic.is_empty() else ""),15,GOLD,true)
 				_label(cv,("+%d · %s" % [relic.get("level",0),_relic_main(relic)]) if not relic.is_empty() else "空置",14,MUTED,true)
 				if not relic.is_empty():_button(line,"卸下",func():_check(model.unequip_relic(selected_character,slot.id));_render_screen())
-				else:_button(line,"选择遗物",func():navigate("relics"))
+				elif owned:_button(line,"选择遗物",func():navigate("relics"))
 	var footer:=_hbox(details,8)
 	if owned:
-		var train:=_button(footer,"训练一次 · 500 金币",func():
-			if _check(model.train_character(selected_character)):_toast("训练完成",CYAN);_render_screen(),true)
-		_button_icon(train,"coin",true)
-		train.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-		train.disabled=int(progress.get("level",1))>=10
+		if growth_panel=="gear":
+			var auto_equip:=_button(footer,"自动搭配",func():_auto_relic_loadout(selected_character),true)
+			auto_equip.name="GrowthAutoRelics";auto_equip.size_flags_horizontal=Control.SIZE_EXPAND_FILL;_button_icon(auto_equip,"gear",true)
+		else:
+			var train:=_button(footer,"训练一次 · 500 金币",func():
+				if _check(model.train_character(selected_character)):_toast("训练完成",CYAN);_render_screen(),true)
+			_button_icon(train,"coin",true)
+			train.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+			train.disabled=int(progress.get("level",1))>=10
 		_button(footer,"冒险编队",func():navigate("party"))
 	else:
 		_button(footer,"前往星辰祈愿",func():navigate("summon"),true)
@@ -1080,7 +1062,9 @@ func _relics() -> void:
 	var collection_title:=_hbox(collection,10)
 	collection_title.custom_minimum_size.y=42
 	_label(collection_title,"遗物工坊",24,TEXT)
-	_label(collection_title,"筛选、强化与装备",12,MUTED)
+	var headline_gap:=Control.new();headline_gap.size_flags_horizontal=Control.SIZE_EXPAND_FILL;collection_title.add_child(headline_gap)
+	var auto_equip:=_button(collection_title,"自动搭配",func():_auto_relic_loadout(),true)
+	auto_equip.name="RelicAutoEquip";_button_icon(auto_equip,"gear",true)
 	var controls := _flow(collection, 6)
 	for f in ["全部", "背包", "已装备", "三星", "四星", "五星"]:
 		_tab_button(controls, f, func(): relic_filter = f; _save_preferences(); _render_screen(), relic_filter == f)
@@ -1106,7 +1090,6 @@ func _relics() -> void:
 		return
 	var list_column := _scroll_column(collection)
 	list_column.get_parent().name="RelicRosterScroll"
-	_restore_character_list(list_column.get_parent(),"relics")
 	var listing := _grid(list_column, 2 if compact else 3)
 	if compact: list_column.get_parent().custom_minimum_size.y=350
 	listing.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -1125,22 +1108,40 @@ func _relics() -> void:
 		_label(listing, "当前筛选下没有遗物", 18, MUTED)
 	if not visible.any(func(relic):return str(relic.uid)==selected_relic) and not visible.is_empty():
 		selected_relic = str(visible[0].uid)
-	for relic in visible:
+	# Keep the full filtered inventory addressable while bounding native controls.
+	# Pages remember their own scroll; changing a page preserves the selected UID.
+	var page_key:String=relic_filter+"|"+relic_slot_filter
+	var page_size:int=60
+	var page_count:int=maxi(1,ceili(float(visible.size())/page_size))
+	var pages:Dictionary=get_meta("relic_inventory_pages",{})
+	var page:int=clampi(int(pages.get(page_key,0)),0,page_count-1)
+	pages[page_key]=page;set_meta("relic_inventory_pages",pages)
+	_restore_character_list(list_column.get_parent(),"relics" if page_count==1 else "relics|"+page_key+"|"+str(page))
+	for relic in visible.slice(page*page_size,mini(visible.size(),(page+1)*page_size)):
 		var color := _rarity_color(int(relic.rarity))
 		var card := _panel(listing, color if str(relic.uid) == selected_relic else LINE, 10)
 		card.custom_minimum_size.x=150
 		card.name="RelicCard_"+str(relic.uid)
 		var v := _vbox(card, 6)
-		var art:=_relic_art(v,str(relic.slotId),80)
+		var art:=_relic_item_art(v,relic,70)
 		art.modulate=Color.WHITE
 		var badge:=_hbox(v,4)
 		_rune_icon(badge,"check" if relic.get("equippedBy")!=null else "bag",14,CYAN if relic.get("equippedBy")!=null else MUTED)
 		_label(badge,_char_name(str(relic.equippedBy)) if relic.get("equippedBy")!=null else "待装备",11,CYAN if relic.get("equippedBy")!=null else MUTED)
-		_center_label(v, "%s  +%d" % [_slot_name(relic.slotId), relic.level], 18, TEXT)
+		_center_label(v,_relic_set_name(relic),14,GOLD)
+		_center_label(v, "%s  +%d" % [_slot_name(relic.slotId), relic.level], 16, TEXT)
 		_center_label(v, "★".repeat(int(relic.rarity)), 13, color)
 		_label(v, _relic_main(relic), 13, MUTED, true)
 		_bind_card_tap(card,func():selected_relic=str(relic.uid);_save_preferences();_render_screen())
 		_ignore_children(v)
+	if page_count>1:
+		var paging:=_hbox(collection,8);paging.name="RelicPagination"
+		var previous:=_button(paging,"上一页",func():_set_relic_inventory_page(page_key,page-1));previous.name="RelicPreviousPage";previous.disabled=page==0
+		var count:=_label(paging,"%d 件"%visible.size(),12,MUTED,true);count.size_flags_horizontal=Control.SIZE_EXPAND_FILL;count.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		var jump:=SpinBox.new();jump.name="RelicPageNumber";jump.min_value=1;jump.max_value=page_count;jump.step=1;jump.value=page+1;jump.custom_minimum_size=Vector2(82,44);jump.tooltip_text="输入页码，查看全部遗物";paging.add_child(jump)
+		_label(paging,"/ %d"%page_count,12,MUTED)
+		jump.value_changed.connect(func(value):_set_relic_inventory_page(page_key,int(value)-1))
+		var next:=_button(paging,"下一页",func():_set_relic_inventory_page(page_key,page+1));next.name="RelicNextPage";next.disabled=page>=page_count-1
 	var selected := _find_relic(selected_relic)
 	if selected.is_empty():
 		return
@@ -1152,13 +1153,15 @@ func _relics() -> void:
 	if compact:detail.custom_minimum_size.y=400
 	var dv:=_vbox(detail,8)
 	var title:=_hbox(dv,10)
-	var hero:=_relic_art(title,str(selected.slotId),60);hero.custom_minimum_size.x=60;hero.size_flags_horizontal=Control.SIZE_FILL
+	var hero:=_relic_item_art(title,selected,60);hero.custom_minimum_size.x=60;hero.size_flags_horizontal=Control.SIZE_FILL
 	var identity:=_vbox(title,4);identity.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-	_label(identity,"%s +%d" % [_slot_name(selected.slotId),selected.level],24,TEXT)
+	_label(identity,_relic_set_name(selected),19,GOLD)
+	_label(identity,"%s +%d" % [_slot_name(selected.slotId),selected.level],18,TEXT)
 	_label(identity,"★".repeat(int(selected.rarity)),15,_rarity_color(int(selected.rarity)))
 	_progress(identity,int(selected.level),25,GOLD,4)
 	var stats:=_scroll_column(dv,6)
 	stats.get_parent().name="RelicStatsScroll"
+	_restore_character_list(stats.get_parent(),"relic_detail_"+selected_relic)
 	var main_tile:=_hbox(_panel(stats,GOLD.darkened(0.6),9),8)
 	_rune_icon(main_tile,_stat_icon(str(selected.mainStat.stat)),24,GOLD)
 	_label(main_tile,_relic_main(selected),18,GOLD).tooltip_text="主属性"
@@ -1171,6 +1174,11 @@ func _relics() -> void:
 		_rune_icon(line,_stat_icon(str(stat.stat)),18,CYAN)
 		_label(line,_stat_label(str(stat.stat),str(stat.name)),13,MUTED).size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		_label(line,"+"+_stat_value(stat.stat,stat.value),15,TEXT)
+	var set_count:int=-1
+	if selected.get("equippedBy")!=null:
+		set_count=int(model.relic_loadout_snapshot(str(selected.equippedBy)).get("counts",{}).get(str(selected.get("setId","")),0))
+	_label(stats,"套装效果"+(" · 已装备 %d 件"%set_count if set_count>=0 else ""),12,GOLD,true)
+	_relic_set_details(stats,str(selected.get("setId","")),set_count)
 	var upgrades:=_hbox(dv,6)
 	var upgrade:=_button(upgrades,"强化 +1 · %d 金币" % model.relic_upgrade_cost(int(selected.level)),func():
 		if _check(model.upgrade_relic(selected_relic)):_ui_sound("equip");_render_screen(),true)
@@ -1194,6 +1202,11 @@ func _relics() -> void:
 				if _check(model.sell_relic(selected_relic)):
 					selected_relic="";_ui_sound("coin");_render_screen()))
 
+func _set_relic_inventory_page(key: String, page: int) -> void:
+	var pages:Dictionary=get_meta("relic_inventory_pages",{})
+	pages[key]=maxi(0,page);set_meta("relic_inventory_pages",pages)
+	_render_screen()
+
 func _batch_salvage() -> void:
 	var box := _modal("批量出售遗物", 620)
 	_label(box, "选择满足任一条件的背包遗物。已装备的遗物将保留。", 16, MUTED, true)
@@ -1216,9 +1229,9 @@ func _equip_dialog(uid: String) -> void:
 	var box := _modal("选择装备角色", 760, 450)
 	var relic:=_find_relic(uid)
 	var heading:=_hbox(box,10)
-	var icon:=_relic_art(heading,str(relic.get("slotId","helmet")),50);icon.custom_minimum_size.x=50;icon.size_flags_horizontal=Control.SIZE_FILL
+	var icon:=_relic_item_art(heading,relic,50);icon.custom_minimum_size.x=50;icon.size_flags_horizontal=Control.SIZE_FILL
 	var copy:=_vbox(heading,3)
-	_label(copy,"%s +%d" % [_slot_name(str(relic.get("slotId",""))),int(relic.get("level",0))],20,GOLD)
+	_label(copy,"%s · %s +%d" % [_relic_set_name(relic),_slot_name(str(relic.get("slotId",""))),int(relic.get("level",0))],20,GOLD,true)
 	_label(copy,_relic_main(relic),14,TEXT)
 	var grid := _grid(box, 2)
 	for id in model.state.ownedCharacters:
@@ -1660,7 +1673,7 @@ func _battle_unit_card(parent: Node, unit: Dictionary, active_uid: String) -> vo
 		if status_name not in statuses: statuses.append(status_name)
 	var status_strip=load("res://scripts/ui/battle_status_strip.gd").new()
 	status_strip.name="BattleStatuses_"+str(unit.uid)
-	status_strip.configure(unit.get("statuses",[]),extraction_reduced_motion)
+	status_strip.configure(unit.get("statuses",[]),extraction_reduced_motion,model.catalog)
 	v.add_child(status_strip)
 	p.tooltip_text = "生命 %d / %d\n护盾 %d\n" % [unit.get("currentHp",0),unit.get("maxHp",1),shield_value]+status_strip.tooltip_text
 	_ignore_children(v)
@@ -1925,14 +1938,14 @@ func _render_battle_settlement(result:Dictionary,victory:bool,run_ended:bool) ->
 		if not relic.is_empty():
 			var loot:=_hbox(_panel(scroll_content,_rarity_color(int(relic.get("rarity",3))).darkened(.5),10),12)
 			loot.name="SettlementRelic"
-			var art:=_relic_art(loot,str(relic.get("slotId","helmet")),56);art.custom_minimum_size.x=56;art.size_flags_horizontal=Control.SIZE_FILL
+			var art:=_relic_item_art(loot,relic,56);art.custom_minimum_size.x=56;art.size_flags_horizontal=Control.SIZE_FILL
 			var copy:=_vbox(loot,4);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-			_label(copy,_slot_name(str(relic.get("slotId","helmet"))),18,TEXT)
+			_label(copy,_relic_set_name(relic)+" · "+_slot_name(str(relic.get("slotId","helmet"))),18,TEXT,true)
 			_label(copy,"★".repeat(int(relic.get("rarity",3))),13,_rarity_color(int(relic.get("rarity",3))))
 			_label(copy,"已收入遗物背包",12,MUTED)
 		if battle_config.get("isAbyss",false):
-			var run_rewards:=_grid(scroll_content,2)
-			_settlement_reward_tile(run_rewards,"rift_coin","裂隙币 · 本轮",int(rewards.get("runCoins",0)),"runCoins")
+			var run_rewards:=_grid(scroll_content,1 if run_ended else 2)
+			if not run_ended:_settlement_reward_tile(run_rewards,"rift_coin","裂隙币 · 本轮",int(rewards.get("runCoins",0)),"runCoins")
 			_settlement_reward_tile(run_rewards,"memory_shard","记忆 · 永久",int(rewards.get("meta",0)),"meta")
 		var gift=result.get("gift")
 		if gift is Dictionary and not gift.is_empty():
@@ -2527,17 +2540,43 @@ func _element_color(id: String) -> Color:
 func _rarity_color(rarity: int) -> Color:
 	return {3: Color("a7b6cc"), 4: Color("b6a0df"), 5: GOLD}.get(rarity, TEXT)
 
-func _relic_texture(slot_id: String) -> Texture2D:
+func _relic_texture(slot_id: String, set_id: String = "") -> Texture2D:
+	var definition:Dictionary=model.catalog.get("RelicSets",{}).get(set_id,{})
+	var set_path:String=str(definition.get("slotIcons",{}).get(slot_id,""))
+	if not set_path.is_empty() and ResourceLoader.exists(set_path):return load(set_path)
 	var path:="res://assets/ui/relics/"+slot_id+".png"
 	return load(path) if ResourceLoader.exists(path) else _icon_texture("gear")
 
-func _relic_art(parent: Node, slot_id: String, edge: float) -> TextureRect:
-	var image:=TextureRect.new();image.texture=_relic_texture(slot_id)
+func _relic_art(parent: Node, slot_id: String, edge: float, set_id: String = "") -> TextureRect:
+	var image:=TextureRect.new();image.texture=_relic_texture(slot_id,set_id)
 	image.name="RelicArt_"+slot_id
+	image.set_meta("relic_set_id",set_id)
 	image.custom_minimum_size=Vector2(edge,edge)
 	image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	image.size_flags_horizontal=Control.SIZE_EXPAND_FILL;image.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	parent.add_child(image);return image
+
+func _relic_item_art(parent: Node, relic: Dictionary, edge: float) -> TextureRect:
+	return _relic_art(parent,str(relic.get("slotId","helmet")),edge,str(relic.get("setId","")))
+
+func _relic_set_name(relic: Dictionary) -> String:
+	return str(model.catalog.get("RelicSets",{}).get(str(relic.get("setId","")),{}).get("name","散件"))
+
+func _relic_set_details(parent: Node, set_id: String, active_count: int = -1) -> void:
+	var definition:Dictionary=model.catalog.get("RelicSets",{}).get(set_id,{})
+	if definition.is_empty():
+		_label(parent,"散件 · 自由搭配",13,MUTED,true)
+		return
+	for bonus in definition.get("bonuses",[]):
+		var pieces:int=int(bonus.get("pieces",0))
+		var active:bool=active_count>=pieces
+		var line:=_hbox(parent,7)
+		var marker:=_label(line,"%d 件"%pieces,12,CYAN if active else GOLD)
+		marker.custom_minimum_size.x=32
+		_label(line,str(bonus.get("description","")),13,TEXT if active or active_count<0 else MUTED,true).size_flags_horizontal=Control.SIZE_EXPAND_FILL
+
+func _auto_relic_loadout(char_id: String = "") -> void:
+	load("res://scripts/ui/relic_loadout_view.gd").show_for(self,char_id)
 
 func _stat_icon(stat: String) -> String:
 	if stat.begins_with("hp"):return "heart"
@@ -2633,7 +2672,9 @@ func _save_preferences() -> void:
 func _show_abyss_rules() -> void:
 	var box := _modal("深渊战斗规则", 680, 460)
 	_label(box, "火克风、风克雷、雷克水、水克火。调整技能和目标，可以集中突破敌方关键单位。", 17, TEXT, true)
-	_label(box, "首领至多连续跳过一次行动，其他深渊敌人至多连续跳过两次，随后获得一次保证行动。中毒最多叠加 5 层；普通敌人每层受到最大生命 5% 的伤害，首领每层为 1.5%。首领战超过 20 回合后，每回合攻击提升 5%，上限为 100%。", 16, MUTED, true)
+	var status_view = load("res://scripts/ui/battle_status_strip.gd")
+	_label(box, "感电：" + status_view.status_description({"id":"electrify"}, model.catalog), 16, CYAN, true).name="BattleRulesElectrify"
+	_label(box, "冰冻、眩晕按完整持续时间生效。中毒可以叠加，每层在回合末造成最大生命 5% 的伤害。首领战超过 20 回合后，每回合攻击提升 5%，上限为 100%。", 16, MUTED, true)
 	_label(box, "自动战斗负责战斗行动。祝福、路线、事件、篝火和商店都会等待你的选择。生命、能量与冷却在本轮远征中延续。", 16, MUTED, true)
 	_button(box, "回到战斗", _clear_overlay, true)
 
@@ -2848,12 +2889,22 @@ func _show_unit_details(unit: Dictionary) -> void:
 		_label(v,str(value[0]),13,MUTED)
 		_label(v,str(value[1]),20,TEXT).name="BattleDetail_"+str({"生命":"hp","攻击":"atk","防御":"def"}.get(str(value[0]),"stat"))
 	if float(unit.get("shield",0))>0:_label(box,"护盾 %d" % int(unit.shield),15,CYAN)
+	var status_view = load("res://scripts/ui/battle_status_strip.gd")
 	for status in unit.get("statuses",[]):
 		var row:=_panel(box,LINE,10)
+		var content:=_vbox(row,4)
+		var heading:=_hbox(content,7)
+		var status_id:=str(status.get("id",""))
+		var asset_id:="electrify" if status_id=="shock" else status_id
+		var asset_path:="res://assets/ui/status/%s.svg"%asset_id
+		var icon:=_rune_icon(heading,"star",22)
+		icon.texture=load(asset_path if ResourceLoader.exists(asset_path) else "res://assets/ui/status/unknown.svg")
 		if status.get("source","")=="expedition_equipment":
-			_label(row,"装备护盾 · 剩余 %d" % int(status.get("shieldHp",0)),15,CYAN,true)
+			_label(heading,"装备护盾 · 剩余 %d" % int(status.get("shieldHp",0)),15,CYAN,true)
 		else:
-			_label(row,"%s · 剩余 %d 回合 · %d 层" % [STATUS_NAMES.get(status.get("id",""),status.get("id","")),int(status.get("duration",0)),int(status.get("stacks",1))],15,GOLD,true)
+			var title:=_label(heading,"%s · 剩余 %d 回合 · %d 层" % [STATUS_NAMES.get(status_id,status_id),int(status.get("duration",0)),int(status.get("stacks",1))],15,GOLD,true)
+			title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		_label(content,status_view.status_description(status,model.catalog),13,MUTED,true).name="BattleStatusDetail_"+status_id
 	if unit.get("statuses",[]).is_empty():_label(box,"当前没有持续状态",15,MUTED)
 	_button(_modal_footer(box),"返回战场",_clear_overlay,true)
 
@@ -2897,12 +2948,15 @@ func _button_icon(button:Button,key:String,primary:bool=false)->void:
 	button.add_theme_color_override("icon_hover_color",Color.WHITE if colored else INK if primary else Color.WHITE)
 	button.add_theme_color_override("icon_pressed_color",Color.WHITE if colored else INK if primary else GOLD)
 
+func _exploration_music_track(deep: bool) -> String:
+	return "dungeon_mystic" if deep else "sunset_walk"
+
 func _music_track_for_context() -> String:
 	# Functional pages inherit the scene they were opened from. Inventory,
 	# upgrades, shops, menus and previews never choose a new score themselves.
 	if current_screen=="home":_music_context_id="hub"
 	elif current_screen=="story":_music_context_id="story"
-	elif current_screen=="extraction":_music_context_id="extraction" if model.extraction.active() else "hub"
+	elif current_screen=="extraction":_music_context_id="extraction" if model.extraction.active() else "story"
 	elif current_screen=="abyss":_music_context_id="abyss"
 	elif current_screen=="battle":
 		_music_context_id="extraction" if battle_config.get("isExtraction",false) else "abyss" if battle_config.get("isAbyss",false) else "story"
@@ -2912,9 +2966,9 @@ func _music_track_for_context() -> String:
 		if boss:return "determined_pursuit"
 	match _music_context_id:
 		"extraction":
-			if not model.extraction.active():return "old_tower_inn"
+			if not model.extraction.active():return "medieval_exploration"
 			return {1:"sunset_walk",2:"medieval_exploration",3:"dungeon_mystic"}.get(int(model.extraction.run().get("act",1)),"sunset_walk")
-		"abyss":return "dungeon_mystic" if int(model.state.abyss.get("currentFloor",1))>10 else "sunset_walk"
+		"abyss":return _exploration_music_track(int(model.state.abyss.get("currentFloor",1))>10)
 		"story":return "medieval_exploration"
 	return "old_tower_inn"
 

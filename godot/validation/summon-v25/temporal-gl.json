@@ -1,0 +1,444 @@
+{
+	"checks": 252,
+	"failures": 0,
+	"frames": [
+		{
+			"epoch": 1,
+			"image_hash": 87629957,
+			"index": 0,
+			"label": "r3_full_opening",
+			"paused": false,
+			"progress": 0.192189803921569,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 0.163361333333333,
+			"stage": "opening",
+			"stage_time": 0.163361333333333,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 4,
+			"image_hash": 3967431262,
+			"index": 0,
+			"label": "r3_full_midflip",
+			"paused": false,
+			"progress": 0.47365520282187,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 2.80145519047619,
+			"stage": "unseal",
+			"stage_time": 0.341031746031746,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 5,
+			"image_hash": 2854472547,
+			"index": 0,
+			"label": "r3_full_portrait",
+			"paused": false,
+			"progress": 0.491229569892473,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 3.50634461904762,
+			"stage": "portrait",
+			"stage_time": 0.304562333333333,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 7,
+			"image_hash": 1309246269,
+			"index": 0,
+			"label": "r3_full_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 4.64824541702741,
+			"stage": "summary",
+			"stage_time": 0.739697222222222,
+			"visible_cards": 1,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 1,
+			"image_hash": 1177329206,
+			"index": 0,
+			"label": "r4_full_opening",
+			"paused": false,
+			"progress": 0.217946274509804,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 0.185254333333333,
+			"stage": "opening",
+			"stage_time": 0.185254333333333,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 4,
+			"image_hash": 1296836681,
+			"index": 0,
+			"label": "r4_full_midflip",
+			"paused": false,
+			"progress": 0.485585016835017,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 2.80900121212121,
+			"stage": "unseal",
+			"stage_time": 0.349621212121212,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 5,
+			"image_hash": 4060842156,
+			"index": 0,
+			"label": "r4_full_portrait",
+			"paused": false,
+			"progress": 0.522455913978495,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 3.51046033333333,
+			"stage": "portrait",
+			"stage_time": 0.323922666666667,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 7,
+			"image_hash": 95992382,
+			"index": 0,
+			"label": "r4_full_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 4.62618766666667,
+			"stage": "summary",
+			"stage_time": 0.746482,
+			"visible_cards": 1,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 1,
+			"image_hash": 4091889184,
+			"index": 0,
+			"label": "r5_full_opening",
+			"paused": false,
+			"progress": 0.206900392156863,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 0.175865333333333,
+			"stage": "opening",
+			"stage_time": 0.175865333333333,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 4,
+			"image_hash": 2109671854,
+			"index": 0,
+			"label": "r5_full_midflip",
+			"paused": false,
+			"progress": 0.475913425925926,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 2.80308066666666,
+			"stage": "unseal",
+			"stage_time": 0.342657666666667,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 5,
+			"image_hash": 1838194491,
+			"index": 0,
+			"label": "r5_full_legendary",
+			"paused": false,
+			"progress": 0.472652873176206,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 3.61420169696969,
+			"stage": "legendary",
+			"stage_time": 0.425387585858586,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 6,
+			"image_hash": 2654428339,
+			"index": 0,
+			"label": "r5_full_portrait",
+			"paused": false,
+			"progress": 0.496494477028348,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 4.41429303030303,
+			"stage": "portrait",
+			"stage_time": 0.307826575757576,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 8,
+			"image_hash": 975517520,
+			"index": 0,
+			"label": "r5_full_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 5.5699326969697,
+			"stage": "summary",
+			"stage_time": 0.752757,
+			"visible_cards": 1,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 1,
+			"image_hash": 474000094,
+			"index": 0,
+			"label": "r5_gentle_opening",
+			"paused": false,
+			"progress": 0.210547843137255,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 0.178965666666667,
+			"stage": "opening",
+			"stage_time": 0.178965666666667,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 4,
+			"image_hash": 2417899115,
+			"index": 0,
+			"label": "r5_gentle_midflip",
+			"paused": false,
+			"progress": 0.482032716049383,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 2.56876933333333,
+			"stage": "unseal",
+			"stage_time": 0.347063555555556,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 5,
+			"image_hash": 2555040600,
+			"index": 0,
+			"label": "r5_gentle_legendary",
+			"paused": false,
+			"progress": 0.461324444444444,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 3.370572,
+			"stage": "legendary",
+			"stage_time": 0.415192,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 6,
+			"image_hash": 1095841027,
+			"index": 0,
+			"label": "r5_gentle_portrait",
+			"paused": false,
+			"progress": 0.513673998044966,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 4.19896533333333,
+			"stage": "portrait",
+			"stage_time": 0.318477878787879,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 8,
+			"image_hash": 2158461944,
+			"index": 0,
+			"label": "r5_gentle_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 5.31857066666666,
+			"stage": "summary",
+			"stage_time": 0.736790666666667,
+			"visible_cards": 1,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 8,
+			"image_hash": 1131723515,
+			"index": 1,
+			"label": "ten_continuous_second",
+			"paused": false,
+			"progress": 0.288461538461538,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 7.17249033333333,
+			"stage": "seal",
+			"stage_time": 0.15,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 12,
+			"image_hash": 4075859312,
+			"index": 1,
+			"label": "ten_summary_stagger",
+			"paused": false,
+			"progress": 0.293723851851852,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 9.41813866666667,
+			"stage": "summary",
+			"stage_time": 0.330439333333334,
+			"visible_cards": 0,
+			"window": [
+				960,
+				540
+			]
+		},
+		{
+			"epoch": 12,
+			"image_hash": 4008396279,
+			"index": 1,
+			"label": "ten_summary_complete",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 10.4632664848485,
+			"stage": "summary",
+			"stage_time": 1.37556715151515,
+			"visible_cards": 10,
+			"window": [
+				960,
+				540
+			]
+		},
+		{
+			"epoch": 6,
+			"image_hash": 2460877560,
+			"index": 0,
+			"label": "small_landscape_portrait",
+			"paused": false,
+			"progress": 0.0,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 3.83383433333333,
+			"stage": "result",
+			"stage_time": 0.0,
+			"visible_cards": 0,
+			"window": [
+				740,
+				540
+			]
+		},
+		{
+			"epoch": 43,
+			"image_hash": 3202673659,
+			"index": 9,
+			"label": "small_landscape_ten_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 39.2501936262625,
+			"stage": "summary",
+			"stage_time": 1.220226,
+			"visible_cards": 10,
+			"window": [
+				740,
+				540
+			]
+		}
+	],
+	"renderer": "X11"
+}

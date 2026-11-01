@@ -1,0 +1,28 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+REVIEW CASE kaldi C0 boxes=16 leaves=243
+REVIEW CASE kaldi C6 boxes=32 leaves=486
+REVIEW CASE ayla C0 boxes=48 leaves=729
+REVIEW CASE ayla C6 boxes=64 leaves=972
+REVIEW CASE gus C0 boxes=80 leaves=1215
+REVIEW CASE gus C6 boxes=96 leaves=1458
+REVIEW CASE shana C0 boxes=112 leaves=1701
+REVIEW CASE shana C6 boxes=128 leaves=1944
+REVIEW CASE lorin C0 boxes=144 leaves=2187
+REVIEW CASE lorin C6 boxes=160 leaves=2430
+REVIEW CASE ember C0 boxes=176 leaves=2673
+REVIEW CASE ember C6 boxes=192 leaves=2916
+REVIEW CASE zeph C0 boxes=208 leaves=3159
+REVIEW CASE zeph C6 boxes=224 leaves=3402
+REVIEW CASE bolt C0 boxes=240 leaves=3645
+REVIEW CASE bolt C6 boxes=256 leaves=3888
+REVIEW CASE tide C0 boxes=272 leaves=4131
+REVIEW CASE tide C6 boxes=288 leaves=4374
+REVIEW CASE cinder C0 boxes=304 leaves=4617
+REVIEW CASE cinder C6 boxes=320 leaves=4860
+REVIEW FUTURE review_damage_maxHp score=9542.0
+REVIEW FUTURE review_damage_def score=3473.0
+REVIEW FUTURE review_healing_maxHp score=35760.0
+REVIEW FUTURE review_healing_def score=14538.0
+REVIEW FUTURE review_survival_atk score=4252.47524752475
+RELIC OPTIMIZER REVIEW V250: 6562 checks; 6075 leaves; 400 boxes; minimum margin 0.0; 0 failures

@@ -1,0 +1,25 @@
+Artifact: economy-v250-final.json.gz
+Rules version: v16 / 2.5.0 / final daily milestones 900,1350,1800,2200
+Main seeds: 35500000 through 35500063; 3072 routes
+Independent drop-efficiency seeds: 35600000 through 35600031; 256 routes
+Original bytes: 229569691
+Compressed bytes: 13461648
+Original SHA-256: 19cfd3171e8165cf8247de2c13c8c5929ec991a69b33d8ce77ab632dfd1f9d3c
+Decompressed SHA-256: 19cfd3171e8165cf8247de2c13c8c5929ec991a69b33d8ce77ab632dfd1f9d3c
+Gzip SHA-256: df1491897aa64e3fec594b8d70fe5cdc62b7fa5cac22caf4aff9c1e6acf19594
+Gzip header mtime: 0
+Byte-for-byte decompression equality: PASS
+Routes: 3328 (1024 extraction, 2304 abyss; efficiency rows excluded from main raid comparisons)
+Battles: 126970
+Execution and independent audit errors: 0
+Current behavior source mismatches: 0
+Actual targeted relics: 41528; target hits: 41528
+Actual new relic sale gold: 10472640; direct abyss gold: 0
+Daily-only comparison range: 2.302631316 to 2.702705162
+This is a full production rerun under the final daily-reward model. Comparing archived same-seed records, 2159 routes are identical and 1169 differ only in dailyAwards/dailyDiamonds/diamonds; all fixtures and every other recorded field match.
+Complete original data is represented by one lossless gzip; raw JSON, duplicate shards, pre-award results and calibration files are not duplicated in the evidence manifest.
+
+Storage: two lossless byte-split volumes; concatenate part1 then part2 to reconstruct original gzip.
+economy-v250-final.json.gz.part1: 6730824 bytes, SHA256 06cbb311f1b6b876255968c7e4c13502577b136e668fa1bbee2737d3db23c139
+economy-v250-final.json.gz.part2: 6730824 bytes, SHA256 b3133b7613dd5135cdcf428b61373cff8065c43fc20808a336a697df40ead819
+Concatenation equality and decompressed original SHA256: PASS

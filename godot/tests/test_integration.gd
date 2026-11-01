@@ -126,6 +126,6 @@ func run():
 	check(m.state.abyss.maxFloor >= 20, "real battle engine clears full twenty-floor expedition")
 	check(m.state.abyss.currentFloor == 21 and m.abyss_run_active(), "twentieth floor continues endless run")
 	check(m.reset_abyss().success and m.state.abyss.lastRun.get("outcome")=="retreat", "player ends endless run retaining gains")
-	check(m.state.abyss.meta.currency > 0 and m.state.abyss.meta.runsCompleted == 1, "complete run banks permanent progression")
+	check(m.state.abyss.meta.currency > 0 and m.state.abyss.meta.runsCompleted == 0, "twenty-floor milestone banks progression before completion")
 	print("INTEGRATION TESTS: %d passed, %d failed" % [passed, failed])
 	quit(1 if failed else 0)

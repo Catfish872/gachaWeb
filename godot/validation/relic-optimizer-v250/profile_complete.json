@@ -1,0 +1,65 @@
+{
+	"budgetUsec": 4000,
+	"cases": [
+		{
+			"cacheHits": 1925,
+			"candidateCounts": [
+				21,
+				20,
+				21,
+				19,
+				21
+			],
+			"elapsedUsec": 2119539,
+			"evaluations": 3560,
+			"fastBounds": 12329,
+			"frontier": 0,
+			"gap": 0.0,
+			"initializationUsec": 2388,
+			"inventory": 100,
+			"lowerBound": 3505.7,
+			"maxSliceUsec": 5452,
+			"memoryBytes": 33162504,
+			"p95SliceUsec": 4618,
+			"phase": "done",
+			"provenOptimal": true,
+			"removed": 3,
+			"scanned": 100,
+			"slices": 491,
+			"stateUnchanged": true,
+			"upperBound": 3505.7,
+			"visited": 2005
+		},
+		{
+			"cacheHits": 9920,
+			"candidateCounts": [
+				92,
+				93,
+				94,
+				92,
+				99
+			],
+			"elapsedUsec": 41907655,
+			"evaluations": 17166,
+			"fastBounds": 387537,
+			"frontier": 0,
+			"gap": 0.0,
+			"initializationUsec": 12360,
+			"inventory": 500,
+			"lowerBound": 4112.786,
+			"maxSliceUsec": 74281,
+			"memoryBytes": 45050028,
+			"p95SliceUsec": 4805,
+			"phase": "done",
+			"provenOptimal": true,
+			"removed": 35,
+			"scanned": 500,
+			"slices": 9465,
+			"stateUnchanged": true,
+			"upperBound": 4112.786,
+			"visited": 63667
+		}
+	],
+	"host": "Godot 4.6.3 Linux headless; desktop proxy, Android remains to verify",
+	"reference": "six action default Ember; observation window ten seconds per size"
+}

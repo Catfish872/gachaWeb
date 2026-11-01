@@ -31,6 +31,15 @@ func capture(label:String) -> void:
 	root.get_texture().get_image().save_png("res://validation/v23-loot-"+label+".png")
 func target(name:String):return app.find_child(name,true,false)
 func open_box(id:String) -> void:
+	# Reused fixtures may empty a node, close it, then add the next scenario's
+	# items. Revisit through the visible map after completion auto-return.
+	if app.model.extraction.run().get("phase","")=="route":
+		var map=target("ExtractionMap")
+		check(map!=null,"completed fixture exposes its actual map")
+		if map!=null:
+			var point:Vector2=map.global_position+map.room_point(str(app.model.extraction.run().map.currentRoomId))
+			await click_at(point)
+			if app.model.extraction.run().phase=="route":await click_at(point)
 	await click(target("ExtractionOpenContainer_"+id))
 	check(target("ExtractionContainer_"+id)!=null,"actual click opens matching spatial grid")
 func select_item(id:String,uid:String) -> void:

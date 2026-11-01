@@ -1,0 +1,233 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS default save validates
+PASS all ten characters and stages loaded
+PASS original starter resources
+PASS starter team and shards
+PASS original exponential EXP curve capped
+PASS empty party rejected atomically
+PASS duplicate party rejected atomically
+PASS unowned party rejected atomically
+PASS one-character party padded to three slots
+PASS starter party restored
+PASS training spends 500 for100 EXP
+PASS large EXP settles to capped level10
+PASS max-level training rejected without charging
+PASS constellation C1 unlock
+PASS constellation C2 unlock
+PASS constellation C3 unlock
+PASS constellation C4 unlock
+PASS constellation C5 unlock
+PASS constellation C6 unlock
+PASS C6 cap enforced
+PASS constellation descriptions and exclusiveC6
+PASS level and constellation calculated stats
+PASS dialogue seen persists valid keys
+PASS unknown pool rejected
+PASS negative pulls rejected
+PASS oversized pull request rejected
+PASS ten-pull cost and result count
+PASS tenth pull guarantees four-star
+PASS pull currency and statistics
+PASS insufficient pull is atomic
+PASS hard pity and lost featured flag
+PASS next hard pity guarantees featured
+PASS soft pity starts at count73
+PASS five-star duplicate gives25shards
+PASS source nonfeatured Kaldi branch preserved
+PASS original JavaScript parity: 930 pulls, 2047 RNG draws, all outcomes-pity-balances-shards
+PASS generate valid 3-star helmet
+PASS generate valid 3-star chest
+PASS generate valid 3-star belt
+PASS generate valid 3-star boots
+PASS generate valid 3-star necklace
+PASS generate valid 4-star helmet
+PASS generate valid 4-star chest
+PASS generate valid 4-star belt
+PASS generate valid 4-star boots
+PASS generate valid 4-star necklace
+PASS generate valid 5-star helmet
+PASS generate valid 5-star chest
+PASS generate valid 5-star belt
+PASS generate valid 5-star boots
+PASS generate valid 5-star necklace
+PASS complete relic slot and rarity inventory
+PASS original0to25 upgrade cost exactly8000
+PASS invalid equip leaves ownership intact
+PASS equip links both inventory and owner
+PASS equipped relic stats contribute
+PASS relic transfers between owners
+PASS max upgrade six substat rolls
+PASS relic max25 prevents spending
+PASS combined bulk salvage protects equipped relic
+PASS unequip maintains both links
+PASS single salvage returns rarity plus upgrade value
+PASS empty salvage reports failure
+PASS same-slot replacement unequips prior relic
+PASS single equipped salvage cleans owner map
+PASS stamina recovers six-minute ticks with remainder
+PASS stamina countdown preserves remainder
+PASS offline stamina caps at100
+PASS overflow stamina preserved during recovery
+PASS clock rollback resets baseline without granting stamina
+PASS gold item purchase
+PASS simulated recharge rewards cap stamina300
+PASS item stamina uses same overflow cap
+PASS legacy overflow above300 preserved without further growth
+PASS reserved fragment shop has no mutations
+PASS unknown shop item rejected
+PASS insufficient item currency atomic
+PASS locked chapter rejected before stamina charge
+PASS unknown stage rejected before stamina charge
+PASS empty team rejected before stamina charge
+PASS valid stage deducts original stamina
+PASS unfinished battle cannot settle
+PASS first-clear gems awarded from authoritative config
+PASS replayed victory cannot duplicate rewards
+PASS repeat stage excludes first-clear gems
+PASS cannot skip uncleared story stages
+PASS chapterone penultimate gift grants Kaldi
+PASS chapter gift is one-time
+PASS boss clear unlocks next chapter
+PASS chaptertwo penultimate gift grants Ayla
+PASS retreat records defeat without rewards
+PASS victory and defeat statistics count once
+PASS gift duplicate converts25shards
+PASS cannot overwrite a pending story encounter
+PASS original encounter still settles
+PASS abyss floor1 prepares free
+PASS abyss floor1 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS abyss floor2 prepares free
+PASS abyss floor2 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending route gates combat
+PASS node has safe free option
+PASS node resolves
+PASS pending rest gates combat
+PASS node has safe free option
+PASS node resolves
+PASS abyss floor3 prepares free
+PASS abyss floor3 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS abyss floor4 prepares free
+PASS abyss floor4 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending route gates combat
+PASS node has safe free option
+PASS node resolves
+PASS pending rest gates combat
+PASS node has safe free option
+PASS node resolves
+PASS abyss floor5 prepares free
+PASS abyss floor5 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending shop gates combat
+PASS shop can leave without purchase
+PASS abyss floor6 prepares free
+PASS abyss floor6 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS abyss floor7 prepares free
+PASS abyss floor7 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending route gates combat
+PASS node has safe free option
+PASS node resolves
+PASS pending shop gates combat
+PASS shop can leave without purchase
+PASS abyss floor8 prepares free
+PASS abyss floor8 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending rest gates combat
+PASS node has safe free option
+PASS node resolves
+PASS abyss floor9 prepares free
+PASS abyss floor9 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS abyss floor10 prepares free
+PASS abyss floor10 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS boss offers gold blessings
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS selected blessings feed combat effects
+PASS five-star eligibility captured
+PASS victory recovery heals living18percent and preserves fallen
+PASS pending route gates combat
+PASS node has safe free option
+PASS node resolves
+PASS pending shop gates combat
+PASS shop can leave without purchase
+PASS defeat resets floor and run but preserves best
+PASS earned permanent fragments survive defeat
+PASS free restart
+PASS repeat restart is free without daily wall
+PASS legacy paid flag no longer charges gems
+PASS restarts always available
+PASS new slot file persisted
+PASS slot2 independent default
+PASS restart restores active slot and resources
+PASS switch restores slot1 resources
+PASS three summaries include empty slot
+PASS native export file created
+PASS export uses v6 envelope with original game identity
+PASS inactive slot import preserves active state
+PASS inactive slot export preserves active state
+PASS original web export imports resources and progression
+PASS web imported relic equipment links retained
+PASS web imported progression and gift flags retained
+PASS raw webv3 save import
+PASS malformed import preserves memory and disk
+PASS malformed import preserves memory and disk
+PASS malformed import preserves memory and disk
+PASS malformed import preserves memory and disk
+PASS malformed import preserves memory and disk
+PASS malformed nested timestamp rejected
+PASS malformed relic rejected
+PASS v2 migration fills additions and preserves extension fields
+PASS inactive slot reset leaves active selection
+PASS corrupt startup preserves original bytes
+PASS corrupt slot blocks implicit overwrite
+PASS valid slot accessible after corrupt slot
+PASS explicit reset repairs corrupt slot
+PASS failed gacha persistence rolls back currency-pity-collection
+PASS failed training persistence rolls back character and gold
+PASS failed shop persistence rolls back all resources
+PASS unknown malformed rogue reward rejected atomically
+PASS known rogue reward missing statusId rejected
+PASS known rogue reward nonnumeric value rejected
+PASS failed active-slot metadata keeps original active state
+MODEL TEST RESULTS: 230 passed, 0 failed

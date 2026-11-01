@@ -4,6 +4,7 @@ extends RefCounted
 
 const ExtractionModel = preload("res://scripts/extraction_model.gd")
 const AbyssBalance = preload("res://scripts/abyss_balance.gd")
+const RelicSets = preload("res://scripts/relic_sets.gd")
 const MAX_LEVEL := 10
 const MAX_STAMINA := 100
 const STAMINA_OVERFLOW_CAP := 300
@@ -11,7 +12,6 @@ const RECOVERY_MS := 360000
 const TRAIN_COST := 500
 const TRAIN_EXP := 100
 const ABYSS_UNLOCK_FLOOR := 20
-const MAX_REWARD_COPIES := 3
 
 var extraction
 var rogue_data: Dictionary = {}
@@ -61,10 +61,10 @@ func default_character() -> Dictionary:
 	return {"level": 1, "exp": 0, "shards": 0, "constellation": 0, "awakening": 0, "breakthroughLevel": 0, "equippedRelics": {}}
 
 func default_rogue() -> Dictionary:
-	return {"runId": null, "selectedRewards": [], "pendingChoices": [], "nextStep": {"type": "none", "floor": 0}, "characterFocus": {}, "eligibleCharacters": [], "temporaryCurrency": 0, "eventHistory": [], "shopStock": [], "pendingNode": {}, "runTeam": [], "activeEncounter": {}, "metaEarned": 0, "floorsCleared": 0, "difficulty": 0}
+	return {"runId": null, "selectedRewards": [], "pendingChoices": [], "nextStep": {"type": "none", "floor": 0}, "characterFocus": {}, "eligibleCharacters": [], "temporaryCurrency": 0, "eventHistory": [], "shopStock": [], "pendingNode": {}, "runTeam": [], "activeEncounter": {}, "metaEarned": 0, "floorsCleared": 0, "difficulty": 0, "targetRelicSetId": "", "relicRewardVersion": 0}
 
 func default_meta() -> Dictionary:
-	return {"currency": 0, "totalEarned": 0, "upgrades": {"vitality": 0, "offense": 0, "recovery": 0, "supply": 0}, "runsCompleted": 0, "runsLost": 0, "unlockedDifficulty": 0, "selectedDifficulty": 0}
+	return {"currency": 0, "totalEarned": 0, "upgrades": {"vitality": 0, "offense": 0, "recovery": 0, "supply": 0}, "runsCompleted": 0, "runsLost": 0, "unlockedDifficulty": 0, "selectedDifficulty": 0, "selectedRelicSetId": "flame_oath"}
 
 func default_state() -> Dictionary:
 	var ember := default_character()
@@ -378,18 +378,9 @@ func valid_save(value: Variant) -> bool:
 		if not relic is Dictionary or not relic.get("uid") is String or relic.uid.is_empty() or uids.has(relic.uid):
 			return false
 		uids[relic.uid] = true
-		if not catalog.RelicMainStatPool.has(relic.get("slotId", "")) or not _number(relic.get("rarity", 0), 3, 5) or int(relic.get("rarity", 0)) not in [3, 4, 5]:
+		if not _valid_relic(relic):
 			return false
-		if not _number(relic.get("level", 0), 0, 25) or not relic.get("mainStat") is Dictionary or not relic.get("subStats") is Array:
-			return false
-		if relic.has("legacySellValue") and not _integer(relic.legacySellValue):return false
-		if relic.has("legacySellLevel") and not _integer(relic.legacySellLevel,0,int(relic.level)):return false
-		var main: Dictionary = relic.mainStat
-		if not main.get("stat") is String or not main.get("name") is String or not _number(main.get("base")) or not _number(main.get("perLevel")):
-			return false
-		for sub in relic.subStats:
-			if not sub is Dictionary or not sub.get("stat") is String or not sub.get("name") is String or not _number(sub.get("value")):
-				return false
+
 	var abyss: Dictionary = value.get("abyss", {})
 	for key in ["currentFloor", "maxFloor", "lastFreeResetTime"]:
 		if abyss.has(key) and not _number(abyss[key]):
@@ -526,16 +517,33 @@ func _normalize(src: Dictionary) -> Dictionary:
 				unit.cooldowns[key] = int(unit.cooldowns[key])
 	if not result.abyss.rogue.activeEncounter.is_empty():
 		var encounter: Dictionary = result.abyss.rogue.activeEncounter
-		for key in ["floor", "abyssLayer", "staminaCost", "runLength", "seed", "difficulty"]:
+		for key in ["floor", "abyssLayer", "staminaCost", "runLength", "seed", "difficulty", "relicRewardVersion"]:
 			if encounter.has(key):
 				encounter[key] = int(encounter[key])
 		for key in ["gold", "exp", "diamonds"]:
 			encounter.rewards[key] = int(encounter.rewards.get(key, 0))
 		if encounter.rewards.has("relicDrop"):
 			encounter.rewards.relicDrop.rarity = int(encounter.rewards.relicDrop.rarity)
+			if encounter.rewards.relicDrop.get("item") is Dictionary:
+				encounter.rewards.relicDrop.item.level = int(encounter.rewards.relicDrop.item.level)
+				encounter.rewards.relicDrop.item.rarity = int(encounter.rewards.relicDrop.item.rarity)
 		if encounter.has("encounterModifier"):
 			encounter.encounterModifier = AbyssBalance.modifier(str(encounter.encounterModifier.id))
+	_migrate_bounded_abyss(result)
+	_migrate_unlimited_blessings(result)
+	_migrate_abyss_shop(result)
 	return result
+
+func _migrate_bounded_abyss(value: Dictionary) -> void:
+	# Previously earned permanent assets and counters stay byte-for-byte intact.
+	# Completed legacy floors are summarized once; unplayed encounters issue no reward.
+	var abyss: Dictionary = value.abyss
+	var rogue: Dictionary = abyss.rogue
+	if rogue.runId == null or str(rogue.runId).is_empty() or int(rogue.difficulty) == 3 or int(abyss.currentFloor) <= 50: return
+	abyss.lastRun = {"outcome":"legacy_completion", "floorsCleared":int(rogue.floorsCleared), "metaEarned":int(rogue.metaEarned), "blessings":rogue.selectedRewards.size(), "coinsLost":int(rogue.temporaryCurrency), "difficulty":int(rogue.difficulty)}
+	abyss.currentFloor = 1
+	abyss.savedPartyState = null
+	abyss.rogue = default_rogue()
 
 func exp_to_next_level(level: int) -> int:
 	if level >= MAX_LEVEL:
@@ -641,21 +649,31 @@ func unlock_constellation(char_id: String) -> Dictionary:
 	character.constellation += 1
 	return _commit(previous, {"newLevel": character.constellation, "cost": cost})
 
-func equipped_bonuses(char_id: String) -> Dictionary:
-	var result := {"hp_flat": 0.0, "atk_flat": 0.0, "def_flat": 0.0, "hp_pct": 0.0, "atk_pct": 0.0, "def_pct": 0.0, "spd": 0.0, "cri_rate": 0.0, "cri_dmg": 0.0, "energy_rate": 0.0}
+func equipped_relics(char_id: String) -> Array:
+	var result: Array = []
 	for uid in state.ownedCharacters.get(char_id, {}).get("equippedRelics", {}).values():
 		if uid == null:
 			continue
 		var relic := get_relic(str(uid))
-		if relic.is_empty():
-			continue
-		var main: Dictionary = relic.mainStat
-		if result.has(main.stat):
-			result[main.stat] += main.base + main.perLevel * relic.level
-		for sub in relic.subStats:
-			if result.has(sub.stat):
-				result[sub.stat] += sub.value
-	return result
+		if not relic.is_empty() and relic.get("equippedBy") == char_id:
+			result.append(relic)
+	return RelicSets.unique_relics(catalog, result)
+
+func equipped_bonuses(char_id: String) -> Dictionary:
+	return RelicSets.attribute_bonuses(catalog, equipped_relics(char_id))
+
+func computed_stats_for_relic_loadout(char_id: String, relics: Array) -> Dictionary:
+	var evaluated := RelicSets.evaluate(catalog, relics)
+	return computed_stats(char_id, -1, {"constellation":constellation_bonuses(char_id),"awakening":int(state.ownedCharacters.get(char_id, {}).get("awakening", 0)),"relics":RelicSets.attribute_bonuses(catalog, relics),"relicSetBonuses":evaluated.statBonuses})
+
+func relic_loadout_snapshot(char_id: String, relics: Variant = null) -> Dictionary:
+	var items: Array = equipped_relics(char_id) if relics == null else relics
+	items = RelicSets.unique_relics(catalog, items)
+	var evaluated := RelicSets.evaluate(catalog, items)
+	var uids: Dictionary = {}
+	for relic in items:
+		uids[relic.slotId] = relic.uid
+	return {"charId":char_id,"relics":items.duplicate(true),"relicUids":uids,"stats":computed_stats_for_relic_loadout(char_id,items),"counts":evaluated.counts,"activeBonuses":evaluated.activeBonuses,"statBonuses":evaluated.statBonuses,"ownerEffects":evaluated.ownerEffects}
 
 func computed_stats(char_id: String, level_override:int=-1, frozen:Dictionary={}) -> Dictionary:
 	if not catalog.CharacterData.has(char_id):
@@ -666,14 +684,17 @@ func computed_stats(char_id: String, level_override:int=-1, frozen:Dictionary={}
 	var multiplier := pow(1.1, level - 1)
 	var base: Dictionary = data.baseStats
 	var growth: Dictionary = data.growthRate
-	var cst:Dictionary=frozen.get("constellation",constellation_bonuses(char_id))
-	var rb:Dictionary=frozen.get("relics",equipped_bonuses(char_id))
+	var cst:Dictionary=frozen.constellation if frozen.has("constellation") else constellation_bonuses(char_id)
+	var rb:Dictionary=(frozen.relics if frozen.has("relics") else equipped_bonuses(char_id)).duplicate(true)
+	var set_bonuses: Dictionary = RelicSets.evaluate(catalog,equipped_relics(char_id)).statBonuses if frozen.is_empty() else frozen.get("relicSetBonuses", {})
+	for key in set_bonuses:
+		rb[key] = float(rb.get(key,0)) + float(set_bonuses[key])
 	var result: Dictionary = {}
 	for key in ["hp", "atk", "def"]:
 		var value := floorf(floorf(float(base[key]) + float(growth[key]) * (level - 1)) * multiplier)
 		var percent := float(cst[key + "Percent"]) + (float(frozen.get("awakening",saved.awakening)) * 0.05 if key == "hp" else 0.0)
 		result["maxHp" if key == "hp" else key] = maxi(0 if key == "def" else 1, int(floorf((value * (1 + percent) + rb[key + "_flat"]) * (1 + rb[key + "_pct"]))))
-	result.spd = floorf(float(base.spd) * multiplier) + rb.spd
+	result.spd = (floorf(float(base.spd) * multiplier) + rb.spd) * (1.0 + float(rb.get("spd_pct", 0)))
 	result.cri = minf(1, float(base.cri) * multiplier + rb.cri_rate)
 	result.criDmg = float(base.criDmg) * multiplier + rb.cri_dmg
 	for key in ["normalDmgBonus", "skillDmgBonus", "ultDmgBonus", "skillCdReduce"]:
@@ -685,6 +706,9 @@ func computed_stats(char_id: String, level_override:int=-1, frozen:Dictionary={}
 	return result
 
 func battle_party(is_abyss: bool = false) -> Array:
+	var issued: Dictionary = state.abyss.rogue.activeEncounter if is_abyss else _issued_config
+	if not issued.is_empty() and bool(issued.get("isAbyss",false)) == is_abyss and issued.get("partySnapshot") is Array:
+		return issued.partySnapshot.duplicate(true)
 	var result: Array = []
 	for id in state.team:
 		if id == null or not state.ownedCharacters.has(id) or not catalog.CharacterData.has(id):
@@ -693,6 +717,7 @@ func battle_party(is_abyss: bool = false) -> Array:
 		var saved: Dictionary = state.ownedCharacters[id]
 		var stats := computed_stats(id)
 		var unit := {"id": id, "name": data.name, "element": data.element, "stats": stats, "skills": data.skills.duplicate(), "passiveId": data.get("passiveId", ""),
+			"ownerEffects": RelicSets.evaluate(catalog,equipped_relics(id)).ownerEffects,
 			"level": saved.level, "constellation": saved.constellation, "saveData": saved.duplicate(true), "maxHp": stats.maxHp, "currentHp": stats.maxHp, "energy": 0, "cooldowns": {}}
 		if is_abyss and state.abyss.savedPartyState is Array:
 			for persisted in state.abyss.savedPartyState:
@@ -780,22 +805,48 @@ func get_relic(uid: String) -> Dictionary:
 func _round_stat(value: float, stat: String) -> float:
 	return floorf(value + 0.5) if stat in ["spd", "hp_flat", "atk_flat", "def_flat", "energy_rate_flat"] else floorf(value * 1000 + 0.5) / 1000.0
 
-func generate_relic(rarity: int, slot_id: String) -> Dictionary:
+func generate_relic(rarity: int, slot_id: String, set_id: String = "*") -> Dictionary:
 	if rarity not in [3, 4, 5] or not catalog.RelicMainStatPool.has(slot_id):
 		return {}
-	var main: Dictionary = _pick(catalog.RelicMainStatPool[slot_id])
+	if set_id != "*" and not set_id.is_empty() and not catalog.RelicSets.has(set_id):
+		return {}
+	var relic := _generate_relic_with_source(rarity, slot_id, "", random_value, "")
+	relic.uid = _uid("relic")
+	var chosen_set: String = str(_pick(catalog.RelicSets.keys())) if set_id == "*" else set_id
+	if not chosen_set.is_empty():relic.setId = chosen_set
+	return relic
+
+func _generate_relic_with_source(rarity: int, slot_id: String, set_id: String, source: Callable, uid: String) -> Dictionary:
+	var pool: Array = catalog.RelicMainStatPool[slot_id]
+	var main: Dictionary = pool[mini(pool.size()-1, int(float(source.call())*pool.size()))]
 	var candidates: Array = []
 	for entry in catalog.RelicSubStatPool:
 		if entry.stat != main.stat:
 			candidates.append(entry)
 	var chosen: Array = []
 	for _i in range(int(catalog.RelicRarityConfig[str(rarity)].initSubStats)):
-		var index := mini(candidates.size() - 1, int(random_value() * candidates.size()))
+		var index := mini(candidates.size() - 1, int(float(source.call()) * candidates.size()))
 		chosen.append(candidates.pop_at(index))
 	var subs: Array = []
 	for entry in chosen:
-		subs.append({"stat": entry.stat, "name": entry.name, "value": _round_stat(float(entry.range[0]) + random_value() * float(entry.range[1] - entry.range[0]), entry.stat)})
-	return {"uid": _uid("relic"), "slotId": slot_id, "rarity": rarity, "level": 0, "mainStat": main.duplicate(true), "subStats": subs, "equippedBy": null}
+		subs.append({"stat": entry.stat, "name": entry.name, "value": _round_stat(float(entry.range[0]) + float(source.call()) * float(entry.range[1] - entry.range[0]), entry.stat)})
+	var relic := {"uid":uid,"slotId":slot_id,"rarity":rarity,"level":0,"mainStat":main.duplicate(true),"subStats":subs,"equippedBy":null}
+	if not set_id.is_empty():
+		relic.setId = set_id
+	return relic
+
+func _valid_relic(relic: Variant) -> bool:
+	if not relic is Dictionary or not relic.get("uid") is String or relic.uid.is_empty():return false
+	if not catalog.RelicMainStatPool.has(relic.get("slotId", "")) or not _integer(relic.get("rarity", 0),3,5):return false
+	if not _integer(relic.get("level", 0),0,25) or not relic.get("mainStat") is Dictionary or not relic.get("subStats") is Array:return false
+	if relic.has("setId") and (not relic.setId is String or (not relic.setId.is_empty() and not catalog.RelicSets.has(relic.setId))):return false
+	if relic.has("legacySellValue") and not _integer(relic.legacySellValue):return false
+	if relic.has("legacySellLevel") and not _integer(relic.legacySellLevel,0,int(relic.level)):return false
+	var main: Dictionary = relic.mainStat
+	if not main.get("stat") is String or not main.get("name") is String or not _number(main.get("base")) or not _number(main.get("perLevel")):return false
+	for sub in relic.subStats:
+		if not sub is Dictionary or not sub.get("stat") is String or not sub.get("name") is String or not _number(sub.get("value")):return false
+	return true
 
 func add_relic(relic: Dictionary) -> Dictionary:
 	if relic.is_empty() or not relic.has("uid") or not get_relic(str(relic.uid)).is_empty():
@@ -1052,6 +1103,7 @@ func prepare_stage(stage_id: String) -> Dictionary:
 	config.isAbyss = false
 	config.token = _uid("battle")
 	config._team = state.team.duplicate()
+	config.partySnapshot = JSON.parse_string(JSON.stringify(battle_party(false)))
 	var result := _commit(previous, {"config": config.duplicate(true)})
 	if result.success:
 		_issued_config = config
@@ -1105,6 +1157,11 @@ func finish_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 	var issued := _issued_config.duplicate(true)
 	var previous := state.duplicate(true)
 	var abyss := bool(issued.get("isAbyss", false))
+	if abyss and abyss_floor_cap(int(issued.get("difficulty",0))) > 0 and int(issued.floor) > abyss_floor_cap(int(issued.get("difficulty",0))):
+		_migrate_bounded_abyss(state)
+		var migrated := _commit(previous, {"victory":true,"ended":true,"rewards":{},"lastRun":state.abyss.lastRun.duplicate(true)})
+		if migrated.success: _issued_config.clear()
+		return migrated
 	state.stats.totalBattles += 1
 	if phase == "defeat":
 		if abyss:
@@ -1129,7 +1186,11 @@ func finish_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 			progression.append(_grant_exp(id, int(rewards.get("exp", 0))))
 	var relic: Dictionary = {}
 	if rewards.has("relicDrop"):
-		relic = generate_relic(int(rewards.relicDrop.rarity), str(rewards.relicDrop.slotId))
+		if rewards.relicDrop.get("item") is Dictionary:
+			relic = rewards.relicDrop.item.duplicate(true)
+		else:
+			# Pre-2.5 issued encounters keep their original loose-piece rewards.
+			relic = generate_relic(int(rewards.relicDrop.rarity), str(rewards.relicDrop.slotId), str(rewards.relicDrop.get("setId", "" if abyss else "*")))
 		if not relic.is_empty():
 			state.relics.append(relic)
 	var gift: Dictionary = {}
@@ -1147,7 +1208,7 @@ func finish_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 		state.stageProgress[issued.id] = {"cleared": true, "stars": maxi(stars, int(state.stageProgress.get(issued.id, {}).get("stars", 0))), "bestTurns": mini(old_best, maxi(1, int(battle_state.get("turn", 1))))}
 		gift = _chapter_gift(issued.id)
 	var result := _commit(previous, {"victory": true, "rewards": rewards, "dailyAward":daily_award, "relic": relic, "gift": gift, "progression": progression, "firstClear": first_clear,
-		"nextStep": state.abyss.rogue.nextStep.duplicate(true) if abyss else {}, "pendingChoices": state.abyss.rogue.pendingChoices.duplicate(true) if abyss else [], "ended": false, "lastRun": {}})
+		"nextStep": state.abyss.rogue.nextStep.duplicate(true) if abyss else {}, "pendingChoices": state.abyss.rogue.pendingChoices.duplicate(true) if abyss else [], "ended": abyss and not abyss_run_active(), "lastRun": state.abyss.lastRun.duplicate(true) if abyss and not abyss_run_active() else {}})
 	if result.success:
 		_issued_config.clear()
 	return result
@@ -1174,6 +1235,8 @@ func _init_rogue_run() -> void:
 	rogue.runId = _uid("abyss")
 	rogue.runTeam = state.team.duplicate()
 	rogue.difficulty = int(state.abyss.meta.selectedDifficulty)
+	rogue.targetRelicSetId = str(state.abyss.meta.selectedRelicSetId)
+	rogue.relicRewardVersion = 1
 	rogue.temporaryCurrency = 30 + 15 * int(state.abyss.meta.upgrades.supply)
 	for id in state.team:
 		if id != null and int(catalog.CharacterData.get(id, {}).get("rarity", 0)) == 5:
@@ -1184,6 +1247,12 @@ func _init_rogue_run() -> void:
 
 func prepare_abyss() -> Dictionary:
 	if extraction.active(): return _fail("请先结束搜打撤探索")
+	if abyss_run_active() and abyss_floor_cap() > 0 and int(state.abyss.currentFloor) > abyss_floor_cap():
+		var legacy_previous := state.duplicate(true)
+		_migrate_bounded_abyss(state)
+		var migrated := _commit(legacy_previous, {"ended":true,"lastRun":state.abyss.lastRun.duplicate(true),"message":"旧远征已完成结算，已获得资源完整保留"})
+		if migrated.success and bool(_issued_config.get("isAbyss",false)): _issued_config.clear()
+		return migrated
 	if not state.abyss.rogue.activeEncounter.is_empty():
 		_issued_config = state.abyss.rogue.activeEncounter.duplicate(true)
 		return {"success": true, "config": _issued_config.duplicate(true), "resumed": true}
@@ -1216,13 +1285,19 @@ func prepare_abyss() -> Dictionary:
 	var slot: Dictionary = _pick(catalog.RelicSlots)
 	var config := {"id": "abyss_floor_%d" % floor_number, "name": "深渊 第 %d 层" % floor_number, "isAbyss": true, "floor": floor_number, "abyssLayer": floor_number,
 		"staminaCost": 0, "isBoss": boss, "isElite": elite, "enemies": enemies, "waves": [{"enemies": enemies.duplicate()}], "scaleMult": 1.0,
-		"encounterTier": "boss" if boss else ("elite" if elite else "normal"), "endless":true, "difficulty": int(state.abyss.rogue.difficulty),
+		"encounterTier": "boss" if boss else ("elite" if elite else "normal"), "endless":abyss_is_endless(), "runLength":abyss_floor_cap(), "difficulty": int(state.abyss.rogue.difficulty),
 		"rewards": {"gold": 0, "exp": mini(1000000,35 + floor_number * 5), "diamonds": 0},
 		"seed": int(rng.randi()), "token": _uid("battle"), "_team": state.team.duplicate()}
 	if floor_number >= 6 and not boss and random_value() < 0.45:
 		config.encounterModifier = AbyssBalance.modifier(str(_pick(["bulwark", "frenzy", "swift"])))
-	if elite or boss:
+	if int(state.abyss.rogue.get("relicRewardVersion",0)) >= 1:
+		config.targetRelicSetId = str(state.abyss.rogue.targetRelicSetId)
+		config.relicRewardVersion = 1
+		var drop := _abyss_relic_drop(floor_number, int(config.difficulty), config.targetRelicSetId, int(config.seed), str(config.token))
+		if not drop.is_empty():config.rewards.relicDrop = drop
+	elif elite or boss:
 		config.rewards.relicDrop = {"slotId": slot.id, "rarity": 5 if boss else 4}
+	config.partySnapshot = JSON.parse_string(JSON.stringify(battle_party(true)))
 	state.abyss.rogue.activeEncounter = config.duplicate(true)
 	var result := _commit(previous, {"config": config.duplicate(true)})
 	if result.success:
@@ -1244,15 +1319,12 @@ func _weighted_pick(items: Array, weights: Array) -> Variant:
 			return items[index]
 	return items.back()
 
-func _available_abyss_rewards() -> Array:
+func _available_abyss_rewards(rogue: Dictionary = {}) -> Array:
+	if rogue.is_empty(): rogue = state.abyss.rogue
 	var result: Array = []
-	var eligible: Array = state.abyss.rogue.eligibleCharacters
+	var eligible: Array = rogue.eligibleCharacters
 	for reward in catalog.AbyssData.rogue.rewards:
-		var count := 0
-		for selected in state.abyss.rogue.selectedRewards:
-			if selected.id == reward.id:
-				count += 1
-		if count < MAX_REWARD_COPIES and (reward.pool != "character" or reward.get("characterId", "") in eligible):
+		if reward.pool != "character" or reward.get("characterId", "") in eligible:
 			result.append(reward)
 	return result
 
@@ -1397,9 +1469,11 @@ func _process_abyss_victory(config: Dictionary, battle_state: Dictionary) -> Dic
 	state.abyss.maxFloor = maxi(cleared_floor, int(state.abyss.maxFloor))
 	if cleared_floor == ABYSS_UNLOCK_FLOOR:
 		fragments += _bank_meta(25)
-		state.abyss.meta.runsCompleted+=1
 		state.abyss.meta.unlockedDifficulty=maxi(int(state.abyss.meta.unlockedDifficulty),mini(3,int(state.abyss.rogue.difficulty)+1))
-	_set_after_floor(cleared_floor)
+	if abyss_floor_cap() > 0 and cleared_floor >= abyss_floor_cap():
+		_end_abyss_run("victory")
+	else:
+		_set_after_floor(cleared_floor)
 	return {"runCoins": coins, "meta": fragments}
 
 func can_free_abyss_reset(_now_ms: int = -1) -> bool:
@@ -1427,12 +1501,22 @@ func _is_abyss_reward_floor(floor_number: int) -> bool:
 func abyss_run_active() -> bool:
 	return state.abyss.rogue.runId != null and str(state.abyss.rogue.runId) != ""
 
+func abyss_floor_cap(rank: int = -1) -> int:
+	if rank < 0: rank = int(state.abyss.rogue.difficulty) if abyss_run_active() else int(state.abyss.meta.selectedDifficulty)
+	return int(rogue_data.get("floorCapsByDifficulty", [50,50,50,0])[clampi(rank,0,3)])
+
+func abyss_is_endless(rank: int = -1) -> bool:
+	return abyss_floor_cap(rank) == 0
+
 func abyss_route_preview() -> Array:
 	var result:Array=[]
+	var cap := abyss_floor_cap()
 	var start:=maxi(1,int(state.abyss.currentFloor)-2)
-	for floor_number in range(start,start+10):
+	if cap > 0: start = mini(start, maxi(1, cap - 9))
+	for floor_number in range(start,mini(start+10,cap+1) if cap > 0 else start+10):
 		var cycle:=_abyss_cycle_floor(floor_number)
 		var after:="reward" if _is_abyss_reward_floor(floor_number) else ("shop" if cycle in rogue_data.shopFloors else ("rest" if cycle in rogue_data.restFloors else "route"))
+		if cap > 0 and floor_number == cap: after = "finish"
 		result.append({"floor":floor_number,"tier":"boss" if floor_number%10==0 else ("elite" if floor_number%5==0 else "normal"),"after":after})
 	return result
 
@@ -1498,7 +1582,7 @@ func _set_after_floor(floor_number: int) -> void:
 	if kind == "reward":
 		return
 	rogue.pendingNode = {"id": "%s_%d" % [kind, floor_number], "type": kind}
-	if kind=="rest" and _is_abyss_reward_floor(floor_number) and _available_abyss_rewards().is_empty():rogue.pendingNode.exhausted=true
+	if kind=="rest" and _is_abyss_reward_floor(floor_number) and _available_abyss_rewards().is_empty():rogue.pendingNode.poolUnavailable=true
 	if kind == "route":
 		rogue.pendingNode.eventId = str(_pick(rogue_data.events).id)
 		rogue.pendingNode.routeOptions = ["event", "rest" if floor_number % 2 == 0 else "shop"]
@@ -1527,7 +1611,7 @@ func _option_disabled_reason(option: Dictionary) -> String:
 	if effect.has("hpCost") and not _can_pay_hp(float(effect.hpCost)):
 		return "全队每人须保留至少 1 点生命，倒下角色需要先复苏"
 	if effect.has("blessing") and _rewards_of_rarity(str(effect.blessing)).is_empty():
-		return "此稀有度祝福均已达到每种 3 层的上限"
+		return "当前队伍暂无可用的此稀有度祝福"
 	return ""
 
 func _option_enabled(option: Dictionary) -> bool:
@@ -1556,7 +1640,7 @@ func node_options() -> Dictionary:
 		node.title = "休整营地"
 		node.description = "营火只能停留片刻，请选择一项整备。"
 		options = _abyss_rest_options()
-		if node.get("exhausted",false):node.title="回响已圆满";node.description="带上补给，继续深入。"
+		if node.get("poolUnavailable",false):node.title="临时补给";node.description="当前暂无可用祝福，带上补给继续深入。"
 	elif kind == "shop":
 		node.title = "裂隙商店"
 		node.description = "每件商品限购一次。裂隙币与购买的祝福仅在本次远征中有效。"
@@ -1663,11 +1747,64 @@ func _apply_node_effect(effect: Dictionary) -> Dictionary:
 	result.message = "；".join(parts)
 	return result
 
+func _migrate_unlimited_blessings(value: Dictionary) -> void:
+	var rogue: Dictionary=value.abyss.rogue
+	var node: Dictionary=rogue.pendingNode
+	if rogue.nextStep.get("type", "none")!="rest" or node.get("type", "")!="rest":return
+	if not node.get("exhausted",false) and not node.get("poolUnavailable",false):return
+	var eligible:=_available_abyss_rewards(rogue)
+	node.erase("exhausted")
+	if eligible.is_empty():node.poolUnavailable=true;return
+	# A historical cap-exhaustion fallback becomes its owed ordinary choice.
+	# Existing stacks, currencies and past decisions stay intact; no reward is granted.
+	var floor_number:=int(rogue.nextStep.floor)
+	var salt:=str(rogue.runId)+"|"+str(floor_number)+"|unlimited-blessings|"
+	eligible.sort_custom(func(a,b):return (salt+str(a.id)).sha256_text() < (salt+str(b.id)).sha256_text())
+	var candidates: Array=[]
+	if floor_number%10==0:
+		for reward in eligible:
+			if reward.rarity=="gold":candidates.append(reward)
+	for reward in eligible:
+		if reward not in candidates:candidates.append(reward)
+	rogue.pendingChoices=[]
+	for index in range(mini(3,candidates.size())):
+		var reward: Dictionary=candidates[index].duplicate(true)
+		reward.choiceId="%d_%d_%s"%[floor_number,index,reward.id]
+		rogue.pendingChoices.append(reward)
+	rogue.nextStep.type="reward"
+	rogue.pendingNode={}
+
+func _migrate_abyss_shop(value: Dictionary) -> void:
+	var rogue: Dictionary = value.abyss.rogue
+	if rogue.nextStep.get("type", "none") != "shop": return
+	var used: Array = []
+	var stock_ids: Array = []
+	for item in rogue.shopStock:
+		stock_ids.append(item.id)
+		if item.kind == "blessing": used.append(item.rewardId)
+	var wanted := int(rogue_data.get("shopBlessingCount",3))
+	if used.size() >= wanted: return
+	var candidates: Array = []
+	for reward in _available_abyss_rewards(rogue):
+		if reward.id not in used: candidates.append(reward)
+	# A stable, run-local order adds stock once without rerolling purchases or
+	# consuming the live encounter RNG when a historical shop is loaded again.
+	var salt := str(rogue.runId)+"|"+str(int(rogue.nextStep.floor))+"|shop-v241|"
+	candidates.sort_custom(func(a,b):return (salt+str(a.id)).sha256_text() < (salt+str(b.id)).sha256_text())
+	for reward in candidates:
+		if used.size()>=wanted or rogue.shopStock.size()>=wanted+2: break
+		var index := used.size()
+		while "blessing_%d"%index in stock_ids:index+=1
+		var id := "blessing_%d"%index
+		rogue.shopStock.append({"id":id,"kind":"blessing","rewardId":str(reward.id),"sold":false})
+		stock_ids.append(id);used.append(reward.id)
+
 func _generate_abyss_shop() -> void:
 	var stock: Array = [{"id": "heal", "kind": "heal", "sold": false}, {"id": "energy", "kind": "energy", "sold": false}]
 	var used: Array = []
-	for index in range(2):
-		var reward := _draw_abyss_reward("", used, "blue" if index == 0 else ("gold" if int(state.abyss.currentFloor) >= 10 else "white"))
+	for index in range(int(rogue_data.get("shopBlessingCount",3))):
+		var rarity := "blue" if index == 0 else (("gold" if int(state.abyss.currentFloor) >= 10 else "white") if index == 1 else "")
+		var reward := _draw_abyss_reward("", used, rarity)
 		if not reward.is_empty():
 			stock.append({"id": "blessing_%d" % index, "kind": "blessing", "rewardId": str(reward.id), "sold": false})
 			used.append(reward.id)
@@ -1701,7 +1838,8 @@ func abyss_shop_items() -> Array:
 			item.cost = int({"white": 55, "blue": 85, "gold": 140}.get(reward.get("rarity", "white"), 55))
 			item.rarity = reward.get("rarity", "white")
 			available = reward in _available_abyss_rewards()
-		item.disabledReason = "已售罄" if bool(item.sold) else ("此祝福已达到 3 层上限" if not available else ("裂隙币不足" if int(state.abyss.rogue.temporaryCurrency) < int(item.cost) else ""))
+		item.cost *= int(rogue_data.get("shopPriceMultiplier",2))
+		item.disabledReason = "已售罄" if bool(item.sold) else ("当前队伍无法使用此祝福" if not available else ("裂隙币不足" if int(state.abyss.rogue.temporaryCurrency) < int(item.cost) else ""))
 		item.enabled = str(item.disabledReason).is_empty()
 		result.append(item)
 	return result
@@ -1716,7 +1854,7 @@ func purchase_abyss_item(item_id: String) -> Dictionary:
 	if item.is_empty():
 		return _fail("商品不存在")
 	if not bool(item.enabled):
-		return _fail("商品已经售罄、达到祝福上限或裂隙币不足")
+		return _fail("商品已经售罄、当前队伍无法使用或裂隙币不足")
 	var previous := state.duplicate(true)
 	state.abyss.rogue.temporaryCurrency -= int(item.cost)
 	for raw in state.abyss.rogue.shopStock:
@@ -1754,6 +1892,8 @@ func _valid_rogue_v2(value: Dictionary) -> bool:
 	var meta = abyss.get("meta", {})
 	if not meta is Dictionary:
 		return false
+	if meta.has("selectedRelicSetId") and (not meta.selectedRelicSetId is String or not catalog.RelicSets.has(meta.selectedRelicSetId)):
+		return false
 	for key in ["currency", "totalEarned", "runsCompleted", "runsLost"]:
 		if meta.has(key) and not _integer(meta[key]):
 			return false
@@ -1773,7 +1913,7 @@ func _valid_rogue_v2(value: Dictionary) -> bool:
 	if not summary is Dictionary:
 		return false
 	if not summary.is_empty():
-		if summary.get("outcome", "") not in ["defeat", "victory", "retreat"]:
+		if summary.get("outcome", "") not in ["defeat", "victory", "retreat", "legacy_completion"]:
 			return false
 		for key in ["floorsCleared", "metaEarned", "blessings", "coinsLost"]:
 			if not _integer(summary.get(key, -1)):
@@ -1792,12 +1932,15 @@ func _valid_rogue_v2(value: Dictionary) -> bool:
 				if not _integer(cooldown, 0, 999):
 					return false
 	var rogue: Dictionary = abyss.get("rogue", {})
+	if not _integer(rogue.get("relicRewardVersion",0),0,1):return false
+	if rogue.has("targetRelicSetId") and (not rogue.targetRelicSetId is String or (not rogue.targetRelicSetId.is_empty() and not catalog.RelicSets.has(rogue.targetRelicSetId))):return false
+	if int(rogue.get("relicRewardVersion",0)) == 1 and not catalog.RelicSets.has(rogue.get("targetRelicSetId","")):return false
 	if not _integer(rogue.get("difficulty", 0), 0, 3) or int(rogue.get("difficulty", 0)) > int(meta.get("unlockedDifficulty", 0)):
 		return false
 	for key in ["temporaryCurrency", "metaEarned", "floorsCleared"]:
 		if rogue.has(key) and not _integer(rogue[key], 0, 1000000000):
 			return false
-	if rogue.get("selectedRewards", []).size() > 200 or rogue.get("pendingChoices", []).size() > 3 or rogue.get("eventHistory", []).size() > 100 or rogue.get("shopStock", []).size() > 4:
+	if rogue.get("pendingChoices", []).size() > 3 or rogue.get("eventHistory", []).size() > 100 or rogue.get("shopStock", []).size() > 5:
 		return false
 	var run_team = rogue.get("runTeam", [])
 	if not run_team is Array or run_team.size() > 3:
@@ -1844,18 +1987,15 @@ func _valid_rogue_v2(value: Dictionary) -> bool:
 		return false
 	if not encounter.is_empty() and not _valid_abyss_encounter(encounter, value):
 		return false
+	if not encounter.is_empty() and int(encounter.get("relicRewardVersion",0)) != int(rogue.get("relicRewardVersion",0)):
+		return false
 	if int(value.get("version", 3)) >= 4:
 		if not _integer(abyss.get("currentFloor", 1), 1, 1000000000):
 			return false
 		var active: bool = rogue.get("runId") != null and str(rogue.get("runId", "")) != ""
-		var selected_counts: Dictionary = {}
-		for reward in rogue.get("selectedRewards", []):
-			selected_counts[reward.id] = int(selected_counts.get(reward.id, 0)) + 1
-			if int(selected_counts[reward.id]) > MAX_REWARD_COPIES:
-				return false
 		var choice_ids: Array = []
 		for reward in rogue.get("pendingChoices", []):
-			if reward.id in choice_ids or int(selected_counts.get(reward.id, 0)) >= MAX_REWARD_COPIES:
+			if reward.id in choice_ids:
 				return false
 			choice_ids.append(reward.id)
 		if (kind == "reward") != (not choice_ids.is_empty()):
@@ -1896,6 +2036,11 @@ func _valid_abyss_encounter(config: Dictionary, value: Dictionary) -> bool:
 			return false
 	if not _integer(config.get("difficulty", 0), 0, 3):
 		return false
+	if not _integer(config.get("relicRewardVersion",0),0,1):return false
+	if int(config.get("relicRewardVersion",0)) == 1:
+		if not config.get("targetRelicSetId") is String or not catalog.RelicSets.has(config.targetRelicSetId):return false
+		if config.targetRelicSetId != value.get("abyss",{}).get("rogue",{}).get("targetRelicSetId",""):return false
+	elif config.has("targetRelicSetId") and config.targetRelicSetId != "":return false
 	if not bool(config.isAbyss) or not _integer(config.get("floor"), 1, 1000000000) or not _integer(config.get("seed"), 0, 4294967295):
 		return false
 	if not config.get("enemies") is Array or config.enemies.is_empty() or config.enemies.size() > 3:
@@ -1910,6 +2055,19 @@ func _valid_abyss_encounter(config: Dictionary, value: Dictionary) -> bool:
 	for id in config._team:
 		if id != null and (not id is String or not value.ownedCharacters.has(id)):
 			return false
+	if config.has("partySnapshot"):
+		if not config.partySnapshot is Array or config.partySnapshot.is_empty() or config.partySnapshot.size()>3:return false
+		var party_ids: Array = []
+		for unit in config.partySnapshot:
+			if not unit is Dictionary or not unit.get("id") is String or not unit.id in config._team or unit.id in party_ids:return false
+			party_ids.append(unit.id)
+			if not unit.get("stats") is Dictionary or not unit.get("skills") is Array or not unit.get("cooldowns") is Dictionary:return false
+			if not _integer(unit.get("maxHp"),1) or not _integer(unit.get("currentHp")) or not _integer(unit.get("_abyssSavedMaxHp",unit.maxHp),1) or int(unit.currentHp)>int(unit.get("_abyssSavedMaxHp",unit.maxHp)) or not _integer(unit.get("energy"),0,100):return false
+			for key in ["maxHp","atk","def","spd","cri","criDmg","energyRate"]:
+				if not _number(unit.stats.get(key),0,1000000000):return false
+			if not valid_relic_growth_snapshot({"ownerEffects":unit.get("ownerEffects",[])}):return false
+		for char_id in config._team:
+			if char_id != null and char_id not in party_ids:return false
 	var rewards = config.get("rewards")
 	if not rewards is Dictionary:
 		return false
@@ -1919,6 +2077,14 @@ func _valid_abyss_encounter(config: Dictionary, value: Dictionary) -> bool:
 	if rewards.has("relicDrop"):
 		if not rewards.relicDrop is Dictionary or not catalog.RelicMainStatPool.has(rewards.relicDrop.get("slotId", "")) or not _integer(rewards.relicDrop.get("rarity"), 3, 5):
 			return false
+		var drop: Dictionary = rewards.relicDrop
+		if int(config.get("relicRewardVersion",0)) == 1:
+			if drop.get("setId", "") != config.targetRelicSetId or not _valid_relic(drop.get("item")):return false
+			if drop.item.get("setId", "") != drop.setId or drop.item.slotId != drop.slotId or int(drop.item.rarity) != int(drop.rarity) or drop.item.get("equippedBy") != null or int(drop.item.level) != 0:return false
+			if drop.item.uid != "abyss_relic_" + str(config.token):return false
+			for relic in value.get("relics",[]):
+				if relic.uid == drop.item.uid:return false
+		elif drop.has("setId") or drop.has("item"):return false
 	if not _number(config.get("scaleMult", 1.0), 0.1, 1000000000.0):
 		return false
 	if config.has("encounterModifier"):
@@ -1929,14 +2095,14 @@ func _valid_abyss_encounter(config: Dictionary, value: Dictionary) -> bool:
 
 func abyss_difficulty_options() -> Array:
 	var result: Array = []
-	var names := ["初探", "险境", "绝境", "噩梦"]
+	var names := ["初探", "险境", "绝境", "无尽"]
 	for rank in range(4):
 		var unlocked := rank <= int(state.abyss.meta.unlockedDifficulty)
 		var modifiers := AbyssBalance.apply_difficulty({"hpMod": 1.0, "atkMod": 1.0, "defMod": 1.0}, rank)
 		var hp_percent := int(round((float(modifiers.hpMod) - 1.0) * 100.0))
 		var atk_percent := int(round((float(modifiers.atkMod) - 1.0) * 100.0))
 		var def_percent := int(round((float(modifiers.defMod) - 1.0) * 100.0))
-		result.append({"id": rank, "name": names[rank], "description": "基础敌人强度，记忆碎片收益 100%。" if rank == 0 else "敌人生命 +%d%%、攻击 +%d%%、防御 +%d%%；记忆碎片收益 +%d%%。" % [hp_percent, atk_percent, def_percent, rank * 25], "unlocked": unlocked, "selected": rank == int(state.abyss.meta.selectedDifficulty), "enabled": unlocked and not abyss_run_active()})
+		result.append({"id": rank, "name": names[rank], "floorCap":abyss_floor_cap(rank), "endless":abyss_is_endless(rank), "description": "基础敌人强度，记忆碎片收益 100%。" if rank == 0 else "敌人生命 +%d%%、攻击 +%d%%、防御 +%d%%；记忆碎片收益 +%d%%。" % [hp_percent, atk_percent, def_percent, rank * 25], "unlocked": unlocked, "selected": rank == int(state.abyss.meta.selectedDifficulty), "enabled": unlocked and not abyss_run_active()})
 	return result
 
 func set_abyss_difficulty(rank: int) -> Dictionary:
@@ -1949,7 +2115,7 @@ func set_abyss_difficulty(rank: int) -> Dictionary:
 	return _commit(previous, {"difficulty": rank, "message": "远征难度已设为「%s」" % abyss_difficulty_options()[rank].name})
 
 func _abyss_rest_options()->Array:
-	if state.abyss.rogue.pendingNode.get("exhausted",false):
+	if state.abyss.rogue.pendingNode.get("poolUnavailable",false):
 		return [{"id":"echo_supply","label":"带上补给","description":"获得50裂隙币","effect":{"coins":50}},{"id":"echo_continue","label":"继续深入","description":"前往下一层","effect":{}}]
 	return rogue_data.restOptions.duplicate(true)
 
@@ -1966,16 +2132,16 @@ func abyss_daily_status()->Dictionary:
 	var current:=int(state.abyss.currentFloor)
 	var next:=int((current+9)/10)*10
 	var rank:=int(state.abyss.rogue.difficulty) if abyss_run_active() else int(state.abyss.meta.selectedDifficulty)
-	var rates:Array=rogue_data.get("dailyDiamondsPer10",[675,1000,1350,1625]).duplicate()
+	var rates:Array=rogue_data.get("dailyDiamondsPer10",[900,1350,1800,2200]).duplicate()
 	var total:=0
 	for amount in daily.paid.values():total+=int(amount)
 	var paid:=int(daily.paid.get(str(next),0))
-	return {"dayKey":daily.dayKey,"resetAt":(int(daily.dayKey)+1)*86400000-7200000,"currentFloor":current,"nextMilestone":next,"paidToday":total,"per10ByDifficulty":rates,"difficulty":rank,"reward":int(rates[rank]),"paid":paid,"remaining":maxi(0,int(rates[rank])-paid),"endless":true}
+	return {"dayKey":daily.dayKey,"resetAt":(int(daily.dayKey)+1)*86400000-7200000,"currentFloor":current,"nextMilestone":next,"paidToday":total,"per10ByDifficulty":rates,"difficulty":rank,"reward":int(rates[rank]),"paid":paid,"remaining":maxi(0,int(rates[rank])-paid),"endless":abyss_is_endless(rank),"floorCap":abyss_floor_cap(rank)}
 
 func _award_abyss_daily(floor_number:int,rank:int)->Dictionary:
 	if floor_number%10!=0:return {}
 	var daily:=_abyss_daily_view()
-	var rates:Array=rogue_data.get("dailyDiamondsPer10",[675,1000,1350,1625])
+	var rates:Array=rogue_data.get("dailyDiamondsPer10",[900,1350,1800,2200])
 	var previous:=int(daily.paid.get(str(floor_number),0))
 	var entitlement:=int(rates[clampi(rank,0,3)])
 	var amount:=maxi(0,entitlement-previous)
@@ -2000,4 +2166,144 @@ func exchange_memory(amount:int)->Dictionary:
 	return _commit(previous,{"amount":amount,"diamonds":amount,"message":"已兑换星尘晶"})
 
 func growth_snapshot(char_id:String)->Dictionary:
-	return {"constellation":constellation_bonuses(char_id),"relics":equipped_bonuses(char_id),"awakening":int(state.ownedCharacters[char_id].awakening)}
+	var sets := RelicSets.evaluate(catalog,equipped_relics(char_id))
+	return {"constellation":constellation_bonuses(char_id),"relics":equipped_bonuses(char_id),"awakening":int(state.ownedCharacters[char_id].awakening),"relicSetBonuses":sets.statBonuses,"ownerEffects":sets.ownerEffects,"relicSets":sets.activeBonuses}
+
+
+func relic_set_options() -> Array:
+	var result: Array = []
+	var active := abyss_run_active()
+	var selected: String = str(state.abyss.rogue.get("targetRelicSetId", "")) if active else str(state.abyss.meta.selectedRelicSetId)
+	for set_id in catalog.RelicSets:
+		var entry: Dictionary = catalog.RelicSets[set_id].duplicate(true)
+		entry.selected = set_id == selected
+		entry.enabled = not active
+		entry.locked = active
+		result.append(entry)
+	return result
+
+func set_abyss_relic_set(set_id: String) -> Dictionary:
+	if abyss_run_active():return _fail("请在远征结束后选择目标套装")
+	if not catalog.RelicSets.has(set_id):return _fail("目标套装无效")
+	var previous := state.duplicate(true)
+	state.abyss.meta.selectedRelicSetId = set_id
+	return _commit(previous,{"setId":set_id,"message":"本次远征目标已设为「%s」" % catalog.RelicSets[set_id].name})
+
+func abyss_relic_drop_info(rank: int = -1) -> Dictionary:
+	if rank < 0:rank = int(state.abyss.rogue.difficulty) if abyss_run_active() else int(state.abyss.meta.selectedDifficulty)
+	rank = clampi(rank,0,3)
+	var rule: Dictionary = rogue_data.relicDrops
+	var chance := float(rule.normalChanceByDifficulty[rank])
+	var four_chance := float(rule.extraRarity4Chance)
+	var legacy: bool = abyss_run_active() and int(state.abyss.rogue.get("relicRewardVersion",0)) == 0
+	if legacy:chance = 0.0
+	return {"difficulty":rank,"normalChance":chance,"extraRarity4Chance":four_chance,"extraRarity5Chance":1.0-four_chance,"expectedPer50":10.0+40.0*chance,"expectedFourStarPer50":5.0+40.0*chance*four_chance,"expectedFiveStarPer50":5.0+40.0*chance*(1.0-four_chance),"expectedSellGoldPer50":3000.0+40.0*chance*(120.0*four_chance+480.0*(1.0-four_chance)),"targetSetId":str(state.abyss.rogue.get("targetRelicSetId","")) if abyss_run_active() else str(state.abyss.meta.selectedRelicSetId),"locked":abyss_run_active(),"legacy":legacy,"milestoneEvery":int(rule.milestoneEvery),"fiveStarEvery":int(rule.fiveStarEvery)}
+
+func _abyss_relic_drop(floor_number: int, rank: int, target_set: String, seed_value: int, token: String) -> Dictionary:
+	# Independent persisted reward stream: equipment rolls do not perturb enemies,
+	# events, blessings or the host RNG. The entire item is signed at preparation.
+	var reward_rng := RandomNumberGenerator.new()
+	reward_rng.seed = seed_value ^ 0x51E7C0DE
+	var rule: Dictionary = rogue_data.relicDrops
+	var rarity := 0
+	if floor_number % int(rule.fiveStarEvery) == 0:
+		rarity = 5
+	elif floor_number % int(rule.milestoneEvery) == 0:
+		rarity = 4
+	elif reward_rng.randf() < float(rule.normalChanceByDifficulty[clampi(rank,0,3)]):
+		rarity = 4 if reward_rng.randf() < float(rule.extraRarity4Chance) else 5
+	if rarity == 0:return {}
+	var slot: String = str(catalog.RelicSlots[mini(catalog.RelicSlots.size()-1,int(reward_rng.randf()*catalog.RelicSlots.size()))].id)
+	var item := _generate_relic_with_source(rarity,slot,target_set,reward_rng.randf,"abyss_relic_"+token)
+	return {"slotId":slot,"rarity":rarity,"setId":target_set,"item":item}
+
+func valid_relic_growth_snapshot(snapshot: Dictionary) -> bool:
+	if snapshot.has("relicSetBonuses"):
+		if not snapshot.relicSetBonuses is Dictionary:return false
+		var allowed := RelicSets.empty_stat_bonuses()
+		for key in snapshot.relicSetBonuses:
+			if not allowed.has(key) or not _number(snapshot.relicSetBonuses[key],0,100000000):return false
+	if snapshot.has("ownerEffects"):
+		if not snapshot.ownerEffects is Array or snapshot.ownerEffects.size()>10:return false
+		var seen: Dictionary = {}
+		for effect in snapshot.ownerEffects:
+			if not effect is Dictionary or not effect.get("type") is String or not _number(effect.get("value"),-1,100000000):return false
+			var set_id: String = str(effect.get("setId",""))
+			var effect_key: String = "%s:%d:%s" % [set_id,int(effect.get("pieces",0)),str(effect.type)]
+			if seen.has(effect_key):return false
+			seen[effect_key] = true
+			if not catalog.RelicSets.has(set_id):return false
+			var found := false
+			for bonus in catalog.RelicSets[set_id].bonuses:
+				if int(bonus.pieces) != int(effect.get("pieces",0)):continue
+				for definition in bonus.effects:
+					if definition.type == "stat":continue
+					var expected: Dictionary = definition.duplicate(true)
+					expected.setId = set_id
+					expected.pieces = int(bonus.pieces)
+					if JSON.parse_string(JSON.stringify(expected)) == JSON.parse_string(JSON.stringify(effect)):found = true
+			if not found:return false
+	return true
+
+func begin_best_relic_loadout(char_id: String, context: Dictionary = {}):
+	var optimizer_script = load("res://scripts/relic_optimizer.gd")
+	return optimizer_script.new(self,char_id,context)
+
+func preview_best_relic_loadout(char_id: String, context: Dictionary = {}) -> Dictionary:
+	# Synchronous convenience for tests and small callers. UI uses begin/advance.
+	var search = begin_best_relic_loadout(char_id,context)
+	var preview: Dictionary = search.preview()
+	while not bool(preview.get("done",false)):
+		preview = search.advance(4000)
+	return preview
+
+func apply_relic_loadout(plan: Dictionary, allow_unproven: bool = false) -> Dictionary:
+	var char_id: String = str(plan.get("charId",""))
+	if not state.ownedCharacters.has(char_id):return _fail("未拥有该角色")
+	if not plan.get("context") is Dictionary:return _fail("装备方案缺少评价条件，请重新计算")
+	if bool(plan.context.get("includeEquippedByOthers",false)):return _fail("请先解除其他角色装备后重新计算")
+	if not bool(plan.get("canApply",false)) or bool(plan.get("cancelled",false)):return _fail("请等待装备计算完成")
+	if not bool(plan.get("provenOptimal",false)) and not allow_unproven:return _fail("请等待最优方案确认完成，或明确采用当前推荐")
+	var optimizer_script = load("res://scripts/relic_optimizer.gd")
+	if str(plan.get("fingerprint","")) != optimizer_script.plan_fingerprint(self,char_id,plan.context):return _fail("装备或角色状态已变化，请重新计算")
+	if not plan.get("before") is Dictionary or not plan.get("after") is Dictionary or not plan.after.get("relicUids") is Dictionary:return _fail("装备方案无效，请重新计算")
+	if plan.before.get("relicUids",{}) != relic_loadout_snapshot(char_id).relicUids:return _fail("当前装备已变化，请重新计算")
+	var proposed: Dictionary = plan.after.relicUids
+	var items: Array = []
+	var uids: Dictionary = {}
+	for slot in proposed:
+		if not catalog.RelicMainStatPool.has(slot) or not proposed[slot] is String or uids.has(proposed[slot]):return _fail("装备部位或物品无效")
+		var relic := get_relic(proposed[slot])
+		if relic.is_empty() or relic.slotId != slot:return _fail("装备库存已变化，请重新计算")
+		if relic.get("equippedBy") != null and relic.get("equippedBy") != "" and relic.equippedBy != char_id:return _fail("方案包含其他角色装备，请重新计算")
+		uids[relic.uid] = true
+		items.append(relic)
+	if computed_stats_for_relic_loadout(char_id,items) != plan.after.get("stats",{}):return _fail("装备属性已变化，请重新计算")
+	var previous := state.duplicate(true)
+	for relic in state.relics:
+		if relic.get("equippedBy") == char_id:relic.equippedBy = null
+	state.ownedCharacters[char_id].equippedRelics = proposed.duplicate(true)
+	for relic in items:relic.equippedBy = char_id
+	return _commit(previous,{"charId":char_id,"costGold":0,"before":plan.before.duplicate(true),"after":relic_loadout_snapshot(char_id),"message":"已应用整套装备，金币消耗为 0"})
+
+func relic_set_recommendations(char_id: String) -> Array:
+	# Collection advice is skill-based and available before ownership. The exact
+	# inventory optimum remains the separate loadout search for owned characters.
+	var character: Dictionary = catalog.get("CharacterData",{}).get(char_id,{})
+	if character.is_empty():return []
+	var result: Array = []
+	var seen: Dictionary = {}
+	var profile: Dictionary = character.get("relicObjective",{})
+	for recommendation in profile.get("recommendedSets",[]):
+		if not recommendation is Dictionary:continue
+		var set_id: String = str(recommendation.get("setId",""))
+		if seen.has(set_id) or not catalog.get("RelicSets",{}).has(set_id):continue
+		seen[set_id] = true
+		var entry: Dictionary = catalog.RelicSets[set_id].duplicate(true)
+		entry.setId = set_id
+		entry.reason = str(recommendation.get("reason",""))
+		entry.owned = state.ownedCharacters.has(char_id)
+		entry.equipEnabled = entry.owned
+		entry.advisory = true
+		result.append(entry)
+	return result

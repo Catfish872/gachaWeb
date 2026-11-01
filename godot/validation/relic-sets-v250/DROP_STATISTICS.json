@@ -1,0 +1,250 @@
+{
+  "method": "Independent reward stream, 2000 runs x 50 floors per rank; fixed seeds run*1009+floor*7919 shared across ranks; analytic binomial standard errors.",
+  "totalFloorPlans": 400000,
+  "ranks": [
+    {
+      "meanCount": 10.0,
+      "meanFiveStar": 5.0,
+      "meanFourStar": 5.0,
+      "meanSellGold": 3000.0,
+      "rank": 0,
+      "runs": 2000,
+      "theory": {
+        "difficulty": 0,
+        "expectedFiveStarPer50": 5.0,
+        "expectedFourStarPer50": 5.0,
+        "expectedPer50": 10.0,
+        "expectedSellGoldPer50": 3000.0,
+        "extraRarity4Chance": 0.8,
+        "extraRarity5Chance": 0.2,
+        "fiveStarEvery": 10,
+        "legacy": false,
+        "locked": false,
+        "milestoneEvery": 5,
+        "normalChance": 0.0,
+        "targetSetId": "flame_oath"
+      },
+      "meanUncertainty": {
+        "meanCount": {
+          "theoreticalRunStdDev": 0.0,
+          "standardError": 0.0,
+          "approx95PercentInterval": [
+            10.0,
+            10.0
+          ],
+          "zScoreFromTheory": 0
+        },
+        "meanFourStar": {
+          "theoreticalRunStdDev": 0.0,
+          "standardError": 0.0,
+          "approx95PercentInterval": [
+            5.0,
+            5.0
+          ],
+          "zScoreFromTheory": 0
+        },
+        "meanFiveStar": {
+          "theoreticalRunStdDev": 0.0,
+          "standardError": 0.0,
+          "approx95PercentInterval": [
+            5.0,
+            5.0
+          ],
+          "zScoreFromTheory": 0
+        },
+        "meanSellGold": {
+          "theoreticalRunStdDev": 0.0,
+          "standardError": 0.0,
+          "approx95PercentInterval": [
+            3000.0,
+            3000.0
+          ],
+          "zScoreFromTheory": 0
+        }
+      }
+    },
+    {
+      "meanCount": 13.972,
+      "meanFiveStar": 5.8075,
+      "meanFourStar": 8.1645,
+      "meanSellGold": 3767.34,
+      "rank": 1,
+      "runs": 2000,
+      "theory": {
+        "difficulty": 1,
+        "expectedFiveStarPer50": 5.8,
+        "expectedFourStarPer50": 8.2,
+        "expectedPer50": 14.0,
+        "expectedSellGoldPer50": 3768.0,
+        "extraRarity4Chance": 0.8,
+        "extraRarity5Chance": 0.2,
+        "fiveStarEvery": 10,
+        "legacy": false,
+        "locked": false,
+        "milestoneEvery": 5,
+        "normalChance": 0.1,
+        "targetSetId": "flame_oath"
+      },
+      "meanUncertainty": {
+        "meanCount": {
+          "theoreticalRunStdDev": 1.8973665961010275,
+          "standardError": 0.042426406871192854,
+          "approx95PercentInterval": [
+            13.888844242532462,
+            14.055155757467537
+          ],
+          "zScoreFromTheory": -0.6599663291074553
+        },
+        "meanFourStar": {
+          "theoreticalRunStdDev": 1.7158088471621775,
+          "standardError": 0.03836665218650176,
+          "approx95PercentInterval": [
+            8.089301361714456,
+            8.239698638285544
+          ],
+          "zScoreFromTheory": -0.9252827123782426
+        },
+        "meanFiveStar": {
+          "theoreticalRunStdDev": 0.8854377448471463,
+          "standardError": 0.019798989873223333,
+          "approx95PercentInterval": [
+            5.768693979848482,
+            5.846306020151518
+          ],
+          "zScoreFromTheory": 0.37880720420709335
+        },
+        "meanSellGold": {
+          "theoreticalRunStdDev": 464.38604630199643,
+          "standardError": 10.38398767333629,
+          "approx95PercentInterval": [
+            3746.987384160261,
+            3787.692615839739
+          ],
+          "zScoreFromTheory": -0.06355939748412683
+        }
+      }
+    },
+    {
+      "meanCount": 17.9235,
+      "meanFiveStar": 6.5845,
+      "meanFourStar": 11.339,
+      "meanSellGold": 4521.24,
+      "rank": 2,
+      "runs": 2000,
+      "theory": {
+        "difficulty": 2,
+        "expectedFiveStarPer50": 6.6,
+        "expectedFourStarPer50": 11.4,
+        "expectedPer50": 18.0,
+        "expectedSellGoldPer50": 4536.0,
+        "extraRarity4Chance": 0.8,
+        "extraRarity5Chance": 0.2,
+        "fiveStarEvery": 10,
+        "legacy": false,
+        "locked": false,
+        "milestoneEvery": 5,
+        "normalChance": 0.2,
+        "targetSetId": "flame_oath"
+      },
+      "meanUncertainty": {
+        "meanCount": {
+          "theoreticalRunStdDev": 2.5298221281347035,
+          "standardError": 0.0565685424949238,
+          "approx95PercentInterval": [
+            17.81262565670995,
+            18.03437434329005
+          ],
+          "zScoreFromTheory": -1.3523417190192606
+        },
+        "meanFourStar": {
+          "theoreticalRunStdDev": 2.3186202793903106,
+          "standardError": 0.05184592558726289,
+          "approx95PercentInterval": [
+            11.237381985848964,
+            11.440618014151037
+          ],
+          "zScoreFromTheory": -1.1765630434609495
+        },
+        "meanFiveStar": {
+          "theoreticalRunStdDev": 1.2393546707863734,
+          "standardError": 0.027712812921102038,
+          "approx95PercentInterval": [
+            6.53018288667464,
+            6.63881711332536
+          ],
+          "zScoreFromTheory": -0.5593080732774284
+        },
+        "meanSellGold": {
+          "theoreticalRunStdDev": 633.8908423380165,
+          "standardError": 14.174230137824065,
+          "approx95PercentInterval": [
+            4493.458508929864,
+            4549.021491070135
+          ],
+          "zScoreFromTheory": -1.0413263970233573
+        }
+      }
+    },
+    {
+      "meanCount": 21.882,
+      "meanFiveStar": 7.3655,
+      "meanFourStar": 14.5165,
+      "meanSellGold": 5277.42,
+      "rank": 3,
+      "runs": 2000,
+      "theory": {
+        "difficulty": 3,
+        "expectedFiveStarPer50": 7.4,
+        "expectedFourStarPer50": 14.6,
+        "expectedPer50": 22.0,
+        "expectedSellGoldPer50": 5304.0,
+        "extraRarity4Chance": 0.8,
+        "extraRarity5Chance": 0.2,
+        "fiveStarEvery": 10,
+        "legacy": false,
+        "locked": false,
+        "milestoneEvery": 5,
+        "normalChance": 0.3,
+        "targetSetId": "flame_oath"
+      },
+      "meanUncertainty": {
+        "meanCount": {
+          "theoreticalRunStdDev": 2.8982753492378874,
+          "standardError": 0.0648074069840786,
+          "approx95PercentInterval": [
+            21.754977482311208,
+            22.009022517688795
+          ],
+          "zScoreFromTheory": -1.8207795295526623
+        },
+        "meanFourStar": {
+          "theoreticalRunStdDev": 2.701110882581461,
+          "standardError": 0.060398675482165994,
+          "approx95PercentInterval": [
+            14.398118596054955,
+            14.634881403945046
+          ],
+          "zScoreFromTheory": -1.3824806476866234
+        },
+        "meanFiveStar": {
+          "theoreticalRunStdDev": 1.501998668441487,
+          "standardError": 0.03358571124749333,
+          "approx95PercentInterval": [
+            7.299672005954913,
+            7.431327994045087
+          ],
+          "zScoreFromTheory": -1.027222551452601
+        },
+        "meanSellGold": {
+          "theoreticalRunStdDev": 747.3216175114969,
+          "standardError": 16.710619378108042,
+          "approx95PercentInterval": [
+            5244.667186018908,
+            5310.172813981092
+          ],
+          "zScoreFromTheory": -1.5906053150143191
+        }
+      }
+    }
+  ]
+}

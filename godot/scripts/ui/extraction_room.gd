@@ -31,7 +31,7 @@ func configure(room: Dictionary, boxes: Array, selection: String = "", guards: A
 		var path:="res://assets/enemies/"+str(enemy.get("id",""))+".png"
 		if ResourceLoader.exists(path):enemy_sprites[str(enemy.id)]=load(path)
 	scene = room.duplicate(true); containers = boxes.duplicate(true); selected = selection
-	service_id="relay" if scene.get("type","")=="relay" else "unlock" if scene.get("type","")=="key_vault" and not scene.get("unlocked",false) else ""
+	service_id="" if scene.get("servicesLocked",false) or not enemies.is_empty() else "relay" if scene.get("type","")=="relay" else "unlock" if scene.get("type","")=="key_vault" and not scene.get("unlocked",false) else ""
 	var service_path:="res://assets/items/expedition_v230/relay_chest.png" if service_id=="relay" else "res://assets/extraction/containers/rune_vault.png"
 	if not service_id.is_empty() and ResourceLoader.exists(service_path):service_sprite=load(service_path)
 	var path := str(room.get("background", ""))
@@ -76,7 +76,13 @@ func _resize_room() -> void:
 	_clamp_pan(); queue_redraw()
 
 func container_point(box: Dictionary) -> Vector2:
-	return Vector2(float(box.get("sceneX",0.5)),float(box.get("sceneY",0.65))) * canvas_size + pan
+	var point:=Vector2(float(box.get("sceneX",0.5)),float(box.get("sceneY",0.65))) * canvas_size + pan
+	# Compact service layouts still show the complete search badge, sprite and name.
+	point.y=clampf(point.y,76,maxf(76,size.y-62))
+	return point
+
+func container_visual_rect(box: Dictionary) -> Rect2:
+	return Rect2(container_point(box)+Vector2(-58,-76),Vector2(116,136))
 
 func container_state(box: Dictionary) -> String:
 	if box.get("items",[]).is_empty():return "empty"
@@ -96,8 +102,8 @@ func _draw() -> void:
 	for i in enemies.size():
 		var enemy: Dictionary=enemies[i]
 		var texture=enemy_sprites.get(str(enemy.get("id","")))
-		var point:=Vector2(canvas_size.x/2+(i-(enemies.size()-1)/2.0)*minf(150,canvas_size.x/(enemies.size()+1)),canvas_size.y*0.81)+pan
-		var tall:=minf(220,canvas_size.y*0.64)
+		var point:=Vector2(size.x/2+(i-(enemies.size()-1)/2.0)*minf(150,size.x/(enemies.size()+1)),size.y-36)
+		var tall:=minf(220,maxf(60,size.y-52))
 		var rect:=Rect2(point-Vector2(tall*.39,tall),Vector2(tall*.78,tall))
 		if not reduced_motion:rect.position.y+=sin(_pulse*1.7+i)*1.8
 		enemy_rects.append(rect.grow(8))
@@ -204,6 +210,6 @@ func _activate(at: Vector2) -> void:
 	for rect in enemy_rects:
 		if rect.has_point(at):battle_requested.emit();return
 	for box in containers:
-		if Rect2(container_point(box)-Vector2(48,60),Vector2(96,120)).has_point(at):
+		if container_visual_rect(box).has_point(at):
 			container_selected.emit(str(box.id))
 			return

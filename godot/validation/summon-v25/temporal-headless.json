@@ -1,0 +1,421 @@
+{
+	"checks": 228,
+	"failures": 0,
+	"frames": [
+		{
+			"epoch": 1,
+			"index": 0,
+			"label": "r3_full_opening",
+			"paused": false,
+			"progress": 0.171886274509804,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 0.146103333333333,
+			"stage": "opening",
+			"stage_time": 0.146103333333333,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 4,
+			"index": 0,
+			"label": "r3_full_midflip",
+			"paused": false,
+			"progress": 0.460119444444444,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 2.76721544444446,
+			"stage": "unseal",
+			"stage_time": 0.331286,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 5,
+			"index": 0,
+			"label": "r3_full_portrait",
+			"paused": false,
+			"progress": 0.494090143369176,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 3.46665288888891,
+			"stage": "portrait",
+			"stage_time": 0.306335888888889,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 7,
+			"index": 0,
+			"label": "r3_full_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 4.44636644444448,
+			"stage": "summary",
+			"stage_time": 0.648228222222221,
+			"visible_cards": 1,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 1,
+			"index": 0,
+			"label": "r4_full_opening",
+			"paused": false,
+			"progress": 0.18740705882353,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 0.159296,
+			"stage": "opening",
+			"stage_time": 0.159296,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 4,
+			"index": 0,
+			"label": "r4_full_midflip",
+			"paused": false,
+			"progress": 0.460026388888889,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 2.76621166666668,
+			"stage": "unseal",
+			"stage_time": 0.331219,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 5,
+			"index": 0,
+			"label": "r4_full_portrait",
+			"paused": false,
+			"progress": 0.484138888888888,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 3.45972222222225,
+			"stage": "portrait",
+			"stage_time": 0.300166111111111,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 7,
+			"index": 0,
+			"label": "r4_full_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 4.44701411111115,
+			"stage": "summary",
+			"stage_time": 0.647366333333333,
+			"visible_cards": 1,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 1,
+			"index": 0,
+			"label": "r5_full_opening",
+			"paused": false,
+			"progress": 0.180047843137255,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 0.153040666666666,
+			"stage": "opening",
+			"stage_time": 0.153040666666666,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 4,
+			"index": 0,
+			"label": "r5_full_midflip",
+			"paused": false,
+			"progress": 0.461101388888889,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 2.76282899999998,
+			"stage": "unseal",
+			"stage_time": 0.331993,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 5,
+			"index": 0,
+			"label": "r5_full_legendary",
+			"paused": false,
+			"progress": 0.452071111111112,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 3.56276499999996,
+			"stage": "legendary",
+			"stage_time": 0.406864000000001,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 6,
+			"index": 0,
+			"label": "r5_full_portrait",
+			"paused": false,
+			"progress": 0.490990322580646,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 4.36369099999995,
+			"stage": "portrait",
+			"stage_time": 0.304414,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 8,
+			"index": 0,
+			"label": "r5_full_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 5.32804066666665,
+			"stage": "summary",
+			"stage_time": 0.633341666666665,
+			"visible_cards": 1,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 1,
+			"index": 0,
+			"label": "r5_gentle_opening",
+			"paused": false,
+			"progress": 0.171781568627451,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 0.146014333333333,
+			"stage": "opening",
+			"stage_time": 0.146014333333333,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 4,
+			"index": 0,
+			"label": "r5_gentle_midflip",
+			"paused": false,
+			"progress": 0.459733333333334,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 2.51826799999998,
+			"stage": "unseal",
+			"stage_time": 0.331008,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 5,
+			"index": 0,
+			"label": "r5_gentle_legendary",
+			"paused": false,
+			"progress": 0.445496666666667,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 3.31228699999996,
+			"stage": "legendary",
+			"stage_time": 0.400947,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 6,
+			"index": 0,
+			"label": "r5_gentle_portrait",
+			"paused": false,
+			"progress": 0.492831541218638,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 4.12125055555551,
+			"stage": "portrait",
+			"stage_time": 0.305555555555555,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 8,
+			"index": 0,
+			"label": "r5_gentle_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 5,
+			"ready_frames": 2,
+			"reduced_motion": true,
+			"sequence_time": 5.09020299999997,
+			"stage": "summary",
+			"stage_time": 0.635619111111112,
+			"visible_cards": 1,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 8,
+			"index": 1,
+			"label": "ten_continuous_second",
+			"paused": false,
+			"progress": 0.290972222222222,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 7.08798900000006,
+			"stage": "seal",
+			"stage_time": 0.151305555555556,
+			"visible_cards": 0,
+			"window": [
+				1170,
+				540
+			]
+		},
+		{
+			"epoch": 12,
+			"index": 1,
+			"label": "ten_summary_stagger",
+			"paused": false,
+			"progress": 0.238752987654321,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 9.18708833333333,
+			"stage": "summary",
+			"stage_time": 0.268597111111111,
+			"visible_cards": 0,
+			"window": [
+				960,
+				540
+			]
+		},
+		{
+			"epoch": 12,
+			"index": 1,
+			"label": "ten_summary_complete",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 10.1929481111111,
+			"stage": "summary",
+			"stage_time": 1.27445688888889,
+			"visible_cards": 10,
+			"window": [
+				960,
+				540
+			]
+		},
+		{
+			"epoch": 6,
+			"index": 0,
+			"label": "small_landscape_portrait",
+			"paused": false,
+			"progress": 0.0,
+			"rarity": 3,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 3.77589766666663,
+			"stage": "result",
+			"stage_time": 0.0,
+			"visible_cards": 0,
+			"window": [
+				740,
+				540
+			]
+		},
+		{
+			"epoch": 43,
+			"index": 9,
+			"label": "small_landscape_ten_summary",
+			"paused": false,
+			"progress": 1.0,
+			"rarity": 4,
+			"ready_frames": 2,
+			"reduced_motion": false,
+			"sequence_time": 38.8666526666643,
+			"stage": "summary",
+			"stage_time": 1.201389,
+			"visible_cards": 10,
+			"window": [
+				740,
+				540
+			]
+		}
+	],
+	"renderer": "headless"
+}

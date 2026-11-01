@@ -22,6 +22,7 @@ var _steps: int = 0
 var _max_steps: int = 10000
 var _extra_flags: Dictionary = {}
 var _is_abyss := false
+var _control_check: Dictionary = {}
 
 func _init(data: Dictionary = {}) -> void:
 	catalog = data
@@ -34,10 +35,15 @@ func start(config: Dictionary, allies: Array, rogue_effects: Array = []) -> Dict
 	_is_abyss = bool(config.get("isAbyss", false)) or bool(config.get("isExtraction", false))
 	_effects = rogue_effects.duplicate(true) if _is_abyss else []
 	_steps = 0
+	_control_check = {}
 	_max_steps = clampi(int(config.get("maxSteps", 10000)), 10, 100000)
 	state = {"phase": "player_turn", "allies": [], "enemies": [], "turn": 0,
 		"wave": 1, "events": [], "log": [], "config": config.duplicate(true),
-		"turnOrder": [], "currentActor": "", "steps": 0, "reason": ""}
+		"turnOrder": [], "currentActor": "", "steps": 0, "reason": "",
+		"controlStats": {"electrify": {
+			"ally": {"opportunities":0, "skips":0, "expectedSkips":0.0},
+			"boss": {"opportunities":0, "skips":0, "expectedSkips":0.0},
+			"enemy": {"opportunities":0, "skips":0, "expectedSkips":0.0}}}}
 	_waves = config.get("waves", []).duplicate(true)
 	if _waves.is_empty():
 		_waves = [{"enemies": config.get("enemies", [])}]
@@ -106,6 +112,8 @@ func act(skill_id: String, target_id: String = "") -> Dictionary:
 		return _error("战斗已经结束")
 	if not actor.isAlly:
 		return _error("请等待敌方行动")
+	if _controlled(actor):
+		return _error("当前角色受到控制，请等待下一次行动")
 	if not _available(actor).has(skill_id):
 		return _error("技能不可用：能量不足、冷却中或不属于当前角色")
 	if not target_id.is_empty() and not legal_targets(skill_id).has(target_id):
@@ -127,6 +135,7 @@ func auto_step() -> Dictionary:
 	if skills.is_empty():
 		_events = []
 		_emit("skip", actor, actor, 0, actor.name + " 无可用技能")
+		_consume_action_statuses(actor)
 		_steps += 1
 		_cursor += 1
 		_seek_actor()
@@ -147,20 +156,22 @@ func auto_step() -> Dictionary:
 	return _take_action(actor, chosen, "")
 
 func _hold_healing_skill(actor: Dictionary, skill: Dictionary) -> bool:
+	# Ready ultimates always fire, including full-HP healing and on-heal effects.
+	if skill.get("type", "") == "ultimate": return false
 	var has_heal := false
 	for effect in skill.get("effects", []):
 		if effect.get("type", "") == "damage": return false
 		if effect.get("type", "") == "heal": has_heal = true
 	if not has_heal: return false
-	var threshold := 0.80 if skill.get("type", "") == "ultimate" else 0.90
+	var threshold := 0.90
 	for friend in _friends(actor):
 		if float(friend.currentHp) / friend.maxHp < threshold: return false
 	return true
 
 func _take_action(actor: Dictionary, sid: String, target_id: String) -> Dictionary:
 	_events = []
-	_extra_flags = {}
 	_execute_skill(actor, sid, target_id)
+	_consume_action_statuses(actor)
 	_steps += 1
 	_cursor += 1
 	_seek_actor()
@@ -187,6 +198,8 @@ func _make_ally(input: Dictionary, index: int) -> Dictionary:
 		"role": data.get("role", "dps"), "rarity": data.get("rarity", 3),
 		"image": data.get("image"), "color": data.get("color", "#ffffff"),
 		"stats": stats, "maxHp": stats.maxHp,
+		# Permanent set stats are already in stats; only wearer-bound triggers travel here.
+		"ownerEffects": input.get("ownerEffects", []).duplicate(true),
 		"currentHp": clampi(int(input.get("currentHp", stats.maxHp)), 0, int(input.get("_abyssSavedMaxHp", input.get("maxHp", stats.maxHp)))),
 		"savedMaxHp": input.get("_abyssSavedMaxHp", input.get("maxHp", stats.maxHp)),
 		"energy": clampi(int(input.get("energy", 0)), 0, 100), "maxEnergy": 100,
@@ -223,13 +236,23 @@ func _spawn_wave() -> void:
 			mods = AbyssBalance.apply_difficulty(mods, int(state.config.get("difficulty", 0)))
 			mods = AbyssBalance.apply_modifier(mods, state.config.get("encounterModifier", {}))
 		var bs = data.baseStats
-		var stats = {"maxHp": maxi(1, int(bs.hp * mods.get("hpMod", 1))),
-			"atk": maxi(1, int(bs.atk * mods.get("atkMod", 1))), "def": maxi(0, int(bs.def * mods.get("defMod", 1))),
-			"spd": maxf(1, bs.spd * mods.get("spdMod", 1)), "cri": 0.1, "criDmg": 1.5}
-		if _is_abyss: stats.spd = minf(120.0 if state.config.get("isExtraction", false) else AbyssBalance.MAX_ENEMY_SPEED, stats.spd)
+		var final_boss := bool(state.config.get("isExtraction", false)) and bool(state.config.get("isBoss", false)) and bool(data.get("isBoss", false)) and int(state.config.get("act", 1)) == 3 and is_equal_approx(float(state.config.get("finalBossStatMultiplier", 1.0)), 1.15)
+		var boss_factor := 1.15 if final_boss else 1.0
+		var stats = {"maxHp": maxi(1, int(bs.hp * mods.get("hpMod", 1) * boss_factor)),
+			"atk": maxi(1, int(bs.atk * mods.get("atkMod", 1) * boss_factor)), "def": maxi(0, int(bs.def * mods.get("defMod", 1) * boss_factor)),
+			"spd": maxf(1, bs.spd * mods.get("spdMod", 1) * boss_factor), "cri": 0.1, "criDmg": 1.5}
+		if _is_abyss:
+			var speed_limit := AbyssBalance.MAX_ENEMY_SPEED
+			if state.config.get("isExtraction", false):
+				speed_limit = 120.0
+				# New final-boss encounters carry the explicit 15% budget marker.
+				# Earlier issued encounters and non-boss units keep their original limit.
+				if final_boss:
+					speed_limit *= 1.15
+			stats.spd = minf(speed_limit, stats.spd)
 		state.enemies.append({"uid": "enemy_%d_%d" % [state.wave, i], "id": id, "dataId": id,
 			"name": data.name, "element": data.element, "isAlly": false,
-			"archetype": data.get("type", "normal"), "controlGuard": 0, "controlSkips": 0,
+			"archetype": data.get("type", "normal"),
 			"isBoss": data.get("isBoss", false), "icon": data.get("icon", ""), "color": data.get("color", "#ffffff"),
 			"stats": stats, "maxHp": stats.maxHp, "currentHp": stats.maxHp,
 			"skills": data.skills.duplicate(), "aiPattern": data.get("aiPattern", "random"),
@@ -337,23 +360,13 @@ func _seek_actor() -> void:
 		if actor.isBoss and not actor.inPhase2 and float(actor.currentHp) / actor.maxHp < actor.phaseThreshold:
 			actor.inPhase2 = true
 			_emit("phase_change", actor, actor, 2, actor.name + " 进入第二阶段")
-		if _is_abyss and not actor.isAlly and int(actor.get("controlGuard", 0)) > 0:
-			actor.controlGuard -= 1
+		_prepare_control_check(actor)
 		if _controlled(actor):
-			_emit("skip", actor, actor, 0, actor.name + " 因控制效果跳过行动")
-			for status in actor.statuses:
-				if status.id in CONTROL_STATUSES: status.duration -= 1
-			if _is_abyss and not actor.isAlly:
-				actor.controlSkips = int(actor.get("controlSkips", 0)) + 1
-				if actor.controlSkips >= (1 if actor.isBoss else 2):
-					actor.controlGuard = 1
-					for status in actor.statuses:
-						if status.id in CONTROL_STATUSES: status.duration = 0
-			_cleanup_statuses(actor)
+			_emit("skip", actor, actor, 0, actor.name + " 因控制效果跳过行动", {"statusId": _control_check.get("reason", "")})
+			_consume_action_statuses(actor)
 			_cursor += 1
 			_steps += 1
 			continue
-		if _is_abyss and not actor.isAlly: actor.controlSkips = 0
 		state.currentActor = actor.uid
 		state.phase = "player_turn" if actor.isAlly else "enemy_turn"
 		state.steps = _steps
@@ -391,7 +404,7 @@ func _end_round() -> void:
 			if unit.currentHp <= 0: break
 			match status.id:
 				"burn": _status_damage(unit, maxi(1, int(unit.baseAtk * 0.18)), "burn")
-				"poison": _status_damage(unit, maxi(1, int(unit.maxHp * (0.015 if _is_abyss and unit.isBoss else 0.05))), "poison")
+				"poison": _status_damage(unit, maxi(1, int(unit.maxHp * 0.05)), "poison")
 				"regen": _heal(unit, unit, maxi(1, int(unit.maxHp * 0.08)), "regen", false, "status")
 			if not status.id in CONTROL_STATUSES and not status.get("persistent",false): status.duration -= 1
 		_cleanup_statuses(unit)
@@ -477,14 +490,14 @@ func _lowest_hp(units: Array) -> Dictionary:
 	return lowest
 
 func _execute_skill(caster: Dictionary, sid: String, selected: String = "") -> void:
+	_extra_flags = {}
 	var skill = skill_data(sid, caster.isAlly)
 	var kind = str(skill.get("type", "enemy"))
 	_emit("skill", caster, {}, 0, caster.name + " · " + str(skill.get("name", sid)), {"skill_id": sid, "skill_type": kind, "animation": skill.get("animation", "slash")})
 	if caster.isAlly:
 		if kind == "ultimate": caster.energy = 0
 		else:
-			var energy_bonus = float(caster.stats.get("energyRate", 0.0)) + _effect_sum("energyGainMult")
-			_gain_energy(caster, floor(float(skill.get("energyGain", 15)) * maxf(0, 1 + energy_bonus)))
+			_gain_energy(caster, action_energy_gain(caster, skill))
 	if int(skill.get("cooldown", 0)) > 0:
 		caster.cooldowns[sid] = maxi(1, int(skill.cooldown) - (int(caster.stats.get("skillCdReduce", 0)) if caster.isAlly and kind == "skill" else 0))
 	var cache: Dictionary = {}
@@ -502,15 +515,60 @@ func _execute_skill(caster: Dictionary, sid: String, selected: String = "") -> v
 					_damage(caster, target, skill, sid, effect, float(effect.get("multiplier", 1.0)) * chain)
 					chain = maxf(0.3, chain - float(effect.get("chainDecay", 0.0)))
 				"heal":
-					var heal_mult = float(effect.get("multiplier", 1.0)) * (maxf(0, 1 + _effect_sum("healMult")) if caster.isAlly else 1.0)
-					var amount = maxi(1, int(_effective_atk(caster) * heal_mult))
+					var amount = skill_effect_amount(caster, effect, target)
 					_heal(caster, target, amount, sid, true, kind)
 					had_heal = true
 				"status":
 					if rng.randf() < float(effect.get("chance", 1.0)):
-						apply_status(target, str(effect.statusId), int(effect.get("duration", 1)), effect.get("value"), caster)
+						var shield_amount := skill_effect_amount(caster, effect, target) if effect.get("statusId", "") == "shield" else -1
+						apply_status(target, str(effect.statusId), int(effect.get("duration", 1)), effect.get("value"), caster, shield_amount)
+	if had_heal: _gain_owner_action_energy(caster, "energyOnActiveHeal")
 	if caster.id == "ayla" and _c6(caster) and had_heal:
 		for friend in _friends(caster): apply_status(friend, "regen", 1, null, caster)
+
+func action_energy_gain(caster: Dictionary, skill: Dictionary) -> int:
+	if not caster.get("isAlly", false) or skill.get("type", "") == "ultimate": return 0
+	var energy_bonus = float(caster.stats.get("energyRate", 0.0)) + _effect_sum("energyGainMult")
+	return int(floor(float(skill.get("energyGain", 15)) * maxf(0, 1 + energy_bonus)))
+
+func owner_effect_sum(unit: Dictionary, type: String) -> float:
+	var total := 0.0
+	for effect in unit.get("ownerEffects", []):
+		if effect.get("type", "") == type: total += float(effect.get("value", 0.0))
+	return total
+
+func _gain_owner_action_energy(caster: Dictionary, type: String) -> void:
+	if not caster.get("isAlly", false): return
+	var amount := owner_effect_sum(caster, type)
+	var flag := "owner:%s:%s" % [str(caster.uid), type]
+	if amount <= 0.0 or _extra_flags.has(flag): return
+	_extra_flags[flag] = true
+	_gain_energy(caster, amount)
+
+func effective_speed(unit: Dictionary) -> float:
+	return float(unit.stats.spd) * float(modifiers(unit).spdMult)
+
+func effect_source_value(caster: Dictionary, effect: Dictionary, target: Dictionary = {}, raw: bool = false) -> int:
+	# scalingStat is optional. Legacy shields use the recipient's maximum HP;
+	# declaring a source makes damage/healing/shields use the caster's stated stat.
+	if effect.get("statusId", "") == "shield" and not effect.has("scalingStat"):
+		return int(target.get("maxHp", caster.get("maxHp", 1)))
+	match str(effect.get("scalingStat", "atk")):
+		"maxHp", "hp": return int(caster.maxHp)
+		"def": return maxi(0, int(caster.stats.def * (1.0 if raw else float(modifiers(caster).defMult))))
+		_: return int(caster.stats.atk) if raw or effect.get("rawAtk", false) else _effective_atk(caster)
+
+func skill_effect_amount(caster: Dictionary, effect: Dictionary, target: Dictionary = {}) -> int:
+	# Shared by live skills and loadout evaluation. Passive/regen/utility calls
+	# keep their original paths and never receive active-skill set modifiers.
+	var source := effect_source_value(caster, effect, target)
+	if effect.get("statusId", "") == "shield":
+		var value := float(effect.value) if effect.get("value") != null else 0.3
+		var coefficient := float(effect.get("multiplier", value)) if effect.has("scalingStat") else value
+		return maxi(0, int(source * coefficient * maxf(0.0, 1.0 + owner_effect_sum(caster, "skillShieldMult"))))
+	var heal_mult := float(effect.get("multiplier", 1.0)) * (maxf(0, 1 + _effect_sum("healMult")) if caster.isAlly else 1.0)
+	heal_mult *= maxf(0.0, 1.0 + owner_effect_sum(caster, "activeSkillHealMult"))
+	return maxi(1, int(source * heal_mult))
 
 func _effective_atk(unit: Dictionary) -> int:
 	var mult = modifiers(unit).atkMult
@@ -530,6 +588,41 @@ func _above_average_speed(unit: Dictionary) -> bool:
 	for other in all: sum += other.stats.spd * modifiers(other).spdMult
 	return unit.stats.spd * modifiers(unit).spdMult > sum / maxi(1, all.size())
 
+func _raw_effect_damage(caster: Dictionary, target: Dictionary, skill: Dictionary, effect: Dictionary, mult: float, critical: bool) -> float:
+	var source := effect_source_value(caster, effect, target)
+	var mods := modifiers(target)
+	var raw := source * mult * (100.0 / (100.0 + maxf(0, target.stats.def * mods.defMult * (1.0 - float(effect.get("defPierce", 0.0))))))
+	var element := str(skill.get("element", effect.get("element", caster.element)))
+	raw *= element_mult(element, target.element) * (float(caster.stats.criDmg) if critical else 1.0)
+	if effect.get("trueDamage", false): raw = effect_source_value(caster, effect, target, true) * mult
+	return raw
+
+func predict_effect_damage(caster: Dictionary, target: Dictionary, skill: Dictionary, effect: Dictionary, critical: bool = false, follow_up: bool = false, chain: float = 1.0, blocked: bool = false) -> int:
+	# Exact direct-hit formula before shield absorption. Pure: no RNG or state writes.
+	if int(target.get("currentHp", 0)) <= 0 or has_status(target, "invincible"): return 0
+	var mult := float(effect.get("multiplier", 1.0)) * chain
+	if not follow_up: mult *= _damage_multiplier(caster, target, str(skill.get("type", "enemy")), false)
+	else: mult *= _owner_follow_up_multiplier(caster, target)
+	var raw := _raw_effect_damage(caster, target, skill, effect, mult, critical and not follow_up)
+	var taken := _damage_taken_multiplier(target)
+	var preliminary := maxi(1, int(raw * taken))
+	if target.get("id", "") == "lorin" and _c6(target) and not target.get("c6Used", false) and target.get("shield", 0) > 0 and preliminary > target.maxHp * 0.3: return 0
+	if blocked and target.get("passiveId", "") == "lorin_passive" and target.currentHp > target.maxHp * 0.5: taken *= 0.5
+	return maxi(1, int(raw * maxf(0.1, taken * maxf(0.0, 1.0 - float(modifiers(target).damageReduction)))))
+
+func expected_effect_damage(caster: Dictionary, target: Dictionary, skill: Dictionary, effect: Dictionary, chain: float = 1.0) -> float:
+	var chance := clampf(float(caster.stats.cri), 0.0, 1.0)
+	var block_chance := 0.3 if target.get("passiveId", "") == "lorin_passive" and target.currentHp > target.maxHp * 0.5 else 0.0
+	var result := 0.0
+	for critical in [false, true]:
+		var critical_weight := chance if critical else 1.0 - chance
+		if critical_weight <= 0.0: continue
+		var damage := float(predict_effect_damage(caster, target, skill, effect, critical, false, chain, false))
+		if block_chance > 0.0:
+			damage = (1.0 - block_chance) * damage + block_chance * predict_effect_damage(caster, target, skill, effect, critical, false, chain, true)
+		result += critical_weight * damage
+	return result
+
 func _damage(caster: Dictionary, target: Dictionary, skill: Dictionary, sid: String, effect: Dictionary, mult: float, follow_up: bool = false) -> int:
 	if int(target.get("currentHp", 0)) <= 0: return 0
 	if has_status(target, "invincible"):
@@ -537,35 +630,37 @@ func _damage(caster: Dictionary, target: Dictionary, skill: Dictionary, sid: Str
 		return 0
 	var skill_type = str(skill.get("type", "enemy"))
 	if not follow_up:
-		mult *= _damage_multiplier(caster, target, skill_type)
+		mult *= _damage_multiplier(caster, target, skill_type, false)
+	else:
+		mult *= _owner_follow_up_multiplier(caster, target)
 	var element = str(skill.get("element", effect.get("element", caster.element)))
 	var mods = modifiers(target)
 	var crit_chance = float(caster.stats.cri) if not follow_up else 0.0
 	var crit = rng.randf() < crit_chance
-	var attack = int(caster.stats.atk) if effect.get("rawAtk", false) else _effective_atk(caster)
-	var raw = attack * mult * (100.0 / (100.0 + maxf(0, target.stats.def * mods.defMult * (1.0 - float(effect.get("defPierce", 0.0))))))
 	var element_bonus = element_mult(element, target.element)
-	raw *= element_bonus * (float(caster.stats.criDmg) if crit else 1.0)
-	if effect.get("trueDamage", false): raw = caster.stats.atk * mult
-	var damage = maxi(1, int(raw))
+	var raw := _raw_effect_damage(caster, target, skill, effect, mult, crit)
+	var taken_mult := _damage_taken_multiplier(target)
+	var damage = maxi(1, int(raw * taken_mult))
 	if target.id == "lorin" and _c6(target) and not target.c6Used and target.shield > 0 and damage > target.maxHp * 0.3:
 		target.c6Used = true
 		apply_status(target, "invincible", 1, null, target)
 		_emit("miss", caster, target, 0, "绝对防壁阻挡了致命攻击", {"skill_id": sid})
 		return 0
 	if target.passiveId == "lorin_passive" and target.currentHp > target.maxHp * 0.5 and rng.randf() < 0.3:
-		damage = maxi(1, int(damage * 0.5))
+		taken_mult *= 0.5
 		_emit("block", target, target, 0, "格挡 · 伤害降低 50%")
-	damage = maxi(1, int(damage * maxf(0.1, 1.0 - mods.damageReduction)))
+	# Ordinary reductions share one 90% ceiling; shields absorb afterwards.
+	damage = maxi(1, int(raw * maxf(0.1, taken_mult * maxf(0.0, 1.0 - mods.damageReduction))))
 	damage = _absorb(target, damage)
 	var hp_before := int(target.currentHp)
 	target.currentHp = maxi(0, int(target.currentHp) - damage)
 	_emit("damage", caster, target, damage, "%s → %s  -%d" % [caster.name, target.name, damage], {"skill_id": sid, "isCrit": crit, "element": element, "elementMult": element_bonus, "follow_up": follow_up})
+	if crit and not follow_up: _gain_owner_action_energy(caster, "energyOnCrit")
 	if damage <= 0: return damage
 	if caster.isAlly:
-		var drain := clampf(_effect_sum("lifesteal"), 0.0, 0.35)
+		var drain := maxf(0.0, _effect_sum("lifesteal"))
 		if drain > 0.0: _heal(caster, caster, maxi(1, int(mini(damage, hp_before) * drain)), "rogue_lifesteal", false, "status")
-		if target.currentHp <= 0: _gain_energy(caster, clampf(_effect_sum("energyOnKill"), 0.0, 60.0))
+		if target.currentHp <= 0: _gain_energy(caster, maxf(0.0, _effect_sum("energyOnKill")))
 	if follow_up: return damage
 	if caster.passiveId == "gus_passive" and crit: _gain_energy(caster, 5)
 	if target.currentHp > 0:
@@ -581,7 +676,17 @@ func _damage(caster: Dictionary, target: Dictionary, skill: Dictionary, sid: Str
 			_damage(caster, target, normal, "gus_c6", normal.effects[0], float(normal.effects[0].multiplier) * (1.0 + float(caster.stats.get("normalDmgBonus", 0.0))), true)
 	return damage
 
-func _damage_multiplier(caster: Dictionary, target: Dictionary, kind: String) -> float:
+func _owner_follow_up_multiplier(caster: Dictionary, target: Dictionary) -> float:
+	# Direct set damage bonuses also cover follow-up hits. Trigger processing still
+	# returns at the existing follow_up boundary, so these hits start no proc chains.
+	var status := 0.0
+	var speed := 0.0
+	for effect in caster.get("ownerEffects", []):
+		if effect.get("type", "") == "damageVsStatus" and has_status(target, str(effect.get("statusId", ""))): status += float(effect.get("value", 0.0))
+		elif effect.get("type", "") == "damageWhenFasterThanTarget" and effective_speed(caster) > effective_speed(target): speed += float(effect.get("value", 0.0))
+	return maxf(0.1, 1.0 + status) * maxf(0.1, 1.0 + speed)
+
+func _damage_multiplier(caster: Dictionary, target: Dictionary, kind: String, include_taken: bool = true) -> float:
 	var result = 1.0
 	if caster.isAlly:
 		var key = {"normal": "normalDmgBonus", "skill": "skillDmgBonus", "ultimate": "ultDmgBonus"}.get(kind, "")
@@ -589,8 +694,8 @@ func _damage_multiplier(caster: Dictionary, target: Dictionary, kind: String) ->
 		if caster.passiveId == "kaldi_passive" and has_status(target, "burn"): result *= 1.2
 		if caster.passiveId == "cinder_passive" and kind in ["skill", "ultimate"] and has_status(target, "burn"): result *= 1.7 if _c6(caster) else 1.4
 		if caster.id == "bolt" and _c6(caster) and has_status(target, "electrify"): result *= 1.35
-	var buckets = {"status": 0.0, "type": 0.0, "typeStatus": 0.0, "taken": 0.0, "takenStatus": 0.0, "shield": 0.0, "execute": 0.0}
-	for effect in _effects:
+	var buckets = {"status": 0.0, "type": 0.0, "typeStatus": 0.0, "shield": 0.0, "execute": 0.0, "speed": 0.0}
+	for effect in _effects + caster.get("ownerEffects", []):
 		var value = float(effect.get("value", 0))
 		match effect.get("type", ""):
 			"damageWhileShielded":
@@ -603,13 +708,20 @@ func _damage_multiplier(caster: Dictionary, target: Dictionary, kind: String) ->
 				if caster.isAlly and kind == effect.skillType: buckets.type += value
 			"skillTypeDamageVsStatus":
 				if caster.isAlly and kind == effect.skillType and has_status(target, effect.statusId): buckets.typeStatus += value
-			"damageTakenMult":
-				if target.isAlly: buckets.taken += value
-			"damageTakenWhileStatus":
-				if target.isAlly and has_status(target, effect.statusId): buckets.takenStatus += value
-	for key in ["status", "type", "typeStatus", "shield", "execute"]: result *= maxf(0.1, 1.0 + buckets[key])
-	var taken = maxf(0.1, 1.0 + buckets.taken) * maxf(0.1, 1.0 + buckets.takenStatus)
-	return minf(result, 8.0) * maxf(0.1, taken) if _is_abyss else result * maxf(0.1, taken)
+			"damageWhenFasterThanTarget":
+				if caster.isAlly and effective_speed(caster) > effective_speed(target): buckets.speed += value
+	for key in ["status", "type", "typeStatus", "shield", "execute", "speed"]: result *= maxf(0.1, 1.0 + buckets[key])
+	return result * _damage_taken_multiplier(target) if include_taken else result
+
+func _damage_taken_multiplier(target: Dictionary) -> float:
+	if not target.isAlly: return 1.0
+	var taken := 0.0
+	var taken_status := 0.0
+	for effect in _effects + target.get("ownerEffects", []):
+		if effect.get("type", "") == "damageTakenMult": taken += float(effect.get("value", 0.0))
+		elif effect.get("type", "") == "damageTakenWhileStatus" and has_status(target, str(effect.get("statusId", ""))): taken_status += float(effect.get("value", 0.0))
+	# Match the Web buckets: additive within each source, multiplicative across sources.
+	return maxf(0.1, maxf(0.0, 1.0 + taken) * maxf(0.0, 1.0 + taken_status))
 
 func _after_rogue_damage(caster: Dictionary, target: Dictionary, skill: Dictionary, sid: String, element: String) -> void:
 	if not caster.isAlly: return
@@ -645,35 +757,23 @@ func _heal(caster: Dictionary, target: Dictionary, amount: int, source: String, 
 	if caster.id == "shana" and _c6(caster) and skill_type in ["skill", "ultimate"] and overflow > 0:
 		apply_status(target, "shield", 1, float(overflow) / target.maxHp, caster)
 
-func apply_status(unit: Dictionary, status_id: String, duration: int, value = null, caster: Dictionary = {}) -> bool:
+func apply_status(unit: Dictionary, status_id: String, duration: int, value = null, caster: Dictionary = {}, shield_amount: int = -1) -> bool:
 	if not STATUS_IDS.has(status_id) or duration <= 0 or unit.get("currentHp", 0) <= 0: return false
-	if _is_abyss and not unit.isAlly and status_id in CONTROL_STATUSES:
-		if int(unit.get("controlGuard", 0)) > 0:
-			_emit("resist", caster, unit, 0, unit.name + " · 控制抗性", {"statusId": status_id})
-			return false
-		duration = mini(duration, 1 if unit.isBoss else 2)
-	if _is_abyss and status_id == "poison":
-		var stacks: Array = unit.statuses.filter(func(status): return status.id == "poison")
-		if stacks.size() >= 5:
-			stacks.sort_custom(func(a, b): return a.duration < b.duration)
-			stacks[0].duration = maxi(stacks[0].duration, duration)
-			_emit("status", caster, unit, duration, unit.name + " · poison", {"statusId": "poison", "duration": duration})
-			return true
 	var existing: Dictionary = {}
 	if status_id != "poison":
 		for status in unit.statuses:
 			if status.id == status_id and status.duration > 0 and status.get("source","") != "expedition_equipment": existing = status; break
 	if existing.is_empty():
 		existing = {"id": status_id, "duration": duration, "value": value, "stacks": 1}
-		if status_id == "shield": existing.shieldHp = maxi(0, int(unit.maxHp * (float(value) if value != null else 0.3)))
+		if status_id == "shield": existing.shieldHp = shield_amount if shield_amount >= 0 else maxi(0, int(unit.maxHp * (float(value) if value != null else 0.3)))
 		unit.statuses.append(existing)
 	else:
-		if _is_abyss and not unit.isAlly and status_id in CONTROL_STATUSES:
-			existing.duration = maxi(existing.duration, duration)
-		else:
-			existing.duration += duration
+		existing.duration += duration
 		if value != null: existing.value = value
-		if status_id == "shield": existing.shieldHp += maxi(0, int(unit.maxHp * (float(value) if value != null else 0.3)))
+		if status_id == "shield": existing.shieldHp += shield_amount if shield_amount >= 0 else maxi(0, int(unit.maxHp * (float(value) if value != null else 0.3)))
+	if status_id == "electrify":
+		var chance_bonus := _electrify_source_bonus(caster)
+		existing.electrifySkipChanceBonus = maxf(float(existing.get("electrifySkipChanceBonus", chance_bonus)), chance_bonus)
 	_sync_shield(unit)
 	_emit("status", caster, unit, duration, unit.name + " · " + status_id, {"status": status_id, "statusId": status_id, "duration": duration, "value": value})
 	return true
@@ -696,10 +796,69 @@ func modifiers(unit: Dictionary) -> Dictionary:
 			"invincible": mods.damageReduction = 1.0
 	return mods
 
+static func electrify_chance_for_status(data: Dictionary, status: Dictionary = {}) -> float:
+	var base := float(data.get("CombatRules", {}).get("electrifySkipChance", 0.35))
+	return clampf(base + float(status.get("electrifySkipChanceBonus", 0.0)), 0.0, 1.0)
+
+func electrify_skip_chance(unit: Dictionary) -> float:
+	for status in unit.get("statuses", []):
+		if status.id == "electrify" and int(status.duration) > 0: return electrify_chance_for_status(catalog, status)
+	return electrify_chance_for_status(catalog)
+
+func _electrify_source_bonus(caster: Dictionary) -> float:
+	if caster.is_empty(): return 0.0
+	var definition: Dictionary = catalog.get("CharacterData" if caster.get("isAlly", false) else "EnemyData", {}).get(str(caster.get("dataId", caster.get("id", ""))), {})
+	var bonus := float(definition.get("combatModifiers", {}).get("electrifySkipChanceBonus", 0.0)) + float(caster.get("stats", {}).get("electrifySkipChanceBonus", 0.0))
+	if caster.get("isAlly", false):
+		for effect in _effects:
+			if effect.get("type", "") == "electrifySkipChanceBonus" and (not effect.has("characterId") or effect.characterId == caster.get("id", "")):
+				bonus += float(effect.get("value", 0.0))
+	return bonus
+
+func _control_token(unit: Dictionary) -> String:
+	return "%d:%d:%d:%d:%s" % [int(state.get("wave", 0)), int(state.get("turn", 0)), _cursor, _steps, str(unit.get("uid", ""))]
+
+func control_decision(unit: Dictionary) -> Dictionary:
+	# Pure inspection: UI and telemetry never advance combat RNG.
+	if unit.get("currentHp", 0) <= 0 or _control_check.get("token", "") != _control_token(unit): return {}
+	return _control_check.duplicate(true)
+
+func _prepare_control_check(unit: Dictionary) -> void:
+	if unit.get("currentHp", 0) <= 0:
+		if _control_check.get("uid", "") == unit.get("uid", ""): _control_check = {}
+		return
+	var token := _control_token(unit)
+	if _control_check.get("token", "") != token:
+		_control_check = {"token":token, "uid":unit.uid, "electrifyChecked":false, "electrifySkip":false, "chance":0.0, "reason":""}
+	# Deterministic controls take precedence without drawing an unnecessary shock roll.
+	for id in ["freeze", "stun"]:
+		if has_status(unit, id):
+			_control_check.reason = id
+			return
+	if not has_status(unit, "electrify"): return
+	if not _control_check.electrifyChecked:
+		var chance := electrify_skip_chance(unit)
+		_control_check.chance = chance
+		_control_check.electrifySkip = chance >= 1.0 or (chance > 0.0 and rng.randf() < chance)
+		_control_check.electrifyChecked = true
+		var group := "ally" if unit.isAlly else ("boss" if unit.isBoss else "enemy")
+		var counts: Dictionary = state.controlStats.electrify[group]
+		counts.opportunities += 1
+		counts.expectedSkips += chance
+		if _control_check.electrifySkip: counts.skips += 1
+	_control_check.reason = "electrify" if _control_check.electrifySkip else ""
+
 func _controlled(unit: Dictionary) -> bool:
-	for id in CONTROL_STATUSES:
+	if unit.get("currentHp", 0) <= 0: return false
+	for id in ["freeze", "stun"]:
 		if has_status(unit, id): return true
-	return false
+	return has_status(unit, "electrify") and _control_check.get("token", "") == _control_token(unit) and bool(_control_check.get("electrifySkip", false))
+
+func _consume_action_statuses(unit: Dictionary) -> void:
+	# Each attempted action consumes one turn, whether electrify hits or misses.
+	for status in unit.statuses:
+		if status.id in CONTROL_STATUSES: status.duration -= 1
+	_cleanup_statuses(unit)
 
 func _cleanup_statuses(unit: Dictionary) -> void:
 	unit.statuses = unit.statuses.filter(func(status): return status.duration > 0)
@@ -752,6 +911,7 @@ func _c6(unit: Dictionary) -> bool:
 
 func _report_deaths() -> void:
 	for unit in state.allies + state.enemies:
+		if unit.currentHp <= 0 and _control_check.get("uid", "") == unit.uid: _control_check = {}
 		if unit.currentHp <= 0 and not unit.deathReported:
 			unit.deathReported = true
 			_emit("death", {}, unit, 0, unit.name + " 倒下了")

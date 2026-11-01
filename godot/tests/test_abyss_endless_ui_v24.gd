@@ -22,56 +22,67 @@ func fits(control:Control,label:String):
  ck(clip.encloses(control.get_global_rect()),label+' visible')
 func click(control:Control):
  var point=control.get_global_rect().get_center()
- var down:=InputEventMouseButton.new();down.position=point;down.button_index=MOUSE_BUTTON_LEFT;down.pressed=true;root.push_input(down)
- var up:=InputEventMouseButton.new();up.position=point;up.button_index=MOUSE_BUTTON_LEFT;root.push_input(up)
+ var down:=InputEventMouseButton.new();down.position=point;down.button_index=MOUSE_BUTTON_LEFT;down.pressed=true;root.push_input(down,true)
+ var up:=InputEventMouseButton.new();up.position=point;up.button_index=MOUSE_BUTTON_LEFT;root.push_input(up,true)
  await frames()
 func capture(key:String):
  if DisplayServer.get_name()=="headless":return
  await RenderingServer.frame_post_draw
- var folder="/workspace/scratch/8f1fc457a062/abyss-endless-v24"
+ var folder="/workspace/scratch/8f1fc457a062/abyss-v241"
  DirAccess.make_dir_recursive_absolute(folder)
  root.get_texture().get_image().save_png(folder+"/"+key+"-"+str(root.size.x)+".png")
 func run():
  app=load('res://main.tscn').instantiate();root.add_child(app);await frames();app.set_process(false)
  app.model=ClockModel.new('');app.model.random_source=func():return .01
- for resolution in [Vector2i(960,540),Vector2i(1170,540)]:
+ for resolution in [Vector2i(960,540),Vector2i(1170,540),Vector2i(2048,945)]:
   root.size=resolution;await frames()
-  for floor_number in [50,60]:
-   app.model.reset_abyss();app.model.state.abyss.currentFloor=floor_number;app.model.state.abyss.maxFloor=60
+  for scenario in [{"floor":50,"rank":0},{"floor":50,"rank":1},{"floor":50,"rank":2},{"floor":60,"rank":3}]:
+   var floor_number:int=scenario.floor
+   var rank:int=scenario.rank
+   app.model.reset_abyss();app.model.state.abyss.currentFloor=floor_number;app.model.state.abyss.maxFloor=60;app.model.state.abyss.meta.selectedDifficulty=rank
    app.abyss_panel='expedition';app.navigate('abyss');await frames()
    var track=app.find_child('AbyssRouteTrack',true,false)
    ck(track.visible_floors().size()==10,'bounded ten-floor route')
-   ck(track.visible_floors().has(floor_number) and track.visible_floors().max()>floor_number,'current and future floors shown beyond fifty')
+   ck(track.visible_floors().has(floor_number),'current floor shown')
+   ck(track.visible_floors().max()==50 if rank<3 else track.visible_floors().max()>60,'limited endpoint and endless future path')
+   ck(app.find_child('AbyssFloorCaption',true,false).text==('第 50 / 50 层' if rank<3 else '无尽 · 第 60 层'),'explicit floor limit caption')
    fits(app.shell,'entire abyss shell')
    fits(app.find_child('AbyssDailyCard',true,false),'daily card')
    fits(app.find_child('AbyssBegin',true,false),'begin action')
    ck(app.find_child('AbyssDailyMilestone',true,false).text=='第 %d 层'%floor_number,'correct milestone')
-   await capture('route-'+str(floor_number))
+   await capture('route-rank'+str(rank)+'-'+str(floor_number))
    var prepared:Dictionary=app.model.prepare_abyss()
    ck(prepared.success,'real abyss preparation')
    app.battle_config=prepared.config
    app.battle.state={'allies':app.model.battle_party(true),'turn':3}
    var result:Dictionary=app.model.finish_battle(prepared.config,{'phase':'victory','allies':app.model.battle_party(true)})
-   ck(result.success and not result.ended,'real milestone settlement continues endless')
+   ck(result.success and result.ended==(rank<3),'real milestone ends capped rank and continues endless')
+   ck(int(app.model.state.abyss.currentFloor)==(1 if rank<3 else 61),'finished limited expedition resets; endless advances')
    ck(not result.relic.is_empty() and not result.progression.is_empty(),'real finish yields relic and progression')
-   app._render_battle_settlement(result,true,false);await frames()
+   app._render_battle_settlement(result,true,result.ended);await frames()
    ck(app.find_child('SettlementReward_gold',true,false)==null,'abyss does not display gold')
+   ck((app.find_child('SettlementReward_runCoins',true,false)==null)==(rank<3),'finished run does not present cleared temporary currency as carryout')
+   ck(int(app.model.state.abyss.rogue.temporaryCurrency)==0 if rank<3 else int(app.model.state.abyss.rogue.temporaryCurrency)>0,'temporary currency UI follows actual surviving balance')
    ck(app.find_child('SettlementReward_diamonds',true,false).text=='+%d'%result.dailyAward.amount,'actual daily amount displayed')
    fits(app.find_child('SettlementRelic',true,false),'actual relic visible')
    fits(app.find_child('BattleSettlementContinue',true,false),'continuation fixed')
-   await capture('settlement-'+str(floor_number))
+   await capture('settlement-rank'+str(rank)+'-'+str(floor_number))
+   ck(app.find_child('BattleSettlementContinue',true,false).text.begins_with('返回营地' if rank<3 else '继续旅程'),'completed run offers camp; endless offers next journey')
+   await click(app.find_child('BattleSettlementContinue',true,false))
+   ck(app.current_screen=='abyss' and app.overlay.get_child_count()==0,'real settlement action returns to abyss cleanly')
    app._clear_overlay();app.model.reset_abyss();app.model.state.abyss.currentFloor=floor_number;app.navigate('abyss');await frames()
    ck(app.find_child('AbyssDailyNext',true,false).text=='今日已领取','used award shown')
    var repeat_config:Dictionary=app.model.prepare_abyss()
    var repeated:Dictionary=app.model.finish_battle(repeat_config.config,{'phase':'victory','allies':app.model.battle_party(true)})
    ck(repeated.success and repeated.dailyAward.amount==0 and repeated.rewards.exp>0 and not repeated.relic.is_empty(),'repeat retains experience and actual relic with no duplicate crystals')
-   app.battle_config=repeat_config.config;app._render_battle_settlement(repeated,true,false);await frames()
+   app.battle_config=repeat_config.config;app._render_battle_settlement(repeated,true,repeated.ended);await frames()
    ck(app.find_child('SettlementDailyAwardText',true,false).text=='第 %d 层 · 今日已领取'%floor_number,'repeat settlement states daily award already used')
    app._clear_overlay();app.model.reset_abyss();app.model.state.abyss.currentFloor=floor_number
 
-   app.model.state.abyss.meta.selectedDifficulty=1;app._render_screen();await frames()
-   ck(app.find_child('AbyssDailyNext',true,false).text=='+%d 星尘晶'%int(app.model.abyss_daily_status().remaining),'higher difficulty shows only difference')
-   app.model.state.abyss.meta.selectedDifficulty=0
+   app.model.state.abyss.meta.selectedDifficulty=mini(3,rank+1);app._render_screen();await frames()
+   var remaining:int=app.model.abyss_daily_status().remaining
+   ck(app.find_child('AbyssDailyNext',true,false).text==('+%d 星尘晶'%remaining if remaining>0 else '今日已领取'),'higher difficulty shows only difference')
+   app.model.state.abyss.meta.selectedDifficulty=rank
    var reset_at:int=app.model.abyss_daily_status().resetAt
    app.model.now_ms=reset_at-1;app._render_screen();await frames()
    ck(app.find_child('AbyssDailyNext',true,false).text=='今日已领取','before six AM retains claim')

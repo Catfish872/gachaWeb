@@ -1,0 +1,699 @@
+{
+  "generator": "built-in image_gen.imagegen",
+  "generated_utc": "2026-11-01T12:53:40Z",
+  "source_local_file": "/workspace/scratch/8f1fc457a062/generated_images/exec-dc729b8d-485f-452f-8894-720ecd3347fb.png",
+  "source_original_preserved": true,
+  "atlas": "res://assets/relic_sets/relic_sets_atlas_v250.png",
+  "size": [
+    1145,
+    1374
+  ],
+  "mode": "RGBA",
+  "bytes": 2865182,
+  "sha256": "39bca1ce57af733b9651aeff390691f698e5a3f99298b859b7f8497f5b48585b",
+  "source_sha256": "39bca1ce57af733b9651aeff390691f698e5a3f99298b859b7f8497f5b48585b",
+  "background": "genuine RGBA alpha; original pixels preserved",
+  "fully_transparent_pixels": 633767,
+  "visible_pixels_alpha_at_least_16": 743904,
+  "grid": {
+    "columns": [
+      "helmet",
+      "chest",
+      "belt",
+      "boots",
+      "necklace"
+    ],
+    "rows": [
+      "flame_oath",
+      "aurora_prayer",
+      "thunder_hunt",
+      "wind_voyager",
+      "stone_bastion",
+      "star_watch"
+    ]
+  },
+  "crop_method": "Manually fitted integer source rectangles, AtlasTexture virtual transparent margins, filter_clip=true. Original generated atlas is byte-identical.",
+  "entries": [
+    {
+      "set_id": "flame_oath",
+      "set_name": "炽焰誓约",
+      "slot_id": "helmet",
+      "resource": "res://assets/relic_sets/flame_oath/helmet.tres",
+      "region": [
+        37,
+        7,
+        172,
+        223
+      ],
+      "margin": [
+        33,
+        8,
+        67,
+        16
+      ],
+      "virtual_size": [
+        239,
+        239
+      ]
+    },
+    {
+      "set_id": "flame_oath",
+      "set_name": "炽焰誓约",
+      "slot_id": "chest",
+      "resource": "res://assets/relic_sets/flame_oath/chest.tres",
+      "region": [
+        230,
+        7,
+        232,
+        222
+      ],
+      "margin": [
+        8,
+        13,
+        16,
+        26
+      ],
+      "virtual_size": [
+        248,
+        248
+      ]
+    },
+    {
+      "set_id": "flame_oath",
+      "set_name": "炽焰誓约",
+      "slot_id": "belt",
+      "resource": "res://assets/relic_sets/flame_oath/belt.tres",
+      "region": [
+        474,
+        68,
+        235,
+        146
+      ],
+      "margin": [
+        8,
+        52,
+        16,
+        105
+      ],
+      "virtual_size": [
+        251,
+        251
+      ]
+    },
+    {
+      "set_id": "flame_oath",
+      "set_name": "炽焰誓约",
+      "slot_id": "boots",
+      "resource": "res://assets/relic_sets/flame_oath/boots.tres",
+      "region": [
+        716,
+        12,
+        187,
+        215
+      ],
+      "margin": [
+        22,
+        8,
+        44,
+        16
+      ],
+      "virtual_size": [
+        231,
+        231
+      ]
+    },
+    {
+      "set_id": "flame_oath",
+      "set_name": "炽焰誓约",
+      "slot_id": "necklace",
+      "resource": "res://assets/relic_sets/flame_oath/necklace.tres",
+      "region": [
+        936,
+        5,
+        183,
+        226
+      ],
+      "margin": [
+        29,
+        8,
+        59,
+        16
+      ],
+      "virtual_size": [
+        242,
+        242
+      ]
+    },
+    {
+      "set_id": "aurora_prayer",
+      "set_name": "极光祷歌",
+      "slot_id": "helmet",
+      "resource": "res://assets/relic_sets/aurora_prayer/helmet.tres",
+      "region": [
+        27,
+        235,
+        190,
+        211
+      ],
+      "margin": [
+        18,
+        8,
+        37,
+        16
+      ],
+      "virtual_size": [
+        227,
+        227
+      ]
+    },
+    {
+      "set_id": "aurora_prayer",
+      "set_name": "极光祷歌",
+      "slot_id": "chest",
+      "resource": "res://assets/relic_sets/aurora_prayer/chest.tres",
+      "region": [
+        223,
+        234,
+        245,
+        217
+      ],
+      "margin": [
+        8,
+        22,
+        16,
+        44
+      ],
+      "virtual_size": [
+        261,
+        261
+      ]
+    },
+    {
+      "set_id": "aurora_prayer",
+      "set_name": "极光祷歌",
+      "slot_id": "belt",
+      "resource": "res://assets/relic_sets/aurora_prayer/belt.tres",
+      "region": [
+        476,
+        281,
+        225,
+        166
+      ],
+      "margin": [
+        8,
+        37,
+        16,
+        75
+      ],
+      "virtual_size": [
+        241,
+        241
+      ]
+    },
+    {
+      "set_id": "aurora_prayer",
+      "set_name": "极光祷歌",
+      "slot_id": "boots",
+      "resource": "res://assets/relic_sets/aurora_prayer/boots.tres",
+      "region": [
+        721,
+        239,
+        189,
+        216
+      ],
+      "margin": [
+        21,
+        8,
+        43,
+        16
+      ],
+      "virtual_size": [
+        232,
+        232
+      ]
+    },
+    {
+      "set_id": "aurora_prayer",
+      "set_name": "极光祷歌",
+      "slot_id": "necklace",
+      "resource": "res://assets/relic_sets/aurora_prayer/necklace.tres",
+      "region": [
+        944,
+        231,
+        171,
+        225
+      ],
+      "margin": [
+        35,
+        8,
+        70,
+        16
+      ],
+      "virtual_size": [
+        241,
+        241
+      ]
+    },
+    {
+      "set_id": "thunder_hunt",
+      "set_name": "雷霆追猎",
+      "slot_id": "helmet",
+      "resource": "res://assets/relic_sets/thunder_hunt/helmet.tres",
+      "region": [
+        31,
+        446,
+        190,
+        222
+      ],
+      "margin": [
+        24,
+        8,
+        48,
+        16
+      ],
+      "virtual_size": [
+        238,
+        238
+      ]
+    },
+    {
+      "set_id": "thunder_hunt",
+      "set_name": "雷霆追猎",
+      "slot_id": "chest",
+      "resource": "res://assets/relic_sets/thunder_hunt/chest.tres",
+      "region": [
+        226,
+        451,
+        243,
+        232
+      ],
+      "margin": [
+        8,
+        13,
+        16,
+        27
+      ],
+      "virtual_size": [
+        259,
+        259
+      ]
+    },
+    {
+      "set_id": "thunder_hunt",
+      "set_name": "雷霆追猎",
+      "slot_id": "belt",
+      "resource": "res://assets/relic_sets/thunder_hunt/belt.tres",
+      "region": [
+        474,
+        497,
+        234,
+        160
+      ],
+      "margin": [
+        8,
+        45,
+        16,
+        90
+      ],
+      "virtual_size": [
+        250,
+        250
+      ]
+    },
+    {
+      "set_id": "thunder_hunt",
+      "set_name": "雷霆追猎",
+      "slot_id": "boots",
+      "resource": "res://assets/relic_sets/thunder_hunt/boots.tres",
+      "region": [
+        706,
+        465,
+        205,
+        212
+      ],
+      "margin": [
+        11,
+        8,
+        23,
+        16
+      ],
+      "virtual_size": [
+        228,
+        228
+      ]
+    },
+    {
+      "set_id": "thunder_hunt",
+      "set_name": "雷霆追猎",
+      "slot_id": "necklace",
+      "resource": "res://assets/relic_sets/thunder_hunt/necklace.tres",
+      "region": [
+        941,
+        459,
+        177,
+        221
+      ],
+      "margin": [
+        30,
+        8,
+        60,
+        16
+      ],
+      "virtual_size": [
+        237,
+        237
+      ]
+    },
+    {
+      "set_id": "wind_voyager",
+      "set_name": "疾风星途",
+      "slot_id": "helmet",
+      "resource": "res://assets/relic_sets/wind_voyager/helmet.tres",
+      "region": [
+        27,
+        676,
+        203,
+        210
+      ],
+      "margin": [
+        11,
+        8,
+        23,
+        16
+      ],
+      "virtual_size": [
+        226,
+        226
+      ]
+    },
+    {
+      "set_id": "wind_voyager",
+      "set_name": "疾风星途",
+      "slot_id": "chest",
+      "resource": "res://assets/relic_sets/wind_voyager/chest.tres",
+      "region": [
+        229,
+        686,
+        245,
+        217
+      ],
+      "margin": [
+        8,
+        22,
+        16,
+        44
+      ],
+      "virtual_size": [
+        261,
+        261
+      ]
+    },
+    {
+      "set_id": "wind_voyager",
+      "set_name": "疾风星途",
+      "slot_id": "belt",
+      "resource": "res://assets/relic_sets/wind_voyager/belt.tres",
+      "region": [
+        483,
+        734,
+        226,
+        169
+      ],
+      "margin": [
+        8,
+        36,
+        16,
+        73
+      ],
+      "virtual_size": [
+        242,
+        242
+      ]
+    },
+    {
+      "set_id": "wind_voyager",
+      "set_name": "疾风星途",
+      "slot_id": "boots",
+      "resource": "res://assets/relic_sets/wind_voyager/boots.tres",
+      "region": [
+        711,
+        688,
+        204,
+        212
+      ],
+      "margin": [
+        12,
+        8,
+        24,
+        16
+      ],
+      "virtual_size": [
+        228,
+        228
+      ]
+    },
+    {
+      "set_id": "wind_voyager",
+      "set_name": "疾风星途",
+      "slot_id": "necklace",
+      "resource": "res://assets/relic_sets/wind_voyager/necklace.tres",
+      "region": [
+        932,
+        678,
+        190,
+        219
+      ],
+      "margin": [
+        22,
+        8,
+        45,
+        16
+      ],
+      "virtual_size": [
+        235,
+        235
+      ]
+    },
+    {
+      "set_id": "stone_bastion",
+      "set_name": "城垣誓卫",
+      "slot_id": "helmet",
+      "resource": "res://assets/relic_sets/stone_bastion/helmet.tres",
+      "region": [
+        29,
+        898,
+        182,
+        216
+      ],
+      "margin": [
+        25,
+        8,
+        50,
+        16
+      ],
+      "virtual_size": [
+        232,
+        232
+      ]
+    },
+    {
+      "set_id": "stone_bastion",
+      "set_name": "城垣誓卫",
+      "slot_id": "chest",
+      "resource": "res://assets/relic_sets/stone_bastion/chest.tres",
+      "region": [
+        224,
+        907,
+        260,
+        205
+      ],
+      "margin": [
+        8,
+        35,
+        16,
+        71
+      ],
+      "virtual_size": [
+        276,
+        276
+      ]
+    },
+    {
+      "set_id": "stone_bastion",
+      "set_name": "城垣誓卫",
+      "slot_id": "belt",
+      "resource": "res://assets/relic_sets/stone_bastion/belt.tres",
+      "region": [
+        486,
+        950,
+        208,
+        124
+      ],
+      "margin": [
+        8,
+        50,
+        16,
+        100
+      ],
+      "virtual_size": [
+        224,
+        224
+      ]
+    },
+    {
+      "set_id": "stone_bastion",
+      "set_name": "城垣誓卫",
+      "slot_id": "boots",
+      "resource": "res://assets/relic_sets/stone_bastion/boots.tres",
+      "region": [
+        692,
+        907,
+        235,
+        200
+      ],
+      "margin": [
+        8,
+        25,
+        16,
+        51
+      ],
+      "virtual_size": [
+        251,
+        251
+      ]
+    },
+    {
+      "set_id": "stone_bastion",
+      "set_name": "城垣誓卫",
+      "slot_id": "necklace",
+      "resource": "res://assets/relic_sets/stone_bastion/necklace.tres",
+      "region": [
+        939,
+        900,
+        181,
+        207
+      ],
+      "margin": [
+        21,
+        8,
+        42,
+        16
+      ],
+      "virtual_size": [
+        223,
+        223
+      ]
+    },
+    {
+      "set_id": "star_watch",
+      "set_name": "星辉守望",
+      "slot_id": "helmet",
+      "resource": "res://assets/relic_sets/star_watch/helmet.tres",
+      "region": [
+        29,
+        1118,
+        192,
+        229
+      ],
+      "margin": [
+        26,
+        8,
+        53,
+        16
+      ],
+      "virtual_size": [
+        245,
+        245
+      ]
+    },
+    {
+      "set_id": "star_watch",
+      "set_name": "星辉守望",
+      "slot_id": "chest",
+      "resource": "res://assets/relic_sets/star_watch/chest.tres",
+      "region": [
+        234,
+        1116,
+        248,
+        242
+      ],
+      "margin": [
+        8,
+        11,
+        16,
+        22
+      ],
+      "virtual_size": [
+        264,
+        264
+      ]
+    },
+    {
+      "set_id": "star_watch",
+      "set_name": "星辉守望",
+      "slot_id": "belt",
+      "resource": "res://assets/relic_sets/star_watch/belt.tres",
+      "region": [
+        482,
+        1158,
+        228,
+        178
+      ],
+      "margin": [
+        8,
+        33,
+        16,
+        66
+      ],
+      "virtual_size": [
+        244,
+        244
+      ]
+    },
+    {
+      "set_id": "star_watch",
+      "set_name": "星辉守望",
+      "slot_id": "boots",
+      "resource": "res://assets/relic_sets/star_watch/boots.tres",
+      "region": [
+        708,
+        1117,
+        205,
+        233
+      ],
+      "margin": [
+        22,
+        8,
+        44,
+        16
+      ],
+      "virtual_size": [
+        249,
+        249
+      ]
+    },
+    {
+      "set_id": "star_watch",
+      "set_name": "星辉守望",
+      "slot_id": "necklace",
+      "resource": "res://assets/relic_sets/star_watch/necklace.tres",
+      "region": [
+        940,
+        1107,
+        183,
+        247
+      ],
+      "margin": [
+        40,
+        8,
+        80,
+        16
+      ],
+      "virtual_size": [
+        263,
+        263
+      ]
+    }
+  ],
+  "edge_note": "stone_bastion/boots left rectangle is x=692: it excludes the adjacent belt and clips only 3 fringe pixels of alpha 17, 23 and 22 (out of 255); the full opaque boot silhouette is preserved."
+}

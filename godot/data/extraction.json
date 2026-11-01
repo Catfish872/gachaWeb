@@ -1781,7 +1781,7 @@
       "icon": "res://assets/items/expedition_v230/key_ruins.png",
       "effects": [],
       "category": "补给",
-      "buyPrice": 150,
+      "buyPrice": 500,
       "description": "存入独立钥匙串，开启对应区域密室时消耗一把。",
       "keyTheme": "ruins",
       "v7Value": 40,
@@ -1797,7 +1797,7 @@
       "icon": "res://assets/items/expedition_v230/key_forest.png",
       "effects": [],
       "category": "补给",
-      "buyPrice": 150,
+      "buyPrice": 500,
       "description": "存入独立钥匙串，开启对应区域密室时消耗一把。",
       "keyTheme": "forest",
       "v7Value": 40,
@@ -1813,7 +1813,7 @@
       "icon": "res://assets/items/expedition_v230/key_sanctum.png",
       "effects": [],
       "category": "补给",
-      "buyPrice": 150,
+      "buyPrice": 500,
       "description": "存入独立钥匙串，开启对应区域密室时消耗一把。",
       "keyTheme": "sanctum",
       "v7Value": 40,
@@ -2126,6 +2126,8 @@
     ]
   ],
   "balance": {
+    "withinActTierGrowth": 0.02,
+    "finalBossStatMultiplier": 1.15,
     "rankHp": [
       1,
       2.2,
@@ -2200,7 +2202,13 @@
   },
   "economyVersion": 4,
   "utilityEconomy": {
-    "relayFee": 50,
-    "salvageRate": 0.6
+    "relayFee": 50
+  },
+  "serviceGuards": {
+    "rest": 0.15,
+    "hospital": 0.15,
+    "workshop": 0.15,
+    "relay": 0.15,
+    "shrine": 0.15
   }
 }

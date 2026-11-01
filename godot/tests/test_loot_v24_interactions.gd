@@ -188,11 +188,11 @@ func run() -> void:
 	for item in x.run().bag:check(x._fits(x.run().bag,item,x.dimensions("bag")),"result packing is in bounds and has no overlaps")
 	await capture("fragmented-packed")
 	await click(target("ExtractionCloseContainer"))
-	# Protected cheap supplies remain protected automatically; explicit exchange can choose them.
+	# Explicitly locked cheap supplies stay protected automatically; deliberate exchange can choose them.
 	app.extraction_reduced_motion=false
 	x.run().bag=[]
 	for i in dim.x*dim.y:
-		var cheap_med:Dictionary=x._make_item("bandage");cheap_med.revealed=true
+		var cheap_med:Dictionary=x._make_item("bandage");cheap_med.revealed=true;cheap_med.exchangeLocked=true
 		x._place(x.run().bag,cheap_med,dim)
 	var outgoing:String=x.run().bag[0].uid
 	var chosen_gold:Dictionary=x._make_item("gold_watch");chosen_gold.revealed=true;box.items=[chosen_gold]

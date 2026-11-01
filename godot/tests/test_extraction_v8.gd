@@ -37,6 +37,7 @@ func _init()->void:
  # Manual choice may replace protected cheap supplies or choose lower value.
  g=setup();x=g.extraction
  for n in range(30):x._place(x.run().bag,make(x,"bandage"),x.dimensions("bag"))
+ for supply in x.run().bag:x.set_consumable_exchange_lock(supply.uid,true)
  c=box(x);var gold:=make(x,"gold_watch");c.items=[gold]
  ck(not x.plan_smart_loot(c.id).success,"automatic keeps protected supplies")
  var outgoing:String=x.run().bag[12].uid
@@ -74,7 +75,7 @@ func _init()->void:
  # Keys stack separately while every physical UID and price remains intact.
  x.retreat();var gold_before:int=g.state.resources.gold
  ck(x.buy_keys("key_ruins",3).success,"bulk key purchase")
- ck(x.state().keyring.size()==3 and x.state().stash.is_empty() and g.state.resources.gold==gold_before-450,"key purchase independent storage")
+ ck(x.state().keyring.size()==3 and x.state().stash.is_empty() and g.state.resources.gold==gold_before-1500,"key purchase independent storage")
  var first:String=x.state().keyring[0].uid
  ck(x.keyring()[0].count==3,"stack display")
  ck(x.start_run().success,"keyring departure")
@@ -119,21 +120,18 @@ func _init()->void:
  ck(x.item_value(shallow)==shallow_value,"carrying deeper cannot reappraise")
  var deep:=make(x,"gold_watch")
  ck(deep.originAct==3 and x.item_value(deep)>shallow_value,"new deep loot premium")
- # Recycling is opt-in, discounted, atomic and immediately safe.
+ # Legacy proceeds remain; all in-run recycling entry points now fail closed.
  x.run().bag=[];x._place(x.run().bag,shallow,x.dimensions("bag"));x._place(x.run().bag,deep,x.dimensions("bag"))
- x.run().room.type="cache"
- ck(not x.salvage_quote([shallow.uid]).success,"recycling location enforced")
- x.run().room.type="workshop"
- var quote:Dictionary=x.salvage_quote([shallow.uid])
- ck(quote.success and quote.value==int(floor(shallow_value*0.6)),"sixty percent quote")
- before=g.state.duplicate(true);g.save_blocked=true
- ck(not x.salvage_items([shallow.uid],quote.planHash).success and g.state==before,"recycling rollback")
- g.save_blocked=false;gold_before=g.state.resources.gold
- ck(x.salvage_items([shallow.uid],quote.planHash).success,"recycle chosen item")
- ck(x.run().bag.size()==1 and x.run().bag[0].uid==deep.uid and g.state.resources.gold==gold_before+quote.value,"untouched item and safe wallet")
- ck(not x.salvage_items([shallow.uid],quote.planHash).success,"recycling replay blocked")
- ck(x.retreat().success and g.state.resources.gold==gold_before+quote.value,"recycled proceeds survive retreat")
- ck(x.state().lastRun.salvageGold==quote.value,"summary reports already banked recycling")
+ x.run().salvageGold=123;g.state.resources.gold+=123
+ gold_before=g.state.resources.gold
+ for kind in ["cache","workshop","relay","boss"]:
+  x.run().room.type=kind
+  x.run().phase="boss_exit" if kind=="boss" else "room"
+  before=g.state.duplicate(true)
+  ck(not x.can_salvage() and not x.salvage_quote([shallow.uid]).success,"run recycling disabled "+kind)
+  ck(not x.salvage_items([shallow.uid],"legacy-plan").success and g.state==before,"old recycling API preserves assets "+kind)
+ ck(x.retreat().success and g.state.resources.gold==gold_before,"legacy proceeds survive retreat")
+ ck(x.state().lastRun.salvageGold==123,"historical recycling summary retained")
  ck(g.valid_save(g.state),"final valid")
  # Only gold/red enter new collections; legacy low-rarity records survive.
  x.state().collection=["wire"]

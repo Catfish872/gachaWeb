@@ -230,6 +230,9 @@ func test_statuses() -> void:
 	check(dealt == 0 and unit.currentHp == before,"invincible blocks direct and DOT")
 	for sid in Battle.CONTROL_STATUSES:
 		b = arena()
+		if sid == "electrify":
+			b.catalog = catalog.duplicate(true)
+			b.catalog["CombatRules"] = {"electrifySkipChance":1.0}
 		var actor = b.current_actor()
 		b.apply_status(actor,sid,1)
 		b._events = []

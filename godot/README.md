@@ -1,5 +1,9 @@
 # 虚空裂变 · Godot Android
 
+## 正在验收：2.5.0 统一更新
+
+[查看统一更新内容](CHANGELOG_2.5.md)。抽卡、遗物套装与搭配、连续探索及本批战斗/经济调整将一起发布；最终回归、原生Android与签名验证完成前，最新正式版仍为2.4.0。
+
 ## 最新正式版：2.4.0
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.4.0/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.4.0) · [中文更新说明](CHANGELOG_2.4.md) · [验证记录](validation/expedition-v240/RELEASE.md)

@@ -1,0 +1,9 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/relic_sets/relic_sets_atlas_v250.png" id="1_atlas"]
+
+[resource]
+atlas = ExtResource("1_atlas")
+region = Rect2(708, 1117, 205, 233)
+margin = Rect2(22, 8, 44, 16)
+filter_clip = true

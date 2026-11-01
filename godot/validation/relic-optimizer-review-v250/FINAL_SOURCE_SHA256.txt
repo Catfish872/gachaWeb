@@ -1,0 +1,2 @@
+5cb2805c9c007de78fde2741768ad3dac91adaa65eb6fe339d619ee47c603a1b  scripts/relic_optimizer.gd
+814925778c78fc3a0dc9df38f02dbb5440c0d8ea39bc093db34705c20d8e73ee  scripts/battle_model.gd

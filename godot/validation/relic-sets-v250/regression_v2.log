@@ -1,0 +1,369 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: abyss encounter starts
+PASS: encounter includes deterministic battle seed
+PASS: repeated prepare preserves encounter, rewards, token and seed
+PASS: active encounter save reloads cleanly
+PASS: reload resumes identical issued encounter
+PASS: battle terminates within action budget
+PASS: battle terminates within action budget
+PASS: identical encounter replays identical combat after reload
+PASS: story cannot overwrite pending abyss encounter
+PASS: stale battle-state token cannot settle active encounter
+PASS: matching replay settles after reload
+PASS: settlement uses issued rewards rather than caller changes
+PASS: duplicate settlement cannot pay twice
+PASS: settled token remains invalid after reload
+PASS: active run prevents swapping wounded roster for fresh units
+PASS: battle terminates within action budget
+PASS: run advances through first settlement
+PASS: party lock persists between encounters
+PASS: mandatory opening blessing resolves
+PASS: abandon resolves current expedition
+PASS: defeat returns next expedition to floor one
+PASS: defeat clears carried party health
+PASS: defeat clears temporary build and pending choices
+PASS: roster can change after expedition ends
+PASS: abandoned encounter cannot pay later victory
+PASS: failed encounter save rolls back run creation
+PASS: battle terminates within action budget
+PASS: failed settlement save rolls back resources, floor, and meta
+PASS: failed settlement keeps token available for retry
+PASS: successful retry consumes settlement token exactly once
+PASS: sandbox recharge remains available
+PASS: sandbox recharge remains available
+PASS: sandbox recharge remains available
+PASS: sandbox recharge remains available
+PASS: sandbox recharge remains available
+PASS: sandbox recharge cannot mint earned expedition currencies
+PASS: four bounded persistent upgrade tracks are exposed
+PASS: unfunded meta purchase is atomic
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta track has a finite purchase cap: vitality
+PASS: maxed meta track rejects further spending: vitality
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta track has a finite purchase cap: offense
+PASS: maxed meta track rejects further spending: offense
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta track has a finite purchase cap: recovery
+PASS: maxed meta track rejects further spending: recovery
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta track has a finite purchase cap: supply
+PASS: maxed meta track rejects further spending: supply
+PASS: meta upgrades are locked for active expedition
+PASS: v2 default and roster save validates
+PASS: legacy v3 save migrates
+PASS: migrated save gains valid persistent progression defaults
+PASS: partial legacy-compatible progression fields can be defaulted
+PASS: save validation rejects negative permanent currency
+PASS: save validation rejects out-of-range meta level
+PASS: save validation rejects wrong meta upgrades type
+PASS: save validation rejects negative run currency
+PASS: save validation rejects unknown locked roster member
+PASS: save validation rejects wrong pending node type
+PASS: save validation rejects incomplete persisted encounter
+PASS: save validation rejects unknown node state
+PASS: save validation rejects negative cleared floors
+PASS: empty mandatory blessing gate cannot strand imported run
+PASS: advanced run requires persisted roster health
+PASS: incomplete carried unit rejects cleanly without exception
+PASS: import preserves legitimate repeated blessing stacks without a growth cap
+PASS: complete journey launches floor 1
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 1
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 2
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 2
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 3
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 3
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 4
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 4
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending rest blocks encounter skipping
+PASS: unknown rest option is atomic
+PASS: valid rest option resolves
+PASS: replayed rest option cannot grant twice
+PASS: complete journey launches floor 5
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 5
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending shop blocks encounter skipping
+PASS: shop presents supplies and blessing stock
+PASS: shop stock persists without reload reroll
+PASS: unknown shop item cannot spend currency
+PASS: failed shop commit rolls back spend, healing and sold flag
+PASS: healing supply purchase succeeds
+PASS: healing supply pays exact price and revives fallen ally
+PASS: sold shop item cannot be repurchased
+PASS: sold flag persists across reload
+PASS: leaving shop resumes path
+PASS: replayed shop exit is atomic
+PASS: complete journey launches floor 6
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 6
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 7
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 7
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 8
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 8
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending rest blocks encounter skipping
+PASS: unknown rest option is atomic
+PASS: valid rest option resolves
+PASS: replayed rest option cannot grant twice
+PASS: complete journey launches floor 9
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 9
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 10
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 10
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 11
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 11
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 12
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 12
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 13
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 13
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 14
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 14
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 15
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 15
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending shop blocks encounter skipping
+PASS: shop presents supplies and blessing stock
+PASS: shop stock persists without reload reroll
+PASS: unknown shop item cannot spend currency
+PASS: failed shop commit rolls back spend, healing and sold flag
+PASS: healing supply purchase succeeds
+PASS: healing supply pays exact price and revives fallen ally
+PASS: sold shop item cannot be repurchased
+PASS: sold flag persists across reload
+PASS: leaving shop resumes path
+PASS: replayed shop exit is atomic
+PASS: complete journey launches floor 16
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 16
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 17
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 17
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 18
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 18
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending rest blocks encounter skipping
+PASS: unknown rest option is atomic
+PASS: valid rest option resolves
+PASS: replayed rest option cannot grant twice
+PASS: complete journey launches floor 19
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 19
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 20
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 20
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: full journey exercises reward
+PASS: full journey exercises route
+PASS: full journey exercises event
+PASS: full journey exercises rest
+PASS: full journey exercises shop
+PASS: twentieth boss keeps endless run active at twenty-one
+PASS: twenty-floor milestone retains progression before fifty-floor completion
+PASS: first completion unlocks exactly the next difficulty
+PASS: continuing expedition retains temporary currency and earned blessings
+PASS: final boss settlement cannot duplicate completion payout
+PASS: player voluntarily ends endless expedition
+PASS: voluntary end records retreat and returns to first floor
+PASS: only ending clears temporary currency and blessings
+PASS: completed run summary survives disk reload
+PASS: fresh save exposes four progressively locked difficulties
+PASS: locked or invalid difficulty selection is atomic: -1
+PASS: locked or invalid difficulty selection is atomic: 1
+PASS: locked or invalid difficulty selection is atomic: 4
+PASS: save rejects malformed difficulty selectedDifficulty: -1
+PASS: save rejects malformed difficulty selectedDifficulty: 4
+PASS: save rejects malformed difficulty selectedDifficulty: 1.5
+PASS: save rejects malformed difficulty selectedDifficulty: 1
+PASS: save rejects malformed difficulty selectedDifficulty: {  }
+PASS: save rejects malformed difficulty unlockedDifficulty: -1
+PASS: save rejects malformed difficulty unlockedDifficulty: 4
+PASS: save rejects malformed difficulty unlockedDifficulty: 1.5
+PASS: save rejects malformed difficulty unlockedDifficulty: 1
+PASS: save rejects malformed difficulty unlockedDifficulty: {  }
+PASS: save cannot select difficulty beyond unlocked rank
+PASS: unlocked highest difficulty can be selected
+PASS: encounter snapshots chosen difficulty
+PASS: active expedition difficulty cannot change
+PASS: persisted encounter rank must match active run
+PASS: difficulty persists on encounter reload
+PASS: battle terminates within action budget
+PASS: mature party can exercise highest-rank settlement
+PASS: difficulty increases actual permanent reward
+PASS: settlement reports actual scaled meta reward
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: battle terminates within action budget
+PASS: difficulty event test settles second floor
+PASS: difficulty event route opens
+PASS: highest-rank event applies promised permanent reward multiplier
+PASS: event result reports actual scaled meta reward
+V2 ADVERSARIAL REGRESSIONS: 366 passed, 0 failed

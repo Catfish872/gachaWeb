@@ -202,7 +202,19 @@ def reveal_page_target(state, name):
         target = matches[0]
         if inside(target['rect'], target['clip']):
             return state
-        assert state['scroll_max'] > 0, f'Clipped control without scroll range: {name}'
+        local = next((item for item in state.get('page_scrolls', []) if item['id'] == target.get('scroll_owner') and item['max'] > 0), None)
+        if local:
+            x, y, w, h = local['rect']
+            cx, cy, cw, ch = local.get('clip', [x, y, w, h])
+            top, bottom = max(y, cy), min(y + h, cy + ch)
+            before, scroll_id = local['value'], local['id']
+            upwards = target['rect'][1] >= target['clip'][1]
+            start, end = (.8, .2) if upwards else (.2, .8)
+            finger_x = min(x + w * .85, cx + cw - 12)
+            adb('shell', 'input', 'swipe', str(round(finger_x)), str(round(top + (bottom-top)*start)), str(round(finger_x)), str(round(top+(bottom-top)*end)), '600')
+            state = wait_for(lambda q: any(item['id'] == scroll_id and item['value'] != before for item in q.get('page_scrolls', [])), name + ' local scrolling')
+            continue
+        assert state['scroll_max'] > 0, f'Clipped control without scroll range: {name}' 
         x, y, w, h = state['scroll_rect']
         before = state['scroll']
         _, ty, _, th = target['rect']
@@ -292,10 +304,96 @@ def enter_map_room(state, room_id):
         state = wait_for(lambda q, since=before_seq: q.get('seq', -1) > since and q.get('extraction', {}).get('phase') == 'route' and q.get('canvases', {}).get('map', {}).get('selected_room') == room_id and any(b['name'] == name for b in q['buttons']), 'first map tap previews without travel')
         before_seq = state['seq']
         tap(state, name)
-    return wait_for(lambda q, since=before_seq: q.get('seq', -1) > since and q.get('extraction', {}).get('room_id') == room_id and q['extraction']['phase'] == 'room', 'map node enters room')
+    return wait_for(lambda q, since=before_seq: q.get('seq', -1) > since and q.get('extraction', {}).get('room_id') == room_id and q['extraction']['phase'] in ('room','battle'), 'map node enters room')
+
+
+def resolve_service_guard(state, output):
+    if state['extraction']['phase'] != 'battle':
+        return state
+    assert state['extraction'].get('guard_pending'), 'Safe route unexpectedly entered a non-service battle'
+    room_id, kind = state['extraction']['room_id'], state['extraction']['room_type']
+    assert not any(b['name'].startswith(('ExtractionRoomAction_', 'ExtractionOpenContainer_')) or b['name']=='ExtractionDepositPreview' for b in state['buttons']), 'Guarded service remains usable before victory'
+    screenshot(output, 'service-guard-before', True)
+    tap_page(state, 'ExtractionBattle')
+    state = wait_for(lambda q: q['screen']=='battle', 'real service guard battle starts')
+    if not state['battle_state']['auto']:
+        tap(state, 'BattleAutoToggle')
+    state = wait_for(lambda q: any(b['name']=='ExtractionBattleContinue' for b in q['buttons']), 'real automatic guard battle reaches settlement', timeout=180)
+    assert state['battle_state']['phase']=='victory', 'Ordinary native party lost the actual service guard; do not bypass encounter'
+    tap_overlay(state, 'ExtractionBattleContinue')
+    state = wait_for(lambda q: q['screen']=='extraction' and q['extraction']['phase']=='room', 'guard victory restores service room')
+    state = resolve_growth(state)
+    assert state['extraction']['room_id']==room_id and state['extraction']['room_type']==kind and not state['extraction']['guard_pending'], 'Guard settlement replaced or failed to unlock original service'
+    screenshot(output, 'service-guard-unlocked', True)
+    return state
+
+
+def resolve_growth(state):
+    while state['extraction'].get('growth_choices'):
+        choices = state['extraction']['growth_choices']
+        tap_page(state, 'ExtractionGrowth_'+choices[0])
+        state = wait_for(lambda q: q['extraction'].get('growth_choices',[]) != choices, 'actual blessing selection completes')
+    return state
+
+
+def workshop_input_flow(state, output):
+    assert state['extraction']['room_type']=='workshop' and len(state['extraction']['room_actions'])==3, 'Natural workshop must retain all three service cards'
+    saved_ids = sorted(state['extraction']['bag_ids'])
+    room_id = state['extraction']['room_id']
+    saved_run = state['extraction']['run_digest']
+    footer = ('ExtractionSort_bag','ExtractionQuickSupplies','ExtractionBuild','ExtractionAbandon')
+    def fixed(q):
+        for name in footer:
+            button=next(b for b in q['buttons'] if b['name']==name)
+            assert inside(button['rect'],button['clip']) and inside(button['rect'],[0,0,*q['window']]), 'Workshop footer is clipped: '+name
+            assert button['rect'][2]*q['logical'][0]/q['window'][0]>=43.9 and button['rect'][3]*q['logical'][1]/q['window'][1]>=43.9, 'Workshop footer target is smaller than 44'
+    fixed(state)
+    screenshot(output, 'workshop-three-services-before', True)
+    tap(state,'ExtractionBuild')
+    state=wait_for(lambda q: any(b['name']=='ExtractionTab_expedition' for b in q['buttons']) and not any(b['name']=='ExtractionBuild' for b in q['buttons']), 'direct build page opens')
+    tap_page(state,'ExtractionTab_expedition')
+    state=wait_for(lambda q: any(b['name']=='ExtractionAbandon' for b in q['buttons']), 'return to workshop footer')
+    tap(state,'ExtractionAbandon')
+    state=wait_for(lambda q: any(b['name']=='ExtractionAbandonCancel' for b in q['buttons']), 'abandon requires confirmation')
+    tap_overlay(state,'ExtractionAbandonCancel')
+    state=wait_for(lambda q: q['overlay']==0 and q['extraction']['room_id']==room_id, 'cancel keeps workshop run')
+    assert state['extraction']['run_digest']==saved_run, 'Build navigation or abandon cancellation changed the run'
+    assert sorted(state['extraction']['bag_ids'])==saved_ids and not any(a.get('used',False) for a in state['extraction']['room_actions']), 'Navigation or cancel consumed service or loot'
+    name='ExtractionRoomAction_study'
+    for _ in range(12):
+        button=next(b for b in state['buttons'] if b['name']==name)
+        if inside(button['rect'],button['clip']):break
+        scroll=next(q for q in state['page_scrolls'] if q.get('name')=='ExtractionServiceScroll')
+        x,y,w,h=scroll['rect']; old=scroll['value']; seq=state['seq']
+        adb('shell','input','swipe',str(round(x+w*.65)),str(round(y+h-12)),str(round(x+w*.65)),str(round(y+12)),'600')
+        state=wait_for(lambda q:q['seq']>seq and any(t.get('name')=='ExtractionServiceScroll' and t['value']>old for t in q['page_scrolls']), 'finger scroll reaches last workshop action')
+        fixed(state)
+    assert inside(next(b for b in state['buttons'] if b['name']==name)['rect'],next(b for b in state['buttons'] if b['name']==name)['clip']), 'Last service did not become fully visible'
+    screenshot(output, 'workshop-last-service-reachable', True)
+    tap(state,name)
+    state=wait_for(lambda q: bool(q['extraction'].get('growth_choices')), 'last service opens real blessing choices')
+    state=resolve_growth(state)
+    assert all(a.get('used') for a in state['extraction']['room_actions']), 'Workshop real choice was not consumed exactly once'
+    fixed(state)
+    screenshot(output,'workshop-service-consumed',True)
+    return state
+
+
+def verify_completed_container_close(before, after):
+    a, b = before['extraction'], after['extraction']
+    expected = 'route' if a['interaction']['canAutoReturn'] else 'room'
+    assert after['overlay'] == 0 and b['phase'] == expected, 'Closing must preserve remaining choices or return a truly completed room'
+    assert b['room_id'] == a['room_id'] and sorted(b['bag_ids']) == sorted(a['bag_ids']), 'Automatic map return must not move player or mutate loot'
+    assert b['containers'] == a['containers'], 'Closing or auto-return must not reroll or discard source containers'
+    assert b.get('gold') == a.get('gold'), 'Automatic return must not spend or grant gold'
+    if expected == 'route':
+        assert 'map' in after.get('canvases', {}), 'Completed room must actually display the map'
 
 
 def return_extraction_map(state):
+    if state['extraction']['phase'] == 'route':
+        assert 'map' in state.get('canvases', {}), 'Automatically returned route must render its actual map'
+        return state
     tap_page(state, 'ExtractionAdvance')
     return wait_for(lambda q: q.get('extraction', {}).get('phase') == 'route' and 'map' in q.get('canvases', {}), 'room returns to persistent map')
 
@@ -507,6 +605,36 @@ def warehouse_input_flow(state, output):
     return state
 
 
+def carry_purchased_supply(state):
+    medicine=next(item for item in state['inventory']['items'] if item['item_id']=='medkit')
+    uid=medicine['uid']
+    assert state['inventory']['selected_uid']==uid, 'Carry must follow the already verified first post-scroll exact selection'
+    tap_page(state,'ExtractionBring_'+uid)
+    state=wait_for(lambda q:uid in q['extraction']['loadout_ids'] and all(item['uid']!=uid for item in q.get('inventory',{}).get('items',[])), 'carry purchased medicine into departure supplies')
+    return state,uid
+
+
+def supply_lock_input_flow(state, uid, output):
+    assert any(item['uid']==uid and item['item_id']=='medkit' for item in state['extraction']['supplies']), 'Purchased carried medicine must retain exact UID on departure'
+    bag_ids=sorted(state['extraction']['bag_ids'])
+    tap_page(state,'ExtractionQuickSupplies')
+    state=wait_for(lambda q:any(b['name']=='ExtractionSupplyLock_'+uid for b in q['buttons']), 'real carried supply lock is visible')
+    for locked in (True,False,True):
+        seq=state['seq']
+        tap_overlay(state,'ExtractionSupplyLock_'+uid)
+        state=wait_for(lambda q:q['seq']>seq and any(item['uid']==uid and item['exchange_locked']==locked for item in q['extraction']['supplies']), 'real supply lock toggles to '+str(locked))
+        assert sorted(state['extraction']['bag_ids'])==bag_ids, 'Supply lock consumed or moved an item'
+    screenshot(output,'supply-exact-uid-locked',True)
+    tap_overlay(state,'ExtractionSupplyClose')
+    state=wait_for(lambda q:q['overlay']==0, 'locked supplies close')
+    tap_page(state,'ExtractionQuickSupplies')
+    state=wait_for(lambda q:any(b['name']=='ExtractionSupplyLock_'+uid for b in q['buttons']), 'reopen same locked supply')
+    assert any(item['uid']==uid and item['exchange_locked'] for item in state['extraction']['supplies']), 'Supply lock was lost on reopening'
+    (output/'supply-lock-persistence.json').write_text(json.dumps(state,ensure_ascii=False,indent=2))
+    tap_overlay(state,'ExtractionSupplyClose')
+    return wait_for(lambda q:q['overlay']==0, 'supply lock inspection returns to expedition')
+
+
 def extraction_flow(state, output, component, search_background):
     """Use ordinary deterministic loot, real scene taps and ADB gestures only."""
     state = visit(state, 'extraction')
@@ -515,6 +643,7 @@ def extraction_flow(state, output, component, search_background):
     state = wait_for(lambda q: any(b['name'] == 'ExtractionSort_stash' for b in q['buttons']), 'extraction stash tab')
     screenshot(output, 'extraction-stash', True)
     state = warehouse_input_flow(state, output)
+    state, carried_supply_uid = carry_purchased_supply(state)
     tap_page(state, 'ExtractionTab_expedition')
     state = wait_for(lambda q: any(b['name'] == 'ExtractionStart' for b in q['buttons']), 'extraction departure')
     tap_page(state, 'ExtractionStart')
@@ -528,16 +657,25 @@ def extraction_flow(state, output, component, search_background):
     filled = False
     collected = False
     visited_count = 0
+    workshop_covered = False
+    supply_lock_covered = False
     for _ in range(12):
         path = safe_exploration_path(state)
-        if not path and collected:
+        if not path and collected and workshop_covered:
             return visit(state,'home')
         assert path, 'Deterministic ordinary-loot route ended before collecting an item'
         for index, room_id in enumerate(path):
             state = enter_map_room(state, room_id)
+            state = resolve_service_guard(state, output)
             if index < len(path) - 1:
                 state = return_extraction_map(state)
         visited_count += 1
+        if not supply_lock_covered:
+            state=supply_lock_input_flow(state,carried_supply_uid,output)
+            supply_lock_covered=True
+        if state['extraction']['room_type']=='workshop' and not workshop_covered:
+            state=workshop_input_flow(state,output)
+            workshop_covered=True
         # Exercise a real rest-room choice to obtain ordinary supplies, without
         # granting fixture loot or changing rarity/search speed through the probe.
         supply_action='ExtractionRoomAction_scavenge'
@@ -581,9 +719,16 @@ def extraction_flow(state, output, component, search_background):
                 state = wait_for(lambda q: sorted(q['extraction']['bag_ids']) == stable_ids and any(box['id'] == box_id and sorted(box['items']) == stable_left for box in q['extraction']['containers']), 'full bag preserves overflow loot')
                 screenshot(output, 'extraction-full-bag-container', True)
                 filled = True
+            before_close = state
+            expected_phase = 'route' if state['extraction']['interaction']['canAutoReturn'] else 'room'
             tap_overlay(state, 'ExtractionCloseContainer')
-            state = wait_for(lambda q: q['overlay'] == 0 and q['extraction']['phase'] == 'room', 'container closes to room')
-            if filled:
+            state = wait_for(lambda q: q['overlay'] == 0 and q['extraction']['phase'] == expected_phase, 'container closes according to remaining real interactions')
+            verify_completed_container_close(before_close, state)
+            if expected_phase == 'route':
+                assert 'map' in state.get('canvases', {}), 'Completed room must actually display the map'
+                (output / 'completed-room-auto-return.json').write_text(json.dumps({'before': before_close['extraction'], 'after': state['extraction']}, indent=2))
+                screenshot(output, 'completed-room-auto-return', True)
+            if filled or expected_phase == 'route':
                 break
         if collected:
             assert collected, 'No real loot was collected'
@@ -594,6 +739,7 @@ def extraction_flow(state, output, component, search_background):
             far = next((button for button in state['buttons'] if button.get('reachable') and not button.get('adjacent') and button.get('type') in ('entry','rest','cache','hospital','workshop','shrine') and len(button.get('travel_path', [])) >= 3), None)
             if far is not None:
                 state = enter_map_room(state, far['room_id'])
+                state = resolve_service_guard(state, output)
                 assert sorted(state['extraction']['bag_ids']) == saved_ids, 'Safe route automatically consumed or granted items'
                 state = return_extraction_map(state)
             state = enter_map_room(state, saved_room)
@@ -610,7 +756,7 @@ def extraction_flow(state, output, component, search_background):
             assert sorted(state['extraction']['bag_ids']) == saved_ids, 'Navigation changed inventory'
             assert state['extraction']['room_id'] == saved_room, 'Navigation moved player'
             search_background['rooms_observed']=visited_count
-            if search_background.get('covered') or visited_count>=4:
+            if workshop_covered and (search_background.get('covered') or visited_count>=4):
                 return visit(state, 'home')
             state = return_extraction_map(state)
             continue
@@ -624,6 +770,145 @@ def visit(state, page):
     state = reveal_menu_target(state, 'MenuNav_' + page)
     tap(state, 'MenuNav_' + page)
     return wait_for(lambda s: s['screen'] == page and s['overlay'] == 0, page + ' navigation')
+
+
+def verify_summon_commit(before, after, count):
+    old, new = before['summon'], after['summon']
+    assert new['total_pulls'] == old['total_pulls'] + count, 'Summon must commit exactly the requested pull count'
+    assert new['diamonds'] == old['diamonds'] - 160 * count, 'Summon must charge exactly once'
+    assert len(new['results']) == count, 'Animation must consume the actual committed results'
+    assert all(item['charId'] in new['owned_ids'] for item in new['results']), 'Revealed results must already be owned'
+
+
+def verify_summon_pause(paused, resumed):
+    a, b = paused['summon'], resumed['summon']
+    assert paused['application_paused'] and not resumed['application_paused'], 'Actual summon lifecycle flags must change'
+    assert a['active'] and b['active'], 'Backgrounding must not dismiss the committed sequence'
+    assert a['stage'] == b['stage'] and a['index'] == b['index'], 'Backgrounding must not advance unseen reveal stages'
+    assert abs(a['sequence_time'] - b['sequence_time']) <= .02, 'Visible-frame summon clock must freeze in background'
+    assert a['transaction_digest'] == b['transaction_digest'] and a['results'] == b['results'], 'Resume must not charge, reroll, or grant twice'
+
+
+def verify_summon_history(state):
+    summon = state['summon']
+    stages = [row['stage'] for row in summon['history']]
+    expected = ['opening', 'constellation', 'seal', 'unseal']
+    if summon['rarity'] == 5:
+        expected.append('legendary')
+    expected += ['portrait', 'result']
+    assert stages == expected, ('Actual single reveal omitted/reordered a stage', stages, expected)
+    assert summon['ready_frames'] >= 2 and summon['sequence_time'] >= 3.7, 'Rendering must actually progress through the visible-frame reveal clock'
+
+
+def summon_input_flow(state, component, output):
+    state = visit(state, 'summon')
+    before = state
+    tap(state, 'SummonPull_1', settle=.05)
+    state = wait_for(lambda q: q.get('summon', {}).get('active') and q['summon']['stage'] != 'preparing', 'actual single summon begins')
+    verify_summon_commit(before, state, 1)
+    committed = state['summon']['transaction_digest']
+    adb('shell', 'input', 'keyevent', 'KEYCODE_HOME')
+    paused = wait_probe_event(state['seq'], 'paused')
+    wait_for_completed_background(output)
+    adb('shell', 'am', 'start', '-W', '-n', component)
+    resumed = wait_probe_event(paused['seq'], 'resumed')
+    verify_summon_pause(paused, resumed)
+    assert paused['summon']['stage'] not in ('preparing', 'result', 'summary'), 'Pause coverage must interrupt a real moving reveal phase, not an idle result'
+    screenshot(output, 'summon-resumed-reveal-frame', True)
+    state = wait_for(lambda q: q.get('summon', {}).get('stage') == 'result', 'actual full single reveal sequence', 45)
+    verify_summon_history(state)
+    assert state['summon']['transaction_digest'] == committed, 'Animation must never repeat the pull transaction'
+    screenshot(output, 'summon-single-full-result', True)
+    (output / 'summon-single-lifecycle.json').write_text(json.dumps({'before': before['summon'], 'paused': paused['summon'], 'resumed': resumed['summon'], 'result': state['summon']}, indent=2))
+    tap(state, 'SummonSkip')
+    state = wait_for(lambda q: q.get('summon', {}).get('stage') == 'summary' and q['summon'].get('visible_cards') == 1, 'single summary fully visible')
+    tap(state, 'SummonAccept')
+    state = wait_for(lambda q: q['screen'] == 'summon' and not q.get('summon', {}).get('active'), 'accept actual single result')
+    assert state['summon']['transaction_digest'] == committed, 'Accept must not duplicate any reward'
+    # This game's recharge button calls only the local simulated purchase model,
+    # not a payment service. Buy the actual visible 60-diamond virtual supply.
+    if state['summon']['diamonds'] < 1600:
+        state = visit(state, 'shop')
+        while state['summon']['diamonds'] < 1600:
+            old = state['summon']['diamonds']
+            tap_page(state, 'ShopPurchase_recharge_traveler')
+            state = wait_for(lambda q: q['summon']['diamonds'] == old + 60, 'actual virtual supply credits sixty diamonds')
+        state = visit(state, 'summon')
+    before_ten = state
+    tap(state, 'SummonPull_10', settle=.05)
+    state = wait_for(lambda q: q.get('summon', {}).get('active') and q['summon'].get('sequence_time', 0) >= .65, 'actual ten-pull opening')
+    verify_summon_commit(before_ten, state, 10)
+    committed_ten = state['summon']['transaction_digest']
+    tap(state, 'SummonSkip')
+    state = wait_for(lambda q: q.get('summon', {}).get('stage') == 'summary' and q['summon'].get('visible_cards') == 10, 'ten real results revealed after skip')
+    assert state['summon']['transaction_digest'] == committed_ten, 'Skip must not charge or reroll ten-pull results'
+    screenshot(output, 'summon-ten-skip-summary', True)
+    (output / 'summon-ten-transaction.json').write_text(json.dumps({'before': before_ten['summon'], 'summary': state['summon']}, indent=2))
+    tap(state, 'SummonAccept')
+    state = wait_for(lambda q: q['screen'] == 'summon' and not q.get('summon', {}).get('active'), 'accept ten results')
+    assert state['summon']['transaction_digest'] == committed_ten, 'Ten-pull accept must preserve exact transaction'
+    return visit(state, 'home')
+
+
+def relic_input_flow(state, output):
+    state = visit(state, 'growth')
+    tap_page(state, 'GrowthSelect_zeph')
+    state = wait_for(lambda q: any(b['name'] == 'CharacterRecommendedRelics' for b in q['buttons']), 'owned character recommendation entry')
+    tap_page(state, 'CharacterRecommendedRelics')
+    state = wait_for(lambda q: q.get('relics', {}).get('recommendations_visible'), 'actual character set recommendations')
+    choices = [b for b in state['buttons'] if b['name'].startswith('CharacterSetTarget_')]
+    assert choices, 'Actual character guidance must expose another target set'
+    target_name = choices[0]['name']
+    target_id = target_name.removeprefix('CharacterSetTarget_')
+    tap_overlay(state, target_name)
+    state = wait_for(lambda q: q['relics']['target']['targetSetId'] == target_id and q['relics']['recommendations_visible'], 'recommendation selects actual abyss target')
+    assert any(a['set_id'] == target_id and a['resource'].endswith('.tres') and inside(a['rect'], a['clip']) for a in state['relics']['art']), 'Visible recommendation must load its real set artwork'
+    screenshot(output, 'character-set-recommendations', True)
+    (output / 'character-set-target.json').write_text(json.dumps(state['relics'], indent=2))
+    tap_overlay(state, 'CharacterRecommendationsAbyss')
+    state = wait_for(lambda q: q['screen'] == 'abyss' and q['overlay'] == 0, 'recommendation opens abyss')
+    assert state['relics']['target']['targetSetId'] == target_id, 'Chosen target must survive actual navigation'
+    tap_page(state, 'AbyssChooseRelicSet')
+    state = wait_for(lambda q: any(b['name'] == 'AbyssSetPickerClose' for b in q['buttons']), 'actual set-picker modal')
+    screenshot(output, 'abyss-set-picker', True)
+    tap_overlay(state, 'AbyssSetPickerClose')
+    state = wait_for(lambda q: q['overlay'] == 0, 'set-picker closes')
+    state = visit(state, 'story')
+    old_ids = {item['uid'] for item in state['relics']['inventory']}
+    tap_page(state, 'StageCard_ch1_1')
+    state = wait_for(lambda q: any(b['name'] == 'StoryEnter' for b in q['buttons']), 'actual first story stage selection')
+    tap_page(state, 'StoryEnter')
+    state = wait_for(lambda q: q['screen'] == 'battle' or any(b['name'] == 'DialogueSkip' for b in q['buttons']), 'actual prebattle story or combat')
+    if state['screen'] != 'battle':
+        tap(state, 'DialogueSkip')
+        state = wait_for(lambda q: q['screen'] == 'battle', 'story dialogue starts real combat')
+    if not state['battle_state']['auto']:
+        tap(state, 'BattleAutoToggle')
+    state = wait_for(lambda q: q['battle_state']['phase'] in ('victory', 'defeat') and any(b['name'] == 'BattleSettlementContinue' for b in q['buttons']), 'real story battle settles earned relic', 180)
+    assert state['battle_state']['phase'] == 'victory', 'Actual story defeat cannot be replaced with a granted relic'
+    earned = [item for item in state['relics']['inventory'] if item['uid'] not in old_ids]
+    assert len(earned) == 1 and state['relics']['inventory_count'] == len(old_ids) + 1, 'Real story win must award exactly one new relic UID'
+    screenshot(output, 'story-earned-relic', True)
+    tap_overlay(state, 'BattleSettlementContinue')
+    state = wait_for(lambda q: q['screen'] == 'story' or any(b['name'] == 'DialogueSkip' for b in q['buttons']), 'story settlement continues')
+    if any(b['name'] == 'DialogueSkip' for b in state['buttons']):
+        tap(state, 'DialogueSkip')
+        state = wait_for(lambda q: q['screen'] == 'story' and q['overlay'] == 0, 'actual postbattle dialogue closes')
+    state = visit(state, 'relics')
+    before = state['relics']
+    assert any(a['set_id'] == earned[0].get('setId') and a['resource'].endswith('.tres') and inside(a['rect'], a['clip']) for a in before['art']), 'Earned set relic must show its real texture in the inventory'
+    screenshot(output, 'relic-earned-set-art', True)
+    tap_page(state, 'RelicAutoEquip')
+    state = wait_for(lambda q: bool(q.get('relics', {}).get('displayed_plan', {}).get('after')), 'actual optimizer displays a real plan', 60)
+    plan = state['relics']['displayed_plan']
+    assert plan.get('success', True), 'Actual optimizer preview cannot silently fail'
+    assert state['relics']['inventory_digest'] == before['inventory_digest'] and state['relics']['equipped'] == before['equipped'], 'Preview must never apply equipment implicitly'
+    screenshot(output, 'relic-actual-optimizer-preview', True)
+    (output / 'relic-earned-preview.json').write_text(json.dumps({'earned': earned, 'preview': plan, 'before': before}, indent=2))
+    tap_overlay(state, 'RelicLoadoutCancel')
+    state = wait_for(lambda q: q['screen'] == 'relics' and q['overlay'] == 0, 'optimizer actual cancellation')
+    assert state['relics']['inventory_digest'] == before['inventory_digest'] and state['relics']['equipped'] == before['equipped'], 'Cancel preserves exact owned relics and all character equipment'
+    return visit(state, 'home')
 
 
 def settle_android_configuration(output):
@@ -766,6 +1051,8 @@ def run(apk, output):
         state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, page + ' Android Back')
     search_background={"covered":False,"attempts":0,"reason":"No natural long scan with a safe remaining interval was observed"}
     state = extraction_flow(state, output, component, search_background)
+    state = summon_input_flow(state, component, output)
+    state = relic_input_flow(state, output)
     (output/"search-background.json").write_text(json.dumps(search_background,indent=2))
     adb('shell', 'settings', 'put', 'system', 'user_rotation', '1')
     adb('emu', 'sensor', 'set', 'acceleration', '9.8:0:0')
@@ -796,7 +1083,7 @@ def run(apk, output):
     logs = adb('logcat', '-d', '-v', 'threadtime')
     errors = [line for line in logs.splitlines() if re.search(r'SCRIPT ERROR|Parse Error|FATAL EXCEPTION|Fatal signal|ANR in ' + re.escape(PACKAGE), line) or ('godot' in line.lower() and re.search(r'\bERROR:', line))]
     assert not errors, '\n'.join(errors)
-    (output / 'result.json').write_text(json.dumps({'passed': True, 'search_background': search_background, 'android_api': adb('shell', 'getprop', 'ro.build.version.sdk').strip(), 'abi': adb('shell', 'getprop', 'ro.product.cpu.abi').strip(), 'pages': pages, 'checks': ['landscape launch while system portrait', 'all menu tabs by touch', 'scrolling where content exceeds viewport', 'Android Back', 'landscape adaptation', 'background/resume', 'extraction map drag/connected navigation/scene-container auto-search/auto-pickup/room and bag persistence', 'Android download bridge capability (no download/install)', 'runtime error log']}, indent=2))
+    (output / 'result.json').write_text(json.dumps({'passed': True, 'search_background': search_background, 'android_api': adb('shell', 'getprop', 'ro.build.version.sdk').strip(), 'abi': adb('shell', 'getprop', 'ro.product.cpu.abi').strip(), 'pages': pages, 'checks': ['landscape launch while system portrait', 'all menu tabs by touch', 'scrolling where content exceeds viewport', 'Android Back', 'landscape adaptation', 'background/resume', 'extraction map drag/connected navigation/scene-container auto-search/auto-pickup/room and bag persistence', 'Android download bridge capability (no download/install)', 'single summon rendered stage history/frame clock/native pause-resume/exact transaction', 'ten summon real virtual-supply purchase/skip/ten visible cards/no duplicate rewards', 'character recommendations/abyss target/real story-earned relic/art/optimizer preview cancellation', 'completed room auto-return preserves exact loot and remaining interactions', 'runtime error log']}, indent=2))
     print('ANDROID RUNTIME SMOKE PASSED')
 
 

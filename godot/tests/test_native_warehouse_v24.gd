@@ -68,5 +68,26 @@ func run()->void:
 	await frames()
 	print("V24_VERTICAL_SCROLL_TOUCH touch=",grid._touch_id," pressed=",grid._pressed," selected=",chosen)
 	check(chosen==[medicine.uid],"first finger tap after scrolling over inventory selects immediately")
+	await click(target("ExtractionBring_"+str(medicine.uid)))
+	check(app._probe_extraction().loadout_ids.has(medicine.uid),"actual carry action retains purchased UID in departure supplies")
+	check(not probe().items.any(func(item):return item.uid==medicine.uid),"carried medicine leaves warehouse once")
+	await click(target("ExtractionTab_expedition"));await click(target("ExtractionStart"))
+	var cache_id:=""
+	for room in app.model.extraction.route_options():
+		if room.type=="cache":cache_id=str(room.id);break
+	check(not cache_id.is_empty(),"natural native route has a reachable ordinary cache")
+	var map=target("ExtractionMap")
+	await click_at(map.global_position+map.room_point(cache_id))
+	map=target("ExtractionMap")
+	await click_at(map.global_position+map.room_point(cache_id))
+	check(app.model.extraction.run().phase=="room","real map taps enter natural cache")
+	await click(target("ExtractionQuickSupplies"))
+	for locked in [true,false,true]:
+		await click(target("ExtractionSupplyLock_"+str(medicine.uid)))
+		var supplies:Array=app._probe_extraction().supplies
+		check(supplies.any(func(item):return item.uid==medicine.uid and item.exchange_locked==locked),"read-only probe observes actual lock tap on same purchased UID")
+	await click(target("ExtractionSupplyClose"));await click(target("ExtractionQuickSupplies"))
+	check(target("ExtractionSupplyLock_"+str(medicine.uid)).get_meta("exchange_locked",false),"exact lock persists across reopening actual supplies modal")
+	await click(target("ExtractionSupplyClose"))
 	app.queue_free();await frames();await create_timer(.3).timeout
 	print("NATIVE WAREHOUSE V24: %d checks, %d failures"%[checks,failures]);quit(1 if failures else 0)

@@ -253,13 +253,15 @@ func run() -> void:
 	check(left.items.size()==container_count,"unfitted items remain in container")
 	for item in left.items:check(item.revealed,"full bag still reveals item safely")
 	press("ExtractionCloseContainer");await frames()
-	# Deterministic UI swap fixture: preserve gear/medicine, exclude hidden loot.
+	# Deterministic UI swap fixture: preserve gear and explicitly locked medicine, exclude hidden loot.
 	check(choose_resource_room(),"smart swap fixture");await frames()
 	var swap_bag: Array=[]
 	for i in range(30):
 		var id:="healer_charm" if i==0 else ("bandage" if i==1 else "wire")
 		var item: Dictionary=app.model.extraction._make_item(id)
-		item.x=i%6;item.y=i/6;item.revealed=true;swap_bag.append(item)
+		item.x=i%6;item.y=i/6;item.revealed=true
+		if id=="bandage":item.exchangeLocked=true
+		swap_bag.append(item)
 	app.model.state.extraction.run.bag=swap_bag
 	first=app.model.extraction.containers()[0]
 	var valuable: Dictionary=app.model.extraction._make_item("diamond_ring")
@@ -289,7 +291,7 @@ func run() -> void:
 	var ids: Array=swapped.map(func(item):return str(item.uid))
 	check(ids.has(valuable.uid),"swap takes valuable item")
 	check(not ids.has(hidden.uid),"swap never takes hidden item")
-	check(ids.has(before_swap[0].uid) and ids.has(before_swap[1].uid),"swap protects equipment and medicine")
+	check(ids.has(before_swap[0].uid) and ids.has(before_swap[1].uid),"swap protects equipment and explicitly locked medicine")
 	var returned: Array=_find_box(str(first.id)).items
 	check(returned.any(func(item):return item.itemId=="wire"),"swapped loot remains recoverable")
 	var old_value:=0;var new_value:=0

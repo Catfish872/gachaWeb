@@ -58,8 +58,9 @@ func test_fixed_budgets() -> void:
    check(m.extraction.start_battle(b).success, "bound actual engine")
    var enemy: Dictionary = b.state.enemies[0]
    var base: Dictionary = m.catalog.EnemyData[enemy.dataId].baseStats
-   check(enemy.maxHp == int(base.hp * a.scaleMult.hpMod), "HP budget applied exactly once")
-   check(enemy.stats.atk == int(base.atk * a.scaleMult.atkMod), "attack budget applied exactly once")
+   var final_boss_factor := 1.15 if act == 3 and enemy.isBoss else 1.0
+   check(enemy.maxHp == int(base.hp * a.scaleMult.hpMod * final_boss_factor), "HP budget and final boss factor applied exactly once")
+   check(enemy.stats.atk == int(base.atk * a.scaleMult.atkMod * final_boss_factor), "attack budget and final boss factor applied exactly once")
    check(enemy.stats.spd <= 145, "enemy speed remains bounded")
   m.extraction.retreat()
   adult.extraction.retreat()

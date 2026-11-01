@@ -1,0 +1,91 @@
+{
+  "status": "resolved_and_verified",
+  "optimizer_sha256": "5cb2805c9c007de78fde2741768ad3dac91adaa65eb6fe339d619ee47c603a1b",
+  "battle_sha256": "814925778c78fc3a0dc9df38f02dbb5440c0d8ea39bc093db34705c20d8e73ee",
+  "checks": {
+    "independent_review": 6578,
+    "official_optimizer": 398,
+    "live_battle_reference": 37,
+    "personal_set_battle": 685,
+    "total": 7698
+  },
+  "independent_bound_checks": {
+    "leaves": 6075,
+    "internal_boxes": 400,
+    "minimum_upper_minus_actual": 0.0
+  },
+  "resolved_findings": [
+    {
+      "id": "minimum_one_floor",
+      "fixture": "probe.gd",
+      "before": {
+        "actual": 6.0,
+        "upper": 1.08253014154
+      },
+      "resolution": "shared raw-formula floor safety check; exact Bellman fallback"
+    },
+    {
+      "id": "future_passive_cache",
+      "fixture": "edge_probe.gd",
+      "before": {
+        "actual": 1937.0,
+        "upper": 1732.38115857784
+      },
+      "resolution": "passive-based source and critical-energy dependency keys"
+    },
+    {
+      "id": "future_skill_order",
+      "fixture": "edge_probe.gd",
+      "before": {
+        "actual": 1260.0,
+        "objective": 280.0
+      },
+      "resolution": "explicit live auto skill-type priority"
+    },
+    {
+      "id": "future_shield_source",
+      "fixture": "future_shield_probe.gd",
+      "before": {
+        "actual": 11397.0588235294,
+        "cached": 5269.60784313726
+      },
+      "resolution": "survival source dimensions and cache dependencies derive from shield declaration"
+    },
+    {
+      "id": "real_integer_domain",
+      "fixture": "overflow_probe.gd",
+      "before": {
+        "oracle_at_least": 4411.35,
+        "certified_score": 541.35
+      },
+      "resolution": "unsupported numeric proof domain returns error, prevents application and certification; old formulas retained"
+    },
+    {
+      "id": "artificial_normalizer_domain",
+      "fixture": "normalizer_probe.gd",
+      "before": {
+        "actual": 451500000000000.0,
+        "upper": 1535100.00000365
+      },
+      "resolution": "normalizer arithmetic guard; exact Bellman fallback"
+    },
+    {
+      "id": "floating_cache_and_fingerprint",
+      "fixture": "precision_probe.gd",
+      "before": {
+        "actual": 648.0,
+        "cached": 541.35
+      },
+      "resolution": "lossless Variant-byte cache and canonical fingerprint encoding"
+    },
+    {
+      "id": "status_modified_speed_dependency",
+      "fixture": "status_speed_probe.gd",
+      "before": {
+        "actual": 480.36,
+        "cached": 419.76
+      },
+      "resolution": "retain original speed and delegate conditional evaluation to shared battle helpers"
+    }
+  ]
+}

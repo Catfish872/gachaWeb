@@ -14,7 +14,7 @@ func run() -> void:
 		if room.id==x.run().room.id:room.type="relay"
 	x.run().bag=[]
 	var original_ids:Array=[]
-	for i in 5:
+	for i in 26:
 		var item:Dictionary=x._make_item("diamond_ring");item.revealed=true
 		x._place(x.run().bag,item,x.dimensions("bag"));original_ids.append(item.uid)
 	app.model.state.resources.gold=10000
@@ -24,17 +24,18 @@ func run() -> void:
 	var grid=target("ExtractionDepositBag")
 	for item in grid.items:
 		await click_at(grid.global_position+grid.item_rect(item).get_center())
-	check(target("ExtractionDepositConfirm").disabled,"five one-cell items cannot fit 2x2 and confirmation is disabled")
-	check(x.run().bag.size()==5,"over-limit manual selection transfers nothing")
+	check(target("ExtractionDepositConfirm").disabled,"twenty-six one-cell items cannot fit 5x5 and confirmation is disabled")
+	check(x.run().bag.size()==26,"over-limit manual selection transfers nothing")
 	await capture("deposit-over-limit")
-	var omitted:Dictionary=grid.items[4]
+	var omitted:Dictionary=grid.items[25]
 	await click_at(grid.global_position+grid.item_rect(omitted).get_center())
-	check(not target("ExtractionDepositConfirm").disabled,"deselecting fifth item enables valid four-cell deposit")
+	check(not target("ExtractionDepositConfirm").disabled,"deselecting twenty-sixth item enables valid twenty-five-cell deposit")
 	var plan:Dictionary=app.overlay.get_meta("deposit_plan")
 	var chosen:Array=plan.uids.duplicate()
-	check(chosen.size()==4 and not chosen.has(omitted.uid),"preview follows exact manually selected UIDs")
+	check(int(plan.width)==5 and int(plan.height)==5,"actual quoted parcel is five by five physical cells")
+	check(chosen.size()==25 and not chosen.has(omitted.uid),"preview follows exact manually selected UIDs")
 	var preview=target("ExtractionGrid_deposit")
-	check(preview!=null and preview.items.size()==4,"preview renders all four selected instances")
+	check(preview!=null and preview.items.size()==25,"preview renders all twenty-five selected instances")
 	if preview!=null:
 		for i in preview.items.size():
 			check(preview.textures.has(str(preview.items[i].itemId)),"preview UID has a loaded icon")

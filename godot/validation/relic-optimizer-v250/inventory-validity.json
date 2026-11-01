@@ -1,0 +1,18 @@
+[
+	{
+		"inventory": 100,
+		"validSave": true
+	},
+	{
+		"inventory": 500,
+		"validSave": true
+	},
+	{
+		"inventory": 2000,
+		"validSave": true
+	},
+	{
+		"inventory": 100000,
+		"validSave": true
+	}
+]

@@ -35,13 +35,13 @@ func _init():
 	g.save_blocked=false;var gold:int=g.state.resources.gold;var diamonds:int=g.state.resources.diamonds
 	var r:Dictionary=g.finish_battle(prep.config,result_state)
 	ck(r.success and r.rewards.gold==0 and g.state.resources.gold==gold,"abyss no direct gold")
-	ck(r.dailyAward.amount==675 and g.state.resources.diamonds==diamonds+675,"first milestone grant")
+	ck(r.dailyAward.amount==900 and g.state.resources.diamonds==diamonds+900,"first milestone grant")
 	ck(not r.relic.is_empty() and g.get_relic(r.relic.uid)==r.relic and not r.progression.is_empty(),"actual relic and progression returned")
 	ck(not g.finish_battle(prep.config,result_state).success,"settlement replay blocked")
 	prep=at_floor(g,10);r=g.finish_battle(prep.config,won_state(g,prep.config))
 	ck(r.dailyAward.amount==0 and not r.relic.is_empty() and r.rewards.exp>0,"repeat retains XP relic not daily diamonds")
 	prep=at_floor(g,10,2);r=g.finish_battle(prep.config,won_state(g,prep.config))
-	ck(r.dailyAward.amount==675 and r.dailyAward.totalPaid==1350,"higher difficulty difference only")
+	ck(r.dailyAward.amount==900 and r.dailyAward.totalPaid==1800,"higher difficulty difference only")
 	prep=at_floor(g,10,0);r=g.finish_battle(prep.config,won_state(g,prep.config))
 	ck(r.dailyAward.amount==0,"lower difficulty cannot claim again")
 	var day:int=g.abyss_daily_status().dayKey
@@ -50,7 +50,7 @@ func _init():
 	g.clock_ms+=1
 	ck(g.abyss_daily_status().dayKey==day+1 and g.abyss_daily_status().paidToday==0,"exact reset boundary")
 	prep=at_floor(g,10);r=g.finish_battle(prep.config,won_state(g,prep.config))
-	ck(r.dailyAward.amount==675,"new day eligible")
+	ck(r.dailyAward.amount==900,"new day eligible")
 	g.clock_ms-=86400000
 	prep=at_floor(g,10);r=g.finish_battle(prep.config,won_state(g,prep.config))
 	ck(r.dailyAward.amount==0 and g.abyss_daily_status().dayKey==day+1,"clock rollback cannot reset claims")
@@ -58,8 +58,8 @@ func _init():
 	ck(r.success and not r.ended and g.state.abyss.currentFloor==21 and g.abyss_run_active(),"twenty continues no hard ending")
 	ck(g.state.abyss.meta.unlockedDifficulty>=1 and g.valid_save(g.state),"milestone unlock persists valid")
 	prep=at_floor(g,50);r=g.finish_battle(prep.config,won_state(g,prep.config))
-	ck(r.success and g.state.abyss.currentFloor==51 and g.valid_save(g.state),"fifty is not cap")
-	prep=at_floor(g,10010)
+	ck(r.success and r.ended and g.state.abyss.currentFloor==1 and g.valid_save(g.state),"fifty completes bounded expedition")
+	prep=at_floor(g,10010,3)
 	ck(prep.success and g.valid_save(g.state),"five digit floors valid")
 	ck(Balance.scale(10020).hpMod>Balance.scale(10010).hpMod,"no old 10000 curve plateau")
 	ck(g.abyss_route_preview().size()==10 and g.abyss_route_preview()[0].floor==10008,"bounded preview of endless route")
@@ -85,15 +85,15 @@ func _init():
 	ck(g.relic_sell_value(g.state.relics[0])==1012,"new upgrade adds new refund only")
 	var fresh:Dictionary=g.generate_relic(5,"helmet");fresh.level=10
 	ck(g.relic_sell_value(fresh)==600,"new relic sixty percent resale")
-	# Full blessing inventory must resolve to an explicit supply/continue choice.
+	# Owning three copies of every blessing still offers normal future growth.
 	g=ClockGame.new("");g.prepare_abyss()
 	g.state.abyss.rogue.selectedRewards=[]
 	for definition in g.catalog.AbyssData.rogue.rewards:
 		for n in range(3):g.state.abyss.rogue.selectedRewards.append(definition.duplicate(true))
 	g._set_after_floor(30)
-	ck(g.state.abyss.rogue.pendingChoices.is_empty() and g.node_options().options.size()==2,"exhausted blessings have explicit alternative")
-	var coins:int=g.state.abyss.rogue.temporaryCurrency
-	ck(g.choose_abyss_node("echo_supply").success and g.state.abyss.rogue.temporaryCurrency==coins+50,"supply resolves exhausted pool")
+	ck(g.state.abyss.rogue.pendingChoices.size()==3,"existing stacks keep ordinary blessing choices available")
+	var count_before:int=g.state.abyss.rogue.selectedRewards.size()
+	ck(g.choose_abyss_reward(g.state.abyss.rogue.pendingChoices[0].choiceId).success and g.state.abyss.rogue.selectedRewards.size()==count_before+1,"fourth copy remains attainable")
 	# A real v8 persisted floor20 battle keeps its token/enemies but settles under
 	# the new reward rules and continues instead of silently terminating.
 	var fixture:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/abyss-v8-floor20.json"))

@@ -1,0 +1,233 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: five distinct random events are shipped
+PASS: three explicit choices in blood_altar
+PASS: visible cost, risk, outcome: blood_altar/sacrifice
+PASS: visible cost, risk, outcome: blood_altar/offering
+PASS: visible cost, risk, outcome: blood_altar/leave
+PASS: three explicit choices in lost_caravan
+PASS: visible cost, risk, outcome: lost_caravan/escort
+PASS: visible cost, risk, outcome: lost_caravan/salvage
+PASS: visible cost, risk, outcome: lost_caravan/share
+PASS: three explicit choices in rift_well
+PASS: visible cost, risk, outcome: rift_well/gamble
+PASS: visible cost, risk, outcome: rift_well/listen
+PASS: visible cost, risk, outcome: rift_well/study
+PASS: three explicit choices in abandoned_cache
+PASS: visible cost, risk, outcome: abandoned_cache/supplies
+PASS: visible cost, risk, outcome: abandoned_cache/medicine
+PASS: visible cost, risk, outcome: abandoned_cache/research
+PASS: three explicit choices in ancient_forge
+PASS: visible cost, risk, outcome: ancient_forge/forge
+PASS: visible cost, risk, outcome: ancient_forge/overload
+PASS: visible cost, risk, outcome: ancient_forge/collect
+PASS: HP sacrifice disabled while any hero is down
+PASS: unpayable event leaves every state field intact
+PASS: payable sacrifice gives blessing
+PASS: sacrifice charges exact 20% maximum HP per hero
+PASS: sacrifice grants promised rarity
+PASS: resolved event opens next combat
+PASS: event cannot pay twice
+PASS: advertised winning gamble spends35 and returns95
+PASS: advertised losing gamble spends35 and returns10
+PASS: event permanent reward banks immediately
+PASS: retreat retains event meta while clearing temporary money
+PASS: camp exposes three distinct decisions
+PASS: camp decision gates combat
+PASS: rest recovery resolves
+PASS: camp heals survivors and revives fallen allies at35%
+PASS: meditation resolves
+PASS: meditation adds40 energy and clears cooldown
+PASS: shop holds three blessings and two limited supplies
+PASS: shop remains a mandatory leave decision
+PASS: healing purchase costs70 run coins
+PASS: sold item cannot be purchased twice
+PASS: shop blessing purchase succeeds
+PASS: shop blessing is attached to current build
+PASS: leaving clears the shop inventory
+PASS: shop exit cannot replay
+PASS: branch gives two choices and blocks skipping
+PASS: branch can choose a safe camp instead of the rolled event
+PASS: event route reveals three canonical options
+PASS: live event state round-trips through save validation
+PASS: existing three copies remain eligible for unlimited future draws
+PASS: bounded meta rank purchased vitality
+PASS: bounded meta rank purchased vitality
+PASS: bounded meta rank purchased vitality
+PASS: bounded meta rank purchased vitality
+PASS: bounded meta rank purchased vitality
+PASS: meta cap enforced vitality
+PASS: bounded meta rank purchased offense
+PASS: bounded meta rank purchased offense
+PASS: bounded meta rank purchased offense
+PASS: bounded meta rank purchased offense
+PASS: bounded meta rank purchased offense
+PASS: meta cap enforced offense
+PASS: bounded meta rank purchased recovery
+PASS: bounded meta rank purchased recovery
+PASS: bounded meta rank purchased recovery
+PASS: bounded meta rank purchased recovery
+PASS: meta cap enforced recovery
+PASS: bounded meta rank purchased supply
+PASS: bounded meta rank purchased supply
+PASS: bounded meta rank purchased supply
+PASS: meta cap enforced supply
+PASS: meta never changes base or story computed stats
+PASS: fully upgraded supply starts run with75 coins
+PASS: full permanent stats remain capped15% attack20% HP6% recovery
+PASS: camp save failure rolls back HP and node state
+PASS: shop save failure rolls back money, stock and healing
+PASS: meta save failure rolls back cost and rank
+PASS: 20-floor run starts encounter 1
+PASS: mature test squad clears encounter 1
+PASS: 20-floor run settles encounter 1
+PASS: run save validates after floor 1
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 2
+PASS: mature test squad clears encounter 2
+PASS: 20-floor run settles encounter 2
+PASS: run save validates after floor 2
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 3
+PASS: mature test squad clears encounter 3
+PASS: 20-floor run settles encounter 3
+PASS: run save validates after floor 3
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 4
+PASS: mature test squad clears encounter 4
+PASS: 20-floor run settles encounter 4
+PASS: run save validates after floor 4
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 5
+PASS: mature test squad clears encounter 5
+PASS: 20-floor run settles encounter 5
+PASS: run save validates after floor 5
+PASS: pending shop blocks floor skip
+PASS: resolved shop state remains valid
+PASS: 20-floor run starts encounter 6
+PASS: mature test squad clears encounter 6
+PASS: 20-floor run settles encounter 6
+PASS: run save validates after floor 6
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 7
+PASS: mature test squad clears encounter 7
+PASS: 20-floor run settles encounter 7
+PASS: run save validates after floor 7
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 8
+PASS: mature test squad clears encounter 8
+PASS: 20-floor run settles encounter 8
+PASS: run save validates after floor 8
+PASS: pending rest blocks floor skip
+PASS: resolved rest state remains valid
+PASS: 20-floor run starts encounter 9
+PASS: mature test squad clears encounter 9
+PASS: 20-floor run settles encounter 9
+PASS: run save validates after floor 9
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 10
+PASS: mature test squad clears encounter 10
+PASS: 20-floor run settles encounter 10
+PASS: run save validates after floor 10
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 11
+PASS: mature test squad clears encounter 11
+PASS: 20-floor run settles encounter 11
+PASS: run save validates after floor 11
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 12
+PASS: mature test squad clears encounter 12
+PASS: 20-floor run settles encounter 12
+PASS: run save validates after floor 12
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 13
+PASS: mature test squad clears encounter 13
+PASS: 20-floor run settles encounter 13
+PASS: run save validates after floor 13
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 14
+PASS: mature test squad clears encounter 14
+PASS: 20-floor run settles encounter 14
+PASS: run save validates after floor 14
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 15
+PASS: mature test squad clears encounter 15
+PASS: 20-floor run settles encounter 15
+PASS: run save validates after floor 15
+PASS: pending shop blocks floor skip
+PASS: resolved shop state remains valid
+PASS: 20-floor run starts encounter 16
+PASS: mature test squad clears encounter 16
+PASS: 20-floor run settles encounter 16
+PASS: run save validates after floor 16
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 17
+PASS: mature test squad clears encounter 17
+PASS: 20-floor run settles encounter 17
+PASS: run save validates after floor 17
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 18
+PASS: mature test squad clears encounter 18
+PASS: 20-floor run settles encounter 18
+PASS: run save validates after floor 18
+PASS: pending rest blocks floor skip
+PASS: resolved rest state remains valid
+PASS: 20-floor run starts encounter 19
+PASS: mature test squad clears encounter 19
+PASS: 20-floor run settles encounter 19
+PASS: run save validates after floor 19
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 20
+PASS: mature test squad clears encounter 20
+PASS: 20-floor run settles encounter 20
+PASS: run save validates after floor 20
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: floor20 continues to21
+PASS: continuing retains earned build
+PASS: player can end endless expedition
+PASS: retreat preserves20-floor record without counting completion
+PASS: run payouts and completion bonus are permanently banked
+PASS: full expedition includes numerous resolved route encounters
+PASS: voluntary end clears temporary blessings and coins
+PASS: normal clear unlocks rank1 while retaining selected rank
+PASS: rank2 requires rank1 completion
+PASS: unlocked rank1 can be selected between runs
+PASS: rank snapshots into persisted encounter and expedition
+PASS: difficulty cannot change during an active expedition
+PASS: rank1 gives advertised25% permanent reward bonus
+PASS: ranked expedition save validates
+PASS: rank above3 is rejected by import validation
+PASS: locked chosen rank is rejected by import validation
+PASS: clearing rank1 unlocks rank2 and records rank
+PASS: difficulty unlocks remain bounded at rank3
+V2 PROGRESSION TESTS: 230 passed, 0 failed

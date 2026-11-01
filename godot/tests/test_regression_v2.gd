@@ -222,7 +222,7 @@ func test_save_validation() -> void:
 	invalid = active_base.duplicate(true)
 	for index in range(15):
 		invalid.abyss.rogue.selectedRewards.append(active.catalog.AbyssData.rogue.rewards[0].duplicate(true))
-	check(not active.valid_save(invalid), "import cannot exceed a blessing stack limit")
+	check(active.valid_save(invalid), "import preserves legitimate repeated blessing stacks without a growth cap")
 
 func resolve_pending(model, visited: Dictionary) -> bool:
 	for guard in range(5):
@@ -267,7 +267,7 @@ func resolve_pending(model, visited: Dictionary) -> bool:
 			var restored = Game.new(model.save_dir)
 			check(restored.state.abyss.rogue.shopStock == model.state.abyss.rogue.shopStock, "shop stock persists without reload reroll")
 			check(not model.purchase_abyss_item("missing-item").get("success", true) and snapshot(model) == before, "unknown shop item cannot spend currency")
-			if int(model.state.abyss.rogue.temporaryCurrency) >= 35:
+			if int(model.state.abyss.rogue.temporaryCurrency) >= 70:
 				model.state.abyss.savedPartyState[0].currentHp = 0
 				model.state.abyss.savedPartyState[1].currentHp = int(model.state.abyss.savedPartyState[1].maxHp / 2)
 				model.save_game()
@@ -277,7 +277,7 @@ func resolve_pending(model, visited: Dictionary) -> bool:
 				model.save_blocked = false
 				var coins := int(model.state.abyss.rogue.temporaryCurrency)
 				check(model.purchase_abyss_item("heal").get("success", false), "healing supply purchase succeeds")
-				check(int(model.state.abyss.rogue.temporaryCurrency) == coins - 35 and int(model.state.abyss.savedPartyState[0].currentHp) > 0, "healing supply pays exact price and revives fallen ally")
+				check(int(model.state.abyss.rogue.temporaryCurrency) == coins - 70 and int(model.state.abyss.savedPartyState[0].currentHp) > 0, "healing supply pays exact price and revives fallen ally")
 				before = snapshot(model)
 				check(not model.purchase_abyss_item("heal").get("success", true) and snapshot(model) == before, "sold shop item cannot be repurchased")
 				restored = Game.new(model.save_dir)
@@ -315,7 +315,7 @@ func test_complete_node_journey() -> void:
 	for kind in ["reward", "route", "event", "rest", "shop"]:
 		check(visited.has(kind), "full journey exercises " + kind)
 	check(model.abyss_run_active() and int(model.state.abyss.currentFloor) == 21, "twentieth boss keeps endless run active at twenty-one")
-	check(int(model.state.abyss.meta.runsCompleted) == 1 and int(model.state.abyss.meta.currency) > 0, "completed expedition records completion and retains earned progression")
+	check(int(model.state.abyss.meta.runsCompleted) == 0 and int(model.state.abyss.meta.currency) > 0, "twenty-floor milestone retains progression before fifty-floor completion")
 	check(int(model.state.abyss.meta.unlockedDifficulty) == 1, "first completion unlocks exactly the next difficulty")
 	check(int(model.state.abyss.rogue.temporaryCurrency) > 0 and not model.state.abyss.rogue.selectedRewards.is_empty(), "continuing expedition retains temporary currency and earned blessings")
 	var before := snapshot(model)

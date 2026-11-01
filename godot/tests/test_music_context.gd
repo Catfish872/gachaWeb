@@ -13,8 +13,19 @@ func run():
  var hub=app.music_audio
  for page in ['party','growth','relics','shop','save','summon']:
   app.current_screen=page;app._sync_music();ck(app.music_audio==hub,'hub functional visit preserves same player '+page)
+ app.current_screen='story';app._sync_music()
+ var story=app.music_audio
+ story.seek(8.0)
+ app.current_screen='extraction';app._sync_music()
+ ck(app.music_audio==story and app.music_audio.get_meta('track')=='medieval_exploration','expedition preparation shares story score and player')
+ ck(story.get_playback_position()>=7.9,'story to preparation preserves playback cursor')
+ for page in ['shop','save','relics','party']:
+  app.current_screen=page;app._sync_music();ck(app.music_audio==story,'preparation auxiliary visit keeps story score '+page)
  app.current_screen='extraction';app.model.extraction.start_run(0);app._sync_music()
  var exploration=app.music_audio
+ app.current_screen='abyss';app.model.state.abyss.currentFloor=1;app._sync_music()
+ ck(app.music_audio==exploration,'first expedition act shares abyss entry score')
+ app.current_screen='extraction';app._sync_music()
  for kind in ['rest','vault','key_vault','shrine','cache']:
   app.model.state.extraction.run.room={'type':kind,'districtId':'none'}
   app._sync_music();ck(app.music_audio==exploration,'room changes never interrupt same-act music '+kind)
@@ -28,9 +39,17 @@ func run():
  app.current_screen='extraction';app._sync_music()
  ck(app.music_audio==exploration and exploration.get_playback_position()>=11.9,'return resumes existing exploration cursor')
  app.model.extraction.run().act=2;app._sync_music()
- ck(app.music_audio.get_meta('track')=='medieval_exploration','new act may change score')
+ ck(app.music_audio.get_meta('track')=='medieval_exploration','second expedition act keeps its distinct exploration score')
  app.model.extraction.run().act=3;app._sync_music()
- ck(app.music_audio.get_meta('track')=='dungeon_mystic','final act has distinct score')
+ ck(app.music_audio.get_meta('track')=='dungeon_mystic','third expedition act keeps its distinct dungeon score')
+ var deep=app.music_audio
+ deep.seek(9.0)
+ app.current_screen='abyss';app.model.state.abyss.currentFloor=11;app._sync_music()
+ ck(app.music_audio==deep,'third-act and deeper abyss shared track reuses existing player')
+ app.current_screen='extraction';app._sync_music()
+ ck(app.music_audio==deep and deep.get_playback_position()>=8.9,'functional return preserves third-act playback cursor')
+ app.model.extraction.retreat();app._sync_music()
+ ck(app.music_audio==story,'return to expedition preparation restores story music')
  app.current_screen='home';app._sync_music();ck(app.music_audio==hub,'camp returns to original player')
  app.notification(Node.NOTIFICATION_APPLICATION_PAUSED)
  ck(app.get_meta('application_paused',false) and app.music_audio.stream_paused,'pause freezes current music')

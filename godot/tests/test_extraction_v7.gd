@@ -104,23 +104,23 @@ func _init()->void:
 	g.save_blocked=false;var cost:int=x.repair_quote().cost;var gold:int=g.state.resources.gold
 	ck(x.repair_equipment().success and g.state.resources.gold==gold-cost,"proportional repair payment")
 	ck(x.state().utility.armor.condition==1.0,"camp repair full")
-	# Exact deposit optimization: four small 40-value items beat a 100-value 2x2.
+	# Relay 5x5 parcel prioritizes value and verifies all actual occupied cells.
 	ck(x.start_run().success,"deposit run")
 	room(x,"relay");x.run().bag=[]
 	var large:Dictionary=make(x,"vest",100);large.itemId="barrier_module"
 	ck(x._place(x.run().bag,large,x.dimensions("bag")),"large deposit fixture")
-	for i in range(4):ck(x._place(x.run().bag,make(x,"dried_fruit",40),x.dimensions("bag")),"small deposit fixture")
+	for i in range(22):ck(x._place(x.run().bag,make(x,"dried_fruit",40),x.dimensions("bag")),"small deposit fixture")
 	var plan:Dictionary=x.preview_deposit()
-	ck(plan.success and plan.value==160 and plan.items.size()==4,"exact highest total value")
-	for item in plan.items: ck(x._fits(plan.items,item,Vector2i(2,2)),"deposit preview independent nonoverlapping placements")
-	ck(not x.preview_deposit([large.uid,x.run().bag[1].uid]).success,"manual overflow rejected")
+	ck(plan.success and plan.value==940 and plan.items.size()==22,"exact highest total value")
+	for item in plan.items: ck(x._fits(plan.items,item,Vector2i(5,5)),"deposit preview independent nonoverlapping placements")
+	ck(not x.preview_deposit(x.run().bag.map(func(item): return item.uid)).success,"manual overflow rejected")
 	var manual:Dictionary=x.preview_deposit([large.uid])
 	ck(manual.success and manual.value==100,"manual chosen object preview")
 	before=g.state.duplicate(true);g.save_blocked=true
 	ck(not x.deposit_items(plan.planHash).success and g.state==before,"deposit atomic rollback")
 	g.save_blocked=false;gold=g.state.resources.gold
 	ck(x.deposit_items(plan.planHash).success,"deposit exact plan")
-	ck(g.state.resources.gold==gold-plan.fee and x.run().securedValue==160,"deposit fee and banked value")
+	ck(g.state.resources.gold==gold-plan.fee and x.run().securedValue==940,"deposit fee and banked value")
 	ck(not x.deposit_items(plan.planHash).success,"deposit replay rejected")
 	var stashed:int=x.state().stash.size()
 	ck(x.retreat().success and x.state().stash.size()==stashed,"deposit survives retreat exactly once")

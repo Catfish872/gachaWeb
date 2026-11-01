@@ -77,9 +77,9 @@ func test_rest_shop_routes() -> void:
 	model._set_after_floor(5)
 	model.state.abyss.rogue.temporaryCurrency = 1000
 	var items: Array = model.abyss_shop_items()
-	check(items.size() == 4, "shop holds exactly four limited-stock items")
+	check(items.size() == 5, "shop holds three blessings and two limited supplies")
 	check(not model.prepare_abyss().success, "shop remains a mandatory leave decision")
-	check(model.purchase_abyss_item("heal").success and model.state.abyss.rogue.temporaryCurrency == 965, "healing purchase costs35 run coins")
+	check(model.purchase_abyss_item("heal").success and model.state.abyss.rogue.temporaryCurrency == 930, "healing purchase costs70 run coins")
 	var before := JSON.stringify(model.state)
 	check(not model.purchase_abyss_item("heal").success and before == JSON.stringify(model.state), "sold item cannot be purchased twice")
 	var blessing: Dictionary = items[2]
@@ -106,7 +106,7 @@ func test_caps_meta_and_rollback() -> void:
 	var contains := false
 	for available in model._available_abyss_rewards():
 		contains = contains or available.id == reward.id
-	check(not contains, "three copies cap removes blessing from future draws")
+	check(contains, "existing three copies remain eligible for unlimited future draws")
 	model.reset_abyss()
 	var original_stats: Dictionary = model.computed_stats("ember")
 	model.state.abyss.meta.currency = 10000
@@ -188,7 +188,7 @@ func test_full_expedition() -> void:
 	check(not ended and model.abyss_run_active() and model.state.abyss.currentFloor == 21, "floor20 continues to21")
 	check(not model.state.abyss.rogue.selectedRewards.is_empty(),"continuing retains earned build")
 	check(model.reset_abyss().success,"player can end endless expedition")
-	check(model.state.abyss.maxFloor == 20 and model.state.abyss.meta.runsCompleted == 1, "completion preserves20-floor record and increments wins")
+	check(model.state.abyss.maxFloor == 20 and model.state.abyss.meta.runsCompleted == 0, "retreat preserves20-floor record without counting completion")
 	check(model.state.abyss.meta.currency >= 140 and model.state.abyss.lastRun.metaEarned == model.state.abyss.meta.currency, "run payouts and completion bonus are permanently banked")
 	check(history_count >= 8, "full expedition includes numerous resolved route encounters")
 	check(model.state.abyss.rogue.selectedRewards.is_empty() and model.state.abyss.rogue.temporaryCurrency == 0, "voluntary end clears temporary blessings and coins")

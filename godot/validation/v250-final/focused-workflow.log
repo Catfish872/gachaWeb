@@ -1,0 +1,104 @@
+VERSION VALIDATION PASSED: 2.5.0 (20500)
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.182s
+
+OK
+test_android_texture_import_required (__main__.BuildValidationTests.test_android_texture_import_required) ... ok
+test_apk_valid_and_rejection_fixtures (__main__.BuildValidationTests.test_apk_valid_and_rejection_fixtures) ... ok
+test_bad_metadata (__main__.BuildValidationTests.test_bad_metadata) ... ok
+test_bad_tags (__main__.BuildValidationTests.test_bad_tags) ... ok
+test_export_preset_version_must_match (__main__.BuildValidationTests.test_export_preset_version_must_match) ... ok
+test_finalize_orders_normalization_alignment_and_signing (__main__.BuildValidationTests.test_finalize_orders_normalization_alignment_and_signing) ... ok
+test_matching_version_and_tag (__main__.BuildValidationTests.test_matching_version_and_tag) ... ok
+test_project_icon_required (__main__.BuildValidationTests.test_project_icon_required) ... ok
+test_sdk_view_pins_build_tools (__main__.BuildValidationTests.test_sdk_view_pins_build_tools) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.109s
+
+OK
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 0.006s
+
+OK
+test_actual_pause_resume_requires_same_progress_and_ownership (__main__.AndroidSmokeDriverTests.test_actual_pause_resume_requires_same_progress_and_ownership) ... ok
+test_background_requires_stopped_app_and_other_foreground (__main__.AndroidSmokeDriverTests.test_background_requires_stopped_app_and_other_foreground) ... ok
+test_boot_configuration_waits_until_stable (__main__.AndroidSmokeDriverTests.test_boot_configuration_waits_until_stable) ... ok
+test_canvas_target_pans_with_real_adb_input (__main__.AndroidSmokeDriverTests.test_canvas_target_pans_with_real_adb_input) ... ok
+test_ci_start_button_geometry_converges_with_bounded_finger_drag (__main__.AndroidSmokeDriverTests.test_ci_start_button_geometry_converges_with_bounded_finger_drag) ... ok
+test_clipped_button_fails_before_input (__main__.AndroidSmokeDriverTests.test_clipped_button_fails_before_input) ... ok
+test_conflicting_duplicate_rejects_whole_sequence (__main__.AndroidSmokeDriverTests.test_conflicting_duplicate_rejects_whole_sequence) ... ok
+test_disconnected_room_cannot_be_tapped (__main__.AndroidSmokeDriverTests.test_disconnected_room_cannot_be_tapped) ... ok
+test_distant_selected_room_uses_verified_safe_existing_edges (__main__.AndroidSmokeDriverTests.test_distant_selected_room_uses_verified_safe_existing_edges) ... ok
+test_distant_travel_rejects_shortcut_unsafe_or_locked_intermediate (__main__.AndroidSmokeDriverTests.test_distant_travel_rejects_shortcut_unsafe_or_locked_intermediate) ... ok
+test_each_resume_failure_is_retained_and_remaining_cases_run (__main__.AndroidSmokeDriverTests.test_each_resume_failure_is_retained_and_remaining_cases_run) ... ok
+test_emulator_export_cannot_mutate_source_presets (__main__.AndroidSmokeDriverTests.test_emulator_export_cannot_mutate_source_presets) ... ok
+test_frames_do_not_mix_sequences (__main__.AndroidSmokeDriverTests.test_frames_do_not_mix_sequences) ... ok
+test_fullscreen_dismissal_taps_verified_bounds_then_checks_ui (__main__.AndroidSmokeDriverTests.test_fullscreen_dismissal_taps_verified_bounds_then_checks_ui) ... ok
+test_fullscreen_education_matches_exact_system_controls (__main__.AndroidSmokeDriverTests.test_fullscreen_education_matches_exact_system_controls) ... ok
+test_hidden_clipped_missing_icon_and_other_container_are_not_visible_proof (__main__.AndroidSmokeDriverTests.test_hidden_clipped_missing_icon_and_other_container_are_not_visible_proof) ... ok
+test_horizontal_overflow_fails (__main__.AndroidSmokeDriverTests.test_horizontal_overflow_fails) ... ok
+test_identical_duplicates_emit_one_frame (__main__.AndroidSmokeDriverTests.test_identical_duplicates_emit_one_frame) ... ok
+test_invalid_fullscreen_button_is_rejected (__main__.AndroidSmokeDriverTests.test_invalid_fullscreen_button_is_rejected) ... ok
+test_large_unicode_menu_reassembles_out_of_order (__main__.AndroidSmokeDriverTests.test_large_unicode_menu_reassembles_out_of_order) ... ok
+test_locked_key_vault_exterior_is_a_valid_visited_corridor (__main__.AndroidSmokeDriverTests.test_locked_key_vault_exterior_is_a_valid_visited_corridor) ... ok
+test_long_scan_detection_uses_observed_progress_not_hidden_rarity (__main__.AndroidSmokeDriverTests.test_long_scan_detection_uses_observed_progress_not_hidden_rarity) ... ok
+test_map_drag_already_zoomed_still_requires_pan_and_no_travel (__main__.AndroidSmokeDriverTests.test_map_drag_already_zoomed_still_requires_pan_and_no_travel) ... ok
+test_map_drag_zooms_real_overview_before_real_swipe (__main__.AndroidSmokeDriverTests.test_map_drag_zooms_real_overview_before_real_swipe) ... ok
+test_map_fit_wait_rejects_stale_and_unfitted_observation (__main__.AndroidSmokeDriverTests.test_map_fit_wait_rejects_stale_and_unfitted_observation) ... ok
+test_map_preview_requires_fresh_selection_and_second_real_tap (__main__.AndroidSmokeDriverTests.test_map_preview_requires_fresh_selection_and_second_real_tap) ... ok
+test_map_revisit_selected_current_room_needs_one_real_tap (__main__.AndroidSmokeDriverTests.test_map_revisit_selected_current_room_needs_one_real_tap) ... ok
+test_menu_scroll_uses_android_input (__main__.AndroidSmokeDriverTests.test_menu_scroll_uses_android_input) ... ok
+test_mismatched_envelope_sequence_rejected (__main__.AndroidSmokeDriverTests.test_mismatched_envelope_sequence_rejected) ... ok
+test_missing_and_truncated_chunks_never_emit_frame (__main__.AndroidSmokeDriverTests.test_missing_and_truncated_chunks_never_emit_frame) ... ok
+test_missing_boot_configuration_fails (__main__.AndroidSmokeDriverTests.test_missing_boot_configuration_fails) ... ok
+test_missing_or_duplicate_button_fails (__main__.AndroidSmokeDriverTests.test_missing_or_duplicate_button_fails) ... ok
+test_offscreen_button_fails_before_input (__main__.AndroidSmokeDriverTests.test_offscreen_button_fails_before_input) ... ok
+test_page_control_scroll_uses_android_input (__main__.AndroidSmokeDriverTests.test_page_control_scroll_uses_android_input) ... ok
+test_page_swipe_avoids_native_scrollbar_and_map (__main__.AndroidSmokeDriverTests.test_page_swipe_avoids_native_scrollbar_and_map) ... ok
+test_page_target_missing_fails_before_scroll (__main__.AndroidSmokeDriverTests.test_page_target_missing_fails_before_scroll) ... ok
+test_paused_wall_clock_is_not_visible_dwell_evidence (__main__.AndroidSmokeDriverTests.test_paused_wall_clock_is_not_visible_dwell_evidence) ... ok
+test_permission_dialog_is_never_a_dismissal_target (__main__.AndroidSmokeDriverTests.test_permission_dialog_is_never_a_dismissal_target) ... ok
+test_pickup_visibility_tracks_same_uid_and_actual_destination (__main__.AndroidSmokeDriverTests.test_pickup_visibility_tracks_same_uid_and_actual_destination) ... ok
+test_probe_is_observational_and_reports_extraction_state (__main__.AndroidSmokeDriverTests.test_probe_is_observational_and_reports_extraction_state) ... ok
+test_reads_only_complete_probe_records (__main__.AndroidSmokeDriverTests.test_reads_only_complete_probe_records) ... ok
+test_resume_order_starts_with_original_rapid_case (__main__.AndroidSmokeDriverTests.test_resume_order_starts_with_original_rapid_case) ... ok
+test_safe_map_path_uses_only_connected_noncombat_rooms (__main__.AndroidSmokeDriverTests.test_safe_map_path_uses_only_connected_noncombat_rooms) ... ok
+test_taps_actual_button_center (__main__.AndroidSmokeDriverTests.test_taps_actual_button_center) ... ok
+test_unrelated_icons_cannot_fake_continuous_visible_dwell (__main__.AndroidSmokeDriverTests.test_unrelated_icons_cannot_fake_continuous_visible_dwell) ... ok
+test_visibility_gap_does_not_count_as_same_uid_dwell (__main__.AndroidSmokeDriverTests.test_visibility_gap_does_not_count_as_same_uid_dwell) ... ok
+test_wait_requires_two_new_matching_records (__main__.AndroidSmokeDriverTests.test_wait_requires_two_new_matching_records) ... ok
+test_width_that_fits_passes (__main__.AndroidSmokeDriverTests.test_width_that_fits_passes) ... ok
+test_actual_request_policy_must_allow_metered_but_not_roaming (__main__.AndroidUpdateNetworkPolicyTests.test_actual_request_policy_must_allow_metered_but_not_roaming) ... ok
+test_policy_cannot_hide_failed_native_bridge (__main__.AndroidUpdateNetworkPolicyTests.test_policy_cannot_hide_failed_native_bridge) ... ok
+test_wifi_only_or_missing_policy_is_not_a_native_pass (__main__.AndroidUpdateNetworkPolicyTests.test_wifi_only_or_missing_policy_is_not_a_native_pass) ... ok
+test_carry_uses_exact_previously_selected_purchased_uid (__main__.ServiceGuardDriverTests.test_carry_uses_exact_previously_selected_purchased_uid) ... ok
+test_guard_defeat_cannot_restore_service_by_driver (__main__.ServiceGuardDriverTests.test_guard_defeat_cannot_restore_service_by_driver) ... ok
+test_guard_routes_through_real_battle_and_growth_controls (__main__.ServiceGuardDriverTests.test_guard_routes_through_real_battle_and_growth_controls) ... ok
+test_map_entry_accepts_guard_battle_only_after_real_arrival (__main__.ServiceGuardDriverTests.test_map_entry_accepts_guard_battle_only_after_real_arrival) ... ok
+test_nonservice_battle_is_not_bypassed (__main__.ServiceGuardDriverTests.test_nonservice_battle_is_not_bypassed) ... ok
+test_safe_room_does_not_start_battle (__main__.ServiceGuardDriverTests.test_safe_room_does_not_start_battle) ... ok
+test_supply_lock_real_three_taps_and_reopen_preserve_uid (__main__.ServiceGuardDriverTests.test_supply_lock_real_three_taps_and_reopen_preserve_uid) ... ok
+test_workshop_real_input_order_includes_local_scroll_and_cancel (__main__.ServiceGuardDriverTests.test_workshop_real_input_order_includes_local_scroll_and_cancel) ... ok
+test_drag_cannot_pass_if_it_commits_placement (__main__.WarehouseNativeFlowTests.test_drag_cannot_pass_if_it_commits_placement) ... ok
+test_real_purchase_select_cancel_drag_and_target_tap_sequence (__main__.WarehouseNativeFlowTests.test_real_purchase_select_cancel_drag_and_target_tap_sequence) ... ok
+test_unrelated_selection_uid_cannot_pass_exact_two_item_check (__main__.WarehouseNativeFlowTests.test_unrelated_selection_uid_cannot_pass_exact_two_item_check) ... ok
+
+----------------------------------------------------------------------
+Ran 62 tests in 0.022s
+
+OK
+test_cleanup_failure_fails_otherwise_successful_run (__main__.AndroidKvmTests.test_cleanup_failure_fails_otherwise_successful_run) ... ok
+test_emulator_stops_before_acl_restore (__main__.AndroidKvmTests.test_emulator_stops_before_acl_restore) ... ok
+test_existing_access_requires_no_acl_change (__main__.AndroidKvmTests.test_existing_access_requires_no_acl_change) ... ok
+test_missing_opt_in_or_wrong_runner_never_grants (__main__.AndroidKvmTests.test_missing_opt_in_or_wrong_runner_never_grants) ... ok
+test_named_user_grant_restores_exact_original_acl (__main__.AndroidKvmTests.test_named_user_grant_restores_exact_original_acl) ... ok
+test_original_failure_status_is_preserved (__main__.AndroidKvmTests.test_original_failure_status_is_preserved) ... ok
+test_partial_grant_failure_still_restores (__main__.AndroidKvmTests.test_partial_grant_failure_still_restores) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.077s
+
+OK

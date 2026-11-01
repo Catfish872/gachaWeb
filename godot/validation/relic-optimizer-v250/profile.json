@@ -1,0 +1,152 @@
+{
+  "budgetUsec": 4000,
+  "cases": [
+    {
+      "boundCacheHits": 9141,
+      "cacheHits": 2827,
+      "canApply": true,
+      "candidateCounts": [
+        21,
+        20,
+        21,
+        19,
+        21
+      ],
+      "elapsedUsec": 1468730,
+      "evaluations": 3402,
+      "fastBounds": 12329,
+      "frontier": 0,
+      "gap": 0.0,
+      "incrementalMemoryBytes": 9075540,
+      "initializationUsec": 2613,
+      "inventory": 100,
+      "lowerBound": 3505.7,
+      "maxSliceUsec": 5168,
+      "memoryBytes": 36752201,
+      "p95SliceUsec": 4687,
+      "phase": "done",
+      "provenOptimal": true,
+      "removed": 3,
+      "scanned": 100,
+      "setCounts": {
+        "flame_oath": 2,
+        "star_watch": 3
+      },
+      "slices": 343,
+      "stateUnchanged": true,
+      "upperBound": 3505.7,
+      "visited": 2005
+    },
+    {
+      "boundCacheHits": 295217,
+      "cacheHits": 90331,
+      "canApply": true,
+      "candidateCounts": [
+        92,
+        93,
+        94,
+        92,
+        99
+      ],
+      "elapsedUsec": 38212307,
+      "evaluations": 93270,
+      "fastBounds": 387537,
+      "frontier": 0,
+      "gap": 0.0,
+      "incrementalMemoryBytes": 16719288,
+      "initializationUsec": 2604,
+      "inventory": 500,
+      "lowerBound": 4112.786,
+      "maxSliceUsec": 19083,
+      "memoryBytes": 46502213,
+      "p95SliceUsec": 4447,
+      "phase": "done",
+      "provenOptimal": true,
+      "removed": 35,
+      "scanned": 500,
+      "setCounts": {
+        "flame_oath": 4,
+        "star_watch": 1
+      },
+      "slices": 8901,
+      "stateUnchanged": true,
+      "upperBound": 4112.786,
+      "visited": 63667
+    },
+    {
+      "boundCacheHits": 535445,
+      "cacheHits": 62572,
+      "canApply": true,
+      "candidateCounts": [
+        293,
+        310,
+        336,
+        316,
+        341
+      ],
+      "elapsedUsec": 60003599,
+      "evaluations": 65253,
+      "fastBounds": 597497,
+      "frontier": 57571,
+      "gap": 0.157426628468914,
+      "incrementalMemoryBytes": 73486396,
+      "initializationUsec": 3296,
+      "inventory": 2000,
+      "lowerBound": 4068.828,
+      "maxSliceUsec": 20538,
+      "memoryBytes": 111999689,
+      "p95SliceUsec": 4468,
+      "phase": "search",
+      "provenOptimal": false,
+      "removed": 409,
+      "scanned": 2000,
+      "setCounts": {
+        "star_watch": 1,
+        "thunder_hunt": 4
+      },
+      "slices": 13894,
+      "stateUnchanged": true,
+      "upperBound": 4709.36987385992,
+      "visited": 106702
+    },
+    {
+      "boundCacheHits": 0,
+      "cacheHits": 1,
+      "canApply": true,
+      "candidateCounts": [
+        6197,
+        7352,
+        7465,
+        7652,
+        9557
+      ],
+      "elapsedUsec": 17789997,
+      "evaluations": 5,
+      "fastBounds": 1,
+      "frontier": 1,
+      "gap": 1.62004492676101,
+      "incrementalMemoryBytes": 330966156,
+      "initializationUsec": 2820,
+      "inventory": 100000,
+      "lowerBound": 3093.3,
+      "maxSliceUsec": 6561,
+      "memoryBytes": 867309409,
+      "p95SliceUsec": 4237,
+      "phase": "seed",
+      "provenOptimal": false,
+      "removed": 61782,
+      "scanned": 100000,
+      "setCounts": {
+        "flame_oath": 5
+      },
+      "slices": 4332,
+      "stateUnchanged": true,
+      "upperBound": 8104.58497194982,
+      "visited": 0
+    }
+  ],
+  "host": "Godot 4.6.3 Linux headless; desktop proxy, Android remains to verify",
+  "reference": "six-action actual-auto Ember; full proof at 100/500, sixty-second interaction at 2000, full preparation and first applicable recommendation at legal 100000",
+  "optimizerSha256": "5cb2805c9c007de78fde2741768ad3dac91adaa65eb6fe339d619ee47c603a1b",
+  "validationUTC": "2026-11-01T14:04:06.462516+00:00"
+}

@@ -30,6 +30,24 @@ func frame() -> void:
 	await process_frame
 	await process_frame
 
+func summon_click(needle: String) -> void:
+	var button := find_button(app.overlay, needle)
+	var point := button.get_global_rect().get_center()
+	for pressed in [true,false]:
+		var event := InputEventMouseButton.new()
+		event.button_index = MOUSE_BUTTON_LEFT
+		event.position = point
+		event.global_position = point
+		event.pressed = pressed
+		root.push_input(event)
+		await frame()
+	await frame()
+
+func summon_wait(seconds: float) -> void:
+	var sequence = app.summon_sequence
+	var until: float = sequence.sequence_time + seconds
+	while is_instance_valid(sequence) and sequence.sequence_time < until: await process_frame
+
 func run() -> void:
 	root.size = Vector2i(1440, 900)
 	app = load("res://main.tscn").instantiate()
@@ -85,15 +103,17 @@ func run() -> void:
 	app._pull(1)
 	await frame()
 	check(app.summon_results.size() == 1, "Single pull through UI")
-	find_button(app.overlay, "SummonReveal").pressed.emit()
-	check(app.summon_flipped, "Reveal button flips card")
-	find_button(app.overlay, "SummonNext").pressed.emit()
+	while app.summon_sequence.stage != "result": await process_frame
+	check(app.summon_flipped, "Timed ritual flips and reveals committed card")
+	await summon_click("SummonNext")
 	check("祈愿结果" in texts(app.overlay), "Summon summary visible")
-	find_button(app.overlay, "SummonAccept").pressed.emit()
+	await summon_wait(.5)
+	await summon_click("SummonAccept")
 	check(app.overlay.get_child_count() == 0, "Summon closes")
 	app.model.state.resources.diamonds = 100000
 	app._pull(10)
-	find_button(app.overlay, "SummonSkip").pressed.emit()
+	await summon_wait(.65)
+	await summon_click("SummonSkip")
 	check(app.summon_results.size() == 10, "Ten-pull and skip reveal")
 	app._clear_overlay()
 	for id in app.model.catalog.CharacterData:
@@ -218,7 +238,8 @@ func run() -> void:
 	app._summon_summary()
 	await frame()
 	check(find_button(app.overlay, "SummonAgain") != null, "Repeat ten-pull control exposed")
-	find_button(app.overlay, "SummonAccept").pressed.emit()
+	await summon_wait(.5)
+	await summon_click("SummonAccept")
 	# Automatic combat pauses at every real v2 decision and resumes only after
 	# each nested choice has been explicitly resolved through its UI button.
 	app.model.reset_abyss()
@@ -244,6 +265,17 @@ func run() -> void:
 		else:
 			check(app.model.state.abyss.rogue.pendingChoices.size() == 3, "Three actual abyss choices shown")
 			find_button(app.main_body, "融入构筑").pressed.emit()
+			await frame()
+			var earned=app.get_node_or_null("RogueRewardGain")
+			check(earned!=null and app.current_screen=="abyss","Automatic abyss waits for earned-reward identification")
+			if earned!=null:
+				check(earned.get_meta("reward_id","")==app.model.state.abyss.rogue.selectedRewards.back().id,"Earned card shows the actual committed blessing")
+				var point:Vector2=earned.get_global_rect().get_center()
+				for down in [true,false]:
+					var event:=InputEventMouseButton.new();event.position=point;event.global_position=point;event.button_index=MOUSE_BUTTON_LEFT;event.pressed=down
+					root.push_input(event,true);await process_frame
+				for i in 5:await process_frame
+				check(app.get_node_or_null("RogueRewardGain")==null,"Real acknowledgement dismisses reward and resumes requested auto run")
 	check(app.current_screen == "battle" and app.battle_config.floor == 4, "Resolved choices resume requested continuous run")
 	check(app.model.state.abyss.rogue.selectedRewards.size() == 2, "Both floor one and three blessings saved")
 	find_button(app.main_body, "自动").pressed.emit()

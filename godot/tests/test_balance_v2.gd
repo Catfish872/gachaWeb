@@ -98,30 +98,25 @@ func test_control_resolve() -> void:
 	for id in ["wolf", "dark_knight", "boss_flame_lord"]:
 		var b = arena([], id)
 		var enemy = b.state.enemies[0]
-		b.apply_status(enemy, "freeze", 99)
-		b.apply_status(enemy, "freeze", 99)
-		check(enemy.statuses[0].duration == (1 if enemy.isBoss else 2), id + " repeated control refreshes within cap")
-		# Mechanics fixture positions the actor. Outcomes in real-outcome tests
-		# below always use unmodified combat; this fixture is not balance evidence.
-		for skip in range(1 if enemy.isBoss else 2):
+		b.apply_status(enemy, "freeze", 3)
+		b.apply_status(enemy, "freeze", 2)
+		check(enemy.statuses[0].duration == 5, id + " repeated control adds its complete duration")
+		# Isolated turn-position fixture verifies exact consumption, not combat balance.
+		for skip in range(5):
 			b._queue = [enemy] + b.state.allies
 			b._cursor = 0
 			b._seek_actor()
-		check(enemy.controlGuard == 1, id + " gains resolve after bounded skips")
-		check(not b.apply_status(enemy, "stun", 4), id + " resolve rejects new control")
-		b._queue = [enemy] + b.state.allies
-		b._cursor = 0
-		b._seek_actor()
-		check(b.current_actor().uid == enemy.uid, id + " gets guaranteed action after resolve")
-		check(enemy.controlGuard == 0, id + " resolve expires on action")
-		check(b.apply_status(enemy, "electrify", 2), id + " can be controlled again after guaranteed action")
+			check(b.current_actor().uid != enemy.uid, id + " receives complete control turn %d" % (skip + 1))
+		check(not b.has_status(enemy, "freeze"), id + " control expires after all five skipped turns")
+		check(b.apply_status(enemy, "stun", 2), id + " receives new control without an immunity window")
+		check(b.has_status(enemy, "stun"), id + " new control takes effect immediately")
 	var poison = arena([], "boss_flame_lord")
 	var target = poison.state.enemies[0]
 	for i in range(30): poison.apply_status(target, "poison", 2)
-	check(target.statuses.filter(func(s): return s.id == "poison").size() == 5, "poison capped at5 stacks")
+	check(target.statuses.filter(func(s): return s.id == "poison").size() == 30, "all30 poison applications retain separate stacks")
 	var before := int(target.currentHp)
 	poison._end_round()
-	check(before - target.currentHp == int(target.maxHp * 0.015) * 5, "boss poison deals1.5 percent per stack")
+	check(before - target.currentHp == mini(before, int(target.maxHp * 0.05) * 30), "boss poison retains full five percent per stack until target falls")
 
 func test_new_effects() -> void:
 	var b = arena([{"type": "lifesteal", "value": 5.0}, {"type": "energyOnKill", "value": 15}])
@@ -131,10 +126,10 @@ func test_new_effects() -> void:
 	actor.energy = 0
 	enemy.currentHp = 20
 	b._damage(actor, enemy, {"type": "normal"}, "test", {"trueDamage": true}, 100.0)
-	check(actor.currentHp == 107, "lifesteal capped35 percent of actual HP removed, excludes overkill")
+	check(actor.currentHp == 200, "lifesteal uses full summed rate on actual HP removed, excludes overkill")
 	check(actor.energy == 15, "kill grants energy once")
 	b._damage(actor, enemy, {"type": "normal"}, "test", {"trueDamage": true}, 100.0)
-	check(actor.energy == 15 and actor.currentHp == 107, "dead target grants neither repeated kill energy nor healing")
+	check(actor.energy == 15 and actor.currentHp == 200, "dead target grants neither repeated kill energy nor healing")
 	b = arena([{"type": "damageWhileShielded", "value": 0.12}, {"type": "damageVsLowHp", "value": 0.18, "threshold": 0.35}])
 	actor = b.state.allies[0]
 	enemy = b.state.enemies[0]
@@ -146,7 +141,7 @@ func test_new_effects() -> void:
 	b._absorb(actor, actor.shield)
 	near(b._damage_multiplier(actor, enemy, "normal"), 1.18, "broken shield removes shield-offense bonus")
 	b = arena([{"type": "skillTypeDamage", "skillType": "normal", "value": 1000.0}])
-	near(b._damage_multiplier(b.state.allies[0], b.state.enemies[0], "normal"), 8.0, "abyss offensive bonus has documented8x ceiling")
+	near(b._damage_multiplier(b.state.allies[0], b.state.enemies[0], "normal"), 1001.0, "abyss offensive bonus grows beyond former8x ceiling")
 	check(catalog.AbyssData.rogue.rewards.size() == 26, "26 authored blessings")
 
 func test_auto_healing() -> void:
@@ -157,9 +152,10 @@ func test_auto_healing() -> void:
 		healer.energy = 100
 		b.start({"enemies": ["boss_flame_lord"], "seed": 1}, [healer, hero("tide")])
 		var result = b.auto_step()
-		check(not result.events.any(func(e): return e.type == "skill" and e.get("skill_id", "") == id + "_ult"), id + " holds full-HP healing ultimate")
-		check(result.events.any(func(e): return e.type == "damage"), id + " contributes damage when party healthy")
+		check(result.events.any(func(e): return e.type == "skill" and e.get("skill_id", "") == id + "_ult"), id + " casts ready full-HP healing ultimate")
+		check(result.events.any(func(e): return e.type == "heal"), id + " triggers healing effects even when party healthy")
 		b.state.allies[1].currentHp = int(b.state.allies[1].maxHp * 0.2)
+		b.state.allies[0].energy = 100
 		b.state.currentActor = b.state.allies[0].uid
 		b.state.phase = "player_turn"
 		result = b.auto_step()

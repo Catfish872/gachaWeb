@@ -1,0 +1,34 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ERROR: LOOT TOUCH: actual event has prepared encounter choice
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_redesign_loot_interactions.gd:8)
+       [1] choices_and_back (res://tests/test_room_return_v250.gd:204)
+       [2] show_room (res://tests/test_room_return_v250.gd:42)
+       [3] frames (res://tests/test_redesign_loot_interactions.gd:10)
+ERROR: LOOT TOUCH: real target exists
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_redesign_loot_interactions.gd:8)
+       [1] click (res://tests/test_redesign_loot_interactions.gd:12)
+       [2] choices_and_back (res://tests/test_room_return_v250.gd:223)
+       [3] select_item (res://tests/test_redesign_loot_interactions.gd:44)
+       [4] click_at (res://tests/test_redesign_loot_interactions.gd:27)
+       [5] frames (res://tests/test_redesign_loot_interactions.gd:10)
+ERROR: LOOT TOUCH: Android Back cancels manual exchange inside same container
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_redesign_loot_interactions.gd:8)
+       [1] choices_and_back (res://tests/test_room_return_v250.gd:225)
+       [2] back (res://tests/test_room_return_v250.gd:45)
+       [3] frames (res://tests/test_redesign_loot_interactions.gd:10)
+ERROR: LOOT TOUCH: real target exists
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_redesign_loot_interactions.gd:8)
+       [1] click (res://tests/test_redesign_loot_interactions.gd:12)
+       [2] choices_and_back (res://tests/test_room_return_v250.gd:226)
+       [3] back (res://tests/test_room_return_v250.gd:45)
+       [4] frames (res://tests/test_redesign_loot_interactions.gd:10)
+ROOM RETURN V250: 428 checks, 4 failures

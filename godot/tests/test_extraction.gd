@@ -397,6 +397,7 @@ func test_maps() -> void:
 	for key in ["vest", "bandage"]:
 		var protected_item: Dictionary = ex._make_item(key)
 		protected_item.revealed = true
+		if ex.item_def(key).kind=="consumable":protected_item.exchangeLocked=true
 		protected_ids.append(protected_item.uid)
 		ex._place(ex.run().bag, protected_item, ex.dimensions("bag"))
 	while true:
@@ -445,4 +446,5 @@ func test_maps() -> void:
 		var supply_item: Dictionary = ex._make_item("bandage")
 		supply_item.revealed = true
 		ex._place(ex.run().bag, supply_item, ex.dimensions("bag"))
+	for supply in ex.run().bag:ex.set_consumable_exchange_lock(supply.uid,true)
 	check(not ex.plan_smart_loot(cid).success, "protected full bag has no swap proposal")

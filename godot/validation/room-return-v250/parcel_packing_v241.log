@@ -1,0 +1,5 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+{"bounds":[5,5],"combinations":1120,"false_rejections":[],"feasible":1048,"max_ms":2.494,"median_ms":0.206,"p95_ms":0.472,"reference_worst_nodes":29258,"reference_worst_shapes":["blade","blade","blade","blade","blade","blade","blade","royal_scepter"]}
+{"bounds":[6,6],"combinations":5981,"false_rejections":[],"feasible":5908,"max_ms":14.051,"median_ms":0.307,"p95_ms":0.533,"reference_worst_nodes":128140,"reference_worst_shapes":["royal_scepter","royal_scepter","royal_scepter","barrier_module","barrier_module","barrier_module","barrier_module","barrier_module","barrier_module"]}
+PARCEL PACKING V241 102578 checks 0 failures

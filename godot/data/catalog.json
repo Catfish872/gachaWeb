@@ -1,4 +1,7 @@
 {
+  "CombatRules": {
+    "electrifySkipChance": 0.35
+  },
   "AbyssData": {
     "resetDiamondCost": 100,
     "dailyFreeResets": 1,
@@ -421,7 +424,7 @@
           "name": "汲取之刃",
           "icon": "✦",
           "target": "生命汲取",
-          "description": "全队造成直接伤害时，恢复实际生命伤害的 6%；生命汲取总量上限为 35%。",
+          "description": "全队造成直接伤害时，恢复实际生命伤害的 6%，多份祝福的生命汲取比例累加。",
           "effects": [
             {
               "type": "lifesteal",
@@ -482,7 +485,7 @@
           "name": "淬毒锋刃",
           "icon": "✦",
           "target": "中毒构筑",
-          "description": "全队造成直接伤害后，有 25% 概率使目标中毒 2 回合。中毒最多 5 层，每层每回合造成最大生命 5% 的伤害；深渊首领为 1.5%。",
+          "description": "全队造成直接伤害后，有 25% 概率使目标中毒 2 回合。中毒效果可叠加，每层每回合造成最大生命 5% 的伤害。",
           "effects": [
             {
               "type": "applyStatusAfterDamage",
@@ -499,7 +502,7 @@
           "name": "静电传导",
           "icon": "✦",
           "target": "感电构筑",
-          "description": "全队造成直接伤害后，有 25% 概率使目标感电 2 回合。深渊首领受到控制时至多跳过 1 回合，随后获得 1 次行动的控制抗性。",
+          "description": "全队造成直接伤害后，有 25% 概率使目标感电 2 回合。感电期间每次行动有 35% 概率跳过，重复施加只延长持续，首领同样生效。",
           "effects": [
             {
               "type": "applyStatusAfterDamage",
@@ -548,7 +551,20 @@
       "flavorText": "\"烈焰不灭，我亦永恒。\"",
       "color": "#ef4444",
       "colorDark": "#7f1d1d",
-      "image": "assets/characters/kaldi.png"
+      "image": "assets/characters/kaldi.png",
+      "relicObjective": {
+        "type": "damage",
+        "label": "输出",
+        "referenceStatuses": [
+          "burn"
+        ],
+        "recommendedSets": [
+          {
+            "setId": "flame_oath",
+            "reason": "战技与终结技可施加燃烧。攻击加成与对已燃烧目标的直接增伤，能配合其燃烧增伤被动。"
+          }
+        ]
+      }
     },
     "ayla": {
       "id": "ayla",
@@ -585,7 +601,18 @@
       "flavorText": "\"冰冻，有时是最温柔的救赎。\"",
       "color": "#3b82f6",
       "colorDark": "#1e3a8a",
-      "image": "assets/characters/ayla.png"
+      "image": "assets/characters/ayla.png",
+      "relicObjective": {
+        "type": "healing",
+        "label": "治疗",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "aurora_prayer",
+            "reason": "终结技提供群体主动治疗。套装提高这次治疗量并补充能量，攻击词条则提升角色的治疗基数。"
+          }
+        ]
+      }
     },
     "gus": {
       "id": "gus",
@@ -622,7 +649,18 @@
       "flavorText": "\"战斗在雷鸣结束前就应该终止。\"",
       "color": "#eab308",
       "colorDark": "#713f12",
-      "image": null
+      "image": null,
+      "relicObjective": {
+        "type": "damage",
+        "label": "输出",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "thunder_hunt",
+            "reason": "角色暴击可额外获得能量；套装的暴击属性与每行动暴击回能可配合其技能循环。"
+          }
+        ]
+      }
     },
     "shana": {
       "id": "shana",
@@ -659,7 +697,18 @@
       "flavorText": "\"万物皆有愈合之道。\"",
       "color": "#22c55e",
       "colorDark": "#14532d",
-      "image": null
+      "image": null,
+      "relicObjective": {
+        "type": "healing",
+        "label": "治疗",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "aurora_prayer",
+            "reason": "战技与终结技均含主动治疗。套装提高主动治疗量，并在每次治疗技能行动后补充能量。"
+          }
+        ]
+      }
     },
     "lorin": {
       "id": "lorin",
@@ -696,7 +745,18 @@
       "flavorText": "\"只要我还站着，你们就倒不下。\"",
       "color": "#60a5fa",
       "colorDark": "#1e40af",
-      "image": null
+      "image": null,
+      "relicObjective": {
+        "type": "survival",
+        "label": "施放自身护盾后的有效承伤",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "stone_bastion",
+            "reason": "战技嘲讽让自身承担敌方攻击。防御加成与直接减伤可配合自身护盾，提高持续承伤能力。"
+          }
+        ]
+      }
     },
     "ember": {
       "id": "ember",
@@ -733,7 +793,20 @@
       "flavorText": "\"快准狠，就是我的哲学。\"",
       "color": "#f87171",
       "colorDark": "#7f1d1d",
-      "image": null
+      "image": null,
+      "relicObjective": {
+        "type": "damage",
+        "label": "输出",
+        "referenceStatuses": [
+          "burn"
+        ],
+        "recommendedSets": [
+          {
+            "setId": "flame_oath",
+            "reason": "战技稳定施加燃烧，普攻也有燃烧触发机会；攻击加成与对燃烧目标的增伤适合后续直接输出。"
+          }
+        ]
+      }
     },
     "zeph": {
       "id": "zeph",
@@ -770,7 +843,18 @@
       "flavorText": "\"风比你先到达终点。\"",
       "color": "#86efac",
       "colorDark": "#14532d",
-      "image": null
+      "image": null,
+      "relicObjective": {
+        "type": "damage",
+        "label": "输出",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "wind_voyager",
+            "reason": "速度加成有助于满足自身高于场上平均速度的被动条件；四件套强化对速度低于自己的目标的直接伤害。"
+          }
+        ]
+      }
     },
     "bolt": {
       "id": "bolt",
@@ -799,7 +883,7 @@
         "bolt_ult"
       ],
       "passiveId": "bolt_passive",
-      "passiveDesc": "暴击时，对目标施加【感电】状态（持续 1 回合）",
+      "passiveDesc": "暴击时，对目标施加【感电】1 回合；感电期间每次行动有 35% 概率跳过，重复施加只延长持续。",
       "synergyIds": [
         "thunder_duo"
       ],
@@ -807,7 +891,20 @@
       "flavorText": "\"我的箭，永远跟着电流走。\"",
       "color": "#fde047",
       "colorDark": "#713f12",
-      "image": null
+      "image": null,
+      "relicObjective": {
+        "type": "damage",
+        "label": "输出",
+        "referenceStatuses": [
+          "electrify"
+        ],
+        "recommendedSets": [
+          {
+            "setId": "thunder_hunt",
+            "reason": "暴击可触发自身感电被动。套装提高直接伤害与被动触发机会，并用暴击行动回能支持终结技循环。"
+          }
+        ]
+      }
     },
     "tide": {
       "id": "tide",
@@ -844,7 +941,18 @@
       "flavorText": "\"浪来了，就接着。\"",
       "color": "#93c5fd",
       "colorDark": "#1e3a8a",
-      "image": null
+      "image": null,
+      "relicObjective": {
+        "type": "survival",
+        "label": "施放自身护盾后的有效承伤",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "star_watch",
+            "reason": "最大生命提高自身生存、回合回复和自身技能护盾；四件套也能放大其战技给予队友的护盾，队友护盾仍按受盾者生命计算。"
+          }
+        ]
+      }
     },
     "cinder": {
       "id": "cinder",
@@ -881,7 +989,20 @@
       "flavorText": "\"烬，比火焰更持久。\"",
       "color": "#fb923c",
       "colorDark": "#7c2d12",
-      "image": null
+      "image": null,
+      "relicObjective": {
+        "type": "damage",
+        "label": "输出",
+        "referenceStatuses": [
+          "burn"
+        ],
+        "recommendedSets": [
+          {
+            "setId": "flame_oath",
+            "reason": "战技与终结技可施加燃烧，角色被动也依赖燃烧目标；套装强化攻击和这一条件下的直接输出。"
+          }
+        ]
+      }
     }
   },
   "ElementNames": {
@@ -2724,7 +2845,233 @@
       "dropWeight": 15
     }
   },
-  "RelicSets": {},
+  "RelicSets": {
+    "flame_oath": {
+      "id": "flame_oath",
+      "name": "炽焰誓约",
+      "theme": "炽焰",
+      "slotIcons": {
+        "helmet": "res://assets/relic_sets/flame_oath/helmet.tres",
+        "chest": "res://assets/relic_sets/flame_oath/chest.tres",
+        "belt": "res://assets/relic_sets/flame_oath/belt.tres",
+        "boots": "res://assets/relic_sets/flame_oath/boots.tres",
+        "necklace": "res://assets/relic_sets/flame_oath/necklace.tres"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "攻击力提高 12%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "佩戴者对燃烧目标造成的直接伤害提高 20%。",
+          "effects": [
+            {
+              "type": "damageVsStatus",
+              "value": 0.2,
+              "statusId": "burn"
+            }
+          ]
+        }
+      ],
+      "color": "#ee9b7c"
+    },
+    "aurora_prayer": {
+      "id": "aurora_prayer",
+      "name": "极光祷歌",
+      "theme": "极光",
+      "slotIcons": {
+        "helmet": "res://assets/relic_sets/aurora_prayer/helmet.tres",
+        "chest": "res://assets/relic_sets/aurora_prayer/chest.tres",
+        "belt": "res://assets/relic_sets/aurora_prayer/belt.tres",
+        "boots": "res://assets/relic_sets/aurora_prayer/boots.tres",
+        "necklace": "res://assets/relic_sets/aurora_prayer/necklace.tres"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "佩戴者主动技能的治疗量提高 15%。",
+          "effects": [
+            {
+              "type": "activeSkillHealMult",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "主动技能治疗量额外提高 15%；每次治疗技能行动额外恢复 5 点能量。",
+          "effects": [
+            {
+              "type": "activeSkillHealMult",
+              "value": 0.15
+            },
+            {
+              "type": "energyOnActiveHeal",
+              "value": 5
+            }
+          ]
+        }
+      ],
+      "color": "#83d9cb"
+    },
+    "thunder_hunt": {
+      "id": "thunder_hunt",
+      "name": "雷霆追猎",
+      "theme": "雷霆",
+      "slotIcons": {
+        "helmet": "res://assets/relic_sets/thunder_hunt/helmet.tres",
+        "chest": "res://assets/relic_sets/thunder_hunt/chest.tres",
+        "belt": "res://assets/relic_sets/thunder_hunt/belt.tres",
+        "boots": "res://assets/relic_sets/thunder_hunt/boots.tres",
+        "necklace": "res://assets/relic_sets/thunder_hunt/necklace.tres"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "暴击率提高 8 个百分点。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "cri_rate",
+              "value": 0.08
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "暴击伤害提高 25 个百分点；每次发生暴击的行动额外恢复 4 点能量。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "cri_dmg",
+              "value": 0.25
+            },
+            {
+              "type": "energyOnCrit",
+              "value": 4
+            }
+          ]
+        }
+      ],
+      "color": "#c6a4ef"
+    },
+    "wind_voyager": {
+      "id": "wind_voyager",
+      "name": "疾风星途",
+      "theme": "疾风",
+      "slotIcons": {
+        "helmet": "res://assets/relic_sets/wind_voyager/helmet.tres",
+        "chest": "res://assets/relic_sets/wind_voyager/chest.tres",
+        "belt": "res://assets/relic_sets/wind_voyager/belt.tres",
+        "boots": "res://assets/relic_sets/wind_voyager/boots.tres",
+        "necklace": "res://assets/relic_sets/wind_voyager/necklace.tres"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "速度提高 12%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "spd_pct",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "佩戴者速度高于目标时，对其造成的直接伤害提高 20%。",
+          "effects": [
+            {
+              "type": "damageWhenFasterThanTarget",
+              "value": 0.2
+            }
+          ]
+        }
+      ],
+      "color": "#a9cdb0"
+    },
+    "stone_bastion": {
+      "id": "stone_bastion",
+      "name": "城垣誓卫",
+      "theme": "城垣",
+      "slotIcons": {
+        "helmet": "res://assets/relic_sets/stone_bastion/helmet.tres",
+        "chest": "res://assets/relic_sets/stone_bastion/chest.tres",
+        "belt": "res://assets/relic_sets/stone_bastion/belt.tres",
+        "boots": "res://assets/relic_sets/stone_bastion/boots.tres",
+        "necklace": "res://assets/relic_sets/stone_bastion/necklace.tres"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "防御力提高 20%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "def_pct",
+              "value": 0.2
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "佩戴者受到的直接伤害降低 12%；与其他减伤合计上限为 90%。",
+          "effects": [
+            {
+              "type": "damageTakenMult",
+              "value": -0.12
+            }
+          ]
+        }
+      ],
+      "color": "#d4bd94"
+    },
+    "star_watch": {
+      "id": "star_watch",
+      "name": "星辉守望",
+      "theme": "星辉",
+      "slotIcons": {
+        "helmet": "res://assets/relic_sets/star_watch/helmet.tres",
+        "chest": "res://assets/relic_sets/star_watch/chest.tres",
+        "belt": "res://assets/relic_sets/star_watch/belt.tres",
+        "boots": "res://assets/relic_sets/star_watch/boots.tres",
+        "necklace": "res://assets/relic_sets/star_watch/necklace.tres"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "最大生命值提高 15%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "hp_pct",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "佩戴者技能产生的护盾量提高 25%。",
+          "effects": [
+            {
+              "type": "skillShieldMult",
+              "value": 0.25
+            }
+          ]
+        }
+      ],
+      "color": "#90b9e8"
+    }
+  },
   "ShopData": {
     "rechargeItems": [
       {
@@ -2904,7 +3251,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1.2
+          "multiplier": 1.2,
+          "scalingStat": "atk"
         }
       ],
       "animation": "slash"
@@ -2922,7 +3270,8 @@
         {
           "type": "damage",
           "target": "all",
-          "multiplier": 0.75
+          "multiplier": 0.75,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -2947,7 +3296,8 @@
         {
           "type": "damage",
           "target": "all",
-          "multiplier": 2.5
+          "multiplier": 2.5,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -2972,7 +3322,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 0.9
+          "multiplier": 0.9,
+          "scalingStat": "atk"
         }
       ],
       "animation": "ice"
@@ -2990,7 +3341,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1
+          "multiplier": 1,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3015,7 +3367,8 @@
         {
           "type": "heal",
           "target": "all_allies",
-          "multiplier": 1.8
+          "multiplier": 1.8,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3040,7 +3393,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1.1
+          "multiplier": 1.1,
+          "scalingStat": "atk"
         }
       ],
       "animation": "thunder"
@@ -3059,7 +3413,8 @@
           "type": "damage",
           "target": "chain3",
           "multiplier": 0.85,
-          "chainDecay": 0.15
+          "chainDecay": 0.15,
+          "scalingStat": "atk"
         }
       ],
       "animation": "chain_lightning"
@@ -3077,7 +3432,8 @@
         {
           "type": "damage",
           "target": "all",
-          "multiplier": 2
+          "multiplier": 2,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3103,7 +3459,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 0.9
+          "multiplier": 0.9,
+          "scalingStat": "atk"
         }
       ],
       "animation": "wind"
@@ -3121,7 +3478,8 @@
         {
           "type": "heal",
           "target": "lowest_hp_ally",
-          "multiplier": 1.5
+          "multiplier": 1.5,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3146,7 +3504,8 @@
         {
           "type": "heal",
           "target": "all_allies",
-          "multiplier": 1.2
+          "multiplier": 1.2,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3172,7 +3531,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 0.85
+          "multiplier": 0.85,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3253,7 +3613,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1.1
+          "multiplier": 1.1,
+          "scalingStat": "atk"
         }
       ],
       "animation": "slash"
@@ -3271,7 +3632,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1.3
+          "multiplier": 1.3,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3296,7 +3658,8 @@
         {
           "type": "damage",
           "target": "all",
-          "multiplier": 1.8
+          "multiplier": 1.8,
+          "scalingStat": "atk"
         }
       ],
       "animation": "mega_fire"
@@ -3314,7 +3677,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1
+          "multiplier": 1,
+          "scalingStat": "atk"
         }
       ],
       "animation": "wind"
@@ -3332,7 +3696,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1.2
+          "multiplier": 1.2,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3358,7 +3723,8 @@
         {
           "type": "damage",
           "target": "all",
-          "multiplier": 1.5
+          "multiplier": 1.5,
+          "scalingStat": "atk"
         }
       ],
       "animation": "tornado"
@@ -3376,7 +3742,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1.1
+          "multiplier": 1.1,
+          "scalingStat": "atk"
         }
       ],
       "animation": "thunder"
@@ -3395,7 +3762,8 @@
           "type": "damage",
           "target": "single",
           "multiplier": 1.2,
-          "defPierce": 0.4
+          "defPierce": 0.4,
+          "scalingStat": "atk"
         }
       ],
       "animation": "thunder"
@@ -3408,12 +3776,13 @@
       "element": "thunder",
       "energyCost": 100,
       "energyGain": 0,
-      "description": "引发电磁爆发，对全体敌人造成雷属性伤害并使其陷入【感电】。",
+      "description": "引发电磁爆发，对全体敌人造成雷属性伤害，并有 80% 概率使其【感电】2 回合；感电期间每次行动有 35% 概率跳过，重复施加只延长持续。",
       "effects": [
         {
           "type": "damage",
           "target": "all",
-          "multiplier": 1.6
+          "multiplier": 1.6,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3438,7 +3807,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 0.9
+          "multiplier": 0.9,
+          "scalingStat": "atk"
         }
       ],
       "animation": "ice"
@@ -3485,7 +3855,8 @@
         {
           "type": "damage",
           "target": "all",
-          "multiplier": 1.4
+          "multiplier": 1.4,
+          "scalingStat": "atk"
         }
       ],
       "animation": "mega_water"
@@ -3503,7 +3874,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1
+          "multiplier": 1,
+          "scalingStat": "atk"
         }
       ],
       "animation": "slash"
@@ -3521,7 +3893,8 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 1.1
+          "multiplier": 1.1,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
@@ -3546,7 +3919,8 @@
         {
           "type": "damage",
           "target": "all",
-          "multiplier": 1.9
+          "multiplier": 1.9,
+          "scalingStat": "atk"
         },
         {
           "type": "status",
