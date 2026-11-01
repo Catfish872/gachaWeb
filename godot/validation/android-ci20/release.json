@@ -1,0 +1,15 @@
+{
+  "run_id": 41270718020,
+  "production_job_id": 124744045360,
+  "commit": "b63cefa5066d162c24ba6fd3c768288714aa7208",
+  "tag": "android-v2.1.0",
+  "version": "2.1.0",
+  "version_code": 20100,
+  "apk_bytes": 98934769,
+  "apk_sha256": "cf1157c3b62994892a32ea75d24de5f61a09ed5948bcbc1698cf0225bbdd36f3",
+  "url": "https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.1.0",
+  "native_probe_frames": 335,
+  "physical_device_tested": false,
+  "in_app_cross_version_download_install_tested": false,
+  "existing_release_repeat_run_tested": false
+}

@@ -1,0 +1,9 @@
+2026-11-01T03:58:22.1788324Z Normalized exact Godot Vulkan manifest typed values; unsigned APK ready for alignment/signing
+2026-11-01T03:58:24.4913403Z Verified using v1 scheme (JAR signing): false
+2026-11-01T03:58:24.4914626Z Verified using v2 scheme (APK Signature Scheme v2): true
+2026-11-01T03:58:24.4915904Z Verified using v3 scheme (APK Signature Scheme v3): true
+2026-11-01T03:58:24.4917106Z Verified using v3.1 scheme (APK Signature Scheme v3.1): false
+2026-11-01T03:58:24.4918695Z Verified using v4 scheme (APK Signature Scheme v4): false
+2026-11-01T03:58:24.4936082Z Number of signers: 1
+2026-11-01T03:58:24.6943414Z APK manifest canonicalized, aligned and signature verified
+2026-11-01T03:58:25.2709389Z APK VERIFIED: package, version, SDK, permissions, ARM architectures, contents and signature

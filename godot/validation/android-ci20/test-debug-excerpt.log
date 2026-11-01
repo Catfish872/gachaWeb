@@ -1,0 +1,6 @@
+2026-11-01T03:50:21.8466641Z [36;1mpython3 godot/tests/test_android_manifest.py[0m
+2026-11-01T03:50:22.4486597Z Ran 14 tests in 0.008s
+2026-11-01T03:50:22.4486760Z 
+2026-11-01T03:50:22.4486844Z OK
+2026-11-01T03:52:36.9101005Z Normalized exact Godot Vulkan manifest typed values; unsigned APK ready for alignment/signing
+2026-11-01T03:52:38.8763088Z APK manifest canonicalized, aligned and signature verified
