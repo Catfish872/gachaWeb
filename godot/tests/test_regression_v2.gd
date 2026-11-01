@@ -314,12 +314,15 @@ func test_complete_node_journey() -> void:
 		last_result = outcome
 	for kind in ["reward", "route", "event", "rest", "shop"]:
 		check(visited.has(kind), "full journey exercises " + kind)
-	check(not model.abyss_run_active() and int(model.state.abyss.currentFloor) == 1, "final boss closes run and prepares floor one")
+	check(model.abyss_run_active() and int(model.state.abyss.currentFloor) == 21, "twentieth boss keeps endless run active at twenty-one")
 	check(int(model.state.abyss.meta.runsCompleted) == 1 and int(model.state.abyss.meta.currency) > 0, "completed expedition records completion and retains earned progression")
 	check(int(model.state.abyss.meta.unlockedDifficulty) == 1, "first completion unlocks exactly the next difficulty")
-	check(int(model.state.abyss.rogue.temporaryCurrency) == 0 and model.state.abyss.rogue.selectedRewards.is_empty(), "completed expedition clears temporary currencies and blessings")
+	check(int(model.state.abyss.rogue.temporaryCurrency) > 0 and not model.state.abyss.rogue.selectedRewards.is_empty(), "continuing expedition retains temporary currency and earned blessings")
 	var before := snapshot(model)
 	check(not model.finish_battle(last_config, last_result).get("success", true) and snapshot(model) == before, "final boss settlement cannot duplicate completion payout")
+	check(model.reset_abyss().get("success",false),"player voluntarily ends endless expedition")
+	check(not model.abyss_run_active() and int(model.state.abyss.currentFloor)==1 and model.state.abyss.lastRun.outcome=="retreat","voluntary end records retreat and returns to first floor")
+	check(int(model.state.abyss.rogue.temporaryCurrency)==0 and model.state.abyss.rogue.selectedRewards.is_empty(),"only ending clears temporary currency and blessings")
 	var restored = Game.new(model.save_dir)
 	var summary_matches: bool = not restored.save_blocked and str(restored.state.abyss.lastRun.get("outcome", "")) == str(model.state.abyss.lastRun.outcome)
 	for key in ["floorsCleared", "metaEarned", "blessings", "coinsLost"]:

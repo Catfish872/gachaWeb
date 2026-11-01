@@ -72,9 +72,11 @@ class AndroidSmokeDriverTests(unittest.TestCase):
         paused={'seq':11,'application_paused':True,'extraction':{'searching':True,'bag_ids':[]},'loot':{'scan_uid':'u','scan_progress':.3,'source':[{'uid':'u','revealed':False}]}}
         resumed=json.loads(json.dumps(paused));resumed['seq']=12;resumed['application_paused']=False
         with TemporaryDirectory() as directory,patch.object(smoke,'adb') as adb,patch.object(smoke,'wait_for_completed_background'),patch.object(smoke,'wait_probe_event',side_effect=[paused,resumed]):
-            coverage={}
+            coverage={'reason':'No natural long scan observed'}
             smoke.check_search_background(before,'pkg/Activity',Path(directory),coverage)
             self.assertTrue(coverage['covered'])
+            self.assertNotIn('reason', coverage)
+            self.assertNotIn('reason', json.loads((Path(directory)/'search-background.json').read_text()))
             self.assertEqual(adb.call_args_list[0].args,('shell','input','keyevent','KEYCODE_HOME'))
             self.assertEqual(adb.call_args_list[1].args,('shell','am','start','-W','-n','pkg/Activity'))
         resumed['loot']['scan_progress']=.8
@@ -436,6 +438,73 @@ class AndroidSmokeDriverTests(unittest.TestCase):
         presets = (ROOT / 'export_presets.cfg').read_text()
         self.assertEqual(presets.count('architectures/x86_64=false'), 2)
         self.assertNotIn('android_runtime_probe', (ROOT / 'main.tscn').read_text())
+
+
+class AndroidUpdateNetworkPolicyTests(unittest.TestCase):
+    def test_actual_request_policy_must_allow_metered_but_not_roaming(self):
+        policy={'metered_permitted':True,'roaming_permitted':False}
+        self.assertEqual(smoke.validate_android_bridge({'success':True,'package':smoke.PACKAGE,'network_policy':policy}),policy)
+
+    def test_wifi_only_or_missing_policy_is_not_a_native_pass(self):
+        for policy in [{},{'metered_permitted':False,'roaming_permitted':False},{'metered_permitted':True,'roaming_permitted':True}]:
+            with self.subTest(policy=policy),self.assertRaises(AssertionError):
+                smoke.validate_android_bridge({'success':True,'package':smoke.PACKAGE,'network_policy':policy})
+
+    def test_policy_cannot_hide_failed_native_bridge(self):
+        with self.assertRaises(AssertionError):
+            smoke.validate_android_bridge({'success':False,'package':smoke.PACKAGE,'network_policy':{'metered_permitted':True,'roaming_permitted':False}})
+
+
+class WarehouseNativeFlowTests(unittest.TestCase):
+    def states(self, bad_drag=False):
+        import copy
+        def state(count=2, multi=False, selected=(), placement=False, x=1, y=0):
+            items=[{'uid':'bandage-uid','item_id':'bandage','x':0,'y':0,'rotated':False,'icon_loaded':True,'rect':[10,40,40,40],'clip':[0,0,500,300]},
+                   {'uid':'medkit-uid','item_id':'medkit','x':x,'y':y,'rotated':False,'icon_loaded':True,'rect':[10,40,40,40],'clip':[0,0,500,300]}]
+            names=['ExtractionShopFilter_consumable','ExtractionBuy_bandage','ExtractionMove_medkit-uid']
+            buttons=[{'name':name,'rect':[20,20,40,40]} for name in names]
+            buttons += [{'name':'ExtractionInventoryCell_4_0','rect':[200,40,40,40]}, {'name':'ExtractionInventoryCell_6_1','rect':[280,80,40,40]}]
+            return {'extraction':{'stash_count':count},'buttons':buttons,'inventory':{'items':items,'multi_select':multi,'selected_uids':list(selected),'selected_uid':'medkit-uid','placement_mode':placement,'placement_uid':'medkit-uid','clip':[0,0,500,300],'rect':[0,0,500,600]}}
+        return [state(0),state(0),state(1),state(2),state(),state(multi=True),
+                state(multi=True,selected=['bandage-uid']),state(multi=True,selected=['bandage-uid','medkit-uid']),
+                state(),state(),state(placement=True),state(placement=not bad_drag,x=4 if bad_drag else 1,y=1 if bad_drag else 0),state(x=4,y=1),
+                dict(state(x=4,y=1),inventory=dict(state(x=4,y=1)['inventory'],selected_uid='bandage-uid')),
+                dict(state(x=4,y=1),inventory=dict(state(x=4,y=1)['inventory'],selected_uid='bandage-uid')),state(x=4,y=1)]
+
+    def run_flow(self, bad_drag=False):
+        import tempfile
+        frames=self.states(bad_drag)
+        for frame in frames[-2:]:frame['inventory']['rect'][1]=-20
+        states=iter(frames)
+        actions=[]
+        def wait(predicate, description, *args, **kwargs):
+            current=next(states)
+            if not predicate(current):raise AssertionError(description)
+            return current
+        def tap(state,name,*args,**kwargs):actions.append(name)
+        with tempfile.TemporaryDirectory() as folder, patch.object(smoke,'wait_for',side_effect=wait), patch.object(smoke,'tap',side_effect=tap), patch.object(smoke,'tap_page',side_effect=tap), patch.object(smoke,'adb') as adb, patch.object(smoke,'screenshot'):
+            result=smoke.warehouse_input_flow({'extraction':{'stash_count':0}},Path(folder))
+            self.assertEqual(smoke.inventory_positions(result)['medkit-uid'],('medkit',4,1,False))
+            self.assertTrue((Path(folder)/'warehouse-selection.json').exists())
+            self.assertTrue((Path(folder)/'warehouse-drag-preserved.json').exists())
+            self.assertTrue((Path(folder)/'warehouse-move.json').exists())
+            self.assertEqual(actions.count('ExtractionInventoryItem_bandage-uid'),2)
+            self.assertEqual(actions.count('ExtractionInventoryItem_medkit-uid'),3)
+            self.assertEqual(actions.count('ExtractionInventoryCell_4_1'),1)
+            self.assertTrue(any(c.args[:3]==('shell','input','swipe') for c in adb.call_args_list))
+
+    def test_real_purchase_select_cancel_drag_and_target_tap_sequence(self):
+        self.run_flow()
+
+    def test_drag_cannot_pass_if_it_commits_placement(self):
+        with self.assertRaisesRegex(AssertionError,'finger drag must not commit'):
+            self.run_flow(True)
+
+    def test_unrelated_selection_uid_cannot_pass_exact_two_item_check(self):
+        frames=self.states()
+        frames[7]['inventory']['selected_uids']=['bandage-uid','unrelated-uid']
+        with patch.object(self,'states',return_value=frames), self.assertRaisesRegex(AssertionError,'exact touch selection medkit-uid'):
+            self.run_flow()
 
 
 if __name__ == '__main__':

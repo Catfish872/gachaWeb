@@ -1,0 +1,68 @@
+[
+  {
+    "path": "assets/characters/ayla.png",
+    "sha256": "7fd47c6392edd607383dc3b43ffc52bf1d32788aeb1a85753b1a5f91f0a3504b",
+    "v220_baseline_sha256": "7fd47c6392edd607383dc3b43ffc52bf1d32788aeb1a85753b1a5f91f0a3504b",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/bolt.png",
+    "sha256": "fedc75f05144ce79e7e2cf4bb051ed8548744a9426bf756c0e303b178d47766b",
+    "v220_baseline_sha256": "fedc75f05144ce79e7e2cf4bb051ed8548744a9426bf756c0e303b178d47766b",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/cinder.png",
+    "sha256": "b0adafcca532438d5730e3a373d0b407853773d1943ad20a5e4ee90a690cb711",
+    "v220_baseline_sha256": "b0adafcca532438d5730e3a373d0b407853773d1943ad20a5e4ee90a690cb711",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/ember.png",
+    "sha256": "e3da2766b2890ea25beb9b740020ffe464029872b99883559e456fb72ab14d6e",
+    "v220_baseline_sha256": "e3da2766b2890ea25beb9b740020ffe464029872b99883559e456fb72ab14d6e",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/gus.png",
+    "sha256": "cf1968b54b218e61442be915e948d72bcb042ae0234c51cb51131604f74ab4ff",
+    "v220_baseline_sha256": "cf1968b54b218e61442be915e948d72bcb042ae0234c51cb51131604f74ab4ff",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/kaldi-battle.png",
+    "sha256": "96415b2ae61d06f2775dd6ca846ea0ef77fd90008a7e2b9f2312adc986a7a465",
+    "v220_baseline_sha256": "96415b2ae61d06f2775dd6ca846ea0ef77fd90008a7e2b9f2312adc986a7a465",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/kaldi.png",
+    "sha256": "9f868f5517d95b422b2dfb35674170f9a174c1baef31039c76c3ba03e3416c54",
+    "v220_baseline_sha256": "9f868f5517d95b422b2dfb35674170f9a174c1baef31039c76c3ba03e3416c54",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/lorin.png",
+    "sha256": "ad9fa618ff30fcf717ef660904aeebccafdd351daee70538bf3fb15582b0d107",
+    "v220_baseline_sha256": "ad9fa618ff30fcf717ef660904aeebccafdd351daee70538bf3fb15582b0d107",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/shana.png",
+    "sha256": "17961699898acf129c1de6bba69f088a4f7db9f4ee720b0cef1c57f639713cb5",
+    "v220_baseline_sha256": "17961699898acf129c1de6bba69f088a4f7db9f4ee720b0cef1c57f639713cb5",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/tide.png",
+    "sha256": "1df0853a9b3dc5b446f708333ca6deabe46a71903bf6d4841a44bf6b72cd2f70",
+    "v220_baseline_sha256": "1df0853a9b3dc5b446f708333ca6deabe46a71903bf6d4841a44bf6b72cd2f70",
+    "matches_v220": true
+  },
+  {
+    "path": "assets/characters/zeph.png",
+    "sha256": "b1b5abccfe7e1adbf01446de14ce7e6d6229fa5aa772a84d3b8366c6770017b0",
+    "v220_baseline_sha256": "b1b5abccfe7e1adbf01446de14ce7e6d6229fa5aa772a84d3b8366c6770017b0",
+    "matches_v220": true
+  }
+]

@@ -1,0 +1,137 @@
+{
+  "origin": "Original deterministic synthesized waveforms and filtered noise; no third-party sample or music copied. Seed 24011.",
+  "license": "Original project asset; no third-party attribution obligation",
+  "subjective_listening_verified": false,
+  "effects": [
+    {
+      "id": "slash",
+      "path": "res://assets/audio/battle/slash.ogg",
+      "duration": 0.2510657596371882,
+      "peak": 0.45990505814552307,
+      "rms": 0.08464747667312622,
+      "finite": true,
+      "bytes": 5939,
+      "sha256": "e4bc7ebf8acc29b856bc4626b5a3d98a00dad5e2045f1e900bc7c861ccca332e"
+    },
+    {
+      "id": "blunt",
+      "path": "res://assets/audio/battle/blunt.ogg",
+      "duration": 0.23709750566893423,
+      "peak": 0.4748949408531189,
+      "rms": 0.084972083568573,
+      "finite": true,
+      "bytes": 5968,
+      "sha256": "80a1adc9b938b759e2353fe400e450f7d9d787eda53f45842b3e58a07554003f"
+    },
+    {
+      "id": "fire",
+      "path": "res://assets/audio/battle/fire.ogg",
+      "duration": 0.37709750566893424,
+      "peak": 0.41221728920936584,
+      "rms": 0.05580798164010048,
+      "finite": true,
+      "bytes": 7401,
+      "sha256": "b0a3d6432466a10de563b9ae8eb4e05f2cb8d26fdb9dfb6ab9094a185dd08eda"
+    },
+    {
+      "id": "water",
+      "path": "res://assets/audio/battle/water.ogg",
+      "duration": 0.33709750566893426,
+      "peak": 0.46092313528060913,
+      "rms": 0.08608595281839371,
+      "finite": true,
+      "bytes": 6958,
+      "sha256": "070e22b667ab30fcd080cf1f24698178359611bc1faf3bf2ec82d707a009b26d"
+    },
+    {
+      "id": "ice",
+      "path": "res://assets/audio/battle/ice.ogg",
+      "duration": 0.33709750566893426,
+      "peak": 0.5006536841392517,
+      "rms": 0.08068174123764038,
+      "finite": true,
+      "bytes": 6684,
+      "sha256": "753a7219e94cc631b32afe3fc52c1b607f510c80e759513b90f15605c4550776"
+    },
+    {
+      "id": "thunder",
+      "path": "res://assets/audio/battle/thunder.ogg",
+      "duration": 0.31709750566893424,
+      "peak": 0.47622641921043396,
+      "rms": 0.05530330911278725,
+      "finite": true,
+      "bytes": 8189,
+      "sha256": "d4d70ed2d87c5ea19324d1318b90847afbc085576729e0a8ae954d0551eb628a"
+    },
+    {
+      "id": "wind",
+      "path": "res://assets/audio/battle/wind.ogg",
+      "duration": 0.3613605442176871,
+      "peak": 0.4680021405220032,
+      "rms": 0.08018387854099274,
+      "finite": true,
+      "bytes": 7064,
+      "sha256": "320c636d482270fb1fa1bb5543664269d745d2e8f4e72bf95db98addd164e639"
+    },
+    {
+      "id": "heal",
+      "path": "res://assets/audio/battle/heal.ogg",
+      "duration": 0.5006802721088436,
+      "peak": 0.32163599133491516,
+      "rms": 0.08751999586820602,
+      "finite": true,
+      "bytes": 5341,
+      "sha256": "e1db78da9b28f1f9a3ba5080e7b8f1ae3736181ac2736aff0dfe67f122b41075"
+    },
+    {
+      "id": "shield_cast",
+      "path": "res://assets/audio/battle/shield_cast.ogg",
+      "duration": 0.39709750566893426,
+      "peak": 0.3783024549484253,
+      "rms": 0.11290125548839569,
+      "finite": true,
+      "bytes": 4994,
+      "sha256": "d4b8a06bc82037ae38e767715ae7c19dfffe138ea7fe7e7ec535ac4c8391f895"
+    },
+    {
+      "id": "shield_hit",
+      "path": "res://assets/audio/battle/shield_hit.ogg",
+      "duration": 0.21709750566893424,
+      "peak": 0.47087278962135315,
+      "rms": 0.06541606783866882,
+      "finite": true,
+      "bytes": 5773,
+      "sha256": "33a1bdacce53a1f13ed2c670b87e28ffd6099d3016cb7b98e94bfc407e5f22d1"
+    },
+    {
+      "id": "shield_break",
+      "path": "res://assets/audio/battle/shield_break.ogg",
+      "duration": 0.3570975056689342,
+      "peak": 0.4598584473133087,
+      "rms": 0.046113673597574234,
+      "finite": true,
+      "bytes": 7138,
+      "sha256": "df2c2b9b20ba4ad1f18a0f4d4d1aeec0f8ff327f2521d1ccc7e9604d5eda0086"
+    },
+    {
+      "id": "critical",
+      "path": "res://assets/audio/battle/critical.ogg",
+      "duration": 0.21709750566893424,
+      "peak": 0.43557366728782654,
+      "rms": 0.05228889361023903,
+      "finite": true,
+      "bytes": 5799,
+      "sha256": "fe194888e98ad081f9f88456c455f3e8118e27371da528f225d01b7693471299"
+    },
+    {
+      "id": "ultimate",
+      "path": "res://assets/audio/battle/ultimate.ogg",
+      "duration": 0.6170975056689343,
+      "peak": 0.45491355657577515,
+      "rms": 0.08501838892698288,
+      "finite": true,
+      "bytes": 9412,
+      "sha256": "3b5580eee0035bf485d2c2c4b912ff63f5c53af386d53171709924657c27a3f6"
+    }
+  ]
+}

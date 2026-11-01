@@ -21,7 +21,7 @@ func make(x,id:String,value:int=-1)->Dictionary:
 	return item
 func _init()->void:
 	var g=Game.new("");var x=g.extraction;g.rng.seed=13400001
-	ck(g.state.version==7 and g.valid_save(g.state),"v7 defaults")
+	ck(g.state.version==9 and g.valid_save(g.state),"v7 defaults")
 	ck(x.data.items.size()==128,"128 real item definitions")
 	var armor_uid:=buy_equip(g,"armor_5","armor")
 	var pack_uid:=buy_equip(g,"pack_5","backpack")
@@ -93,7 +93,7 @@ func _init()->void:
 	old.extraction.run.bag[0].erase("legacyValue");old.extraction.run.bag[0].appraisalRisk=5
 	var old_price:=int(x.item_def(old.extraction.run.bag[0].itemId).v6Value)*4
 	g.state=g._normalize(old)
-	ck(g.state.version==7 and x.item_value(x.run().bag[0])==old_price,"v6 physical value preserved")
+	ck(g.state.version==9 and x.item_value(x.run().bag[0])==old_price,"v6 physical value preserved")
 	before=g.state.duplicate(true);g.state=g._normalize(g.state)
 	ck(g.state==before,"v7 normalize idempotent")
 	ck(x.retreat().success,"retreat preserves equipped utility")
@@ -148,9 +148,9 @@ func _init()->void:
 	c=x.run().containers.back();var key_uid:String=c.items[0].uid
 	ck(c.items[0].itemId==x._room_key_id(),"key matches actual district")
 	ck(x.reveal_next(c.id).success,"key visible in room")
-	ck(not x.take_item(c.id,key_uid).success,"full bag leaves key in room")
-	ck(x.discard_item(x.run().bag[0].uid).success,"make key space")
-	ck(x.take_item(c.id,key_uid).success,"key pickup")
+	ck(x.take_item(c.id,key_uid).success,"full bag key enters independent ring")
+	ck(x.run().bag.size()==60,"key uses zero bag cells")
+	ck(not x.take_item(c.id,key_uid).success,"key pickup replay refused")
 	room(x,"key_vault");x._prepare_room_actions("key_vault")
 	before=g.state.duplicate(true);g.save_blocked=true
 	ck(not x.choose_room_action("unlock").success and g.state==before,"key and chest unlock atomic")
@@ -239,7 +239,7 @@ func _init()->void:
 	var old_gold:int=legacy.resources.gold
 	var encounter:Dictionary=legacy.extraction.run.activeEncounter.duplicate(true)
 	g.state=g._normalize(legacy)
-	ck(g.valid_save(g.state) and g.state.version==7,"genuine v6 active migration valid")
+	ck(g.valid_save(g.state) and g.state.version==9,"genuine v6 active migration valid")
 	ck(g.state.resources.gold==old_gold and x.run().bag.size()==30 and x.run().equipped.size()==1,"v6 full bag equipment and gold retained")
 	ck(x.run().activeEncounter==encounter and x.run().blessings.size()==1,"v6 battle seed budget and build retained")
 	ck(x.run().containers[0].items[0].revealed and not x.run().containers[0].items[1].revealed,"partial search retained")

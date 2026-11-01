@@ -61,8 +61,9 @@ func probe() -> Dictionary:
 	var uri_class = _wrapper.wrap("android.net.Uri")
 	var request = request_class.call("DownloadManager$Request", uri_class.parse("https://github.com/Catfish872/gachaWeb/releases"))
 	var request_ok := request != null
+	var metered_ok := request != null and request.setAllowedOverMetered(true) != null
 	if request_ok:
-		request_ok = request.setTitle("更新接口检查") != null and request.setMimeType(MIME_APK) != null and request.setAllowedOverMetered(false) != null and request.setAllowedOverRoaming(false) != null and request.setNotificationVisibility(1) != null
+		request_ok = request.setTitle("更新接口检查") != null and request.setMimeType(MIME_APK) != null and metered_ok and request.setAllowedOverRoaming(false) != null and request.setNotificationVisibility(1) != null
 	var intent_class = _wrapper.wrap("android.content.Intent")
 	var content_uri = uri_class.parse("content://downloads/all_downloads/-1")
 	var intent = intent_class.Intent("android.intent.action.VIEW")
@@ -80,7 +81,7 @@ func probe() -> Dictionary:
 	var query_ok := cursor != null
 	if cursor != null:
 		cursor.close()
-	return {"success": request_ok and intent_ok and settings_ok and runnable != null and permission_read_ok and query != null and query_ok, "package": str(_context.getPackageName()), "install_allowed": install_allowed}
+	return {"success": request_ok and intent_ok and settings_ok and runnable != null and permission_read_ok and query != null and query_ok, "package": str(_context.getPackageName()), "install_allowed": install_allowed, "network_policy": {"metered_permitted": metered_ok, "roaming_permitted": false}}
 
 func begin(url: String, tag: String, sha256: String, size_bytes: int) -> Error:
 	if not _bridge():
@@ -100,7 +101,7 @@ func begin(url: String, tag: String, sha256: String, size_bytes: int) -> Error:
 	request.setTitle("虚空裂变 " + tag.trim_prefix("android-v"))
 	request.setDescription("下载完成后在游戏内确认安装，存档保留")
 	request.setMimeType(MIME_APK)
-	request.setAllowedOverMetered(false)
+	request.setAllowedOverMetered(true)
 	request.setAllowedOverRoaming(false)
 	request.setNotificationVisibility(1)
 	request.setDestinationInExternalFilesDir(_context, "updates", proposed.filename)
@@ -117,7 +118,7 @@ func begin(url: String, tag: String, sha256: String, size_bytes: int) -> Error:
 	proposed.id = id
 	record = proposed
 	_save()
-	_set_download_state({"status": "downloading", "message": "正在自动下载更新（仅 Wi-Fi）", "progress": 0.0, "tag": tag})
+	_set_download_state({"status": "downloading", "message": "正在自动下载更新", "progress": 0.0, "tag": tag})
 	return OK
 
 func _process(delta: float) -> void:
@@ -167,7 +168,7 @@ func _poll() -> void:
 		_set_download_state({"status": "download_error", "message": "系统下载失败（%d），可以取消后重试" % reason})
 	else:
 		var fraction := clampf(float(received) / maxf(1, float(total)), 0, 1) if total > 0 else 0.0
-		_set_download_state({"status": "downloading", "message": "等待 Wi-Fi 或系统恢复下载" if status == 4 else "正在自动下载更新 · %d%%" % int(fraction * 100), "progress": fraction, "tag": str(record.tag)})
+		_set_download_state({"status": "downloading", "message": "等待网络或系统恢复下载" if status == 4 else "正在自动下载更新 · %d%%" % int(fraction * 100), "progress": fraction, "tag": str(record.tag)})
 
 func can_install() -> bool:
 	if not _bridge():

@@ -1,0 +1,205 @@
+{
+  "abyss": {
+    "currentFloor": 20,
+    "lastFreeResetTime": 0,
+    "lastRun": {
+
+    },
+    "maxFloor": 19,
+    "meta": {
+      "currency": 0,
+      "runsCompleted": 0,
+      "runsLost": 0,
+      "selectedDifficulty": 0,
+      "totalEarned": 0,
+      "unlockedDifficulty": 0,
+      "upgrades": {
+        "offense": 0,
+        "recovery": 0,
+        "supply": 0,
+        "vitality": 0
+      }
+    },
+    "rogue": {
+      "activeEncounter": {
+        "_team": [
+          "ember",
+          "zeph",
+          null
+        ],
+        "abyssLayer": 20,
+        "difficulty": 0,
+        "encounterTier": "boss",
+        "enemies": [
+          "boss_storm_witch"
+        ],
+        "floor": 20,
+        "id": "abyss_floor_20",
+        "isAbyss": true,
+        "isBoss": true,
+        "isElite": false,
+        "name": "深渊 第 20 层",
+        "rewards": {
+          "diamonds": 100,
+          "exp": 135,
+          "gold": 400,
+          "relicDrop": {
+            "rarity": 5,
+            "slotId": "boots"
+          }
+        },
+        "runLength": 20,
+        "scaleMult": 1.0,
+        "seed": 256490081,
+        "staminaCost": 0,
+        "token": "battle_1793525183325_3_3995866658",
+        "waves": [
+          {
+            "enemies": [
+              "boss_storm_witch"
+            ]
+          }
+        ]
+      },
+      "characterFocus": {
+
+      },
+      "difficulty": 0,
+      "eligibleCharacters": [],
+      "eventHistory": [],
+      "floorsCleared": 19,
+      "metaEarned": 0,
+      "nextStep": {
+        "floor": 0,
+        "type": "none"
+      },
+      "pendingChoices": [],
+      "pendingNode": {
+
+      },
+      "runId": "abyss_1793525183325_1_592095893",
+      "runTeam": [
+        "ember",
+        "zeph",
+        null
+      ],
+      "selectedRewards": [],
+      "shopStock": [],
+      "temporaryCurrency": 30
+    },
+    "savedPartyState": [
+      {
+        "cooldowns": {
+
+        },
+        "currentHp": 595,
+        "energy": 30,
+        "id": "ember",
+        "maxHp": 850
+      },
+      {
+        "cooldowns": {
+
+        },
+        "currentHp": 560,
+        "energy": 30,
+        "id": "zeph",
+        "maxHp": 800
+      }
+    ]
+  },
+  "chapterGiftClaimed": {
+
+  },
+  "createdAt": 1793525183324,
+  "dailyMissions": {
+    "completed": [],
+    "lastReset": 0
+  },
+  "dialogueSeen": {
+
+  },
+  "extraction": {
+    "collection": [],
+    "credits": 0,
+    "keyring": [],
+    "lastRun": {
+
+    },
+    "loadout": [],
+    "mailbox": [],
+    "run": {
+
+    },
+    "runs": 0,
+    "stash": [],
+    "unlockedDifficulty": 0,
+    "utility": {
+      "armor": {
+
+      },
+      "backpack": {
+
+      }
+    }
+  },
+  "lastSaved": 1793525183325,
+  "ownedCharacters": {
+    "ember": {
+      "awakening": 0,
+      "breakthroughLevel": 0,
+      "constellation": 0,
+      "equippedRelics": {
+
+      },
+      "exp": 0,
+      "level": 1,
+      "shards": 3
+    },
+    "zeph": {
+      "awakening": 0,
+      "breakthroughLevel": 0,
+      "constellation": 0,
+      "equippedRelics": {
+
+      },
+      "exp": 0,
+      "level": 1,
+      "shards": 1
+    }
+  },
+  "pityCounters": {
+    "limited_kaldi": {
+      "count": 0,
+      "count4": 0,
+      "guaranteedFeatured": false
+    },
+    "standard": {
+      "count": 0,
+      "count4": 0,
+      "guaranteedFeatured": false
+    }
+  },
+  "relics": [],
+  "resources": {
+    "diamonds": 1600,
+    "gold": 50000,
+    "stamina": 100,
+    "staminaLastUpdate": 1793525183324
+  },
+  "stageProgress": {
+
+  },
+  "stats": {
+    "totalBattles": 0,
+    "totalGoldSpent": 0,
+    "totalPulls": 0,
+    "totalVictories": 0
+  },
+  "team": [
+    "ember",
+    "zeph",
+    null
+  ],
+  "version": 8
+}

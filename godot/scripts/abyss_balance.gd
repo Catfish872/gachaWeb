@@ -5,7 +5,6 @@ extends RefCounted
 
 const VERSION := 2
 const MAX_ENEMY_SPEED := 145.0
-const MAX_SAFE_FLOOR := 10000
 const MODIFIERS := {
 	"bulwark": {"id": "bulwark", "name": "铁甲阵", "description": "生命 +15%，防御 +20%，速度 −10%。",
 		"statMult": {"hp": 1.15, "atk": 1.0, "def": 1.20, "spd": 0.90}},
@@ -19,11 +18,11 @@ static func modifier(id: String) -> Dictionary:
 	return MODIFIERS.get(id, {}).duplicate(true)
 
 static func scale(floor_number: int, enemy_data: Dictionary = {}) -> Dictionary:
-	var n := float(clampi(floor_number, 1, MAX_SAFE_FLOOR) - 1)
+	var n := float(maxi(floor_number, 1) - 1)
 	var first_act := minf(n, 19.0)
 	var later := maxf(0.0, n - 19.0)
-	# Within the twenty-floor expedition, HP drives encounter length; attack
-	# grows more slowly, defense slower still. Beyond it, growth stays linear.
+	# In the first twenty floors, HP drives encounter length; attack
+	# grows more slowly, defense slower still. Endless floors extend linearly.
 	var hp := 0.90 + first_act * 0.11 + later * 0.14
 	var attack := 0.85 + first_act * 0.045 + later * 0.060
 	var defense := minf(3.0, 0.85 + first_act * 0.018 + later * 0.008)

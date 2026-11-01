@@ -1,0 +1,1431 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS default save validates
+PASS all ten characters and stages loaded
+PASS original starter resources
+PASS starter team and shards
+PASS original exponential EXP curve capped
+PASS empty party rejected atomically
+PASS duplicate party rejected atomically
+PASS unowned party rejected atomically
+PASS one-character party padded to three slots
+PASS starter party restored
+PASS training spends 500 for100 EXP
+PASS large EXP settles to capped level10
+PASS max-level training rejected without charging
+PASS constellation C1 unlock
+PASS constellation C2 unlock
+PASS constellation C3 unlock
+PASS constellation C4 unlock
+PASS constellation C5 unlock
+PASS constellation C6 unlock
+PASS C6 cap enforced
+PASS constellation descriptions and exclusiveC6
+PASS level and constellation calculated stats
+PASS dialogue seen persists valid keys
+PASS unknown pool rejected
+PASS negative pulls rejected
+PASS oversized pull request rejected
+PASS ten-pull cost and result count
+PASS tenth pull guarantees four-star
+PASS pull currency and statistics
+PASS insufficient pull is atomic
+PASS hard pity and lost featured flag
+PASS next hard pity guarantees featured
+PASS soft pity starts at count73
+PASS five-star duplicate gives25shards
+PASS source nonfeatured Kaldi branch preserved
+PASS original JavaScript parity: 930 pulls, 2047 RNG draws, all outcomes-pity-balances-shards
+PASS generate valid 3-star helmet
+PASS generate valid 3-star chest
+PASS generate valid 3-star belt
+PASS generate valid 3-star boots
+PASS generate valid 3-star necklace
+PASS generate valid 4-star helmet
+PASS generate valid 4-star chest
+PASS generate valid 4-star belt
+PASS generate valid 4-star boots
+PASS generate valid 4-star necklace
+PASS generate valid 5-star helmet
+PASS generate valid 5-star chest
+PASS generate valid 5-star belt
+PASS generate valid 5-star boots
+PASS generate valid 5-star necklace
+PASS complete relic slot and rarity inventory
+PASS original0to25 upgrade cost exactly8000
+PASS invalid equip leaves ownership intact
+PASS equip links both inventory and owner
+PASS equipped relic stats contribute
+PASS relic transfers between owners
+PASS max upgrade six substat rolls
+PASS relic max25 prevents spending
+PASS combined bulk salvage protects equipped relic
+PASS unequip maintains both links
+PASS single salvage returns rarity plus upgrade value
+PASS empty salvage reports failure
+PASS same-slot replacement unequips prior relic
+PASS single equipped salvage cleans owner map
+PASS stamina recovers six-minute ticks with remainder
+PASS stamina countdown preserves remainder
+PASS offline stamina caps at100
+PASS overflow stamina preserved during recovery
+PASS clock rollback resets baseline without granting stamina
+PASS gold item purchase
+PASS simulated recharge rewards cap stamina300
+PASS item stamina uses same overflow cap
+PASS legacy overflow above300 preserved without further growth
+PASS reserved fragment shop has no mutations
+PASS unknown shop item rejected
+PASS insufficient item currency atomic
+PASS locked chapter rejected before stamina charge
+PASS unknown stage rejected before stamina charge
+PASS empty team rejected before stamina charge
+PASS valid stage deducts original stamina
+PASS unfinished battle cannot settle
+PASS first-clear gems awarded from authoritative config
+PASS replayed victory cannot duplicate rewards
+PASS repeat stage excludes first-clear gems
+PASS cannot skip uncleared story stages
+PASS chapterone penultimate gift grants Kaldi
+PASS chapter gift is one-time
+PASS boss clear unlocks next chapter
+PASS chaptertwo penultimate gift grants Ayla
+PASS retreat records defeat without rewards
+PASS victory and defeat statistics count once
+PASS gift duplicate converts25shards
+PASS cannot overwrite a pending story encounter
+PASS original encounter still settles
+PASS abyss floor1 prepares free
+PASS abyss floor1 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS abyss floor2 prepares free
+PASS abyss floor2 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending route gates combat
+PASS node has safe free option
+PASS node resolves
+PASS pending rest gates combat
+PASS node has safe free option
+PASS node resolves
+PASS abyss floor3 prepares free
+PASS abyss floor3 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS abyss floor4 prepares free
+PASS abyss floor4 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending route gates combat
+PASS node has safe free option
+PASS node resolves
+PASS pending rest gates combat
+PASS node has safe free option
+PASS node resolves
+PASS abyss floor5 prepares free
+PASS abyss floor5 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending shop gates combat
+PASS shop can leave without purchase
+PASS abyss floor6 prepares free
+PASS abyss floor6 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS abyss floor7 prepares free
+PASS abyss floor7 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending route gates combat
+PASS node has safe free option
+PASS node resolves
+PASS pending shop gates combat
+PASS shop can leave without purchase
+PASS abyss floor8 prepares free
+PASS abyss floor8 advances and records
+PASS floor win grants separate run and permanent currency
+PASS HP-energy-cooldown state carried
+PASS pending rest gates combat
+PASS node has safe free option
+PASS node resolves
+PASS abyss floor9 prepares free
+PASS abyss floor9 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS abyss floor10 prepares free
+PASS abyss floor10 advances and records
+PASS floor win grants separate run and permanent currency
+PASS reward floor three choices
+PASS boss offers gold blessings
+PASS HP-energy-cooldown state carried
+PASS pending reward gates combat
+PASS three distinct blessing choices
+PASS blessing selected
+PASS blessing cannot replay
+PASS selected blessings feed combat effects
+PASS five-star eligibility captured
+PASS victory recovery heals living18percent and preserves fallen
+PASS pending route gates combat
+PASS node has safe free option
+PASS node resolves
+PASS pending shop gates combat
+PASS shop can leave without purchase
+PASS defeat resets floor and run but preserves best
+PASS earned permanent fragments survive defeat
+PASS free restart
+PASS repeat restart is free without daily wall
+PASS legacy paid flag no longer charges gems
+PASS restarts always available
+PASS new slot file persisted
+PASS slot2 independent default
+PASS restart restores active slot and resources
+PASS switch restores slot1 resources
+PASS three summaries include empty slot
+PASS native export file created
+PASS export uses v6 envelope with original game identity
+PASS inactive slot import preserves active state
+PASS inactive slot export preserves active state
+PASS original web export imports resources and progression
+PASS web imported relic equipment links retained
+PASS web imported progression and gift flags retained
+PASS raw webv3 save import
+PASS malformed import preserves memory and disk
+PASS malformed import preserves memory and disk
+PASS malformed import preserves memory and disk
+PASS malformed import preserves memory and disk
+PASS malformed import preserves memory and disk
+PASS malformed nested timestamp rejected
+PASS malformed relic rejected
+PASS v2 migration fills additions and preserves extension fields
+PASS inactive slot reset leaves active selection
+PASS corrupt startup preserves original bytes
+PASS corrupt slot blocks implicit overwrite
+PASS valid slot accessible after corrupt slot
+PASS explicit reset repairs corrupt slot
+PASS failed gacha persistence rolls back currency-pity-collection
+PASS failed training persistence rolls back character and gold
+PASS failed shop persistence rolls back all resources
+PASS unknown malformed rogue reward rejected atomically
+PASS known rogue reward missing statusId rejected
+PASS known rogue reward nonnumeric value rejected
+PASS failed active-slot metadata keeps original active state
+MODEL TEST RESULTS: 230 passed, 0 failed
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+BATTLE TESTS: 554 checks; 30 player skills; 23 enemy skills; 26 rogue rewards exercised; 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: 60 original-JS character stat cases match; differences=[]
+PASS: raw web v3 save imports
+PASS: import retains resources and progression
+PASS: import retains upgraded equipped relic
+PASS: original browser export envelope imports
+PASS: import retains dialogue and chapter gift
+PASS: new player can launch first stage
+PASS: battle terminates: ch1_1 steps=9
+PASS: starter party can win first stage at default stats
+PASS: starter battle settles
+PASS: stage is reachable: ch1_1
+PASS: battle terminates: ch1_1 steps=2
+PASS: mature party clears ch1_1
+PASS: stage settlement ch1_1
+PASS: first-clear gems granted ch1_1
+PASS: duplicate settlement blocked ch1_1
+PASS: stage is reachable: ch1_2
+PASS: battle terminates: ch1_2 steps=2
+PASS: mature party clears ch1_2
+PASS: stage settlement ch1_2
+PASS: first-clear gems granted ch1_2
+PASS: duplicate settlement blocked ch1_2
+PASS: stage is reachable: ch1_3
+PASS: battle terminates: ch1_3 steps=2
+PASS: mature party clears ch1_3
+PASS: stage settlement ch1_3
+PASS: first-clear gems granted ch1_3
+PASS: duplicate settlement blocked ch1_3
+PASS: stage is reachable: ch1_4
+PASS: battle terminates: ch1_4 steps=3
+PASS: mature party clears ch1_4
+PASS: stage settlement ch1_4
+PASS: first-clear gems granted ch1_4
+PASS: duplicate settlement blocked ch1_4
+PASS: stage is reachable: ch1_5
+PASS: battle terminates: ch1_5 steps=5
+PASS: mature party clears ch1_5
+PASS: stage settlement ch1_5
+PASS: first-clear gems granted ch1_5
+PASS: duplicate settlement blocked ch1_5
+PASS: stage is reachable: ch2_1
+PASS: battle terminates: ch2_1 steps=2
+PASS: mature party clears ch2_1
+PASS: stage settlement ch2_1
+PASS: first-clear gems granted ch2_1
+PASS: duplicate settlement blocked ch2_1
+PASS: stage is reachable: ch2_2
+PASS: battle terminates: ch2_2 steps=3
+PASS: mature party clears ch2_2
+PASS: stage settlement ch2_2
+PASS: first-clear gems granted ch2_2
+PASS: duplicate settlement blocked ch2_2
+PASS: stage is reachable: ch2_3
+PASS: battle terminates: ch2_3 steps=5
+PASS: mature party clears ch2_3
+PASS: stage settlement ch2_3
+PASS: first-clear gems granted ch2_3
+PASS: duplicate settlement blocked ch2_3
+PASS: stage is reachable: ch2_4
+PASS: battle terminates: ch2_4 steps=4
+PASS: mature party clears ch2_4
+PASS: stage settlement ch2_4
+PASS: first-clear gems granted ch2_4
+PASS: duplicate settlement blocked ch2_4
+PASS: stage is reachable: ch2_5
+PASS: battle terminates: ch2_5 steps=6
+PASS: mature party clears ch2_5
+PASS: stage settlement ch2_5
+PASS: first-clear gems granted ch2_5
+PASS: duplicate settlement blocked ch2_5
+PASS: both chapter gifts resolve
+PASS: all ten stage wins deliver relics
+PASS: expedition floor launch 1
+PASS: battle terminates: abyss_floor_1 steps=2
+PASS: mature party clears expedition 1
+PASS: expedition settlement 1
+PASS: three blessing options after floor 1
+PASS: choice gates next encounter 1
+PASS: pending reward gates combat
+PASS: three distinct blessing choices
+PASS: blessing selected
+PASS: blessing cannot replay
+PASS: expedition floor launch 2
+PASS: battle terminates: abyss_floor_2 steps=2
+PASS: mature party clears expedition 2
+PASS: expedition settlement 2
+PASS: pending route gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: pending rest gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: expedition floor launch 3
+PASS: battle terminates: abyss_floor_3 steps=2
+PASS: mature party clears expedition 3
+PASS: expedition settlement 3
+PASS: three blessing options after floor 3
+PASS: choice gates next encounter 3
+PASS: pending reward gates combat
+PASS: three distinct blessing choices
+PASS: blessing selected
+PASS: blessing cannot replay
+PASS: expedition floor launch 4
+PASS: battle terminates: abyss_floor_4 steps=2
+PASS: mature party clears expedition 4
+PASS: expedition settlement 4
+PASS: pending route gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: pending rest gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: expedition floor launch 5
+PASS: battle terminates: abyss_floor_5 steps=3
+PASS: mature party clears expedition 5
+PASS: expedition settlement 5
+PASS: pending shop gates combat
+PASS: shop can leave without purchase
+PASS: expedition floor launch 6
+PASS: battle terminates: abyss_floor_6 steps=3
+PASS: mature party clears expedition 6
+PASS: expedition settlement 6
+PASS: three blessing options after floor 6
+PASS: choice gates next encounter 6
+PASS: pending reward gates combat
+PASS: three distinct blessing choices
+PASS: blessing selected
+PASS: blessing cannot replay
+PASS: expedition floor launch 7
+PASS: battle terminates: abyss_floor_7 steps=3
+PASS: mature party clears expedition 7
+PASS: expedition settlement 7
+PASS: pending route gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: pending shop gates combat
+PASS: shop can leave without purchase
+PASS: expedition floor launch 8
+PASS: battle terminates: abyss_floor_8 steps=2
+PASS: mature party clears expedition 8
+PASS: expedition settlement 8
+PASS: pending rest gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: expedition floor launch 9
+PASS: battle terminates: abyss_floor_9 steps=6
+PASS: mature party clears expedition 9
+PASS: expedition settlement 9
+PASS: three blessing options after floor 9
+PASS: choice gates next encounter 9
+PASS: pending reward gates combat
+PASS: three distinct blessing choices
+PASS: blessing selected
+PASS: blessing cannot replay
+PASS: expedition floor launch 10
+PASS: battle terminates: abyss_floor_10 steps=10
+PASS: mature party clears expedition 10
+PASS: expedition settlement 10
+PASS: three blessing options after floor 10
+PASS: choice gates next encounter 10
+PASS: pending reward gates combat
+PASS: three distinct blessing choices
+PASS: blessing selected
+PASS: blessing cannot replay
+PASS: expedition floor launch 11
+PASS: battle terminates: abyss_floor_11 steps=2
+PASS: mature party clears expedition 11
+PASS: expedition settlement 11
+PASS: pending route gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: pending shop gates combat
+PASS: shop can leave without purchase
+PASS: expedition floor launch 12
+PASS: battle terminates: abyss_floor_12 steps=3
+PASS: mature party clears expedition 12
+PASS: expedition settlement 12
+PASS: pending route gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: pending rest gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: expedition floor launch 13
+PASS: battle terminates: abyss_floor_13 steps=6
+PASS: mature party clears expedition 13
+PASS: expedition settlement 13
+PASS: three blessing options after floor 13
+PASS: choice gates next encounter 13
+PASS: pending reward gates combat
+PASS: three distinct blessing choices
+PASS: blessing selected
+PASS: blessing cannot replay
+PASS: expedition floor launch 14
+PASS: battle terminates: abyss_floor_14 steps=6
+PASS: mature party clears expedition 14
+PASS: expedition settlement 14
+PASS: pending route gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: pending rest gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: expedition floor launch 15
+PASS: battle terminates: abyss_floor_15 steps=7
+PASS: mature party clears expedition 15
+PASS: expedition settlement 15
+PASS: pending shop gates combat
+PASS: shop can leave without purchase
+PASS: expedition floor launch 16
+PASS: battle terminates: abyss_floor_16 steps=3
+PASS: mature party clears expedition 16
+PASS: expedition settlement 16
+PASS: three blessing options after floor 16
+PASS: choice gates next encounter 16
+PASS: pending reward gates combat
+PASS: three distinct blessing choices
+PASS: blessing selected
+PASS: blessing cannot replay
+PASS: expedition floor launch 17
+PASS: battle terminates: abyss_floor_17 steps=3
+PASS: mature party clears expedition 17
+PASS: expedition settlement 17
+PASS: pending route gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: pending shop gates combat
+PASS: shop can leave without purchase
+PASS: expedition floor launch 18
+PASS: battle terminates: abyss_floor_18 steps=5
+PASS: mature party clears expedition 18
+PASS: expedition settlement 18
+PASS: pending rest gates combat
+PASS: node has safe free option
+PASS: node resolves
+PASS: expedition floor launch 19
+PASS: battle terminates: abyss_floor_19 steps=3
+PASS: mature party clears expedition 19
+PASS: expedition settlement 19
+PASS: three blessing options after floor 19
+PASS: choice gates next encounter 19
+PASS: pending reward gates combat
+PASS: three distinct blessing choices
+PASS: blessing selected
+PASS: blessing cannot replay
+PASS: expedition floor launch 20
+PASS: battle terminates: abyss_floor_20 steps=8
+PASS: mature party clears expedition 20
+PASS: expedition settlement 20
+PASS: real battle engine clears full twenty-floor expedition
+PASS: twentieth floor continues endless run
+PASS: player ends endless run retaining gains
+PASS: complete run banks permanent progression
+INTEGRATION TESTS: 253 passed, 0 failed
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: disk default slot is fresh
+PASS: disk-backed pull commits
+PASS: second slot isolated
+PASS: simulated recharge commits in slot2
+PASS: restart restores active slot2 and resources
+PASS: empty inactive slot cannot export current state
+PASS: inactive slot1 exports
+PASS: inactive export leaves active slot unchanged
+PASS: export contains correct slot1 history
+PASS: web export imports into inactive slot3
+PASS: inactive import leaves current slot unchanged
+PASS: imported slot3 activates correctly
+PASS: restarting imported slot retains progression
+PASS: malformed import rejected
+PASS: rejected import preserves entire in-memory state
+PASS: rejected import preserves disk save
+STORAGE TESTS: 16 passed, 0 failed
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: five distinct random events are shipped
+PASS: three explicit choices in blood_altar
+PASS: visible cost, risk, outcome: blood_altar/sacrifice
+PASS: visible cost, risk, outcome: blood_altar/offering
+PASS: visible cost, risk, outcome: blood_altar/leave
+PASS: three explicit choices in lost_caravan
+PASS: visible cost, risk, outcome: lost_caravan/escort
+PASS: visible cost, risk, outcome: lost_caravan/salvage
+PASS: visible cost, risk, outcome: lost_caravan/share
+PASS: three explicit choices in rift_well
+PASS: visible cost, risk, outcome: rift_well/gamble
+PASS: visible cost, risk, outcome: rift_well/listen
+PASS: visible cost, risk, outcome: rift_well/study
+PASS: three explicit choices in abandoned_cache
+PASS: visible cost, risk, outcome: abandoned_cache/supplies
+PASS: visible cost, risk, outcome: abandoned_cache/medicine
+PASS: visible cost, risk, outcome: abandoned_cache/research
+PASS: three explicit choices in ancient_forge
+PASS: visible cost, risk, outcome: ancient_forge/forge
+PASS: visible cost, risk, outcome: ancient_forge/overload
+PASS: visible cost, risk, outcome: ancient_forge/collect
+PASS: HP sacrifice disabled while any hero is down
+PASS: unpayable event leaves every state field intact
+PASS: payable sacrifice gives blessing
+PASS: sacrifice charges exact 20% maximum HP per hero
+PASS: sacrifice grants promised rarity
+PASS: resolved event opens next combat
+PASS: event cannot pay twice
+PASS: advertised winning gamble spends35 and returns95
+PASS: advertised losing gamble spends35 and returns10
+PASS: event permanent reward banks immediately
+PASS: retreat retains event meta while clearing temporary money
+PASS: camp exposes three distinct decisions
+PASS: camp decision gates combat
+PASS: rest recovery resolves
+PASS: camp heals survivors and revives fallen allies at35%
+PASS: meditation resolves
+PASS: meditation adds40 energy and clears cooldown
+PASS: shop holds exactly four limited-stock items
+PASS: shop remains a mandatory leave decision
+PASS: healing purchase costs35 run coins
+PASS: sold item cannot be purchased twice
+PASS: shop blessing purchase succeeds
+PASS: shop blessing is attached to current build
+PASS: leaving clears the shop inventory
+PASS: shop exit cannot replay
+PASS: branch gives two choices and blocks skipping
+PASS: branch can choose a safe camp instead of the rolled event
+PASS: event route reveals three canonical options
+PASS: live event state round-trips through save validation
+PASS: three copies cap removes blessing from future draws
+PASS: bounded meta rank purchased vitality
+PASS: bounded meta rank purchased vitality
+PASS: bounded meta rank purchased vitality
+PASS: bounded meta rank purchased vitality
+PASS: bounded meta rank purchased vitality
+PASS: meta cap enforced vitality
+PASS: bounded meta rank purchased offense
+PASS: bounded meta rank purchased offense
+PASS: bounded meta rank purchased offense
+PASS: bounded meta rank purchased offense
+PASS: bounded meta rank purchased offense
+PASS: meta cap enforced offense
+PASS: bounded meta rank purchased recovery
+PASS: bounded meta rank purchased recovery
+PASS: bounded meta rank purchased recovery
+PASS: bounded meta rank purchased recovery
+PASS: meta cap enforced recovery
+PASS: bounded meta rank purchased supply
+PASS: bounded meta rank purchased supply
+PASS: bounded meta rank purchased supply
+PASS: meta cap enforced supply
+PASS: meta never changes base or story computed stats
+PASS: fully upgraded supply starts run with75 coins
+PASS: full permanent stats remain capped15% attack20% HP6% recovery
+PASS: camp save failure rolls back HP and node state
+PASS: shop save failure rolls back money, stock and healing
+PASS: meta save failure rolls back cost and rank
+PASS: 20-floor run starts encounter 1
+PASS: mature test squad clears encounter 1
+PASS: 20-floor run settles encounter 1
+PASS: run save validates after floor 1
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 2
+PASS: mature test squad clears encounter 2
+PASS: 20-floor run settles encounter 2
+PASS: run save validates after floor 2
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 3
+PASS: mature test squad clears encounter 3
+PASS: 20-floor run settles encounter 3
+PASS: run save validates after floor 3
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 4
+PASS: mature test squad clears encounter 4
+PASS: 20-floor run settles encounter 4
+PASS: run save validates after floor 4
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 5
+PASS: mature test squad clears encounter 5
+PASS: 20-floor run settles encounter 5
+PASS: run save validates after floor 5
+PASS: pending shop blocks floor skip
+PASS: resolved shop state remains valid
+PASS: 20-floor run starts encounter 6
+PASS: mature test squad clears encounter 6
+PASS: 20-floor run settles encounter 6
+PASS: run save validates after floor 6
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 7
+PASS: mature test squad clears encounter 7
+PASS: 20-floor run settles encounter 7
+PASS: run save validates after floor 7
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 8
+PASS: mature test squad clears encounter 8
+PASS: 20-floor run settles encounter 8
+PASS: run save validates after floor 8
+PASS: pending rest blocks floor skip
+PASS: resolved rest state remains valid
+PASS: 20-floor run starts encounter 9
+PASS: mature test squad clears encounter 9
+PASS: 20-floor run settles encounter 9
+PASS: run save validates after floor 9
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 10
+PASS: mature test squad clears encounter 10
+PASS: 20-floor run settles encounter 10
+PASS: run save validates after floor 10
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 11
+PASS: mature test squad clears encounter 11
+PASS: 20-floor run settles encounter 11
+PASS: run save validates after floor 11
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 12
+PASS: mature test squad clears encounter 12
+PASS: 20-floor run settles encounter 12
+PASS: run save validates after floor 12
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 13
+PASS: mature test squad clears encounter 13
+PASS: 20-floor run settles encounter 13
+PASS: run save validates after floor 13
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 14
+PASS: mature test squad clears encounter 14
+PASS: 20-floor run settles encounter 14
+PASS: run save validates after floor 14
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 15
+PASS: mature test squad clears encounter 15
+PASS: 20-floor run settles encounter 15
+PASS: run save validates after floor 15
+PASS: pending shop blocks floor skip
+PASS: resolved shop state remains valid
+PASS: 20-floor run starts encounter 16
+PASS: mature test squad clears encounter 16
+PASS: 20-floor run settles encounter 16
+PASS: run save validates after floor 16
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 17
+PASS: mature test squad clears encounter 17
+PASS: 20-floor run settles encounter 17
+PASS: run save validates after floor 17
+PASS: pending route blocks floor skip
+PASS: resolved route state remains valid
+PASS: pending event blocks floor skip
+PASS: resolved event state remains valid
+PASS: 20-floor run starts encounter 18
+PASS: mature test squad clears encounter 18
+PASS: 20-floor run settles encounter 18
+PASS: run save validates after floor 18
+PASS: pending rest blocks floor skip
+PASS: resolved rest state remains valid
+PASS: 20-floor run starts encounter 19
+PASS: mature test squad clears encounter 19
+PASS: 20-floor run settles encounter 19
+PASS: run save validates after floor 19
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: 20-floor run starts encounter 20
+PASS: mature test squad clears encounter 20
+PASS: 20-floor run settles encounter 20
+PASS: run save validates after floor 20
+PASS: pending reward blocks floor skip
+PASS: resolved reward state remains valid
+PASS: floor20 continues to21
+PASS: continuing retains earned build
+PASS: player can end endless expedition
+PASS: completion preserves20-floor record and increments wins
+PASS: run payouts and completion bonus are permanently banked
+PASS: full expedition includes numerous resolved route encounters
+PASS: voluntary end clears temporary blessings and coins
+PASS: normal clear unlocks rank1 while retaining selected rank
+PASS: rank2 requires rank1 completion
+PASS: unlocked rank1 can be selected between runs
+PASS: rank snapshots into persisted encounter and expedition
+PASS: difficulty cannot change during an active expedition
+PASS: rank1 gives advertised25% permanent reward bonus
+PASS: ranked expedition save validates
+PASS: rank above3 is rejected by import validation
+PASS: locked chosen rank is rejected by import validation
+PASS: clearing rank1 unlocks rank2 and records rank
+PASS: difficulty unlocks remain bounded at rank3
+V2 PROGRESSION TESTS: 230 passed, 0 failed
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+REAL COMBAT REGRESSIONS: starter floor1 32/32; starter floor20 0/32; trained floor10 32/32
+BALANCE V2 TESTS: 546 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: abyss encounter starts
+PASS: encounter includes deterministic battle seed
+PASS: repeated prepare preserves encounter, rewards, token and seed
+PASS: active encounter save reloads cleanly
+PASS: reload resumes identical issued encounter
+PASS: battle terminates within action budget
+PASS: battle terminates within action budget
+PASS: identical encounter replays identical combat after reload
+PASS: story cannot overwrite pending abyss encounter
+PASS: stale battle-state token cannot settle active encounter
+PASS: matching replay settles after reload
+PASS: settlement uses issued rewards rather than caller changes
+PASS: duplicate settlement cannot pay twice
+PASS: settled token remains invalid after reload
+PASS: active run prevents swapping wounded roster for fresh units
+PASS: battle terminates within action budget
+PASS: run advances through first settlement
+PASS: party lock persists between encounters
+PASS: mandatory opening blessing resolves
+PASS: abandon resolves current expedition
+PASS: defeat returns next expedition to floor one
+PASS: defeat clears carried party health
+PASS: defeat clears temporary build and pending choices
+PASS: roster can change after expedition ends
+PASS: abandoned encounter cannot pay later victory
+PASS: failed encounter save rolls back run creation
+PASS: battle terminates within action budget
+PASS: failed settlement save rolls back resources, floor, and meta
+PASS: failed settlement keeps token available for retry
+PASS: successful retry consumes settlement token exactly once
+PASS: sandbox recharge remains available
+PASS: sandbox recharge remains available
+PASS: sandbox recharge remains available
+PASS: sandbox recharge remains available
+PASS: sandbox recharge remains available
+PASS: sandbox recharge cannot mint earned expedition currencies
+PASS: four bounded persistent upgrade tracks are exposed
+PASS: unfunded meta purchase is atomic
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta track has a finite purchase cap: vitality
+PASS: maxed meta track rejects further spending: vitality
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta track has a finite purchase cap: offense
+PASS: maxed meta track rejects further spending: offense
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta track has a finite purchase cap: recovery
+PASS: maxed meta track rejects further spending: recovery
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta purchase spends currency and advances exactly one rank
+PASS: meta track has a finite purchase cap: supply
+PASS: maxed meta track rejects further spending: supply
+PASS: meta upgrades are locked for active expedition
+PASS: v2 default and roster save validates
+PASS: legacy v3 save migrates
+PASS: migrated save gains valid persistent progression defaults
+PASS: partial legacy-compatible progression fields can be defaulted
+PASS: save validation rejects negative permanent currency
+PASS: save validation rejects out-of-range meta level
+PASS: save validation rejects wrong meta upgrades type
+PASS: save validation rejects negative run currency
+PASS: save validation rejects unknown locked roster member
+PASS: save validation rejects wrong pending node type
+PASS: save validation rejects incomplete persisted encounter
+PASS: save validation rejects unknown node state
+PASS: save validation rejects negative cleared floors
+PASS: empty mandatory blessing gate cannot strand imported run
+PASS: advanced run requires persisted roster health
+PASS: incomplete carried unit rejects cleanly without exception
+PASS: import cannot exceed a blessing stack limit
+PASS: complete journey launches floor 1
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 1
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 2
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 2
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 3
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 3
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 4
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 4
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending rest blocks encounter skipping
+PASS: unknown rest option is atomic
+PASS: valid rest option resolves
+PASS: replayed rest option cannot grant twice
+PASS: complete journey launches floor 5
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 5
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending shop blocks encounter skipping
+PASS: shop presents supplies and blessing stock
+PASS: shop stock persists without reload reroll
+PASS: unknown shop item cannot spend currency
+PASS: failed shop commit rolls back spend, healing and sold flag
+PASS: healing supply purchase succeeds
+PASS: healing supply pays exact price and revives fallen ally
+PASS: sold shop item cannot be repurchased
+PASS: sold flag persists across reload
+PASS: leaving shop resumes path
+PASS: replayed shop exit is atomic
+PASS: complete journey launches floor 6
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 6
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 7
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 7
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 8
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 8
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending rest blocks encounter skipping
+PASS: unknown rest option is atomic
+PASS: valid rest option resolves
+PASS: replayed rest option cannot grant twice
+PASS: complete journey launches floor 9
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 9
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 10
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 10
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 11
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 11
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 12
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 12
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 13
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 13
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 14
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 14
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 15
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 15
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending shop blocks encounter skipping
+PASS: shop presents supplies and blessing stock
+PASS: shop stock persists without reload reroll
+PASS: unknown shop item cannot spend currency
+PASS: failed shop commit rolls back spend, healing and sold flag
+PASS: healing supply purchase succeeds
+PASS: healing supply pays exact price and revives fallen ally
+PASS: sold shop item cannot be repurchased
+PASS: sold flag persists across reload
+PASS: leaving shop resumes path
+PASS: replayed shop exit is atomic
+PASS: complete journey launches floor 16
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 16
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 17
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 17
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending route blocks encounter skipping
+PASS: unknown route option is atomic
+PASS: valid route option resolves
+PASS: replayed route option cannot grant twice
+PASS: pending event blocks encounter skipping
+PASS: unknown event option is atomic
+PASS: valid event option resolves
+PASS: replayed event option cannot grant twice
+PASS: complete journey launches floor 18
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 18
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending rest blocks encounter skipping
+PASS: unknown rest option is atomic
+PASS: valid rest option resolves
+PASS: replayed rest option cannot grant twice
+PASS: complete journey launches floor 19
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 19
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: complete journey launches floor 20
+PASS: battle terminates within action budget
+PASS: prepared mature party clears journey floor 20
+PASS: journey settlement succeeds
+PASS: successful floor immediately banks permanent progression
+PASS: each floor produces a valid reloadable save
+PASS: full journey exercises reward
+PASS: full journey exercises route
+PASS: full journey exercises event
+PASS: full journey exercises rest
+PASS: full journey exercises shop
+PASS: twentieth boss keeps endless run active at twenty-one
+PASS: completed expedition records completion and retains earned progression
+PASS: first completion unlocks exactly the next difficulty
+PASS: continuing expedition retains temporary currency and earned blessings
+PASS: final boss settlement cannot duplicate completion payout
+PASS: player voluntarily ends endless expedition
+PASS: voluntary end records retreat and returns to first floor
+PASS: only ending clears temporary currency and blessings
+PASS: completed run summary survives disk reload
+PASS: fresh save exposes four progressively locked difficulties
+PASS: locked or invalid difficulty selection is atomic: -1
+PASS: locked or invalid difficulty selection is atomic: 1
+PASS: locked or invalid difficulty selection is atomic: 4
+PASS: save rejects malformed difficulty selectedDifficulty: -1
+PASS: save rejects malformed difficulty selectedDifficulty: 4
+PASS: save rejects malformed difficulty selectedDifficulty: 1.5
+PASS: save rejects malformed difficulty selectedDifficulty: 1
+PASS: save rejects malformed difficulty selectedDifficulty: {  }
+PASS: save rejects malformed difficulty unlockedDifficulty: -1
+PASS: save rejects malformed difficulty unlockedDifficulty: 4
+PASS: save rejects malformed difficulty unlockedDifficulty: 1.5
+PASS: save rejects malformed difficulty unlockedDifficulty: 1
+PASS: save rejects malformed difficulty unlockedDifficulty: {  }
+PASS: save cannot select difficulty beyond unlocked rank
+PASS: unlocked highest difficulty can be selected
+PASS: encounter snapshots chosen difficulty
+PASS: active expedition difficulty cannot change
+PASS: persisted encounter rank must match active run
+PASS: difficulty persists on encounter reload
+PASS: battle terminates within action budget
+PASS: mature party can exercise highest-rank settlement
+PASS: difficulty increases actual permanent reward
+PASS: settlement reports actual scaled meta reward
+PASS: pending reward blocks encounter skipping
+PASS: unknown blessing selection is atomic
+PASS: valid blessing selection advances
+PASS: blessing callback replay cannot duplicate reward
+PASS: battle terminates within action budget
+PASS: difficulty event test settles second floor
+PASS: difficulty event route opens
+PASS: highest-rank event applies promised permanent reward multiplier
+PASS: event result reports actual scaled meta reward
+V2 ADVERSARIAL REGRESSIONS: 366 passed, 0 failed
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS UI: 140 checks
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+UI V2 view: hub display=headless
+UI V2 view: meta display=headless
+UI V2 encounter: 1
+UI V2 view: reward display=headless
+UI V2 view: ready display=headless
+UI V2 encounter: 2
+UI V2 view: route display=headless
+UI V2 view: event display=headless
+UI V2 encounter: 3
+UI V2 view: reward display=headless
+UI V2 encounter: 4
+UI V2 view: route display=headless
+UI V2 view: rest display=headless
+UI V2 encounter: 5
+UI V2 view: shop display=headless
+UI V2 encounter: 6
+UI V2 view: reward display=headless
+UI V2 encounter: 7
+UI V2 view: route display=headless
+UI V2 view: shop display=headless
+UI V2 encounter: 8
+UI V2 view: rest display=headless
+UI V2 encounter: 9
+UI V2 view: reward display=headless
+UI V2 encounter: 10
+UI V2 view: reward display=headless
+UI V2 encounter: 11
+UI V2 view: route display=headless
+UI V2 view: shop display=headless
+UI V2 encounter: 12
+UI V2 view: route display=headless
+UI V2 view: rest display=headless
+UI V2 encounter: 13
+UI V2 view: reward display=headless
+UI V2 encounter: 14
+UI V2 view: route display=headless
+UI V2 view: rest display=headless
+UI V2 encounter: 15
+UI V2 view: shop display=headless
+UI V2 encounter: 16
+UI V2 view: reward display=headless
+UI V2 encounter: 17
+UI V2 view: route display=headless
+UI V2 view: shop display=headless
+UI V2 encounter: 18
+UI V2 view: rest display=headless
+UI V2 encounter: 19
+UI V2 view: reward display=headless
+UI V2 encounter: 20
+UI V2 view: reward display=headless
+UI V2 view: portrait-reward display=headless
+UI V2 view: portrait-route display=headless
+UI V2 view: portrait-event display=headless
+UI V2 view: portrait-reward display=headless
+UI V2 view: portrait-route display=headless
+UI V2 view: portrait-rest display=headless
+UI V2 view: portrait-shop display=headless
+UI V2 view: portrait-reward display=headless
+UI V2 view: portrait-route display=headless
+UI V2 view: portrait-shop display=headless
+UI V2 view: portrait-rest display=headless
+PASS UI V2: 417 checks
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ART ASSETS: 42 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+AVATARS: 132 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+AVATAR UI V24: 172 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+EXTRACTION CORE: 1685 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+EXTRACTION UI: 1024 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+EXTRACTION BALANCE TESTS: 7027 checks, 342 genuine battles, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LOOT_ECONOMY_TEST checks=5268 failures=0
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+REDESIGN LAYOUT: 75 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+REDESIGN INVENTORY: 138 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+AUDIO: 5 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LOOT TOUCH: 144 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+DEPOSIT TOUCH: 30 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+BATTLE PRESENTATION: 29 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ENCOUNTER FEEDBACK: 24 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+STORY PRESENTATION: 36 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+CHARACTER NAVIGATION: 35 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SUMMON PRESENTATION: 110 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+UI SEMANTIC COVERAGE: 48 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+RELIC PRESENTATION: 96 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ANDROID_SMOKE_BACK {"monotonic_ms":2477,"observed_overlay":0,"screen":"home","source":"notification"}
+ANDROID_SMOKE_BACK {"monotonic_ms":2486,"observed_overlay":2,"screen":"home","source":"notification"}
+ANDROID_SMOKE_BACK {"monotonic_ms":2486,"observed_overlay":0,"screen":"home","source":"notification"}
+ANDROID_SMOKE_BACK {"monotonic_ms":2498,"observed_overlay":0,"screen":"home","source":"notification"}
+ANDROID_SMOKE_CHUNK 1 0 23 13776 eyJhbmRyb2lkX2JyaWRnZSI6e30sImFwcGxpY2F0aW9uX3BhdXNlZCI6dHJ1ZSwiYnV0dG9ucyI6W3siY2xpcCI6WzAuMCwwLjAsMTI4MC4wLDcyMC4wXSwibmFtZSI6IkJhY2tCdXR0b24iLCJyZWN0IjpbMTYuMCwxMC42NjY2NjY5ODQ1NTgxLDEwNS4zMzMzMzU4NzY0NjUsNjMuOTk5OTk3MTM4OTc3MV0sInRleHQiOiLov5Tlm54ifSx7ImNsaXAiOlswLjAsMC4wLDEyODAuMCw3MjAuMF0sIm5hbWUiOiJNZW51QnV0dG9uIiwicmVjdCI6WzcxMy4zMzMzNzQwMjM0MzgsMTAuNjY2NjY2OTg0NTU4MSwxMDUuMzMzMzEyOTg4MjgxLDYzLjk5OTk5NzEzODk3NzFdLCJ0ZXh0Ijoi6I+c5Y2VIn0seyJjbGlwIjpbMTYuMCw4NS4zMzMzMzU4NzY0NjQ4LDEyNDguMCw2MjQuMF0sIm5hbWUiOiJFeHRyYWN0aW9uVGFiX2V4cGVkaXRpb24iLCJyZWN0IjpbODAuMCw4NS4zMzMzMzU4NzY0NjQ4LDExNi4w
+ANDROID_SMOKE_CHUNK 1 1 23 13776 LDU4LjY2NjY2NDEyMzUzNTJdLCJ0ZXh0Ijoi5o6i57SiIn0seyJjbGlwIjpbMTYuMCw4NS4zMzMzMzU4NzY0NjQ4LDEyNDguMCw2MjQuMF0sIm5hbWUiOiJFeHRyYWN0aW9uVGFiX2JhZyIsInJlY3QiOlsyMDYuNjY2NjcxNzUyOTMsODUuMzMzMzM1ODc2NDY0OCwxMTYuMDAwMDE1MjU4Nzg5LDU4LjY2NjY2NDEyMzUzNTJdLCJ0ZXh0Ijoi6IOM5YyFIn0seyJjbGlwIjpbMTYuMCw4NS4zMzMzMzU4NzY0NjQ4LDEyNDguMCw2MjQuMF0sIm5hbWUiOiJFeHRyYWN0aW9uVGFiX2J1aWxkIiwicmVjdCI6WzMzMy4zMzMzNDM1MDU4NTksODUuMzMzMzM1ODc2NDY0OCwxMTYuMCw1OC42NjY2NjQxMjM1MzUyXSwidGV4dCI6IuaehOetkSJ9LHsiY2xpcCI6WzE2LjAsODUuMzMzMzM1ODc2NDY0OCwxMjQ4LjAsNjI0LjBdLCJuYW1lIjoiRXh0cmFjdGlvbktleXJpbmciLCJyZWN0IjpbMTEzNi4wLDg1LjMz
+ANDROID_SMOKE_CHUNK 1 2 23 13776 MzMzNTg3NjQ2NDgsNTguNjY2NjI1OTc2NTYyNSw1OC42NjY2NjQxMjM1MzUyXSwidGV4dCI6IiJ9LHsiY2xpcCI6WzE2LjAsODUuMzMzMzM1ODc2NDY0OCwxMjQ4LjAsNjI0LjBdLCJuYW1lIjoiRXh0cmFjdGlvbkhlbHAiLCJyZWN0IjpbMTIwNS4zMzMzNzQwMjM0NCw4NS4zMzMzMzU4NzY0NjQ4LDU4LjY2NjYyNTk3NjU2MjUsNTguNjY2NjY0MTIzNTM1Ml0sInRleHQiOiIifSx7ImNsaXAiOlsxNi4wLDg1LjMzMzMzNTg3NjQ2NDgsMTI0OC4wLDYyNC4wXSwibmFtZSI6IkV4dHJhY3Rpb25BZHZhbmNlIiwicmVjdCI6WzY3Ny4zMzMzNzQwMjM0MzgsMTYwLjAsMTA1LjMzMzMxMjk4ODI4MSw1OC42NjY2NzE3NTI5Mjk3XSwidGV4dCI6IuWcsOWbviJ9LHsiY2xpcCI6WzE2LjAsODUuMzMzMzM1ODc2NDY0OCwxMjQ4LjAsNjI0LjBdLCJuYW1lIjoiRXh0cmFjdGlvbk9wZW5Db250YWluZXJfZXh0
+ANDROID_SMOKE_CHUNK 1 3 23 13776 cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19jb250YWluZXJfMjAiLCJyZWN0IjpbMTYuMCw2NTAuNjY2Njg3MDExNzE5LDEzMi4wLDU4LjY2NjY4NzAxMTcxODhdLCJ0ZXh0Ijoi5Y+k5Luj5YW15Zmo5p62In0seyJjbGlwIjpbMTYuMCw4NS4zMzMzMzU4NzY0NjQ4LDEyNDguMCw2MjQuMF0sIm5hbWUiOiJFeHRyYWN0aW9uU29ydF9iYWciLCJyZWN0IjpbNzk4LjY2NjY4NzAxMTcxOSw2NTAuNjY2Njg3MDExNzE5LDEwNS4zMzMzMTI5ODgyODEsNTguNjY2Njg3MDExNzE4OF0sInRleHQiOiLmlbTnkIYifSx7ImNsaXAiOlsxNi4wLDg1LjMzMzMzNTg3NjQ2NDgsMTI0OC4wLDYyNC4wXSwibmFtZSI6IkV4dHJhY3Rpb25RdWlja1N1cHBsaWVzIiwicmVjdCI6WzkxMi4wLDY1MC42NjY2ODcwMTE3MTksMTA1LjMzMzMxMjk4ODI4MSw1OC42NjY2ODcwMTE3MTg4XSwidGV4dCI6Iuih
+ANDROID_SMOKE_CHUNK 1 4 23 13776 pee7mSJ9LHsiY2xpcCI6WzMyLjAsMzcuMzMzMzM1ODc2NDY0OCwxMjE2LjAsNjQ1LjMzMzM3NDAyMzQzOF0sIm5hbWUiOiJFeHRyYWN0aW9uQ2xvc2VDb250YWluZXIiLCJyZWN0IjpbMTE5Ni4wLDM3LjMzMzMzNTg3NjQ2NDgsNTIuMCw1OC42NjY2NjQxMjM1MzUyXSwidGV4dCI6IsOXIn0seyJjbGlwIjpbMzIuMCwzNy4zMzMzMzU4NzY0NjQ4LDEyMTYuMCw2NDUuMzMzMzc0MDIzNDM4XSwibmFtZSI6IkV4dHJhY3Rpb25BdXRvUGljayIsInJlY3QiOlszMi4wLDEwNi42NjY2NzE3NTI5MywxNTQuNjY2NjcxNzUyOTMsNTMuMzMzMzI4MjQ3MDcwM10sInRleHQiOiLoh6rliqjmlLbkuIsifSx7ImNsaXAiOlszMi4wLDM3LjMzMzMzNTg3NjQ2NDgsMTIxNi4wLDY0NS4zMzMzNzQwMjM0MzhdLCJuYW1lIjoiRXh0cmFjdGlvblRha2VBbGwiLCJyZWN0IjpbNDUuMzMzMzM1ODc2NDY0OCw1NDQuMCwx
+ANDROID_SMOKE_CHUNK 1 5 23 13776 NDUuMzMzMzUxMTM1MjU0LDU4LjY2NjY4NzAxMTcxODhdLCJ0ZXh0Ijoi5pS25LiL5YWo6YOoIn0seyJjbGlwIjpbMzIuMCwzNy4zMzMzMzU4NzY0NjQ4LDEyMTYuMCw2NDUuMzMzMzc0MDIzNDM4XSwibmFtZSI6IkV4dHJhY3Rpb25TbWFydExvb3QiLCJyZWN0IjpbMTk4LjY2NjY3MTc1MjkzLDU0NC4wLDE0NS4zMzMzMjgyNDcwNyw1OC42NjY2ODcwMTE3MTg4XSwidGV4dCI6IuS4gOmUruaNouWFpSJ9LHsiY2xpcCI6WzE2LjAsODUuMzMzMzM1ODc2NDY0OCwxMjQ4LjAsNjI0LjBdLCJuYW1lIjoiRXh0cmFjdGlvblNjZW5lVmlld3BvcnQiLCJyZWN0IjpbMTYuMCwyMjYuNjY2NjcxNzUyOTMsNzY2LjY2NjY4NzAxMTcxOSw0MTYuMDAwMDE1MjU4Nzg5XX0seyJjbGlwIjpbMTYuMCwyMjYuNjY2NjcxNzUyOTMsNzY2LjY2NjY4NzAxMTcxOSw0MTYuMF0sImNvbnRhaW5lcl9pZCI6ImV4dHJhY3Rp
+ANDROID_SMOKE_CHUNK 1 6 23 13776 b25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfY29udGFpbmVyXzIwIiwiaXRlbV9jb3VudCI6MywibmFtZSI6IkV4dHJhY3Rpb25TY2VuZUNvbnRhaW5lcl9leHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX2NvbnRhaW5lcl8yMCIsInJlY3QiOlsxMTguODU1OTU3MDMxMjUsNDQxLjQ5NzgwMjczNDM3NSw1My4zMzMzNDM1MDU4NTk0LDUzLjMzMzMxMjk4ODI4MTJdfV0sImNhbnZhc2VzIjp7InNjZW5lIjp7ImNsaXAiOlsxNi4wLDIyNi42NjY2NzE3NTI5Myw3NjYuNjY2Njg3MDExNzE5LDQxNi4wXSwicGFuIjpbMC4wLC0xNC4wXSwicmVjdCI6WzE2LjAsMjI2LjY2NjY3MTc1MjkzLDc2Ni42NjY2ODcwMTE3MTksNDE2LjAwMDAxNTI1ODc4OV19fSwiZXh0cmFjdGlvbiI6eyJhY3QiOjEsImJhZ19hcmVhIjowLCJiYWdfY291bnQiOjAsImJhZ19pZHMiOltdLCJjb250YWlu
+ANDROID_SMOKE_CHUNK 1 7 23 13776 ZXJzIjpbeyJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfY29udGFpbmVyXzIwIiwiaXRlbXMiOlsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19pdGVtXzIxIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19pdGVtXzIyIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19pdGVtXzIzIl0sInVua25vd24iOjN9XSwiZXhwbG9yZWQiOjEsImdvbGQiOjUwMDAwLCJtYXBfZWRnZXMiOltbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzMiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1
+ANDROID_SMOKE_CHUNK 1 8 23 13776 NjY4M19yb29tXzIiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8yIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzQiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8zIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzUiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV81IiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzYiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8zIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzQiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV83IiwiZXh0
+ANDROID_SMOKE_CHUNK 1 9 23 13776 cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzgiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV84IiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzEwIl0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fNyIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV85Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fOSIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMSJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzEwIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzEyIl0sWyJleHRyYWN0aW9uXzE3OTM1
+ANDROID_SMOKE_CHUNK 1 10 23 13776 MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fOSIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMCJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzIiLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fNyJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzEzIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE0Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTMiLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTUiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNSIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMw
+ANDROID_SMOKE_CHUNK 1 11 23 13776 MTg4NTY2ODNfcm9vbV8xNiJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE2IiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE4Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTciLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTgiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNCIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNiJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzgiLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTMiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNf
+ANDROID_SMOKE_CHUNK 1 12 23 13776 cm9vbV8xMCIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNSJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE0IiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE5Il1dLCJtYXBfcm9vbXMiOlt7ImNsZWFyZWQiOnRydWUsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzEiLCJ0eXBlIjoiZW50cnkiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOnRydWV9LHsiY2xlYXJlZCI6dHJ1ZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMiIsInR5cGUiOiJjYWNoZSIsInVubG9ja2VkIjpmYWxzZSwidmlzaXRlZCI6dHJ1ZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRf
+ANDROID_SMOKE_CHUNK 1 13 23 13776 MV8zMDE4ODU2NjgzX3Jvb21fMyIsInR5cGUiOiJyZXN0IiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fNCIsInR5cGUiOiJob3NwaXRhbCIsInVubG9ja2VkIjpmYWxzZSwidmlzaXRlZCI6ZmFsc2V9LHsiY2xlYXJlZCI6ZmFsc2UsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzUiLCJ0eXBlIjoicmVsYXkiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV82IiwidHlwZSI6InJlc3QiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4
+ANDROID_SMOKE_CHUNK 1 14 23 13776 dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV83IiwidHlwZSI6IndvcmtzaG9wIiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fOCIsInR5cGUiOiJob3NwaXRhbCIsInVubG9ja2VkIjpmYWxzZSwidmlzaXRlZCI6ZmFsc2V9LHsiY2xlYXJlZCI6ZmFsc2UsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzkiLCJ0eXBlIjoiZXZlbnQiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMCIsInR5cGUiOiJiYXR0bGUiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZh
+ANDROID_SMOKE_CHUNK 1 15 23 13776 bHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMSIsInR5cGUiOiJzaHJpbmUiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMiIsInR5cGUiOiJiYXR0bGUiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMyIsInR5cGUiOiJjYWNoZSIsInVubG9ja2VkIjpmYWxzZSwidmlzaXRlZCI6ZmFsc2V9LHsiY2xlYXJlZCI6ZmFsc2UsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE0IiwidHlwZSI6ImJhdHRsZSIs
+ANDROID_SMOKE_CHUNK 1 16 23 13776 InVubG9ja2VkIjpmYWxzZSwidmlzaXRlZCI6ZmFsc2V9LHsiY2xlYXJlZCI6ZmFsc2UsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE1IiwidHlwZSI6ImVsaXRlIiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTYiLCJ0eXBlIjoid29ya3Nob3AiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNyIsInR5cGUiOiJrZXlfdmF1bHQiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMw
+ANDROID_SMOKE_CHUNK 1 17 23 13776 MTg4NTY2ODNfcm9vbV8xOCIsInR5cGUiOiJjYWNoZSIsInVubG9ja2VkIjpmYWxzZSwidmlzaXRlZCI6ZmFsc2V9LHsiY2xlYXJlZCI6ZmFsc2UsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE5IiwidHlwZSI6ImJvc3MiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfV0sIm5vZGUiOjEsInBoYXNlIjoicm9vbSIsInJvb21faWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMiIsInJvb21fdHlwZSI6ImNhY2hlIiwic2VhcmNoaW5nIjp0cnVlLCJzdGFzaF9jb3VudCI6MH0sImludmVudG9yeSI6e30sImxvZ2ljYWwiOls5NjAuMCw1NDAuMF0sImxvb3QiOnsiYmFnIjpbXSwiY29udGFpbmVyX2lkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19jb250YWluZXJfMjAiLCJzY2Fu
+ANDROID_SMOKE_CHUNK 1 18 23 13776 X3Byb2dyZXNzIjowLjEyMTA0NzE3OTQ4NzE3OSwic2Nhbl91aWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX2l0ZW1fMjEiLCJzb3VyY2UiOlt7ImNsaXAiOls0OS4zMzMzMzU4NzY0NjQ4LDIzMy4zMzMzNDM1MDU4NTksMzYwLjAsMzAwLjAwMDAzMDUxNzU3OF0sImljb25fbG9hZGVkIjpmYWxzZSwibmFtZSI6IiIsInJlY3QiOls1Mi4wMDAwMDM4MTQ2OTczLDIzNi4wMDAwMTUyNTg3ODksMTE0LjY2NjY2NzkzODIzMiwxMTQuNjY2NjcxNzUyOTNdLCJyZXZlYWxlZCI6ZmFsc2UsInVpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfaXRlbV8yMSJ9LHsiY2xpcCI6WzQ5LjMzMzMzNTg3NjQ2NDgsMjMzLjMzMzM0MzUwNTg1OSwzNjAuMCwzMDAuMDAwMDMwNTE3NTc4XSwiaWNvbl9sb2FkZWQiOmZhbHNlLCJuYW1lIjoiIiwicmVjdCI6WzE3
+ANDROID_SMOKE_CHUNK 1 19 23 13776 Mi4wLDIzNi4wMDAwMTUyNTg3ODksMTE0LjY2NjY4NzAxMTcxOSwxMTQuNjY2NjcxNzUyOTNdLCJyZXZlYWxlZCI6ZmFsc2UsInVpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfaXRlbV8yMiJ9LHsiY2xpcCI6WzQ5LjMzMzMzNTg3NjQ2NDgsMjMzLjMzMzM0MzUwNTg1OSwzNjAuMCwzMDAuMDAwMDMwNTE3NTc4XSwiaWNvbl9sb2FkZWQiOmZhbHNlLCJuYW1lIjoiIiwicmVjdCI6WzI5Mi4wLDIzNi4wMDAwMTUyNTg3ODksNTQuNjY2Njg3MDExNzE4OCw1NC42NjY2NzE3NTI5Mjk3XSwicmV2ZWFsZWQiOmZhbHNlLCJ1aWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX2l0ZW1fMjMifV19LCJtb2RhbF9zY3JvbGxzIjpbeyJtYXgiOjAuMCwicmVjdCI6WzMyLjAsMzcuMzMzMzM1ODc2NDY0OCwxMjE2LjAsNjQ1LjMzMzM1MTEzNTI1NF0sInZh
+ANDROID_SMOKE_CHUNK 1 20 23 13776 bHVlIjowfSx7Im1heCI6MC4wLCJyZWN0IjpbNDUuMzMzMzM1ODc2NDY0OCwyMzMuMzMzMzQzNTA1ODU5LDM2OS4zMzMzNTExMzUyNTQsMzAwLjAwMDAzMDUxNzU3OF0sInZhbHVlIjowfSx7Im1heCI6MC4wLCJyZWN0IjpbNDU0LjY2NjY4NzAxMTcxOSwyMzMuMzMzMzQzNTA1ODU5LDM2OS4zMzMzMTI5ODgyODEsMzczLjMzMzM0MzUwNTg1OV0sInZhbHVlIjowfSx7Im1heCI6MC4wLCJyZWN0IjpbODY0LjAsMjMzLjMzMzM0MzUwNTg1OSwzNzAuNjY2NzQ4MDQ2ODc1LDM4NC4wMDAwMzA1MTc1NzhdLCJ2YWx1ZSI6MH1dLCJtb25vdG9uaWNfbXMiOjI3MDMsIm92ZXJsYXkiOjIsInBhZ2Vfc2Nyb2xscyI6W3siaWQiOiIvcm9vdC9TdGVsbGFyV2lzaC9TaGVsbC9AVkJveENvbnRhaW5lckAzMDEvQEhCb3hDb250YWluZXJAMzIxL1BhZ2VTY3JvbGwvUGFnZUNvbnRlbnQvQEhCb3hDb250YWluZXJA
+ANDROID_SMOKE_CHUNK 1 21 23 13776 NDc5L0BWQm94Q29udGFpbmVyQDQ4MS9AUGFuZWxDb250YWluZXJANTI3L0BWQm94Q29udGFpbmVyQDUyOC9AU2Nyb2xsQ29udGFpbmVyQDUzMiIsIm1heCI6MTAuMCwicmVjdCI6WzgxMi4wLDQ1My4zMzMzNDM1MDU4NTksNDM4LjY2Njc0ODA0Njg3NSwxNzMuMzMzMzQzNTA1ODU5XSwidmFsdWUiOjB9XSwicGFnZV93aWR0aCI6OTM2LjAsInByb2JlX2V2ZW50IjoicGF1c2VkIiwicmVuZGVyZXIiOnsiYWRhcHRlciI6IiIsImRyaXZlciI6Im9wZW5nbDMiLCJtZXRob2QiOiJnbF9jb21wYXRpYmlsaXR5In0sInNjcmVlbiI6ImV4dHJhY3Rpb24iLCJzY3JvbGwiOjAsInNjcm9sbF9tYXgiOjAuMCwic2Nyb2xsX3JlY3QiOlsxNi4wLDg1LjMzMzMzNTg3NjQ2NDgsMTI0OC4wLDYyMy45OTk5NzcxMTE4MTZdLCJzY3JvbGxfd2lkdGgiOjkzNi4wLCJzY3JvbGxiYXJfcmVjdCI6WzEyNjQuMCw4NS4z
+ANDROID_SMOKE_CHUNK 1 22 23 13776 MzMzMzU4NzY0NjQ4LDEwLjY2NjYyNTk3NjU2MjUsNjIzLjk5OTk3NzExMTgxNl0sInNlcSI6MSwic3lzdGVtX2JhY2tfZXZlbnRzIjpbeyJtb25vdG9uaWNfbXMiOjI0NzcsIm9ic2VydmVkX292ZXJsYXkiOjAsInNjcmVlbiI6ImhvbWUiLCJzb3VyY2UiOiJub3RpZmljYXRpb24ifSx7Im1vbm90b25pY19tcyI6MjQ4Niwib2JzZXJ2ZWRfb3ZlcmxheSI6Miwic2NyZWVuIjoiaG9tZSIsInNvdXJjZSI6Im5vdGlmaWNhdGlvbiJ9LHsibW9ub3RvbmljX21zIjoyNDg2LCJvYnNlcnZlZF9vdmVybGF5IjowLCJzY3JlZW4iOiJob21lIiwic291cmNlIjoibm90aWZpY2F0aW9uIn0seyJtb25vdG9uaWNfbXMiOjI0OTgsIm9ic2VydmVkX292ZXJsYXkiOjAsInNjcmVlbiI6ImhvbWUiLCJzb3VyY2UiOiJub3RpZmljYXRpb24ifV0sIndpbmRvdyI6WzEyODAsNzIwXX0=
+ANDROID_SMOKE_CHUNK 2 0 23 13780 eyJhbmRyb2lkX2JyaWRnZSI6e30sImFwcGxpY2F0aW9uX3BhdXNlZCI6ZmFsc2UsImJ1dHRvbnMiOlt7ImNsaXAiOlswLjAsMC4wLDEyODAuMCw3MjAuMF0sIm5hbWUiOiJCYWNrQnV0dG9uIiwicmVjdCI6WzE2LjAsMTAuNjY2NjY2OTg0NTU4MSwxMDUuMzMzMzM1ODc2NDY1LDYzLjk5OTk5NzEzODk3NzFdLCJ0ZXh0Ijoi6L+U5ZueIn0seyJjbGlwIjpbMC4wLDAuMCwxMjgwLjAsNzIwLjBdLCJuYW1lIjoiTWVudUJ1dHRvbiIsInJlY3QiOls3MTMuMzMzMzc0MDIzNDM4LDEwLjY2NjY2Njk4NDU1ODEsMTA1LjMzMzMxMjk4ODI4MSw2My45OTk5OTcxMzg5NzcxXSwidGV4dCI6IuiPnOWNlSJ9LHsiY2xpcCI6WzE2LjAsODUuMzMzMzM1ODc2NDY0OCwxMjQ4LjAsNjI0LjBdLCJuYW1lIjoiRXh0cmFjdGlvblRhYl9leHBlZGl0aW9uIiwicmVjdCI6WzgwLjAsODUuMzMzMzM1ODc2NDY0OCwxMTYu
+ANDROID_SMOKE_CHUNK 2 1 23 13780 MCw1OC42NjY2NjQxMjM1MzUyXSwidGV4dCI6IuaOoue0oiJ9LHsiY2xpcCI6WzE2LjAsODUuMzMzMzM1ODc2NDY0OCwxMjQ4LjAsNjI0LjBdLCJuYW1lIjoiRXh0cmFjdGlvblRhYl9iYWciLCJyZWN0IjpbMjA2LjY2NjY3MTc1MjkzLDg1LjMzMzMzNTg3NjQ2NDgsMTE2LjAwMDAxNTI1ODc4OSw1OC42NjY2NjQxMjM1MzUyXSwidGV4dCI6IuiDjOWMhSJ9LHsiY2xpcCI6WzE2LjAsODUuMzMzMzM1ODc2NDY0OCwxMjQ4LjAsNjI0LjBdLCJuYW1lIjoiRXh0cmFjdGlvblRhYl9idWlsZCIsInJlY3QiOlszMzMuMzMzMzQzNTA1ODU5LDg1LjMzMzMzNTg3NjQ2NDgsMTE2LjAsNTguNjY2NjY0MTIzNTM1Ml0sInRleHQiOiLmnoTnrZEifSx7ImNsaXAiOlsxNi4wLDg1LjMzMzMzNTg3NjQ2NDgsMTI0OC4wLDYyNC4wXSwibmFtZSI6IkV4dHJhY3Rpb25LZXlyaW5nIiwicmVjdCI6WzExMzYuMCw4NS4z
+ANDROID_SMOKE_CHUNK 2 2 23 13780 MzMzMzU4NzY0NjQ4LDU4LjY2NjYyNTk3NjU2MjUsNTguNjY2NjY0MTIzNTM1Ml0sInRleHQiOiIifSx7ImNsaXAiOlsxNi4wLDg1LjMzMzMzNTg3NjQ2NDgsMTI0OC4wLDYyNC4wXSwibmFtZSI6IkV4dHJhY3Rpb25IZWxwIiwicmVjdCI6WzEyMDUuMzMzMzc0MDIzNDQsODUuMzMzMzM1ODc2NDY0OCw1OC42NjY2MjU5NzY1NjI1LDU4LjY2NjY2NDEyMzUzNTJdLCJ0ZXh0IjoiIn0seyJjbGlwIjpbMTYuMCw4NS4zMzMzMzU4NzY0NjQ4LDEyNDguMCw2MjQuMF0sIm5hbWUiOiJFeHRyYWN0aW9uQWR2YW5jZSIsInJlY3QiOls2NzcuMzMzMzc0MDIzNDM4LDE2MC4wLDEwNS4zMzMzMTI5ODgyODEsNTguNjY2NjcxNzUyOTI5N10sInRleHQiOiLlnLDlm74ifSx7ImNsaXAiOlsxNi4wLDg1LjMzMzMzNTg3NjQ2NDgsMTI0OC4wLDYyNC4wXSwibmFtZSI6IkV4dHJhY3Rpb25PcGVuQ29udGFpbmVyX2V4
+ANDROID_SMOKE_CHUNK 2 3 23 13780 dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfY29udGFpbmVyXzIwIiwicmVjdCI6WzE2LjAsNjUwLjY2NjY4NzAxMTcxOSwxMzIuMCw1OC42NjY2ODcwMTE3MTg4XSwidGV4dCI6IuWPpOS7o+WFteWZqOaetiJ9LHsiY2xpcCI6WzE2LjAsODUuMzMzMzM1ODc2NDY0OCwxMjQ4LjAsNjI0LjBdLCJuYW1lIjoiRXh0cmFjdGlvblNvcnRfYmFnIiwicmVjdCI6Wzc5OC42NjY2ODcwMTE3MTksNjUwLjY2NjY4NzAxMTcxOSwxMDUuMzMzMzEyOTg4MjgxLDU4LjY2NjY4NzAxMTcxODhdLCJ0ZXh0Ijoi5pW055CGIn0seyJjbGlwIjpbMTYuMCw4NS4zMzMzMzU4NzY0NjQ4LDEyNDguMCw2MjQuMF0sIm5hbWUiOiJFeHRyYWN0aW9uUXVpY2tTdXBwbGllcyIsInJlY3QiOls5MTIuMCw2NTAuNjY2Njg3MDExNzE5LDEwNS4zMzMzMTI5ODgyODEsNTguNjY2Njg3MDExNzE4OF0sInRleHQiOiLo
+ANDROID_SMOKE_CHUNK 2 4 23 13780 oaXnu5kifSx7ImNsaXAiOlszMi4wLDM3LjMzMzMzNTg3NjQ2NDgsMTIxNi4wLDY0NS4zMzMzNzQwMjM0MzhdLCJuYW1lIjoiRXh0cmFjdGlvbkNsb3NlQ29udGFpbmVyIiwicmVjdCI6WzExOTYuMCwzNy4zMzMzMzU4NzY0NjQ4LDUyLjAsNTguNjY2NjY0MTIzNTM1Ml0sInRleHQiOiLDlyJ9LHsiY2xpcCI6WzMyLjAsMzcuMzMzMzM1ODc2NDY0OCwxMjE2LjAsNjQ1LjMzMzM3NDAyMzQzOF0sIm5hbWUiOiJFeHRyYWN0aW9uQXV0b1BpY2siLCJyZWN0IjpbMzIuMCwxMDYuNjY2NjcxNzUyOTMsMTU0LjY2NjY3MTc1MjkzLDUzLjMzMzMyODI0NzA3MDNdLCJ0ZXh0Ijoi6Ieq5Yqo5pS25LiLIn0seyJjbGlwIjpbMzIuMCwzNy4zMzMzMzU4NzY0NjQ4LDEyMTYuMCw2NDUuMzMzMzc0MDIzNDM4XSwibmFtZSI6IkV4dHJhY3Rpb25UYWtlQWxsIiwicmVjdCI6WzQ1LjMzMzMzNTg3NjQ2NDgsNTQ0LjAs
+ANDROID_SMOKE_CHUNK 2 5 23 13780 MTQ1LjMzMzM1MTEzNTI1NCw1OC42NjY2ODcwMTE3MTg4XSwidGV4dCI6IuaUtuS4i+WFqOmDqCJ9LHsiY2xpcCI6WzMyLjAsMzcuMzMzMzM1ODc2NDY0OCwxMjE2LjAsNjQ1LjMzMzM3NDAyMzQzOF0sIm5hbWUiOiJFeHRyYWN0aW9uU21hcnRMb290IiwicmVjdCI6WzE5OC42NjY2NzE3NTI5Myw1NDQuMCwxNDUuMzMzMzI4MjQ3MDcsNTguNjY2Njg3MDExNzE4OF0sInRleHQiOiLkuIDplK7mjaLlhaUifSx7ImNsaXAiOlsxNi4wLDg1LjMzMzMzNTg3NjQ2NDgsMTI0OC4wLDYyNC4wXSwibmFtZSI6IkV4dHJhY3Rpb25TY2VuZVZpZXdwb3J0IiwicmVjdCI6WzE2LjAsMjI2LjY2NjY3MTc1MjkzLDc2Ni42NjY2ODcwMTE3MTksNDE2LjAwMDAxNTI1ODc4OV19LHsiY2xpcCI6WzE2LjAsMjI2LjY2NjY3MTc1MjkzLDc2Ni42NjY2ODcwMTE3MTksNDE2LjBdLCJjb250YWluZXJfaWQiOiJleHRyYWN0
+ANDROID_SMOKE_CHUNK 2 6 23 13780 aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX2NvbnRhaW5lcl8yMCIsIml0ZW1fY291bnQiOjMsIm5hbWUiOiJFeHRyYWN0aW9uU2NlbmVDb250YWluZXJfZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19jb250YWluZXJfMjAiLCJyZWN0IjpbMTE4Ljg1NTk1NzAzMTI1LDQ0MS40OTc4MDI3MzQzNzUsNTMuMzMzMzQzNTA1ODU5NCw1My4zMzMzMTI5ODgyODEyXX1dLCJjYW52YXNlcyI6eyJzY2VuZSI6eyJjbGlwIjpbMTYuMCwyMjYuNjY2NjcxNzUyOTMsNzY2LjY2NjY4NzAxMTcxOSw0MTYuMF0sInBhbiI6WzAuMCwtMTQuMF0sInJlY3QiOlsxNi4wLDIyNi42NjY2NzE3NTI5Myw3NjYuNjY2Njg3MDExNzE5LDQxNi4wMDAwMTUyNTg3ODldfX0sImV4dHJhY3Rpb24iOnsiYWN0IjoxLCJiYWdfYXJlYSI6MCwiYmFnX2NvdW50IjowLCJiYWdfaWRzIjpbXSwiY29udGFp
+ANDROID_SMOKE_CHUNK 2 7 23 13780 bmVycyI6W3siaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX2NvbnRhaW5lcl8yMCIsIml0ZW1zIjpbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfaXRlbV8yMSIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfaXRlbV8yMiIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfaXRlbV8yMyJdLCJ1bmtub3duIjozfV0sImV4cGxvcmVkIjoxLCJnb2xkIjo1MDAwMCwibWFwX2VkZ2VzIjpbWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMSIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8zIl0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMSIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4
+ANDROID_SMOKE_CHUNK 2 8 23 13780 NTY2ODNfcm9vbV8yIl0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMiIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV80Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMyIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV81Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fNSIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV82Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMyIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV80Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fNyIsImV4
+ANDROID_SMOKE_CHUNK 2 9 23 13780 dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV84Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fOCIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMCJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzciLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fOSJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzkiLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTEiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMCIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMiJdLFsiZXh0cmFjdGlvbl8xNzkz
+ANDROID_SMOKE_CHUNK 2 10 23 13780 NTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzkiLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTAiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8yIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzciXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xMyIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNCJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzEzIiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE1Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTUiLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8z
+ANDROID_SMOKE_CHUNK 2 11 23 13780 MDE4ODU2NjgzX3Jvb21fMTYiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNiIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xOCJdLFsiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE3IiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE4Il0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTQiLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTYiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV84IiwiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzEzIl0sWyJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2Njgz
+ANDROID_SMOKE_CHUNK 2 12 23 13780 X3Jvb21fMTAiLCJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTUiXSxbImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNCIsImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xOSJdXSwibWFwX3Jvb21zIjpbeyJjbGVhcmVkIjp0cnVlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xIiwidHlwZSI6ImVudHJ5IiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjp0cnVlfSx7ImNsZWFyZWQiOnRydWUsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzIiLCJ0eXBlIjoiY2FjaGUiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOnRydWV9LHsiY2xlYXJlZCI6ZmFsc2UsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0
+ANDROID_SMOKE_CHUNK 2 13 23 13780 XzFfMzAxODg1NjY4M19yb29tXzMiLCJ0eXBlIjoicmVzdCIsInVubG9ja2VkIjpmYWxzZSwidmlzaXRlZCI6ZmFsc2V9LHsiY2xlYXJlZCI6ZmFsc2UsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzQiLCJ0eXBlIjoiaG9zcGl0YWwiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV81IiwidHlwZSI6InJlbGF5IiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fNiIsInR5cGUiOiJyZXN0IiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJl
+ANDROID_SMOKE_CHUNK 2 14 23 13780 eHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fNyIsInR5cGUiOiJ3b3Jrc2hvcCIsInVubG9ja2VkIjpmYWxzZSwidmlzaXRlZCI6ZmFsc2V9LHsiY2xlYXJlZCI6ZmFsc2UsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzgiLCJ0eXBlIjoiaG9zcGl0YWwiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV85IiwidHlwZSI6ImV2ZW50IiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTAiLCJ0eXBlIjoiYmF0dGxlIiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpm
+ANDROID_SMOKE_CHUNK 2 15 23 13780 YWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTEiLCJ0eXBlIjoic2hyaW5lIiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTIiLCJ0eXBlIjoiYmF0dGxlIiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTMiLCJ0eXBlIjoiY2FjaGUiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNCIsInR5cGUiOiJiYXR0bGUi
+ANDROID_SMOKE_CHUNK 2 16 23 13780 LCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xNSIsInR5cGUiOiJlbGl0ZSIsInVubG9ja2VkIjpmYWxzZSwidmlzaXRlZCI6ZmFsc2V9LHsiY2xlYXJlZCI6ZmFsc2UsImlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzE2IiwidHlwZSI6IndvcmtzaG9wIiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX3Jvb21fMTciLCJ0eXBlIjoia2V5X3ZhdWx0IiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX0seyJjbGVhcmVkIjpmYWxzZSwiaWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8z
+ANDROID_SMOKE_CHUNK 2 17 23 13780 MDE4ODU2NjgzX3Jvb21fMTgiLCJ0eXBlIjoiY2FjaGUiLCJ1bmxvY2tlZCI6ZmFsc2UsInZpc2l0ZWQiOmZhbHNlfSx7ImNsZWFyZWQiOmZhbHNlLCJpZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfcm9vbV8xOSIsInR5cGUiOiJib3NzIiwidW5sb2NrZWQiOmZhbHNlLCJ2aXNpdGVkIjpmYWxzZX1dLCJub2RlIjoxLCJwaGFzZSI6InJvb20iLCJyb29tX2lkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19yb29tXzIiLCJyb29tX3R5cGUiOiJjYWNoZSIsInNlYXJjaGluZyI6dHJ1ZSwic3Rhc2hfY291bnQiOjB9LCJpbnZlbnRvcnkiOnt9LCJsb2dpY2FsIjpbOTYwLjAsNTQwLjBdLCJsb290Ijp7ImJhZyI6W10sImNvbnRhaW5lcl9pZCI6ImV4dHJhY3Rpb25fMTc5MzUyNjg3MDU4NF8xXzMwMTg4NTY2ODNfY29udGFpbmVyXzIwIiwic2Nh
+ANDROID_SMOKE_CHUNK 2 18 23 13780 bl9wcm9ncmVzcyI6MC4xMjEwNDcxNzk0ODcxNzksInNjYW5fdWlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19pdGVtXzIxIiwic291cmNlIjpbeyJjbGlwIjpbNDkuMzMzMzM1ODc2NDY0OCwyMzMuMzMzMzQzNTA1ODU5LDM2MC4wLDMwMC4wMDAwMzA1MTc1NzhdLCJpY29uX2xvYWRlZCI6ZmFsc2UsIm5hbWUiOiIiLCJyZWN0IjpbNTIuMDAwMDAzODE0Njk3MywyMzYuMDAwMDE1MjU4Nzg5LDExNC42NjY2Njc5MzgyMzIsMTE0LjY2NjY3MTc1MjkzXSwicmV2ZWFsZWQiOmZhbHNlLCJ1aWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX2l0ZW1fMjEifSx7ImNsaXAiOls0OS4zMzMzMzU4NzY0NjQ4LDIzMy4zMzMzNDM1MDU4NTksMzYwLjAsMzAwLjAwMDAzMDUxNzU3OF0sImljb25fbG9hZGVkIjpmYWxzZSwibmFtZSI6IiIsInJlY3QiOlsx
+ANDROID_SMOKE_CHUNK 2 19 23 13780 NzIuMCwyMzYuMDAwMDE1MjU4Nzg5LDExNC42NjY2ODcwMTE3MTksMTE0LjY2NjY3MTc1MjkzXSwicmV2ZWFsZWQiOmZhbHNlLCJ1aWQiOiJleHRyYWN0aW9uXzE3OTM1MjY4NzA1ODRfMV8zMDE4ODU2NjgzX2l0ZW1fMjIifSx7ImNsaXAiOls0OS4zMzMzMzU4NzY0NjQ4LDIzMy4zMzMzNDM1MDU4NTksMzYwLjAsMzAwLjAwMDAzMDUxNzU3OF0sImljb25fbG9hZGVkIjpmYWxzZSwibmFtZSI6IiIsInJlY3QiOlsyOTIuMCwyMzYuMDAwMDE1MjU4Nzg5LDU0LjY2NjY4NzAxMTcxODgsNTQuNjY2NjcxNzUyOTI5N10sInJldmVhbGVkIjpmYWxzZSwidWlkIjoiZXh0cmFjdGlvbl8xNzkzNTI2ODcwNTg0XzFfMzAxODg1NjY4M19pdGVtXzIzIn1dfSwibW9kYWxfc2Nyb2xscyI6W3sibWF4IjowLjAsInJlY3QiOlszMi4wLDM3LjMzMzMzNTg3NjQ2NDgsMTIxNi4wLDY0NS4zMzMzNTExMzUyNTRdLCJ2
+ANDROID_SMOKE_CHUNK 2 20 23 13780 YWx1ZSI6MH0seyJtYXgiOjAuMCwicmVjdCI6WzQ1LjMzMzMzNTg3NjQ2NDgsMjMzLjMzMzM0MzUwNTg1OSwzNjkuMzMzMzUxMTM1MjU0LDMwMC4wMDAwMzA1MTc1NzhdLCJ2YWx1ZSI6MH0seyJtYXgiOjAuMCwicmVjdCI6WzQ1NC42NjY2ODcwMTE3MTksMjMzLjMzMzM0MzUwNTg1OSwzNjkuMzMzMzEyOTg4MjgxLDM3My4zMzMzNDM1MDU4NTldLCJ2YWx1ZSI6MH0seyJtYXgiOjAuMCwicmVjdCI6Wzg2NC4wLDIzMy4zMzMzNDM1MDU4NTksMzcwLjY2Njc0ODA0Njg3NSwzODQuMDAwMDMwNTE3NTc4XSwidmFsdWUiOjB9XSwibW9ub3RvbmljX21zIjoyOTA0LCJvdmVybGF5IjoyLCJwYWdlX3Njcm9sbHMiOlt7ImlkIjoiL3Jvb3QvU3RlbGxhcldpc2gvU2hlbGwvQFZCb3hDb250YWluZXJAMzAxL0BIQm94Q29udGFpbmVyQDMyMS9QYWdlU2Nyb2xsL1BhZ2VDb250ZW50L0BIQm94Q29udGFpbmVy
+ANDROID_SMOKE_CHUNK 2 21 23 13780 QDQ3OS9AVkJveENvbnRhaW5lckA0ODEvQFBhbmVsQ29udGFpbmVyQDUyNy9AVkJveENvbnRhaW5lckA1MjgvQFNjcm9sbENvbnRhaW5lckA1MzIiLCJtYXgiOjEwLjAsInJlY3QiOls4MTIuMCw0NTMuMzMzMzQzNTA1ODU5LDQzOC42NjY3NDgwNDY4NzUsMTczLjMzMzM0MzUwNTg1OV0sInZhbHVlIjowfV0sInBhZ2Vfd2lkdGgiOjkzNi4wLCJwcm9iZV9ldmVudCI6InJlc3VtZWQiLCJyZW5kZXJlciI6eyJhZGFwdGVyIjoiIiwiZHJpdmVyIjoib3BlbmdsMyIsIm1ldGhvZCI6ImdsX2NvbXBhdGliaWxpdHkifSwic2NyZWVuIjoiZXh0cmFjdGlvbiIsInNjcm9sbCI6MCwic2Nyb2xsX21heCI6MC4wLCJzY3JvbGxfcmVjdCI6WzE2LjAsODUuMzMzMzM1ODc2NDY0OCwxMjQ4LjAsNjIzLjk5OTk3NzExMTgxNl0sInNjcm9sbF93aWR0aCI6OTM2LjAsInNjcm9sbGJhcl9yZWN0IjpbMTI2NC4wLDg1
+ANDROID_SMOKE_CHUNK 2 22 23 13780 LjMzMzMzNTg3NjQ2NDgsMTAuNjY2NjI1OTc2NTYyNSw2MjMuOTk5OTc3MTExODE2XSwic2VxIjoyLCJzeXN0ZW1fYmFja19ldmVudHMiOlt7Im1vbm90b25pY19tcyI6MjQ3Nywib2JzZXJ2ZWRfb3ZlcmxheSI6MCwic2NyZWVuIjoiaG9tZSIsInNvdXJjZSI6Im5vdGlmaWNhdGlvbiJ9LHsibW9ub3RvbmljX21zIjoyNDg2LCJvYnNlcnZlZF9vdmVybGF5IjoyLCJzY3JlZW4iOiJob21lIiwic291cmNlIjoibm90aWZpY2F0aW9uIn0seyJtb25vdG9uaWNfbXMiOjI0ODYsIm9ic2VydmVkX292ZXJsYXkiOjAsInNjcmVlbiI6ImhvbWUiLCJzb3VyY2UiOiJub3RpZmljYXRpb24ifSx7Im1vbm90b25pY19tcyI6MjQ5OCwib2JzZXJ2ZWRfb3ZlcmxheSI6MCwic2NyZWVuIjoiaG9tZSIsInNvdXJjZSI6Im5vdGlmaWNhdGlvbiJ9XSwid2luZG93IjpbMTI4MCw3MjBdfQ==
+ANDROID_SMOKE_BACK {"monotonic_ms":3008,"observed_overlay":0,"screen":"extraction","source":"notification"}
+PROBE NOTIFICATIONS: 28 checks; 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+BATTLE GEOMETRY GROWN (2340, 1080) [{ "id": "kaldi", "maxHp": 12841 }, { "id": "ayla", "maxHp": 9639 }, { "id": "gus", "maxHp": 11398 }]
+BATTLE GEOMETRY GROWN (1920, 1080) [{ "id": "kaldi", "maxHp": 12841 }, { "id": "ayla", "maxHp": 9639 }, { "id": "gus", "maxHp": 11398 }]
+BATTLE GEOMETRY GROWN (1280, 720) [{ "id": "kaldi", "maxHp": 12841 }, { "id": "ayla", "maxHp": 9639 }, { "id": "gus", "maxHp": 11398 }]
+BATTLE GEOMETRY V24: 843 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+BATTLE STATUS EFFECTS V24: 56 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+COMBAT AUDIO V24: 21 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+V24_DRAG_REPETITION 0
+V24_DRAG before mode=true pressed=false dragged=false touch=-1 press=(157.5, 90.0) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen touched at ((22.5, 22.5)) with 0 touch points device=0
+V24_DRAG down-sync mode=true pressed=true dragged=false touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG down-frames mode=true pressed=true dragged=false touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((45.0, 33.75)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-1-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-1-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((67.5, 45.0)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-2-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-2-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((90.0, 56.25)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-3-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-3-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((112.5, 67.5)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-4-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-4-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen released at ((112.5, 67.5)) with 0 touch points device=0
+V24_DRAG up-sync mode=true pressed=false dragged=true touch=-1 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG up-frames mode=true pressed=false dragged=true touch=-1 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG_REPETITION 1
+V24_DRAG before mode=true pressed=false dragged=true touch=-1 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen touched at ((22.5, 22.5)) with 0 touch points device=0
+V24_DRAG down-sync mode=true pressed=true dragged=false touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG down-frames mode=true pressed=true dragged=false touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((45.0, 33.75)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-1-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-1-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((67.5, 45.0)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-2-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-2-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((90.0, 56.25)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-3-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-3-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((112.5, 67.5)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-4-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-4-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen released at ((112.5, 67.5)) with 0 touch points device=0
+V24_DRAG up-sync mode=true pressed=false dragged=true touch=-1 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG up-frames mode=true pressed=false dragged=true touch=-1 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG_REPETITION 2
+V24_DRAG before mode=true pressed=false dragged=true touch=-1 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen touched at ((22.5, 22.5)) with 0 touch points device=0
+V24_DRAG down-sync mode=true pressed=true dragged=false touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG down-frames mode=true pressed=true dragged=false touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((45.0, 33.75)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-1-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-1-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((67.5, 45.0)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-2-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-2-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((90.0, 56.25)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-3-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-3-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen dragged with 0 touch points at position ((112.5, 67.5)) with velocity of ((0.0, 0.0)) device=0
+V24_DRAG drag-4-sync mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG drag-4-frame mode=true pressed=true dragged=true touch=0 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_GRID_EVENT Screen released at ((112.5, 67.5)) with 0 touch points device=0
+V24_DRAG up-sync mode=true pressed=false dragged=true touch=-1 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+V24_DRAG up-frames mode=true pressed=false dragged=true touch=-1 press=(22.5, 22.5) bag=[{"appraisalRisk":0,"itemId":"scope","originAct":1,"revealed":true,"rotated":true,"uid":"extraction_1793526882234_1_3018856683_item_90","x":3,"y":1},{"appraisalRisk":0,"itemId":"wire","originAct":1,"revealed":true,"rotated":false,"uid":"extraction_1793526882234_1_3018856683_item_91","x":4,"y":2}]
+LOOT V24: 283 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+INVENTORY V24 TOUCH: 23 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+V24_AFTER_VERTICAL_DRAG touch=-1 pressed=false dragged=false
+V24_VERTICAL_SCROLL_TOUCH touch=-1 pressed=false selected=["supply_1793526896303_2_3018856683"]
+NATIVE WAREHOUSE V24: 34 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SERVICES V24: 161 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+COLLECTION V24: 572 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+V24 LAYOUT: 105 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+REWARD RARITY V24: 37 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+V240_MEDIA: 63 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ATLAS minimum compact target spacing 58.2320175170898
+ATLAS 163262 checks; 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+EXTRACTION V6: 36821 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+EXTRACTION V7: 323 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+EXTRACTION V8 685 checks 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ECONOMY V9 392 checks 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ABYSS ENDLESS UI V24: 134 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+RUNE THEME: 76 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+MUSIC CONTEXT: 33 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+EXPEDITION_ASSETS: 149 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LOOTING FEEDBACK: 79 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+UPDATE TESTS: 80 checks, 0 failures
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+UPDATE LAYOUT: 57 checks, 0 failures
+ALL GAMEPLAY AND EXTRACTION TEST SUITES PASSED

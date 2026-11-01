@@ -118,7 +118,7 @@ func _test_relics() -> void:
 	check(sold.success and sold.count == 14 and m.state.relics.size() == 1 and m.get_relic(uid).equippedBy == "zeph", "combined bulk salvage protects equipped relic")
 	check(m.unequip_relic("zeph", "helmet").success and m.get_relic(uid).equippedBy == null, "unequip maintains both links")
 	sold = m.sell_relic(uid)
-	check(sold.success and sold.gold == 550 and m.state.relics.is_empty(), "single salvage returns rarity plus upgrade value")
+	check(sold.success and sold.gold == 330 and m.state.relics.is_empty(), "single salvage returns rarity plus upgrade value")
 	check(not m.batch_sell_relics(3).success, "empty salvage reports failure")
 	var a: Dictionary = m.generate_relic(5, "helmet")
 	var b: Dictionary = m.generate_relic(4, "helmet")
@@ -333,7 +333,7 @@ func _test_persistence() -> void:
 	legacy.erase("chapterGiftClaimed")
 	legacy.customExtension = {"note": "preserved"}
 	write_json(invalid, legacy)
-	check(m.import_save(invalid).success and m.state.version == 7 and m.state.abyss.currentFloor == 1 and m.state.customExtension.note == "preserved", "v2 migration fills additions and preserves extension fields")
+	check(m.import_save(invalid).success and m.state.version == 9 and m.state.abyss.currentFloor == 1 and m.state.customExtension.note == "preserved", "v2 migration fills additions and preserves extension fields")
 	check(m.reset_slot(2).success and m.active_slot == 3, "inactive slot reset leaves active selection")
 	var corrupted_path := directory.path_join("slot3.json")
 	var corrupt_file := FileAccess.open(corrupted_path, FileAccess.WRITE)

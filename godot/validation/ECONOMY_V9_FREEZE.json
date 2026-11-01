@@ -1,0 +1,48 @@
+{
+  "status": "frozen",
+  "frozenAtUTC": "2026-11-01T09:34:35Z",
+  "saveVersion": 9,
+  "hashes": {
+    "scripts/extraction_model.gd": "947abf0f7d797b39b6edfe9c4d3a28703cadda978ca881d21b1f5f5249472204",
+    "scripts/game_model.gd": "7f06dee6cfa1af6e74085ec157a3620494f2ca9346d329f7356d544c06e1dd92",
+    "scripts/abyss_balance.gd": "e22d9de93e3f1aa174a77c1b010355e3c75c9a22a151d1de723206fd6ee247b8",
+    "scripts/battle_model.gd": "a1df683761eb6c9b5cbe46d60d999c24f17b5cd1ab9d7164c299d39ee0d48a0e",
+    "data/rogue_v2.json": "4973a69fc26fd7cb48705a1e40ac6312f0b2d35ea769907eea69a15a9355c5b2",
+    "data/extraction.json": "55340c63c0a68aa9d5fd5f5b36edd88de17df3e86a37a8a5b48df0e1cb993ead",
+    "tests/test_economy_v9.gd": "81e8a4c3f729869dbb97305bf24e212be995292b5f5ce20d2e8568f6c19ea6fc",
+    "tests/test_extraction_v8.gd": "0c91a5e8b3843cb0c7d78404ede80c6cd03f95e93fdf3ce192ebbcd3d0556fe4",
+    "tests/fixtures/abyss-v8-floor20.json": "4d5ab0ad149c5a64c539ef4c095d4a9e1415e7e7d5662b3fb6b604cdaac6f552",
+    "tests/fixtures/extraction-v7-active.json": "f2a05101c5779c11bb19d2a477dfaff131dc4fd78f0c7b6a2259c101ef66103a"
+  },
+  "dailyDiamondsPer10": [
+    675,
+    1000,
+    1350,
+    1625
+  ],
+  "dailyReset": "06:00 UTC+08:00",
+  "memoryExchange": 1,
+  "newRelicResaleFraction": 0.6,
+  "extractionLootMultiplier": 1.75,
+  "finalIndependentSeedRange": [
+    32300000,
+    32300063
+  ],
+  "notes": "No parameter fitting after holdout. Old v8 freeze and old-economy holdouts superseded.",
+  "keyRoomIndependentSeedRange": [
+    32600000,
+    32600255
+  ],
+  "verification": {
+    "economyRoutes": 1920,
+    "actualBattles": 80153,
+    "economyErrors": 0,
+    "keyRooms": 6144,
+    "keyContainers": 12288,
+    "keyErrors": 0,
+    "v9Checks": 392,
+    "v8Checks": 685,
+    "migrationV7PhysicalAssets": 38
+  },
+  "finalHashCheckUTC": "2026-11-01T09:40:35Z"
+}

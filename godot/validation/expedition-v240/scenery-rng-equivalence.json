@@ -1,0 +1,21 @@
+{
+  "cases": 96,
+  "seeds": [
+    30500000,
+    30500031
+  ],
+  "acts": [
+    1,
+    2,
+    3
+  ],
+  "compared": [
+    "room types/tiers/coordinates/district",
+    "edges",
+    "post-container RNG state",
+    "six subsequent loot IDs"
+  ],
+  "beforeSha256": "198b23056c7af7dbb4710833ebdc539bf20fd9a73a49ddcc2c9b9777fea628ee",
+  "afterSha256": "198b23056c7af7dbb4710833ebdc539bf20fd9a73a49ddcc2c9b9777fea628ee",
+  "identical": true
+}

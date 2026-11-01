@@ -1,0 +1,32 @@
+profile mode risk camp attempt complete/n meanGold fullGold floors dayDiam memory converted fullDiam gold/min
+damage_c6_gear25 abyss 3 empty first 64/64 3000 3000 50 8125 795 0 8125 572
+damage_c6_gear25 abyss 3 empty repeat 64/64 3000 3000 50 0 795 0 0 570
+damage_c6_gear25 abyss 3 maxed first 64/64 3000 3000 50 8125 795 795 8920 570
+damage_c6_gear25 abyss 3 maxed repeat 64/64 3000 3000 50 0 795 795 795 568
+damage_c6_gear25 extraction 5   16/64 17181 34542 0 0 0 0 0 2578
+grown abyss 1 empty first 64/64 3000 3000 50 5000 561 0 5000 437
+grown abyss 1 empty repeat 64/64 3000 3000 50 0 561 0 0 473
+grown abyss 1 maxed first 64/64 3000 3000 50 5000 561 561 5561 449
+grown abyss 1 maxed repeat 64/64 3000 3000 50 0 561 561 561 480
+grown extraction 2   20/64 12765 22996 0 0 0 0 0 1810
+limited_c6_gear25 abyss 2 empty first 64/64 3000 3000 50 6750 682 0 6750 562
+limited_c6_gear25 abyss 2 empty repeat 64/64 3000 3000 50 0 682 0 0 561
+limited_c6_gear25 abyss 2 maxed first 64/64 3000 3000 50 6750 682 682 7432 559
+limited_c6_gear25 abyss 2 maxed repeat 64/64 3000 3000 50 0 682 682 682 558
+limited_c6_gear25 abyss 3 empty first 64/64 3000 3000 50 8125 795 0 8125 558
+limited_c6_gear25 abyss 3 empty repeat 64/64 3000 3000 50 0 795 0 0 557
+limited_c6_gear25 abyss 3 maxed first 64/64 3000 3000 50 8125 795 795 8920 556
+limited_c6_gear25 abyss 3 maxed repeat 64/64 3000 3000 50 0 795 795 795 555
+limited_c6_gear25 extraction 4   64/64 31790 31790 0 0 0 0 0 4470
+limited_c6_gear25 extraction 5   26/64 22505 36235 0 0 0 0 0 3005
+optimized_c6 abyss 3 empty first 64/64 3000 3000 50 8125 795 0 8125 566
+optimized_c6 abyss 3 empty repeat 64/64 3000 3000 50 0 795 0 0 565
+optimized_c6 abyss 3 maxed first 64/64 3000 3000 50 8125 795 795 8920 562
+optimized_c6 abyss 3 maxed repeat 64/64 3000 3000 50 0 795 795 795 561
+optimized_c6 extraction 5   33/64 24894 34865 0 0 0 0 0 3413
+starter abyss 0 empty first 53/64 2565 3000 43.1 2879 393 0 3375 443
+starter abyss 0 empty repeat 64/64 3000 3000 50 496 465 0 496 488
+starter abyss 0 maxed first 63/64 2962 3000 49.4 3333 458 458 3840 458
+starter abyss 0 maxed repeat 64/64 3000 3000 50 42 465 465 507 499
+starter extraction 0   64/64 16405 16405 0 0 0 0 0 2472
+Errors: []

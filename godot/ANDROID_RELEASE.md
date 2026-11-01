@@ -27,9 +27,9 @@
 
 ## 手机内更新
 
-每次启动等待 3 秒后检查一次 GitHub 正式版本。检查在后台进行，战斗期间延后显示更新提示；离线时继续游玩。设置页可关闭自动检查和 Wi-Fi 自动下载，偏好保存在本机。
+每次启动等待 3 秒后检查一次 GitHub 正式版本。检查在后台进行，战斗期间延后显示更新提示；离线时继续游玩。设置页可关闭自动检查和 自动下载，偏好保存在本机。
 
-Android 使用 Godot 4.6 内置 `AndroidRuntime` 与 `JavaClassWrapper` 访问系统 `DownloadManager`。下载限定该仓库 Release 的 `universal.apk`，在 Wi-Fi 下保存到应用外部私有目录，由系统管理断线、后台与进度；游戏重启后恢复查询同一下载记录。界面提供进度、取消和重试。桌面仍可通过发布页下载。
+Android 使用 Godot 4.6 内置 `AndroidRuntime` 与 `JavaClassWrapper` 访问系统 `DownloadManager`。下载限定该仓库 Release 的 `universal.apk`，允许移动网络下载，保存到应用外部私有目录，由系统管理断线、后台与进度；游戏重启后恢复查询同一下载记录。界面提供进度、取消和重试。桌面仍可通过发布页下载。
 
 下载结束后按 GitHub Release asset 的 SHA256 `digest` 和文件大小校验；安装前再次校验。缺少有效摘要、大小异常、内容不符或下载失败时停止安装。下载包上限为 512 MiB。旧版更新包在新版本启动后清理。
 

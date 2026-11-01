@@ -1,0 +1,78 @@
+{
+  "generator": "built-in image_gen",
+  "brief": "Six independent original 16:9 painted fantasy environments for acts 2/3. Eye-level view, clear foreground platform, no characters/monsters/containers/loot/UI/text. Source pixels retained; WebP format conversion only.",
+  "scenes": [
+    {
+      "id": "ruins_act2",
+      "source": "exec-120034c4-bfa9-4a92-86d0-c4a5ddc5d065.png",
+      "theme": "Subterranean aqueduct",
+      "path": "res://assets/extraction/rooms/ruins_act2.webp",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 576034,
+      "sha256": "e3150a13164c666437f7e97ab01ca056373a1d74ea7e186b010380012ba206b1"
+    },
+    {
+      "id": "forest_act2",
+      "source": "exec-b37f309d-4e38-4b7c-9d37-cc2e3aa051fd.png",
+      "theme": "Colossal root labyrinth",
+      "path": "res://assets/extraction/rooms/forest_act2.webp",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 631070,
+      "sha256": "56237a82d7c3c1dc0464a8804b977d99c9931220a1bc67ccf1fa9c3d4f33a902"
+    },
+    {
+      "id": "sanctum_act2",
+      "source": "exec-8a0e1f3f-bf38-42d1-86d8-f84988e5ec71.png",
+      "theme": "Moonlit celestial archive",
+      "path": "res://assets/extraction/rooms/sanctum_act2.webp",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 480886,
+      "sha256": "db894b7f11364aaf9e0b2a25dc5c08c7ecca328d842a3bdaf423bc936b177d84"
+    },
+    {
+      "id": "ruins_act3",
+      "source": "exec-22b77bba-ff3a-4862-b9e4-61f55ee5d658.png",
+      "theme": "Molten-gold obsidian citadel",
+      "path": "res://assets/extraction/rooms/ruins_act3.webp",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 478608,
+      "sha256": "b5bf87338f8932bd59851bc009890cc130d17b5be4cf0f274cd5762e2104a793"
+    },
+    {
+      "id": "forest_act3",
+      "source": "exec-adb7a2c0-88f8-46f4-9aed-a2ee9f096eef.png",
+      "theme": "Crystalline floating forest",
+      "path": "res://assets/extraction/rooms/forest_act3.webp",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 582620,
+      "sha256": "3849e0c308dada8569878cee84930aa24b2410480b42813a7400113a4572dadb"
+    },
+    {
+      "id": "sanctum_act3",
+      "source": "exec-825828ee-8c0f-4eef-bb55-5150bd138ee2.png",
+      "theme": "Eclipsed cosmic observatory",
+      "path": "res://assets/extraction/rooms/sanctum_act3.webp",
+      "size": [
+        1672,
+        941
+      ],
+      "bytes": 575648,
+      "sha256": "94ebf219fb6d0bf3bff5786fd8c4b15dd2bdd5cee956c8c9cbf628949f6f23b3"
+    }
+  ]
+}

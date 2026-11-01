@@ -44,5 +44,14 @@ func run():
   ck(done[0]==2 and app.dialogue_key.is_empty(),'repeat full reading finishes without lock')
   app.navigate('story');await frames()
   fits(app.main_body.find_child('StoryEnter',true,false),'story remains interactive after reading')
+  # Begin through the actual stage button; preparation happens only after prose completion.
+  app.model.state.dialogueSeen.erase('ch1_1_pre')
+  await click(app.main_body.find_child('StageCard_ch1_1',true,false))
+  await click(app.main_body.find_child('StoryEnter',true,false))
+  ck(app.dialogue_key=='ch1_1_pre','real stage entry opens unseen pre-battle dialogue')
+  ck(app.model._issued_config.is_empty(),'pre-battle prose does not prematurely issue an encounter')
+  app.notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST);await frames()
+  ck(app.dialogue_key.is_empty() and app.current_screen=='story','real system Back cancels pre-battle prose without starting combat')
+  ck(app.model._issued_config.is_empty(),'cancelled real stage entry leaves no stale encounter token')
  app.queue_free();await frames();await create_timer(.3).timeout
  print('STORY PRESENTATION: %d checks, %d failures' % [checks,failures]);quit(1 if failures else 0)

@@ -297,24 +297,32 @@ func run() -> void:
 	for item in swapped:new_value+=int(app.model.extraction.item_def(str(item.itemId)).value)
 	check(new_value>old_value,"confirmed swap increases bag value")
 	press("ExtractionCloseContainer");await frames()
-	# Permanent collection affordance never annotates an unknown container item.
+	# Collection now tracks rare gold/red types while unknown items remain private.
 	var view=load("res://scripts/ui/extraction_view.gd")
 	var badge_box=VBoxContainer.new();root.add_child(badge_box)
 	app.model.state.extraction.collection=[]
-	view._item_title(app,badge_box,app.model.extraction.item_def("wire"))
-	check("新藏品" in texts(badge_box),"new collectible badge")
+	view._item_title(app,badge_box,app.model.extraction.item_def("gold_watch"))
+	check("新藏品" in texts(badge_box),"new rare collectible badge")
 	badge_box.free();badge_box=VBoxContainer.new();root.add_child(badge_box)
-	app.model.state.extraction.collection=["wire"]
+	app.model.state.extraction.collection=["gold_watch","wire"]
+	view._item_title(app,badge_box,app.model.extraction.item_def("gold_watch"))
+	check("已收藏" in texts(badge_box) and not "新藏品" in texts(badge_box),"owned rare collectible badge")
+	badge_box.free();badge_box=VBoxContainer.new();root.add_child(badge_box)
 	view._item_title(app,badge_box,app.model.extraction.item_def("wire"))
-	check("已收藏" in texts(badge_box) and not "新藏品" in texts(badge_box),"owned collectible badge")
+	check(not "新藏品" in texts(badge_box) and not "已收藏" in texts(badge_box),"ordinary materials have no rare collection badge")
 	badge_box.free();badge_box=VBoxContainer.new();root.add_child(badge_box)
 	view._item_title(app,badge_box,{"name":"未搜索","kind":"unknown"})
 	check(not "新藏品" in texts(badge_box) and not "已收藏" in texts(badge_box),"unknown item has no collection leak")
 	app.extraction_panel="collection";app._render_screen();await frames()
-	check("1 / %d" % app.model.extraction.data.items.size() in texts(app.main_body),"collection progress")
+	var rare_count:int=0
 	for id in app.model.extraction.data.items:
-		check(str(app.model.extraction.item_def(id).name) in texts(app.main_body),"gallery target "+str(id))
-	check("待收集" in texts(app.main_body),"uncollected targets visible")
+		var definition:Dictionary=app.model.extraction.item_def(id)
+		if int(definition.rarity)>=4:
+			rare_count+=1
+			check(str(definition.name) in texts(app.main_body),"rare gallery target "+str(id))
+		else:check(app.main_body.find_child("ExtractionCollection_"+str(id),true,false)==null,"ordinary item excluded from rare gallery "+str(id))
+	check("1 / %d" % rare_count in texts(app.main_body),"rare collection progress excludes legacy ordinary entries")
+	check("未发现" in texts(app.main_body),"uncollected rare targets visible")
 	badge_box.free()
 	# Cancelling after reveal preserves loot still waiting for its pickup animation.
 	app.extraction_panel="map"

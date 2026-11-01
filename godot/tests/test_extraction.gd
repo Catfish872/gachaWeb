@@ -92,7 +92,7 @@ func _init() -> void:
 	old.erase("extraction")
 	check(game.valid_save(old), "v4 accepted")
 	var migrated = game._normalize(old)
-	check(migrated.version == 7 and migrated.extraction.stash.is_empty(), "v6 defaults")
+	check(migrated.version == 9 and migrated.extraction.stash.is_empty(), "v6 defaults")
 	check(migrated.abyss == old.abyss, "v4 abyss preserved")
 	# Failed storage must restore physical objects and run phase.
 	check(ex.start_run().success, "rollback run")
@@ -105,7 +105,11 @@ func _init() -> void:
 		owned.level = 10
 		owned.constellation = 6
 		owned.awakening = 100
-	check(ex.departure_party() == game.battle_party(false), "full growth snapshot unchanged")
+	var departure:Array=ex.departure_party()
+	for unit in departure:
+		check(unit.permanentGrowth==game.growth_snapshot(unit.id),"XP growth equipment snapshot complete")
+		unit.erase("permanentGrowth")
+	check(departure == game.battle_party(false), "full growth snapshot unchanged")
 	# Per-rank battle modifiers are isolated from story/abyss rules.
 	var combat = Battle.new(game.catalog)
 	var base_party: Array = game.battle_party(false)
@@ -142,7 +146,7 @@ func _init() -> void:
 		for x in range(10):
 			ex.state().stash.append({"uid":"fixture_%d_%d" % [x,y],"itemId":"wire","x":x,"y":y,"rotated":false,"revealed":true})
 	check(ex.start_run().success,"overflow run starts")
-	ex.run().bag.append({"uid":"earned_unique","itemId":"lens","x":0,"y":0,"rotated":false,"revealed":true})
+	ex.run().bag.append({"uid":"earned_unique","itemId":"gold_watch","x":0,"y":0,"rotated":false,"revealed":true})
 	ex.run().phase = "boss_exit"
 	ex.run().node = 4
 	ex.run().bossesDefeated = 1
@@ -344,6 +348,12 @@ func test_maps() -> void:
 		check(ex._place(ex.run().bag, filler, ex.dimensions("bag")), "fill bag physically")
 	ex._container("满包测试", 3, 0)
 	cid = ex.containers()[0].id
+	# This contract concerns physical bag space. Random containers can now include
+	# independent keyring items, which correctly bypass a full bag.
+	var full_container:Dictionary=ex._find_container(cid)
+	full_container.items=[]
+	for item_id in ["wire","gold_watch","pocket_book"]:
+		full_container.items.append(ex._make_item(item_id))
 	while ex.reveal_next(cid).success: pass
 	objects = ex.containers()
 	var bag: Array = ex.run().bag.duplicate(true)
@@ -351,6 +361,12 @@ func test_maps() -> void:
 	check(result.success and result.taken.is_empty() and result.left.size() == objects[0].items.size(), "full bag returns explicit leavebehind")
 	check(ex.run().bag == bag and ex.containers() == objects, "full bag preserves all physical objects")
 	check(not ex.take_item(cid, objects[0].items[0].uid).success and ex.run().bag == bag, "single pickup full no mutation")
+	var independent_key:Dictionary=ex._make_item("key_ruins");independent_key.revealed=true
+	ex._find_container(cid).items.append(independent_key)
+	result=ex.take_all_revealed(cid)
+	check(result.success and result.taken==[independent_key.uid] and result.left.size()==3,"full bag mixed source takes only independent key and reports all physical leftovers")
+	check(ex.run().bag==bag and ex.state().keyring.any(func(item):return item.uid==independent_key.uid),"full bag key preserves every bag UID and enters keyring with exact identity")
+	check(ex.containers()==objects,"taking independent key leaves all three original source objects unchanged")
 
 	# Optional gear purchases reward progression without mandatory entry fees.
 	game = Game.new("")

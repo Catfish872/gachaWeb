@@ -82,8 +82,17 @@ func assert_page_fits(label: String) -> void:
 						check(ancestor.get_global_rect().encloses(node.get_global_rect()), label + " hero clip preserves full button: " + node.text)
 					ancestor = ancestor.get_parent()
 	for node in descendants(app.main_body):
-		if node is TextureRect and node.texture != null and "/characters/" in node.texture.resource_path:
-			check(node.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED or node.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT, label + " character artwork preserves complete aspect ratio")
+		if not node is TextureRect or node.texture==null:continue
+		var source:Texture2D=node.texture.atlas if node.texture is AtlasTexture else node.texture
+		if source!=null and "/characters/" in source.resource_path:
+			check(node.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED or node.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT, label + " character artwork preserves its source or curated crop aspect ratio")
+			if node.texture is AtlasTexture:
+				var portrait:Node=node.get_parent()
+				var mode:String=str(portrait.get_meta("portrait_mode",""))
+				var id:String=str(portrait.get_meta("portrait_id",""))
+				check(mode in ["face","bust"] and not id.is_empty(),label+" atlas has an explicit portrait identity and crop purpose")
+				var avatars=load("res://scripts/ui/character_avatar.gd")
+				check(node.texture.region==avatars.region_for(id,mode) and source.resource_path==avatars.source_path(id),label+" avatar uses the exact reviewed region of the original character")
 
 func test_scroll_over_art() -> void:
 	app.navigate("home")

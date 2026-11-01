@@ -27,6 +27,15 @@ func run():
    check(app.shell.size.x<=app.size.x+1 and app.shell.size.y<=app.size.y+1,page+' shell fits')
    check(app.page_scroll.get_global_rect().end.y<=app.size.y+1,page+' body viewport fits')
    check(app.main_body.get_global_rect().end.y<=app.size.y+1,page+' fixed content fits')
+ app.navigate('save');await frames()
+ var automatic=app.find_child('AutoDownloadUpdates',true,false)
+ check(automatic!=null and automatic.text=='自动下载更新（Android）','automatic download UI applies to ordinary mobile data, not Wi-Fi only')
+ var check_action=app.find_child('CheckForUpdates',true,false)
+ check(check_action!=null and not check_action.disabled,'manual update check has no Wi-Fi-only UI gate')
+ var obsolete_restriction:=false
+ for label in app.find_child('UpdatePanel',true,false).find_children('*','Label',true,false):
+  if 'Wi-Fi' in label.text or '仅限无线' in label.text:obsolete_restriction=true
+ check(not obsolete_restriction,'actual visible update explanation has no obsolete Wi-Fi restriction')
  app.queue_free();await frames();await create_timer(.3).timeout
  print('UPDATE LAYOUT: %d checks, %d failures' % [checks,failures])
  quit(0 if failures==0 else 1)

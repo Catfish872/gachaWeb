@@ -380,6 +380,7 @@ def check_search_background(state, component, output, coverage):
     assert resumed['loot']['scan_uid']==uid, 'Background resume skipped the active searched item'
     assert abs(resumed['loot']['scan_progress']-paused['loot']['scan_progress'])<=.02, 'Search progress jumped while backgrounded'
     assert loot_ownership(resumed)==loot_ownership(paused), 'Background search silently revealed or transferred loot'
+    coverage.pop('reason', None)
     coverage.update({'covered':True,'uid':uid,'paused_progress':paused['loot']['scan_progress'],'resumed_progress':resumed['loot']['scan_progress']})
     (output/'search-background.json').write_text(json.dumps(coverage,indent=2))
     return resumed
@@ -436,6 +437,76 @@ def visible_pickup_uids(states, container_id, after_seq):
     return collected
 
 
+def inventory_positions(state):
+    return {item['uid']: (item['item_id'], item['x'], item['y'], item['rotated'])
+            for item in state.get('inventory', {}).get('items', [])}
+
+
+def warehouse_input_flow(state, output):
+    """Purchase real supplies, then verify real ADB selection and deliberate placement."""
+    tap_page(state, 'ExtractionTab_shop')
+    state = wait_for(lambda q: any(b['name'] == 'ExtractionShopFilter_consumable' for b in q['buttons']), 'supply shop')
+    tap_page(state, 'ExtractionShopFilter_consumable')
+    state = wait_for(lambda q: any(b['name'] == 'ExtractionBuy_bandage' for b in q['buttons']), 'consumables filter')
+    for item_id in ('bandage', 'medkit'):
+        before = state['extraction']['stash_count']
+        tap_page(state, 'ExtractionBuy_' + item_id)
+        state = wait_for(lambda q: q['extraction']['stash_count'] == before + 1, 'real purchase ' + item_id)
+    tap_page(state, 'ExtractionTab_stash')
+    state = wait_for(lambda q: len(q.get('inventory', {}).get('items', [])) == 2, 'purchased warehouse supplies')
+    items = state['inventory']['items']
+    assert {item['item_id'] for item in items} == {'bandage', 'medkit'}
+    assert all(item['icon_loaded'] for item in items), 'Purchased supply icons must be loaded'
+    original = inventory_positions(state)
+    uids = {item['uid'] for item in items}
+    tap_page(state, 'ExtractionStashMulti')
+    state = wait_for(lambda q: q.get('inventory', {}).get('multi_select') and not q['inventory']['selected_uids'], 'empty explicit multiselect')
+    selected = set()
+    for item in items:
+        tap(state, 'ExtractionInventoryItem_' + item['uid'])
+        selected.add(item['uid'])
+        expected = selected.copy()
+        state = wait_for(lambda q: set(q.get('inventory', {}).get('selected_uids', [])) == expected, 'exact touch selection ' + item['uid'])
+        assert inventory_positions(state) == original, 'Selection may not mutate warehouse items'
+    screenshot(output, 'warehouse-two-exact-uids', True)
+    (output / 'warehouse-selection.json').write_text(json.dumps(state, ensure_ascii=False, indent=2))
+    tap_page(state, 'ExtractionStashMulti')
+    state = wait_for(lambda q: not q.get('inventory', {}).get('multi_select', True) and not q['inventory']['selected_uids'], 'cancel warehouse multiselect')
+    assert inventory_positions(state) == original
+    medkit = next(item for item in items if item['item_id'] == 'medkit')
+    uid = medkit['uid']
+    tap(state, 'ExtractionInventoryItem_' + uid)
+    state = wait_for(lambda q: q.get('inventory', {}).get('selected_uid') == uid and any(b['name'] == 'ExtractionMove_' + uid for b in q['buttons']), 'select exact medicine for movement')
+    tap_page(state, 'ExtractionMove_' + uid)
+    state = wait_for(lambda q: q.get('inventory', {}).get('placement_mode') and q['inventory']['placement_uid'] == uid, 'explicit medicine placement mode')
+    cells = {b['name']: b for b in state['buttons']}
+    start = cells['ExtractionInventoryCell_4_0']['rect']
+    end = cells['ExtractionInventoryCell_6_1']['rect']
+    adb('shell', 'input', 'swipe', str(round(start[0]+start[2]/2)), str(round(start[1]+start[3]/2)), str(round(end[0]+end[2]/2)), str(round(end[1]+end[3]/2)), '650')
+    state = wait_for(lambda q: q.get('inventory', {}).get('placement_mode') and inventory_positions(q) == original, 'real warehouse finger drag must not commit movement')
+    (output / 'warehouse-drag-preserved.json').write_text(json.dumps(state, ensure_ascii=False, indent=2))
+    tap(state, 'ExtractionInventoryCell_4_1')
+    state = wait_for(lambda q: not q.get('inventory', {}).get('placement_mode', True) and inventory_positions(q).get(uid) == ('medkit', 4, 1, medkit['rotated']), 'explicit target tap commits exact medicine position')
+    actual = inventory_positions(state)
+    assert set(actual) == uids and all(actual[key] == original[key] for key in uids if key != uid), 'Moving one UID preserves all others'
+    screenshot(output, 'warehouse-deliberate-move', True)
+    (output / 'warehouse-move.json').write_text(json.dumps(state, ensure_ascii=False, indent=2))
+    # A real vertical page drag must release the inventory's gesture ownership;
+    # the very next tap, not a second retry, selects the visible medicine.
+    bandage_uid = next(item['uid'] for item in items if item['item_id'] == 'bandage')
+    tap(state, 'ExtractionInventoryItem_' + bandage_uid)
+    state = wait_for(lambda q: q.get('inventory', {}).get('selected_uid') == bandage_uid, 'select other item before scrolling')
+    cx, cy, cw, ch = state['inventory']['clip']
+    before_scroll_top = state['inventory']['rect'][1]
+    adb('shell', 'input', 'swipe', str(round(cx+cw*.8)), str(round(cy+ch*.6)), str(round(cx+cw*.8)), str(round(cy+ch*.6-30)), '500')
+    state = wait_for(lambda q: q.get('inventory', {}).get('selected_uid') == bandage_uid and q['inventory']['rect'][1] < before_scroll_top - 5 and any(item['uid'] == uid and inside(item['rect'], item['clip']) for item in q['inventory']['items']), 'medicine remains visible after inventory scrolling')
+    tap(state, 'ExtractionInventoryItem_' + uid)
+    state = wait_for(lambda q: q.get('inventory', {}).get('selected_uid') == uid, 'first tap after inventory scroll selects immediately')
+    assert inventory_positions(state) == actual, 'Scrolling and selection cannot move assets'
+    (output / 'warehouse-scroll-first-tap.json').write_text(json.dumps(state, ensure_ascii=False, indent=2))
+    return state
+
+
 def extraction_flow(state, output, component, search_background):
     """Use ordinary deterministic loot, real scene taps and ADB gestures only."""
     state = visit(state, 'extraction')
@@ -443,6 +514,7 @@ def extraction_flow(state, output, component, search_background):
     tap_page(state, 'ExtractionTab_stash')
     state = wait_for(lambda q: any(b['name'] == 'ExtractionSort_stash' for b in q['buttons']), 'extraction stash tab')
     screenshot(output, 'extraction-stash', True)
+    state = warehouse_input_flow(state, output)
     tap_page(state, 'ExtractionTab_expedition')
     state = wait_for(lambda q: any(b['name'] == 'ExtractionStart' for b in q['buttons']), 'extraction departure')
     tap_page(state, 'ExtractionStart')
@@ -640,6 +712,15 @@ def check_background_resume(component, output):
     assert all(item['passed'] for item in results), 'Background/resume failed: ' + json.dumps(results)
 
 
+def validate_android_bridge(bridge):
+    assert bridge.get('success') is True, f'Android download/install bridge unavailable: {bridge}'
+    assert bridge.get('package') == PACKAGE, f'Android bridge resolved wrong package: {bridge}'
+    policy = bridge.get('network_policy', {})
+    assert policy.get('metered_permitted') is True, f'Actual DownloadManager request must permit cellular/metered data: {policy}'
+    assert policy.get('roaming_permitted') is False, f'International roaming remains separately protected: {policy}'
+    return policy
+
+
 def run(apk, output):
     adb('install', '-r', str(apk))
     adb('shell', 'pm', 'clear', PACKAGE)
@@ -657,8 +738,8 @@ def run(apk, output):
     assert renderer.get('method') == 'mobile' and renderer.get('driver') == 'vulkan', f'Expected actual Mobile/Vulkan renderer, not silent fallback: {renderer}'
     assert renderer.get('adapter'), f'Missing actual graphics adapter: {renderer}'
     bridge = state.get('android_bridge', {})
-    assert bridge.get('success') is True, f'Android download/install bridge unavailable: {bridge}'
-    assert bridge.get('package') == PACKAGE, f'Android bridge resolved wrong package: {bridge}'
+    policy = validate_android_bridge(bridge)
+    (output / 'android-network-policy.json').write_text(json.dumps({'policy': policy, 'evidence': 'Actual Android DownloadManager.Request setter accepted metered data; this is not a completed cellular APK download.'}, indent=2))
     geometry(state)
     dismiss_fullscreen_education(output, state['window'])
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'home after fullscreen education')

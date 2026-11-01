@@ -1,0 +1,1135 @@
+{
+  "armorUid": "extraction_1793523875851_1_570460239_item_20",
+  "prices": {
+    "extraction_1793523875851_1_570460239_item_20": 440,
+    "extraction_1793523875851_1_570460239_item_21": 40,
+    "extraction_1793523875851_1_570460239_item_22": 130,
+    "extraction_1793523875851_1_570460239_item_23": 40,
+    "extraction_1793523875851_1_570460239_item_24": 40,
+    "extraction_1793523875851_1_570460239_item_25": 40,
+    "extraction_1793523875851_1_570460239_item_26": 5,
+    "extraction_1793523875851_1_570460239_item_27": 5,
+    "extraction_1793523875851_1_570460239_item_28": 5,
+    "extraction_1793523875851_1_570460239_item_29": 5,
+    "extraction_1793523875851_1_570460239_item_30": 5,
+    "extraction_1793523875851_1_570460239_item_31": 5,
+    "extraction_1793523875851_1_570460239_item_32": 5,
+    "extraction_1793523875851_1_570460239_item_33": 5,
+    "extraction_1793523875851_1_570460239_item_34": 5,
+    "extraction_1793523875851_1_570460239_item_35": 5,
+    "extraction_1793523875851_1_570460239_item_36": 5,
+    "extraction_1793523875851_1_570460239_item_37": 5,
+    "extraction_1793523875851_1_570460239_item_38": 5,
+    "extraction_1793523875851_1_570460239_item_39": 5,
+    "extraction_1793523875851_1_570460239_item_40": 5,
+    "extraction_1793523875851_1_570460239_item_41": 5,
+    "extraction_1793523875851_1_570460239_item_42": 5,
+    "extraction_1793523875851_1_570460239_item_43": 5,
+    "extraction_1793523875851_1_570460239_item_44": 5,
+    "extraction_1793523875851_1_570460239_item_45": 5,
+    "extraction_1793523875851_1_570460239_item_46": 5,
+    "extraction_1793523875851_1_570460239_item_47": 5,
+    "extraction_1793523875851_1_570460239_item_48": 5,
+    "extraction_1793523875851_1_570460239_item_49": 5,
+    "extraction_1793523875851_1_570460239_item_50": 5,
+    "extraction_1793523875851_1_570460239_item_51": 5,
+    "extraction_1793523875851_1_570460239_item_52": 5,
+    "extraction_1793523875851_1_570460239_item_53": 5,
+    "extraction_1793523875851_1_570460239_item_54": 5,
+    "extraction_1793523875851_1_570460239_item_55": 60,
+    "extraction_1793523875851_1_570460239_item_57": 40,
+    "extraction_1793523875851_1_570460239_item_58": 130
+  },
+  "save": {
+    "abyss": {
+      "currentFloor": 1,
+      "lastFreeResetTime": 0,
+      "lastRun": {
+
+      },
+      "maxFloor": 0,
+      "meta": {
+        "currency": 0,
+        "runsCompleted": 0,
+        "runsLost": 0,
+        "selectedDifficulty": 0,
+        "totalEarned": 0,
+        "unlockedDifficulty": 0,
+        "upgrades": {
+          "offense": 0,
+          "recovery": 0,
+          "supply": 0,
+          "vitality": 0
+        }
+      },
+      "rogue": {
+        "activeEncounter": {
+
+        },
+        "characterFocus": {
+
+        },
+        "difficulty": 0,
+        "eligibleCharacters": [],
+        "eventHistory": [],
+        "floorsCleared": 0,
+        "metaEarned": 0,
+        "nextStep": {
+          "floor": 0,
+          "type": "none"
+        },
+        "pendingChoices": [],
+        "pendingNode": {
+
+        },
+        "runId": null,
+        "runTeam": [],
+        "selectedRewards": [],
+        "shopStock": [],
+        "temporaryCurrency": 0
+      },
+      "savedPartyState": null
+    },
+    "chapterGiftClaimed": {
+
+    },
+    "createdAt": 1793523875850,
+    "dailyMissions": {
+      "completed": [],
+      "lastReset": 0
+    },
+    "dialogueSeen": {
+
+    },
+    "extraction": {
+      "collection": [],
+      "credits": 0,
+      "lastRun": {
+
+      },
+      "loadout": [
+        {
+          "appraisalRisk": 0,
+          "itemId": "key_forest",
+          "revealed": false,
+          "rotated": false,
+          "uid": "extraction_1793523875851_1_570460239_item_23",
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "mailbox": [
+        {
+          "appraisalRisk": 0,
+          "itemId": "key_sanctum",
+          "revealed": false,
+          "rotated": false,
+          "uid": "extraction_1793523875851_1_570460239_item_24",
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "run": {
+        "act": 1,
+        "activeEncounter": {
+
+        },
+        "bag": [
+          {
+            "appraisalRisk": 0,
+            "itemId": "key_ruins",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_25",
+            "x": 0,
+            "y": 0
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_26",
+            "x": 1,
+            "y": 0
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_27",
+            "x": 2,
+            "y": 0
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_28",
+            "x": 3,
+            "y": 0
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_29",
+            "x": 4,
+            "y": 0
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_30",
+            "x": 5,
+            "y": 0
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_31",
+            "x": 0,
+            "y": 1
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_32",
+            "x": 1,
+            "y": 1
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_33",
+            "x": 2,
+            "y": 1
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_34",
+            "x": 3,
+            "y": 1
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_35",
+            "x": 4,
+            "y": 1
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_36",
+            "x": 5,
+            "y": 1
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_37",
+            "x": 0,
+            "y": 2
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_38",
+            "x": 1,
+            "y": 2
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_39",
+            "x": 2,
+            "y": 2
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_40",
+            "x": 3,
+            "y": 2
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_41",
+            "x": 4,
+            "y": 2
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_42",
+            "x": 5,
+            "y": 2
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_43",
+            "x": 0,
+            "y": 3
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_44",
+            "x": 1,
+            "y": 3
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_45",
+            "x": 2,
+            "y": 3
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_46",
+            "x": 3,
+            "y": 3
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_47",
+            "x": 4,
+            "y": 3
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_48",
+            "x": 5,
+            "y": 3
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_49",
+            "x": 0,
+            "y": 4
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_50",
+            "x": 1,
+            "y": 4
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_51",
+            "x": 2,
+            "y": 4
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_52",
+            "x": 3,
+            "y": 4
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_53",
+            "x": 4,
+            "y": 4
+          },
+          {
+            "appraisalRisk": 0,
+            "itemId": "bandage",
+            "revealed": true,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_54",
+            "x": 5,
+            "y": 4
+          }
+        ],
+        "baseMaxHp": 1650,
+        "blessings": [],
+        "bossesDefeated": 0,
+        "characterFocus": {
+
+        },
+        "collectedValue": 0,
+        "containers": [
+          {
+            "height": 8,
+            "id": "extraction_1793523875851_1_570460239_container_56",
+            "items": [
+              {
+                "appraisalRisk": 0,
+                "itemId": "key_forest",
+                "revealed": true,
+                "rotated": false,
+                "uid": "extraction_1793523875851_1_570460239_item_57",
+                "x": 0,
+                "y": 0
+              },
+              {
+                "appraisalRisk": 0,
+                "itemId": "gold_watch",
+                "revealed": false,
+                "rotated": false,
+                "uid": "extraction_1793523875851_1_570460239_item_58",
+                "x": 1,
+                "y": 0
+              }
+            ],
+            "kind": "supply",
+            "name": "fixture",
+            "quality": 0,
+            "revealed": 1,
+            "sceneX": 0.330554512143135,
+            "sceneY": 0.722157270908356,
+            "sprite": "res://assets/extraction/containers/wooden_chest.png",
+            "width": 6
+          }
+        ],
+        "difficulty": 0,
+        "equipped": [
+          {
+            "appraisalRisk": 0,
+            "itemId": "blade",
+            "revealed": false,
+            "rotated": false,
+            "uid": "extraction_1793523875851_1_570460239_item_55",
+            "x": 0,
+            "y": 0
+          }
+        ],
+        "growthBattles": 0,
+        "id": "extraction_1793523875851_1_570460239",
+        "map": {
+          "bossRoomId": "extraction_1793523875851_1_570460239_room_19",
+          "bossUnlocked": false,
+          "currentRoomId": "extraction_1793523875851_1_570460239_room_1",
+          "districts": [
+            {
+              "background": "res://assets/extraction/rooms/sanctum_1.webp",
+              "id": "district_0",
+              "name": "星核圣所",
+              "theme": "sanctum"
+            },
+            {
+              "background": "res://assets/extraction/rooms/ruins_1.webp",
+              "id": "district_1",
+              "name": "旧王城遗址",
+              "theme": "ruins"
+            },
+            {
+              "background": "res://assets/extraction/rooms/forest_1.webp",
+              "id": "district_2",
+              "name": "幽光林地",
+              "theme": "forest"
+            }
+          ],
+          "edges": [
+            [
+              "extraction_1793523875851_1_570460239_room_1",
+              "extraction_1793523875851_1_570460239_room_2"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_2",
+              "extraction_1793523875851_1_570460239_room_4"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_3",
+              "extraction_1793523875851_1_570460239_room_4"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_4",
+              "extraction_1793523875851_1_570460239_room_6"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_3",
+              "extraction_1793523875851_1_570460239_room_5"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_1",
+              "extraction_1793523875851_1_570460239_room_3"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_7",
+              "extraction_1793523875851_1_570460239_room_8"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_8",
+              "extraction_1793523875851_1_570460239_room_10"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_7",
+              "extraction_1793523875851_1_570460239_room_9"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_10",
+              "extraction_1793523875851_1_570460239_room_12"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_11",
+              "extraction_1793523875851_1_570460239_room_12"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_9",
+              "extraction_1793523875851_1_570460239_room_11"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_2",
+              "extraction_1793523875851_1_570460239_room_7"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_6",
+              "extraction_1793523875851_1_570460239_room_11"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_13",
+              "extraction_1793523875851_1_570460239_room_15"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_15",
+              "extraction_1793523875851_1_570460239_room_16"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_13",
+              "extraction_1793523875851_1_570460239_room_14"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_15",
+              "extraction_1793523875851_1_570460239_room_17"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_17",
+              "extraction_1793523875851_1_570460239_room_18"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_16",
+              "extraction_1793523875851_1_570460239_room_18"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_10",
+              "extraction_1793523875851_1_570460239_room_15"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_8",
+              "extraction_1793523875851_1_570460239_room_13"
+            ],
+            [
+              "extraction_1793523875851_1_570460239_room_14",
+              "extraction_1793523875851_1_570460239_room_19"
+            ]
+          ],
+          "explored": 0,
+          "requiredExploration": 6,
+          "rooms": [
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/sanctum_2.webp",
+              "cleared": true,
+              "containers": [],
+              "description": "星纹路标指向遗迹深处。",
+              "districtId": "district_0",
+              "id": "extraction_1793523875851_1_570460239_room_1",
+              "name": "远征入口",
+              "tier": 1,
+              "type": "entry",
+              "visited": true,
+              "x": 0.0736795802116394,
+              "y": 0.182113456249237
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/sanctum_2.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "旅人遗留的物资，偶有意外珍藏。",
+              "districtId": "district_0",
+              "id": "extraction_1793523875851_1_570460239_room_2",
+              "name": "旅人物资站",
+              "tier": 1,
+              "type": "cache",
+              "visited": false,
+              "x": 0.21444916677475,
+              "y": 0.181727555751801
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/sanctum_1.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "营火旁可包扎、冥想或搜寻补给。",
+              "districtId": "district_0",
+              "id": "extraction_1793523875851_1_570460239_room_3",
+              "name": "隐蔽营地",
+              "tier": 1,
+              "type": "rest",
+              "visited": false,
+              "x": 0.071462562084198,
+              "y": 0.495065241575241
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/sanctum_1.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "将四格珍藏提前送回仓库。",
+              "districtId": "district_0",
+              "id": "extraction_1793523875851_1_570460239_room_4",
+              "name": "远征寄存站",
+              "tier": 2,
+              "type": "relay",
+              "visited": false,
+              "x": 0.215562086820602,
+              "y": 0.488348380804062
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/sanctum_1.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "旧工坊散落着符文构件与装备。",
+              "districtId": "district_0",
+              "id": "extraction_1793523875851_1_570460239_room_5",
+              "name": "符文工坊",
+              "tier": 2,
+              "type": "workshop",
+              "visited": false,
+              "x": 0.067652138710022,
+              "y": 0.802117793560028
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/sanctum_1.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "残存药柜内可能留有疗愈用品。",
+              "districtId": "district_0",
+              "id": "extraction_1793523875851_1_570460239_room_6",
+              "name": "疗愈药房",
+              "tier": 2,
+              "type": "hospital",
+              "visited": false,
+              "x": 0.208073369264603,
+              "y": 0.800299421787262
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/ruins_2.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "营火旁可包扎、冥想或搜寻补给。",
+              "districtId": "district_1",
+              "id": "extraction_1793523875851_1_570460239_room_7",
+              "name": "隐蔽营地",
+              "tier": 2,
+              "type": "rest",
+              "visited": false,
+              "x": 0.346875730216503,
+              "y": 0.180252983808517
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/ruins_1.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "旧工坊散落着符文构件与装备。",
+              "districtId": "district_1",
+              "id": "extraction_1793523875851_1_570460239_room_8",
+              "name": "符文工坊",
+              "tier": 2,
+              "type": "workshop",
+              "visited": false,
+              "x": 0.484152365610004,
+              "y": 0.175073049813509
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/ruins_1.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "旧工坊散落着符文构件与装备。",
+              "districtId": "district_1",
+              "id": "extraction_1793523875851_1_570460239_room_9",
+              "name": "符文工坊",
+              "tier": 2,
+              "type": "workshop",
+              "visited": false,
+              "x": 0.355293702125549,
+              "y": 0.484970097243786
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/ruins_2.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "旧工坊散落着符文构件与装备。",
+              "districtId": "district_1",
+              "id": "extraction_1793523875851_1_570460239_room_10",
+              "name": "符文工坊",
+              "tier": 3,
+              "type": "workshop",
+              "visited": false,
+              "x": 0.491412353992462,
+              "y": 0.489336509823799
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/ruins_1.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "旧工坊散落着符文构件与装备。",
+              "districtId": "district_1",
+              "id": "extraction_1793523875851_1_570460239_room_11",
+              "name": "符文工坊",
+              "tier": 3,
+              "type": "workshop",
+              "visited": false,
+              "x": 0.344886047720909,
+              "y": 0.802052466392517
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/ruins_2.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "营火旁可包扎、冥想或搜寻补给。",
+              "districtId": "district_1",
+              "id": "extraction_1793523875851_1_570460239_room_12",
+              "name": "隐蔽营地",
+              "tier": 3,
+              "type": "rest",
+              "visited": false,
+              "x": 0.493971357345581,
+              "y": 0.7941520864591
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/forest_1.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "营火旁可包扎、冥想或搜寻补给。",
+              "districtId": "district_2",
+              "id": "extraction_1793523875851_1_570460239_room_13",
+              "name": "隐蔽营地",
+              "tier": 3,
+              "type": "rest",
+              "visited": false,
+              "x": 0.62926535654068,
+              "y": 0.183685289382935
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/forest_2.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "旅人遗留的物资，偶有意外珍藏。",
+              "districtId": "district_2",
+              "id": "extraction_1793523875851_1_570460239_room_14",
+              "name": "旅人物资站",
+              "tier": 3,
+              "type": "cache",
+              "visited": false,
+              "x": 0.767121507644653,
+              "y": 0.178446474552155
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/forest_2.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "巡逻警戒，战胜后可搜索。",
+              "districtId": "district_2",
+              "id": "extraction_1793523875851_1_570460239_room_15",
+              "name": "巡逻走廊",
+              "tier": 3,
+              "type": "battle",
+              "visited": false,
+              "x": 0.629486791133881,
+              "y": 0.48935905611515
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/forest_2.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "营火旁可包扎、冥想或搜寻补给。",
+              "districtId": "district_2",
+              "id": "extraction_1793523875851_1_570460239_room_16",
+              "name": "隐蔽营地",
+              "tier": 4,
+              "type": "rest",
+              "visited": false,
+              "x": 0.775262905359268,
+              "y": 0.491538384199142
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/forest_2.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "巡逻警戒，战胜后可搜索。",
+              "districtId": "district_2",
+              "id": "extraction_1793523875851_1_570460239_room_17",
+              "name": "巡逻走廊",
+              "tier": 4,
+              "type": "battle",
+              "visited": false,
+              "x": 0.632368248224259,
+              "y": 0.797879504919052
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/forest_2.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "调查遗迹，选择收获与代价。",
+              "districtId": "district_2",
+              "id": "extraction_1793523875851_1_570460239_room_18",
+              "name": "遗迹调查",
+              "tier": 4,
+              "type": "event",
+              "visited": false,
+              "x": 0.766499919295311,
+              "y": 0.800862127065659
+            },
+            {
+              "actions": [],
+              "background": "res://assets/extraction/rooms/forest_1.webp",
+              "cleared": false,
+              "containers": [],
+              "description": "击败首领，撤离或深入下一幕",
+              "districtId": "district_2",
+              "id": "extraction_1793523875851_1_570460239_room_19",
+              "name": "封印核心",
+              "tier": 4,
+              "type": "boss",
+              "visited": false,
+              "x": 0.95,
+              "y": 0.18
+            }
+          ]
+        },
+        "node": 0,
+        "party": [
+          {
+            "constellation": 0,
+            "cooldowns": {
+
+            },
+            "currentHp": 850,
+            "element": "fire",
+            "energy": 0,
+            "id": "ember",
+            "level": 1,
+            "maxHp": 850,
+            "name": "赤炎·冈",
+            "passiveId": "ember_passive",
+            "saveData": {
+              "awakening": 0,
+              "breakthroughLevel": 0,
+              "constellation": 0,
+              "equippedRelics": {
+
+              },
+              "exp": 0,
+              "level": 1,
+              "shards": 3
+            },
+            "skills": [
+              "ember_normal",
+              "ember_skill",
+              "ember_ult"
+            ],
+            "stats": {
+              "atk": 140,
+              "cri": 0.15,
+              "criDmg": 1.5,
+              "critDmg": 1.5,
+              "critRate": 0.15,
+              "def": 65,
+              "energyRate": 0.0,
+              "hp": 850,
+              "maxHp": 850,
+              "normalDmgBonus": 0.0,
+              "skillCdReduce": 0,
+              "skillDmgBonus": 0.0,
+              "spd": 95.0,
+              "ultDmgBonus": 0.0
+            }
+          },
+          {
+            "constellation": 0,
+            "cooldowns": {
+
+            },
+            "currentHp": 800,
+            "element": "wind",
+            "energy": 0,
+            "id": "zeph",
+            "level": 1,
+            "maxHp": 800,
+            "name": "流风·泽菲",
+            "passiveId": "zeph_passive",
+            "saveData": {
+              "awakening": 0,
+              "breakthroughLevel": 0,
+              "constellation": 0,
+              "equippedRelics": {
+
+              },
+              "exp": 0,
+              "level": 1,
+              "shards": 1
+            },
+            "skills": [
+              "zeph_normal",
+              "zeph_skill",
+              "zeph_ult"
+            ],
+            "stats": {
+              "atk": 120,
+              "cri": 0.12,
+              "criDmg": 1.5,
+              "critDmg": 1.5,
+              "critRate": 0.12,
+              "def": 70,
+              "energyRate": 0.0,
+              "hp": 800,
+              "maxHp": 800,
+              "normalDmgBonus": 0.0,
+              "skillCdReduce": 0,
+              "skillDmgBonus": 0.0,
+              "spd": 115.0,
+              "ultDmgBonus": 0.0
+            }
+          }
+        ],
+        "pendingChoices": [],
+        "phase": "room",
+        "rngState": "54206317310528950",
+        "room": {
+          "actions": [],
+          "background": "res://assets/extraction/rooms/sanctum_2.webp",
+          "cleared": true,
+          "containers": [],
+          "description": "星纹路标指向遗迹深处。",
+          "districtId": "district_0",
+          "id": "extraction_1793523875851_1_570460239_room_1",
+          "name": "远征入口",
+          "tier": 1,
+          "type": "entry",
+          "visited": true,
+          "x": 0.0736795802116394,
+          "y": 0.182113456249237
+        },
+        "roomActions": [],
+        "roomsCleared": 0,
+        "routes": [
+          {
+            "actions": [],
+            "background": "res://assets/extraction/rooms/sanctum_2.webp",
+            "cleared": false,
+            "containers": [],
+            "description": "旅人遗留的物资，偶有意外珍藏。",
+            "districtId": "district_0",
+            "id": "extraction_1793523875851_1_570460239_room_2",
+            "locked": false,
+            "name": "旅人物资站",
+            "path": [
+              "extraction_1793523875851_1_570460239_room_1",
+              "extraction_1793523875851_1_570460239_room_2"
+            ],
+            "tier": 1,
+            "type": "cache",
+            "visited": false,
+            "x": 0.21444916677475,
+            "y": 0.181727555751801
+          },
+          {
+            "actions": [],
+            "background": "res://assets/extraction/rooms/sanctum_1.webp",
+            "cleared": false,
+            "containers": [],
+            "description": "营火旁可包扎、冥想或搜寻补给。",
+            "districtId": "district_0",
+            "id": "extraction_1793523875851_1_570460239_room_3",
+            "locked": false,
+            "name": "隐蔽营地",
+            "path": [
+              "extraction_1793523875851_1_570460239_room_1",
+              "extraction_1793523875851_1_570460239_room_3"
+            ],
+            "tier": 1,
+            "type": "rest",
+            "visited": false,
+            "x": 0.071462562084198,
+            "y": 0.495065241575241
+          }
+        ],
+        "securedItems": 0,
+        "securedValue": 0,
+        "selectedContainer": "",
+        "serial": 58,
+        "startedAt": 1793523875851
+      },
+      "runs": 0,
+      "stash": [
+        {
+          "appraisalRisk": 0,
+          "itemId": "key_ruins",
+          "revealed": false,
+          "rotated": false,
+          "uid": "extraction_1793523875851_1_570460239_item_21",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "appraisalRisk": 0,
+          "itemId": "gold_watch",
+          "revealed": false,
+          "rotated": false,
+          "uid": "extraction_1793523875851_1_570460239_item_22",
+          "x": 1,
+          "y": 0
+        }
+      ],
+      "unlockedDifficulty": 0,
+      "utility": {
+        "armor": {
+          "appraisalRisk": 0,
+          "condition": 0.37,
+          "itemId": "armor_3",
+          "revealed": false,
+          "rotated": false,
+          "uid": "extraction_1793523875851_1_570460239_item_20",
+          "x": 0,
+          "y": 0
+        },
+        "backpack": {
+
+        }
+      }
+    },
+    "lastSaved": 1793523875852,
+    "ownedCharacters": {
+      "ember": {
+        "awakening": 0,
+        "breakthroughLevel": 0,
+        "constellation": 0,
+        "equippedRelics": {
+
+        },
+        "exp": 0,
+        "level": 1,
+        "shards": 3
+      },
+      "zeph": {
+        "awakening": 0,
+        "breakthroughLevel": 0,
+        "constellation": 0,
+        "equippedRelics": {
+
+        },
+        "exp": 0,
+        "level": 1,
+        "shards": 1
+      }
+    },
+    "pityCounters": {
+      "limited_kaldi": {
+        "count": 0,
+        "count4": 0,
+        "guaranteedFeatured": false
+      },
+      "standard": {
+        "count": 0,
+        "count4": 0,
+        "guaranteedFeatured": false
+      }
+    },
+    "relics": [],
+    "resources": {
+      "diamonds": 1600,
+      "gold": 50000,
+      "stamina": 100,
+      "staminaLastUpdate": 1793523875850
+    },
+    "stageProgress": {
+
+    },
+    "stats": {
+      "totalBattles": 0,
+      "totalGoldSpent": 0,
+      "totalPulls": 0,
+      "totalVictories": 0
+    },
+    "team": [
+      "ember",
+      "zeph",
+      null
+    ],
+    "version": 7
+  },
+  "sourceVersion": 7,
+  "worldKey": "extraction_1793523875851_1_570460239_item_57"
+}

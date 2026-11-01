@@ -52,9 +52,10 @@ func _emit_probe(event: String="frame") -> void:
 	_probe_controls(self, controls)
 	var canvases := _probe_canvases(controls)
 	var loot := _probe_loot(controls)
+	var inventory := _probe_inventory(controls)
 	var scroll := main_body.get_parent() as ScrollContainer
 	var payload := Marshalls.utf8_to_base64(JSON.stringify({
-		"seq": _probe_sequence, "probe_event":event, "application_paused":bool(get_meta("application_paused",false)), "monotonic_ms": Time.get_ticks_msec(), "loot": loot, "modal_scrolls": _probe_scrolls(), "page_scrolls": _probe_page_scrolls(), "screen": current_screen, "window": [get_window().size.x, get_window().size.y],
+		"seq": _probe_sequence, "probe_event":event, "application_paused":bool(get_meta("application_paused",false)), "monotonic_ms": Time.get_ticks_msec(), "loot": loot, "inventory": inventory, "modal_scrolls": _probe_scrolls(), "page_scrolls": _probe_page_scrolls(), "screen": current_screen, "window": [get_window().size.x, get_window().size.y],
 		"logical": [size.x, size.y], "overlay": overlay.get_child_count(), "system_back_events": _probe_back_events,
 		"renderer": {"method": RenderingServer.get_current_rendering_method(), "driver": RenderingServer.get_current_rendering_driver_name(), "adapter": RenderingServer.get_video_adapter_name()},
 		"scroll": scroll.scroll_vertical, "scroll_max": scroll.get_v_scroll_bar().max_value - scroll.get_v_scroll_bar().page,
@@ -187,3 +188,21 @@ func _probe_loot(controls: Array) -> Dictionary:
 			result[pair[0]].append(entry)
 			if pair[0]=="source" and not known:controls.append({"name":"ExtractionLootItem_"+str(item.uid),"rect":entry.rect,"clip":clip})
 	return result
+
+# Read-only warehouse geometry for real Android selection and placement gestures.
+func _probe_inventory(controls: Array) -> Dictionary:
+	var grid=main_body.find_child("ExtractionGrid_stash",true,false)
+	if not is_instance_valid(grid):return {}
+	var clip:=_probe_canvas_clip(grid)
+	var items:Array=[]
+	for item in grid.items:
+		var entry:Dictionary={"uid":str(item.uid),"item_id":str(item.itemId),"x":int(item.x),"y":int(item.y),"rotated":bool(item.get("rotated",false)),"rect":_probe_local_rect(grid,grid.visual_rect(item)),"clip":clip,"icon_loaded":grid.textures.has(str(item.itemId))}
+		items.append(entry)
+		controls.append({"name":"ExtractionInventoryItem_"+str(item.uid),"rect":entry.rect,"clip":clip})
+	if grid.placement_mode:
+		for y in range(grid.rows):
+			for x in range(grid.columns):
+				var rect:=_probe_local_rect(grid,Rect2(Vector2(x,y)*grid.cell+Vector2.ONE*3,Vector2.ONE*(grid.cell-6)))
+				if Rect2(clip[0],clip[1],clip[2],clip[3]).encloses(Rect2(rect[0],rect[1],rect[2],rect[3])):
+					controls.append({"name":"ExtractionInventoryCell_%d_%d"%[x,y],"rect":rect,"clip":clip})
+	return {"items":items,"selected_uids":grid.selected_uids.duplicate(),"selected_uid":grid.selected_uid,"multi_select":grid.multi_select,"placement_mode":grid.placement_mode,"placement_uid":grid.placement_uid,"rect":_probe_rect(grid),"clip":clip}

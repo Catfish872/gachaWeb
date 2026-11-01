@@ -1,5 +1,6 @@
 extends Control
 
+const CharacterAvatars = preload("res://scripts/ui/character_avatar.gd")
 const RuneTheme = preload("res://scripts/ui/rune_theme.gd")
 
 const INK := Color("080e19")
@@ -66,12 +67,17 @@ var extraction_recent: Dictionary = {}
 var extraction_audio: AudioStreamPlayer
 var extraction_search_audio: AudioStreamPlayer
 var music_audio: AudioStreamPlayer
+var _music_pool: Dictionary = {}
+var _music_context_id := "hub"
 var ui_audio: AudioStreamPlayer
 var music_enabled := true
 var sound_enabled := true
 var music_volume_db := -8.0
 var effects_volume_db := -10.0
 var _last_ui_sound_msec := 0
+var _last_ui_sound_clip := ""
+var _last_battle_sound_msec: int = -10000
+var _battle_audio_history: Array = []
 var battle_log: Array = []
 var last_reward: Dictionary = {}
 var summon_results: Array = []
@@ -211,6 +217,7 @@ func _input(event: InputEvent) -> void:
 				return
 			if absf(travel.y)>=6 and absf(travel.y)>=absf(travel.x)*1.15:
 				_touch_dragging=true
+				_cancel_scroll_child_gestures(_touch_scroll, event.index)
 		if _touch_dragging:
 			var now := Time.get_ticks_msec()
 			var elapsed := maxf(0.004, float(now - _touch_timestamp) / 1000.0)
@@ -221,6 +228,14 @@ func _input(event: InputEvent) -> void:
 			_touch_timestamp = now
 			get_viewport().set_input_as_handled()
 		_touch_previous = event.position
+
+func _cancel_scroll_child_gestures(node: Node, touch_index: int) -> void:
+	# Scrolling consumes subsequent drag/release events; release the original
+	# child's pointer ownership immediately, without clicking or placing items.
+	if node.has_method("cancel_pointer_gesture"):
+		node.cancel_pointer_gesture(touch_index)
+	for child in node.get_children():
+		_cancel_scroll_child_gestures(child, touch_index)
 
 func _apply_scroll(scroll: ScrollContainer) -> void:
 	var bar := scroll.get_v_scroll_bar()
@@ -285,7 +300,7 @@ func _notification(what: int) -> void:
 	elif what == NOTIFICATION_APPLICATION_RESUMED:
 		set_meta("application_paused",false)
 		for player in get_children():
-			if player is AudioStreamPlayer and player.has_meta("track"):player.stream_paused=false
+			if player is AudioStreamPlayer and player.has_meta("track"):player.stream_paused=player!=music_audio or not music_enabled
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST and _ready_done:
 		_go_back()
 
@@ -532,6 +547,7 @@ func _render_screen() -> void:
 	if current_screen != "battle":
 		unit_cards.clear()
 		fx.clear_effects()
+		_clear(fx)
 	_clear(main_body)
 	set_page_fixed(false)
 	_update_resources()
@@ -821,7 +837,7 @@ func _summon_summary() -> void:
 		var card:=_panel(grid,color.darkened(.35),6)
 		card.name="SummonResult_"+str(r.charId)
 		var v:=_vbox(card,3)
-		var art:=_portrait_environment(v,str(r.charId),150 if summon_results.size()==1 else 76)
+		var art:=_portrait_environment(v,str(r.charId),150 if summon_results.size()==1 else 76,"","" if summon_results.size()==1 else "face")
 		var rarity_label:=_label(art,"★".repeat(int(data.rarity)),10,color)
 		rarity_label.position=Vector2(5,3)
 		_center_label(v,str(data.name),14,color)
@@ -951,7 +967,7 @@ func _growth() -> void:
 		contents.offset_left=9;contents.offset_right=-9;contents.offset_top=6;contents.offset_bottom=-6
 		contents.add_theme_constant_override("separation",6)
 		b.add_child(contents)
-		_rune_icon(contents,"energy" if entry.get("element","")=="thunder" else str(entry.get("element","star")),22,INK if selected_character==str(id) else _element_color(str(entry.get("element",""))))
+		var avatar:=_portrait(contents,str(id),38);avatar.custom_minimum_size.x=32;avatar.size_flags_horizontal=Control.SIZE_FILL
 		var labels:=_vbox(contents,3);labels.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		var title:=_label(labels,_char_name(str(id)),13,INK if selected_character==str(id) else (TEXT if obtained else MUTED))
 		title.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -1055,30 +1071,40 @@ func _growth() -> void:
 
 func _relics() -> void:
 	set_page_fixed(not compact)
-	_page_title("遗物工坊", "整理古老遗物，将力量铭刻于旅者的装备")
-	var controls := _flow(main_body, 8)
+	var row := _responsive_box(main_body, compact, 16)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var collection:=_vbox(row,8)
+	collection.name="RelicCollectionColumn"
+	collection.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	collection.size_flags_stretch_ratio=1.5
+	var collection_title:=_hbox(collection,10)
+	collection_title.custom_minimum_size.y=42
+	_label(collection_title,"遗物工坊",24,TEXT)
+	_label(collection_title,"筛选、强化与装备",12,MUTED)
+	var controls := _flow(collection, 6)
 	for f in ["全部", "背包", "已装备", "三星", "四星", "五星"]:
 		_tab_button(controls, f, func(): relic_filter = f; _save_preferences(); _render_screen(), relic_filter == f)
 	_button_icon(_tab_button(controls, "批量出售", _batch_salvage),"coin")
 	var slots := HFlowContainer.new()
 	slots.add_theme_constant_override("h_separation", 8)
 	slots.add_theme_constant_override("v_separation", 8)
-	main_body.add_child(slots)
+	collection.add_child(slots)
 	_tab_button(slots, "全部部位", func(): relic_slot_filter = "全部"; _save_preferences(); _render_screen(), relic_slot_filter == "全部")
 	for slot in model.catalog.RelicSlots:
 		var filter_button:=_tab_button(slots, slot.name, func(): relic_slot_filter = slot.id; _save_preferences(); _render_screen(), relic_slot_filter == slot.id)
 		filter_button.icon=_relic_texture(str(slot.id));filter_button.add_theme_constant_override("icon_max_width",24);filter_button.expand_icon=false
+		for style_name in ["normal","hover","pressed","disabled"]:
+			var style:StyleBox=filter_button.get_theme_stylebox(style_name).duplicate()
+			style.content_margin_left=8;style.content_margin_right=8
+			filter_button.add_theme_stylebox_override(style_name,style)
 	var inventory: Array = model.state.get("relics", [])
 	if inventory.is_empty():
-		var empty:=_vbox(_panel(main_body,LINE,20),12)
+		var empty:=_vbox(_panel(collection,LINE,20),12)
 		_label(empty,"尚未获得遗物",24,GOLD)
 		_label(empty,"完成章节与深渊挑战，收集旅途中的遗物。",15,MUTED,true)
 		_button(empty,"开始探索",func():navigate("story"),true)
 		return
-	var row := _responsive_box(main_body, compact, 20)
-	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	var list_column := _scroll_column(row)
-	list_column.get_parent().size_flags_stretch_ratio = 1.6
+	var list_column := _scroll_column(collection)
 	list_column.get_parent().name="RelicRosterScroll"
 	_restore_character_list(list_column.get_parent(),"relics")
 	var listing := _grid(list_column, 2 if compact else 3)
@@ -1119,24 +1145,29 @@ func _relics() -> void:
 	if selected.is_empty():
 		return
 	var detail:=_panel(row,_rarity_color(int(selected.rarity)).darkened(0.4),12)
-	detail.custom_minimum_size.x=330 if not compact else 0
+	detail.name="RelicDetailPanel"
+	detail.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	detail.size_flags_stretch_ratio=1.0
+	detail.custom_minimum_size.x=350 if not compact else 0
 	if compact:detail.custom_minimum_size.y=400
 	var dv:=_vbox(detail,8)
 	var title:=_hbox(dv,10)
-	var hero:=_relic_art(title,str(selected.slotId),72);hero.custom_minimum_size.x=72;hero.size_flags_horizontal=Control.SIZE_FILL
+	var hero:=_relic_art(title,str(selected.slotId),60);hero.custom_minimum_size.x=60;hero.size_flags_horizontal=Control.SIZE_FILL
 	var identity:=_vbox(title,4);identity.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	_label(identity,"%s +%d" % [_slot_name(selected.slotId),selected.level],24,TEXT)
 	_label(identity,"★".repeat(int(selected.rarity)),15,_rarity_color(int(selected.rarity)))
 	_progress(identity,int(selected.level),25,GOLD,4)
-	var stats:=_scroll_column(dv,7)
+	var stats:=_scroll_column(dv,6)
 	stats.get_parent().name="RelicStatsScroll"
 	var main_tile:=_hbox(_panel(stats,GOLD.darkened(0.6),9),8)
 	_rune_icon(main_tile,_stat_icon(str(selected.mainStat.stat)),24,GOLD)
-	var main_copy:=_vbox(main_tile,3)
-	_label(main_copy,"主属性",11,MUTED)
-	_label(main_copy,_relic_main(selected),18,GOLD)
+	_label(main_tile,_relic_main(selected),18,GOLD).tooltip_text="主属性"
+	var substats:=_vbox(_panel(stats,LINE,8),7)
+	_label(substats,"附加属性",11,MUTED)
 	for stat in selected.get("subStats",[]):
-		var line:=_hbox(_panel(stats,LINE,6),6)
+		var line:=_hbox(substats,8)
+		line.name="RelicSubstat_"+str(stat.stat)
+		line.custom_minimum_size.y=22
 		_rune_icon(line,_stat_icon(str(stat.stat)),18,CYAN)
 		_label(line,_stat_label(str(stat.stat),str(stat.name)),13,MUTED).size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		_label(line,"+"+_stat_value(stat.stat,stat.value),15,TEXT)
@@ -1306,7 +1337,7 @@ func _update_panel() -> void:
 	_label(content, "版本与更新", 24, TEXT)
 	var local: Dictionary = updater.local_version
 	_label(content, "当前版本 %s · 构建 %s" % [str(local.get("version_name", "未知")), str(local.get("version_code", "未知"))], 16, MUTED, true)
-	_label(content, "启动后检查正式版本，Android 可在 Wi-Fi 下自动下载并校验更新。下载完成后点击安装，由系统确认覆盖升级，保留本机存档。首次从旧测试包迁移时请先导出存档。", 14, MUTED, true)
+	_label(content, "启动后自动检查并下载更新，完成后点击安装。升级保留本机存档。", 14, MUTED, true)
 	var auto_check := CheckBox.new()
 	auto_check.name = "AutoCheckUpdates"
 	auto_check.text = "启动时自动检查更新"
@@ -1318,7 +1349,7 @@ func _update_panel() -> void:
 		_save_preferences())
 	var auto_download := CheckBox.new()
 	auto_download.name = "AutoDownloadUpdates"
-	auto_download.text = "Wi-Fi 下自动下载更新（Android）"
+	auto_download.text = "自动下载更新（Android）"
 	auto_download.custom_minimum_size.y = 48
 	auto_download.button_pressed = updater.auto_download_enabled
 	content.add_child(auto_download)
@@ -1498,7 +1529,7 @@ func _render_battle() -> void:
 		var chip := _panel(order, GOLD if uid == active_uid else LINE, 2)
 		chip.size_flags_horizontal=Control.SIZE_FILL
 		chip.tooltip_text=str(unit.name)
-		var avatar:=_portrait(chip,str(unit.id),24)
+		var avatar:=_portrait(chip,str(unit.id),24,false,not bool(unit.get("isAlly",true)))
 		avatar.custom_minimum_size.x=32
 	var arena := _panel(main_body, Color(0,0,0,0), 8)
 	arena.add_theme_stylebox_override("panel", _box(Color(0.035,0.055,0.09,0.12),Color(0,0,0,0),8))
@@ -1518,6 +1549,7 @@ func _render_battle() -> void:
 			field.add_child(divider)
 	var controls := _panel(main_body, CYAN.darkened(0.65), 8)
 	controls.name = "BattleActions"
+	controls.custom_minimum_size.y = 118
 	if state.phase == "player_turn" and not active.is_empty():
 		var available: Array = battle.available_actions()
 		var cv := _vbox(controls, 5)
@@ -1570,6 +1602,11 @@ func _show_battle_log() -> void:
 	if battle_log.is_empty(): _label(box,"战斗即将开始",16,MUTED)
 	_button(_modal_footer(box),"返回战场",_clear_overlay,true)
 
+func _battle_number(value: float) -> String:
+	if absf(value)>=100000000:return "%.1f亿" % (value/100000000.0)
+	if absf(value)>=10000:return "%.1f万" % (value/10000.0)
+	return str(int(value))
+
 func _battle_unit_card(parent: Node, unit: Dictionary, active_uid: String) -> void:
 	var alive: bool = float(unit.get("currentHp",0)) > 0
 	var ally: bool = unit.get("isAlly",true)
@@ -1592,7 +1629,7 @@ func _battle_unit_card(parent: Node, unit: Dictionary, active_uid: String) -> vo
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_label.max_lines_visible = 1
 	_label(badge,_element_name(unit.get("element","")),10,color)
-	var art := _portrait(v,unit.id,150,false,not ally)
+	var art := _portrait(v,unit.id,138,false,not ally)
 	var ground=load("res://scripts/ui/unit_ground.gd").new()
 	ground.accent=GOLD if selected else CYAN
 	ground.selected=selected;ground.active=unit.uid==active_uid
@@ -1600,25 +1637,32 @@ func _battle_unit_card(parent: Node, unit: Dictionary, active_uid: String) -> vo
 	art.add_child(ground);art.move_child(ground,0)
 	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_progress(v,unit.get("currentHp",0),maxi(1,int(unit.get("maxHp",1))),CYAN if ally else RED,7)
-	var vitals := _hbox(v, 5)
-	vitals.alignment = BoxContainer.ALIGNMENT_CENTER
-	_label(vitals,"%d / %d" % [unit.get("currentHp",0),unit.get("maxHp",1)],14,MUTED)
+	var hp_label:=_center_label(v,"%s / %s" % [_battle_number(float(unit.get("currentHp",0))),_battle_number(float(unit.get("maxHp",1)))],14,MUTED)
+	hp_label.clip_text=true
+	hp_label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	var shield_value := int(unit.get("shield", 0))
-	if shield_value > 0:
-		_rune_icon(vitals, "shield", 15, Color(0.55,0.78,1.0))
-		_label(vitals, str(shield_value), 12, Color(0.55,0.78,1.0))
-		var shield_bar := _progress(v, shield_value, maxi(shield_value,int(unit.get("maxHp",1))), Color(0.55,0.78,1.0), 4)
-		shield_bar.name = "BattleShield_" + str(unit.uid)
-	if ally:
-		_progress(v,unit.get("energy",0),unit.get("maxEnergy",100),GOLD,3)
+	var shield_line:=_hbox(v,4)
+	shield_line.custom_minimum_size.y=16
+	_rune_icon(shield_line,"shield",12,Color(0.55,0.78,1.0))
+	var shield_bar := _progress(shield_line, shield_value, maxi(1,maxi(shield_value,int(unit.get("maxHp",1)))), Color(0.55,0.78,1.0), 4)
+	shield_bar.name = "BattleShield_" + str(unit.uid)
+	shield_bar.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	shield_bar.size_flags_vertical=Control.SIZE_SHRINK_CENTER
+	var shield_count:=_label(shield_line,_battle_number(shield_value),11,Color(0.55,0.78,1.0))
+	shield_count.custom_minimum_size.x=36;shield_count.clip_text=true
+	shield_count.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+	shield_line.modulate.a=1.0 if shield_value>0 else 0.0
+	var energy_bar:=_progress(v,unit.get("energy",0),unit.get("maxEnergy",100),GOLD,3)
+	energy_bar.modulate.a=1.0 if ally else 0.0
 	var statuses: Array = []
 	for status in unit.get("statuses",[]):
 		var status_name := "装备护盾" if status.get("source", "") == "expedition_equipment" else str(STATUS_NAMES.get(status.get("id",""),status.get("id","")))
 		if status_name not in statuses: statuses.append(status_name)
-	var status_text := " · ".join(statuses) if not statuses.is_empty() else ("行动中" if unit.uid == active_uid else ("选中目标" if selected else ""))
-	var status_label := _center_label(v,status_text,10,color)
-	status_label.max_lines_visible = 1
-	p.tooltip_text = "\n".join(statuses)
+	var status_strip=load("res://scripts/ui/battle_status_strip.gd").new()
+	status_strip.name="BattleStatuses_"+str(unit.uid)
+	status_strip.configure(unit.get("statuses",[]),extraction_reduced_motion)
+	v.add_child(status_strip)
+	p.tooltip_text = "生命 %d / %d\n护盾 %d\n" % [unit.get("currentHp",0),unit.get("maxHp",1),shield_value]+status_strip.tooltip_text
 	_ignore_children(v)
 	var info:=_tool_button(art,"book","角色状态",func():_show_unit_details(unit))
 	info.name="BattleUnitInfo_"+str(unit.uid)
@@ -1646,19 +1690,81 @@ func _do_battle_action(skill_id: String, target_id: String, automatic: bool = fa
 	_render_battle()
 	_show_combat_events(result.get("events", []))
 
+func _battle_event_element(event: Dictionary) -> String:
+	var unit:=_battle_unit(str(event.get("actor","")))
+	return str(event.get("element",unit.get("element","fire")))
+
+func _battle_effect_kind(event: Dictionary) -> String:
+	var skill:Dictionary=model.catalog.SkillData.get(event.get("skill_id",""),{})
+	var animation:=str(event.get("animation",skill.get("animation",""))).to_lower()
+	if "ice" in animation or "frost" in animation:return "ice"
+	if "punch" in animation or "smash" in animation or "impact" in animation:return "blunt"
+	if "slash" in animation or "blade" in animation:return "slash"
+	return _battle_event_element(event)
+
+func _battle_sound_clip(events: Array) -> String:
+	var has_damage:=false
+	var has_heal:=false
+	var has_shield_hit:=false
+	var has_shield_cast:=false
+	var critical:=false
+	var element_clip:="slash"
+	for event in events:
+		var type:=str(event.get("type",""))
+		if type=="skill" and str(model.catalog.SkillData.get(event.get("skill_id",""),{}).get("type",""))=="ultimate":return "ultimate"
+		if type=="shield":
+			has_shield_hit=true
+			if int(_battle_unit(str(event.get("target",""))).get("shield",0))<=0:return "shield_break"
+		if type=="status" and str(event.get("statusId",event.get("status","")))=="shield":has_shield_cast=true
+		if type=="heal" and int(event.get("amount",0))>0:has_heal=true
+		if type=="damage" and int(event.get("amount",0))>0:
+			has_damage=true;critical=critical or event.get("isCrit",false)
+			element_clip=_battle_effect_kind(event)
+	if critical:return "critical"
+	if has_damage:return element_clip if element_clip in ["slash","blunt","fire","water","ice","thunder","wind"] else "blunt"
+	if has_shield_hit:return "shield_hit"
+	if has_heal:return "heal"
+	if has_shield_cast:return "shield_cast"
+	return ""
+
+func _play_battle_sound(events: Array) -> void:
+	if not sound_enabled or bool(get_meta("application_paused",false)):return
+	var clip:=_battle_sound_clip(events)
+	if clip.is_empty() or Time.get_ticks_msec()-_last_battle_sound_msec<90:return
+	var path:="res://assets/audio/battle/"+clip+".ogg"
+	if not ResourceLoader.exists(path):return
+	_last_battle_sound_msec=Time.get_ticks_msec()
+	var voices:Array=get_tree().get_nodes_in_group("battle_audio")
+	while voices.size()>=2:
+		var old:AudioStreamPlayer=voices.pop_front()
+		old.stop();old.stream=null;old.remove_from_group("battle_audio");old.remove_from_group("transient_audio");old.queue_free()
+	var voice:=AudioStreamPlayer.new();voice.stream=load(path)
+	voice.volume_db=effects_volume_db-9
+	voice.add_to_group("battle_audio");voice.add_to_group("transient_audio");voice.set_meta("priority",1)
+	voice.set_meta("battle_clip",clip)
+	add_child(voice);voice.finished.connect(voice.queue_free);voice.play()
+	_battle_audio_history.append(clip)
+	if _battle_audio_history.size()>32:_battle_audio_history.pop_front()
+
 func _show_combat_events(events: Array) -> void:
 	var generation := battle_generation
 	await get_tree().process_frame
 	if current_screen != "battle" or generation != battle_generation: return
+	_play_battle_sound(events)
 	for e in events:
 		if e.get("type", "") == "skill" and model.catalog.SkillData.get(e.get("skill_id", ""), {}).get("type", "") == "ultimate":
-			fx.flash(_element_color(str(e.get("element", "fire"))))
+			fx.flash(_element_color(_battle_event_element(e)))
 			var source_unit := _battle_unit(str(e.get("actor", "")))
 			var source_card = unit_cards.get(str(e.get("actor", "")))
-			var destination_card = unit_cards.get(str(e.get("target", "")))
+			var target_uid:=str(e.get("target",""))
+			if target_uid.is_empty():
+				for follow in events:
+					if follow.get("actor","")==e.get("actor","") and not str(follow.get("target","")).is_empty() and follow.get("type","") in ["damage","heal","status"]:
+						target_uid=str(follow.target);break
+			var destination_card = unit_cards.get(target_uid)
 			var origin: Vector2 = source_card.get_global_rect().get_center() if is_instance_valid(source_card) else size * Vector2(0.25,0.5)
 			var destination: Vector2 = destination_card.get_global_rect().get_center() if is_instance_valid(destination_card) else size * Vector2(0.75,0.5)
-			fx.ultimate(str(source_unit.get("id","")),str(e.get("element","fire")),origin,destination)
+			fx.ultimate(str(source_unit.get("id","")),_battle_event_element(e),origin,destination)
 		var target = unit_cards.get(str(e.get("target", "")))
 		var actor = unit_cards.get(str(e.get("actor", "")))
 		if not is_instance_valid(target):
@@ -1675,7 +1781,11 @@ func _show_combat_events(events: Array) -> void:
 			if type == "shield": text_value = "护盾 −%d" % e.get("amount", 0)
 			if e.get("isCrit", false): text_value += "!"
 			_float_text(pos, text_value, color, 30 if e.get("isCrit", false) else 23)
-			fx.burst(pos, color, e.get("isCrit", false))
+			if type=="damage":
+				var origin:Vector2=actor.global_position+actor.size*0.5 if is_instance_valid(actor) else pos+Vector2(-32,0)
+				fx.impact(str(e.get("status",_battle_effect_kind(e))),origin,pos,bool(e.get("isCrit",false)))
+			elif type=="shield" and int(_battle_unit(str(e.get("target",""))).get("shield",0))<=0:fx.impact("shield_break",pos,pos)
+			else:fx.burst(pos,color,false)
 			if is_instance_valid(actor) and type == "damage":
 				fx.streak(actor.global_position + actor.size * 0.5, pos, _element_color(str(e.get("element", "fire"))))
 				if not extraction_reduced_motion and not actor.has_meta("lunging"):
@@ -1694,6 +1804,9 @@ func _show_combat_events(events: Array) -> void:
 			target.modulate = Color(1.8, 0.6, 0.5) if type == "damage" else Color(0.5, 1.4, 1.1)
 			create_tween().tween_property(target, "modulate", original, 0.35)
 		elif type in ["status", "enrage", "resist"]:
+			var status_id:=str(e.get("statusId",e.get("status","")))
+			if status_id=="shield":fx.shield_ring(pos)
+			elif not status_id.is_empty():fx.impact(status_id,pos,pos)
 			_float_text(pos + Vector2(0, -24), _localized_combat_text(str(e.get("text", "状态变化"))), GOLD, 14)
 
 func _finish_battle() -> void:
@@ -1734,6 +1847,13 @@ func _finish_battle() -> void:
 			_extraction_result_stat(summary, "star" if not choices.is_empty() else "bag", "回响待选" if not choices.is_empty() else "区域解锁", "战后收获")
 		else:
 			_extraction_result_stat(summary, "shield", "整备再战", "旅者成长保留")
+		if victory and int(result.get("rewards",{}).get("exp",0))>0:
+			var experience_row:=_hbox(extraction_box,8);experience_row.alignment=BoxContainer.ALIGNMENT_CENTER
+			var experience_icon:=_rune_icon(experience_row,"star",26);experience_icon.texture=_relic_texture("essence")
+			_label(experience_row,"经验 +%d"%int(result.rewards.exp),18,CYAN).name="ExtractionBattleExperience"
+			var gained_levels:=0
+			for progress in result.get("progression",[]):gained_levels+=int(progress.get("leveledUp",0))
+			if gained_levels>0:_label(experience_row,"等级提升 +%d"%gained_levels,15,GOLD)
 		var exit_open: bool = victory and model.extraction.active() and model.extraction.run().get("phase", "") == "boss_exit"
 		_center_label(extraction_box, "撤离点已开启" if exit_open else ("守卫已清除" if victory else "返回营地"), 20, GOLD if victory else MUTED)
 		var continue_button := _button(extraction_box, "选择回响" if victory and not model.extraction.growth_choices().is_empty() else ("前往出口" if exit_open else ("继续搜索" if victory else "返回营地")), func(): navigate("extraction"), true)
@@ -1756,35 +1876,86 @@ func _finish_battle() -> void:
 		navigate("abyss")
 		return
 	if not victory: abyss_auto_continue = false
-	var box := _modal(("远征通关" if run_ended else "远征胜利") if victory else "整装再出发", 760, 520)
-	box.add_theme_constant_override("separation", 10)
-	_center_label(box, "✦" if victory else "◇", 38, GOLD if victory else MUTED)
-	_center_label(box, "星光与你同在" if victory else "旅途仍将继续", 25, TEXT)
-	_center_label(box, "%d 回合 · %s" % [battle.state.get("turn", 0), battle_config.get("name", "深渊远征")], 15, MUTED)
+	_render_battle_settlement(result,victory,run_ended)
+
+func _render_battle_settlement(result:Dictionary,victory:bool,run_ended:bool) -> void:
+	var box:=_modal("战斗结算",1080,500)
+	box.add_theme_constant_override("separation",10)
+	var row:=_responsive_box(box,compact,18)
+	row.name="SettlementColumns"
+	var left:=_vbox(row,7)
+	left.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	left.size_flags_stretch_ratio=.9
+	var color:=GOLD if victory else MUTED
+	var heading:=_hbox(left,10)
+	_rune_icon(heading,"crown" if victory else "shield",28,color)
+	_label(heading,"远征通关" if run_ended and victory else ("远征胜利" if victory else "整装再出发"),28,color)
+	var allies:Array=battle.state.get("allies",[])
+	var featured:String=str(allies[0].get("id","ember")) if not allies.is_empty() else "ember"
+	_portrait_environment(left,featured,210)
+	var context:=_hbox(left,8)
+	_rune_icon(context,"sword",20,MUTED)
+	_label(context,"%d 回合" % int(battle.state.get("turn",0)),15,TEXT)
+	_label(left,str(battle_config.get("name","深渊远征")),14,MUTED,true)
+	var right:=_vbox(row,9)
+	right.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	right.size_flags_stretch_ratio=1.5
+	var scroll_content:=_scroll_column(right,10)
+	scroll_content.get_parent().name="SettlementRewardScroll"
+	scroll_content.get_parent().custom_minimum_size.y=300
 	if victory:
-		var rewards: Dictionary = result.get("rewards", {})
-		_center_label(box, "金币 +%d     经验 +%d     星尘晶 +%d" % [rewards.get("gold", 0), rewards.get("exp", 0), rewards.get("diamonds", 0)], 19, GOLD)
-		if result.get("firstClear", false):
-			_center_label(box, "首次通关奖励已领取", 14, CYAN)
-		if rewards.get("relicDrop") != null:
-			_center_label(box, "获得遗物 · 已收入背包", 16, Color("b7a4df"))
-		if battle_config.get("isAbyss", false):
-			_center_label(box, "裂隙币 +%d     记忆碎片 +%d" % [rewards.get("runCoins", 0), rewards.get("meta", 0)], 18, Color("c4a4e8"))
-			_center_label(box, "裂隙币用于本轮补给 · 记忆碎片可用于永久成长", 13, MUTED)
-		var gift = result.get("gift")
+		var rewards:Dictionary=result.get("rewards",{})
+		var is_abyss:bool=bool(battle_config.get("isAbyss",false))
+		var reward_grid:=_grid(scroll_content,2 if is_abyss else 3)
+		var resources:Array=[["exp","essence","经验"],["diamonds","gem","星尘晶"]] if is_abyss else [["gold","coin","金币"],["exp","essence","经验"],["diamonds","gem","星尘晶"]]
+		for resource in resources:
+			_settlement_reward_tile(reward_grid,resource[1],resource[2],int(rewards.get(resource[0],0)),resource[0])
+		var daily_award:Dictionary=result.get("dailyAward",{})
+		if is_abyss and not daily_award.is_empty():
+			var daily_row:=_hbox(_panel(scroll_content,GOLD.darkened(.55),8),8)
+			daily_row.name="SettlementDailyAward";_rune_icon(daily_row,"gem",24)
+			var award_text:String="第 %d 层 · 今日已领取"%int(daily_award.get("floor",0))
+			if int(daily_award.get("amount",0))>0:
+				award_text="第 %d 层 · %s +%d"%[int(daily_award.get("floor",0)),"难度补领" if int(daily_award.get("previousPaid",0))>0 else "每日首通",int(daily_award.amount)]
+			_label(daily_row,award_text,15,GOLD,true).name="SettlementDailyAwardText"
+		if result.get("firstClear",false):
+			var first:=_hbox(scroll_content,7);_rune_icon(first,"check",18,CYAN);_label(first,"首次通关",14,CYAN)
+		var relic:Dictionary=result.get("relic",{})
+		if relic.is_empty() and rewards.get("relicDrop") is Dictionary:relic=rewards.relicDrop
+		if not relic.is_empty():
+			var loot:=_hbox(_panel(scroll_content,_rarity_color(int(relic.get("rarity",3))).darkened(.5),10),12)
+			loot.name="SettlementRelic"
+			var art:=_relic_art(loot,str(relic.get("slotId","helmet")),56);art.custom_minimum_size.x=56;art.size_flags_horizontal=Control.SIZE_FILL
+			var copy:=_vbox(loot,4);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+			_label(copy,_slot_name(str(relic.get("slotId","helmet"))),18,TEXT)
+			_label(copy,"★".repeat(int(relic.get("rarity",3))),13,_rarity_color(int(relic.get("rarity",3))))
+			_label(copy,"已收入遗物背包",12,MUTED)
+		if battle_config.get("isAbyss",false):
+			var run_rewards:=_grid(scroll_content,2)
+			_settlement_reward_tile(run_rewards,"rift_coin","裂隙币 · 本轮",int(rewards.get("runCoins",0)),"runCoins")
+			_settlement_reward_tile(run_rewards,"memory_shard","记忆 · 永久",int(rewards.get("meta",0)),"meta")
+		var gift=result.get("gift")
 		if gift is Dictionary and not gift.is_empty():
-			_center_label(box, "章节赠礼  " + str(gift.get("charName", gift.get("name", "五星旅者加入"))), 20, GOLD)
-		for p in result.get("progression", []):
-			if p.get("leveledUp", 0) > 0:
-				_center_label(box, "%s 升至等级 %d" % [_char_name(str(p.get("charId", ""))), p.get("newLevel", 1)], 14, CYAN)
+			var giftrow:=_hbox(_panel(scroll_content,GOLD.darkened(.5),10),10)
+			_rune_icon(giftrow,"star",28,GOLD)
+			_label(giftrow,"章节赠礼 · "+str(gift.get("charName",gift.get("name","五星旅者加入"))),17,GOLD,true)
+		for progress in result.get("progression",[]):
+			if int(progress.get("leveledUp",0))<=0:continue
+			var growth:=_hbox(scroll_content,8)
+			var portrait:=_portrait(growth,str(progress.get("charId","ember")),36);portrait.custom_minimum_size.x=36;portrait.size_flags_horizontal=Control.SIZE_FILL
+			_label(growth,_char_name(str(progress.get("charId",""))),14,TEXT).size_flags_horizontal=Control.SIZE_EXPAND_FILL
+			_rune_icon(growth,"upgrade",18,CYAN)
+			_label(growth,"等级 %d" % int(progress.get("newLevel",1)),16,CYAN)
 	else:
-		_label(box, "提升角色等级、强化遗物，或调整元素与队伍搭配后再次挑战。", 17, MUTED, true)
-	if not result.get("success", true):
-		_label(box, str(result.get("error", "结算异常")), 14, RED, true)
-	if run_ended and not result.get("lastRun", {}).is_empty():
-		var summary: Dictionary = result.lastRun
-		_center_label(box, "本轮通关 %d 层 · 永久获得 %d 记忆碎片" % [int(summary.get("floorsCleared", 0)), int(summary.get("metaEarned", 0))], 17, CYAN)
-	_button(_modal_footer(box), "返回营地 · 继续旅程   →" if run_ended else "继续旅程   →", func():
+		var recovery:=_vbox(_panel(scroll_content,LINE,16),12)
+		_rune_icon(recovery,"camp",48,CYAN)
+		_label(recovery,"回到营地，再次出发",22,TEXT)
+		_label(recovery,"训练旅者、强化遗物，带着新的准备继续挑战。",16,MUTED,true)
+	if run_ended and not result.get("lastRun",{}).is_empty():
+		var summary:Dictionary=result.lastRun
+		var endrow:=_hbox(scroll_content,8);_rune_icon(endrow,"path",24,CYAN)
+		_label(endrow,"本轮通关 %d 层 · 获得 %d 记忆碎片" % [int(summary.get("floorsCleared",0)),int(summary.get("metaEarned",0))],16,CYAN,true)
+	var proceed:=_button(_modal_footer(box), "返回营地 · 继续旅程   →" if run_ended else "继续旅程   →", func():
 		_clear_overlay()
 		var next_screen := "abyss" if battle_config.get("isAbyss", false) else "story"
 		var key: String = str(battle_config.get("id", "")) + "_post"
@@ -1792,6 +1963,17 @@ func _finish_battle() -> void:
 			_play_dialogue(key, func(): navigate(next_screen))
 		else:
 			navigate(next_screen), true)
+	proceed.name="BattleSettlementContinue"
+	_button_icon(proceed,"next",true)
+
+func _settlement_reward_tile(parent:Node,icon_key:String,caption:String,amount:int,key:String) -> void:
+	var card:=_panel(parent,LINE,10)
+	var row:=_hbox(card,9)
+	var icon:=_rune_icon(row,icon_key,30)
+	if icon_key=="essence":icon.texture=_relic_texture("essence")
+	var copy:=_vbox(row,3)
+	_label(copy,caption,12,MUTED)
+	_label(copy,"+%d" % amount,22,TEXT).name="SettlementReward_"+key
 
 func _extraction_result_stat(parent: Node, icon_key: String, value: String, caption: String) -> void:
 	var card := _panel(parent, LINE, 12)
@@ -2113,7 +2295,7 @@ func _scene_panel(parent: Node, path: String, height: int) -> Control:
 	p.add_child(border)
 	return p
 
-func _portrait(parent: Node, id: String, height: float, _wide: bool = false, enemy: bool = false) -> Control:
+func _portrait(parent: Node, id: String, height: float, _wide: bool = false, enemy: bool = false, avatar_style: String = "") -> Control:
 	var c := Control.new()
 	c.custom_minimum_size.y = height
 	c.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -2127,7 +2309,12 @@ func _portrait(parent: Node, id: String, height: float, _wide: bool = false, ene
 		path = "res://assets/portraits/%s.svg" % id
 	if ResourceLoader.exists(path):
 		var t := TextureRect.new()
-		t.texture = load(path)
+		var style:String=avatar_style if not avatar_style.is_empty() else ("face" if height>0 and height<=80 and not _wide else "")
+		var avatar:Texture2D=CharacterAvatars.get_texture(id,style) if not enemy and not style.is_empty() else null
+		t.texture = avatar if avatar!=null else load(path)
+		c.set_meta("portrait_mode",style if avatar!=null else "full")
+		c.set_meta("portrait_id",id)
+		t.name="CharacterPortraitTexture"
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		t.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -2153,7 +2340,7 @@ func _character_card(parent: Node, id: String, art_height: int, action: Callable
 	var p := _panel(parent, color.darkened(0.5), 10)
 	p.custom_minimum_size.x = 160
 	var v := _vbox(p, 7)
-	var portrait:=_portrait_environment(v, id, art_height)
+	var portrait:=_portrait_environment(v, id, art_height,"","bust")
 	_character_ownership_badge(v,id)
 	if not owned:portrait.modulate=Color(0.64,0.68,0.76,0.8)
 	_label(v, "★".repeat(rarity) + "   " + _element_name(data.get("element", "")), 11, color)
@@ -2319,7 +2506,7 @@ func _float_text(at: Vector2, value: String, color: Color, font_size: int = 25) 
 	l.add_theme_color_override("font_outline_color", INK)
 	l.position = at - Vector2(30, 0)
 	var tween := create_tween().set_parallel()
-	tween.tween_property(l, "position:y", l.position.y - 75, 0.9).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	if not extraction_reduced_motion:tween.tween_property(l, "position:y", l.position.y - 75, 0.9).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween.tween_property(l, "modulate:a", 0.0, 0.7).set_delay(0.2)
 	tween.chain().tween_callback(l.queue_free)
 
@@ -2393,7 +2580,9 @@ func _show_battle_echoes() -> void:
 	for raw in model.state.abyss.rogue.get("selectedRewards", []):
 		var reward: Dictionary = raw if raw is Dictionary else _abyss_reward(str(raw))
 		var card:=_panel(box,LINE,12)
-		var row:=_hbox(card,12)
+		var contents:=_vbox(card,6)
+		preload("res://scripts/ui/reward_rarity.gd").decorate(self,card,contents,str(reward.get("rarity","white")))
+		var row:=_hbox(contents,12)
 		_rune_icon(row,RuneTheme.effect_key(reward),40,GOLD)
 		var copy:=_vbox(row,5);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		_label(copy, str(reward.get("name", "回响")), 20, GOLD)
@@ -2504,13 +2693,16 @@ func _extraction_play(clip: String) -> void:
 		if old_duck is Tween and old_duck.is_valid():old_duck.kill()
 		var duck:=music_audio.create_tween()
 		music_audio.set_meta("duck_tween",duck)
-		duck.tween_property(music_audio,"volume_db",music_volume_db-6,0.08)
+		duck.tween_property(music_audio,"volume_db",_music_gain(music_audio)-6,0.08)
 		duck.tween_interval(0.35)
-		duck.tween_property(music_audio,"volume_db",music_volume_db,0.5)
+		duck.tween_property(music_audio,"volume_db",_music_gain(music_audio),0.5)
 
 func _extraction_stop_search_audio() -> void:
 	if is_instance_valid(extraction_search_audio): extraction_search_audio.stop()
-	if is_instance_valid(music_audio): music_audio.volume_db = music_volume_db-2.0 if current_screen == "battle" else music_volume_db
+	if is_instance_valid(music_audio) and music_audio.has_meta("duck_tween"):
+		var duck=music_audio.get_meta("duck_tween")
+		if duck is Tween and duck.is_valid():
+			duck.kill();music_audio.volume_db=_music_gain(music_audio)
 
 
 func content_height() -> float:
@@ -2526,49 +2718,72 @@ func set_page_fixed(fixed: bool) -> void:
 	main_body.size_flags_vertical = Control.SIZE_EXPAND_FILL if fixed else Control.SIZE_FILL
 	if fixed: page_scroll.scroll_vertical = 0
 
-func _sync_music() -> void:
-	var track := _music_track_for_context()
-	if not music_enabled:
-		for player in get_children():
-			if player is AudioStreamPlayer and player.has_meta("track"):player.stop()
-		return
-	var path := "res://assets/audio/music/licensed/" + track + ".ogg"
-	if not ResourceLoader.exists(path):
-		track="medieval_exploration"
-		path="res://assets/audio/music/licensed/medieval_exploration.ogg"
-		if not ResourceLoader.exists(path):return
-	if is_instance_valid(music_audio) and music_audio.get_meta("track", "") == track:
-		if not music_audio.playing: music_audio.play()
-		return
-	var old := music_audio
-	music_audio = AudioStreamPlayer.new()
-	music_audio.set_meta("track",track)
-	var stream: AudioStreamOggVorbis = load(path).duplicate()
-	stream.loop = true
-	music_audio.stream = stream
-	music_audio.volume_db = -48
-	add_child(music_audio)
-	music_audio.play()
-	music_audio.create_tween().tween_property(music_audio,"volume_db",music_volume_db-2.0 if current_screen == "battle" else music_volume_db,0.5)
-	if is_instance_valid(old):
-		var fade := old.create_tween()
-		fade.tween_property(old,"volume_db",-60.0,0.5)
+func _music_gain(player: AudioStreamPlayer) -> float:
+	return music_volume_db-2.0 if str(player.get_meta("track",""))=="determined_pursuit" else music_volume_db
+
+func _music_cancel_tween(player: AudioStreamPlayer, key: String) -> void:
+	var tween=player.get_meta(key) if player.has_meta(key) else null
+	if tween is Tween and tween.is_valid():tween.kill()
+
+func _music_fade_to(player: AudioStreamPlayer, volume: float, pause_after: bool=false) -> void:
+	_music_cancel_tween(player,"music_fade")
+	_music_cancel_tween(player,"duck_tween")
+	var fade:=player.create_tween()
+	player.set_meta("music_fade",fade)
+	fade.tween_property(player,"volume_db",volume,1.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	if pause_after:
 		fade.tween_callback(func():
-			if is_instance_valid(old):
-				old.stop()
-				old.stream=null
-				old.queue_free())
+			if is_instance_valid(player) and player!=music_audio:player.stream_paused=true)
+
+func _sync_music() -> void:
+	var track:=_music_track_for_context()
+	if not music_enabled:
+		for player in _music_pool.values():
+			if is_instance_valid(player):
+				_music_cancel_tween(player,"music_fade");_music_cancel_tween(player,"duck_tween")
+				player.stream_paused=true
+		return
+	var path:="res://assets/audio/music/licensed/"+track+".ogg"
+	if not ResourceLoader.exists(path):return
+	var target:AudioStreamPlayer=_music_pool.get(track)
+	if not is_instance_valid(target):
+		target=AudioStreamPlayer.new();target.set_meta("track",track)
+		var stream:AudioStreamOggVorbis=load(path).duplicate();stream.loop=true
+		target.stream=stream;target.volume_db=-60
+		add_child(target);_music_pool[track]=target
+	if music_audio==target:
+		var was_paused:bool=target.stream_paused
+		if not target.playing:target.play()
+		target.stream_paused=bool(get_meta("application_paused",false))
+		if was_paused and not target.stream_paused:_music_fade_to(target,_music_gain(target))
+		return
+	var old:=music_audio
+	music_audio=target
+	# Reusing the player preserves the exact cursor across a boss encounter or
+	# a trip to the camp. Only the two sides of the current transition may sound.
+	for other in _music_pool.values():
+		if other!=target and other!=old:
+			_music_cancel_tween(other,"music_fade");_music_cancel_tween(other,"duck_tween")
+			other.stream_paused=true
+	_music_cancel_tween(target,"music_fade")
+	if not target.playing:target.play()
+	target.stream_paused=bool(get_meta("application_paused",false))
+	_music_fade_to(target,_music_gain(target))
+	if is_instance_valid(old):_music_fade_to(old,-60.0,true)
 
 func _ui_sound(clip: String = "tap") -> void:
-	if not sound_enabled or Time.get_ticks_msec()-_last_ui_sound_msec < 65: return
-	_last_ui_sound_msec=Time.get_ticks_msec()
+	if not sound_enabled:return
+	var now:=Time.get_ticks_msec()
+	if now-_last_ui_sound_msec<65 and (clip==_last_ui_sound_clip or clip=="tap"):return
+	_last_ui_sound_msec=now
+	_last_ui_sound_clip=clip
 	var path := "res://assets/audio/ui/"+clip+".ogg"
 	if not ResourceLoader.exists(path): return
 	if not is_instance_valid(ui_audio):
 		ui_audio = AudioStreamPlayer.new()
-		ui_audio.volume_db = effects_volume_db-13
+		ui_audio.volume_db = effects_volume_db-(13 if clip in ["tap","back"] else 8)
 		add_child(ui_audio)
-	ui_audio.volume_db = effects_volume_db-13
+	ui_audio.volume_db = effects_volume_db-(13 if clip in ["tap","back"] else 8)
 	ui_audio.stream = load(path)
 	ui_audio.play()
 
@@ -2607,7 +2822,8 @@ func _show_audio_settings() -> void:
 				if is_instance_valid(music_audio):
 					var duck=music_audio.get_meta("duck_tween") if music_audio.has_meta("duck_tween") else null
 					if duck is Tween and duck.is_valid():duck.kill()
-					music_audio.volume_db=value
+					_music_cancel_tween(music_audio,"music_fade")
+					music_audio.volume_db=_music_gain(music_audio)
 			else:effects_volume_db=value
 			_save_preferences())
 	_button(content,"音乐鸣谢",_show_music_credits)
@@ -2654,6 +2870,9 @@ func _stop_reveal_voices() -> void:
 		voice.stop();voice.stream=null;voice.remove_from_group("transient_audio");voice.queue_free()
 
 func _icon_texture(key:String)->Texture2D:
+	if key in ["rift_coin","memory_shard"]:
+		var currency_path:="res://assets/ui/currency/"+key+".png"
+		if ResourceLoader.exists(currency_path):return load(currency_path)
 	var path:="res://assets/ui/runes/"+key+".svg"
 	return load(path) if ResourceLoader.exists(path) else load("res://assets/ui/runes/star.svg")
 
@@ -2673,28 +2892,31 @@ func _button_icon(button:Button,key:String,primary:bool=false)->void:
 	button.icon=_icon_texture(key)
 	button.add_theme_constant_override("icon_max_width",18)
 	button.expand_icon=false
-	var colored:bool=key in ["coin","gem","energy"]
+	var colored:bool=key in ["coin","gem","energy","rift_coin","memory_shard"]
 	button.add_theme_color_override("icon_normal_color",Color.WHITE if colored else INK if primary else TEXT)
 	button.add_theme_color_override("icon_hover_color",Color.WHITE if colored else INK if primary else Color.WHITE)
 	button.add_theme_color_override("icon_pressed_color",Color.WHITE if colored else INK if primary else GOLD)
 
 func _music_track_for_context() -> String:
-	if current_screen=="battle":return "determined_pursuit"
-	if current_screen in ["home","shop"]:return "old_tower_inn"
-	if current_screen=="extraction":
-		if not model.extraction.active():return "old_tower_inn"
-		var run:Dictionary=model.state.extraction.get("run",{})
-		var room:Dictionary=run.get("room",{})
-		var kind:=str(room.get("type",""))
-		if kind=="rest":return "old_tower_inn"
-		if kind in ["vault","key_vault","shrine","boss"]:return "dungeon_mystic"
-		for district in run.get("map",{}).get("districts",[]):
-			if district.get("id","")==room.get("districtId","") and district.get("theme","")=="sanctum":return "dungeon_mystic"
-		return "sunset_walk"
-	if current_screen=="abyss":
-		if str(model.state.abyss.get("rogue",{}).get("nextStep",{}).get("type","")) in ["rest","shop"]:return "old_tower_inn"
-		return "sunset_walk"
-	return "sunset_walk" if current_screen=="story" else "medieval_exploration"
+	# Functional pages inherit the scene they were opened from. Inventory,
+	# upgrades, shops, menus and previews never choose a new score themselves.
+	if current_screen=="home":_music_context_id="hub"
+	elif current_screen=="story":_music_context_id="story"
+	elif current_screen=="extraction":_music_context_id="extraction" if model.extraction.active() else "hub"
+	elif current_screen=="abyss":_music_context_id="abyss"
+	elif current_screen=="battle":
+		_music_context_id="extraction" if battle_config.get("isExtraction",false) else "abyss" if battle_config.get("isAbyss",false) else "story"
+		var boss:bool=battle_config.get("kind","")=="boss" or battle_config.get("isBoss",false)
+		for enemy_id in battle_config.get("enemies",[]):
+			if str(enemy_id).begins_with("boss_"):boss=true
+		if boss:return "determined_pursuit"
+	match _music_context_id:
+		"extraction":
+			if not model.extraction.active():return "old_tower_inn"
+			return {1:"sunset_walk",2:"medieval_exploration",3:"dungeon_mystic"}.get(int(model.extraction.run().get("act",1)),"sunset_walk")
+		"abyss":return "dungeon_mystic" if int(model.state.abyss.get("currentFloor",1))>10 else "sunset_walk"
+		"story":return "medieval_exploration"
+	return "old_tower_inn"
 
 func _story_chip(parent:Node,key:String,caption:String,value:String,color:Color)->void:
 	var row:=_hbox(_panel(parent,color.darkened(0.65),5),5)
@@ -2725,7 +2947,7 @@ func _tool_button(parent:Node,key:String,tooltip:String,action:Callable)->Button
 		b.add_theme_stylebox_override(state,style)
 	return b
 
-func _portrait_environment(parent:Node,id:String,height:float=240,background_path:String="")->Control:
+func _portrait_environment(parent:Node,id:String,height:float=240,background_path:String="",avatar_style:String="")->Control:
 	var element:=str(model.catalog.CharacterData.get(id,{}).get("element","water"))
 	var tint:=_element_color(element)
 	var stage:=Control.new()
@@ -2746,7 +2968,7 @@ func _portrait_environment(parent:Node,id:String,height:float=240,background_pat
 	var glow:=GradientTexture2D.new();glow.gradient=gradient;glow.fill=GradientTexture2D.FILL_RADIAL;glow.fill_from=Vector2(.5,.45);glow.fill_to=Vector2(1,.9)
 	var light:=TextureRect.new();light.texture=glow;light.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);light.mouse_filter=Control.MOUSE_FILTER_IGNORE;stage.add_child(light)
 	var aura=load("res://scripts/ui/character_aura.gd").new();aura.tint=tint.lightened(.25);aura.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);stage.add_child(aura)
-	var portrait:=_portrait(stage,id,0)
+	var portrait:=_portrait(stage,id,0,false,false,avatar_style)
 	portrait.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	portrait.offset_top=8;portrait.offset_bottom=-8
 	return stage

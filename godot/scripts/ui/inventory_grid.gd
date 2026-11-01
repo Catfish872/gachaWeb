@@ -24,6 +24,10 @@ var movement_duration := 0.25
 var movements: Dictionary = {}
 var flashes: Dictionary = {}
 var arrivals: Dictionary = {}
+var placement_mode := false
+var placement_uid := ""
+var placement_size := Vector2i.ONE
+var placement_cell := Vector2i.ZERO
 var _press := Vector2.ZERO
 var _pressed := false
 var _press_time := 0.0
@@ -93,10 +97,10 @@ func _process(delta: float) -> void:
 			if speed!=0:
 				ancestor.scroll_vertical+=roundi(speed*delta)
 				_sweep(_pointer_global-global_position)
-	if allow_multi_select and _pressed and not _dragged and not multi_select and Time.get_ticks_msec()/1000.0-_press_time > 0.45:
+	if not placement_mode and allow_multi_select and _pressed and not _dragged and not multi_select and Time.get_ticks_msec()/1000.0-_press_time > 0.45:
 		var item := _item_at(_press)
 		if not item.is_empty():
-			multi_select=true; set_meta("inventory_selection",true); _sweep(_press); accept_event()
+			multi_select=true; selected_uid=""; set_meta("inventory_selection",true); _sweep(_press); accept_event()
 
 func set_scan(uid: String, progress: float) -> void:
 	scan_uid=uid; scan_progress=progress; queue_redraw()
@@ -140,7 +144,7 @@ func _draw() -> void:
 		var rect:=visual_rect(item)
 		var unknown: bool=d.get("kind","")=="unknown"
 		var color: Color=COLORS[clampi(int(d.get("rarity",0)),0,5)]
-		var chosen:=uid==selected_uid or selected_uids.has(uid)
+		var chosen:=(not multi_select and uid==selected_uid) or selected_uids.has(uid)
 		draw_rect(rect,color.darkened(0.86))
 		draw_rect(rect,Color.WHITE if chosen else color.darkened(0.35),false,2 if chosen else 1)
 		if unknown:
@@ -187,6 +191,11 @@ func _draw() -> void:
 			draw_circle(rect.position+Vector2(10,10),8,Color("dfbd78"))
 			draw_line(rect.position+Vector2(6,10),rect.position+Vector2(9,13),Color("172431"),2)
 			draw_line(rect.position+Vector2(9,13),rect.position+Vector2(14,7),Color("172431"),2)
+	if placement_mode:
+		var preview:=Rect2(Vector2(placement_cell)*cell+Vector2.ONE,Vector2(placement_size)*cell-Vector2.ONE*2)
+		var tint:=Color("8be6ee") if placement_fits() else Color("e98c8a")
+		draw_rect(preview,Color(tint,.2))
+		draw_rect(preview,tint,false,2)
 	_draw_scroll_edges()
 
 func _scroll_container():
@@ -209,6 +218,14 @@ func _draw_scroll_edges() -> void:
 		for step in 7:
 			draw_rect(Rect2(0,bottom-edge+step*2,size.x,2),Color(.055,.085,.12,float(step)/7*.85))
 
+func placement_fits() -> bool:
+	var target:=Rect2i(placement_cell,placement_size)
+	if placement_cell.x<0 or placement_cell.y<0 or target.end.x>columns or target.end.y>rows:return false
+	for item in items:
+		if str(item.get("uid",""))==placement_uid:continue
+		if target.intersects(Rect2i(Vector2i(int(item.get("x",0)),int(item.get("y",0))),item_size(item))):return false
+	return true
+
 func _get_tooltip(at_position: Vector2) -> String:
 	var item:=_item_at(at_position)
 	if item.is_empty():return "空格"
@@ -217,12 +234,25 @@ func _get_tooltip(at_position: Vector2) -> String:
 	return "%s · %d × %d · 金币 %d" % [d.get("name","物资"),d.get("width",1),d.get("height",1),item.get("displayValue",d.get("value",0))]
 
 func _item_at(point: Vector2) -> Dictionary:
-	var pos:=Vector2i(floori(point.x/cell),floori(point.y/cell))
-	for item in items:
-		if Rect2i(Vector2i(int(item.get("x",0)),int(item.get("y",0))),item_size(item)).has_point(pos):return item
+	# Match the visible artwork, including in-flight sorting; last drawn is on top.
+	for index in range(items.size()-1,-1,-1):
+		var item:Dictionary=items[index]
+		if visual_rect(item).grow(2).has_point(point):return item
 	return {}
 
+func cancel_pointer_gesture(touch_index: int = -1) -> void:
+	# A parent scroller owns this gesture now and consumes its release.
+	# Cancel rather than ending: scrolling must never activate a cell or item.
+	if touch_index != -1 and _touch_id != touch_index:return
+	_touch_id = -1
+	_pressed = false
+	_dragged = false
+	_press_time = 0.0
+	_swept.clear()
+
 func _gui_input(event: InputEvent) -> void:
+	# Touch is handled directly here; its emulated mouse companion must not toggle twice.
+	if event is InputEventMouse and event.device==-1:return
 	if event is InputEventScreenTouch:
 		if event.pressed and _touch_id==-1:_touch_id=event.index;_begin(event.position)
 		elif not event.pressed and event.index==_touch_id:_touch_id=-1;_end(event.position)
@@ -234,8 +264,9 @@ func _gui_input(event: InputEvent) -> void:
 	if multi_select and _pressed:accept_event()
 
 func _begin(at: Vector2) -> void:
+	if placement_mode:placement_cell=Vector2i(floori(at.x/cell),floori(at.y/cell));queue_redraw()
 	_press=at;_last_point=at;_pointer_global=global_position+at;_pressed=true;_dragged=false;_press_time=Time.get_ticks_msec()/1000.0;_swept.clear()
-	if multi_select:set_meta("inventory_selection",true);_sweep(at)
+	if multi_select:selected_uid="";set_meta("inventory_selection",true);_sweep(at)
 func _move(at: Vector2) -> void:
 	if not _pressed:return
 	if at.distance_to(_press)>10:_dragged=true
@@ -261,6 +292,10 @@ func _sweep(at: Vector2) -> void:
 	selection_changed.emit(selected_uids.duplicate());queue_redraw()
 func _activate(point: Vector2) -> void:
 	if not is_inside_tree():return
+	if placement_mode:
+		var pos:=Vector2i(floori(point.x/cell),floori(point.y/cell))
+		if pos.x>=0 and pos.y>=0 and pos.x<columns and pos.y<rows:placement_cell=pos;queue_redraw();cell_selected.emit(pos.x,pos.y)
+		return
 	var item:=_item_at(point)
 	if not item.is_empty():selected_uid=str(item.uid);queue_redraw();item_selected.emit(selected_uid)
 	else:

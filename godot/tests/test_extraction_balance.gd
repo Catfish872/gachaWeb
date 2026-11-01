@@ -123,7 +123,13 @@ func actual_run(level: int, ids: Array, rank: int, seed_value: int) -> Dictionar
  check(not x.active(),"run terminates within bounded decisions")
  check(safety == 0,"no battle action-limit termination")
  check(acts <= 3,"three-act endpoint respected")
- for id in ids: check(int(m.state.ownedCharacters[id].level) == level,"run does not grant unplanned level ups")
+ var expected_level:=level
+ var expected_exp:int=x.state().lastRun.get("expEarned",0)
+ while expected_level<10 and expected_exp>=m.exp_to_next_level(expected_level):
+  expected_exp-=m.exp_to_next_level(expected_level);expected_level+=1
+ for id in ids:
+  check(int(m.state.ownedCharacters[id].level)==expected_level,"run level follows actually awarded battle XP")
+  check(int(m.state.ownedCharacters[id].exp)==(0 if expected_level==10 else expected_exp),"run XP conserved without extra levels")
  return {"outcome":x.state().lastRun.get("outcome","error"),"rounds":rounds,"acts":acts,"safety":safety}
 
 func test_departure_preserves_growth() -> void:
@@ -136,6 +142,9 @@ func test_departure_preserves_growth() -> void:
    var before: Dictionary = m.state.duplicate(true)
    var departure: Array = m.extraction.departure_party()
    check(m.state == before,"mode snapshot preserves original save")
+   for unit in departure:
+    check(unit.permanentGrowth==m.growth_snapshot(unit.id),"permanent growth snapshot preserves bonuses")
+    unit.erase("permanentGrowth")
    check(departure == raw,"all original player stats and identity preserved")
    for i in range(departure.size()):
     check(departure[i].stats == raw[i].stats,"no level/gear/critical/speed compression")

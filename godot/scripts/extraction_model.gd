@@ -19,7 +19,7 @@ func _init(owner) -> void:
 	if parsed is Dictionary: data = parsed
 
 static func defaults() -> Dictionary:
-	return {"credits": 0, "stash": [], "loadout": [], "mailbox": [], "collection": [], "unlockedDifficulty": 0, "run": {}, "lastRun": {}, "runs": 0, "utility": {"armor": {}, "backpack": {}}}
+	return {"credits": 0, "stash": [], "loadout": [], "mailbox": [], "collection": [], "unlockedDifficulty": 0, "run": {}, "lastRun": {}, "runs": 0, "utility": {"armor": {}, "backpack": {}}, "keyring": []}
 
 func state() -> Dictionary:
 	return host.state.extraction
@@ -52,7 +52,7 @@ func _uid(prefix: String) -> String:
 	return "%s_%s_%d" % [run().id, prefix, int(run().serial)]
 
 func _make_item(id: String) -> Dictionary:
-	return {"uid": _uid("item"), "itemId": id, "x": 0, "y": 0, "rotated": false, "revealed": false, "appraisalRisk": int(run().difficulty)}
+	return {"uid": _uid("item"), "itemId": id, "x": 0, "y": 0, "rotated": false, "revealed": false, "appraisalRisk": int(run().difficulty), "originAct":int(run().act)}
 
 func start_run(difficulty: int = 0) -> Dictionary:
 	if active(): return _fail("当前搜打撤尚未结算")
@@ -78,8 +78,10 @@ func start_run(difficulty: int = 0) -> Dictionary:
 	return _commit(previous, {"message": "出发，击败每幕首领后可以撤离"})
 
 func _departure_party() -> Array:
-	# 保留完整局外成长，出发后仅冻结快照避免局中换装。
-	return host.battle_party(false)
+	# 保留完整局外成长；装备/命座冻结，战斗经验升级从下一战生效。
+	var party:Array=host.battle_party(false)
+	for unit in party:unit.permanentGrowth=host.growth_snapshot(unit.id)
+	return party
 
 func _sync_room() -> void:
 	if not active() or not run().has("map"): return
@@ -106,7 +108,7 @@ func _generate_map() -> void:
 	for district in range(3):
 		var theme: String = themes[(district + offset + int(run().act) - 1) % 3]
 		var pool: Array = data.get("mapBackgrounds", {}).get(theme, ["res://assets/extraction/rooms/%s_1.webp" % theme, "res://assets/extraction/rooms/%s_2.webp" % theme])
-		map.districts.append({"id":"district_%d" % district, "name":names[(district+offset+int(run().act)-1)%3], "theme":theme, "background":pool[0]})
+		map.districts.append({"id":"district_%d" % district, "name":names[(district+offset+int(run().act)-1)%3], "theme":theme, "background":("res://assets/extraction/rooms/%s_act%d.webp" % [theme,int(run().act)]) if int(run().act)>1 else pool[0]})
 		for local in range(6):
 			var index := district * 6 + local
 			var kind: String = str(types[int(_rand() * types.size()) % types.size()])
@@ -117,6 +119,12 @@ func _generate_map() -> void:
 			elif index == relay_index: kind = "relay"
 			elif index == key_index: kind = "key_vault"
 			var room_pool: Array = pool.duplicate()
+			if int(run().act)>1:
+				var act_background:="res://assets/extraction/rooms/%s_act%d.webp" % [theme,int(run().act)]
+				if index in [0,1]:room_pool=[act_background]
+				else:
+					# One existing background roll is retained; weighting changes only art.
+					for repeat in range(pool.size()*4):room_pool.append(act_background)
 			if kind == "relay": room_pool.append("res://assets/extraction/rooms/courier_waystation.webp")
 			elif kind == "key_vault": room_pool.append("res://assets/extraction/rooms/astral_vault.webp")
 			var id := _uid("room")
@@ -350,6 +358,8 @@ func settle_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 	if not armor.is_empty() and armor_max > 0:
 		armor.condition = clampf(float(battle_state.get("equipmentShieldRemaining", 0)) / armor_max, 0.0, 1.0)
 	var victory: bool = battle_state.phase == "victory"
+	var xp:=0
+	var progression:Array=[]
 	host.state.stats.totalBattles += 1
 	if not victory:
 		_end("defeat")
@@ -373,6 +383,18 @@ func settle_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 		if recovery > 0: _heal(recovery)
 		run().growthBattles = int(run().get("growthBattles", 0)) + 1
 		var kind: String = run().activeEncounter.kind
+		xp=int(round((35+int(run().act)*10)*(1.5 if kind=="boss" else (1.25 if kind=="elite" else 1.0))))
+		for unit in run().party:
+			if host.state.ownedCharacters.has(unit.id):
+				if not unit.has("permanentGrowth"):unit.permanentGrowth=host.growth_snapshot(unit.id)
+				progression.append(host._grant_exp(unit.id,xp))
+				unit.level=int(host.state.ownedCharacters[unit.id].level)
+				unit.stats=host.computed_stats(unit.id,unit.level,unit.permanentGrowth)
+				if not unit.get("saveData") is Dictionary:unit.saveData=host.state.ownedCharacters[unit.id].duplicate(true)
+				unit.saveData.level=unit.level
+				unit.saveData.exp=int(host.state.ownedCharacters[unit.id].exp)
+		run().baseMaxHp=_base_party_hp(run().party)
+		run().expEarned=int(run().get("expEarned",0))+xp
 		run().activeEncounter = {}
 		if kind == "boss":
 			run().phase = "boss_exit"
@@ -384,7 +406,7 @@ func settle_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 			else: _container("精英战利品" if kind == "elite" else "敌人背包", 3 if kind == "elite" else 2, 1 if kind == "elite" else 0)
 		if int(run().growthBattles) == 1 or kind in ["elite", "boss"]:
 			_offer_growth("gold" if kind == "boss" else "")
-	var result := _commit(previous, {"victory": victory, "ended": not victory, "rewards": {}, "lastRun": state().lastRun.duplicate(true), "message": "首领已击败，出口开放" if victory and active() and run().phase == "boss_exit" else "战斗结束"})
+	var result := _commit(previous, {"victory": victory, "ended": not victory, "rewards": {"exp":xp}, "progression":progression, "lastRun": state().lastRun.duplicate(true), "message": "首领已击败，出口开放" if victory and active() and run().phase == "boss_exit" else "战斗结束"})
 	if result.success: _engine = null
 	return result
 
@@ -411,7 +433,15 @@ func _container(title: String, count: int, quality: int, categories: Array = [])
 		for key in pool:
 			if data.items[key].get("category", "") in categories: preferred.append(key)
 		if not preferred.is_empty(): pool = preferred
-		if not pool.is_empty(): container.items.append(_make_item(str(pool[int(_rand() * pool.size()) % pool.size()])))
+		if not pool.is_empty():
+			var item_weight:=0.0
+			for key in pool:item_weight+=float(data.items[key].get("dropWeight",1.0))
+			var item_roll:=_rand()*item_weight
+			var picked:String=str(pool.back())
+			for key in pool:
+				item_roll-=float(data.items[key].get("dropWeight",1.0))
+				if item_roll<=0:picked=str(key);break
+			container.items.append(_make_item(picked))
 	var packed: Array = []
 	for item in container.items:
 		_place(packed, item, Vector2i(6, 8))
@@ -484,16 +514,18 @@ func take_item(container_id: String, item_uid: String) -> Dictionary:
 	return _fail("物品已被取走")
 
 func _pickup_fit(item: Dictionary) -> bool:
+	if item_def(item.itemId).get("kind")=="key":
+		if state().keyring.size()>=20000:return false
+		state().keyring.append(item.duplicate(true))
+		return true
 	var bag: Array = run().bag.duplicate(true)
 	if _place(bag, item.duplicate(true), dimensions("bag")):
 		run().bag = bag
 		return true
 	bag = run().bag.duplicate(true)
 	bag.append(item.duplicate(true))
-	bag.sort_custom(func(a,b): return _size(a).x * _size(a).y > _size(b).x * _size(b).y)
-	var packed: Array = []
-	for entry in bag:
-		if not _place(packed, entry, dimensions("bag")): return false
+	var packed := _packed_copy(bag,dimensions("bag"))
+	if packed.size()!=bag.size(): return false
 	run().bag = packed
 	return true
 
@@ -531,29 +563,40 @@ func move_item(scope: String, uid: String, x: int, y: int, rotated: bool) -> Dic
 func sort_grid(scope: String) -> Dictionary:
 	if scope not in ["stash", "bag"] or (scope == "bag" and (not active() or run().phase == "battle")): return _fail("当前无法整理")
 	var pending: Array = _items(scope).duplicate(true)
-	pending.sort_custom(func(a,b): return _size(a).x * _size(a).y > _size(b).x * _size(b).y)
-	var packed: Array = []
-	for item in pending:
-		if not _place(packed, item, dimensions(scope)): return _fail("自动整理未找到更好的布局，原布局已保留")
+	var packed := _packed_copy(pending,dimensions(scope))
+	if packed.size()!=pending.size(): return _fail("暂未找到合适布局，原物品保持原位")
 	var previous: Dictionary = host.state.duplicate(true)
 	if scope == "stash": state().stash = packed
 	else: run().bag = packed
 	return _commit(previous)
 
-func equip_item(uid: String) -> Dictionary:
+func equip_item(uid: String, replace_uid: String = "") -> Dictionary:
 	if not can_prepare_supplies(): return _fail("战斗结束后再整备")
+	var selected: Dictionary = {}
 	for entry in run().bag:
-		if entry.uid == uid and item_def(entry.itemId).get("kind") == "utility": return set_utility_slot(str(item_def(entry.itemId).slot), uid)
-	if run().equipped.size() >= 3: return _fail("三处装备位已满")
-	for i in range(run().bag.size()):
-		var item: Dictionary = run().bag[i]
-		if item.uid != uid: continue
-		if item_def(item.itemId).kind != "equipment": return _fail("这件物品无法装备")
-		var previous: Dictionary = host.state.duplicate(true)
-		run().equipped.append(item)
-		run().bag.remove_at(i)
-		return _commit(previous)
-	return _fail("物品不存在")
+		if entry.uid == uid: selected=entry;break
+	if selected.is_empty(): return _fail("物品不存在")
+	var d := item_def(selected.itemId)
+	if d.get("kind")=="utility": return set_utility_slot(str(d.slot),uid)
+	if d.get("kind")!="equipment": return _fail("这件物品无法装备")
+	var old: Dictionary = {}
+	for item in run().equipped:
+		if item.uid == replace_uid: old=item;break
+	if not replace_uid.is_empty() and old.is_empty(): return _fail("替换装备已经改变")
+	if run().equipped.size()>=3 and old.is_empty(): return _fail("选择一件装备替换")
+	var previous: Dictionary = host.state.duplicate(true)
+	run().bag.erase(selected)
+	if not old.is_empty():
+		run().equipped.erase(old)
+		var remaining: Array = run().bag.duplicate(true)
+		remaining.append(old.duplicate(true))
+		var packed := _packed_copy(remaining,dimensions("bag"))
+		if packed.size()!=remaining.size():
+			host.state=previous
+			return _fail("背包装不下换出的装备")
+		run().bag=packed
+	run().equipped.append(selected)
+	return _commit(previous,{"message":"已装备「%s」" % d.name})
 
 func unequip_item(uid: String) -> Dictionary:
 	if not can_prepare_supplies(): return _fail("战斗结束后再整备")
@@ -610,7 +653,7 @@ func continue_act() -> Dictionary:
 func _end(outcome: String) -> void:
 	var value := 0
 	for item in run().bag + run().equipped: value += item_value(item)
-	state().lastRun = {"outcome": outcome, "act": int(run().act), "difficulty": int(run().difficulty), "roomsCleared": int(run().roomsCleared), "bossesDefeated": int(run().bossesDefeated), "value": value, "items": run().bag.size() + run().equipped.size(), "durationSeconds": maxi(0, int((host._now() - int(run().startedAt)) / 1000)), "securedValue":int(run().get("securedValue",0)), "securedItems":int(run().get("securedItems",0))}
+	state().lastRun = {"outcome": outcome, "act": int(run().act), "difficulty": int(run().difficulty), "roomsCleared": int(run().roomsCleared), "bossesDefeated": int(run().bossesDefeated), "value": value, "items": run().bag.size() + run().equipped.size(), "durationSeconds": maxi(0, int((host._now() - int(run().startedAt)) / 1000)), "securedValue":int(run().get("securedValue",0)), "securedItems":int(run().get("securedItems",0)), "salvageGold":int(run().get("salvageGold",0)), "expEarned":int(run().get("expEarned",0))}
 	state().runs += 1
 	state().run = {}
 
@@ -652,6 +695,7 @@ func collect_item(uid: String) -> Dictionary:
 	for i in range(state().stash.size()):
 		var item: Dictionary = state().stash[i]
 		if item.uid != uid: continue
+		if int(item_def(item.itemId).rarity)<4:return _fail("图鉴收藏金色与红色物品")
 		if item.itemId in state().collection: return _fail("该藏品已经收藏，可以出售重复物品")
 		var previous: Dictionary = host.state.duplicate(true)
 		state().collection.append(item.itemId)
@@ -684,6 +728,9 @@ func valid(value: Variant) -> bool:
 			if not host._integer(summary.get(key, -1)): return false
 	var ids: Dictionary = {}
 	if not _valid_utility(value.get("utility", {}), ids): return false
+	if not value.get("keyring",[]) is Array or not _valid_items(value.get("keyring",[]),ids,Vector2i.ZERO,20000):return false
+	for key_item in value.get("keyring",[]):
+		if item_def(key_item.itemId).get("kind")!="key":return false
 	if not _valid_items(value.get("stash", []), ids, Vector2i(STASH_WIDTH, STASH_HEIGHT)): return false
 	if not _valid_items(value.get("mailbox", []), ids): return false
 	if value.get("loadout", []).size() > 3 or not _valid_items(value.get("loadout", []), ids): return false
@@ -699,7 +746,7 @@ func valid(value: Variant) -> bool:
 	if r.phase not in ["route", "room", "battle", "boss_exit"] or not r.rngState.is_valid_int(): return false
 	if not _valid_growth_state(r): return false
 	if r.has("baseMaxHp") and not host._integer(r.baseMaxHp,1,300000000): return false
-	for key in ["securedValue","securedItems"]:
+	for key in ["securedValue","securedItems","salvageGold","expEarned"]:
 		if r.has(key) and not host._integer(r[key],0,1000000000): return false
 	for key in ["act", "node", "difficulty", "serial", "roomsCleared", "bossesDefeated", "collectedValue", "startedAt"]:
 		if not host._integer(r.get(key, -1), 0, 10000000000000000): return false
@@ -724,6 +771,13 @@ func valid(value: Variant) -> bool:
 	for unit in r.party:
 		if not unit is Dictionary or not host.catalog.CharacterData.has(unit.get("id", "")) or not unit.get("stats") is Dictionary: return false
 		if not host._integer(unit.get("currentHp", -1)) or not host._integer(unit.get("maxHp", 0), 1) or unit.currentHp > unit.maxHp: return false
+		if unit.has("permanentGrowth"):
+			var snapshot=unit.permanentGrowth
+			if not snapshot is Dictionary or not snapshot.get("constellation") is Dictionary or not snapshot.get("relics") is Dictionary or not host._integer(snapshot.get("awakening",-1),0,100):return false
+			for key in ["hpPercent","atkPercent","defPercent","normalDmgBonus","skillDmgBonus","ultDmgBonus","skillCdReduce"]:
+				if not host._number(snapshot.constellation.get(key),0,1000000):return false
+			for key in ["hp_flat","atk_flat","def_flat","hp_pct","atk_pct","def_pct","spd","cri_rate","cri_dmg","energy_rate"]:
+				if not host._number(snapshot.relics.get(key),0,100000000):return false
 		if party_ids.has(unit.id): return false
 		party_ids[unit.id] = true
 		if not unit.get("skills") is Array or not unit.get("cooldowns") is Dictionary: return false
@@ -750,8 +804,8 @@ func valid(value: Variant) -> bool:
 	if r.phase == "boss_exit" and (int(r.node) != ROOMS_PER_ACT or int(r.bossesDefeated) != int(r.act)): return false
 	return true
 
-func _valid_items(items: Array, ids: Dictionary, bounds := Vector2i.ZERO) -> bool:
-	if items.size() > 10000: return false
+func _valid_items(items: Array, ids: Dictionary, bounds := Vector2i.ZERO, max_count:int=10000) -> bool:
+	if items.size() > max_count: return false
 	for item in items:
 		if not item is Dictionary or not item.get("uid") is String or item.uid.is_empty() or ids.has(item.uid): return false
 		if not item.get("itemId") is String or item_def(item.itemId).is_empty(): return false
@@ -759,6 +813,7 @@ func _valid_items(items: Array, ids: Dictionary, bounds := Vector2i.ZERO) -> boo
 		if item.has("legacyValue") and not host._integer(item.legacyValue, 0, 1000000000): return false
 		if item.has("appraisalRisk") and not host._integer(item.appraisalRisk, 0, 5): return false
 		if item.has("condition") and not host._number(item.condition, 0, 1): return false
+		if item.has("originAct") and not host._integer(item.originAct,1,3):return false
 		if bounds != Vector2i.ZERO and not _fits(items, item, bounds): return false
 		ids[item.uid] = true
 	return true
@@ -795,6 +850,7 @@ func store_item(uid: String) -> Dictionary:
 	return _fail("物品不存在")
 
 func buy_supply(item_id: String) -> Dictionary:
+	if item_def(item_id).get("kind")=="key":return buy_keys(item_id,1)
 	if active(): return _fail("请在营地购买补给")
 	var definition := item_def(item_id)
 	var cost := int(definition.get("buyPrice", 0))
@@ -889,7 +945,8 @@ func plan_smart_loot(container_id: String) -> Dictionary:
 		if item_def(item.itemId).kind in ["equipment", "consumable"]: protected.append(item.duplicate(true))
 		else: candidates.append(item.duplicate(true))
 	for item in container.items:
-		if item.revealed: candidates.append(item.duplicate(true))
+		# Keys have their own inventory; automatic bag optimization never moves them into cells.
+		if item.revealed and item_def(item.itemId).get("kind")!="key": candidates.append(item.duplicate(true))
 	protected.sort_custom(func(a,b): return _size(a).x * _size(a).y > _size(b).x * _size(b).y)
 	var packed: Array = []
 	for item in protected:
@@ -966,6 +1023,18 @@ func migrate_state(value: Dictionary, source_version: int) -> void:
 		for container in ex.run.get("containers", []): _preserve_v6_values(container.items)
 		for room in ex.run.get("map", {}).get("rooms", []):
 			for container in room.get("containers", []): _preserve_v6_values(container.items)
+	if not ex.has("keyring"):ex.keyring=[]
+	if source_version<8:
+		for scope in ["stash","loadout","mailbox"]:_preserve_v7_values(ex.get(scope,[]))
+		for scope in ["bag","equipped"]:_preserve_v7_values(ex.run.get(scope,[]))
+		for slot in ["armor","backpack"]:
+			var entry:Dictionary=ex.get("utility",{}).get(slot,{})
+			if not entry.is_empty():_preserve_v7_values([entry])
+		for container in ex.run.get("containers",[]):_preserve_v7_values(container.items)
+		for saved_room in ex.run.get("map",{}).get("rooms",[]):
+			for container in saved_room.get("containers",[]):_preserve_v7_values(container.items)
+		for scope in ["stash","loadout","mailbox"]:_move_owned_keys(ex[scope],ex.keyring)
+		_move_owned_keys(ex.run.get("bag",[]),ex.keyring)
 	if not ex.run.is_empty():
 		if not ex.run.has("baseMaxHp"): ex.run.baseMaxHp = _base_party_hp(ex.run.party)
 		if not ex.run.has("securedValue"): ex.run.securedValue = 0
@@ -985,7 +1054,11 @@ func item_value(item: Dictionary) -> int:
 	if item.has("legacyValue"): return int(item.legacyValue)
 	var base := int(item_def(str(item.get("itemId", ""))).get("value", 0))
 	var risk := clampi(int(item.get("appraisalRisk", 0)), 0, 5)
-	return int(round(base * float(data.get("lootEconomy", {}).get("riskAppraisalMultiplier", [1.0, 1.25, 1.6, 2.1, 2.9, 4.0])[risk])))
+	var multiplier := float(data.get("lootEconomy", {}).get("riskAppraisalMultiplier", [1.0, 1.25, 1.6, 2.1, 2.9, 4.0])[risk])
+	if item_def(str(item.get("itemId",""))).get("kind")=="loot":
+		multiplier*=float(data.get("lootEconomy",{}).get("saleMultiplier",1.0))
+		multiplier*=float(data.get("lootEconomy",{}).get("actAppraisalMultiplier",[1.0,1.0,1.0])[clampi(int(item.get("originAct",1)),1,3)-1])
+	return int(round(base*multiplier))
 
 func _growth_definition(id: String) -> Dictionary:
 	for reward in host.catalog.AbyssData.rogue.rewards:
@@ -1154,6 +1227,8 @@ func choose_room_action(action_id: String) -> Dictionary:
 		_engine = null
 	if effect.get("unlock", false):
 		var key_uid := _room_key_uid()
+		for entry in state().keyring.duplicate():
+			if entry.uid==key_uid:state().keyring.erase(entry);break
 		for entry in run().bag.duplicate():
 			if entry.uid == key_uid: run().bag.erase(entry); break
 		run().room.unlocked = true
@@ -1244,9 +1319,9 @@ func collect_items(uids: Array) -> Dictionary:
 		for item in state().stash:
 			if item.uid != uid: continue
 			found = true
-			if item.itemId not in definitions: targets.append(item); definitions.append(item.itemId)
+			if int(item_def(item.itemId).rarity)>=4 and item.itemId not in definitions: targets.append(item); definitions.append(item.itemId)
 		if not found: return _fail("选择的物品已改变")
-	if targets.is_empty(): return _fail("所选物品均已收藏")
+	if targets.is_empty(): return _fail("请选择尚未收藏的金色或红色物品")
 	var previous: Dictionary = host.state.duplicate(true)
 	for item in targets:
 		state().collection.append(item.itemId)
@@ -1405,12 +1480,68 @@ func remove_utility_slot(slot: String) -> Dictionary:
 	return _commit(previous,{"message":"装备已收回"})
 
 func _packed_copy(items: Array, bounds: Vector2i) -> Array:
+	if items.is_empty(): return []
+	var area:=0
+	for item in items: area+=_size(item).x*_size(item).y
+	if area>bounds.x*bounds.y:return []
 	var pending := items.duplicate(true)
-	pending.sort_custom(func(a,b): return _size(a).x*_size(a).y > _size(b).x*_size(b).y)
+	pending.sort_custom(func(a,b):
+		var sa:=_size(a);var sb:=_size(b)
+		return sa.x*sa.y>sb.x*sb.y if sa.x*sa.y!=sb.x*sb.y else maxi(sa.x,sa.y)>maxi(sb.x,sb.y))
 	var packed: Array = []
+	var complete:=true
 	for item in pending:
-		if not _place(packed,item,bounds): return []
-	return packed
+		if not _place(packed,item,bounds):complete=false;break
+	if complete:return packed
+	# Bounded exact search fixes legal layouts rejected by area-first greed.
+	# Row bitmasks support both 60-cell bags and the 120-cell warehouse.
+	var board:Array=[]
+	board.resize(bounds.y);board.fill(0)
+	var search:={"nodes":0,"limit":12000,"memo":{}}
+	packed=[]
+	if _pack_search(pending,0,bounds,board,packed,0,search):return packed
+	return []
+
+func _pack_search(items:Array,index:int,bounds:Vector2i,board:Array,packed:Array,minimum:int,search:Dictionary)->bool:
+	search.nodes+=1
+	if search.nodes>search.limit:return false
+	if index>=items.size():return true
+	var item:Dictionary=items[index]
+	var original:=Vector2i(int(item_def(item.itemId).width),int(item_def(item.itemId).height))
+	var small:=mini(original.x,original.y);var large:=maxi(original.x,original.y)
+	if small==1 and large==1:
+		for remaining in items.slice(index):
+			if not _place(packed,remaining.duplicate(true),bounds):return false
+		return true
+	var memo_key:=str(index)+":"+str(minimum)+":"+str(board)
+	if search.memo.has(memo_key):return false
+	var shapes:Array=[Vector2i(small,large)]
+	if small!=large:shapes.append(Vector2i(large,small))
+	for y in range(bounds.y):
+		for x in range(bounds.x):
+			for orientation in range(shapes.size()):
+				var code:=(y*bounds.x+x)*2+orientation
+				if code<minimum:continue
+				var size:Vector2i=shapes[orientation]
+				if x+size.x>bounds.x or y+size.y>bounds.y:continue
+				var mask:=((1<<size.x)-1)<<x
+				var free:=true
+				for row in range(y,y+size.y):
+					if int(board[row])&mask:free=false;break
+				if not free:continue
+				for row in range(y,y+size.y):board[row]=int(board[row])|mask
+				var placed:Dictionary=item.duplicate(true)
+				placed.x=x;placed.y=y;placed.rotated=size.x!=original.x
+				packed.append(placed)
+				var next_min:=0
+				if index+1<items.size():
+					var next_size:=_size(items[index+1])
+					if mini(next_size.x,next_size.y)==small and maxi(next_size.x,next_size.y)==large:next_min=code+1
+				if _pack_search(items,index+1,bounds,board,packed,next_min,search):return true
+				packed.pop_back()
+				for row in range(y,y+size.y):board[row]=int(board[row])&~mask
+	search.memo[memo_key]=true
+	return false
 
 func repair_quote() -> Dictionary:
 	var a: Dictionary = equipment_status().armor
@@ -1482,7 +1613,7 @@ func _room_key_id() -> String:
 
 func _room_key_uid() -> String:
 	var key_id := _room_key_id()
-	for item in run().get("bag",[]):
+	for item in state().get("keyring",[])+run().get("bag",[]):
 		if item.itemId == key_id: return str(item.uid)
 	return ""
 
@@ -1580,3 +1711,147 @@ func _equipment_shield_capacities() -> Dictionary:
 
 func reset_runtime() -> void:
 	_engine = null
+
+func take_item_at(container_id:String,uid:String,x:int,y:int,rotated:bool=false)->Dictionary:
+	if not active() or run().phase not in ["room","boss_exit"]:return _fail("当前无法拾取")
+	var container:=_find_container(container_id)
+	if container.is_empty():return _fail("容器不存在")
+	var original:Dictionary={}
+	for item in container.items:
+		if item.uid==uid:original=item;break
+	if original.is_empty() or not original.get("revealed",false):return _fail("先完成搜索")
+	if item_def(original.itemId).get("kind")=="key":return take_item(container_id,uid)
+	var candidate:Dictionary=original.duplicate(true)
+	candidate.x=x;candidate.y=y;candidate.rotated=rotated
+	if not _fits(run().bag,candidate,dimensions("bag")):return _fail("该位置放不下物品")
+	var previous:Dictionary=host.state.duplicate(true)
+	run().bag.append(candidate)
+	container.items.erase(original)
+	run().collectedValue+=item_value(original)
+	return _commit(previous,{"item":candidate.duplicate(true),"message":"已收入背包"})
+
+func preview_exchange(container_id:String,uid:String,outgoing_uids:Array)->Dictionary:
+	if not active() or run().phase not in ["room","boss_exit"]:return _fail("当前无法交换")
+	var container:=_find_container(container_id)
+	if container.is_empty():return _fail("容器不存在")
+	var incoming:Dictionary={}
+	for item in container.items:
+		if item.uid==uid:incoming=item;break
+	if incoming.is_empty() or not incoming.get("revealed",false):return _fail("先完成搜索")
+	if item_def(incoming.itemId).get("kind")=="key":return _fail("钥匙可直接收入钥匙串")
+	var requested:Dictionary={}
+	for id in outgoing_uids:
+		if not id is String or requested.has(id):return _fail("交换选择已改变")
+		requested[id]=true
+	var remaining:Array=[]
+	var removed:Array=[]
+	var removed_value:=0
+	for item in run().bag:
+		if requested.has(item.uid):removed.append(item.duplicate(true));removed_value+=item_value(item)
+		else:remaining.append(item.duplicate(true))
+	if removed.size()!=requested.size():return _fail("换出物品已改变")
+	remaining.append(incoming.duplicate(true))
+	var packed:=_packed_copy(remaining,dimensions("bag"))
+	if packed.size()!=remaining.size():return _fail("所选物品换出后仍放不下，请增加换出或调整位置")
+	var leftovers:Array=[]
+	for item in container.items:
+		if item.uid!=uid:leftovers.append(item.duplicate(true))
+	leftovers.append_array(removed.duplicate(true))
+	var height:=8
+	for item in leftovers:height+=_size(item).y
+	var stored:=_packed_copy(leftovers,Vector2i(6,height))
+	if stored.size()!=leftovers.size():return _fail("原容器暂时放不下换出物品")
+	var used_height:=8
+	for item in stored:used_height=maxi(used_height,int(item.y)+_size(item).y)
+	var fingerprint:=JSON.stringify([run().id,run().room.get("id",""),run().bag,container,uid,outgoing_uids,packed]).sha256_text()
+	return {"success":true,"added":[incoming.duplicate(true)],"removed":removed,"gain":item_value(incoming)-removed_value,"planHash":fingerprint,"packed":packed,"containerItems":stored,"containerHeight":used_height}
+
+func exchange_items(container_id:String,uid:String,outgoing_uids:Array,plan_hash:String)->Dictionary:
+	var plan:=preview_exchange(container_id,uid,outgoing_uids)
+	if not plan.success:return plan
+	if plan_hash.is_empty() or plan.planHash!=plan_hash:return _fail("物品已变化，请重新确认")
+	var previous:Dictionary=host.state.duplicate(true)
+	var container:=_find_container(container_id)
+	container.items=plan.containerItems.duplicate(true)
+	container.width=6;container.height=plan.containerHeight;container.revealed=0
+	for item in container.items:
+		if item.revealed:container.revealed+=1
+	run().bag=plan.packed.duplicate(true)
+	run().collectedValue+=item_value(plan.added[0])
+	return _commit(previous,{"added":plan.added,"removed":plan.removed,"gain":plan.gain,"message":"交换完成，换出物品留在原容器"})
+
+func _preserve_v7_values(items:Array)->void:
+	for item in items:
+		if item.has("legacyValue"):continue
+		var base:=int(item_def(item.itemId).get("v7Value",item_def(item.itemId).value))
+		item.legacyValue=int(round(base*[1.0,1.15,1.3,1.5,1.7,1.9][clampi(int(item.get("appraisalRisk",0)),0,5)]))
+
+func _move_owned_keys(items:Array,ring:Array)->void:
+	for item in items.duplicate():
+		if item_def(item.itemId).get("kind")=="key":
+			items.erase(item)
+			ring.append(item)
+
+func keyring()->Array:
+	var result:Array=[]
+	for id in ["key_ruins","key_forest","key_sanctum"]:
+		var d:=item_def(id)
+		var count:=0;var value:=0
+		for item in state().get("keyring",[]):
+			if item.itemId==id:count+=1;value+=item_value(item)
+		result.append({"itemId":id,"name":d.name,"icon":d.icon,"count":count,"buyPrice":int(d.buyPrice),"value":value})
+	return result
+
+func buy_keys(id:String,count:int=1)->Dictionary:
+	if active() and not can_salvage():return _fail("请在工坊、寄存站或撤离点购买")
+	var d:=item_def(id)
+	if d.get("kind")!="key" or count<1 or count>999 or state().keyring.size()+count>20000:return _fail("钥匙数量无效")
+	var cost:=int(d.buyPrice)*count
+	if int(host.state.resources.gold)<cost:return _fail("金币不足")
+	var previous:Dictionary=host.state.duplicate(true)
+	for n in range(count):state().keyring.append({"uid":host._uid("key"),"itemId":id,"x":0,"y":0,"rotated":false,"revealed":true})
+	host.state.resources.gold-=cost
+	return _commit(previous,{"count":count,"cost":cost,"message":"钥匙已收入钥匙串"})
+
+func sell_keys(id:String,count:int=1)->Dictionary:
+	if active() and not can_salvage():return _fail("请在工坊、寄存站或撤离点出售")
+	if item_def(id).get("kind")!="key" or count<1 or count>999:return _fail("钥匙数量无效")
+	var selected:Array=[]
+	for item in state().keyring:
+		if item.itemId==id and selected.size()<count:selected.append(item)
+	if selected.size()!=count:return _fail("钥匙数量不足")
+	var previous:Dictionary=host.state.duplicate(true)
+	var value:=0
+	for item in selected:value+=item_value(item);state().keyring.erase(item)
+	host.state.resources.gold+=value
+	return _commit(previous,{"count":count,"value":value,"message":"钥匙已出售"})
+
+func can_salvage()->bool:
+	return active() and (run().phase=="boss_exit" or (run().phase=="room" and run().room.get("type","") in ["workshop","relay"]))
+
+func salvage_quote(uids:Array)->Dictionary:
+	if not can_salvage():return _fail("工坊、寄存站和首领出口可回收物资")
+	var selected:Dictionary={}
+	for uid in uids:
+		if not uid is String or selected.has(uid):return _fail("回收选择已改变")
+		selected[uid]=true
+	var items:Array=[];var gross:=0
+	for item in run().bag:
+		if selected.has(item.uid):items.append(item.duplicate(true));gross+=item_value(item)
+	if items.size()!=selected.size() or items.is_empty():return _fail("请选择背包物资")
+	var rate:=float(data.get("utilityEconomy",{}).get("salvageRate",0.6))
+	var value:=int(floor(gross*rate))
+	var fingerprint:=JSON.stringify([run().id,run().room.get("id",""),run().phase,items,rate,value]).sha256_text()
+	return {"success":true,"enabled":true,"items":items,"grossValue":gross,"value":value,"rate":rate,"planHash":fingerprint}
+
+func salvage_items(uids:Array,plan_hash:String)->Dictionary:
+	var quote:=salvage_quote(uids)
+	if not quote.success:return quote
+	if plan_hash.is_empty() or quote.planHash!=plan_hash:return _fail("物资已变化，请重新确认")
+	var previous:Dictionary=host.state.duplicate(true)
+	for selected in quote.items:
+		for item in run().bag.duplicate():
+			if item.uid==selected.uid:run().bag.erase(item);break
+	host.state.resources.gold+=int(quote.value)
+	run().salvageGold=int(run().get("salvageGold",0))+int(quote.value)
+	return _commit(previous,{"count":quote.items.size(),"value":quote.value,"message":"回收完成，金币已入账"})

@@ -24,6 +24,10 @@ func run():
  for bad in ["", "v1", "01.0.0", "2.100.0", "2.0.100", "2.0.1-01", "0.0.0", "https://bad/2.0.1"]:
   check(U.parse_version(bad).is_empty(), "invalid version " + bad)
  var D = load("res://scripts/android_updater.gd")
+ var native_source = FileAccess.get_file_as_string("res://scripts/android_updater.gd")
+ check(native_source.count("setAllowedOverMetered(true)") == 2, "native probe and actual request both permit cellular data")
+ check(not native_source.contains("setAllowedOverMetered(false)") and not native_source.contains("NETWORK_WIFI"), "no Wi-Fi-only native download restriction")
+ check(not native_source.contains("Wi-Fi"), "download progress has no Wi-Fi restriction text")
  var saved_download = {"id":123,"tag":"android-v2.1.0","filename":"voidrift-android-v2.1.0.apk","sha256":"a".repeat(64),"size":123456}
  check(D.valid_record(saved_download), "valid persisted Android download")
  for change in [{"id":-1},{"id":1.5},{"size":0},{"size":536870913},{"filename":"../payload.apk"},{"filename":"voidrift-other.apk"},{"tag":"android-v2.1.0/evil"},{"sha256":"wrong"}]:
@@ -115,6 +119,7 @@ func run():
  check(app.current_screen == "home" and app.overlay.get_child_count() == 0 and not app.update_notice.visible, "failed background response stays quiet")
  app.navigate("save")
  check(app.find_child("CheckForUpdates", true, false) != null and app.find_child("OpenReleases", true, false) != null, "manual and browser fallback remain accessible")
+ check(app.find_child("AutoDownloadUpdates", true, false).text == "自动下载更新（Android）", "download toggle has no network condition")
  var toggle = app.find_child("AutoCheckUpdates", true, false)
  toggle.button_pressed = false
  check(not app.updater.auto_check_enabled, "UI toggle controls auto check")
@@ -128,7 +133,7 @@ func run():
  app._save_preferences()
  app.updater.auto_download_enabled = true
  app._load_preferences()
- check(not app.updater.auto_download_enabled, "Wi-Fi auto-download preference persists")
+ check(not app.updater.auto_download_enabled, "auto-download preference persists")
  app.test_session = true
  app.navigate("save")
  for download_status in ["downloading", "downloaded", "install_permission", "installing", "download_error"]:

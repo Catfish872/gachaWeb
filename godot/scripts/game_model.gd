@@ -10,7 +10,7 @@ const STAMINA_OVERFLOW_CAP := 300
 const RECOVERY_MS := 360000
 const TRAIN_COST := 500
 const TRAIN_EXP := 100
-const RUN_LENGTH := 20
+const ABYSS_UNLOCK_FLOOR := 20
 const MAX_REWARD_COPIES := 3
 
 var extraction
@@ -71,13 +71,13 @@ func default_state() -> Dictionary:
 	ember.shards = 3
 	var zeph := default_character()
 	zeph.shards = 1
-	return {"extraction": ExtractionModel.defaults(), "version": 7, "createdAt": _now(), "lastSaved": _now(),
+	return {"extraction": ExtractionModel.defaults(), "version": 9, "createdAt": _now(), "lastSaved": _now(),
 		"resources": {"diamonds": 1600, "gold": 50000, "stamina": 100, "staminaLastUpdate": _now()},
 		"ownedCharacters": {"ember": ember, "zeph": zeph}, "relics": [], "team": ["ember", "zeph", null], "stageProgress": {},
 		"pityCounters": {"standard": {"count": 0, "count4": 0, "guaranteedFeatured": false}, "limited_kaldi": {"count": 0, "count4": 0, "guaranteedFeatured": false}},
 		"dailyMissions": {"lastReset": 0, "completed": []}, "stats": {"totalPulls": 0, "totalBattles": 0, "totalVictories": 0, "totalGoldSpent": 0},
 		"dialogueSeen": {}, "chapterGiftClaimed": {},
-		"abyss": {"currentFloor": 1, "maxFloor": 0, "savedPartyState": null, "lastFreeResetTime": 0, "rogue": default_rogue(), "meta": default_meta(), "lastRun": {}}}
+		"abyss": {"currentFloor": 1, "maxFloor": 0, "savedPartyState": null, "lastFreeResetTime": 0, "rogue": default_rogue(), "meta": default_meta(), "lastRun": {}, "daily": {"dayKey": -1, "paid": {}}}}
 
 func _fail(message: String) -> Dictionary:
 	last_error = message
@@ -314,7 +314,7 @@ func _number(value: Variant, minimum: float = 0.0, maximum: float = 1.0e15) -> b
 func valid_save(value: Variant) -> bool:
 	if not value is Dictionary or not value.get("resources") is Dictionary or not value.get("ownedCharacters") is Dictionary:
 		return false
-	if not _number(value.get("version", 3), 2, 7) or int(value.get("version", 3)) not in [2, 3, 4, 5, 6, 7] or value.ownedCharacters.is_empty():
+	if not _number(value.get("version", 3), 2, 9) or int(value.get("version", 3)) not in [2, 3, 4, 5, 6, 7, 8, 9] or value.ownedCharacters.is_empty():
 		return false
 	for key in ["diamonds", "gold", "stamina"]:
 		if not _number(value.resources.get(key), 0):
@@ -382,6 +382,8 @@ func valid_save(value: Variant) -> bool:
 			return false
 		if not _number(relic.get("level", 0), 0, 25) or not relic.get("mainStat") is Dictionary or not relic.get("subStats") is Array:
 			return false
+		if relic.has("legacySellValue") and not _integer(relic.legacySellValue):return false
+		if relic.has("legacySellLevel") and not _integer(relic.legacySellLevel,0,int(relic.level)):return false
 		var main: Dictionary = relic.mainStat
 		if not main.get("stat") is String or not main.get("name") is String or not _number(main.get("base")) or not _number(main.get("perLevel")):
 			return false
@@ -464,7 +466,7 @@ func _merge_defaults(base: Dictionary, src: Dictionary) -> Dictionary:
 
 func _normalize(src: Dictionary) -> Dictionary:
 	var result := _merge_defaults(default_state(), src.duplicate(true))
-	result.version = 7
+	result.version = 9
 	extraction.migrate_state(result, int(src.get("version", 3)))
 	# Owned collections replace defaults; preserved extension fields remain round-trippable.
 	result.ownedCharacters = src.ownedCharacters.duplicate(true)
@@ -481,6 +483,9 @@ func _normalize(src: Dictionary) -> Dictionary:
 	for relic in result.relics:
 		relic.level = int(relic.level)
 		relic.rarity = int(relic.rarity)
+		if int(src.get("version",3))<9 and not relic.has("legacySellValue"):
+			relic.legacySellValue=int({3:50,4:200,5:800}.get(relic.rarity,50))+relic.level*20
+			relic.legacySellLevel=relic.level
 		var owner = relic.get("equippedBy")
 		if owner != null and result.ownedCharacters.has(owner):
 			var equipped: Dictionary = result.ownedCharacters[owner].equippedRelics
@@ -652,21 +657,21 @@ func equipped_bonuses(char_id: String) -> Dictionary:
 				result[sub.stat] += sub.value
 	return result
 
-func computed_stats(char_id: String) -> Dictionary:
+func computed_stats(char_id: String, level_override:int=-1, frozen:Dictionary={}) -> Dictionary:
 	if not catalog.CharacterData.has(char_id):
 		return {}
 	var data: Dictionary = catalog.CharacterData[char_id]
 	var saved: Dictionary = state.ownedCharacters.get(char_id, default_character())
-	var level := clampi(int(saved.level), 1, MAX_LEVEL)
+	var level := clampi(level_override if level_override>=0 else int(saved.level), 1, MAX_LEVEL)
 	var multiplier := pow(1.1, level - 1)
 	var base: Dictionary = data.baseStats
 	var growth: Dictionary = data.growthRate
-	var cst := constellation_bonuses(char_id)
-	var rb := equipped_bonuses(char_id)
+	var cst:Dictionary=frozen.get("constellation",constellation_bonuses(char_id))
+	var rb:Dictionary=frozen.get("relics",equipped_bonuses(char_id))
 	var result: Dictionary = {}
 	for key in ["hp", "atk", "def"]:
 		var value := floorf(floorf(float(base[key]) + float(growth[key]) * (level - 1)) * multiplier)
-		var percent := float(cst[key + "Percent"]) + (float(saved.awakening) * 0.05 if key == "hp" else 0.0)
+		var percent := float(cst[key + "Percent"]) + (float(frozen.get("awakening",saved.awakening)) * 0.05 if key == "hp" else 0.0)
 		result["maxHp" if key == "hp" else key] = maxi(0 if key == "def" else 1, int(floorf((value * (1 + percent) + rb[key + "_flat"]) * (1 + rb[key + "_pct"]))))
 	result.spd = floorf(float(base.spd) * multiplier) + rb.spd
 	result.cri = minf(1, float(base.cri) * multiplier + rb.cri_rate)
@@ -900,7 +905,9 @@ func unequip_relic(char_id: String, slot_id: String) -> Dictionary:
 	return _commit(previous)
 
 func relic_sell_value(relic: Dictionary) -> int:
-	return int({3: 50, 4: 200, 5: 800}.get(int(relic.rarity), 50)) + int(relic.level) * 20
+	if relic.has("legacySellValue"):
+		return int(relic.legacySellValue)+maxi(0,int(relic.level)-int(relic.get("legacySellLevel",relic.level)))*12
+	return int({3:30,4:120,5:480}.get(int(relic.rarity),30))+int(relic.level)*12
 
 func sell_relic(uid: String) -> Dictionary:
 	var relic := get_relic(uid)
@@ -1109,6 +1116,11 @@ func finish_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 	state.stats.totalVictories += 1
 	var first_clear: bool = not bool(state.stageProgress.get(issued.id, {}).get("cleared", false)) and not abyss
 	var rewards := _stage_rewards(issued, first_clear)
+	var daily_award:Dictionary={}
+	if abyss:
+		rewards.gold=0
+		daily_award=_award_abyss_daily(int(issued.floor),int(issued.get("difficulty",0)))
+		rewards.diamonds=int(daily_award.get("amount",0))
 	for key in ["gold", "diamonds"]:
 		state.resources[key] += int(rewards.get(key, 0))
 	var progression: Array = []
@@ -1134,8 +1146,8 @@ func finish_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 		var stars := 1 + (1 if all_alive else 0) + (1 if int(battle_state.get("turn", 1)) <= int(issued.get("starTurnTarget", 12)) else 0)
 		state.stageProgress[issued.id] = {"cleared": true, "stars": maxi(stars, int(state.stageProgress.get(issued.id, {}).get("stars", 0))), "bestTurns": mini(old_best, maxi(1, int(battle_state.get("turn", 1))))}
 		gift = _chapter_gift(issued.id)
-	var result := _commit(previous, {"victory": true, "rewards": rewards, "relic": relic, "gift": gift, "progression": progression, "firstClear": first_clear,
-		"nextStep": state.abyss.rogue.nextStep.duplicate(true) if abyss else {}, "pendingChoices": state.abyss.rogue.pendingChoices.duplicate(true) if abyss else [], "ended": abyss and int(issued.floor) >= RUN_LENGTH, "lastRun": state.abyss.lastRun.duplicate(true) if abyss and int(issued.floor) >= RUN_LENGTH else {}})
+	var result := _commit(previous, {"victory": true, "rewards": rewards, "dailyAward":daily_award, "relic": relic, "gift": gift, "progression": progression, "firstClear": first_clear,
+		"nextStep": state.abyss.rogue.nextStep.duplicate(true) if abyss else {}, "pendingChoices": state.abyss.rogue.pendingChoices.duplicate(true) if abyss else [], "ended": false, "lastRun": {}})
 	if result.success:
 		_issued_config.clear()
 	return result
@@ -1204,8 +1216,8 @@ func prepare_abyss() -> Dictionary:
 	var slot: Dictionary = _pick(catalog.RelicSlots)
 	var config := {"id": "abyss_floor_%d" % floor_number, "name": "深渊 第 %d 层" % floor_number, "isAbyss": true, "floor": floor_number, "abyssLayer": floor_number,
 		"staminaCost": 0, "isBoss": boss, "isElite": elite, "enemies": enemies, "waves": [{"enemies": enemies.duplicate()}], "scaleMult": 1.0,
-		"encounterTier": "boss" if boss else ("elite" if elite else "normal"), "runLength": RUN_LENGTH, "difficulty": int(state.abyss.rogue.difficulty),
-		"rewards": {"gold": 100 + floor_number * 15, "exp": 35 + floor_number * 5, "diamonds": 100 if boss else 0},
+		"encounterTier": "boss" if boss else ("elite" if elite else "normal"), "endless":true, "difficulty": int(state.abyss.rogue.difficulty),
+		"rewards": {"gold": 0, "exp": mini(1000000,35 + floor_number * 5), "diamonds": 0},
 		"seed": int(rng.randi()), "token": _uid("battle"), "_team": state.team.duplicate()}
 	if floor_number >= 6 and not boss and random_value() < 0.45:
 		config.encounterModifier = AbyssBalance.modifier(str(_pick(["bulwark", "frenzy", "swift"])))
@@ -1383,11 +1395,11 @@ func _process_abyss_victory(config: Dictionary, battle_state: Dictionary) -> Dic
 	state.abyss.rogue.activeEncounter = {}
 	state.abyss.currentFloor = cleared_floor + 1
 	state.abyss.maxFloor = maxi(cleared_floor, int(state.abyss.maxFloor))
-	if cleared_floor >= RUN_LENGTH:
+	if cleared_floor == ABYSS_UNLOCK_FLOOR:
 		fragments += _bank_meta(25)
-		_end_abyss_run("victory")
-	else:
-		_set_after_floor(cleared_floor)
+		state.abyss.meta.runsCompleted+=1
+		state.abyss.meta.unlockedDifficulty=maxi(int(state.abyss.meta.unlockedDifficulty),mini(3,int(state.abyss.rogue.difficulty)+1))
+	_set_after_floor(cleared_floor)
 	return {"runCoins": coins, "meta": fragments}
 
 func can_free_abyss_reset(_now_ms: int = -1) -> bool:
@@ -1406,25 +1418,22 @@ func reset_abyss(_use_diamonds: bool = false, _now_ms: int = -1) -> Dictionary:
 		_issued_config.clear()
 	return result
 
+func _abyss_cycle_floor(floor_number:int)->int:
+	return floor_number if floor_number<=20 else 11+(floor_number-21)%10
+
 func _is_abyss_reward_floor(floor_number: int) -> bool:
-	return floor_number in rogue_data.rewardFloors
+	return _abyss_cycle_floor(floor_number) in rogue_data.rewardFloors or floor_number%10==0
 
 func abyss_run_active() -> bool:
 	return state.abyss.rogue.runId != null and str(state.abyss.rogue.runId) != ""
 
 func abyss_route_preview() -> Array:
-	var result: Array = []
-	for floor_number in range(1, RUN_LENGTH + 1):
-		var after := "route"
-		if floor_number == RUN_LENGTH:
-			after = "finish"
-		elif floor_number in rogue_data.rewardFloors:
-			after = "reward"
-		elif floor_number in rogue_data.shopFloors:
-			after = "shop"
-		elif floor_number in rogue_data.restFloors:
-			after = "rest"
-		result.append({"floor": floor_number, "tier": "boss" if floor_number % 10 == 0 else ("elite" if floor_number % 5 == 0 else "normal"), "after": after})
+	var result:Array=[]
+	var start:=maxi(1,int(state.abyss.currentFloor)-2)
+	for floor_number in range(start,start+10):
+		var cycle:=_abyss_cycle_floor(floor_number)
+		var after:="reward" if _is_abyss_reward_floor(floor_number) else ("shop" if cycle in rogue_data.shopFloors else ("rest" if cycle in rogue_data.restFloors else "route"))
+		result.append({"floor":floor_number,"tier":"boss" if floor_number%10==0 else ("elite" if floor_number%5==0 else "normal"),"after":after})
 	return result
 
 func meta_upgrade_list() -> Array:
@@ -1478,17 +1487,18 @@ func _set_after_floor(floor_number: int) -> void:
 	rogue.pendingNode = {}
 	rogue.shopStock = []
 	var kind := "route"
-	if floor_number in rogue_data.rewardFloors:
-		rogue.pendingChoices = generate_abyss_choices(floor_number, "gold" if floor_number == 10 else "")
+	if _is_abyss_reward_floor(floor_number):
+		rogue.pendingChoices = generate_abyss_choices(floor_number, "gold" if floor_number % 10 == 0 else "")
 		kind = "reward" if not rogue.pendingChoices.is_empty() else "rest"
-	elif floor_number in rogue_data.shopFloors:
+	elif _abyss_cycle_floor(floor_number) in rogue_data.shopFloors:
 		kind = "shop"
-	elif floor_number in rogue_data.restFloors:
+	elif _abyss_cycle_floor(floor_number) in rogue_data.restFloors:
 		kind = "rest"
 	rogue.nextStep = {"type": kind, "floor": floor_number}
 	if kind == "reward":
 		return
 	rogue.pendingNode = {"id": "%s_%d" % [kind, floor_number], "type": kind}
+	if kind=="rest" and _is_abyss_reward_floor(floor_number) and _available_abyss_rewards().is_empty():rogue.pendingNode.exhausted=true
 	if kind == "route":
 		rogue.pendingNode.eventId = str(_pick(rogue_data.events).id)
 		rogue.pendingNode.routeOptions = ["event", "rest" if floor_number % 2 == 0 else "shop"]
@@ -1545,7 +1555,8 @@ func node_options() -> Dictionary:
 	elif kind == "rest":
 		node.title = "休整营地"
 		node.description = "营火只能停留片刻，请选择一项整备。"
-		options = rogue_data.restOptions.duplicate(true)
+		options = _abyss_rest_options()
+		if node.get("exhausted",false):node.title="回响已圆满";node.description="带上补给，继续深入。"
 	elif kind == "shop":
 		node.title = "裂隙商店"
 		node.description = "每件商品限购一次。裂隙币与购买的祝福仅在本次远征中有效。"
@@ -1564,6 +1575,7 @@ func node_options() -> Dictionary:
 func _complete_abyss_node(message: String, details: Dictionary = {}) -> void:
 	var rogue: Dictionary = state.abyss.rogue
 	rogue.eventHistory.append({"floor": int(rogue.nextStep.floor), "type": str(rogue.nextStep.type), "nodeId": str(rogue.pendingNode.get("id", "")), "message": message, "details": details.duplicate(true)})
+	while rogue.eventHistory.size()>100:rogue.eventHistory.pop_front()
 	rogue.nextStep = {"type": "none", "floor": int(rogue.nextStep.floor)}
 	rogue.pendingNode = {}
 	rogue.shopStock = []
@@ -1586,7 +1598,7 @@ func choose_abyss_node(option_id: String) -> Dictionary:
 		if option_id == "shop":
 			_generate_abyss_shop()
 		return _commit(previous, {"message": "已抵达" + str(node_options().get("title", "落脚点")), "nextStep": rogue.nextStep.duplicate(true)})
-	var choices: Array = rogue_data.restOptions if kind == "rest" else _event_definition(str(rogue.pendingNode.get("eventId", ""))).get("options", [])
+	var choices: Array = _abyss_rest_options() if kind == "rest" else _event_definition(str(rogue.pendingNode.get("eventId", ""))).get("options", [])
 	var choice: Dictionary = {}
 	for option in choices:
 		if option.id == option_id:
@@ -1735,6 +1747,10 @@ func _integer(value: Variant, minimum: int = 0, maximum: int = 1000000000) -> bo
 
 func _valid_rogue_v2(value: Dictionary) -> bool:
 	var abyss: Dictionary = value.get("abyss", {})
+	var daily=abyss.get("daily",{"dayKey":-1,"paid":{}})
+	if not daily is Dictionary or not _integer(daily.get("dayKey",-1),-1,1000000000) or not daily.get("paid",{}) is Dictionary:return false
+	for milestone in daily.get("paid",{}):
+		if not milestone is String or not milestone.is_valid_int() or str(int(milestone))!=milestone or int(milestone)<=0 or int(milestone)%10!=0 or not _integer(daily.paid[milestone]):return false
 	var meta = abyss.get("meta", {})
 	if not meta is Dictionary:
 		return false
@@ -1764,8 +1780,6 @@ func _valid_rogue_v2(value: Dictionary) -> bool:
 				return false
 		if not _integer(summary.get("difficulty", 0), 0, 3):
 			return false
-		if int(summary.floorsCleared) > RUN_LENGTH:
-			return false
 	if abyss.get("savedPartyState") is Array:
 		var ids: Array = []
 		if abyss.savedPartyState.size() > 3:
@@ -1781,7 +1795,7 @@ func _valid_rogue_v2(value: Dictionary) -> bool:
 	if not _integer(rogue.get("difficulty", 0), 0, 3) or int(rogue.get("difficulty", 0)) > int(meta.get("unlockedDifficulty", 0)):
 		return false
 	for key in ["temporaryCurrency", "metaEarned", "floorsCleared"]:
-		if rogue.has(key) and not _integer(rogue[key], 0, RUN_LENGTH if key == "floorsCleared" else 1000000000):
+		if rogue.has(key) and not _integer(rogue[key], 0, 1000000000):
 			return false
 	if rogue.get("selectedRewards", []).size() > 200 or rogue.get("pendingChoices", []).size() > 3 or rogue.get("eventHistory", []).size() > 100 or rogue.get("shopStock", []).size() > 4:
 		return false
@@ -1801,7 +1815,7 @@ func _valid_rogue_v2(value: Dictionary) -> bool:
 		for key in ["type", "nodeId", "message"]:
 			if history.has(key) and not history[key] is String:
 				return false
-		if history.has("floor") and not _integer(history.floor, 0, RUN_LENGTH):
+		if history.has("floor") and not _integer(history.floor, 0, 1000000000):
 			return false
 	var node = rogue.get("pendingNode", {})
 	if not node is Dictionary:
@@ -1831,7 +1845,7 @@ func _valid_rogue_v2(value: Dictionary) -> bool:
 	if not encounter.is_empty() and not _valid_abyss_encounter(encounter, value):
 		return false
 	if int(value.get("version", 3)) >= 4:
-		if not _integer(abyss.get("currentFloor", 1), 1, RUN_LENGTH):
+		if not _integer(abyss.get("currentFloor", 1), 1, 1000000000):
 			return false
 		var active: bool = rogue.get("runId") != null and str(rogue.get("runId", "")) != ""
 		var selected_counts: Dictionary = {}
@@ -1882,7 +1896,7 @@ func _valid_abyss_encounter(config: Dictionary, value: Dictionary) -> bool:
 			return false
 	if not _integer(config.get("difficulty", 0), 0, 3):
 		return false
-	if not bool(config.isAbyss) or not _integer(config.get("floor"), 1, RUN_LENGTH) or not _integer(config.get("seed"), 0, 4294967295):
+	if not bool(config.isAbyss) or not _integer(config.get("floor"), 1, 1000000000) or not _integer(config.get("seed"), 0, 4294967295):
 		return false
 	if not config.get("enemies") is Array or config.enemies.is_empty() or config.enemies.size() > 3:
 		return false
@@ -1905,7 +1919,7 @@ func _valid_abyss_encounter(config: Dictionary, value: Dictionary) -> bool:
 	if rewards.has("relicDrop"):
 		if not rewards.relicDrop is Dictionary or not catalog.RelicMainStatPool.has(rewards.relicDrop.get("slotId", "")) or not _integer(rewards.relicDrop.get("rarity"), 3, 5):
 			return false
-	if not _number(config.get("scaleMult", 1.0), 0.1, 10.0):
+	if not _number(config.get("scaleMult", 1.0), 0.1, 1000000000.0):
 		return false
 	if config.has("encounterModifier"):
 		var modifier = config.encounterModifier
@@ -1933,3 +1947,57 @@ func set_abyss_difficulty(rank: int) -> Dictionary:
 	var previous := state.duplicate(true)
 	state.abyss.meta.selectedDifficulty = rank
 	return _commit(previous, {"difficulty": rank, "message": "远征难度已设为「%s」" % abyss_difficulty_options()[rank].name})
+
+func _abyss_rest_options()->Array:
+	if state.abyss.rogue.pendingNode.get("exhausted",false):
+		return [{"id":"echo_supply","label":"带上补给","description":"获得50裂隙币","effect":{"coins":50}},{"id":"echo_continue","label":"继续深入","description":"前往下一层","effect":{}}]
+	return rogue_data.restOptions.duplicate(true)
+
+func _abyss_day_key()->int:
+	# UTC+8 06:00 is UTC 22:00. Never roll the persisted claim day backwards.
+	return maxi(int(floor(float(_now())/86400000.0+2.0/24.0)),int(state.abyss.daily.dayKey))
+
+func _abyss_daily_view()->Dictionary:
+	var day:=_abyss_day_key()
+	return state.abyss.daily.duplicate(true) if day==int(state.abyss.daily.dayKey) else {"dayKey":day,"paid":{}}
+
+func abyss_daily_status()->Dictionary:
+	var daily:=_abyss_daily_view()
+	var current:=int(state.abyss.currentFloor)
+	var next:=int((current+9)/10)*10
+	var rank:=int(state.abyss.rogue.difficulty) if abyss_run_active() else int(state.abyss.meta.selectedDifficulty)
+	var rates:Array=rogue_data.get("dailyDiamondsPer10",[675,1000,1350,1625]).duplicate()
+	var total:=0
+	for amount in daily.paid.values():total+=int(amount)
+	var paid:=int(daily.paid.get(str(next),0))
+	return {"dayKey":daily.dayKey,"resetAt":(int(daily.dayKey)+1)*86400000-7200000,"currentFloor":current,"nextMilestone":next,"paidToday":total,"per10ByDifficulty":rates,"difficulty":rank,"reward":int(rates[rank]),"paid":paid,"remaining":maxi(0,int(rates[rank])-paid),"endless":true}
+
+func _award_abyss_daily(floor_number:int,rank:int)->Dictionary:
+	if floor_number%10!=0:return {}
+	var daily:=_abyss_daily_view()
+	var rates:Array=rogue_data.get("dailyDiamondsPer10",[675,1000,1350,1625])
+	var previous:=int(daily.paid.get(str(floor_number),0))
+	var entitlement:=int(rates[clampi(rank,0,3)])
+	var amount:=maxi(0,entitlement-previous)
+	daily.paid[str(floor_number)]=maxi(previous,entitlement)
+	state.abyss.daily=daily
+	return {"floor":floor_number,"amount":amount,"difficulty":rank,"dayKey":daily.dayKey,"alreadyClaimed":amount==0,"previousPaid":previous,"totalPaid":maxi(previous,entitlement)}
+
+func memory_exchange_status()->Dictionary:
+	var complete:=true
+	for definition in rogue_data.metaUpgrades:
+		if int(state.abyss.meta.upgrades.get(definition.id,0))<int(definition.maxLevel):complete=false
+	var outside:bool=not abyss_run_active() and not extraction.active() and _issued_config.is_empty()
+	return {"enabled":complete and outside and int(state.abyss.meta.currency)>0,"available":int(state.abyss.meta.currency),"rate":1,"maxed":complete,"reason":"传承全部升满后开放" if not complete else ("请先结束探索" if not outside else ("记忆不足" if int(state.abyss.meta.currency)<=0 else ""))}
+
+func exchange_memory(amount:int)->Dictionary:
+	var status:=memory_exchange_status()
+	if not status.enabled:return _fail(status.reason)
+	if amount<=0 or amount>int(status.available):return _fail("兑换数量无效")
+	var previous:=state.duplicate(true)
+	state.abyss.meta.currency-=amount
+	state.resources.diamonds+=amount
+	return _commit(previous,{"amount":amount,"diamonds":amount,"message":"已兑换星尘晶"})
+
+func growth_snapshot(char_id:String)->Dictionary:
+	return {"constellation":constellation_bonuses(char_id),"relics":equipped_bonuses(char_id),"awakening":int(state.ownedCharacters[char_id].awakening)}

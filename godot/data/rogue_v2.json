@@ -1,5 +1,4 @@
 {
-  "runLength": 20,
   "rewardFloors": [
     1,
     3,
@@ -331,5 +330,12 @@
         "coins": 45
       }
     }
+  ],
+  "endless": true,
+  "dailyDiamondsPer10": [
+    675,
+    1000,
+    1350,
+    1625
   ]
 }

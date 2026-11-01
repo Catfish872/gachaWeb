@@ -126,13 +126,8 @@ func run() -> void:
 			break
 		victory_count += 1
 		if floor_number == 20:
-			check(not app.abyss_auto_continue and app.battle_settled, "Completing floor20 stops continuous combat")
-			check("本轮通关 20 层" in texts(app.overlay), "Completion overlay reports full expedition")
-			await frames()
-			var continue_button := button("继续旅程", app.overlay)
-			check(continue_button.get_global_rect().end.y <= app.size.y and continue_button.get_global_rect().position.y >= 0, "Settlement footer stays visibly inside viewport")
-			press("继续旅程", app.overlay)
-			break
+			check(app.model.abyss_run_active() and app.model.state.abyss.currentFloor==21,"Floor20 preserves the active expedition and opens floor21")
+			check(app.model.state.abyss.rogue.nextStep.type!="none","Floor20 still offers its real post-battle decision")
 		check(app.current_screen == "abyss", "Every post-battle decision pauses automatic combat")
 		var nested := 0
 		while app._abyss_has_decision() and nested < 4:
@@ -209,8 +204,16 @@ func run() -> void:
 	check(victory_count == 20, "Real geared party completes all20 encounters through UI settlement")
 	for phase in ["reward", "route", "event", "shop", "rest"]:
 		check(observed.has(phase), "Exercised actual " + phase + " screen")
-	check(not app.model.abyss_run_active() and app.model.state.abyss.currentFloor == 1, "Completed run returns to start")
-	check(app.model.state.abyss.meta.runsCompleted == 1 and app.model.state.abyss.meta.currency > 400 - upgrade_cost, "Victory banks permanent progress")
+	check(app.current_screen=="battle" and int(app.battle_config.floor)==21,"Resolving floor20 choices enters a real floor21 encounter")
+	var memory_before_end:int=app.model.state.abyss.meta.currency
+	app.navigate("abyss")
+	press("返回",app.overlay)
+	check(app.current_screen=="battle" and app.model.abyss_run_active(),"Cancelling the floor21 retreat retains the endless run")
+	app.navigate("abyss")
+	press("确认",app.overlay)
+	check(not app.model.abyss_run_active() and app.model.state.abyss.currentFloor==1,"Explicit player retreat, not floor20, returns to start")
+	check(app.model.state.abyss.meta.currency==memory_before_end,"Explicit retreat keeps all banked memory")
+	check(app.model.state.abyss.meta.runsCompleted == 1 and app.model.state.abyss.meta.currency > 400 - upgrade_cost, "Twenty-floor milestone banks progress and unlocks next difficulty without ending run")
 	check("上一轮通关" in texts(app.main_body) and "20 层" in texts(app.main_body), "Run summary remains available in hub")
 	check(not button("AbyssDifficulty_1").disabled, "Completing rank0 visibly unlocks rank1")
 	press("AbyssDifficulty_1")

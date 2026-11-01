@@ -1,0 +1,33 @@
+{
+  "generator": "built-in image_gen",
+  "source": "exec-3f11f6f1-a595-493b-b42f-729cecb0f506.png",
+  "brief": "Two transparent bold silhouettes: obsidian six-sided cracked amber rune seal, asymmetric blue-violet feather-shaped memory crest. No round coin or diamond silhouette. Half-atlas crop and size reduction only, original alpha retained.",
+  "icons": [
+    {
+      "id": "rift_coin",
+      "path": "res://assets/ui/currency/rift_coin.png",
+      "sha256": "939fca7b3223083d89efdd37baf4d86be91556e29066d73ee4d7cbd32e9cfd0c",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "memory_shard",
+      "path": "res://assets/ui/currency/memory_shard.png",
+      "sha256": "05f0c08856d38db0d08359d1dfea441da7777f51ab5c91c9bcc30921a1377200",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": [
+        0,
+        255
+      ]
+    }
+  ]
+}
