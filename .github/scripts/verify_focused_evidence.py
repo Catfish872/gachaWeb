@@ -65,14 +65,44 @@ def verify(root, record):
     return len(files), digest
 
 
+def verify_v263_constant_only(root, record):
+    # Narrow 2.6.3 release exception: no gameplay test result is asserted.
+    if record.get('version') != '2.6.3' or record.get('version_code') != 20603:
+        raise ValueError('Constant-only review is restricted to 2.6.3 / 20603.')
+    if record.get('targeted_checks') != 'not_run_requested' or record.get('test_elapsed_seconds') != 0:
+        raise ValueError('This release must accurately report that gameplay tests were not run.')
+    if record.get('review_mode') != 'exact_v262_to_v263_constant_diff':
+        raise ValueError('The exact constant-only review is required.')
+    files, digest = production_snapshot(root)
+    if len(files) != 828 or digest != record.get('production_sha256'):
+        raise ValueError('Current production snapshot differs from the reviewed constant change.')
+    normalized = dict(files)
+    replacements = {
+        'scripts/abyss_balance.gd': [('pow(1.07, exponent_floor)', 'pow(1.042, exponent_floor)', 1)],
+        'data/version.json': [('2.6.3', '2.6.2', 1), ('20603', '20602', 1)],
+        'export_presets.cfg': [('2.6.3', '2.6.2', 2), ('20603', '20602', 2)],
+    }
+    for path, edits in replacements.items():
+        data = (root / path).read_bytes()
+        for new, old, count in edits:
+            if data.count(new.encode()) != count:
+                raise ValueError('Unexpected constant or version edit: ' + path)
+            data = data.replace(new.encode(), old.encode())
+        normalized[path] = hashlib.sha256(data).hexdigest()
+    previous_digest = hashlib.sha256(''.join(f'{p}\0{normalized[p]}\n' for p in sorted(normalized)).encode()).hexdigest()
+    if previous_digest != '8cc958b00466e81692628a626fdd0c06c6fe90368c0764469d5674ff8122966a':
+        raise ValueError('Changes exceed the exact verified 2.6.2 baseline plus exponent/version replacements.')
+    return len(files), digest
+
+
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2] / 'godot'
-    path = root / 'validation/v262-focused/release-evidence.json'
+    path = root / 'validation/v263-focused/release-evidence.json'
     if not path.is_file():
-        raise SystemExit('Focused release evidence is missing; signing remains blocked.')
+        raise SystemExit('Constant-only release record is missing; signing remains blocked.')
     try:
-        count, digest = verify(root, json.loads(path.read_text()))
+        count, digest = verify_v263_constant_only(root, json.loads(path.read_text()))
     except (ValueError, KeyError, OSError) as error:
         raise SystemExit(str(error)) from error
-    print(f'Focused 2.6.2 evidence verified: {count} production files, SHA256 {digest}')
-    print('Coverage is limited to the declared affected behavior and actual UI review; no broad suite is started.')
+    print(f'Exact 2.6.3 constant-only source diff verified: {count} files, SHA256 {digest}')
+    print('Gameplay tests: NOT RUN as requested. Prior 2.6.2 results are background only, not current test results.')

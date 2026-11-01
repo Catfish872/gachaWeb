@@ -1,0 +1,21 @@
+{
+  "version": "2.6.3",
+  "version_code": 20603,
+  "review_mode": "exact_v262_to_v263_constant_diff",
+  "targeted_checks": "not_run_requested",
+  "ui_visual_review": "not_run_unchanged",
+  "test_elapsed_seconds": 0,
+  "production_sha256": "eddc7fd0de1f548b8f243ff13a92c45bf45c9e2eb262ec26fd0efe8b66283031",
+  "production_file_count": 828,
+  "scope": [
+    "Only endless exponent base 1.042 to 1.07 plus release version fields; all other production bytes must match verified 2.6.2 after reversing those replacements."
+  ],
+  "regression_background": {
+    "version": "2.6.2",
+    "production_sha256": "8cc958b00466e81692628a626fdd0c06c6fe90368c0764469d5674ff8122966a",
+    "record": "../v262-focused/release-evidence.json"
+  },
+  "limits": [
+    "No gameplay, model, GL or gate-test suite was run for 2.6.3. Build, signature and package preflight remain required."
+  ]
+}
