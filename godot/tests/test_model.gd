@@ -304,7 +304,7 @@ func _test_persistence() -> void:
 	var exported := work.path_join("export.json")
 	check(m.export_save(exported).success, "native export file created")
 	var raw = JSON.parse_string(FileAccess.get_file_as_string(exported))
-	check(raw.game == "void-rift-gacha" and raw.schema == 5 and raw.data.resources.diamonds == 2100, "export uses v5 envelope with original game identity")
+	check(raw.game == "void-rift-gacha" and raw.schema == 6 and raw.data.resources.diamonds == 2100, "export uses v6 envelope with original game identity")
 	check(m.import_save("res://tests/fixtures/web-save-export.json", 3).success and m.active_slot == 1 and m.state.resources.diamonds == 2100, "inactive slot import preserves active state")
 	var inactive_export := work.path_join("slot3-export.json")
 	check(m.export_save(inactive_export, 3).success and m.active_slot == 1, "inactive slot export preserves active state")
@@ -333,7 +333,7 @@ func _test_persistence() -> void:
 	legacy.erase("chapterGiftClaimed")
 	legacy.customExtension = {"note": "preserved"}
 	write_json(invalid, legacy)
-	check(m.import_save(invalid).success and m.state.version == 5 and m.state.abyss.currentFloor == 1 and m.state.customExtension.note == "preserved", "v2 migration fills additions and preserves extension fields")
+	check(m.import_save(invalid).success and m.state.version == 6 and m.state.abyss.currentFloor == 1 and m.state.customExtension.note == "preserved", "v2 migration fills additions and preserves extension fields")
 	check(m.reset_slot(2).success and m.active_slot == 3, "inactive slot reset leaves active selection")
 	var corrupted_path := directory.path_join("slot3.json")
 	var corrupt_file := FileAccess.open(corrupted_path, FileAccess.WRITE)

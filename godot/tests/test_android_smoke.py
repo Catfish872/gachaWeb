@@ -20,6 +20,16 @@ def chunk_lines(state):
 
 
 class AndroidSmokeDriverTests(unittest.TestCase):
+    def test_map_preview_requires_second_real_tap(self):
+        initial = {'extraction': {'room_id': 'entry', 'phase': 'route'}, 'buttons': [{'name': 'ExtractionMapNode_cache', 'adjacent': True}]}
+        entered = {'extraction': {'room_id': 'cache', 'phase': 'room'}}
+        with patch.object(smoke, 'canvas_target', return_value=initial), patch.object(smoke, 'tap') as tap, patch.object(smoke, 'wait_for', side_effect=[initial, entered]) as wait:
+            self.assertEqual(smoke.enter_map_room(initial, 'cache'), entered)
+            self.assertEqual(tap.call_count, 2)
+            self.assertTrue(wait.call_args_list[0].args[0](initial))
+            self.assertFalse(wait.call_args_list[0].args[0](entered))
+            self.assertTrue(wait.call_args_list[1].args[0](entered))
+
     def test_reads_only_complete_probe_records(self):
         state = {'seq': 1, 'screen': 'home'}
         log = '\n'.join(chunk_lines(state)) + '\nI godot: ANDROID_SMOKE_CHUNK broken'

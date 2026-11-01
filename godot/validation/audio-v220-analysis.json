@@ -1,0 +1,101 @@
+[
+  {
+    "path": "assets/audio/extraction/search_loop.ogg",
+    "sha256": "5a156bc093f845cc755e992574589f0aa2b506a505b117bf4f72fba1b5924f24",
+    "seconds": 0.297125,
+    "peak": 0.19693300127983093,
+    "rms": 0.05195165053009987,
+    "loop_boundary_delta": 0.003133184276521206,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/music/licensed/determined_pursuit.ogg",
+    "sha256": "ac8c1ce286ff103cfcc8ded656df9619b5ee41128be94b6b13199ad4468141f3",
+    "seconds": 108.0,
+    "peak": 0.3500719666481018,
+    "rms": 0.06671629101037979,
+    "loop_boundary_delta": 0.003534596413373947,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/music/licensed/medieval_exploration.ogg",
+    "sha256": "d9a208f956e71f995707813988e0db0fc1bf1c2ee422b7cce5a5c6f51edaba14",
+    "seconds": 236.3559375,
+    "peak": 0.6732596755027771,
+    "rms": 0.06112723425030708,
+    "loop_boundary_delta": 0.0,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/music/licensed/sunset_walk.ogg",
+    "sha256": "b0feaaa742999ec31ea8864f1138481517558dfba76bc3e5b38b52f9404015e7",
+    "seconds": 76.8,
+    "peak": 0.7254247069358826,
+    "rms": 0.09146671742200851,
+    "loop_boundary_delta": 0.014518181793391705,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/music/ruins_ambient.ogg",
+    "sha256": "6271bf1c14ddffbb5b2eea5b2266dbb2dc70843386fb3e0f8eb9f9084c50a392",
+    "seconds": 32.0,
+    "peak": 0.4656093418598175,
+    "rms": 0.15155813097953796,
+    "loop_boundary_delta": 0.00993838906288147,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/music/ruins_battle.ogg",
+    "sha256": "35371a0a17a98ff8aa4b904f1e52272979303d5ec04403f3f84f4060013e362b",
+    "seconds": 32.0,
+    "peak": 0.4612090587615967,
+    "rms": 0.13980373740196228,
+    "loop_boundary_delta": 0.012108445167541504,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/ui/back.ogg",
+    "sha256": "532e9f89f80195a7865a168d47bea612d99afe8482cf0d7c4b1573e91c52a733",
+    "seconds": 0.087125,
+    "peak": 0.32776087522506714,
+    "rms": 0.14137107133865356,
+    "loop_boundary_delta": 0.0012406357564032078,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/ui/coin.ogg",
+    "sha256": "e9507461d827cda07c3d2af14ad5f7bc7a1fbbad852a3f12dc53910e5fa93997",
+    "seconds": 0.177125,
+    "peak": 0.32758066058158875,
+    "rms": 0.1399080455303192,
+    "loop_boundary_delta": 0.00028443109476938844,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/ui/equip.ogg",
+    "sha256": "967a221152e2991d1dc3b95375841d033e2a4f78d5130713f7c3c2fe3e173d39",
+    "seconds": 0.217125,
+    "peak": 0.32680195569992065,
+    "rms": 0.1396246999502182,
+    "loop_boundary_delta": 0.00017236333223991096,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/ui/tap.ogg",
+    "sha256": "bf7ed2acd1a47fdbbc4600be2127449013324f09589b4252795e63d76ecc2823",
+    "seconds": 0.067125,
+    "peak": 0.32558345794677734,
+    "rms": 0.1414829045534134,
+    "loop_boundary_delta": 0.0006636898615397513,
+    "finite": true
+  },
+  {
+    "path": "assets/audio/ui/use.ogg",
+    "sha256": "0f21af2e528a73385f9520d7eaf5117d11dec3cd2f1fffd8acb7b0e68e6a3004",
+    "seconds": 0.297125,
+    "peak": 0.32823634147644043,
+    "rms": 0.13965928554534912,
+    "loop_boundary_delta": 5.9358306316426024e-05,
+    "finite": true
+  }
+]

@@ -275,6 +275,8 @@ def enter_map_room(state, room_id):
     target = next(b for b in state['buttons'] if b['name'] == name)
     assert target.get('adjacent') or room_id == state['extraction']['room_id'], 'Driver attempted a disconnected room'
     tap(state, name)
+    state = wait_for(lambda q: q.get('extraction', {}).get('phase') == 'route' and any(b['name'] == name for b in q['buttons']), 'first map tap previews without travel')
+    tap(state, name)
     return wait_for(lambda q: q.get('extraction', {}).get('room_id') == room_id and q['extraction']['phase'] == 'room', 'map node enters room')
 
 
@@ -289,7 +291,7 @@ def extraction_flow(state, output):
     geometry(state)
     tap_page(state, 'ExtractionTab_stash')
     state = wait_for(lambda q: any(b['name'] == 'ExtractionSort_stash' for b in q['buttons']), 'extraction stash tab')
-    screenshot(output, 'extraction-stash', False)
+    screenshot(output, 'extraction-stash', True)
     tap_page(state, 'ExtractionTab_expedition')
     state = wait_for(lambda q: any(b['name'] == 'ExtractionStart' for b in q['buttons']), 'extraction departure')
     tap_page(state, 'ExtractionStart')
@@ -302,7 +304,7 @@ def extraction_flow(state, output):
     state = wait_for(lambda q: q.get('canvases', {}).get('map', {}).get('pan') != old_pan, 'map finger drag')
     assert state['extraction']['phase'] == 'route' and state['extraction']['room_id'] == old_room, 'Dragging unintentionally entered a room'
     geometry(state)
-    screenshot(output, 'extraction-map-drag', False)
+    screenshot(output, 'extraction-map-drag', True)
     filled = False
     collected = False
     visited_count = 0
@@ -316,7 +318,7 @@ def extraction_flow(state, output):
         visited_count += 1
         geometry(state)
         if visited_count == 1:
-            screenshot(output, 'extraction-room-scene', False)
+            screenshot(output, 'extraction-room-scene', True)
         if visited_count == 1 and 'scene' in state.get('canvases', {}):
             state = reveal_page_target(state, 'ExtractionSceneViewport')
             cx, cy, cw, ch = state['canvases']['scene']['clip']
@@ -343,7 +345,7 @@ def extraction_flow(state, output):
                 tap_overlay(state, 'ExtractionTakeAll')
                 stable_ids, stable_left = sorted(after_ids), sorted(remaining)
                 state = wait_for(lambda q: sorted(q['extraction']['bag_ids']) == stable_ids and any(box['id'] == box_id and sorted(box['items']) == stable_left for box in q['extraction']['containers']), 'full bag preserves overflow loot')
-                screenshot(output, 'extraction-full-bag-container', False)
+                screenshot(output, 'extraction-full-bag-container', True)
                 filled = True
             tap_overlay(state, 'ExtractionCloseContainer')
             state = wait_for(lambda q: q['overlay'] == 0 and q['extraction']['phase'] == 'room', 'container closes to room')
@@ -363,7 +365,7 @@ def extraction_flow(state, output):
             tap_page(state, 'ExtractionSort_bag')
             state = wait_for(lambda q: sorted(q['extraction']['bag_ids']) == saved_ids, 'manual sort preserves inventory')
             geometry(state)
-            screenshot(output, 'extraction-bag-after-search', False)
+            screenshot(output, 'extraction-bag-after-search', True)
             state = visit(state, 'home')
             state = visit(state, 'extraction')
             assert sorted(state['extraction']['bag_ids']) == saved_ids, 'Navigation changed inventory'
@@ -478,7 +480,7 @@ def run(apk, output):
     assert '/' in component, f'Cannot resolve activity: {component}'
     adb('shell', 'am', 'start', '-W', '-n', component)
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'Android game startup', 90)
-    assert state['window'][1] > state['window'][0], 'Portrait startup expected'
+    assert state['window'][0] > state['window'][1], 'Landscape startup required even with portrait OS setting'
     renderer = state.get('renderer', {})
     (output / 'renderer.json').write_text(json.dumps(renderer, indent=2))
     assert renderer.get('method') == 'mobile' and renderer.get('driver') == 'vulkan', f'Expected actual Mobile/Vulkan renderer, not silent fallback: {renderer}'
@@ -489,24 +491,24 @@ def run(apk, output):
     geometry(state)
     dismiss_fullscreen_education(output, state['window'])
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'home after fullscreen education')
-    screenshot(output, 'portrait-home', False)
+    screenshot(output, 'landscape-locked-home', True)
     # Menu is dismissed by the real Android Back event and the game stays alive.
     tap(state, 'MenuButton')
     wait_for(lambda s: s['overlay'] > 0, 'menu before Back')
-    screenshot(output, 'portrait-menu', False)
+    screenshot(output, 'landscape-locked-menu', True)
     back()
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'Back dismisses menu')
     pages = ['story', 'summon', 'party', 'growth', 'relics', 'abyss', 'extraction', 'shop', 'save']
     for page in pages:
         state = visit(state, page)
         geometry(state)
-        screenshot(output, 'portrait-' + page, False)
+        screenshot(output, 'landscape-locked-' + page, True)
         if state['scroll_max'] > 10:
             x, y, w, h = state['scroll_rect']
             before = state['scroll']
             adb('shell', 'input', 'swipe', str(round(x + w * .85)), str(round(y + h * .8)), str(round(x + w * .85)), str(round(y + h * .2)), '600')
             state = wait_for(lambda s: s['scroll'] > before + 5, page + ' finger scroll')
-            screenshot(output, 'portrait-' + page + '-scrolled', False)
+            screenshot(output, 'landscape-locked-' + page + '-scrolled', True)
         back()
         state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, page + ' Android Back')
     state = extraction_flow(state, output)
@@ -523,11 +525,14 @@ def run(apk, output):
     state = visit(state, 'growth')
     geometry(state)
     screenshot(output, 'landscape-growth', True)
-    assert state['scroll_max'] > 10, 'Landscape growth must expose its scrollable content'
-    x, y, w, h = state['scroll_rect']
-    before = state['scroll']
+    candidates = [scroll for scroll in state.get('page_scrolls', []) if scroll['max'] > 10]
+    assert candidates, 'Landscape growth must expose local scrollable details'
+    target_scroll = max(candidates, key=lambda item: item['rect'][2])
+    x, y, w, h = target_scroll['rect']
+    before = target_scroll['value']
+    scroll_id = target_scroll['id']
     adb('shell', 'input', 'swipe', str(round(x + w * .85)), str(round(y + h * .8)), str(round(x + w * .85)), str(round(y + h * .2)), '600')
-    state = wait_for(lambda s: s['screen'] == 'growth' and s['scroll'] > before + 5, 'landscape growth finger scroll')
+    state = wait_for(lambda s: s['screen'] == 'growth' and any(item['id'] == scroll_id and item['value'] > before + 5 for item in s.get('page_scrolls', [])), 'landscape growth local finger scroll')
     screenshot(output, 'landscape-growth-scrolled', True)
     back()
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'landscape Back')
@@ -536,7 +541,7 @@ def run(apk, output):
     logs = adb('logcat', '-d', '-v', 'threadtime')
     errors = [line for line in logs.splitlines() if re.search(r'SCRIPT ERROR|Parse Error|FATAL EXCEPTION|Fatal signal|ANR in ' + re.escape(PACKAGE), line) or ('godot' in line.lower() and re.search(r'\bERROR:', line))]
     assert not errors, '\n'.join(errors)
-    (output / 'result.json').write_text(json.dumps({'passed': True, 'android_api': adb('shell', 'getprop', 'ro.build.version.sdk').strip(), 'abi': adb('shell', 'getprop', 'ro.product.cpu.abi').strip(), 'pages': pages, 'checks': ['portrait launch', 'all menu tabs by touch', 'scrolling where content exceeds viewport', 'Android Back', 'landscape adaptation', 'background/resume', 'extraction map drag/connected navigation/scene-container auto-search/auto-pickup/room and bag persistence', 'Android download bridge capability (no download/install)', 'runtime error log']}, indent=2))
+    (output / 'result.json').write_text(json.dumps({'passed': True, 'android_api': adb('shell', 'getprop', 'ro.build.version.sdk').strip(), 'abi': adb('shell', 'getprop', 'ro.product.cpu.abi').strip(), 'pages': pages, 'checks': ['landscape launch while system portrait', 'all menu tabs by touch', 'scrolling where content exceeds viewport', 'Android Back', 'landscape adaptation', 'background/resume', 'extraction map drag/connected navigation/scene-container auto-search/auto-pickup/room and bag persistence', 'Android download bridge capability (no download/install)', 'runtime error log']}, indent=2))
     print('ANDROID RUNTIME SMOKE PASSED')
 
 

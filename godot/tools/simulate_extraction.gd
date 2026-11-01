@@ -60,7 +60,7 @@ func _init() -> void:
      print(JSON.stringify(summary))
  for path in input_hashes:
   if simulation_hash(path) != input_hashes[path]: errors.append("input changed during simulation: " + path)
- var report := {"trialRankHp":trial_hp,"trialRankAtk":trial_atk,"inputHashes":input_hashes,"hashScope":"Full source/catalog hashes; extraction JSON hash excludes item name/description/icon presentation fields only; category now affects themed loot (parallel art/lore import), all balance/shape/effect/value fields included.","method":"Connected-map policies shortest gate-aware BFS gate4, POI-priority target7, completionist11 nonentry rooms per act, BFS backtracking. Real ExtractionModel public route/search/take/equip/consume/advance/start_battle/settle_battle/extract methods; BattleModel.auto_step naturally determines every battle. Initial save fixtures unlock rank but do not fake gameplay results. Unprepared profiles have no relics or supplies. Prepared profiles use legal generated 4-star +10 relics and buy/bring three medkits (initial wallet fixture); no manufactured run loot or meta upgrades. Party health/energy/cooldowns persist, no between-fight XP. Policies choose offered rooms and revealed loot only. First-fit packing with lower-density replacement is heuristic, not optimal. Timing not measured.", "profiles": selected_profiles, "seedStart":first_seed, "samplesPerCell":samples, "totalRuns":rows.size(), "totalBattles":total_battles, "errors":errors, "aggregate":aggregate, "rows":rows}
+ var report := {"trialRankHp":trial_hp,"trialRankAtk":trial_atk,"inputHashes":input_hashes,"hashScope":"Full source/catalog hashes; extraction JSON hash excludes item name/description/icon presentation fields only; category now affects themed loot (parallel art/lore import), all balance/shape/effect/value fields included.","method":"Connected-map policies shortest gate-aware BFS gate6, POI-priority target10, completionist17 nonentry rooms per act, BFS backtracking. Real ExtractionModel public route/search/take/equip/consume/advance/start_battle/settle_battle/extract methods; BattleModel.auto_step naturally determines every battle. Initial save fixtures unlock rank but do not fake gameplay results. Unprepared profiles have no relics or supplies. Prepared profiles use legal generated 5-star +25 relics and buy/bring three medkits (initial wallet fixture); no manufactured run loot or meta upgrades. Party health/energy/cooldowns persist, no between-fight XP. Policies choose offered rooms and revealed loot only. First-fit packing with lower-density replacement is heuristic, not optimal. Timing not measured.", "profiles": selected_profiles, "seedStart":first_seed, "samplesPerCell":samples, "totalRuns":rows.size(), "totalBattles":total_battles, "errors":errors, "aggregate":aggregate, "rows":rows}
  var file := FileAccess.open("res://validation/" + output, FileAccess.WRITE)
  if file: file.store_string(JSON.stringify(report, "\t"))
  else: errors.append("report could not be written")
@@ -85,17 +85,17 @@ func simulate(profile: Dictionary, rank: int, exit_act: int, policy: String, see
   m.state.resources.gold = 1000000
   for id in profile.team:
    for slot in m.catalog.RelicSlots:
-    var relic: Dictionary = m.generate_relic(4, slot.id)
+    var relic: Dictionary = m.generate_relic(5, slot.id)
     must(m.add_relic(relic), "fixture generated relic")
     must(m.equip_relic(relic.uid,id), "fixture equip relic")
-    for upgrade in range(10): must(m.upgrade_relic(relic.uid), "fixture upgrade relic")
+    for upgrade in range(25): must(m.upgrade_relic(relic.uid), "fixture upgrade relic")
  var x = m.extraction
  if trial_hp > 0: x.data.balance.rankHp[rank] = trial_hp
  if trial_atk > 0: x.data.balance.rankAtk[rank] = trial_atk
  x.state().unlockedDifficulty = rank
  var supply_cost := 0
  if profile.get("supplies", false):
-  x.state().credits = 10000
+  m.state.resources.gold = 10000
   for supply in range(3):
    var bought: Dictionary = x.buy_supply("medkit")
    if must(bought, "buy departure medkit"):
@@ -107,6 +107,9 @@ func simulate(profile: Dictionary, rank: int, exit_act: int, policy: String, see
  for room in x.map_state().rooms: row.vaultsGenerated += int(room.type == "vault")
  for guard in range(500):
   if not x.active(): break
+  if not x.growth_choices().is_empty():
+   must(x.choose_growth(x.growth_choices()[0].choiceId), "resolve earned growth")
+   continue
   match str(x.run().phase):
    "route":
     var target: String = Navigation.next_room(x, policy, party_health(x))
@@ -142,6 +145,11 @@ func simulate(profile: Dictionary, rank: int, exit_act: int, policy: String, see
     if b.state.phase == "victory" and x.run().room.type == "vault": row.vaultsWon += 1
     if not must(x.settle_battle(begun.config, b.state), "settle actual battle"): break
    "room", "boss_exit":
+    for action in x.room_actions():
+     if action.enabled and action.cost == 0:
+      must(x.choose_room_action(action.id), "active room choice")
+      break
+    if not x.growth_choices().is_empty(): continue
     loot_room(x, row)
     use_supplies(x)
     if str(x.run().phase) == "room":
@@ -184,7 +192,7 @@ func party_health(x) -> float:
 
 func density(x, item: Dictionary) -> float:
  var d: Dictionary = x.item_def(item.itemId)
- return float(d.value) / maxf(1, float(d.width * d.height))
+ return float(x.item_value(item)) / maxf(1, float(d.width * d.height))
 
 func loot_room(x, row: Dictionary) -> void:
  for container in x.containers():
@@ -218,10 +226,10 @@ func loot_room(x, row: Dictionary) -> void:
      if density(x,existing) >= density(x,item): break
      var existing_def: Dictionary = x.item_def(existing.itemId)
      candidate_area += int(existing_def.width * existing_def.height)
-     candidate_value += int(existing_def.value)
+     candidate_value += x.item_value(existing)
      remove.append(existing.uid)
      if candidate_area >= int(def.width * def.height): break
-    if candidate_area >= int(def.width * def.height) and candidate_value < int(def.value):
+    if candidate_area >= int(def.width * def.height) and candidate_value < x.item_value(item):
      for uid in remove:
       must(x.discard_item(uid), "discard lower-value item")
       row.replacements += 1
@@ -236,7 +244,7 @@ func loot_room(x, row: Dictionary) -> void:
 func use_supplies(x) -> void:
  for item in x.run().bag.duplicate(true):
   if party_health(x) >= 0.75: break
-  if x.item_def(item.itemId).kind == "consumable": must(x.use_item(item.uid), "use discovered supply")
+  if x.item_def(item.itemId).kind == "consumable" and x.can_use_consumable(item.itemId): must(x.use_item(item.uid), "use discovered supply")
 
 func summarize(rows: Array) -> Dictionary:
  var first: Dictionary = rows[0]

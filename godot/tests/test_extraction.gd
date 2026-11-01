@@ -72,16 +72,18 @@ func _init() -> void:
 	check(ex.bring_item(item.uid).success, "bring item")
 	check(ex.state().stash.is_empty(), "staged item removed stash")
 	check(ex.store_item(item.uid).success, "return item")
-	var expected = ex.item_def(item.itemId).value
+	var expected = ex.item_value(item)
+	var before_sale_gold = game.state.resources.gold
 	check(ex.sell_item(item.uid).success, "sell")
-	check(ex.state().credits == expected, "price authoritative")
+	check(game.state.resources.gold == before_sale_gold + expected, "price authoritative")
 	check(not ex.sell_item(item.uid).success, "double sale blocked")
-	ex.state().credits = 10000
+	game.state.resources.gold = 10000
 	check(ex.buy_supply("bandage").success, "purchase sink")
 	var supply = ex.state().stash[0]
 	check(ex.bring_item(supply.uid).success, "carry supply")
 	check(ex.start_run().success, "start carried")
 	check(ex.state().loadout.is_empty() and ex.run().bag.size() == 1, "carry moved once")
+	ex.run().party[0].currentHp = 1
 	check(ex.use_item(supply.uid).success, "use supply")
 	check(not ex.use_item(supply.uid).success, "double consumption blocked")
 	check(ex.retreat().success, "end")
@@ -90,7 +92,7 @@ func _init() -> void:
 	old.erase("extraction")
 	check(game.valid_save(old), "v4 accepted")
 	var migrated = game._normalize(old)
-	check(migrated.version == 5 and migrated.extraction.stash.is_empty(), "v5 defaults")
+	check(migrated.version == 6 and migrated.extraction.stash.is_empty(), "v6 defaults")
 	check(migrated.abyss == old.abyss, "v4 abyss preserved")
 	# Failed storage must restore physical objects and run phase.
 	check(ex.start_run().success, "rollback run")
@@ -216,7 +218,7 @@ func test_maps() -> void:
 		var ex = game.extraction
 		check(ex.start_run().success, "seeded map start")
 		var map: Dictionary = ex.map_state()
-		check(map.rooms.size() == 13 and map.districts.size() == 3, "13 rooms 3 districts")
+		check(map.rooms.size() == 19 and map.districts.size() == 3, "19 rooms 3 districts")
 		var vaults := 0
 		for room in map.rooms:
 			if room.type == "vault": vaults += 1
@@ -224,15 +226,15 @@ func test_maps() -> void:
 		if vaults > 0: vault_maps += 1
 		check(game.valid_save(game.state), "generated map valid")
 		var distances := {map.currentRoomId: 0}
-		for iteration in range(13):
+		for iteration in range(19):
 			for edge in map.edges:
 				for direction in range(2):
 					var a: String = edge[direction]
 					var b: String = edge[1-direction]
 					if distances.has(a): distances[b] = mini(int(distances.get(b, 100)), distances[a] + 1)
-		check(distances.size() == 13, "all rooms reachable")
-		check(distances[map.bossRoomId] <= 7, "boss within seven graph steps")
-		check(map.edges.size() > 12, "map contains loop edges")
+		check(distances.size() == 19, "all rooms reachable")
+		check(distances[map.bossRoomId] <= 18, "boss within finite graph diameter")
+		check(map.edges.size() > 18, "map contains loop edges")
 		var snapshot: Dictionary = game.state.duplicate(true)
 		check(not ex.enter_room(map.bossRoomId).success and game.state == snapshot, "locked boss cannot teleport")
 		var shape: Array = []
@@ -303,6 +305,9 @@ func test_maps() -> void:
 			check(ex.start_battle(engine).success, "map real combat")
 			while engine.state.phase not in ["victory", "defeat"]: engine.auto_step()
 			check(ex.settle_battle(ex.run().activeEncounter, engine.state).success and ex.active(), "map real combat cleared")
+		while not ex.growth_choices().is_empty(): check(ex.choose_growth(ex.growth_choices()[0].choiceId).success, "resolve earned growth")
+		if kind in ["rest", "event"]: check(ex.choose_room_action(ex.room_actions()[0].id).success, "active room choice " + kind)
+		while not ex.growth_choices().is_empty(): check(ex.choose_growth(ex.growth_choices()[0].choiceId).success, "resolve room growth")
 		if kind == "vault":
 			check(ex.containers().size() == 2 and ex.containers()[0].items.size() == 3 and ex.containers()[1].items.size() == 3, "guarded vault rewards two times three")
 		var hp: Array = []
@@ -341,7 +346,7 @@ func test_maps() -> void:
 	# Optional gear purchases reward progression without mandatory entry fees.
 	game = Game.new("")
 	ex = game.extraction
-	ex.state().credits = 1000000
+	game.state.resources.gold = 1000000
 	for key in ["shield", "barrier_module", "scope", "arc_coil", "reactor", "blood_emblem", "guardian_seal"]:
 		var definition: Dictionary = ex.item_def(key)
 		ex.state().unlockedDifficulty = int(definition.buyMinRisk) - 1
@@ -352,10 +357,10 @@ func test_maps() -> void:
 		game.save_blocked = true
 		check(not ex.buy_supply(key).success and game.state == snapshot, "gear purchase rollback " + key)
 		game.save_blocked = false
-		var credits: int = ex.state().credits
+		var credits: int = game.state.resources.gold
 		check(ex.buy_supply(key).success, "unlocked gear purchase " + key)
 		var bought: Dictionary = ex.state().stash.back()
-		check(ex.sell_item(bought.uid).success and ex.state().credits == credits - int(definition.value) * 3, "gear resale no arbitrage " + key)
+		check(ex.sell_item(bought.uid).success and game.state.resources.gold == credits - int(definition.buyPrice) + int(definition.value), "gear resale no arbitrage " + key)
 	check(not ex.buy_supply("prism").success and not ex.buy_supply("eclipse_relic").success and not ex.buy_supply("storm_heart").success, "red gear cannot be bought")
 
 	# Confirmed smart swapping is conservative, recoverable and atomic.

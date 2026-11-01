@@ -54,6 +54,7 @@ func run() -> void:
 	app.extraction_sound=false;app.extraction_reduced_motion=true
 	app.navigate("extraction");await frames()
 	check(button("ExtractionStart")!=null,"camp start")
+	press("ExtractionTab_shop");await frames()
 	for item_id in app.model.extraction.data.items:
 		var shop_def: Dictionary=app.model.extraction.item_def(str(item_id))
 		if int(shop_def.get("buyPrice",0))<=0:continue
@@ -61,6 +62,7 @@ func run() -> void:
 		check(buy!=null,"shop lists purchasable "+str(item_id))
 		check(buy!=null and buy.disabled==(int(shop_def.get("buyMinRisk",0))>int(app.model.state.extraction.unlockedDifficulty)),"shop gate "+str(item_id))
 
+	press("ExtractionTab_expedition");await frames()
 	check(not "40回合" in texts(app.main_body),"detailed rules moved to help")
 	press("ExtractionHelp");await frames()
 	check("40" in texts(app.overlay),"help exposes battle limit")
@@ -68,8 +70,9 @@ func run() -> void:
 	for unit in app.model.extraction.departure_party():
 		var label=app.main_body.find_child("ExtractionPartyStats_"+str(unit.id),true,false)
 		check(label!=null,"party stats visible")
-		var expected:="%s · 生命 %d · 攻击 %d · 防御 %d" % [app._char_name(str(unit.id)),int(unit.stats.maxHp),int(unit.stats.atk),int(unit.stats.def)]
-		check(label!=null and label.text==expected,"correct displayed stats")
+		for stat in [["生命",unit.stats.maxHp],["攻击",unit.stats.atk],["防御",unit.stats.def]]:
+			var expected:="%s %d" % [stat[0],int(stat[1])]
+			check(label!=null and descendants(label).any(func(node):return node is Label and node.text==expected and node.is_visible_in_tree() and node.size.x>0 and node.size.y>0),"dedicated stat label shows exact value: "+expected)
 	var owned: Dictionary=app.model.state.ownedCharacters.duplicate(true)
 	for id in app.model.state.ownedCharacters:app.model.state.ownedCharacters[id].level=10
 	for unit in app.model.extraction.departure_party():
@@ -90,6 +93,8 @@ func run() -> void:
 	if not adjacent.is_empty():
 		var id: String=adjacent[0].id
 		map.offset=map.size/2-map._world_point(map.rooms[id]);map.queue_redraw()
+		tap(map,map.room_point(id));await frames()
+		check(app.model.extraction.map_state().currentRoomId==initial_room,"first tap previews room without movement")
 		tap(map,map.room_point(id));await frames()
 		check(app.model.extraction.map_state().currentRoomId==id,"tap adjacent enters actual room")
 	# Choose a genuine generated resource room; do not fabricate battle rewards.
@@ -147,8 +152,29 @@ func run() -> void:
 	await frames()
 	boxes=app.model.extraction.containers();first=boxes[0]
 	press("ExtractionOpenContainer_"+str(first.id));await frames()
-	app.extraction_auto_pick=true;app.extraction_reduced_motion=true
-	press("ExtractionSearch");await create_timer(1.3).timeout;await frames()
+	app.extraction_auto_pick=true;app.extraction_reduced_motion=false
+	var stable_grid=app.overlay.find_child("ExtractionContainer_"+str(first.id),true,false)
+	var stable_id: int=stable_grid.get_instance_id()
+	press("ExtractionSearch")
+	var visible_reveal:=false
+	var revealed_at:=0.0
+	var reveal_duration:=0.0
+	var start_time:=Time.get_ticks_msec()/1000.0
+	while app.extraction_searching and Time.get_ticks_msec()/1000.0-start_time<12.0:
+		await process_frame
+		var current_grid=app.overlay.find_child("ExtractionContainer_"+str(first.id),true,false)
+		check(current_grid!=null and current_grid.get_instance_id()==stable_id,"continuous search preserves grid identity")
+		var showing:=false
+		for visible_item in current_grid.items:
+			if current_grid.definitions.get(str(visible_item.itemId),{}).get("kind","")!="unknown":showing=true
+		if showing and not visible_reveal:
+			visible_reveal=true;revealed_at=Time.get_ticks_msec()/1000.0
+		if showing and visible_reveal:reveal_duration=maxf(reveal_duration,Time.get_ticks_msec()/1000.0-revealed_at)
+	check(visible_reveal,"auto pickup visibly reveals item before collecting")
+	check(reveal_duration>=0.20,"normal reveal remains observable for at least 200ms")
+	check(not app.extraction_searching,"continuous search completes within bounded time")
+	app.extraction_reduced_motion=true
+	await frames()
 	check(app.model.state.extraction.run.bag.size()>0,"automatic search stores loot")
 	press("ExtractionCloseContainer");await frames()
 	for physical in SIZES:
@@ -258,7 +284,30 @@ func run() -> void:
 		check(str(app.model.extraction.item_def(id).name) in texts(app.main_body),"gallery target "+str(id))
 	check("待收集" in texts(app.main_body),"uncollected targets visible")
 	badge_box.free()
+	# Cancelling after reveal preserves loot still waiting for its pickup animation.
+	app.extraction_panel="map"
+	check(choose_resource_room(),"cancel-after-reveal room")
+	await frames()
+	var cancel_box: Dictionary=app.model.extraction.containers()[0]
+	press("ExtractionOpenContainer_"+str(cancel_box.id));await frames()
+	app.extraction_auto_pick=true;app.extraction_reduced_motion=false
+	press("ExtractionSearch")
+	var pending_uid:=""
+	var cancel_deadline:=Time.get_ticks_msec()+5000
+	while pending_uid.is_empty() and Time.get_ticks_msec()<cancel_deadline:
+		await process_frame
+		for item in _find_box(str(cancel_box.id)).get("items",[]):
+			if item.get("revealed",false):pending_uid=str(item.uid);break
+	check(not pending_uid.is_empty(),"observe revealed pending pickup")
+	press("ExtractionStopSearch")
+	var cancelled_bag: Array=app.model.state.extraction.run.bag.duplicate(true)
+	await create_timer(0.7).timeout
+	check(app.model.state.extraction.run.bag==cancelled_bag,"stop cancels pending pickup")
+	check(_find_box(str(cancel_box.id)).get("items",[]).any(func(item):return str(item.uid)==pending_uid),"cancelled revealed item stays in container")
+	press("ExtractionCloseContainer");await frames()
 	app.queue_free();await frames()
+	# AudioServer releases queued streaming buffers asynchronously.
+	await create_timer(0.3).timeout
 	print("EXTRACTION UI: %d checks, %d failures" % [checks,failures.size()])
 	quit(0 if failures.is_empty() else 1)
 

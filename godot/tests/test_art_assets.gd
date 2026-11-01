@@ -35,5 +35,8 @@ func run() -> void:
 		check(scene.get_node("SceneBackdrop").texture.resource_path == "res://assets/backgrounds/%s.png" % expected, screen + " background mapped")
 		scene._resize_layout()
 		check(scene.find_children("SceneBackdrop", "TextureRect", false, false).size() == 1, screen + " resize keeps single background")
+	scene.queue_free()
+	await process_frame
+	await create_timer(0.3).timeout
 	print("ART ASSETS: %d checks, %d failures" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)

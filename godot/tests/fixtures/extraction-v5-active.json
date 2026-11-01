@@ -1,0 +1,701 @@
+{
+	"abyss": {
+		"currentFloor": 1,
+		"lastFreeResetTime": 0,
+		"lastRun": {
+
+		},
+		"maxFloor": 0,
+		"meta": {
+			"currency": 0,
+			"runsCompleted": 0,
+			"runsLost": 0,
+			"selectedDifficulty": 0,
+			"totalEarned": 0,
+			"unlockedDifficulty": 0,
+			"upgrades": {
+				"offense": 0,
+				"recovery": 0,
+				"supply": 0,
+				"vitality": 0
+			}
+		},
+		"rogue": {
+			"activeEncounter": {
+
+			},
+			"characterFocus": {
+
+			},
+			"difficulty": 0,
+			"eligibleCharacters": [],
+			"eventHistory": [],
+			"floorsCleared": 0,
+			"metaEarned": 0,
+			"nextStep": {
+				"floor": 0,
+				"type": "none"
+			},
+			"pendingChoices": [],
+			"pendingNode": {
+
+			},
+			"runId": null,
+			"runTeam": [],
+			"selectedRewards": [],
+			"shopStock": [],
+			"temporaryCurrency": 0
+		},
+		"savedPartyState": null
+	},
+	"chapterGiftClaimed": {
+
+	},
+	"createdAt": 1793509493566,
+	"dailyMissions": {
+		"completed": [],
+		"lastReset": 0
+	},
+	"dialogueSeen": {
+
+	},
+	"extraction": {
+		"collection": [],
+		"credits": 2456,
+		"lastRun": {
+
+		},
+		"loadout": [],
+		"mailbox": [],
+		"run": {
+			"act": 1,
+			"activeEncounter": {
+				"act": 1,
+				"difficulty": 0,
+				"enemies": [
+					"fire_imp",
+					"fire_imp"
+				],
+				"enrageAfterRound": 0,
+				"enrageCap": 0.0,
+				"enragePerRound": 0.0,
+				"healingMultiplier": 1.0,
+				"id": "extraction_1793509493624_1_1458379470_encounter_18",
+				"isAbyss": false,
+				"isBoss": false,
+				"isElite": false,
+				"isExtraction": true,
+				"kind": "battle",
+				"maxRounds": 40,
+				"name": "第 1 幕 · 巡逻队",
+				"rewards": {
+
+				},
+				"scaleMult": {
+					"atkMod": 0.65,
+					"defMod": 0.8,
+					"hpMod": 0.7,
+					"spdMod": 1.0
+				},
+				"seed": 78153832,
+				"staminaCost": 0,
+				"token": "extraction_1793509493624_1_1458379470_battle_19",
+				"waves": [
+					{
+						"enemies": [
+							"fire_imp",
+							"fire_imp"
+						]
+					}
+				]
+			},
+			"bag": [
+				{
+					"itemId": "energy_cell",
+					"revealed": true,
+					"rotated": false,
+					"uid": "extraction_1793509493624_1_1458379470_item_15",
+					"x": 0,
+					"y": 0
+				}
+			],
+			"bossesDefeated": 0,
+			"collectedValue": 840,
+			"containers": [
+				{
+					"height": 8,
+					"id": "extraction_1793509493624_1_1458379470_container_14",
+					"items": [
+						{
+							"itemId": "thermal_chip",
+							"revealed": false,
+							"rotated": false,
+							"uid": "extraction_1793509493624_1_1458379470_item_16",
+							"x": 2,
+							"y": 0
+						},
+						{
+							"itemId": "wire",
+							"revealed": false,
+							"rotated": false,
+							"uid": "extraction_1793509493624_1_1458379470_item_17",
+							"x": 3,
+							"y": 0
+						}
+					],
+					"kind": "supply",
+					"name": "旧版容器",
+					"quality": 1,
+					"revealed": 1,
+					"sceneX": 0.71210755109787,
+					"sceneY": 0.768590179681778,
+					"sprite": "res://assets/extraction/containers/wooden_chest.png",
+					"width": 6
+				}
+			],
+			"difficulty": 0,
+			"equipped": [],
+			"id": "extraction_1793509493624_1_1458379470",
+			"map": {
+				"bossRoomId": "extraction_1793509493624_1_1458379470_room_13",
+				"bossUnlocked": false,
+				"currentRoomId": "extraction_1793509493624_1_1458379470_room_1",
+				"districts": [
+					{
+						"background": "res://assets/extraction/rooms/forest_2.webp",
+						"id": "district_0",
+						"name": "幽光林地",
+						"theme": "forest"
+					},
+					{
+						"background": "res://assets/extraction/rooms/sanctum_2.webp",
+						"id": "district_1",
+						"name": "星核圣所",
+						"theme": "sanctum"
+					},
+					{
+						"background": "res://assets/extraction/rooms/ruins_1.webp",
+						"id": "district_2",
+						"name": "旧王城遗址",
+						"theme": "ruins"
+					}
+				],
+				"edges": [
+					[
+						"extraction_1793509493624_1_1458379470_room_1",
+						"extraction_1793509493624_1_1458379470_room_2"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_1",
+						"extraction_1793509493624_1_1458379470_room_3"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_2",
+						"extraction_1793509493624_1_1458379470_room_3"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_1",
+						"extraction_1793509493624_1_1458379470_room_4"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_4",
+						"extraction_1793509493624_1_1458379470_room_5"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_5",
+						"extraction_1793509493624_1_1458379470_room_6"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_6",
+						"extraction_1793509493624_1_1458379470_room_7"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_7",
+						"extraction_1793509493624_1_1458379470_room_8"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_8",
+						"extraction_1793509493624_1_1458379470_room_9"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_9",
+						"extraction_1793509493624_1_1458379470_room_10"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_9",
+						"extraction_1793509493624_1_1458379470_room_11"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_10",
+						"extraction_1793509493624_1_1458379470_room_11"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_10",
+						"extraction_1793509493624_1_1458379470_room_12"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_11",
+						"extraction_1793509493624_1_1458379470_room_12"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_5",
+						"extraction_1793509493624_1_1458379470_room_7"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_9",
+						"extraction_1793509493624_1_1458379470_room_12"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_7",
+						"extraction_1793509493624_1_1458379470_room_13"
+					],
+					[
+						"extraction_1793509493624_1_1458379470_room_12",
+						"extraction_1793509493624_1_1458379470_room_13"
+					]
+				],
+				"explored": 0,
+				"requiredExploration": 4,
+				"rooms": [
+					{
+						"background": "res://assets/extraction/rooms/forest_2.webp",
+						"cleared": true,
+						"containers": [
+							{
+								"height": 8,
+								"id": "extraction_1793509493624_1_1458379470_container_14",
+								"items": [
+									{
+										"itemId": "thermal_chip",
+										"revealed": false,
+										"rotated": false,
+										"uid": "extraction_1793509493624_1_1458379470_item_16",
+										"x": 2,
+										"y": 0
+									},
+									{
+										"itemId": "wire",
+										"revealed": false,
+										"rotated": false,
+										"uid": "extraction_1793509493624_1_1458379470_item_17",
+										"x": 3,
+										"y": 0
+									}
+								],
+								"kind": "supply",
+								"name": "旧版容器",
+								"quality": 1,
+								"revealed": 1,
+								"sceneX": 0.71210755109787,
+								"sceneY": 0.768590179681778,
+								"sprite": "res://assets/extraction/containers/wooden_chest.png",
+								"width": 6
+							}
+						],
+						"description": "星纹路标指向遗迹深处。",
+						"districtId": "district_0",
+						"id": "extraction_1793509493624_1_1458379470_room_1",
+						"name": "远征入口",
+						"tier": 1,
+						"type": "entry",
+						"visited": true,
+						"x": 0.132881587743759,
+						"y": 0.139955672025681
+					},
+					{
+						"background": "res://assets/extraction/rooms/forest_1.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "旅人遗留的物资，偶有意外珍藏。",
+						"districtId": "district_0",
+						"id": "extraction_1793509493624_1_1458379470_room_2",
+						"name": "旅人物资站",
+						"tier": 2,
+						"type": "cache",
+						"visited": false,
+						"x": 0.161189299821854,
+						"y": 0.375043877363205
+					},
+					{
+						"background": "res://assets/extraction/rooms/forest_2.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "隐蔽营地，首次停留恢复25%生命。",
+						"districtId": "district_0",
+						"id": "extraction_1793509493624_1_1458379470_room_3",
+						"name": "隐蔽营地",
+						"tier": 3,
+						"type": "rest",
+						"visited": false,
+						"x": 0.134166526794434,
+						"y": 0.57472291007638
+					},
+					{
+						"background": "res://assets/extraction/rooms/forest_1.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "机关与遗物并存，调查可能受伤。",
+						"districtId": "district_0",
+						"id": "extraction_1793509493624_1_1458379470_room_4",
+						"name": "遗迹调查",
+						"tier": 4,
+						"type": "event",
+						"visited": false,
+						"x": 0.0887212237715721,
+						"y": 0.839965494871139
+					},
+					{
+						"background": "res://assets/extraction/rooms/sanctum_1.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "精英守卫驻守，战利品品质更高。",
+						"districtId": "district_1",
+						"id": "extraction_1793509493624_1_1458379470_room_5",
+						"name": "禁卫哨所",
+						"tier": 2,
+						"type": "elite",
+						"visited": false,
+						"x": 0.45956812530756,
+						"y": 0.13751057267189
+					},
+					{
+						"background": "res://assets/extraction/rooms/sanctum_2.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "隐蔽营地，首次停留恢复25%生命。",
+						"districtId": "district_1",
+						"id": "extraction_1793509493624_1_1458379470_room_6",
+						"name": "隐蔽营地",
+						"tier": 3,
+						"type": "rest",
+						"visited": false,
+						"x": 0.478200752735138,
+						"y": 0.333850209861994
+					},
+					{
+						"background": "res://assets/extraction/rooms/sanctum_1.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "旧工坊散落着符文构件与装备。",
+						"districtId": "district_1",
+						"id": "extraction_1793509493624_1_1458379470_room_7",
+						"name": "符文工坊",
+						"tier": 4,
+						"type": "workshop",
+						"visited": false,
+						"x": 0.512507037520409,
+						"y": 0.576989038586617
+					},
+					{
+						"background": "res://assets/extraction/rooms/sanctum_2.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "残存药柜内可能留有疗愈用品。",
+						"districtId": "district_1",
+						"id": "extraction_1793509493624_1_1458379470_room_8",
+						"name": "疗愈药房",
+						"tier": 4,
+						"type": "hospital",
+						"visited": false,
+						"x": 0.492036970853806,
+						"y": 0.855504460334778
+					},
+					{
+						"background": "res://assets/extraction/rooms/ruins_1.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "巡逻警戒，战胜后可搜索。",
+						"districtId": "district_2",
+						"id": "extraction_1793509493624_1_1458379470_room_9",
+						"name": "巡逻走廊",
+						"tier": 3,
+						"type": "battle",
+						"visited": false,
+						"x": 0.809242803454399,
+						"y": 0.122827568054199
+					},
+					{
+						"background": "res://assets/extraction/rooms/ruins_2.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "星辉之下，古物与秘典静候来者。",
+						"districtId": "district_2",
+						"id": "extraction_1793509493624_1_1458379470_room_10",
+						"name": "星辉神龛",
+						"tier": 4,
+						"type": "shrine",
+						"visited": false,
+						"x": 0.810398347377777,
+						"y": 0.379592003822327
+					},
+					{
+						"background": "res://assets/extraction/rooms/ruins_2.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "残存药柜内可能留有疗愈用品。",
+						"districtId": "district_2",
+						"id": "extraction_1793509493624_1_1458379470_room_11",
+						"name": "疗愈药房",
+						"tier": 4,
+						"type": "hospital",
+						"visited": false,
+						"x": 0.800184426382184,
+						"y": 0.573289985507727
+					},
+					{
+						"background": "res://assets/extraction/rooms/ruins_1.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "旧工坊散落着符文构件与装备。",
+						"districtId": "district_2",
+						"id": "extraction_1793509493624_1_1458379470_room_12",
+						"name": "符文工坊",
+						"tier": 4,
+						"type": "workshop",
+						"visited": false,
+						"x": 0.8744646692276,
+						"y": 0.834165841937065
+					},
+					{
+						"background": "res://assets/extraction/rooms/ruins_1.webp",
+						"cleared": false,
+						"containers": [],
+						"description": "完成四处独立探索后解除封印；击败首领可撤离或深入下一幕。",
+						"districtId": "district_2",
+						"id": "extraction_1793509493624_1_1458379470_room_13",
+						"name": "封印核心",
+						"tier": 4,
+						"type": "boss",
+						"visited": false,
+						"x": 0.94,
+						"y": 0.92
+					}
+				]
+			},
+			"node": 0,
+			"party": [
+				{
+					"constellation": 0,
+					"cooldowns": {
+
+					},
+					"currentHp": 850,
+					"element": "fire",
+					"energy": 0,
+					"id": "ember",
+					"level": 1,
+					"maxHp": 850,
+					"name": "赤炎·冈",
+					"passiveId": "ember_passive",
+					"saveData": {
+						"awakening": 0,
+						"breakthroughLevel": 0,
+						"constellation": 0,
+						"equippedRelics": {
+
+						},
+						"exp": 0,
+						"level": 1,
+						"shards": 3
+					},
+					"skills": [
+						"ember_normal",
+						"ember_skill",
+						"ember_ult"
+					],
+					"stats": {
+						"atk": 140,
+						"cri": 0.15,
+						"criDmg": 1.5,
+						"critDmg": 1.5,
+						"critRate": 0.15,
+						"def": 65,
+						"energyRate": 0.0,
+						"hp": 850,
+						"maxHp": 850,
+						"normalDmgBonus": 0.0,
+						"skillCdReduce": 0,
+						"skillDmgBonus": 0.0,
+						"spd": 95.0,
+						"ultDmgBonus": 0.0
+					}
+				},
+				{
+					"constellation": 0,
+					"cooldowns": {
+
+					},
+					"currentHp": 800,
+					"element": "wind",
+					"energy": 0,
+					"id": "zeph",
+					"level": 1,
+					"maxHp": 800,
+					"name": "流风·泽菲",
+					"passiveId": "zeph_passive",
+					"saveData": {
+						"awakening": 0,
+						"breakthroughLevel": 0,
+						"constellation": 0,
+						"equippedRelics": {
+
+						},
+						"exp": 0,
+						"level": 1,
+						"shards": 1
+					},
+					"skills": [
+						"zeph_normal",
+						"zeph_skill",
+						"zeph_ult"
+					],
+					"stats": {
+						"atk": 120,
+						"cri": 0.12,
+						"criDmg": 1.5,
+						"critDmg": 1.5,
+						"critRate": 0.12,
+						"def": 70,
+						"energyRate": 0.0,
+						"hp": 800,
+						"maxHp": 800,
+						"normalDmgBonus": 0.0,
+						"skillCdReduce": 0,
+						"skillDmgBonus": 0.0,
+						"spd": 115.0,
+						"ultDmgBonus": 0.0
+					}
+				}
+			],
+			"phase": "battle",
+			"rngState": "3175511697406806525",
+			"room": {
+				"background": "res://assets/extraction/rooms/forest_2.webp",
+				"cleared": true,
+				"containers": [],
+				"description": "星纹路标指向遗迹深处。",
+				"districtId": "district_0",
+				"id": "extraction_1793509493624_1_1458379470_room_1",
+				"name": "远征入口",
+				"tier": 1,
+				"type": "entry",
+				"visited": true,
+				"x": 0.132881587743759,
+				"y": 0.139955672025681
+			},
+			"roomsCleared": 0,
+			"routes": [
+				{
+					"background": "res://assets/extraction/rooms/forest_1.webp",
+					"cleared": false,
+					"containers": [],
+					"description": "旅人遗留的物资，偶有意外珍藏。",
+					"districtId": "district_0",
+					"id": "extraction_1793509493624_1_1458379470_room_2",
+					"locked": false,
+					"name": "旅人物资站",
+					"tier": 2,
+					"type": "cache",
+					"visited": false,
+					"x": 0.161189299821854,
+					"y": 0.375043877363205
+				},
+				{
+					"background": "res://assets/extraction/rooms/forest_2.webp",
+					"cleared": false,
+					"containers": [],
+					"description": "隐蔽营地，首次停留恢复25%生命。",
+					"districtId": "district_0",
+					"id": "extraction_1793509493624_1_1458379470_room_3",
+					"locked": false,
+					"name": "隐蔽营地",
+					"tier": 3,
+					"type": "rest",
+					"visited": false,
+					"x": 0.134166526794434,
+					"y": 0.57472291007638
+				},
+				{
+					"background": "res://assets/extraction/rooms/forest_1.webp",
+					"cleared": false,
+					"containers": [],
+					"description": "机关与遗物并存，调查可能受伤。",
+					"districtId": "district_0",
+					"id": "extraction_1793509493624_1_1458379470_room_4",
+					"locked": false,
+					"name": "遗迹调查",
+					"tier": 4,
+					"type": "event",
+					"visited": false,
+					"x": 0.0887212237715721,
+					"y": 0.839965494871139
+				}
+			],
+			"selectedContainer": "",
+			"serial": 19,
+			"startedAt": 1793509493624
+		},
+		"runs": 0,
+		"stash": [],
+		"unlockedDifficulty": 0
+	},
+	"lastSaved": 1793509493625,
+	"ownedCharacters": {
+		"ember": {
+			"awakening": 0,
+			"breakthroughLevel": 0,
+			"constellation": 0,
+			"equippedRelics": {
+
+			},
+			"exp": 0,
+			"level": 1,
+			"shards": 3
+		},
+		"zeph": {
+			"awakening": 0,
+			"breakthroughLevel": 0,
+			"constellation": 0,
+			"equippedRelics": {
+
+			},
+			"exp": 0,
+			"level": 1,
+			"shards": 1
+		}
+	},
+	"pityCounters": {
+		"limited_kaldi": {
+			"count": 0,
+			"count4": 0,
+			"guaranteedFeatured": false
+		},
+		"standard": {
+			"count": 0,
+			"count4": 0,
+			"guaranteedFeatured": false
+		}
+	},
+	"relics": [],
+	"resources": {
+		"diamonds": 1600,
+		"gold": 50000,
+		"stamina": 100,
+		"staminaLastUpdate": 1793509493566
+	},
+	"stageProgress": {
+
+	},
+	"stats": {
+		"totalBattles": 0,
+		"totalGoldSpent": 0,
+		"totalPulls": 0,
+		"totalVictories": 0
+	},
+	"team": [
+		"ember",
+		"zeph",
+		null
+	],
+	"version": 5
+}

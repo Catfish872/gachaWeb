@@ -1,7 +1,11 @@
 extends Control
+## Touch-first expedition atlas. The world is independent from the camera and
+## every room keeps its model id; layout decoration never changes game state.
 signal room_selected(id: String)
+signal room_previewed(id: String)
 var graph: Dictionary = {}
 var rooms: Dictionary = {}
+var selected_room_id := ""
 var offset := Vector2.ZERO
 var zoom := 1.0
 var _last := Vector2.ZERO
@@ -10,16 +14,27 @@ var _pressed := false
 var _dragged := false
 var _touch_id := -1
 var _initial := true
-const WORLD := Vector2(940, 660)
-const TYPE_NAMES := {"entry":"入口", "cache":"物资", "battle":"敌人", "elite":"精英", "event":"奇遇", "rest":"营地", "boss":"首领"}
-const DISTRICT_COLORS := [Color("3c6060"),Color("5a536e"),Color("6a5b40")]
+var _touches: Dictionary = {}
+var _pinching := false
+var _velocity := Vector2.ZERO
+var _last_motion_ms := 0
+var _toolbar: HBoxContainer
+const WORLD := Vector2(1320, 850)
+const PAD := Vector2(100, 120)
+const GOLD := Color("edcf94")
+const CYAN := Color("91dfd4")
+const MUTED := Color("71828a")
+const TYPE_NAMES := {"entry":"入口", "cache":"物资", "battle":"敌人", "elite":"精英", "event":"奇遇", "rest":"营地", "boss":"首领", "hospital":"药房", "workshop":"工坊", "vault":"宝库", "shrine":"神龛"}
+const THEME_COLORS := {"ruins":Color("756553"), "forest":Color("3f7165"), "sanctum":Color("62648b")}
 
 func configure(value: Dictionary) -> void:
 	graph = value.duplicate(true)
 	rooms.clear()
 	for room in graph.get("rooms", []): rooms[str(room.id)] = room
-	custom_minimum_size = Vector2(0, 340)
+	selected_room_id = str(graph.get("currentRoomId", ""))
+	custom_minimum_size = Vector2(0, 320)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	clip_contents = true
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	set_meta("extraction_pan", true)
@@ -27,18 +42,49 @@ func configure(value: Dictionary) -> void:
 
 func _ready() -> void:
 	resized.connect(_resize)
+	_toolbar = HBoxContainer.new()
+	_toolbar.name = "AtlasTools"
+	_toolbar.add_theme_constant_override("separation", 5)
+	_toolbar.mouse_filter = Control.MOUSE_FILTER_PASS
+	add_child(_toolbar)
+	_tool("全图", fit_view, "AtlasFit")
+	_tool("定位", focus_current, "AtlasFocus")
+	_tool("−", func(): zoom_at(_view_rect().get_center(), zoom / 1.25), "AtlasZoomOut")
+	_tool("＋", func(): zoom_at(_view_rect().get_center(), zoom * 1.25), "AtlasZoomIn")
 	_resize()
 
+func _tool(caption: String, action: Callable, node_name: String) -> void:
+	var button := Button.new()
+	button.name = node_name
+	button.text = caption
+	button.custom_minimum_size = Vector2(42 if caption in ["−","＋"] else 52, 36)
+	button.add_theme_font_size_override("font_size", 13)
+	button.add_theme_color_override("font_color", Color("dbe7e6"))
+	for state in ["normal", "hover", "pressed", "focus"]:
+		var box := StyleBoxFlat.new()
+		box.bg_color = Color("223b42") if state in ["hover", "pressed"] else Color("13272e")
+		box.border_color = Color("6b9b94") if state in ["pressed", "focus"] else Color("365057")
+		box.set_border_width_all(1)
+		box.set_corner_radius_all(6)
+		button.add_theme_stylebox_override(state, box)
+	button.pressed.connect(action)
+	_toolbar.add_child(button)
+
+func _view_rect() -> Rect2:
+	return Rect2(Vector2(12, 51), Vector2(maxf(1,size.x-24), maxf(1,size.y-89)))
+
 func _resize() -> void:
-	if _initial and size.x > 0:
-		var current: Dictionary = rooms.get(str(graph.get("currentRoomId", "")), {})
-		offset = size / 2 - _world_point(current) if not current.is_empty() else (size - WORLD) / 2
+	if _toolbar:
+		_toolbar.position = Vector2(maxf(12,size.x-218), 8)
+	if _initial and size.x > 40 and size.y > 100:
+		fit_view()
 		_initial = false
 	_clamp_offset()
 	queue_redraw()
 
 func _world_point(room: Dictionary) -> Vector2:
-	return (Vector2(55, 60) + Vector2(float(room.get("x", 0.5)), float(room.get("y", 0.5))) * (WORLD - Vector2(110,120))) * zoom
+	var normalized := Vector2(float(room.get("x", 0.5)), float(room.get("y", 0.5)))
+	return (PAD + normalized * (WORLD - PAD * 2.0)) * zoom
 
 func room_point(id: String) -> Vector2:
 	return _world_point(rooms.get(id, {})) + offset
@@ -51,100 +97,351 @@ func adjacent_ids() -> Array:
 		elif edge[1] == current: result.append(str(edge[0]))
 	return result
 
+func _known(id: String) -> bool:
+	# Surveyed and adjacent landmarks use full contrast. Distant rooms retain
+	# their type icon so players can plan a route without seeing their loot.
+	var room: Dictionary = rooms[id]
+	return bool(room.get("visited",false)) or id in adjacent_ids() or bool(room.get("discovered",false)) or room.get("type","") in ["boss","vault","shrine","elite"]
+
+func _district_bounds(district_id: String) -> Rect2:
+	var first := true
+	var bounds := Rect2()
+	for id in rooms:
+		if str(rooms[id].get("districtId", "")) != district_id: continue
+		var p: Vector2 = _world_point(rooms[id]) / zoom
+		if first: bounds = Rect2(p, Vector2.ONE); first = false
+		else: bounds = bounds.expand(p)
+	return bounds.grow(65)
+
+func _screen(world: Vector2) -> Vector2:
+	return world * zoom + offset
+
 func _draw() -> void:
-	draw_rect(Rect2(Vector2.ZERO,size), Color("0c1722"))
-	for x in range(-30, int(size.x)+30, 32):
-		draw_line(Vector2(x + fmod(offset.x,32),0),Vector2(x + fmod(offset.x,32),size.y),Color("142332"),1)
-	for y in range(-30,int(size.y)+30,32):
-		draw_line(Vector2(0,y + fmod(offset.y,32)),Vector2(size.x,y + fmod(offset.y,32)),Color("142332"),1)
-	var font := get_theme_default_font()
-	var district_index := 0
-	for district in graph.get("districts", []):
-		var center := Vector2.ZERO
-		var count := 0
-		for id in rooms:
-			if str(rooms[id].get("districtId", "")) == str(district.id): center += room_point(id); count += 1
-		if count > 0:
-			center /= count
-			var color: Color = DISTRICT_COLORS[district_index % DISTRICT_COLORS.size()]
-			draw_circle(center, 115 * zoom, Color(color,0.13))
-			draw_string(font, center-Vector2(85,90),str(district.get("name",district.id)),HORIZONTAL_ALIGNMENT_CENTER,170,17,color.lightened(0.45))
-		district_index += 1
+	draw_rect(Rect2(Vector2.ZERO,size), Color("0a151c"))
+	# Contour lines belong to the landscape, not a graph-paper background.
+	for band in range(9):
+		var points := PackedVector2Array()
+		for step in range(35):
+			var x := float(step)*42.0
+			var y := 48.0 + band*94.0 + sin(x*0.007+band*0.9)*22.0 + sin(x*0.018+band)*10.0
+			points.append(_screen(Vector2(x,y)))
+		draw_polyline(points,Color(0.23,0.38,0.41,0.13),1.0,true)
+	for district in graph.get("districts", []): _draw_district(district)
 	var adjacent := adjacent_ids()
 	for edge in graph.get("edges", []):
 		var a := str(edge[0]); var b := str(edge[1])
-		if rooms.has(a) and rooms.has(b):
-			var near := a == str(graph.get("currentRoomId","")) or b == str(graph.get("currentRoomId",""))
-			draw_line(room_point(a),room_point(b),Color("6baeb2") if near else Color("354353"),3 if near else 2,true)
+		if not rooms.has(a) or not rooms.has(b): continue
+		var near := a == str(graph.get("currentRoomId","")) or b == str(graph.get("currentRoomId",""))
+		var explored := bool(rooms[a].get("visited",false)) and bool(rooms[b].get("visited",false))
+		var color := CYAN if near else (Color("738e8a") if explored else Color("384c54"))
+		var from := room_point(a); var to := room_point(b)
+		draw_line(from,to,Color("081217"),7.0,true)
+		if near or explored:
+			draw_line(from,to,color,2.5 if near else 1.6,true)
+			if near: _arrow(from.lerp(to,0.56), (to-from).normalized() if a == str(graph.get("currentRoomId","")) else (from-to).normalized(),color)
+		else:
+			_dashed(from,to,color)
+	# Draw lower priority nodes first; selected rings are always legible.
 	for id in rooms:
-		var room: Dictionary = rooms[id]
-		var center := room_point(id)
-		var current: bool = id == str(graph.get("currentRoomId", ""))
-		var visited := bool(room.get("visited",false))
-		var boss: bool = id == str(graph.get("bossRoomId","")) or room.get("type", "") == "boss"
-		var color := Color("7ed1d0") if id in adjacent else Color("80909c")
-		if boss: color = Color("edb366") if graph.get("bossUnlocked",false) else Color("806b5c")
-		if room.get("type", "") in ["elite","vault","shrine"] or room.get("highValue",false): color = Color("d9a5ef")
-		if current: color = Color("f1d399")
-		var radius := clampf(25 * zoom, 12, 25)
-		draw_circle(center,radius,Color("20343e") if visited else Color("182431"))
-		draw_arc(center,radius,0,TAU,32,color,3 if current else 1.5,true)
-		if current: draw_arc(center,radius+5,0,TAU,32,Color(color,0.4),2,true)
-		var symbols := {"cache":"箱","battle":"战","elite":"强","rest":"休","hospital":"药","workshop":"工","vault":"宝","shrine":"祭","event":"?"}
-		var text: String = "◆" if boss else ("●" if current else ("✓" if room.get("cleared",false) else str(symbols.get(str(room.get("type","")),"◇"))))
-		draw_string(font,center+Vector2(-15,7),text,HORIZONTAL_ALIGNMENT_CENTER,30,20,color)
-		var title := str(room.get("name", TYPE_NAMES.get(str(room.get("type","")),"房间")))
-		if zoom < 0.6 and not current: title = ""
-		draw_string(font,center+Vector2(-65,44),title,HORIZONTAL_ALIGNMENT_CENTER,130,14,color)
-		if current: draw_string(font,center+Vector2(-35,-36),"当前位置",HORIZONTAL_ALIGNMENT_CENTER,70,13,color)
-	draw_rect(Rect2(Vector2.ZERO,size),Color("40505d"),false,1)
+		if id != selected_room_id: _draw_room(str(id),adjacent)
+	if rooms.has(selected_room_id): _draw_room(selected_room_id,adjacent)
+	_draw_chrome()
+
+func _draw_district(district: Dictionary) -> void:
+	var theme := str(district.get("theme","ruins"))
+	var color: Color = THEME_COLORS.get(theme, THEME_COLORS.ruins)
+	var bounds := _district_bounds(str(district.id))
+	var rect := Rect2(_screen(bounds.position),bounds.size*zoom)
+	# Uneven polygon shoreline, with hand-drafted silhouettes for each biome.
+	var p := bounds.position
+	var s := bounds.size
+	var land := PackedVector2Array([p+Vector2(s.x*.08,0),p+Vector2(s.x*.8,4),p+Vector2(s.x,s.y*.16),p+Vector2(s.x*.95,s.y*.78),p+Vector2(s.x*.78,s.y),p+Vector2(s.x*.15,s.y*.96),p+Vector2(0,s.y*.7),p+Vector2(5,s.y*.2)])
+	var contour := PackedVector2Array()
+	for point in land: contour.append(_screen(point))
+	draw_colored_polygon(contour,Color(color,0.13))
+	contour.append(contour[0]);draw_polyline(contour,Color(color,0.28),1.0,true)
+	for scale_factor in [.86,.72]:
+		var inner := PackedVector2Array()
+		for point in land:inner.append(_screen(bounds.get_center()+(point-bounds.get_center())*scale_factor))
+		inner.append(inner[0]);draw_polyline(inner,Color(color,.12),1.0,true)
+	for n in range(42):
+		var fx := fposmod(float(n)*0.6180339+0.17,1.0)
+		var fy := fposmod(float(n)*0.4142135+0.11,1.0)
+		var pos := _screen(p+Vector2(s.x*fx,s.y*fy))
+		var radius := 14.0*zoom
+		# Keep landmarks clear rather than placing scenery below their icons.
+		var near_room := false
+		for id in rooms:
+			if room_point(id).distance_to(pos)<34: near_room = true;break
+		if near_room: continue
+		if theme == "forest":
+			var triangle := PackedVector2Array([pos+Vector2(0,-radius),pos+Vector2(radius*.7,radius*.6),pos+Vector2(-radius*.7,radius*.6)])
+			draw_colored_polygon(triangle,Color(color,0.42))
+			draw_line(pos,pos+Vector2(0,radius),Color(color.lightened(.1),.35),1.0)
+		elif theme == "ruins":
+			draw_rect(Rect2(pos,Vector2(radius*1.8,radius)),Color(color,.28),false,1.0)
+			draw_line(pos+Vector2(radius*.5,0),pos+Vector2(radius*.5,radius),Color(color,.35),1.0)
+		else:
+			var crystal := PackedVector2Array([pos+Vector2(0,-radius),pos+Vector2(radius*.45,0),pos+Vector2(0,radius),pos+Vector2(-radius*.45,0),pos+Vector2(0,-radius)])
+			draw_polyline(crystal,Color(color.lightened(.1),.4),1.0,true)
+	var title := str(district.get("name",district.id))
+	var font := get_theme_default_font()
+	var title_width := font.get_string_size(title,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+24
+	var title_pos := Vector2(rect.get_center().x-title_width/2,rect.position.y-23)
+	var plate := Rect2(title_pos,Vector2(title_width,23))
+	draw_style_box(_plate(Color("0f2027"),Color(color,.6),4),plate)
+	draw_string(font,title_pos+Vector2(12,16),title,HORIZONTAL_ALIGNMENT_LEFT,-1,13,color.lightened(.38))
+
+func _draw_room(id: String, adjacent: Array) -> void:
+	var room: Dictionary = rooms[id]
+	var center := room_point(id)
+	if not Rect2(Vector2(-60,-60),size+Vector2(120,120)).has_point(center): return
+	var current: bool = id == str(graph.get("currentRoomId", ""))
+	var visited := bool(room.get("visited",false))
+	var kind := str(room.get("type","cache"))
+	var known := _known(id)
+	var boss := kind == "boss"
+	var color := CYAN if id in adjacent else Color("8b9ba1")
+	if kind in ["elite","battle"]: color = Color("d88b7e") if known else MUTED
+	if kind in ["vault","shrine"]: color = Color("c6a3e3")
+	if boss: color = GOLD if graph.get("bossUnlocked",false) else Color("ae877a")
+	if current: color = GOLD
+	var radius := clampf(24 * sqrt(zoom),15,25)
+	var selected := id == selected_room_id
+	if selected:
+		draw_circle(center,radius+7,Color(color,.12))
+		draw_arc(center,radius+6,-PI*.4,PI*.4,24,color,1.6,true)
+		draw_arc(center,radius+6,PI*.6,PI*1.4,24,color,1.6,true)
+	draw_circle(center+Vector2(0,2),radius+2,Color(0,0,0,.5))
+	draw_circle(center,radius,Color("14272e") if known else Color("101e26"))
+	draw_arc(center,radius,0,TAU,48,Color(color,.85 if known else .36),1.6,true)
+	if visited: draw_arc(center,radius-3,0,TAU,48,Color(color,.18),1.0,true)
+	_draw_icon(center,kind,radius*.58,color if known else MUTED)
+	if current:
+		var marker := center+Vector2(0,-radius-10)
+		draw_colored_polygon(PackedVector2Array([marker+Vector2(-4,-4),marker+Vector2(4,-4),marker+Vector2(0,2)]),GOLD)
+	if bool(room.get("cleared",false)) and not current:
+		var badge := center+Vector2(radius*.75,radius*.7)
+		draw_circle(badge,6,Color("132b2a"));draw_arc(badge,6,0,TAU,16,CYAN,1.0,true)
+		draw_polyline(PackedVector2Array([badge+Vector2(-3,0),badge+Vector2(-1,2),badge+Vector2(3,-2)]),CYAN,1.0,true)
+	if boss and not graph.get("bossUnlocked",false):
+		var lock := center+Vector2(radius*.7,-radius*.7)
+		draw_circle(lock,7,Color("1b2228"));_draw_icon(lock,"lock",4,GOLD)
+	# Only one persistent label. Full names and actions live in the adjacent
+	# preview panel, keeping small maps free from overlapping text.
+	if selected and zoom >= 0.5:
+		var label := str(room.get("name",TYPE_NAMES.get(kind,"遗迹")))
+		var font := get_theme_default_font()
+		var width := minf(160,font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+18)
+		var rect := Rect2(center+Vector2(-width/2,radius+11),Vector2(width,24))
+		draw_style_box(_plate(Color("0a171e"),Color(color,.5),4),rect)
+		draw_string(font,rect.position+Vector2(9,16),label,HORIZONTAL_ALIGNMENT_LEFT,width-18,13,color)
+
+func _draw_icon(p: Vector2, kind: String, r: float, color: Color) -> void:
+	var w := maxf(1.3,r*.13)
+	match kind:
+		"cache","vault":
+			draw_rect(Rect2(p+Vector2(-r,-r*.55),Vector2(r*2,r*1.3)),color,false,w)
+			draw_line(p+Vector2(-r,-r*.1),p+Vector2(r,-r*.1),color,w,true)
+			draw_rect(Rect2(p+Vector2(-r*.15,-r*.25),Vector2(r*.3,r*.5)),color)
+			if kind == "vault":
+				draw_line(p+Vector2(-r*.65,-r*.9),p+Vector2(r*.65,-r*.9),color,w,true)
+		"battle","elite":
+			for sign_value in [-1,1]:
+				var direction := Vector2(float(sign_value),-1).normalized()
+				draw_line(p-direction*r*.7,p+direction*r,color,w,true)
+				var side := Vector2(-direction.y,direction.x)*r*.32
+				draw_line(p-direction*r*.35-side,p-direction*r*.35+side,color,w,true)
+			if kind == "elite": draw_arc(p,r*1.2,PI*.1,PI*.9,16,color,w,true)
+		"rest":
+			draw_polyline(PackedVector2Array([p+Vector2(-r,r*.7),p+Vector2(0,-r*.8),p+Vector2(r,r*.7),p+Vector2(-r,r*.7)]),color,w,true)
+			draw_polyline(PackedVector2Array([p+Vector2(-r*.35,r*.7),p+Vector2(0,-r*.1),p+Vector2(r*.35,r*.7)]),color,w,true)
+		"hospital":
+			draw_line(p-Vector2(r*.75,0),p+Vector2(r*.75,0),color,w*2.6,true)
+			draw_line(p-Vector2(0,r*.75),p+Vector2(0,r*.75),color,w*2.6,true)
+		"workshop":
+			draw_arc(p,r*.7,0,TAU,18,color,w,true)
+			draw_circle(p,r*.22,color)
+			for i in range(6):
+				var v := Vector2.from_angle(i*TAU/6)
+				draw_line(p+v*r*.7,p+v*r*1.1,color,w*1.6,true)
+		"shrine":
+			draw_polyline(PackedVector2Array([p+Vector2(0,-r),p+Vector2(r*.6,0),p+Vector2(0,r*.65),p+Vector2(-r*.6,0),p+Vector2(0,-r)]),color,w,true)
+			draw_line(p+Vector2(-r,r),p+Vector2(r,r),color,w,true)
+		"boss":
+			draw_polyline(PackedVector2Array([p+Vector2(-r,-r*.5),p+Vector2(-r*.7,r*.6),p+Vector2(r*.7,r*.6),p+Vector2(r,-r*.5),p+Vector2(r*.4,0),p+Vector2(0,-r*.9),p+Vector2(-r*.4,0),p+Vector2(-r,-r*.5)]),color,w,true)
+			draw_line(p+Vector2(-r*.7,r),p+Vector2(r*.7,r),color,w,true)
+		"entry":
+			draw_arc(p,r*.8,PI,TAU,20,color,w,true)
+			draw_line(p+Vector2(-r*.8,0),p+Vector2(-r*.8,r),color,w,true)
+			draw_line(p+Vector2(r*.8,0),p+Vector2(r*.8,r),color,w,true)
+			draw_line(p,p+Vector2(0,r*.8),color,w,true)
+			_arrow(p,Vector2.UP,color,r*.35)
+		"lock":
+			draw_rect(Rect2(p+Vector2(-r,-r*.1),Vector2(r*2,r*1.2)),color,false,w)
+			draw_arc(p+Vector2(0,-r*.1),r*.6,PI,TAU,12,color,w,true)
+		"event":
+			var star := PackedVector2Array()
+			for i in range(8):star.append(p+Vector2.from_angle(-PI/2+i*PI/4)*r*(1.0 if i%2==0 else .32))
+			star.append(star[0]);draw_polyline(star,color,w,true)
+		_:
+			draw_arc(p-Vector2(0,r*.2),r*.4,PI,TAU*1.1,16,color,w,true)
+			draw_line(p+Vector2(r*.3,0),p+Vector2(0,r*.35),color,w,true)
+			draw_circle(p+Vector2(0,r*.75),w*.8,color)
+
+func _arrow(p: Vector2, direction: Vector2, color: Color, radius: float=4.0) -> void:
+	var side := Vector2(-direction.y,direction.x)
+	draw_polyline(PackedVector2Array([p-direction*radius+side*radius*.7,p+direction*radius,p-direction*radius-side*radius*.7]),color,1.5,true)
+
+func _dashed(a: Vector2, b: Vector2, color: Color) -> void:
+	var length := a.distance_to(b)
+	if length < 1: return
+	for n in range(int(length/10.0)+1):
+		var start := float(n)*10.0
+		draw_line(a.lerp(b,start/length),a.lerp(b,minf(start+5,length)/length),color,1.2,true)
+
+func _plate(background: Color, border: Color, corner: int) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color=background;style.border_color=border
+	style.set_corner_radius_all(corner);style.set_border_width_all(1)
+	return style
+
+func _draw_chrome() -> void:
+	var font := get_theme_default_font()
+	draw_rect(Rect2(0,0,size.x,49),Color("0d1c24"))
+	draw_line(Vector2(0,49),Vector2(size.x,49),Color("2b424a"),1)
+	draw_string(font,Vector2(15,22),"遗境地图",HORIZONTAL_ALIGNMENT_LEFT,maxf(20,size.x-242),15,GOLD)
+	if size.x>430:draw_string(font,Vector2(15,40),"拖动探索 · 双指缩放",HORIZONTAL_ALIGNMENT_LEFT,190,11,MUTED)
+	draw_rect(Rect2(0,size.y-34,size.x,34),Color("0d1c24"))
+	draw_line(Vector2(0,size.y-34),Vector2(size.x,size.y-34),Color("2b424a"),1)
+	var x := 17.0
+	for entry in [[CYAN,"可前往"],[Color("c6a3e3"),"珍稀点"],[Color("d88b7e"),"危险"]]:
+		draw_circle(Vector2(x,size.y-16),3,entry[0])
+		draw_string(font,Vector2(x+9,size.y-12),entry[1],HORIZONTAL_ALIGNMENT_LEFT,-1,11,entry[0])
+		x+=76
+	if size.x>360:
+		draw_string(font,Vector2(size.x-104,size.y-12),"探索 %d / %d" % [int(graph.get("explored",0)),rooms.size()-1],HORIZONTAL_ALIGNMENT_RIGHT,88,11,MUTED)
+	draw_rect(Rect2(Vector2.ZERO,size),Color("35515a"),false,1)
 
 func _clamp_offset() -> void:
-	offset.x = clampf(offset.x, minf(20,size.x-WORLD.x*zoom-20),20)
-	offset.y = clampf(offset.y, minf(20,size.y-WORLD.y*zoom-20),20)
+	var view := _view_rect()
+	for axis in range(2):
+		var extent: float = WORLD[axis]*zoom
+		if extent<=view.size[axis]: offset[axis]=view.position[axis]+(view.size[axis]-extent)/2
+		else: offset[axis]=clampf(offset[axis],view.end[axis]-extent-24,view.position[axis]+24)
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
-		if event.pressed and _touch_id == -1:
-			_touch_id = event.index; _begin(event.position)
-		elif not event.pressed and event.index == _touch_id:
-			_touch_id = -1; _end(event.position)
+		if event.pressed:
+			_touches[event.index]=event.position
+			if _touches.size()==1: _touch_id=event.index;_begin(event.position)
+			else: _pinching=true;_dragged=true;_velocity=Vector2.ZERO
+		else:
+			_touches.erase(event.index)
+			if _touches.is_empty():
+				if _pinching: _pressed=false
+				else: _end(event.position)
+				_touch_id=-1;_pinching=false
+			elif _touches.size()==1:
+				_touch_id=int(_touches.keys()[0]);_last=_touches[_touch_id]
 		accept_event()
-	elif event is InputEventScreenDrag and event.index == _touch_id:
-		_move(event.position); accept_event()
-	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and _touch_id == -1:
-		if event.pressed: _begin(event.position)
-		else: _end(event.position)
+	elif event is InputEventScreenDrag and _touches.has(event.index):
+		if _touches.size()>=2:
+			var ids := _touches.keys()
+			var before_a: Vector2=_touches[ids[0]];var before_b: Vector2=_touches[ids[1]]
+			_touches[event.index]=event.position
+			var after_a: Vector2=_touches[ids[0]];var after_b: Vector2=_touches[ids[1]]
+			var old_distance := before_a.distance_to(before_b)
+			if old_distance>5:zoom_at((before_a+before_b)/2,zoom*after_a.distance_to(after_b)/old_distance)
+			offset+=(after_a+after_b-before_a-before_b)/2;_clamp_offset();queue_redraw()
+		else:
+			_touches[event.index]=event.position;_move(event.position)
 		accept_event()
-	elif event is InputEventMouseMotion and _pressed and _touch_id == -1:
-		_move(event.position); accept_event()
+	elif event is InputEventMouseButton and _touch_id==-1:
+		if event.button_index==MOUSE_BUTTON_LEFT:
+			if event.pressed:_begin(event.position)
+			else:_end(event.position)
+			accept_event()
+		elif event.pressed and event.button_index in [MOUSE_BUTTON_WHEEL_UP,MOUSE_BUTTON_WHEEL_DOWN]:
+			zoom_at(event.position,zoom*(1.12 if event.button_index==MOUSE_BUTTON_WHEEL_UP else 1.0/1.12));accept_event()
+	elif event is InputEventMouseMotion and _pressed and _touch_id==-1:
+		_move(event.position);accept_event()
+	elif event is InputEventMagnifyGesture:
+		zoom_at(event.position,zoom*event.factor);accept_event()
 
 func _begin(at: Vector2) -> void:
-	_pressed = true; _dragged = false; _last = at; _start = at
+	if not _view_rect().has_point(at):return
+	_pressed=true;_dragged=false;_last=at;_start=at;_velocity=Vector2.ZERO
+	_last_motion_ms=Time.get_ticks_msec()
+
 func _move(at: Vector2) -> void:
-	if not _pressed: return
-	if at.distance_to(_start) > 10: _dragged = true
+	if not _pressed:return
+	if at.distance_to(_start)>7:_dragged=true
 	if _dragged:
-		offset += at - _last; _clamp_offset(); queue_redraw()
-	_last = at
+		var now := Time.get_ticks_msec()
+		var delta := maxf(.008,float(now-_last_motion_ms)/1000.0)
+		_velocity=_velocity.lerp((at-_last)/delta,.6).limit_length(1800)
+		offset+=at-_last;_clamp_offset();queue_redraw();_last_motion_ms=now
+	_last=at
+
 func _end(at: Vector2) -> void:
-	if not _pressed: return
-	_pressed = false
-	if not _dragged and at.distance_to(_start) < 10: _activate.call_deferred(at)
+	if not _pressed:return
+	_pressed=false
+	if not _dragged and at.distance_to(_start)<7:_activate.call_deferred(at)
+	elif Time.get_ticks_msec()-_last_motion_ms>120:_velocity=Vector2.ZERO
+
+func _process(delta: float) -> void:
+	if _pressed or _velocity.length()<4:return
+	offset+=_velocity*delta
+	_velocity=_velocity.move_toward(Vector2.ZERO,2300*delta)
+	_clamp_offset();queue_redraw()
+
 func _activate(at: Vector2) -> void:
-	if not is_inside_tree(): return
+	if not is_inside_tree() or not _view_rect().has_point(at):return
+	var candidate := ""
+	var distance := 22.0
 	for id in rooms:
-		if room_point(id).distance_to(at) <= clampf(30*zoom,15,30):
-			room_selected.emit(id)
-			return
+		var d := room_point(id).distance_to(at)
+		if d<distance: candidate=str(id);distance=d
+	if candidate.is_empty():return
+	var previous := selected_room_id
+	selected_room_id=candidate
+	room_previewed.emit(candidate)
+	queue_redraw()
+	# Existing callers keep single-tap navigation; split-workspace callers
+	# subscribe to previews and use a clear dedicated travel button.
+	if previous==candidate or room_previewed.get_connections().is_empty():room_selected.emit(candidate)
+
+func zoom_at(anchor: Vector2, next_zoom: float) -> void:
+	var world := (anchor-offset)/zoom
+	zoom=clampf(next_zoom,_minimum_zoom(),1.8)
+	offset=anchor-world*zoom
+	_velocity=Vector2.ZERO;_clamp_offset();queue_redraw()
+
+func _content_bounds() -> Rect2:
+	if rooms.is_empty():return Rect2(Vector2.ZERO,WORLD)
+	var first := true
+	var bounds := Rect2()
+	for id in rooms:
+		var point := _world_point(rooms[id])/zoom
+		if first:bounds=Rect2(point,Vector2.ONE);first=false
+		else:bounds=bounds.expand(point)
+	return Rect2(bounds.position-Vector2(85,145),bounds.size+Vector2(170,235))
+
+func _minimum_zoom() -> float:
+	var view := _view_rect()
+	var content := _content_bounds()
+	return clampf(minf(view.size.x/content.size.x,view.size.y/content.size.y),.2,1.0)
 
 func fit_view() -> void:
-	zoom=clampf(minf((size.x-20)/WORLD.x,(size.y-20)/WORLD.y),0.25,1.0)
-	offset=(size-WORLD*zoom)/2
-	queue_redraw()
+	zoom=_minimum_zoom()
+	var view := _view_rect()
+	offset=view.get_center()-_content_bounds().get_center()*zoom
+	_velocity=Vector2.ZERO;queue_redraw()
 
 func focus_current() -> void:
-	zoom=1.0
+	zoom=maxf(_minimum_zoom(),.75)
 	var current: Dictionary=rooms.get(str(graph.get("currentRoomId","")),{})
-	if not current.is_empty():offset=size/2-_world_point(current)
-	_clamp_offset();queue_redraw()
+	if not current.is_empty():offset=_view_rect().get_center()-_world_point(current)
+	selected_room_id=str(graph.get("currentRoomId",""))
+	_velocity=Vector2.ZERO;_clamp_offset();queue_redraw()

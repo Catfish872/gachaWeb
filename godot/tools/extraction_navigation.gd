@@ -26,7 +26,7 @@ static func next_room(x, policy: String, health := 1.0) -> String:
  var current: String = map.currentRoomId
  var boss: String = map.bossRoomId
  var explored := int(map.explored)
- var target_count := 4 if policy == "shortest" else (7 if policy == "poi" else 11)
+ var target_count: int = int(map.requiredExploration) if policy == "shortest" else (mini(map.rooms.size()-2,10) if policy == "poi" else map.rooms.size()-2)
  if explored >= target_count and map.bossUnlocked:
   var boss_path := path(map,current,boss,true)
   if not boss_path.is_empty(): return boss_path[0]
@@ -69,7 +69,7 @@ static func shortest_gate_step(map: Dictionary) -> String:
   if room.id == map.bossRoomId: boss = i
   if room.visited and room.type not in ["entry","boss"]: mask |= 1 << i
  var queue: Array = [[start, mask, -1]]
- var seen: Dictionary = {mask * 16 + start:true}
+ var seen: Dictionary = {mask * 32 + start:true}
  var cursor := 0
  while cursor < queue.size():
   var node: Array = queue[cursor]
@@ -85,7 +85,7 @@ static func shortest_gate_step(map: Dictionary) -> String:
    if map.rooms[next].type not in ["entry","boss"]: next_mask |= 1 << next
    var first: int = next if int(node[2]) < 0 else int(node[2])
    if next == boss: return map.rooms[first].id
-   var key := next_mask * 16 + next
+   var key := next_mask * 32 + next
    if seen.has(key): continue
    seen[key] = true
    queue.append([next,next_mask,first])

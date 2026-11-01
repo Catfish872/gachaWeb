@@ -1,5 +1,5 @@
 extends "res://tools/simulate_extraction.gd"
-## Actual battles: starter reinvests 3,840 extraction credits in three medkits.
+## Actual battles: starter reinvests 315 gold in three medkits.
 func _init() -> void:
  for path in ["tools/simulate_extraction.gd","tools/simulate_extraction_reinvestment.gd","tools/extraction_navigation.gd","scripts/game_model.gd","scripts/extraction_model.gd","scripts/battle_model.gd","data/extraction.json","data/catalog.json"]:
   input_hashes[path] = simulation_hash(path)
@@ -12,14 +12,14 @@ func _init() -> void:
   for policy in ["shortest","poi","completionist"]:
    var group: Array = []
    for sample in range(16):
-    var row := simulate(starter,0,3,policy,1297000+sample)
+    var row := simulate(starter,0,3,policy,9520000+sample)
     group.append(row)
     rows.append(row)
    aggregate.append(summarize(group))
  for path in input_hashes:
   if simulation_hash(path) != input_hashes[path]: errors.append("input changed: "+path)
- var report := {"method":"Real battles, paired lv1 two-character profiles, no relic/level/constellation changes; second profile starts with wallet fixture to buy three medkits at 3840. Both use actual core plan_smart_loot/apply_smart_loot confirmed positive-value proposals (existing equipment and consumables protected, outgoing loot retained in container), consume below75% health, all other rules inherited. Departure RNG state is restored to pre-purchase fixture state, making initial maps identical despite UID generation during purchases. Thereafter route/loot RNG evolves naturally. Tests preparation with bag-space tradeoff; no fabricated wins, health, battle seeds or run loot.","inputHashes":input_hashes,"totalRuns":rows.size(),"totalBattles":total_battles,"errors":errors,"aggregate":aggregate,"rows":rows}
- var file := FileAccess.open("res://validation/extraction-map-reinvestment.json",FileAccess.WRITE)
+ var report := {"method":"Real battles, paired lv1 two-character profiles, no relic/level/constellation changes; second profile starts with wallet fixture to buy three medkits at 315. Both use actual core plan_smart_loot/apply_smart_loot confirmed positive-value proposals (existing equipment and consumables protected, outgoing loot retained in container), consume below75% health, all other rules inherited. Departure RNG state is restored to pre-purchase fixture state, making initial maps identical despite UID generation during purchases. Thereafter route/loot RNG evolves naturally. Tests preparation with bag-space tradeoff; no fabricated wins, health, battle seeds or run loot.","inputHashes":input_hashes,"totalRuns":rows.size(),"totalBattles":total_battles,"errors":errors,"aggregate":aggregate,"rows":rows}
+ var file := FileAccess.open("res://validation/extraction-v6-reinvestment.json",FileAccess.WRITE)
  file.store_string(JSON.stringify(report,"\t"))
  print(JSON.stringify(aggregate))
  print("REINVESTMENT %d runs %d battles %d errors" % [rows.size(),total_battles,errors.size()])
@@ -37,10 +37,10 @@ func simulate(profile: Dictionary, rank: int, exit_act: int, policy: String, see
   m.state.resources.gold = 1000000
   for id in profile.team:
    for slot in m.catalog.RelicSlots:
-    var relic: Dictionary = m.generate_relic(4, slot.id)
+    var relic: Dictionary = m.generate_relic(5, slot.id)
     must(m.add_relic(relic), "fixture generated relic")
     must(m.equip_relic(relic.uid,id), "fixture equip relic")
-    for upgrade in range(10): must(m.upgrade_relic(relic.uid), "fixture upgrade relic")
+    for upgrade in range(25): must(m.upgrade_relic(relic.uid), "fixture upgrade relic")
  var x = m.extraction
  if trial_hp > 0: x.data.balance.rankHp[rank] = trial_hp
  if trial_atk > 0: x.data.balance.rankAtk[rank] = trial_atk
@@ -48,7 +48,7 @@ func simulate(profile: Dictionary, rank: int, exit_act: int, policy: String, see
  var departure_rng_state = m.rng.state
  var supply_cost := 0
  if profile.get("supplies", false):
-  x.state().credits = 10000
+  m.state.resources.gold = 10000
   for supply in range(3):
    var bought: Dictionary = x.buy_supply("medkit")
    if must(bought, "buy departure medkit"):
@@ -61,6 +61,9 @@ func simulate(profile: Dictionary, rank: int, exit_act: int, policy: String, see
  for room in x.map_state().rooms: row.vaultsGenerated += int(room.type == "vault")
  for guard in range(500):
   if not x.active(): break
+  if not x.growth_choices().is_empty():
+   must(x.choose_growth(x.growth_choices()[0].choiceId), "resolve earned growth")
+   continue
   match str(x.run().phase):
    "route":
     var target: String = Navigation.next_room(x, policy, party_health(x))
@@ -96,6 +99,11 @@ func simulate(profile: Dictionary, rank: int, exit_act: int, policy: String, see
     if b.state.phase == "victory" and x.run().room.type == "vault": row.vaultsWon += 1
     if not must(x.settle_battle(begun.config, b.state), "settle actual battle"): break
    "room", "boss_exit":
+    for action in x.room_actions():
+     if action.enabled and action.cost == 0:
+      must(x.choose_room_action(action.id), "active room choice")
+      break
+    if not x.growth_choices().is_empty(): continue
     loot_room(x, row)
     use_supplies(x)
     if str(x.run().phase) == "room":

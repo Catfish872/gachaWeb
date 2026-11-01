@@ -1,0 +1,157 @@
+{
+  "generator": "built-in imagegen",
+  "source_sha256": "76d5fd0d5f45f10d197aa169b1bc622ed96ff30c2c3db882fcf00d184fa7bd8e",
+  "purpose": "nine transparent full-body fantasy enemy sprites; replaces framed battle SVG portraits",
+  "items": [
+    {
+      "id": "wolf",
+      "cell": [
+        0,
+        0,
+        418,
+        418
+      ],
+      "alpha_bounds": [
+        19,
+        15,
+        418,
+        418
+      ],
+      "sha256": "12626e3722eb0968de8365cf8bc13356df980f4d11f7be039798a07b6fd4c8f4"
+    },
+    {
+      "id": "goblin",
+      "cell": [
+        418,
+        0,
+        836,
+        418
+      ],
+      "alpha_bounds": [
+        0,
+        13,
+        418,
+        414
+      ],
+      "sha256": "e3361428f341ea433de5bca327a12f553ec7ddc2af772a325db2d0399a81e26e"
+    },
+    {
+      "id": "fire_imp",
+      "cell": [
+        836,
+        0,
+        1254,
+        418
+      ],
+      "alpha_bounds": [
+        1,
+        48,
+        390,
+        408
+      ],
+      "sha256": "bab096132dd21ced1c5ba5ebd3df853c753e58b1f5cf897f5e7998b2fc75f289"
+    },
+    {
+      "id": "stone_golem",
+      "cell": [
+        0,
+        418,
+        418,
+        836
+      ],
+      "alpha_bounds": [
+        47,
+        0,
+        418,
+        394
+      ],
+      "sha256": "84dc2231bd42374d9f8cde2697773995509ce815d091753564934d64370ae5fc"
+    },
+    {
+      "id": "ice_wolf",
+      "cell": [
+        418,
+        418,
+        836,
+        836
+      ],
+      "alpha_bounds": [
+        0,
+        21,
+        418,
+        418
+      ],
+      "sha256": "78bb855cccbdb4676b7fe3e924167498bd4915a327b9ec60ff6fcc17e9588ea9"
+    },
+    {
+      "id": "thunder_hawk",
+      "cell": [
+        836,
+        418,
+        1254,
+        836
+      ],
+      "alpha_bounds": [
+        0,
+        7,
+        398,
+        418
+      ],
+      "sha256": "c1c77df18526ddad8b824af79fa23f5cde9770d504bf85311408b7eafbe6e4b3"
+    },
+    {
+      "id": "dark_knight",
+      "cell": [
+        0,
+        836,
+        418,
+        1254
+      ],
+      "alpha_bounds": [
+        27,
+        15,
+        418,
+        388
+      ],
+      "sha256": "8a918afed45c2a0faf9fb70e78770c1a3a2a4a936fe115439a48fe095559c830"
+    },
+    {
+      "id": "boss_flame_lord",
+      "cell": [
+        418,
+        836,
+        836,
+        1254
+      ],
+      "alpha_bounds": [
+        3,
+        0,
+        418,
+        394
+      ],
+      "sha256": "cb50974a233d5d896fbbbe2c9476d45904abe121333d033bf8bf66ac6a5e0413"
+    },
+    {
+      "id": "boss_storm_witch",
+      "cell": [
+        836,
+        836,
+        1254,
+        1254
+      ],
+      "alpha_bounds": [
+        19,
+        0,
+        396,
+        378
+      ],
+      "sha256": "5f169ff6e794c7a3a54604de6db64f399ef40e5f52dc63d446ec3fbd3fcd0231"
+    }
+  ],
+  "character_sprite": {
+    "id": "kaldi",
+    "path": "res://assets/characters/kaldi-battle.png",
+    "sha256": "96415b2ae61d06f2775dd6ca846ea0ef77fd90008a7e2b9f2312adc986a7a465",
+    "description": "Full-body dragonborn warrior matching catalog; previous dragon splash art retained."
+  }
+}

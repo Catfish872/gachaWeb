@@ -7,7 +7,7 @@ var catalog := {}
 var loot_weights := {}
 var masks := {}
 var packing_checks := 0
-var report := {"scope":"Conditional loot generation only; no combat, survival or playtime claims. Collection bag uses hindsight packing (density or collection priority), not default autopick; bitmask placement cross-checked against core.","seed":739192,"groups":[],"footprints":[],"collection":[]}
+var report := {"scope":"V6 unified gold; conditional standardized loot generation only, not a prediction of the 19-room map. No combat, survival, growth choice or playtime claims. Actual-map economics are in extraction-v6-holdout.json. Collection bag uses hindsight packing (density or collection priority), not default autopick; bitmask placement cross-checked against core.","seed":739192,"groups":[],"footprints":[],"collection":[]}
 func _init() -> void:
  rng.seed = 739192
  var game = Game.new("")
@@ -39,7 +39,7 @@ func _init() -> void:
      var boss_set := []; var gold := false; var red := false
      for item in ex.containers()[0].items:
       var d = ex.item_def(item.itemId)
-      ids.append(item.itemId); boss_set.append(item.itemId); counts[int(d.rarity)] += 1; values.append(d.value); cells.append(d.width*d.height)
+      ids.append(item.itemId); boss_set.append(item.itemId); counts[int(d.rarity)] += 1; values.append(ex.item_value(item)); cells.append(d.width*d.height)
       gold = gold or d.rarity >= 4; red = red or d.rarity == 5
      boss_sets.append(boss_set)
      gold_containers += int(gold); red_containers += int(red)
@@ -87,7 +87,7 @@ func _init() -> void:
        packing_checks += 1
       if placement != 0:
        occupied |= placement
-       collection[id] = true; value += int(ex.item_def(id).value)
+       collection[id] = true; value += ex.item_value({"itemId":id,"appraisalRisk":risk})
      retained_value.append(value)
      if checkpoints.has(run_index):
       checkpoints[run_index].append(collection.size()); seen_checks[run_index].append(seen.size())
@@ -95,7 +95,7 @@ func _init() -> void:
    var no_gold := golds.count(0)/float(golds.size())
    report.collection.append({"risk":risk,"exitAct":exit_act,"policy":policy,"successfulRuns":4000,"cohorts":40,"offeredUnique10":summary(seen_checks[10]),"offeredUnique30":summary(seen_checks[30]),"offeredUnique100":summary(seen_checks[100]),"distinct10":summary(checkpoints[10]),"distinct30":summary(checkpoints[30]),"distinct100":summary(checkpoints[100]),"offeredCells":summary(offered_cells),"offeredRed":summary(reds),"retainedValueOptimistic":summary(retained_value),"noGoldOfferChance":no_gold,"threeNoGoldIndependent":pow(no_gold,3)})
  report.packingEquivalenceChecks = packing_checks
- var file = FileAccess.open("res://validation/extraction-loot-economy.json",FileAccess.WRITE)
+ var file = FileAccess.open("res://validation/extraction-v6-loot-economy.json",FileAccess.WRITE)
  file.store_string(JSON.stringify(report,"  ")); file.close()
  print("LOOT_ECONOMY_COMPLETE groups=",report.groups.size()," collection=",report.collection.size())
  quit()

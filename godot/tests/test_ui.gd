@@ -58,19 +58,20 @@ func run() -> void:
 	app.navigate("growth")
 	check("尚未获得" in texts(app.main_body), "Unowned codex detail available")
 	check("对处于燃烧状态" in texts(app.main_body), "Passive description exposed")
+	find_button(app.main_body, "技能").pressed.emit()
 	check("炎牙斩" in texts(app.main_body), "Skills exposed")
 	app.navigate("shop")
 	var gems_before: int = app.model.state.resources.diamonds
-	find_button(app.main_body, "模拟领取").pressed.emit()
+	find_button(app.main_body, "免费领取").pressed.emit()
 	check(app.model.state.resources.diamonds > gems_before, "Simulated recharge button grants bundle")
 	app.navigate("summon")
 	var saved_balance: int = app.model.state.resources.diamonds
 	app.model.state.resources.diamonds = 15
 	app.navigate("summon")
-	check(find_button(app.main_body, "祈愿一次").disabled and find_button(app.main_body, "祈愿十次").disabled, "Insufficient currency disables summon buttons")
+	check(find_button(app.main_body, "祈愿1次").disabled and find_button(app.main_body, "祈愿10次").disabled, "Insufficient currency disables summon buttons")
 	app.model.state.resources.diamonds = 160
 	app.navigate("summon")
-	check(not find_button(app.main_body, "祈愿一次").disabled and find_button(app.main_body, "祈愿十次").disabled, "Affordability handles single and ten-pull independently")
+	check(not find_button(app.main_body, "祈愿1次").disabled and find_button(app.main_body, "祈愿10次").disabled, "Affordability handles single and ten-pull independently")
 	app.model.state.resources.diamonds = saved_balance
 	app.navigate("summon")
 	app.model.rng.seed = 45
@@ -97,6 +98,7 @@ func run() -> void:
 	var old_exp: int = app.model.state.ownedCharacters.kaldi.exp
 	find_button(app.main_body, "训练一次").pressed.emit()
 	check(app.model.state.ownedCharacters.kaldi.level == 2, "Training button grants level")
+	find_button(app.main_body, "命座").pressed.emit()
 	find_button(app.main_body, "解锁").pressed.emit()
 	check(app.model.state.ownedCharacters.kaldi.constellation == 1, "Constellation button unlocks")
 	for i in range(8):
@@ -112,7 +114,7 @@ func run() -> void:
 	check(relic.equippedBy == "kaldi", "Relic equip UI")
 	find_button(app.main_body, "卸下").pressed.emit()
 	check(relic.equippedBy == null, "Relic unequip UI")
-	find_button(app.main_body, "强化至 +25").pressed.emit()
+	find_button(app.main_body, "升满").pressed.emit()
 	find_button(app.overlay, "确认").pressed.emit()
 	check(relic.level == 25, "Relic max upgrade confirmed")
 	app._batch_salvage()
@@ -212,7 +214,7 @@ func run() -> void:
 	# each nested choice has been explicitly resolved through its UI button.
 	app.model.reset_abyss()
 	app.navigate("abyss")
-	var automatic: CheckBox = find_button(app.main_body, "连续自动挑战")
+	var automatic: BaseButton = find_button(app.main_body, "连续挑战")
 	automatic.button_pressed = true
 	find_button(app.main_body, "挑战第").pressed.emit()
 	for floor_number in range(1, 4):
@@ -232,10 +234,10 @@ func run() -> void:
 			app.main_body.find_child("NodeChoice_recover", true, false).pressed.emit()
 		else:
 			check(app.model.state.abyss.rogue.pendingChoices.size() == 3, "Three actual abyss choices shown")
-			find_button(app.main_body, "选择此项回响").pressed.emit()
+			find_button(app.main_body, "融入构筑").pressed.emit()
 	check(app.current_screen == "battle" and app.battle_config.floor == 4, "Resolved choices resume requested continuous run")
 	check(app.model.state.abyss.rogue.selectedRewards.size() == 2, "Both floor one and three blessings saved")
-	find_button(app.main_body, "自动 · 开启").pressed.emit()
+	find_button(app.main_body, "自动").pressed.emit()
 	check(not app.abyss_auto_continue and not app.battle_auto, "Turning auto off cancels continuous advancement")
 	app.navigate("abyss")
 	find_button(app.overlay, "确认").pressed.emit()
@@ -285,6 +287,8 @@ func run() -> void:
 		check(app.main_body.get_combined_minimum_size().x <= app.main_body.get_parent().size.x + 2, "Portrait page fits horizontally: " + page + " min=" + str(app.main_body.get_combined_minimum_size().x) + " available=" + str(app.main_body.get_parent().size.x))
 	app.queue_free()
 	await frame()
+	# AudioServer releases queued streaming buffers asynchronously.
+	await create_timer(0.3).timeout
 	if failures.is_empty():
 		print("PASS UI: %d checks" % checks)
 		quit(0)

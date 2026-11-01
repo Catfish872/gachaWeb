@@ -181,5 +181,6 @@ func run():
  native_updater.free()
  app.queue_free()
  await process_frame
+ await create_timer(0.3).timeout
  print("UPDATE TESTS: %d checks, %d failures" % [checks,fails])
  quit(1 if fails else 0)

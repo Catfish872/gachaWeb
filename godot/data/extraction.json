@@ -7,11 +7,12 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 70,
+      "value": 5,
       "icon": "res://assets/items/extraction/wire.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 70
     },
     "bolts": {
       "name": "矮人工坊铆钉",
@@ -19,11 +20,12 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 150,
+      "value": 10,
       "icon": "res://assets/items/extraction/bolts.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 150
     },
     "bandage": {
       "name": "草药绷带",
@@ -31,13 +33,14 @@
       "width": 1,
       "height": 1,
       "kind": "consumable",
-      "value": 80,
+      "value": 5,
       "icon": "res://assets/items/extraction/bandage.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员15%最大生命。消耗一件物品。",
       "heal": 0.15,
-      "buyPrice": 160,
-      "category": "补给"
+      "buyPrice": 25,
+      "category": "补给",
+      "legacyValue": 80
     },
     "ration": {
       "name": "旅人干粮",
@@ -45,13 +48,14 @@
       "width": 2,
       "height": 1,
       "kind": "consumable",
-      "value": 180,
+      "value": 15,
       "icon": "res://assets/items/extraction/ration.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员20%最大生命。消耗一件物品。",
       "heal": 0.2,
-      "buyPrice": 360,
-      "category": "补给"
+      "buyPrice": 30,
+      "category": "补给",
+      "legacyValue": 180
     },
     "circuit": {
       "name": "导魔符板",
@@ -59,11 +63,12 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 240,
+      "value": 20,
       "icon": "res://assets/items/extraction/circuit.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 240
     },
     "lens": {
       "name": "窥星透镜",
@@ -71,11 +76,12 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 130,
+      "value": 10,
       "icon": "res://assets/items/extraction/lens.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 130
     },
     "vest": {
       "name": "符纹轻甲",
@@ -83,7 +89,7 @@
       "width": 2,
       "height": 3,
       "kind": "equipment",
-      "value": 880,
+      "value": 75,
       "icon": "res://assets/items/extraction/vest.png",
       "effects": [
         {
@@ -93,8 +99,9 @@
         }
       ],
       "description": "全队最大生命提高15%。占用一个装备位。",
-      "buyPrice": 1760,
-      "category": "装备"
+      "buyPrice": 145,
+      "category": "装备",
+      "legacyValue": 880
     },
     "medkit": {
       "name": "炼金药囊",
@@ -102,13 +109,14 @@
       "width": 2,
       "height": 2,
       "kind": "consumable",
-      "value": 640,
+      "value": 55,
       "icon": "res://assets/items/extraction/medkit.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员35%最大生命。消耗一件物品。",
       "heal": 0.35,
-      "buyPrice": 1280,
-      "category": "补给"
+      "buyPrice": 105,
+      "category": "补给",
+      "legacyValue": 640
     },
     "battery": {
       "name": "充能晶匣",
@@ -116,11 +124,12 @@
       "width": 1,
       "height": 2,
       "kind": "loot",
-      "value": 370,
+      "value": 30,
       "icon": "res://assets/items/extraction/battery.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 370
     },
     "sensor": {
       "name": "元素探针",
@@ -128,11 +137,12 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 840,
+      "value": 70,
       "icon": "res://assets/items/extraction/sensor.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 840
     },
     "blade": {
       "name": "鸣雷短刃",
@@ -140,7 +150,7 @@
       "width": 1,
       "height": 3,
       "kind": "equipment",
-      "value": 690,
+      "value": 60,
       "icon": "res://assets/items/extraction/blade.png",
       "effects": [
         {
@@ -150,8 +160,9 @@
         }
       ],
       "description": "全队攻击提高15%。占用一个装备位。",
-      "buyPrice": 1380,
-      "category": "装备"
+      "buyPrice": 115,
+      "category": "装备",
+      "legacyValue": 690
     },
     "shield": {
       "name": "守誓灵盾",
@@ -159,7 +170,7 @@
       "width": 2,
       "height": 2,
       "kind": "equipment",
-      "value": 1010,
+      "value": 85,
       "icon": "res://assets/items/extraction/shield.png",
       "effects": [
         {
@@ -170,8 +181,9 @@
       ],
       "description": "全队防御提高25%。占用一个装备位。",
       "category": "装备",
-      "buyPrice": 4040,
-      "buyMinRisk": 1
+      "buyPrice": 335,
+      "buyMinRisk": 1,
+      "legacyValue": 1010
     },
     "processor": {
       "name": "星纹符片",
@@ -179,11 +191,12 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 550,
+      "value": 45,
       "icon": "res://assets/items/extraction/processor.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 550
     },
     "crystal": {
       "name": "紫晶标本",
@@ -191,11 +204,12 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 2470,
+      "value": 205,
       "icon": "res://assets/items/extraction/crystal.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 2470
     },
     "scope": {
       "name": "鹰眼护符",
@@ -203,7 +217,7 @@
       "width": 2,
       "height": 1,
       "kind": "equipment",
-      "value": 1360,
+      "value": 115,
       "icon": "res://assets/items/extraction/scope.png",
       "effects": [
         {
@@ -214,8 +228,9 @@
       ],
       "description": "全队暴击率提高12个百分点。占用一个装备位。",
       "category": "装备",
-      "buyPrice": 5440,
-      "buyMinRisk": 2
+      "buyPrice": 455,
+      "buyMinRisk": 2,
+      "legacyValue": 1360
     },
     "injector": {
       "name": "生命露剂",
@@ -223,12 +238,13 @@
       "width": 1,
       "height": 1,
       "kind": "consumable",
-      "value": 750,
+      "value": 60,
       "icon": "res://assets/items/extraction/injector.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员60%最大生命。消耗一件物品。",
       "heal": 0.6,
-      "category": "补给"
+      "category": "补给",
+      "legacyValue": 750
     },
     "gold_watch": {
       "name": "古代金怀表",
@@ -236,11 +252,12 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 1530,
+      "value": 130,
       "icon": "res://assets/items/extraction/gold_watch.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 1530
     },
     "idol": {
       "name": "黄金神像",
@@ -248,11 +265,12 @@
       "width": 2,
       "height": 3,
       "kind": "loot",
-      "value": 10260,
+      "value": 855,
       "icon": "res://assets/items/extraction/idol.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 10260
     },
     "reactor": {
       "name": "微型星核",
@@ -260,7 +278,7 @@
       "width": 2,
       "height": 2,
       "kind": "equipment",
-      "value": 7560,
+      "value": 630,
       "icon": "res://assets/items/extraction/reactor.png",
       "effects": [
         {
@@ -270,8 +288,9 @@
       ],
       "description": "每场战斗开始时全队获得25点能量。占用一个装备位。",
       "category": "装备",
-      "buyPrice": 30240,
-      "buyMinRisk": 3
+      "buyPrice": 2520,
+      "buyMinRisk": 3,
+      "legacyValue": 7560
     },
     "crown": {
       "name": "失落王冠",
@@ -279,11 +298,12 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 8280,
+      "value": 690,
       "icon": "res://assets/items/extraction/crown.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 8280
     },
     "red_core": {
       "name": "赤焰灵核",
@@ -291,11 +311,12 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 17000,
+      "value": 1415,
       "icon": "res://assets/items/extraction/red_core.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 17000
     },
     "archive": {
       "name": "封印秘卷",
@@ -303,11 +324,12 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 9500,
+      "value": 790,
       "icon": "res://assets/items/extraction/archive.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 9500
     },
     "prism": {
       "name": "虹光棱镜",
@@ -315,7 +337,7 @@
       "width": 2,
       "height": 2,
       "kind": "equipment",
-      "value": 21000,
+      "value": 1750,
       "icon": "res://assets/items/extraction/prism.png",
       "effects": [
         {
@@ -330,7 +352,8 @@
         }
       ],
       "description": "全队攻击提高25%、最大生命提高15%。占用一个装备位。",
-      "category": "装备"
+      "category": "装备",
+      "legacyValue": 21000
     },
     "dragon_egg": {
       "name": "龙纹化石",
@@ -338,11 +361,12 @@
       "width": 3,
       "height": 3,
       "kind": "loot",
-      "value": 51750,
+      "value": 4310,
       "icon": "res://assets/items/extraction/dragon_egg.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
-      "category": "遗迹珍藏"
+      "category": "遗迹珍藏",
+      "legacyValue": 51750
     },
     "cloth": {
       "name": "旅织布卷",
@@ -351,10 +375,11 @@
       "height": 2,
       "kind": "loot",
       "category": "纺织品",
-      "value": 210,
+      "value": 20,
       "icon": "res://assets/items/extraction/cloth.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 210
     },
     "ceramic": {
       "name": "古陶碎片",
@@ -363,10 +388,11 @@
       "height": 1,
       "kind": "loot",
       "category": "材料",
-      "value": 100,
+      "value": 10,
       "icon": "res://assets/items/extraction/ceramic.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 100
     },
     "fuse": {
       "name": "导魔石芯",
@@ -375,10 +401,11 @@
       "height": 1,
       "kind": "loot",
       "category": "符文构件",
-      "value": 70,
+      "value": 5,
       "icon": "res://assets/items/extraction/fuse.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 70
     },
     "tape": {
       "name": "树脂封带",
@@ -387,10 +414,11 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 180,
+      "value": 15,
       "icon": "res://assets/items/extraction/tape.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 180
     },
     "scrap_plate": {
       "name": "旧铁甲片",
@@ -399,10 +427,11 @@
       "height": 3,
       "kind": "loot",
       "category": "材料",
-      "value": 360,
+      "value": 30,
       "icon": "res://assets/items/extraction/scrap_plate.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 360
     },
     "tin_cup": {
       "name": "锡制旅杯",
@@ -411,10 +440,11 @@
       "height": 2,
       "kind": "loot",
       "category": "日用品",
-      "value": 220,
+      "value": 20,
       "icon": "res://assets/items/extraction/tin_cup.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 220
     },
     "water_flask": {
       "name": "净泉水壶",
@@ -423,12 +453,13 @@
       "height": 2,
       "kind": "consumable",
       "category": "补给",
-      "value": 130,
+      "value": 10,
       "icon": "res://assets/items/extraction/water_flask.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员18%最大生命。消耗一件物品。",
       "heal": 0.18,
-      "buyPrice": 260
+      "buyPrice": 25,
+      "legacyValue": 130
     },
     "dried_fruit": {
       "name": "林地干果",
@@ -437,11 +468,12 @@
       "height": 1,
       "kind": "consumable",
       "category": "补给",
-      "value": 90,
+      "value": 10,
       "icon": "res://assets/items/extraction/dried_fruit.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员12%最大生命。消耗一件物品。",
-      "heal": 0.12
+      "heal": 0.12,
+      "legacyValue": 90
     },
     "spark_plug": {
       "name": "引火燧石",
@@ -450,10 +482,11 @@
       "height": 1,
       "kind": "loot",
       "category": "零件",
-      "value": 80,
+      "value": 5,
       "icon": "res://assets/items/extraction/spark_plug.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 80
     },
     "rope": {
       "name": "冒险者绳索",
@@ -462,10 +495,11 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 300,
+      "value": 25,
       "icon": "res://assets/items/extraction/rope.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 300
     },
     "gas_filter": {
       "name": "净瘴香囊",
@@ -474,10 +508,11 @@
       "height": 1,
       "kind": "loot",
       "category": "防护用品",
-      "value": 190,
+      "value": 15,
       "icon": "res://assets/items/extraction/gas_filter.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 190
     },
     "pocket_book": {
       "name": "野外手册",
@@ -486,10 +521,11 @@
       "height": 2,
       "kind": "loot",
       "category": "文献",
-      "value": 110,
+      "value": 10,
       "icon": "res://assets/items/extraction/pocket_book.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 110
     },
     "radio": {
       "name": "传声符石",
@@ -498,10 +534,11 @@
       "height": 2,
       "kind": "loot",
       "category": "传讯法器",
-      "value": 360,
+      "value": 30,
       "icon": "res://assets/items/extraction/radio.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 360
     },
     "compass": {
       "name": "寻路罗盘",
@@ -510,10 +547,11 @@
       "height": 1,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 180,
+      "value": 15,
       "icon": "res://assets/items/extraction/compass.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 180
     },
     "pliers": {
       "name": "矮人工匠钳",
@@ -522,10 +560,11 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 250,
+      "value": 20,
       "icon": "res://assets/items/extraction/pliers.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 250
     },
     "thermometer": {
       "name": "测温晶棒",
@@ -534,10 +573,11 @@
       "height": 2,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 310,
+      "value": 25,
       "icon": "res://assets/items/extraction/thermometer.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 310
     },
     "memory_card": {
       "name": "记忆符片",
@@ -546,10 +586,11 @@
       "height": 1,
       "kind": "loot",
       "category": "符文构件",
-      "value": 100,
+      "value": 10,
       "icon": "res://assets/items/extraction/memory_card.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 100
     },
     "motor": {
       "name": "魔偶齿轮",
@@ -558,10 +599,11 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 760,
+      "value": 65,
       "icon": "res://assets/items/extraction/motor.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 760
     },
     "lubricant": {
       "name": "工坊机油",
@@ -570,10 +612,11 @@
       "height": 2,
       "kind": "loot",
       "category": "炼金材料",
-      "value": 220,
+      "value": 20,
       "icon": "res://assets/items/extraction/lubricant.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 220
     },
     "saline": {
       "name": "净化药水",
@@ -582,11 +625,12 @@
       "height": 2,
       "kind": "consumable",
       "category": "补给",
-      "value": 320,
+      "value": 25,
       "icon": "res://assets/items/extraction/saline.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员28%最大生命。消耗一件物品。",
-      "heal": 0.28
+      "heal": 0.28,
+      "legacyValue": 320
     },
     "tourniquet": {
       "name": "止血药带",
@@ -595,12 +639,13 @@
       "height": 1,
       "kind": "consumable",
       "category": "补给",
-      "value": 140,
+      "value": 10,
       "icon": "res://assets/items/extraction/tourniquet.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员22%最大生命。消耗一件物品。",
       "heal": 0.22,
-      "buyPrice": 280
+      "buyPrice": 25,
+      "legacyValue": 140
     },
     "kevlar": {
       "name": "秘银织线",
@@ -609,10 +654,11 @@
       "height": 3,
       "kind": "loot",
       "category": "材料",
-      "value": 800,
+      "value": 65,
       "icon": "res://assets/items/extraction/kevlar.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 800
     },
     "boots": {
       "name": "轻羽旅靴",
@@ -621,7 +667,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 670,
+      "value": 55,
       "icon": "res://assets/items/extraction/boots.png",
       "effects": [
         {
@@ -631,7 +677,8 @@
         }
       ],
       "description": "全队速度提高10%。占用一个装备位。",
-      "buyPrice": 1340
+      "buyPrice": 110,
+      "legacyValue": 670
     },
     "lucky_coin": {
       "name": "旧王朝铜币",
@@ -640,10 +687,11 @@
       "height": 1,
       "kind": "loot",
       "category": "古物",
-      "value": 100,
+      "value": 10,
       "icon": "res://assets/items/extraction/lucky_coin.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 100
     },
     "hard_drive": {
       "name": "封印记忆匣",
@@ -652,10 +700,11 @@
       "height": 1,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 290,
+      "value": 25,
       "icon": "res://assets/items/extraction/hard_drive.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 290
     },
     "drone_rotor": {
       "name": "魔偶翼片",
@@ -664,10 +713,11 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 1650,
+      "value": 140,
       "icon": "res://assets/items/extraction/drone_rotor.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 1650
     },
     "capacitor": {
       "name": "储能晶柱",
@@ -676,10 +726,11 @@
       "height": 2,
       "kind": "loot",
       "category": "符文构件",
-      "value": 400,
+      "value": 35,
       "icon": "res://assets/items/extraction/capacitor.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 400
     },
     "camera": {
       "name": "留影晶镜",
@@ -688,10 +739,11 @@
       "height": 2,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 970,
+      "value": 80,
       "icon": "res://assets/items/extraction/camera.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 970
     },
     "silver_chain": {
       "name": "银月项链",
@@ -700,10 +752,11 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 160,
+      "value": 15,
       "icon": "res://assets/items/extraction/silver_chain.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 160
     },
     "toolbox": {
       "name": "匠师工具箱",
@@ -712,10 +765,11 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 1780,
+      "value": 150,
       "icon": "res://assets/items/extraction/toolbox.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 1780
     },
     "insulin_case": {
       "name": "寒霜药匣",
@@ -724,10 +778,11 @@
       "height": 3,
       "kind": "loot",
       "category": "疗愈用品",
-      "value": 1060,
+      "value": 90,
       "icon": "res://assets/items/extraction/insulin_case.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 1060
     },
     "antibiotic": {
       "name": "净毒药剂",
@@ -736,11 +791,12 @@
       "height": 1,
       "kind": "consumable",
       "category": "补给",
-      "value": 250,
+      "value": 20,
       "icon": "res://assets/items/extraction/antibiotic.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员35%最大生命。消耗一件物品。",
-      "heal": 0.35
+      "heal": 0.35,
+      "legacyValue": 250
     },
     "field_syringe": {
       "name": "复苏滴剂",
@@ -749,11 +805,12 @@
       "height": 2,
       "kind": "consumable",
       "category": "补给",
-      "value": 440,
+      "value": 35,
       "icon": "res://assets/items/extraction/field_syringe.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员40%最大生命。消耗一件物品。",
-      "heal": 0.4
+      "heal": 0.4,
+      "legacyValue": 440
     },
     "energy_cell": {
       "name": "军团魔晶匣",
@@ -762,10 +819,11 @@
       "height": 2,
       "kind": "loot",
       "category": "能源",
-      "value": 840,
+      "value": 70,
       "icon": "res://assets/items/extraction/energy_cell.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 840
     },
     "barrier_module": {
       "name": "结界符盘",
@@ -774,7 +832,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 1060,
+      "value": 90,
       "icon": "res://assets/items/extraction/barrier_module.png",
       "effects": [
         {
@@ -785,8 +843,9 @@
         }
       ],
       "description": "战斗开始时全队获得18%最大生命的护盾，持续3回合。",
-      "buyPrice": 4240,
-      "buyMinRisk": 1
+      "buyPrice": 355,
+      "buyMinRisk": 1,
+      "legacyValue": 1060
     },
     "combat_manual": {
       "name": "剑术手札",
@@ -795,7 +854,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 310,
+      "value": 25,
       "icon": "res://assets/items/extraction/combat_manual.png",
       "effects": [
         {
@@ -809,7 +868,8 @@
           "value": 0.04
         }
       ],
-      "description": "全队攻击提高12%、暴击率提高4个百分点。"
+      "description": "全队攻击提高12%、暴击率提高4个百分点。",
+      "legacyValue": 310
     },
     "signal_decoder": {
       "name": "解咒星盘",
@@ -818,10 +878,11 @@
       "height": 2,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 1690,
+      "value": 140,
       "icon": "res://assets/items/extraction/signal_decoder.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 1690
     },
     "rare_ore": {
       "name": "星陨矿样",
@@ -830,10 +891,11 @@
       "height": 3,
       "kind": "loot",
       "category": "材料",
-      "value": 4880,
+      "value": 405,
       "icon": "res://assets/items/extraction/rare_ore.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 4880
     },
     "jade_pendant": {
       "name": "翡翠挂坠",
@@ -842,10 +904,11 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 580,
+      "value": 50,
       "icon": "res://assets/items/extraction/jade_pendant.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 580
     },
     "silk_scroll": {
       "name": "古代丝绢",
@@ -854,10 +917,11 @@
       "height": 3,
       "kind": "loot",
       "category": "古物",
-      "value": 2140,
+      "value": 180,
       "icon": "res://assets/items/extraction/silk_scroll.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 2140
     },
     "hologram": {
       "name": "幻光晶灯",
@@ -866,10 +930,11 @@
       "height": 2,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 1950,
+      "value": 160,
       "icon": "res://assets/items/extraction/hologram.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 1950
     },
     "thermal_chip": {
       "name": "焰息符片",
@@ -878,10 +943,11 @@
       "height": 1,
       "kind": "loot",
       "category": "符文构件",
-      "value": 880,
+      "value": 75,
       "icon": "res://assets/items/extraction/thermal_chip.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 880
     },
     "servo_arm": {
       "name": "古代魔偶臂",
@@ -890,10 +956,11 @@
       "height": 4,
       "kind": "loot",
       "category": "零件",
-      "value": 4160,
+      "value": 345,
       "icon": "res://assets/items/extraction/servo_arm.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 4160
     },
     "research_notes": {
       "name": "贤者手札",
@@ -902,10 +969,11 @@
       "height": 2,
       "kind": "loot",
       "category": "文献",
-      "value": 2990,
+      "value": 250,
       "icon": "res://assets/items/extraction/research_notes.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 2990
     },
     "emergency_pack": {
       "name": "行军药箱",
@@ -914,11 +982,12 @@
       "height": 2,
       "kind": "consumable",
       "category": "补给",
-      "value": 2600,
+      "value": 215,
       "icon": "res://assets/items/extraction/emergency_pack.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员50%最大生命。消耗一件物品。",
-      "heal": 0.5
+      "heal": 0.5,
+      "legacyValue": 2600
     },
     "venom_vial": {
       "name": "淬毒符匣",
@@ -927,7 +996,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 1240,
+      "value": 105,
       "icon": "res://assets/items/extraction/venom_vial.png",
       "effects": [
         {
@@ -937,7 +1006,8 @@
           "chance": 0.3
         }
       ],
-      "description": "造成伤害后有30%概率使目标中毒，持续2回合。"
+      "description": "造成伤害后有30%概率使目标中毒，持续2回合。",
+      "legacyValue": 1240
     },
     "arc_coil": {
       "name": "雷纹环",
@@ -946,7 +1016,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 3120,
+      "value": 260,
       "icon": "res://assets/items/extraction/arc_coil.png",
       "effects": [
         {
@@ -957,8 +1027,9 @@
         }
       ],
       "description": "每场开始时使一名随机敌人感电1回合。",
-      "buyPrice": 12480,
-      "buyMinRisk": 2
+      "buyPrice": 1040,
+      "buyMinRisk": 2,
+      "legacyValue": 3120
     },
     "healer_charm": {
       "name": "疗愈护符",
@@ -967,7 +1038,7 @@
       "height": 1,
       "kind": "equipment",
       "category": "装备",
-      "value": 450,
+      "value": 40,
       "icon": "res://assets/items/extraction/healer_charm.png",
       "effects": [
         {
@@ -975,7 +1046,8 @@
           "value": 0.25
         }
       ],
-      "description": "全队技能治疗量提高25%。"
+      "description": "全队技能治疗量提高25%。",
+      "legacyValue": 450
     },
     "platinum_bar": {
       "name": "白金锭",
@@ -984,10 +1056,11 @@
       "height": 2,
       "kind": "loot",
       "category": "贵金属",
-      "value": 2340,
+      "value": 195,
       "icon": "res://assets/items/extraction/platinum_bar.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 2340
     },
     "diamond_ring": {
       "name": "星钻戒指",
@@ -996,10 +1069,11 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 2250,
+      "value": 190,
       "icon": "res://assets/items/extraction/diamond_ring.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 2250
     },
     "antique_camera": {
       "name": "古代留影镜",
@@ -1008,10 +1082,11 @@
       "height": 2,
       "kind": "loot",
       "category": "古物",
-      "value": 6480,
+      "value": 540,
       "icon": "res://assets/items/extraction/antique_camera.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 6480
     },
     "star_map": {
       "name": "古星图",
@@ -1020,10 +1095,11 @@
       "height": 3,
       "kind": "loot",
       "category": "文献",
-      "value": 11880,
+      "value": 990,
       "icon": "res://assets/items/extraction/star_map.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 11880
     },
     "fusion_battery": {
       "name": "聚星晶匣",
@@ -1032,10 +1108,11 @@
       "height": 3,
       "kind": "loot",
       "category": "能源",
-      "value": 8100,
+      "value": 675,
       "icon": "res://assets/items/extraction/fusion_battery.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 8100
     },
     "ivory_statue": {
       "name": "白瓷仕女像",
@@ -1044,10 +1121,11 @@
       "height": 3,
       "kind": "loot",
       "category": "艺术品",
-      "value": 7290,
+      "value": 610,
       "icon": "res://assets/items/extraction/ivory_statue.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 7290
     },
     "ruby_necklace": {
       "name": "红宝石项链",
@@ -1056,10 +1134,11 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 2880,
+      "value": 240,
       "icon": "res://assets/items/extraction/ruby_necklace.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 2880
     },
     "quantum_server": {
       "name": "远古演算匣",
@@ -1068,10 +1147,11 @@
       "height": 3,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 18630,
+      "value": 1550,
       "icon": "res://assets/items/extraction/quantum_server.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 18630
     },
     "vintage_vase": {
       "name": "窑变花瓶",
@@ -1080,10 +1160,11 @@
       "height": 3,
       "kind": "loot",
       "category": "艺术品",
-      "value": 10800,
+      "value": 900,
       "icon": "res://assets/items/extraction/vintage_vase.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 10800
     },
     "phoenix_tonic": {
       "name": "凤凰秘药",
@@ -1092,11 +1173,12 @@
       "height": 2,
       "kind": "consumable",
       "category": "补给",
-      "value": 3420,
+      "value": 285,
       "icon": "res://assets/items/extraction/phoenix_tonic.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员85%最大生命。消耗一件物品。",
-      "heal": 0.85
+      "heal": 0.85,
+      "legacyValue": 3420
     },
     "blood_emblem": {
       "name": "血色徽章",
@@ -1105,7 +1187,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 8640,
+      "value": 720,
       "icon": "res://assets/items/extraction/blood_emblem.png",
       "effects": [
         {
@@ -1114,8 +1196,9 @@
         }
       ],
       "description": "全队造成有效伤害时吸血12%。",
-      "buyPrice": 34560,
-      "buyMinRisk": 3
+      "buyPrice": 2880,
+      "buyMinRisk": 3,
+      "legacyValue": 8640
     },
     "guardian_seal": {
       "name": "守护者印章",
@@ -1124,7 +1207,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 2520,
+      "value": 210,
       "icon": "res://assets/items/extraction/guardian_seal.png",
       "effects": [
         {
@@ -1133,8 +1216,9 @@
         }
       ],
       "description": "全队受到的伤害降低15%。",
-      "buyPrice": 10080,
-      "buyMinRisk": 3
+      "buyPrice": 840,
+      "buyMinRisk": 3,
+      "legacyValue": 2520
     },
     "astral_clock": {
       "name": "星轨时计",
@@ -1143,10 +1227,11 @@
       "height": 2,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 13000,
+      "value": 1085,
       "icon": "res://assets/items/extraction/astral_clock.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 13000
     },
     "genesis_disk": {
       "name": "创世铭盘",
@@ -1155,10 +1240,11 @@
       "height": 2,
       "kind": "loot",
       "category": "秘传典籍",
-      "value": 25000,
+      "value": 2085,
       "icon": "res://assets/items/extraction/genesis_disk.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 25000
     },
     "meteor_heart": {
       "name": "陨星之心",
@@ -1167,10 +1253,11 @@
       "height": 3,
       "kind": "loot",
       "category": "奇珍",
-      "value": 27000,
+      "value": 2250,
       "icon": "res://assets/items/extraction/meteor_heart.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 27000
     },
     "royal_scepter": {
       "name": "古王权杖",
@@ -1179,10 +1266,11 @@
       "height": 4,
       "kind": "loot",
       "category": "王室遗物",
-      "value": 22000,
+      "value": 1835,
       "icon": "res://assets/items/extraction/royal_scepter.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 22000
     },
     "sunken_crown": {
       "name": "沉海冠冕",
@@ -1191,10 +1279,11 @@
       "height": 2,
       "kind": "loot",
       "category": "王室遗物",
-      "value": 15000,
+      "value": 1250,
       "icon": "res://assets/items/extraction/sunken_crown.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 15000
     },
     "void_fossil": {
       "name": "虚空生物化石",
@@ -1203,10 +1292,11 @@
       "height": 3,
       "kind": "loot",
       "category": "标本",
-      "value": 60750,
+      "value": 5060,
       "icon": "res://assets/items/extraction/void_fossil.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 60750
     },
     "phoenix_feather": {
       "name": "不灭羽翎",
@@ -1215,10 +1305,11 @@
       "height": 3,
       "kind": "loot",
       "category": "奇珍",
-      "value": 12000,
+      "value": 1000,
       "icon": "res://assets/items/extraction/phoenix_feather.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 12000
     },
     "world_seed": {
       "name": "世界树种",
@@ -1227,10 +1318,11 @@
       "height": 1,
       "kind": "loot",
       "category": "奇珍",
-      "value": 5750,
+      "value": 480,
       "icon": "res://assets/items/extraction/world_seed.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 5750
     },
     "eternal_flame": {
       "name": "永燃火种",
@@ -1239,10 +1331,11 @@
       "height": 2,
       "kind": "loot",
       "category": "能源",
-      "value": 20000,
+      "value": 1665,
       "icon": "res://assets/items/extraction/eternal_flame.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 20000
     },
     "oracle_tablet": {
       "name": "神谕石板",
@@ -1251,10 +1344,11 @@
       "height": 3,
       "kind": "loot",
       "category": "文献",
-      "value": 28500,
+      "value": 2375,
       "icon": "res://assets/items/extraction/oracle_tablet.png",
       "effects": [],
-      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。"
+      "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
+      "legacyValue": 28500
     },
     "eclipse_relic": {
       "name": "蚀日圣器",
@@ -1263,7 +1357,7 @@
       "height": 3,
       "kind": "equipment",
       "category": "装备",
-      "value": 36000,
+      "value": 3000,
       "icon": "res://assets/items/extraction/eclipse_relic.png",
       "effects": [
         {
@@ -1276,7 +1370,8 @@
           "value": 20
         }
       ],
-      "description": "全队攻击提高28%，每场战斗开始获得20点能量。"
+      "description": "全队攻击提高28%，每场战斗开始获得20点能量。",
+      "legacyValue": 36000
     },
     "storm_heart": {
       "name": "风暴之核",
@@ -1285,7 +1380,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 14000,
+      "value": 1165,
       "icon": "res://assets/items/extraction/storm_heart.png",
       "effects": [
         {
@@ -1299,7 +1394,8 @@
           "value": 0.15
         }
       ],
-      "description": "全队速度提高15%、暴击率提高15个百分点。"
+      "description": "全队速度提高15%、暴击率提高15个百分点。",
+      "legacyValue": 14000
     }
   },
   "rarityWeightsByAct": [
@@ -1331,19 +1427,19 @@
   "balance": {
     "rankHp": [
       1,
-      1.8,
-      3.2,
-      5.5,
-      9,
-      18
+      2.2,
+      5,
+      12,
+      35,
+      90
     ],
     "rankAtk": [
       1,
-      2,
-      4,
-      7,
-      12,
-      24
+      2.5,
+      6,
+      15,
+      50,
+      90
     ],
     "rankDef": [
       1,
@@ -1352,6 +1448,16 @@
       1.3,
       1.4,
       1.5
+    ],
+    "actHp": [
+      1,
+      1.5,
+      2.5
+    ],
+    "actAtk": [
+      1,
+      1.25,
+      1.65
     ]
   },
   "mapEconomy": {
@@ -1375,6 +1481,15 @@
     "riskRedWeight": 0.05,
     "qualityPurpleWeight": 3,
     "qualityGoldWeight": 2,
-    "qualityRedWeight": 0.7
-  }
+    "qualityRedWeight": 0.7,
+    "riskAppraisalMultiplier": [
+      1,
+      1.25,
+      1.6,
+      2.1,
+      2.9,
+      4
+    ]
+  },
+  "economyVersion": 2
 }

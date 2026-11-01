@@ -113,7 +113,7 @@ func run() -> void:
 	await fit_page("desktop permanent upgrades")
 	await capture("meta")
 	press("返回远征地图")
-	button("连续自动挑战").button_pressed = true
+	button("连续挑战").button_pressed = true
 	press("AbyssBegin")
 	check(app.model.abyss_run_active(), "Starting encounter creates persistent run")
 	var observed: Dictionary = {}
@@ -155,23 +155,27 @@ func run() -> void:
 				"reward":
 					var count: int = app.model.state.abyss.rogue.selectedRewards.size()
 					if floor_number == 1:
-						button("连续自动挑战").button_pressed = false
-					press("选择此项回响")
+						button("连续挑战").button_pressed = false
+					press("融入构筑")
 					check(app.model.state.abyss.rogue.selectedRewards.size() == count + 1, "Chosen blessing joins build")
 					if floor_number == 1:
 						await fit_page("active ready hub")
 						await capture("ready")
 						check(button("AbyssBegin").get_global_rect().end.y <= app.size.y, "Active hub primary action visible without scrolling")
 						check(button("AbyssDifficulty_0") == null and "本轮难度：初探 · 已锁定" in texts(app.main_body), "Active difficulty uses compact lock label")
-						button("连续自动挑战").button_pressed = true
+						button("连续挑战").button_pressed = true
 						press("AbyssBegin")
 				"route":
 					var target := "event" if floor_number == 2 else ("rest" if floor_number % 2 == 0 else "shop")
 					press("NodeChoice_" + target)
 					check(app.current_screen == "abyss", "Route entry waits for its nested decision")
 				"event":
-					check("收益：" in texts(app.main_body) and "花费：" in texts(app.main_body), "Event benefits and costs visible")
 					var options: Array = app.model.node_options().options
+					for option in options:
+						for field in ["reward","risk"]:
+							var detail:=str(option.get(field,""))
+							if not detail.is_empty():check(detail in texts(app.main_body),"Event actual "+field+" visible")
+						if int(option.get("cost",0))>0:check("%d 裂隙币" % int(option.cost) in texts(app.main_body),"Event actual cost visible")
 					var chosen := ""
 					for option in options:
 						if option.enabled and int(option.get("cost", 0)) == 0 and str(option.get("risk", "")).is_empty():
@@ -207,7 +211,7 @@ func run() -> void:
 		check(observed.has(phase), "Exercised actual " + phase + " screen")
 	check(not app.model.abyss_run_active() and app.model.state.abyss.currentFloor == 1, "Completed run returns to start")
 	check(app.model.state.abyss.meta.runsCompleted == 1 and app.model.state.abyss.meta.currency > 400 - upgrade_cost, "Victory banks permanent progress")
-	check("上一轮" in texts(app.main_body) and "20 层" in texts(app.main_body), "Run summary remains available in hub")
+	check("上一轮通关" in texts(app.main_body) and "20 层" in texts(app.main_body), "Run summary remains available in hub")
 	check(not button("AbyssDifficulty_1").disabled, "Completing rank0 visibly unlocks rank1")
 	press("AbyssDifficulty_1")
 	check(app.model.state.abyss.meta.selectedDifficulty == 1, "Difficulty selection commits model setting")
@@ -223,7 +227,7 @@ func run() -> void:
 	press("永久成长")
 	await fit_page("portrait permanent upgrades")
 	press("返回远征地图")
-	button("连续自动挑战").button_pressed = true
+	button("连续挑战").button_pressed = true
 	press("AbyssBegin")
 	for floor_number in range(1, 9):
 		if not await battle_to_result():
@@ -236,7 +240,7 @@ func run() -> void:
 			await fit_page("portrait " + phase)
 			await capture("portrait-" + phase)
 			match phase:
-				"reward": press("选择此项回响")
+				"reward": press("融入构筑")
 				"route": press("NodeChoice_event" if floor_number == 2 else ("NodeChoice_rest" if floor_number % 2 == 0 else "NodeChoice_shop"))
 				"event":
 					for option in app.model.node_options().options:
@@ -255,6 +259,8 @@ func run() -> void:
 	check(not app.model.abyss_run_active() and app.model.state.abyss.meta.currency == permanent_before, "Confirmed retreat resets run while retaining earned memory")
 	app.queue_free()
 	await frames()
+	# AudioServer releases queued streaming buffers asynchronously.
+	await create_timer(0.3).timeout
 	if failures.is_empty():
 		print("PASS UI V2: %d checks" % checks)
 		quit(0)

@@ -51,7 +51,7 @@ func _uid(prefix: String) -> String:
 	return "%s_%s_%d" % [run().id, prefix, int(run().serial)]
 
 func _make_item(id: String) -> Dictionary:
-	return {"uid": _uid("item"), "itemId": id, "x": 0, "y": 0, "rotated": false, "revealed": false}
+	return {"uid": _uid("item"), "itemId": id, "x": 0, "y": 0, "rotated": false, "revealed": false, "appraisalRisk": int(run().difficulty)}
 
 func start_run(difficulty: int = 0) -> Dictionary:
 	if active(): return _fail("当前搜打撤尚未结算")
@@ -62,7 +62,9 @@ func start_run(difficulty: int = 0) -> Dictionary:
 	var previous: Dictionary = host.state.duplicate(true)
 	var generator := RandomNumberGenerator.new()
 	generator.seed = host.rng.randi()
-	state().run = {"id": host._uid("extraction"), "act": 1, "node": 0, "phase": "route", "difficulty": difficulty, "bag": [], "equipped": [], "party": party.duplicate(true), "containers": [], "routes": [], "activeEncounter": {}, "rngState": str(generator.state), "serial": 0, "roomsCleared": 0, "bossesDefeated": 0, "collectedValue": 0, "room": {}, "startedAt": host._now()}
+	state().run = {"id": host._uid("extraction"), "act": 1, "node": 0, "phase": "route", "difficulty": difficulty, "bag": [], "equipped": [], "party": party.duplicate(true), "containers": [], "routes": [], "activeEncounter": {}, "rngState": str(generator.state), "serial": 0, "roomsCleared": 0, "bossesDefeated": 0, "collectedValue": 0, "room": {}, "blessings": [], "pendingChoices": [], "characterFocus": {}, "roomActions": [], "growthBattles": 0, "startedAt": host._now()}
+	for unit in party:
+		if int(host.catalog.CharacterData[unit.id].rarity) == 5: run().characterFocus[unit.id] = 1.0
 	for item in state().loadout:
 		if not _place(run().bag, item.duplicate(true), dimensions("bag")):
 			host.state = previous
@@ -80,54 +82,67 @@ func _sync_room() -> void:
 	for room in run().map.rooms:
 		if room.id == run().map.currentRoomId:
 			room.containers = run().containers.duplicate(true)
+			room.actions = run().get("roomActions", []).duplicate(true)
 			if run().phase in ["room", "boss_exit"]: room.cleared = true
 
 func _generate_map() -> void:
-	var map := {"rooms": [], "edges": [], "districts": [], "currentRoomId": "", "bossRoomId": "", "bossUnlocked": false, "explored": 0, "requiredExploration": 4}
+	var map := {"rooms": [], "edges": [], "districts": [], "currentRoomId": "", "bossRoomId": "", "bossUnlocked": false, "explored": 0, "requiredExploration": 6}
 	var themes := ["ruins", "forest", "sanctum"]
 	var names := ["旧王城遗址", "幽光林地", "星核圣所"]
-	var theme_offset := int(_rand() * 3)
-	var types := ["battle", "cache", "rest", "event", "elite", "hospital", "workshop", "shrine"]
-	var vault_index := 6 + int(_rand() * 6) if _rand() < float(data.get("mapEconomy", {}).get("vaultChance", 0.45)) else -1
+	var offset := int(_rand() * 3)
+	var types := ["battle", "battle", "cache", "rest", "event", "elite", "hospital", "workshop", "shrine"]
 	var labels := {"entry":"远征入口", "battle":"巡逻走廊", "cache":"旅人物资站", "rest":"隐蔽营地", "event":"遗迹调查", "elite":"禁卫哨所", "vault":"封存宝库", "hospital":"疗愈药房", "workshop":"符文工坊", "shrine":"星辉神龛", "boss":"封印核心"}
+	var vault := 8 + int(_rand() * 10) if _rand() < float(data.mapEconomy.vaultChance) else -1
 	for district in range(3):
-		var theme: String = themes[(district + theme_offset + int(run().act) - 1) % 3]
+		var theme: String = themes[(district + offset + int(run().act) - 1) % 3]
 		var pool: Array = data.get("mapBackgrounds", {}).get(theme, ["res://assets/extraction/rooms/%s_1.webp" % theme, "res://assets/extraction/rooms/%s_2.webp" % theme])
-		var bg: String = str(pool[int(_rand() * pool.size()) % pool.size()])
-		map.districts.append({"id": "district_%d" % district, "name": names[(district + theme_offset + int(run().act) - 1) % 3], "theme": theme, "background": bg})
-		for local in range(4):
-			var index := district * 4 + local
-			var kind: String = "entry" if index == 0 else str(types[int(_rand() * types.size()) % types.size()])
-			# 保底基础补给与营地；高价值宝库稀少且必须击败守卫。
-			if index == 1: kind = "cache"
-			if index == 2: kind = "rest"
-			if index == vault_index: kind = "vault"
+		map.districts.append({"id":"district_%d" % district, "name":names[(district+offset+int(run().act)-1)%3], "theme":theme, "background":pool[0]})
+		for local in range(6):
+			var index := district * 6 + local
+			var kind: String = str(types[int(_rand() * types.size()) % types.size()])
+			if index == 0: kind = "entry"
+			elif index == 1: kind = "cache"
+			elif index == 2: kind = "rest"
+			elif index == vault: kind = "vault"
 			var id := _uid("room")
-			map.rooms.append({"id": id, "name": labels[kind], "type": kind, "description": _room_description(kind), "tier": mini(4, district + local + 1), "districtId": "district_%d" % district, "x": 0.12 + district * 0.36 + (_rand() - 0.5) * 0.09, "y": 0.12 + local * 0.24 + (_rand() - 0.5) * 0.07, "visited": index == 0, "cleared": index == 0, "background": str(pool[posmod(hash(str(run().rngState) + str(index)), pool.size())]), "containers": []})
-			if index > 0:
-				var parent: int = district * 4 + int(_rand() * local) if local > 0 else index - 1
-				map.edges.append([map.rooms[parent].id, id])
-			if local >= 2 and _rand() < 0.7:
-				var extra: String = map.rooms[index - 1].id
-				if not _has_edge(map.edges, extra, id): map.edges.append([extra, id])
-	# 每个区块至少一个环路，允许绕路而非只有线性树枝。
-	for district in range(3):
-		var base := district * 4
-		for local in range(1, 4):
-			if not _has_edge(map.edges, map.rooms[base].id, map.rooms[base + local].id):
-				map.edges.append([map.rooms[base].id, map.rooms[base + local].id])
-				break
+			map.rooms.append({"id":id, "name":labels[kind], "type":kind, "description":_room_description(kind), "tier":mini(4,district+1+int(local/3)), "districtId":"district_%d" % district, "x":0.07+(district*2+local%2)*0.14+(_rand()-0.5)*0.012, "y":0.18+int(local/2)*0.31+(_rand()-0.5)*0.012, "visited":index==0, "cleared":index==0, "background":pool[int(_rand()*pool.size())%pool.size()], "containers":[], "actions":[]})
+		# Randomized frontier tree on adjacent lattice cells, plus one local loop.
+		var visited: Array = [0]
+		var candidates: Array = []
+		for local in range(6):
+			if local % 2 == 0: candidates.append([local,local+1])
+			if local < 4: candidates.append([local,local+2])
+		while visited.size() < 6:
+			var frontier: Array = []
+			for edge in candidates:
+				if (edge[0] in visited) != (edge[1] in visited): frontier.append(edge)
+			var edge: Array = frontier[int(_rand()*frontier.size())%frontier.size()]
+			map.edges.append([map.rooms[district*6+edge[0]].id,map.rooms[district*6+edge[1]].id])
+			if edge[0] not in visited: visited.append(edge[0])
+			if edge[1] not in visited: visited.append(edge[1])
+		var extras: Array = []
+		for edge in candidates:
+			if not _has_edge(map.edges,map.rooms[district*6+edge[0]].id,map.rooms[district*6+edge[1]].id): extras.append(edge)
+		if not extras.is_empty():
+			var edge: Array = extras[int(_rand()*extras.size())%extras.size()]
+			map.edges.append([map.rooms[district*6+edge[0]].id,map.rooms[district*6+edge[1]].id])
+		if district > 0:
+			var row := int(_rand()*3)
+			map.edges.append([map.rooms[(district-1)*6+row*2+1].id,map.rooms[district*6+row*2].id])
+			if _rand() < 0.55:
+				var second := (row+1+int(_rand()*2))%3
+				map.edges.append([map.rooms[(district-1)*6+second*2+1].id,map.rooms[district*6+second*2].id])
 	var boss_id := _uid("room")
-	map.rooms.append({"id": boss_id, "name": labels.boss, "type": "boss", "description": "完成四处独立探索后解除封印；击败首领可撤离或深入下一幕。", "tier": 4, "districtId": "district_2", "x": 0.94, "y": 0.92, "visited": false, "cleared": false, "background": map.districts[2].background, "containers": []})
-	# 两条独立入口使首领无需清完整张地图即可抵达。
-	map.edges.append([map.rooms[6].id, boss_id])
-	map.edges.append([map.rooms[11].id, boss_id])
+	var boss_row := int(_rand()*3)
+	map.rooms.append({"id":boss_id, "name":labels.boss, "type":"boss", "description":"击败首领，撤离或深入下一幕", "tier":4, "districtId":"district_2", "x":0.95, "y":0.18+boss_row*0.31, "visited":false, "cleared":false, "background":map.districts[2].background, "containers":[], "actions":[]})
+	map.edges.append([map.rooms[12+boss_row*2+1].id,boss_id])
 	map.currentRoomId = map.rooms[0].id
 	map.bossRoomId = boss_id
 	run().map = map
 	run().room = map.rooms[0].duplicate(true)
 	run().containers = []
 	run().selectedContainer = ""
+	run().roomActions = []
 
 func _has_edge(edges: Array, a: String, b: String) -> bool:
 	for edge in edges:
@@ -163,6 +178,7 @@ func choose_route(id: String) -> Dictionary:
 
 func enter_room(id: String) -> Dictionary:
 	if not active() or run().phase not in ["route", "room", "boss_exit"]: return _fail("请先结束当前战斗")
+	if not run().get("pendingChoices", []).is_empty(): return _fail("先选择一项祝福")
 	var previous: Dictionary = host.state.duplicate(true)
 	if not run().has("map"):
 		_generate_map()
@@ -172,12 +188,13 @@ func enter_room(id: String) -> Dictionary:
 	for room in run().map.rooms:
 		if room.id == id: target = room
 	if target.is_empty() or not _has_edge(run().map.edges, run().map.currentRoomId, id): return _fail("只能进入相邻的连通房间")
-	if target.type == "boss" and not run().map.bossUnlocked: return _fail("探索四处不同房间后才能解除首领封印")
+	if target.type == "boss" and not run().map.bossUnlocked: return _fail("继续探索，解除首领封印")
 	_sync_room()
 	run().map.currentRoomId = id
 	run().node = int(target.tier)
 	run().room = target.duplicate(true)
 	run().containers = target.containers.duplicate(true)
+	run().roomActions = target.get("actions", []).duplicate(true)
 	run().selectedContainer = ""
 	run().routes = []
 	run().phase = "room"
@@ -190,17 +207,14 @@ func enter_room(id: String) -> Dictionary:
 			run().map.explored += 1
 			run().roomsCleared += 1
 			run().node = int(target.tier)
-			run().map.bossUnlocked = run().map.explored >= 4
+			run().map.bossUnlocked = run().map.explored >= int(run().map.requiredExploration)
 		var kind: String = target.type
 		if kind in ["battle", "elite", "boss", "vault"]:
 			run().node = int(target.tier)
 			_generate_encounter("elite" if kind == "vault" else kind)
 		else:
-			if kind == "rest": _heal(0.25)
-			elif kind == "event" and _rand() < 0.25:
-				for unit in run().party:
-					if unit.currentHp > 0: unit.currentHp = maxi(1, int(unit.currentHp * 0.88))
-			else: _populate_room(kind)
+			if kind in ["rest", "event", "hospital", "workshop", "shrine"]: _prepare_room_actions(kind)
+			if kind not in ["rest", "event"]: _populate_room(kind)
 	return _commit(previous, {"config": run().activeEncounter.duplicate(true), "message": str(target.name)})
 
 func _populate_room(kind: String) -> void:
@@ -251,10 +265,15 @@ func _generate_encounter(kind: String) -> void:
 	var enemies: Array = []
 	for i in range(count): enemies.append(pool[int(_rand() * pool.size()) % pool.size()])
 	var rank := int(run().difficulty)
+	if kind == "boss" and rank >= 4:
+		enemies.append("dark_knight")
+		if rank >= 5: enemies.append("thunder_hawk")
 	var budgets: Dictionary = data.get("balance", {})
 	var n := float((act - 1) * 5 + int(run().node))
 	var hp: float = (0.70 + 0.075 * n) * float(budgets.get("rankHp", [1,1.35,1.8,2.4])[rank])
 	var atk: float = (0.65 + 0.030 * n) * float(budgets.get("rankAtk", [1,1.5,2.2,3.2])[rank])
+	hp *= float(budgets.get("actHp", [1.0, 1.0, 1.0])[act - 1])
+	atk *= float(budgets.get("actAtk", [1.0, 1.0, 1.0])[act - 1])
 	if kind == "boss": hp *= 0.45; atk *= 0.85
 	var mods := {"hpMod": hp, "atkMod": atk, "defMod": (0.80 + 0.014 * n) * float(budgets.get("rankDef", [1,1.1,1.2,1.3])[rank]), "spdMod": 1.0 + 0.008 * n}
 	var config := {"id": _uid("encounter"), "token": _uid("battle"), "name": "第 %d 幕 · %s" % [act, "首领" if kind == "boss" else "精英" if kind == "elite" else "巡逻队"], "isExtraction": true, "maxRounds": 40, "isAbyss": false, "isBoss": kind == "boss", "isElite": kind == "elite", "enemies": enemies, "waves": [{"enemies": enemies.duplicate()}], "scaleMult": mods, "seed": int(_rand() * 2147483000), "rewards": {}, "staminaCost": 0, "difficulty": rank, "act": act, "kind": kind, "healingMultiplier": 1.0, "enrageAfterRound": 15 if rank >= 3 else 0, "enragePerRound": 0.05 if rank >= 3 else 0.0, "enrageCap": 0.5 if rank >= 3 else 0.0}
@@ -278,6 +297,13 @@ func effects() -> Array:
 			effect.rewardId = item.itemId
 			effect.rewardInstanceId = item.uid
 			effect.rewardName = item_def(item.itemId).name
+			result.append(effect)
+	for reward in run().get("blessings", []):
+		for raw in _growth_definition(str(reward.id)).get("effects", []):
+			var effect: Dictionary = raw.duplicate(true)
+			effect.rewardId = reward.id
+			effect.rewardInstanceId = reward.instanceId
+			effect.rewardName = reward.name
 			result.append(effect)
 	return result
 
@@ -312,6 +338,11 @@ func settle_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 					saved.cooldowns = unit.cooldowns.duplicate(true)
 			next_party.append(saved)
 		run().party = next_party
+		var recovery := 0.0
+		for effect in effects():
+			if effect.get("type") == "victoryHealPct": recovery += float(effect.get("value", 0))
+		if recovery > 0: _heal(recovery)
+		run().growthBattles = int(run().get("growthBattles", 0)) + 1
 		var kind: String = run().activeEncounter.kind
 		run().activeEncounter = {}
 		if kind == "boss":
@@ -322,6 +353,8 @@ func settle_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 			run().phase = "room"
 			if run().room.get("type") == "vault": _populate_room("vault")
 			else: _container("精英战利品" if kind == "elite" else "敌人背包", 3 if kind == "elite" else 2, 1 if kind == "elite" else 0)
+		if int(run().growthBattles) == 1 or kind in ["elite", "boss"]:
+			_offer_growth("gold" if kind == "boss" else "")
 	var result := _commit(previous, {"victory": victory, "ended": not victory, "rewards": {}, "lastRun": state().lastRun.duplicate(true), "message": "首领已击败，出口开放" if victory and active() and run().phase == "boss_exit" else "战斗结束"})
 	if result.success: _engine = null
 	return result
@@ -417,7 +450,7 @@ func take_item(container_id: String, item_uid: String) -> Dictionary:
 		var previous: Dictionary = host.state.duplicate(true)
 		if not _pickup_fit(item): return _fail("背包已满，物品留在原容器；可继续搜索更小的物品")
 		container.items.remove_at(i)
-		run().collectedValue += int(item_def(item.itemId).value)
+		run().collectedValue += item_value(item)
 		return _commit(previous, {"item": item.duplicate(true)})
 	return _fail("物品已被取走")
 
@@ -443,14 +476,14 @@ func take_all_revealed(container_id: String) -> Dictionary:
 	var candidates: Array = []
 	for item in container.items:
 		if item.revealed: candidates.append(item)
-	candidates.sort_custom(func(a,b): return float(item_def(a.itemId).value) / (_size(a).x * _size(a).y) > float(item_def(b.itemId).value) / (_size(b).x * _size(b).y))
+	candidates.sort_custom(func(a,b): return float(item_value(a)) / (_size(a).x * _size(a).y) > float(item_value(b)) / (_size(b).x * _size(b).y))
 	var taken: Array = []
 	var left: Array = []
 	for item in candidates:
 		if _pickup_fit(item):
 			taken.append(item.uid)
 			container.items.erase(item)
-			run().collectedValue += int(item_def(item.itemId).value)
+			run().collectedValue += item_value(item)
 		else: left.append(item.uid)
 	return _commit(previous, {"taken": taken, "left": left, "message": "拾取 %d 件，空间不足留下 %d 件；未丢弃任何背包物品" % [taken.size(), left.size()]})
 
@@ -509,6 +542,7 @@ func use_item(uid: String) -> Dictionary:
 		if item.uid != uid: continue
 		var definition := item_def(item.itemId)
 		if definition.kind != "consumable": return _fail("物品无法使用")
+		if not can_use_consumable(item.itemId): return _fail("生命已满")
 		var previous: Dictionary = host.state.duplicate(true)
 		_heal(float(definition.get("heal", 0.25)))
 		run().bag.remove_at(i)
@@ -526,6 +560,7 @@ func discard_item(uid: String) -> Dictionary:
 
 func advance_room() -> Dictionary:
 	if not active() or run().phase != "room": return _fail("请先完成当前房间")
+	if not run().get("pendingChoices", []).is_empty(): return _fail("先选择一项祝福")
 	var previous: Dictionary = host.state.duplicate(true)
 	_sync_room()
 	_routes()
@@ -533,6 +568,7 @@ func advance_room() -> Dictionary:
 
 func continue_act() -> Dictionary:
 	if not active() or run().phase != "boss_exit": return _fail("击败首领后才能继续")
+	if not run().get("pendingChoices", []).is_empty(): return _fail("先选择一项祝福")
 	if int(run().act) >= MAX_ACTS: return _fail("三幕探索已完成，请撤离结算")
 	var previous: Dictionary = host.state.duplicate(true)
 	run().act += 1; run().node = 0
@@ -542,7 +578,7 @@ func continue_act() -> Dictionary:
 
 func _end(outcome: String) -> void:
 	var value := 0
-	for item in run().bag + run().equipped: value += int(item_def(item.itemId).value)
+	for item in run().bag + run().equipped: value += item_value(item)
 	state().lastRun = {"outcome": outcome, "act": int(run().act), "difficulty": int(run().difficulty), "roomsCleared": int(run().roomsCleared), "bossesDefeated": int(run().bossesDefeated), "value": value, "items": run().bag.size() + run().equipped.size(), "durationSeconds": maxi(0, int((host._now() - int(run().startedAt)) / 1000))}
 	state().runs += 1
 	state().run = {}
@@ -571,8 +607,8 @@ func sell_item(uid: String) -> Dictionary:
 		var item: Dictionary = state().stash[i]
 		if item.uid != uid: continue
 		var previous: Dictionary = host.state.duplicate(true)
-		var value := int(item_def(item.itemId).value)
-		state().credits += value
+		var value := item_value(item)
+		host.state.resources.gold += value
 		state().stash.remove_at(i)
 		return _commit(previous, {"value": value})
 	return _fail("物品不存在")
@@ -626,6 +662,7 @@ func valid(value: Variant) -> bool:
 	for key in ["id", "phase", "rngState"]:
 		if not r.get(key) is String: return false
 	if r.phase not in ["route", "room", "battle", "boss_exit"] or not r.rngState.is_valid_int(): return false
+	if not _valid_growth_state(r): return false
 	for key in ["act", "node", "difficulty", "serial", "roomsCleared", "bossesDefeated", "collectedValue", "startedAt"]:
 		if not host._integer(r.get(key, -1), 0, 10000000000000000): return false
 	if int(r.act) < 1 or int(r.act) > 3 or int(r.node) > 4 or int(r.difficulty) > int(value.get("unlockedDifficulty", 0)): return false
@@ -663,7 +700,7 @@ func valid(value: Variant) -> bool:
 	if r.phase == "battle":
 		var config: Dictionary = r.activeEncounter
 		if int(config.get("maxRounds", 40)) != 40 or not config.get("isExtraction", false) or config.get("isAbyss", false) or not config.get("token") is String or not config.get("enemies") is Array or not config.get("scaleMult") is Dictionary: return false
-		if not config.get("id") is String or not config.get("name") is String or config.get("kind", "") not in ["battle", "elite", "boss"] or not host._integer(config.get("seed", -1)): return false
+		if not config.get("id") is String or not config.get("name") is String or config.get("kind", "") not in ["battle", "elite", "boss"] or not host._integer(config.get("seed", -1), 0, 2147483647): return false
 		if config.enemies.is_empty() or config.enemies.size() > 3: return false
 		for stat in ["hpMod", "atkMod", "defMod", "spdMod"]:
 			if not host._number(config.scaleMult.get(stat), 0.01, 1000): return false
@@ -681,6 +718,8 @@ func _valid_items(items: Array, ids: Dictionary, bounds := Vector2i.ZERO) -> boo
 		if not item is Dictionary or not item.get("uid") is String or item.uid.is_empty() or ids.has(item.uid): return false
 		if not item.get("itemId") is String or item_def(item.itemId).is_empty(): return false
 		if not host._integer(item.get("x", -1), 0, 100) or not host._integer(item.get("y", -1), 0, 100) or not item.get("rotated") is bool or not item.get("revealed") is bool: return false
+		if item.has("legacyValue") and not host._integer(item.legacyValue, 0, 1000000000): return false
+		if item.has("appraisalRisk") and not host._integer(item.appraisalRisk, 0, 5): return false
 		if bounds != Vector2i.ZERO and not _fits(items, item, bounds): return false
 		ids[item.uid] = true
 	return true
@@ -723,11 +762,11 @@ func buy_supply(item_id: String) -> Dictionary:
 	if cost <= 0: return _fail("该物品无法购买")
 	var required_risk := int(definition.get("buyMinRisk", 0))
 	if int(state().unlockedDifficulty) < required_risk: return _fail("解锁危险等级 %d 后可购买" % required_risk)
-	if int(state().credits) < cost: return _fail("交易币不足")
+	if int(host.state.resources.gold) < cost: return _fail("金币不足")
 	var item := {"uid": host._uid("supply"), "itemId": item_id, "x": 0, "y": 0, "rotated": false, "revealed": true}
 	var previous: Dictionary = host.state.duplicate(true)
 	if not _place(state().stash, item, dimensions("stash")): return _fail("仓库空间不足")
-	state().credits -= cost
+	host.state.resources.gold -= cost
 	return _commit(previous, {"cost": cost})
 
 func departure_party() -> Array:
@@ -739,9 +778,9 @@ func max_difficulty() -> int:
 func _valid_map(r: Dictionary, ids: Dictionary) -> bool:
 	if not r.map is Dictionary: return false
 	var m: Dictionary = r.map
-	if not m.get("rooms") is Array or m.rooms.size() != 13 or not m.get("edges") is Array or m.edges.size() > 40 or not m.get("districts") is Array or m.districts.size() != 3: return false
-	if not host._integer(m.get("explored", -1), 0, 11) or m.get("requiredExploration") != 4 or not m.get("bossUnlocked") is bool: return false
-	if m.bossUnlocked != (int(m.explored) >= 4): return false
+	if not m.get("rooms") is Array or m.rooms.size() not in [13, 19] or not m.get("edges") is Array or m.edges.size() > 48 or not m.get("districts") is Array or m.districts.size() != 3: return false
+	if not host._integer(m.get("explored", -1), 0, m.rooms.size() - 2) or not host._integer(m.get("requiredExploration", -1), 4, 6) or int(m.get("requiredExploration", -1)) not in [4, 6] or not m.get("bossUnlocked") is bool: return false
+	if m.bossUnlocked != (int(m.explored) >= int(m.requiredExploration)): return false
 	var rooms: Dictionary = {}
 	var bosses := 0
 	var explored := 0
@@ -752,6 +791,7 @@ func _valid_map(r: Dictionary, ids: Dictionary) -> bool:
 		if room.get("type") not in ["entry", "boss", "battle", "cache", "rest", "event", "elite", "vault", "hospital", "workshop", "shrine"]: return false
 		if not host._number(room.get("x"), 0, 1) or not host._number(room.get("y"), 0, 1) or not host._integer(room.get("tier"), 0, 4): return false
 		if not room.get("visited") is bool or not room.get("cleared") is bool or not room.get("containers") is Array or room.containers.size() > 10: return false
+		if not _valid_room_actions(room.get("actions", [])): return false
 		rooms[room.id] = room
 		if room.type == "boss":
 			bosses += 1
@@ -773,11 +813,11 @@ func _valid_map(r: Dictionary, ids: Dictionary) -> bool:
 		var reversed_key := str(edge[1]) + "|" + str(edge[0])
 		if unique_edges.has(edge_key) or unique_edges.has(reversed_key): return false
 		unique_edges[edge_key] = true
-	for _pass in range(13):
+	for _pass in range(m.rooms.size()):
 		for edge in m.edges:
 			if reached.has(edge[0]): reached[edge[1]] = true
 			if reached.has(edge[1]): reached[edge[0]] = true
-	return reached.size() == 13
+	return reached.size() == m.rooms.size()
 
 func _valid_scene_container(container: Dictionary) -> bool:
 	for key in ["sceneX", "sceneY"]:
@@ -792,7 +832,7 @@ func view_current_room() -> Dictionary:
 	return _commit(previous)
 
 func _room_description(kind: String) -> String:
-	return {"entry":"星纹路标指向遗迹深处。", "cache":"旅人遗留的物资，偶有意外珍藏。", "rest":"隐蔽营地，首次停留恢复25%生命。", "battle":"巡逻警戒，战胜后可搜索。", "elite":"精英守卫驻守，战利品品质更高。", "vault":"精英守卫封锁宝库，战胜后开放两处珍藏。", "hospital":"残存药柜内可能留有疗愈用品。", "workshop":"旧工坊散落着符文构件与装备。", "shrine":"星辉之下，古物与秘典静候来者。", "event":"机关与遗物并存，调查可能受伤。"}.get(kind, "封印深处传来回声。")
+	return {"entry":"星纹路标指向遗迹深处。", "cache":"旅人遗留的物资，偶有意外珍藏。", "rest":"营火旁可包扎、冥想或搜寻补给。", "battle":"巡逻警戒，战胜后可搜索。", "elite":"精英守卫驻守，战利品品质更高。", "vault":"精英守卫封锁宝库，战胜后开放两处珍藏。", "hospital":"残存药柜内可能留有疗愈用品。", "workshop":"旧工坊散落着符文构件与装备。", "shrine":"星辉之下，古物与秘典静候来者。", "event":"调查遗迹，选择收获与代价。"}.get(kind, "封印深处传来回声。")
 
 func plan_smart_loot(container_id: String) -> Dictionary:
 	if not active() or run().phase not in ["room", "boss_exit"]: return _fail("当前无法整理战利品")
@@ -804,7 +844,7 @@ func plan_smart_loot(container_id: String) -> Dictionary:
 	var previous_value := 0
 	for item in run().bag:
 		original_ids[item.uid] = true
-		previous_value += int(item_def(item.itemId).value)
+		previous_value += item_value(item)
 		if item_def(item.itemId).kind in ["equipment", "consumable"]: protected.append(item.duplicate(true))
 		else: candidates.append(item.duplicate(true))
 	for item in container.items:
@@ -814,8 +854,8 @@ func plan_smart_loot(container_id: String) -> Dictionary:
 	for item in protected:
 		if not _place(packed, item, dimensions("bag")): return _fail("受保护的装备与补给占满背包，暂无更优换装方案")
 	candidates.sort_custom(func(a,b):
-		var av := float(item_def(a.itemId).value) / (_size(a).x * _size(a).y)
-		var bv := float(item_def(b.itemId).value) / (_size(b).x * _size(b).y)
+		var av := float(item_value(a)) / (_size(a).x * _size(a).y)
+		var bv := float(item_value(b)) / (_size(b).x * _size(b).y)
 		return av > bv if not is_equal_approx(av, bv) else str(a.uid) < str(b.uid))
 	for item in candidates: _place(packed, item, dimensions("bag"))
 	var selected: Dictionary = {}
@@ -823,7 +863,7 @@ func plan_smart_loot(container_id: String) -> Dictionary:
 	var added: Array = []
 	for item in packed:
 		selected[item.uid] = true
-		total += int(item_def(item.itemId).value)
+		total += item_value(item)
 		if not original_ids.has(item.uid): added.append(item.duplicate(true))
 	var removed: Array = []
 	var names: Array = []
@@ -864,3 +904,314 @@ func apply_smart_loot(container_id: String, expected_hash: String) -> Dictionary
 		if item.revealed: container.revealed += 1
 	run().bag = plan.packed.duplicate(true)
 	return _commit(previous, {"added": plan.added, "removed": plan.removed, "gain": plan.gain, "message": plan.message})
+
+# Version 6: one permanent gold wallet. Existing physical assets keep their old
+# appraisal so migration never removes value earned under the previous economy.
+func migrate_state(value: Dictionary, source_version: int) -> void:
+	var ex: Dictionary = value.extraction
+	if source_version < 6:
+		value.resources.gold = int(value.resources.gold) + int(ex.get("credits", 0))
+		ex.credits = 0
+		for scope in ["stash", "loadout", "mailbox"]: _preserve_legacy_values(ex.get(scope, []))
+		var old_run: Dictionary = ex.get("run", {})
+		for scope in ["bag", "equipped"]: _preserve_legacy_values(old_run.get(scope, []))
+		for container in old_run.get("containers", []): _preserve_legacy_values(container.items)
+		for room in old_run.get("map", {}).get("rooms", []):
+			for container in room.get("containers", []): _preserve_legacy_values(container.items)
+	if not ex.run.is_empty():
+		for key in ["blessings", "pendingChoices", "roomActions"]:
+			if not ex.run.has(key): ex.run[key] = []
+		if not ex.run.has("characterFocus"):
+			ex.run.characterFocus = {}
+			for unit in ex.run.party:
+				if int(host.catalog.CharacterData[unit.id].rarity) == 5: ex.run.characterFocus[unit.id] = 1.0
+		if not ex.run.has("growthBattles"): ex.run.growthBattles = 0
+
+func _preserve_legacy_values(items: Array) -> void:
+	for item in items: item.legacyValue = int(item_def(item.itemId).get("legacyValue", item_def(item.itemId).value))
+
+func item_value(item: Dictionary) -> int:
+	if item.has("legacyValue"): return int(item.legacyValue)
+	var base := int(item_def(str(item.get("itemId", ""))).get("value", 0))
+	var risk := clampi(int(item.get("appraisalRisk", 0)), 0, 5)
+	return int(round(base * float(data.get("lootEconomy", {}).get("riskAppraisalMultiplier", [1.0, 1.25, 1.6, 2.1, 2.9, 4.0])[risk])))
+
+func _growth_definition(id: String) -> Dictionary:
+	for reward in host.catalog.AbyssData.rogue.rewards:
+		if reward.id == id: return reward
+	return {}
+
+func _growth_count(id: String) -> int:
+	var count := 0
+	for reward in run().get("blessings", []):
+		if reward.id == id: count += 1
+	return count
+
+func _growth_pool(rarity: String = "") -> Array:
+	var result: Array = []
+	for reward in host.catalog.AbyssData.rogue.rewards:
+		if _growth_count(reward.id) >= 3: continue
+		if reward.pool == "character" and not run().get("characterFocus", {}).has(reward.get("characterId", "")): continue
+		if not rarity.is_empty() and reward.rarity != rarity: continue
+		result.append(reward)
+	return result
+
+func _offer_growth(rarity: String = "") -> void:
+	if not run().get("pendingChoices", []).is_empty(): return
+	var options: Array = []
+	var pool := _growth_pool(rarity)
+	for index in range(mini(3, pool.size())):
+		var weights: Array = []
+		var total := 0.0
+		for reward in pool:
+			var weight := float({"white": 6.0, "blue": 3.0, "gold": 1.0}.get(reward.rarity, 1.0))
+			if reward.pool == "character": weight *= float(run().characterFocus.get(reward.characterId, 1.0))
+			if index == 0 and rarity.is_empty() and reward.pool == "common": weight *= 2.0
+			weights.append(weight); total += weight
+		var roll := _rand() * total
+		var chosen := pool.size() - 1
+		for i in range(pool.size()):
+			roll -= float(weights[i])
+			if roll <= 0: chosen = i; break
+		var reward: Dictionary = pool[chosen].duplicate(true)
+		reward.choiceId = _uid("growth")
+		reward.description = str(reward.description).replace("深渊", "探索")
+		options.append(reward)
+		pool.remove_at(chosen)
+	run().pendingChoices = options
+
+func growth_choices() -> Array:
+	return run().get("pendingChoices", []).duplicate(true)
+
+func growth_summary() -> Array:
+	var result: Array = []
+	for reward in run().get("blessings", []):
+		var found := false
+		for entry in result:
+			if entry.id == reward.id: entry.stacks += 1; found = true; break
+		if not found:
+			var entry: Dictionary = _growth_definition(reward.id).duplicate(true)
+			entry.stacks = 1
+			entry.description = str(entry.description).replace("深渊", "探索")
+			result.append(entry)
+	return result
+
+func choose_growth(choice_id: String) -> Dictionary:
+	if not active() or run().phase == "battle": return _fail("当前无法选择祝福")
+	var choice: Dictionary = {}
+	for option in run().get("pendingChoices", []):
+		if option.choiceId == choice_id: choice = option
+	if choice.is_empty() or _growth_count(str(choice.get("id", ""))) >= 3: return _fail("祝福已经选取")
+	var previous: Dictionary = host.state.duplicate(true)
+	var reward := _growth_definition(choice.id).duplicate(true)
+	reward.instanceId = _uid("blessing")
+	reward.pickedAtAct = int(run().act)
+	run().blessings.append(reward)
+	var character_id := str(reward.get("characterId", ""))
+	if not character_id.is_empty(): run().characterFocus[character_id] = minf(3.0, float(run().characterFocus.get(character_id, 1.0)) + 0.35)
+	run().pendingChoices = []
+	return _commit(previous, {"reward": reward.duplicate(true), "message": "获得「%s」" % reward.name})
+
+func _prepare_room_actions(kind: String) -> void:
+	var choices: Array = []
+	if kind in ["rest", "hospital"]:
+		choices = [{"id":"recover", "label":"包扎休整", "description":"全队恢复35%，倒下角色复苏", "effect":{"heal":0.35,"revive":true}}, {"id":"meditate", "label":"冥想蓄能", "description":"恢复10%，获得40能量，清空冷却", "effect":{"heal":0.1,"energy":40,"cooldown":99}}, {"id":"scavenge", "label":"寻找补给", "description":"搜寻营地留下的物资", "effect":{"cache":true}}]
+	elif kind == "shrine":
+		choices = [{"id":"insight", "label":"聆听神谕", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"sacrifice", "label":"献血祈愿", "description":"消耗20%生命，选择蓝色祝福", "effect":{"hpCost":0.2,"blessing":"blue"}}, {"id":"leave", "label":"收集余光", "description":"获得30能量", "effect":{"energy":30}}]
+	elif kind == "workshop":
+		choices = [{"id":"forge", "label":"刻印符文", "description":"选择蓝色祝福", "cost":90, "effect":{"blessing":"blue"}}, {"id":"overload", "label":"共鸣锻造", "description":"消耗20%生命，选择金色祝福", "cost":160, "effect":{"hpCost":0.2,"blessing":"gold"}}, {"id":"study", "label":"研读铭文", "description":"选择一项祝福", "effect":{"blessing":""}}]
+	else:
+		var event_index := int(_rand() * 3)
+		if event_index == 0:
+			choices = [{"id":"rescue", "label":"救助旅人", "description":"消耗15%生命，选择蓝色祝福", "effect":{"hpCost":0.15,"blessing":"blue"}}, {"id":"share", "label":"交换补给", "description":"恢复全队20%生命", "effect":{"heal":0.2}}, {"id":"search", "label":"调查车队", "description":"寻找遗落的货箱", "effect":{"cache":true}}]
+		elif event_index == 1:
+			choices = [{"id":"listen", "label":"倾听回声", "description":"获得35能量，冷却减少1", "effect":{"energy":35,"cooldown":1}}, {"id":"study", "label":"解读石碑", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"rest", "label":"泉边休息", "description":"全队恢复25%生命", "effect":{"heal":0.25}}]
+		else:
+			choices = [{"id":"open", "label":"打开秘匣", "description":"消耗12%生命，找到精良物资", "effect":{"hpCost":0.12,"cache":true,"quality":1}}, {"id":"trace", "label":"追寻星光", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"shelter", "label":"借光疗愈", "description":"恢复20%，倒下角色复苏", "effect":{"heal":0.2,"revive":true}}]
+	for choice in choices:
+		choice.cost = int(choice.get("cost", 0))
+		choice.used = false
+		choice.selected = false
+	run().roomActions = choices
+
+func room_actions() -> Array:
+	if not active(): return []
+	var result: Array = run().get("roomActions", []).duplicate(true)
+	for choice in result:
+		var reason := ""
+		if bool(choice.get("used", false)): reason = "已经完成整备"
+		elif run().phase == "battle" or not run().get("pendingChoices", []).is_empty(): reason = "先完成当前选择"
+		elif int(host.state.resources.gold) < int(choice.get("cost", 0)): reason = "金币不足"
+		var effect: Dictionary = choice.get("effect", {})
+		if reason.is_empty() and effect.has("hpCost"):
+			for unit in run().party:
+				if int(unit.currentHp) <= maxi(1, int(ceil(unit.maxHp * float(effect.hpCost)))): reason = "生命不足"
+		if reason.is_empty() and effect.has("blessing") and _growth_pool(str(effect.blessing)).is_empty(): reason = "祝福已集齐"
+		choice.enabled = reason.is_empty()
+		choice.disabledReason = reason
+		choice.erase("effect")
+	return result
+
+func choose_room_action(action_id: String) -> Dictionary:
+	if not active() or run().phase not in ["room", "boss_exit"]: return _fail("请进入房间后操作")
+	var allowed := false
+	for option in room_actions():
+		if option.id == action_id and option.enabled: allowed = true
+	if not allowed: return _fail("此选项暂不可用")
+	var previous: Dictionary = host.state.duplicate(true)
+	var chosen: Dictionary = {}
+	for option in run().roomActions:
+		if option.id == action_id: chosen = option
+		option.used = true
+		option.selected = option.id == action_id
+	var effect: Dictionary = chosen.effect
+	host.state.resources.gold -= int(chosen.cost)
+	for unit in run().party:
+		if effect.has("hpCost"): unit.currentHp -= maxi(1, int(ceil(unit.maxHp * float(effect.hpCost))))
+		if effect.has("heal") and (unit.currentHp > 0 or effect.get("revive", false)): unit.currentHp = mini(int(unit.maxHp), int(unit.currentHp) + maxi(1, int(unit.maxHp * float(effect.heal))))
+		if unit.currentHp <= 0: continue
+		unit.energy = mini(100, int(unit.energy) + int(effect.get("energy", 0)))
+		for key in unit.cooldowns: unit.cooldowns[key] = maxi(0, int(unit.cooldowns[key]) - int(effect.get("cooldown", 0)))
+	if effect.has("blessing"): _offer_growth(str(effect.blessing))
+	if effect.get("cache", false): _container("遗留物资", 3, int(effect.get("quality", 0)))
+	return _commit(previous, {"message": str(chosen.label), "choices": growth_choices()})
+
+func use_container_item(container_id: String, uid: String) -> Dictionary:
+	if not active() or run().phase not in ["room", "boss_exit"]: return _fail("请在战斗外使用")
+	var container := _find_container(container_id)
+	if container.is_empty(): return _fail("容器不存在")
+	for index in range(container.items.size()):
+		var item: Dictionary = container.items[index]
+		if item.uid != uid: continue
+		if not item.revealed: return _fail("先完成搜索")
+		var definition := item_def(item.itemId)
+		if definition.kind != "consumable": return _fail("这件物品无法使用")
+		if not can_use_consumable(item.itemId): return _fail("生命已满")
+		var previous: Dictionary = host.state.duplicate(true)
+		_heal(float(definition.get("heal", 0.25)))
+		container.items.remove_at(index)
+		return _commit(previous, {"message":"已使用「%s」" % definition.name})
+	return _fail("物品已经取走")
+
+func equip_container_item(container_id: String, uid: String, replace_uid: String = "") -> Dictionary:
+	if not active() or run().phase not in ["room", "boss_exit"]: return _fail("请在战斗外装备")
+	var container := _find_container(container_id)
+	if container.is_empty(): return _fail("容器不存在")
+	var index := -1
+	for i in range(container.items.size()):
+		if container.items[i].uid == uid: index = i
+	if index < 0: return _fail("物品已经取走")
+	var item: Dictionary = container.items[index]
+	if not item.revealed: return _fail("先完成搜索")
+	if item_def(item.itemId).kind != "equipment": return _fail("这件物品无法装备")
+	var replace_index := -1
+	for i in range(run().equipped.size()):
+		if run().equipped[i].uid == replace_uid: replace_index = i
+	if not replace_uid.is_empty() and replace_index < 0: return _fail("替换装备已经改变")
+	if run().equipped.size() >= 3 and replace_index < 0: return _fail("选择一件装备替换")
+	var previous: Dictionary = host.state.duplicate(true)
+	container.items.remove_at(index)
+	if replace_index >= 0:
+		var old: Dictionary = run().equipped[replace_index]
+		run().equipped.remove_at(replace_index)
+		# Repack only the container; never destroy displaced equipment.
+		var packed: Array = []
+		var remaining: Array = container.items.duplicate(true)
+		remaining.append(old.duplicate(true))
+		remaining.sort_custom(func(a,b): return _size(a).x * _size(a).y > _size(b).x * _size(b).y)
+		for entry in remaining:
+			if not _place(packed, entry, Vector2i(int(container.width), int(container.height))):
+				host.state = previous
+				return _fail("原容器放不下换出的装备")
+		container.items = packed
+	run().equipped.append(item)
+	return _commit(previous, {"message":"已装备「%s」" % item_def(item.itemId).name})
+
+func sell_items(uids: Array) -> Dictionary:
+	if active(): return _fail("本局结束后出售")
+	var targets: Array = []
+	var seen := {}
+	for uid in uids:
+		if not uid is String or seen.has(uid): continue
+		seen[uid] = true
+		for item in state().stash:
+			if item.uid == uid: targets.append(item)
+	if targets.size() != seen.size() or targets.is_empty(): return _fail("选择的物品已改变")
+	var previous: Dictionary = host.state.duplicate(true)
+	var total := 0
+	for item in targets:
+		total += item_value(item)
+		state().stash.erase(item)
+	host.state.resources.gold += total
+	return _commit(previous, {"count":targets.size(), "value":total, "message":"出售 %d 件，获得 %d 金币" % [targets.size(),total]})
+
+func collect_items(uids: Array) -> Dictionary:
+	if active(): return _fail("本局结束后收藏")
+	var targets: Array = []
+	var seen := {}
+	var definitions: Array = state().collection.duplicate()
+	for uid in uids:
+		if not uid is String or seen.has(uid): continue
+		seen[uid] = true
+		var found := false
+		for item in state().stash:
+			if item.uid != uid: continue
+			found = true
+			if item.itemId not in definitions: targets.append(item); definitions.append(item.itemId)
+		if not found: return _fail("选择的物品已改变")
+	if targets.is_empty(): return _fail("所选物品均已收藏")
+	var previous: Dictionary = host.state.duplicate(true)
+	for item in targets:
+		state().collection.append(item.itemId)
+		state().stash.erase(item)
+	return _commit(previous, {"count":targets.size(), "message":"收藏 %d 种物品" % targets.size()})
+
+func _valid_growth_state(r: Dictionary) -> bool:
+	for key in ["blessings", "pendingChoices", "roomActions"]:
+		if not r.get(key, []) is Array: return false
+	if r.get("blessings", []).size() > 78 or r.get("pendingChoices", []).size() > 3 or r.get("roomActions", []).size() > 3: return false
+	if not r.get("characterFocus", {}) is Dictionary or not host._integer(r.get("growthBattles", 0), 0, 10000): return false
+	for id in r.get("characterFocus", {}):
+		if not host.catalog.CharacterData.has(id) or not host._number(r.characterFocus[id], 0, 3): return false
+	var counts := {}
+	var instances := {}
+	for reward in r.get("blessings", []):
+		if not reward is Dictionary or not reward.get("id") is String or _growth_definition(reward.id).is_empty(): return false
+		if not reward.get("instanceId") is String or instances.has(reward.instanceId): return false
+		instances[reward.instanceId] = true
+		counts[reward.id] = int(counts.get(reward.id, 0)) + 1
+		if counts[reward.id] > 3: return false
+	var choices := {}
+	for reward in r.get("pendingChoices", []):
+		if not reward is Dictionary or not reward.get("id") is String or _growth_definition(reward.id).is_empty(): return false
+		if not reward.get("choiceId") is String or choices.has(reward.choiceId): return false
+		choices[reward.choiceId] = true
+	return _valid_room_actions(r.get("roomActions", []))
+
+func _valid_room_actions(actions: Variant) -> bool:
+	if not actions is Array or actions.size() > 3: return false
+	for action in actions:
+		if not action is Dictionary or not action.get("id") is String or not action.get("label") is String or not action.get("description") is String: return false
+		if action.has("selected") and not action.selected is bool: return false
+		if not action.get("used") is bool or not host._integer(action.get("cost", -1), 0, 10000) or not action.get("effect") is Dictionary: return false
+		for key in action.effect:
+			var v = action.effect[key]
+			match key:
+				"heal", "hpCost":
+					if not host._number(v, 0, 1): return false
+				"energy", "cooldown":
+					if not host._integer(v, 0, 100): return false
+				"quality":
+					if not host._integer(v, 0, 2): return false
+				"blessing":
+					if v not in ["", "white", "blue", "gold"]: return false
+				"cache", "revive":
+					if not v is bool: return false
+				_: return false
+	return true
+
+func can_use_consumable(item_id: String) -> bool:
+	if not active() or run().phase == "battle" or item_def(item_id).get("kind") != "consumable": return false
+	for unit in run().party:
+		if unit.currentHp > 0 and unit.currentHp < unit.maxHp: return true
+	return false

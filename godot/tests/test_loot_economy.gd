@@ -9,7 +9,8 @@ func _init() -> void:
  var game = Game.new("")
  var ex = game.extraction
  game.rng.seed = 739192
- check(ex.start_run(0).success,"free entry remains available with zero credits")
+ game.state.resources.gold=0
+ check(ex.start_run(0).success,"free entry remains available with zero gold")
  var counts := [0,0,0,0,0,0]
  for d in ex.data.items.values():
   counts[int(d.rarity)] += 1

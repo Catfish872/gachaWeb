@@ -13,6 +13,8 @@ config_version=5
 config/name="虚空裂变 · VOID RIFT"
 run/main_scene="res://main.tscn"
 config/icon="res://assets/icon.svg"
+boot_splash/show_image=false
+boot_splash/bg_color=Color(0.025, 0.04, 0.065, 1)
 config/features=PackedStringArray("4.6", "GL Compatibility")
 
 [display]
@@ -28,7 +30,7 @@ window/stretch/aspect="expand"
 window/size/min_width=320
 window/size/min_height=320
 
-window/handheld/orientation=6
+window/handheld/orientation=4
 
 [input_devices]
 
@@ -36,7 +38,7 @@ pointing/emulate_mouse_from_touch=true
 
 [gui]
 
-common/default_scroll_deadzone=12
+common/default_scroll_deadzone=6
 
 [rendering]
 

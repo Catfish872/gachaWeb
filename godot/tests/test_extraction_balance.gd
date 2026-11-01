@@ -96,6 +96,9 @@ func actual_run(level: int, ids: Array, rank: int, seed_value: int) -> Dictionar
  var safety := 0
  for guard in range(500):
   if not x.active(): break
+  if not x.growth_choices().is_empty():
+   check(x.choose_growth(x.growth_choices()[0].choiceId).success,"choose actual earned growth")
+   continue
   match str(x.run().phase):
    "route":
     var target: String = Navigation.next_room(x,"shortest")
@@ -180,7 +183,7 @@ func test_navigation_graph() -> void:
     check(x._has_edge(map.edges,map.currentRoomId,target),"navigation uses connected edge")
     if target == map.bossRoomId:
      check(map.bossUnlocked,"navigation respects boss gate")
-     check(int(map.explored)>= (11 if policy=="completionist" else (7 if policy=="poi" else 4)),"navigation satisfies exploration policy")
+     check(int(map.explored)>= (17 if policy=="completionist" else (10 if policy=="poi" else 6)),"navigation satisfies exploration policy")
      arrived = true
      break
     map.currentRoomId = target
@@ -189,6 +192,6 @@ func test_navigation_graph() -> void:
       room.visited = true
       room.cleared = true
       map.explored += 1
-    map.bossUnlocked = int(map.explored)>=4
+    map.bossUnlocked = int(map.explored)>=int(map.requiredExploration)
    check(arrived,"navigation reaches boss without infinite backtracking")
    x.retreat()

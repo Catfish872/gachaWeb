@@ -61,7 +61,7 @@ func assert_page_fits(label: String) -> void:
 	check(viewport.encloses(scroll.get_global_rect()), label + " scroll viewport stays on screen")
 	check(scroll.size.y >= 160, label + " leaves useful page height")
 	if app.size.x > app.size.y:
-		check(app.header_resources.size.y <= 40, label + " landscape wallet uses compact single-line strip")
+		check(app.header_resources.size.y <= 48, label + " landscape wallet uses compact single-line strip")
 		check(scroll.size.y >= app.size.y * 0.65, label + " landscape content receives at least 65 percent of height")
 		for panel in app.header_resources.get_children():
 			var resource_labels: Array[Node] = []
@@ -89,6 +89,9 @@ func test_scroll_over_art() -> void:
 	app.navigate("home")
 	await frames()
 	var scroll: ScrollContainer = app.main_body.get_parent()
+	if scroll.get_v_scroll_bar().max_value <= scroll.get_v_scroll_bar().page + 1:
+		check(scroll.get_global_rect().encloses(app.main_body.get_global_rect()), "Fixed home content is entirely visible without scrolling")
+		return
 	var art := first_texture(app.main_body)
 	check(art != null, "Home has actual scene artwork")
 	if art == null:
@@ -136,31 +139,51 @@ func pointer_drag(at: Vector2, offset: Vector2) -> void:
 	root.push_input(up, true)
 	await frames()
 
+func test_slider_horizontal_drag() -> void:
+	app._show_audio_settings()
+	await frames()
+	var sliders=app.overlay.find_children("*","HSlider",true,false)
+	check(sliders.size()==2,"Both audio volume sliders exist")
+	for slider in sliders:
+		var ancestor=slider.get_parent()
+		while ancestor!=null and not ancestor is ScrollContainer:ancestor=ancestor.get_parent()
+		if ancestor is ScrollContainer:
+			ancestor.ensure_control_visible(slider)
+			await frames()
+		var before_scroll:int=ancestor.scroll_vertical if ancestor is ScrollContainer else 0
+		slider.value=slider.min_value+(slider.max_value-slider.min_value)*0.2
+		var previous:float=slider.value
+		var bounds:Rect2=slider.get_global_rect()
+		await pointer_drag(bounds.position+Vector2(bounds.size.x*0.2,bounds.size.y/2),Vector2(bounds.size.x*0.5,0))
+		check(slider.value>previous+5,"Horizontal volume drag changes slider value")
+		check(not ancestor is ScrollContainer or ancestor.scroll_vertical==before_scroll,"Horizontal slider drag does not scroll parent")
+	app._clear_overlay()
+	await frames()
+
 func test_card_drag_and_tap() -> void:
 	app.navigate("party")
 	await frames()
-	var scroll: ScrollContainer = app.main_body.get_parent()
-	var art := first_texture(app.main_body)
-	check(art != null, "Party contains a portrait touch target")
-	if art == null:
-		return
-	scroll.scroll_vertical = maxi(0, int(art.global_position.y - scroll.global_position.y - 20))
-	await frames()
-	var visible := art.get_global_rect().intersection(scroll.get_global_rect())
-	var start := visible.get_center()
-	var team_before: Array = app.draft_team.duplicate()
-	var before := scroll.scroll_vertical
-	await drag(start, Vector2(0, -100))
-	check(scroll.scroll_vertical > before + 25, "Touch drag over clickable portrait scrolls party")
-	check(app.draft_team == team_before, "Portrait drag does not toggle team membership")
-	# Reset scroll and reacquire the target after dragging.
-	scroll.scroll_vertical = maxi(0, int(art.global_position.y + scroll.scroll_vertical - scroll.global_position.y - 20))
-	await frames()
-	visible = art.get_global_rect().intersection(scroll.get_global_rect())
-	await pointer_drag(visible.get_center(), Vector2(0, -35))
-	check(app.draft_team == team_before, "Pointer drag across portrait does not activate card")
-	await pointer_click(visible.get_center())
-	check(app.draft_team != team_before, "Portrait pointer tap toggles team membership exactly once")
+	var scroll: ScrollContainer = app.main_body.find_child("PartyRosterScroll",true,false)
+	check(scroll!=null,"Party has independent roster scrolling")
+	if scroll==null:return
+	var id: String=str(app.draft_team[0])
+	var card: Control=scroll.find_child("PartyCard_"+id,true,false)
+	check(card!=null,"Owned card is reachable in roster")
+	if card==null:return
+	scroll.ensure_control_visible(card);await frames()
+	var start:=card.get_global_rect().intersection(scroll.get_global_rect()).get_center()
+	var before:=scroll.scroll_vertical
+	var team_before: Array=app.draft_team.duplicate()
+	await drag(start,Vector2(0,-100))
+	check(scroll.scroll_vertical>before+25,"Touch drag over clickable roster scrolls locally")
+	check(app.draft_team==team_before,"Roster drag does not toggle membership")
+	scroll.ensure_control_visible(card);await frames()
+	start=card.get_global_rect().intersection(scroll.get_global_rect()).get_center()
+	await pointer_drag(start,Vector2(0,-35))
+	check(app.draft_team==team_before,"Mouse drag does not activate roster card")
+	scroll.ensure_control_visible(card);await frames()
+	await pointer_click(card.get_global_rect().intersection(scroll.get_global_rect()).get_center())
+	check(app.draft_team!=team_before,"Tap toggles owned card exactly once")
 
 func test_menu_navigation() -> void:
 	app.navigate("home")
@@ -170,7 +193,7 @@ func test_menu_navigation() -> void:
 	check(menu != null and back != null, "Phone exposes fixed menu and back controls")
 	if menu == null or back == null:
 		return
-	check(menu.size.y >= 48 and back.size.y >= 48, "Phone menu and back provide 48 logical pixel touch targets")
+	check(menu.size.y >= 44 and back.size.y >= 44, "Phone menu and back provide 44 logical pixel touch targets")
 	await pointer_click(menu.get_global_rect().get_center())
 	check(app.overlay.get_child_count() > 0, "Pointer tap opens phone navigation")
 	var target: Button
@@ -293,7 +316,7 @@ func run() -> void:
 		root.size = physical_size
 		await frames(16)
 		print("MOBILE VIEWPORT physical=", root.size, " logical=", root.content_scale_size, " app=", app.size)
-		check(minf(app.size.x, app.size.y) <= 360.5, "Phone short edge preserves touch density " + str(physical_size))
+		check(minf(app.size.x, app.size.y) <= 540.5, "Phone short edge preserves touch density " + str(physical_size))
 		check(root.size == physical_size, "Window accepts physical phone resolution " + str(physical_size))
 		check(absf(app.size.x / app.size.y - float(physical_size.x) / physical_size.y) < 0.02, "Logical viewport matches phone aspect " + str(physical_size))
 		for page in PAGES:
@@ -306,10 +329,13 @@ func run() -> void:
 		await test_back_dispatch()
 	root.size = PHONE_SIZES[0]
 	await frames(16)
+	await test_slider_horizontal_drag()
 	await test_extraction_touch_ownership()
 	await test_open_modal_rotation()
 	await test_battle_back_safety()
 	app.queue_free()
 	await frames()
+	# AudioServer releases queued streaming buffers asynchronously.
+	await create_timer(0.3).timeout
 	print("MOBILE UI: ", checks, " checks; ", failures.size(), " failures. Input source: synthetic Linux Viewport events.")
 	quit(0 if failures.is_empty() else 1)

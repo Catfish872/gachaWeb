@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 	var canvases := _probe_canvases(controls)
 	var scroll := main_body.get_parent() as ScrollContainer
 	var payload := Marshalls.utf8_to_base64(JSON.stringify({
-		"seq": _probe_sequence, "modal_scrolls": _probe_scrolls(), "screen": current_screen, "window": [get_window().size.x, get_window().size.y],
+		"seq": _probe_sequence, "modal_scrolls": _probe_scrolls(), "page_scrolls": _probe_page_scrolls(), "screen": current_screen, "window": [get_window().size.x, get_window().size.y],
 		"logical": [size.x, size.y], "overlay": overlay.get_child_count(),
 		"renderer": {"method": RenderingServer.get_current_rendering_method(), "driver": RenderingServer.get_current_rendering_driver_name(), "adapter": RenderingServer.get_video_adapter_name()},
 		"scroll": scroll.scroll_vertical, "scroll_max": scroll.get_v_scroll_bar().max_value - scroll.get_v_scroll_bar().page,
@@ -92,7 +92,7 @@ func _probe_extraction() -> Dictionary:
 		"room_id": str(graph.get("currentRoomId", "")), "explored": int(graph.get("explored", 0)),
 		"map_rooms": graph.get("rooms", []).map(func(room): return {"id": str(room.id), "type": str(room.type), "visited": bool(room.visited)}), "map_edges": graph.get("edges", []),
 		"room_type": str(run.get("room", {}).get("type", "")),
-		"stash_count": data.get("stash", []).size(), "credits": int(data.get("credits", 0))}
+		"stash_count": data.get("stash", []).size(), "gold": int(model.state.resources.get("gold", 0))}
 
 func _probe_local_rect(control: Control, local_rect: Rect2) -> Array:
 	var transform := get_viewport().get_screen_transform() * control.get_global_transform_with_canvas()
@@ -113,6 +113,10 @@ func _probe_canvases(controls: Array) -> Dictionary:
 	var map_view = main_body.find_child("ExtractionMap", true, false)
 	if map_view != null:
 		var clip := _probe_canvas_clip(map_view)
+		if map_view.has_method("_view_rect"):
+			var inner := _probe_local_rect(map_view, map_view._view_rect())
+			var region := Rect2(clip[0],clip[1],clip[2],clip[3]).intersection(Rect2(inner[0],inner[1],inner[2],inner[3]))
+			clip = [region.position.x,region.position.y,region.size.x,region.size.y]
 		result.map = {"rect": _probe_rect(map_view), "clip": clip, "pan": [map_view.offset.x, map_view.offset.y]}
 		controls.append({"name": "ExtractionMapViewport", "rect": _probe_rect(map_view), "clip": _probe_clip(map_view)})
 		var adjacent: Array = map_view.adjacent_ids()
@@ -130,4 +134,10 @@ func _probe_canvases(controls: Array) -> Dictionary:
 		for box in scene_view.containers:
 			var point: Vector2 = scene_view.container_point(box)
 			controls.append({"name": "ExtractionSceneContainer_" + str(box.id), "rect": _probe_local_rect(scene_view, Rect2(point-Vector2(20,20), Vector2(40,40))), "clip": clip, "container_id": str(box.id), "item_count": box.get("items", []).size()})
+	return result
+
+func _probe_page_scrolls() -> Array:
+	var result: Array=[]
+	for node in main_body.find_children("*","ScrollContainer",true,false):
+		if node.is_visible_in_tree():result.append({"id":str(node.get_path()),"rect":_probe_rect(node),"value":node.scroll_vertical,"max":maxf(0,node.get_v_scroll_bar().max_value-node.get_v_scroll_bar().page)})
 	return result

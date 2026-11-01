@@ -62,5 +62,9 @@ func run() -> void:
 	target.queue_free()
 	await frames()
 	check(state.calls == 2, "Obsolete queued controls cannot execute their action")
+	app.queue_free()
+	await frames()
+	# AudioServer releases queued streaming buffers asynchronously.
+	await create_timer(0.3).timeout
 	print("INPUT DISPATCH: %d checks; %d failures" % [checks, failures])
 	quit(1 if failures else 0)
