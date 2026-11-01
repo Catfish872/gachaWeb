@@ -45,8 +45,8 @@ static func uses_web_endless(config: Dictionary) -> bool:
 static func web_endless_scale(floor_number: int, enemy_id: String) -> Dictionary:
 	var floor_value := float(maxi(floor_number, 1))
 	var n := floor_value - 1.0
-	var exponent_floor := maxf(0.0, floor_value - 25.0)
-	var multiplier := (1.0 + n * 0.33) * 0.70 + pow(1.062, exponent_floor) * 0.30
+	var exponent_floor := maxf(0.0, floor_value - 1.0)
+	var multiplier := (1.0 + n * 0.33) * 0.70 + pow(1.07, exponent_floor) * 0.30
 	var first_character := enemy_id.unicode_at(0) if not enemy_id.is_empty() else 1
 	var random_bias := (sin(floor_value * float(first_character)) + 1.0) / 2.0
 	return {

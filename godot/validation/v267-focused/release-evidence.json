@@ -1,0 +1,21 @@
+{
+  "version": "2.6.7",
+  "version_code": 20607,
+  "review_mode": "exact_v266_to_v267_constant_diff",
+  "targeted_checks": "not_run_requested",
+  "ui_visual_review": "not_run_unchanged",
+  "test_elapsed_seconds": 0,
+  "production_sha256": "240a44b289fcaf665dfe55b6f42f912e17c67444b05eddbd30d48901be73ff65",
+  "production_file_count": 828,
+  "scope": [
+    "Only endless exponent base 1.062 to 1.07 and start floor 25 to 1, matching difficulty text, and release version fields. Shared exponent also advances the unchanged 1.011 attack factor."
+  ],
+  "regression_background": {
+    "version": "2.6.6",
+    "production_sha256": "7c0bb768d0a6949750056fe3ad7315d1329d186f97728a72b80a0609b8bcd853",
+    "record": "../v266-focused/release-evidence.json"
+  },
+  "limits": [
+    "No gameplay, model, GL or gate-test suite run for 2.6.7. Build, signature and package preflight remain required."
+  ]
+}

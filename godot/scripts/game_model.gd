@@ -2143,7 +2143,7 @@ func abyss_difficulty_options() -> Array:
 		var hp_percent := int(round((float(modifiers.hpMod) - 1.0) * 100.0))
 		var atk_percent := int(round((float(modifiers.atkMod) - 1.0) * 100.0))
 		var def_percent := int(round((float(modifiers.defMod) - 1.0) * 100.0))
-		result.append({"id": rank, "name": names[rank], "floorCap":abyss_floor_cap(rank), "endless":abyss_is_endless(rank), "description": "25层后指数成长；记忆碎片收益 +75%。" if rank == 3 else ("基础敌人强度，记忆碎片收益 100%。" if rank == 0 else "敌人生命 +%d%%、攻击 +%d%%、防御 +%d%%；记忆碎片收益 +%d%%。" % [hp_percent, atk_percent, def_percent, rank * 25]), "unlocked": unlocked, "selected": rank == int(state.abyss.meta.selectedDifficulty), "enabled": unlocked and not abyss_run_active()})
+		result.append({"id": rank, "name": names[rank], "floorCap":abyss_floor_cap(rank), "endless":abyss_is_endless(rank), "description": "每层指数成长7%；记忆碎片收益 +75%。" if rank == 3 else ("基础敌人强度，记忆碎片收益 100%。" if rank == 0 else "敌人生命 +%d%%、攻击 +%d%%、防御 +%d%%；记忆碎片收益 +%d%%。" % [hp_percent, atk_percent, def_percent, rank * 25]), "unlocked": unlocked, "selected": rank == int(state.abyss.meta.selectedDifficulty), "enabled": unlocked and not abyss_run_active()})
 	return result
 
 func set_abyss_difficulty(rank: int) -> Dictionary:
