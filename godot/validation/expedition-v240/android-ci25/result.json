@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "search_background": {
+    "covered": true,
+    "attempts": 1,
+    "uid": "extraction_1793527541938_3_83181836_item_21",
+    "paused_progress": 0.315789473684211,
+    "resumed_progress": 0.315789473684211,
+    "rooms_observed": 1
+  },
+  "android_api": "35",
+  "abi": "x86_64",
+  "pages": [
+    "story",
+    "summon",
+    "party",
+    "growth",
+    "relics",
+    "abyss",
+    "extraction",
+    "shop",
+    "save"
+  ],
+  "checks": [
+    "landscape launch while system portrait",
+    "all menu tabs by touch",
+    "scrolling where content exceeds viewport",
+    "Android Back",
+    "landscape adaptation",
+    "background/resume",
+    "extraction map drag/connected navigation/scene-container auto-search/auto-pickup/room and bag persistence",
+    "Android download bridge capability (no download/install)",
+    "runtime error log"
+  ]
+}

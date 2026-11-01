@@ -1,0 +1,448 @@
+{
+  "android_bridge": {
+    "install_allowed": false,
+    "network_policy": {
+      "metered_permitted": true,
+      "roaming_permitted": false
+    },
+    "package": "org.catfish872.voidrift.debug",
+    "success": true
+  },
+  "application_paused": false,
+  "buttons": [
+    {
+      "clip": [
+        0.0,
+        0.0,
+        1280.0,
+        720.0
+      ],
+      "name": "BackButton",
+      "rect": [
+        16.0,
+        10.6666669845581,
+        105.333335876465,
+        63.9999971389771
+      ],
+      "text": "返回"
+    },
+    {
+      "clip": [
+        0.0,
+        0.0,
+        1280.0,
+        720.0
+      ],
+      "name": "MenuButton",
+      "rect": [
+        713.333374023438,
+        10.6666669845581,
+        105.333312988281,
+        63.9999971389771
+      ],
+      "text": "菜单"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionTab_expedition",
+      "rect": [
+        80.0,
+        85.3333358764648,
+        116.0,
+        58.6666641235352
+      ],
+      "text": "探索"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionTab_stash",
+      "rect": [
+        206.66667175293,
+        85.3333358764648,
+        116.000015258789,
+        58.6666641235352
+      ],
+      "text": "仓库"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionTab_shop",
+      "rect": [
+        333.333343505859,
+        85.3333358764648,
+        136.0,
+        58.6666641235352
+      ],
+      "text": "补给站"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionTab_collection",
+      "rect": [
+        480.0,
+        85.3333358764648,
+        116.0,
+        58.6666641235352
+      ],
+      "text": "藏品"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionKeyring",
+      "rect": [
+        1136.0,
+        85.3333358764648,
+        58.6666259765625,
+        58.6666641235352
+      ],
+      "text": ""
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionHelp",
+      "rect": [
+        1205.33337402344,
+        85.3333358764648,
+        58.6666259765625,
+        58.6666641235352
+      ],
+      "text": ""
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionStashMulti",
+      "rect": [
+        141.333343505859,
+        222.66667175293,
+        105.333343505859,
+        58.6666717529297
+      ],
+      "text": "多选"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionSort_stash",
+      "rect": [
+        254.66667175293,
+        222.66667175293,
+        105.33332824707,
+        58.6666717529297
+      ],
+      "text": "整理"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionCollectAll",
+      "rect": [
+        29.3333339691162,
+        637.333374023438,
+        145.333337783813,
+        58.6666870117188
+      ],
+      "text": "一键收藏"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionSellAll",
+      "rect": [
+        182.66667175293,
+        637.333374023438,
+        145.33332824707,
+        58.6666870117188
+      ],
+      "text": "出售全部"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionMove_supply_1793527514161_2_3018856683",
+      "rect": [
+        784.0,
+        349.333343505859,
+        129.333374023438,
+        58.6666564941406
+      ],
+      "text": "移动 / 旋转"
+    },
+    {
+      "clip": [
+        29.3333339691162,
+        292.0,
+        701.333374023438,
+        334.666687011719
+      ],
+      "name": "ExtractionInventoryItem_supply_1793527512097_1_3242323450",
+      "rect": [
+        32.0,
+        294.666656494141,
+        61.3333358764648,
+        61.3333435058594
+      ]
+    },
+    {
+      "clip": [
+        29.3333339691162,
+        292.0,
+        701.333374023438,
+        334.666687011719
+      ],
+      "name": "ExtractionInventoryItem_supply_1793527514161_2_3018856683",
+      "rect": [
+        298.666687011719,
+        361.333343505859,
+        128.0,
+        128.0
+      ]
+    }
+  ],
+  "canvases": {},
+  "extraction": {
+    "act": 0,
+    "bag_area": 0,
+    "bag_count": 0,
+    "bag_ids": [],
+    "containers": [],
+    "explored": 0,
+    "gold": 49870,
+    "map_edges": [],
+    "map_rooms": [],
+    "node": 0,
+    "phase": "camp",
+    "room_id": "",
+    "room_type": "",
+    "searching": false,
+    "stash_count": 2
+  },
+  "inventory": {
+    "clip": [
+      29.3333339691162,
+      292.0,
+      701.333374023438,
+      334.666687011719
+    ],
+    "items": [
+      {
+        "clip": [
+          29.3333339691162,
+          292.0,
+          701.333374023438,
+          334.666687011719
+        ],
+        "icon_loaded": true,
+        "item_id": "bandage",
+        "rect": [
+          32.0,
+          294.666656494141,
+          61.3333358764648,
+          61.3333435058594
+        ],
+        "rotated": false,
+        "uid": "supply_1793527512097_1_3242323450",
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clip": [
+          29.3333339691162,
+          292.0,
+          701.333374023438,
+          334.666687011719
+        ],
+        "icon_loaded": true,
+        "item_id": "medkit",
+        "rect": [
+          298.666687011719,
+          361.333343505859,
+          128.0,
+          128.0
+        ],
+        "rotated": false,
+        "uid": "supply_1793527514161_2_3018856683",
+        "x": 4,
+        "y": 1
+      }
+    ],
+    "multi_select": false,
+    "placement_mode": false,
+    "placement_uid": "supply_1793527514161_2_3018856683",
+    "rect": [
+      29.3333339691162,
+      292.0,
+      701.333353042603,
+      800.0
+    ],
+    "selected_uid": "supply_1793527514161_2_3018856683",
+    "selected_uids": []
+  },
+  "logical": [
+    960.0,
+    540.0
+  ],
+  "loot": {
+    "bag": [],
+    "container_id": "",
+    "scan_progress": 0.0,
+    "scan_uid": "",
+    "source": []
+  },
+  "modal_scrolls": [],
+  "monotonic_ms": 106711,
+  "overlay": 0,
+  "page_scrolls": [
+    {
+      "id": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll/PageContent/@HBoxContainer@3422/@PanelContainer@3423/@VBoxContainer@3424/@ScrollContainer@3430",
+      "max": 349.0,
+      "rect": [
+        29.3333339691162,
+        292.0,
+        711.999979019165,
+        334.666687011719
+      ],
+      "value": 0
+    }
+  ],
+  "page_width": 936.0,
+  "probe_event": "frame",
+  "renderer": {
+    "adapter": "SwiftShader Device (Subzero)",
+    "driver": "vulkan",
+    "method": "mobile"
+  },
+  "screen": "extraction",
+  "scroll": 0,
+  "scroll_max": 0.0,
+  "scroll_rect": [
+    16.0,
+    85.3333358764648,
+    1248.0,
+    623.999977111816
+  ],
+  "scroll_width": 936.0,
+  "scrollbar_rect": [
+    1264.0,
+    85.3333358764648,
+    10.6666259765625,
+    623.999977111816
+  ],
+  "seq": 178,
+  "system_back_events": [
+    {
+      "monotonic_ms": 16131,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 21861,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 28172,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 34267,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 40572,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 46818,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 52165,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 58522,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 64750,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 73227,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    }
+  ],
+  "window": [
+    1280,
+    720
+  ]
+}

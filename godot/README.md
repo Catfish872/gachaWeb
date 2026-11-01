@@ -1,4 +1,13 @@
-# 虚空裂变 · 远征与传承（Godot v2）
+# 虚空裂变 · Godot Android
+
+## 最新正式版：2.4.0
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.4.0/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.4.0) · [中文更新说明](CHANGELOG_2.4.md) · [验证记录](validation/expedition-v240/RELEASE.md)
+
+无限深渊与每日里程碑奖励、记忆兑换、搜打撤经验、库存手动摆放和快捷补给已上线。界面、头像、场景音乐与战斗反馈同步完善，更新允许使用移动数据。现有正式版继续使用同一签名与自动更新渠道。
+
+以下2.1交付段为历史记录，不代表当前货币、背包、地图及搜索规则；当前版本以更新说明和v9设计文档为准。
+
 
 ## 2.1.0：遗境搜打撤
 

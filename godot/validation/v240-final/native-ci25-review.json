@@ -1,0 +1,163 @@
+{
+  "commit": "e1275e3b37c0b8a5a6ab7ab848860c1c0c960f9e",
+  "run_id": 41295372451,
+  "test_debug_job_id": 124815004715,
+  "native_result": {
+    "passed": true,
+    "search_background": {
+      "covered": true,
+      "attempts": 1,
+      "uid": "extraction_1793527541938_3_83181836_item_21",
+      "paused_progress": 0.315789473684211,
+      "resumed_progress": 0.315789473684211,
+      "rooms_observed": 1
+    },
+    "android_api": "35",
+    "abi": "x86_64",
+    "pages": [
+      "story",
+      "summon",
+      "party",
+      "growth",
+      "relics",
+      "abyss",
+      "extraction",
+      "shop",
+      "save"
+    ],
+    "checks": [
+      "landscape launch while system portrait",
+      "all menu tabs by touch",
+      "scrolling where content exceeds viewport",
+      "Android Back",
+      "landscape adaptation",
+      "background/resume",
+      "extraction map drag/connected navigation/scene-container auto-search/auto-pickup/room and bag persistence",
+      "Android download bridge capability (no download/install)",
+      "runtime error log"
+    ]
+  },
+  "renderer": {
+    "adapter": "SwiftShader Device (Subzero)",
+    "driver": "vulkan",
+    "method": "mobile"
+  },
+  "network_policy": {
+    "policy": {
+      "metered_permitted": true,
+      "roaming_permitted": false
+    },
+    "evidence": "Actual Android DownloadManager.Request setter accepted metered data; this is not a completed cellular APK download."
+  },
+  "back": {
+    "screen": "home",
+    "overlay": 0,
+    "events": [
+      {
+        "monotonic_ms": 16131,
+        "observed_overlay": 0,
+        "screen": "home",
+        "source": "notification"
+      }
+    ]
+  },
+  "search_background": {
+    "covered": true,
+    "attempts": 1,
+    "uid": "extraction_1793527541938_3_83181836_item_21",
+    "paused_progress": 0.315789473684211,
+    "resumed_progress": 0.315789473684211,
+    "rooms_observed": 1
+  },
+  "resume_results": [
+    {
+      "mode": "rapid",
+      "passed": true
+    },
+    {
+      "mode": "settled",
+      "passed": true
+    },
+    {
+      "mode": "rapid_again",
+      "passed": true
+    }
+  ],
+  "warehouse": {
+    "selected_uids": [
+      "supply_1793527512097_1_3242323450",
+      "supply_1793527514161_2_3018856683"
+    ],
+    "drag_preserves_coordinates": [
+      [
+        "supply_1793527512097_1_3242323450",
+        0,
+        0
+      ],
+      [
+        "supply_1793527514161_2_3018856683",
+        1,
+        0
+      ]
+    ],
+    "placement_still_active_after_drag": true,
+    "after_explicit_tap": [
+      [
+        "supply_1793527512097_1_3242323450",
+        0,
+        0
+      ],
+      [
+        "supply_1793527514161_2_3018856683",
+        4,
+        1
+      ]
+    ],
+    "scroll_shift_physical_px": 34.66665649414102,
+    "first_tap_selected_uid": "supply_1793527514161_2_3018856683"
+  },
+  "evidence_sha256": {
+    "warehouse-two-exact-uids.png": "d2b13a73c8dc79a39db005e7569426cb5b7c144210dd482a6679f5cea151f886",
+    "warehouse-selection.json": "0e687133af19f100228c4aa8f51c46d55ba95ce1201ef79b0ac8630c65f033f5",
+    "warehouse-scroll-first-tap.json": "6fb8052dfd6d63bbf3e9c9f2841a2fffaec0bb41ce4ff57b659bf2fc88842340",
+    "warehouse-move.json": "0a88f3f62ed45f78a43005593d2c7a11938a75b6b67faf1e663cdb5ef3ab0f37",
+    "warehouse-drag-preserved.json": "c8466f017bf604eced9bfa3a7984faba76579192b904957c79547180154eaae5",
+    "warehouse-deliberate-move.png": "299c8b812c220a30afe2a26ef389d2fa46033dacd99b0c2e5fddb0497480d3e5",
+    "settled-resume-menu.png": "4d81d9362b78ec528b1ba699684e1b5a4a2502e819018bb4b3c53dca922fc316",
+    "search-background.json": "a332cfa522188ae72b6aa8a53efd5338971ef4d470a32e47cd6501e0fea48682",
+    "resume-results.json": "98b3afaad5c6865a1b61661d4275b01421a31f32a1e9f575f95b4a4e6f37ad87",
+    "result.json": "88f2f5938e46532b5bf25b4cc939997a518b3511b14d7d6b8a431d32cd28f229",
+    "renderer.json": "a9cd3219e7421fabe722f2970adc71a5c4b68c3267958d63a55e16c236b5f3dc",
+    "rapid_again-resume-menu.png": "bc39441aa2513edacb15ae59cf2c6ffe751148587fab709005baf15290bb1175",
+    "rapid-resume-menu.png": "f509560e95088153bed31bdea940ad6ba934a4ec5cbe0c1ddc05a12a8a47585b",
+    "landscape-menu.png": "2485f1e6305499d68e29da99df84f8611e388227a2281d419d917a99280b68c4",
+    "landscape-locked-summon.png": "234c14205b6d48b6a675105fde90f1280e248cbfce7a5010f44175dbaf574c16",
+    "landscape-locked-story.png": "6db07930d7d8cbf42fe33ae64ef15ba9b1f1bbc08c52343a258581a6365f293e",
+    "landscape-locked-shop.png": "7a4d3c2ddaaa90d5df64e694087a908234130310d0400f13433e4ef3245f36ef",
+    "landscape-locked-save.png": "fd8a4ba75bae51a16805abaa3777099effbe6414aba2d83027f19ac60af98518",
+    "landscape-locked-save-scrolled.png": "ea654b995e899391241b022088b5dbe906ae4edf5a35b53cdfab7d86ee8ebae0",
+    "landscape-locked-relics.png": "53064d44b0fb4e46382a2eef0636abedf379764245df15b46b692c0278aeb8e8",
+    "landscape-locked-party.png": "6ed8c1af00ee38c72dba7685d66c0619a379317868c98459a060748bb3130a01",
+    "landscape-locked-menu.png": "96918448ca50e55c3a233f9a49bc542e31cac323cf89c5dff20c7f172251faf8",
+    "landscape-locked-home.png": "3952582dbf8120803b4f390ba7e17150b10b8932d5f171652254907bb59298e4",
+    "landscape-locked-growth.png": "fb0ee9eb3a82df6a0c693361503e6286a48f2c1dcbd013eb7da01326e9bdef3e",
+    "landscape-locked-extraction.png": "7eca6bfc8bceb12d76ea1d772cc22496a4e20dbac1680a351f9f048d0cecd29e",
+    "landscape-locked-abyss.png": "510ad41b2ea6a24476edc13a76d6fd6797c90cfc9cdefc57db454b4fc370a276",
+    "landscape-home.png": "876bb22449232454a65c6a3459e33da2e27b187d9fe0fb3dc441374dd1449445",
+    "landscape-growth.png": "6dd4ac4baf2c1da0210f3216d9c45f0989b6065bc5716bf4c06685b908b38922",
+    "landscape-growth-scrolled.png": "591f9583cf1cce06e7d94bbbcac9f850ea63e1622bd45fe54e77ead6a294d053",
+    "final-screen.png": "466a05338d14fff8c567a5d144b07dd6d223799b61be037faeeb0ee44cd22678",
+    "extraction-stash.png": "265f65aa279ab17b918cc287cc0bc6b8b1138ef2698391aa35957a9cf6c85cdc",
+    "extraction-room-scene.png": "d874e9bcad8c81b66c5cff5cc0087cd9868a3d1dda92f3aa7c59ec0a81d53768",
+    "extraction-map-drag.png": "95ae7e3ff2fe8c1dffc964a7023bbe054ce18cb59a6e809c0aac545fc6d61706",
+    "extraction-bag-after-search.png": "476b574ae88a6372c118b770e597bb8e2967aaa800a258a85a46bf6ec8adfac9",
+    "back-menu.json": "030658bc79454e722234b4876600710d43d897510ae5b64122be2677d4fc4ee3",
+    "android-network-policy.json": "cab2c0dc59ba632ca31d66e0c4f74808a98fe336030e718944a36d119a903655"
+  },
+  "notes": [
+    "Actual Android API35 x86_64 emulator with Mobile/Vulkan, not a physical S23+ device.",
+    "Metered permission is a successful actual Android Request API call, not a completed cellular APK download.",
+    "Full medicine description was independently checked; it is complete and within viewport, no clipping defect confirmed.",
+    "Signed release and public asset verification remain release-agent responsibilities."
+  ]
+}
