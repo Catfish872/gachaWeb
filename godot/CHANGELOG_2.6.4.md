@@ -1,6 +1,6 @@
 # 2.6.4 持续伤害调整
 
-定向验收已完成，准备发布。
+已于2026-11-01发布。[下载正式 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.6.4/universal.apk)。
 
 - 无尽成长恢复原网页版4.2%指数项。
 - 燃烧每轮造成施加时攻击力18%的伤害，保留最强来源。
