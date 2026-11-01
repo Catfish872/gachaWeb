@@ -182,8 +182,20 @@ def reveal_menu_target(state, name):
 
 
 
+def page_swipe_x(state):
+    """Use page content, avoiding both native scrollbar and gesture canvases."""
+    x, _, w, _ = state['scroll_rect']
+    bar_left = state.get('scrollbar_rect', [x + w, 0, 0, 0])[0]
+    canvases = state.get('canvases', {})
+    if canvases:
+        canvas_right = max(c['rect'][0] + c['rect'][2] for c in canvases.values())
+        assert bar_left - canvas_right >= 4, 'Page needs a touch gutter outside canvases and scrollbar'
+        return (canvas_right + bar_left) / 2
+    return min(x + w * .85, bar_left - 8)
+
+
 def reveal_page_target(state, name):
-    """Bring a real page control into view using Android finger scrolling."""
+    """Bring a real page control into view using bounded Android finger drags."""
     for _ in range(16):
         matches = [b for b in state['buttons'] if b['name'] == name]
         assert len(matches) == 1, f'Missing/duplicate page target: {name}'
@@ -193,9 +205,15 @@ def reveal_page_target(state, name):
         assert state['scroll_max'] > 0, f'Clipped control without scroll range: {name}'
         x, y, w, h = state['scroll_rect']
         before = state['scroll']
-        upward = target['rect'][1] >= target['clip'][1]
-        start, end = (.82, .22) if upward else (.22, .82)
-        adb('shell', 'input', 'swipe', str(round(x + w * .99)), str(round(y + h * start)), str(round(x + w * .99)), str(round(y + h * end)), '600')
+        _, ty, _, th = target['rect']
+        _, cy, _, ch = target['clip']
+        # Center rather than merely uncover the control; cap travel to avoid
+        # overshoot, and never touch the native scrollbar's draggable thumb.
+        distance = max(-h * .4, min(h * .4, ty + th / 2 - (cy + ch / 2)))
+        finger_x = round(page_swipe_x(state))
+        start_y = y + h / 2 + distance / 2
+        end_y = y + h / 2 - distance / 2
+        adb('shell', 'input', 'swipe', str(finger_x), str(round(start_y)), str(finger_x), str(round(end_y)), '900')
         state = wait_for(lambda s: s['scroll'] != before, name + ' page scrolling')
     raise AssertionError(f'Page target remains clipped: {name}')
 

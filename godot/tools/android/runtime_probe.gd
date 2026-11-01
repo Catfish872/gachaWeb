@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 		"logical": [size.x, size.y], "overlay": overlay.get_child_count(),
 		"scroll": scroll.scroll_vertical, "scroll_max": scroll.get_v_scroll_bar().max_value - scroll.get_v_scroll_bar().page,
 		"page_width": main_body.size.x, "scroll_width": scroll.size.x,
-		"scroll_rect": _probe_rect(scroll), "buttons": controls, "extraction": _probe_extraction(), "android_bridge": _android_bridge, "canvases": canvases
+		"scroll_rect": _probe_rect(scroll), "scrollbar_rect": _probe_rect(scroll.get_v_scroll_bar()), "buttons": controls, "extraction": _probe_extraction(), "android_bridge": _android_bridge, "canvases": canvases
 	}))
 	# Android/Godot log output truncates long lines. Each ASCII record stays
 	# below 700 bytes, independent of Unicode menu labels and number of controls.

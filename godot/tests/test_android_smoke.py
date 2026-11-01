@@ -198,7 +198,33 @@ class AndroidSmokeDriverTests(unittest.TestCase):
         shown = {'buttons': [{'name': 'ExtractionSearch', 'rect': [20, 300, 100, 50], 'clip': [0, 100, 500, 400]}], 'scroll': 200, 'scroll_max': 500, 'scroll_rect': [0, 100, 500, 400]}
         with patch.object(smoke, 'adb') as adb, patch.object(smoke, 'wait_for', return_value=shown):
             self.assertEqual(smoke.reveal_page_target(state, 'ExtractionSearch'), shown)
-        adb.assert_called_once_with('shell', 'input', 'swipe', '495', '428', '495', '188', '600')
+        adb.assert_called_once_with('shell', 'input', 'swipe', '425', '380', '425', '220', '900')
+
+    def test_page_swipe_avoids_native_scrollbar_and_map(self):
+        state = {'scroll_rect': [24, 276, 672, 988], 'scrollbar_rect': [680, 276, 16, 988]}
+        self.assertAlmostEqual(smoke.page_swipe_x(state), 595.2)
+        state['canvases'] = {'map': {'rect': [24, 400, 624, 680]}}
+        self.assertEqual(smoke.page_swipe_x(state), 664)
+        self.assertLess(smoke.page_swipe_x(state), state['scrollbar_rect'][0])
+        self.assertGreater(smoke.page_swipe_x(state), 648)
+
+    def test_ci_start_button_geometry_converges_with_bounded_finger_drag(self):
+        import copy
+        state = {'scroll_rect': [24, 276, 672, 988], 'scrollbar_rect': [680, 276, 16, 988],
+                 'scroll': 0, 'scroll_max': 1321, 'buttons': [{'name': 'ExtractionStart', 'rect': [24, 1804, 108, 102], 'clip': [24, 276, 672, 988]}]}
+        gestures = []
+        def input_drag(*args):
+            self.assertEqual(args[:3], ('shell', 'input', 'swipe'))
+            self.assertLess(int(args[3]), 680)
+            delta = int(args[4]) - int(args[6])
+            gestures.append(delta)
+            state['scroll'] += delta / 2
+            state['buttons'][0]['rect'][1] -= delta
+        with patch.object(smoke, 'adb', side_effect=input_drag), patch.object(smoke, 'wait_for', side_effect=lambda *a: copy.deepcopy(state)):
+            shown = smoke.reveal_page_target(copy.deepcopy(state), 'ExtractionStart')
+        self.assertTrue(smoke.inside(shown['buttons'][0]['rect'], shown['buttons'][0]['clip']))
+        self.assertEqual(len(gestures), 2)
+        self.assertTrue(all(0 < value <= 396 for value in gestures))
 
     def test_page_target_missing_fails_before_scroll(self):
         with patch.object(smoke, 'adb') as adb, self.assertRaisesRegex(AssertionError, 'Missing/duplicate'):
