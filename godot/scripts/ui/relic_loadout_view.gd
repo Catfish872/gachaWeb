@@ -68,10 +68,10 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	if not bool(plan.get("success",true)) or phase=="error":
 		ui.progress.text=str(plan.get("error","暂时无法完成搭配"))
 	elif proven:
-		ui.progress.text="搭配完成"
+		ui.progress.text="高星优先 · 搭配完成"
 	elif phase=="scan":
 		ui.progress.text="整理遗物 %d / %d"%[int(plan.get("scanned",0)),int(plan.get("total",0))]
-	elif phase=="prune":ui.progress.text="正在比较遗物与套装…"
+	elif phase=="prune":ui.progress.text="高星优先 · 比较属性与套装…"
 	else:
 		ui.progress.text="继续比较中"
 	var gap:float=float(plan.get("gap",INF))
@@ -96,7 +96,8 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	app._label(metric_copy,"%.1f  →  %.1f"%[float(before.get("objective",0)),float(after.get("objective",0))],24,app.TEXT)
 	var start:float=float(before.get("objective",0))
 	var gain:float=float(after.get("objective",0))-start
-	app._label(metric,"+%.1f%%"%(100.0*gain/maxf(.00001,absf(start))) if start>0 else "+%.1f"%gain,25,app.CYAN)
+	var change_text:String=("+" if gain>=0 else "")+("%.1f%%"%(100.0*gain/maxf(.00001,absf(start))) if start>0 else "%.1f"%gain)
+	app._label(metric,change_text,25,app.CYAN if gain>=0 else app.GOLD)
 	var attributes=app._grid(ui.comparison,3)
 	for stat in [["hp","生命"],["atk","攻击"],["def","防御"],["spd","速度"],["cri","暴击率"],["criDmg","暴击伤害"],["energyRate","能量恢复"]]:
 		var old:float=float(before.get("stats",{}).get(stat[0],0))

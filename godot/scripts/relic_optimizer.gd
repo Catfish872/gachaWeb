@@ -42,6 +42,7 @@ var _build_key := 0
 var _build_item := 0
 var _seen_uids: Dictionary = {}
 var _current_items: Array = []
+var _highest_rarity: Array = [0,0,0,0,0]
 var _slot_max: Array = []
 var _slot_sets: Array = [{},{},{},{},{}]
 var _memo: Dictionary = {}
@@ -147,7 +148,7 @@ static func _relic_fingerprint_bytes(relic: Variant) -> PackedByteArray:
 	return var_to_bytes([relic.get("uid"),relic.get("slotId"),relic.get("setId",""),relic.get("rarity"),relic.get("level"),relic.get("equippedBy"),_canonical_variant(main),subs,_canonical_variant(extras)])
 
 static func _fingerprint_header(game, char_id: String, context: Dictionary) -> String:
-	return var_to_bytes(_canonical_variant({"version":"relic-reference-v2","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size()})).hex_encode() + "\n"
+	return var_to_bytes(_canonical_variant({"version":"relic-reference-v3-highest-rarity","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size()})).hex_encode() + "\n"
 
 static func plan_fingerprint(game, char_id: String, context: Dictionary = {}) -> String:
 	var digest := HashingContext.new()
@@ -337,7 +338,13 @@ func _scan_step() -> void:
 		return
 	if _scan >= _total:
 		_before = _snapshot(_current_items)
-		_best = _before.duplicate(true); _score = float(_best.objective)
+		# Seed only from the eligible highest-rarity pools. The equipped loadout
+		# remains the comparison baseline, even when its immediate score is higher.
+		var eligible: Array = []
+		for slot_index in range(5):
+			var first: Dictionary = _groups[slot_index].values()[0][0].relic
+			if not first.is_empty(): eligible.append(first)
+		_best = _snapshot(eligible); _score = float(_best.objective)
 		_fingerprint = _hash.finish().hex_encode()
 		_phase = "prepare"
 		return
@@ -357,6 +364,11 @@ func _scan_step() -> void:
 	_seen_uids[uid] = true
 	if uid == str(_saved.get("equippedRelics",{}).get(SLOTS[slot],"")):
 		_current_items.append(relic.duplicate(true))
+	var rarity := int(relic.get("rarity",0))
+	if rarity < int(_highest_rarity[slot]): return
+	if rarity > int(_highest_rarity[slot]):
+		_highest_rarity[slot] = rarity
+		_groups[slot].clear()
 	_pending = _candidate(relic,slot)
 	if _pending.is_empty(): return
 	if not _groups[slot].has(_pending.group): _groups[slot][_pending.group] = []
@@ -893,12 +905,12 @@ func preview() -> Dictionary:
 		upper=maxf(upper,_active_upper)
 	var counts: Array = []
 	for choices in _choices: counts.append(choices.size())
-	var improvement := maxf(0.0,_score-float(_before.get("objective",0.0)))
+	var improvement := _score-float(_before.get("objective",0.0))
 	var filled:=_filled_empty(_best) if not _before.is_empty() else 0
-	var useful:=improvement>EPS or filled>0
+	var useful:bool=not _before.is_empty() and _best.get("relicUids",{}) != _before.get("relicUids",{})
 	var proven := not _cancelled and _phase=="done" and upper<=_score
 	var objective := str(_profile.get("type","damage"))
-	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":{"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective),"objectiveLabel":{"damage":"参考场景六次行动期望伤害","healing":"参考场景六次行动潜在治疗","survival":"施放自身护盾后的有效承伤"}.get(objective,objective),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
+	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"highestRarities":_highest_rarity.duplicate(),"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":{"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective),"objectiveLabel":{"damage":"参考场景六次行动期望伤害","healing":"参考场景六次行动潜在治疗","survival":"施放自身护盾后的有效承伤"}.get(objective,objective),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
 
 func _assumptions() -> Array:
 	if _profile.get("type","")=="survival": return ["满血施放一次自身战技护盾，以中性基础伤害 %d 的直接攻击计算等效生命。"%int(_context.incomingRawHit),"采用真实防御、减伤及满血格挡期望；一次性无敌、队友护盾、持续回复和实战战术另行发挥作用。","同收益先补齐空槽，再保留已有装备；仅使用未装备和当前角色遗物，等级与金币保持原样。"]

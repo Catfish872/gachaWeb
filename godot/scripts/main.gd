@@ -1041,6 +1041,16 @@ func _growth() -> void:
 		if growth_panel=="gear":
 			var auto_equip:=_button(footer,"自动搭配",func():_auto_relic_loadout(selected_character),true)
 			auto_equip.name="GrowthAutoRelics";auto_equip.size_flags_horizontal=Control.SIZE_EXPAND_FILL;_button_icon(auto_equip,"gear",true)
+			var upgrade_preview:Dictionary=model.equipped_relic_upgrade_preview(selected_character)
+			var upgrade_count:int=upgrade_preview.get("uids",[]).size()
+			var upgrade_cost:int=int(upgrade_preview.get("cost",0))
+			var upgrade_title:String="一键满级\n%d 金币" % upgrade_cost if upgrade_count>0 else ("已全部满级" if int(upgrade_preview.get("equippedCount",0))>0 else "一键满级")
+			var upgrade_all:=_button(footer,upgrade_title,func():_upgrade_equipped_relics(selected_character),true)
+			upgrade_all.name="GrowthUpgradeAllRelics";upgrade_all.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+			upgrade_all.custom_minimum_size.y=56;upgrade_all.add_theme_font_size_override("font_size",13)
+			_button_icon(upgrade_all,"coin",true)
+			upgrade_all.disabled=upgrade_count==0
+			upgrade_all.tooltip_text="强化身上 %d 件遗物至满级" % upgrade_count if upgrade_count>0 else ("已全部满级" if int(upgrade_preview.get("equippedCount",0))>0 else "请先装备遗物")
 		else:
 			var train:=_button(footer,"训练一次 · 500 金币",func():
 				if _check(model.train_character(selected_character)):_toast("训练完成",CYAN);_render_screen(),true)
@@ -1050,6 +1060,22 @@ func _growth() -> void:
 		_button(footer,"冒险编队",func():navigate("party"))
 	else:
 		_button(footer,"前往星辰祈愿",func():navigate("summon"),true)
+
+func _upgrade_equipped_relics(char_id:String) -> void:
+	var preview:Dictionary=model.equipped_relic_upgrade_preview(char_id)
+	if not _check(preview):return
+	var count:int=preview.uids.size()
+	if count==0:return
+	var cost:int=int(preview.cost)
+	if int(model.state.resources.gold)<cost:
+		_toast("金币不足，需要 %d 金币" % cost,GOLD)
+		return
+	_confirm("一键满级","%s · %d 件遗物强化至各自满级\n消耗 %d 金币" % [_char_name(char_id),count,cost],func():
+		var result:Dictionary=model.upgrade_equipped_relics_to_max(char_id)
+		if _check(result):
+			_ui_sound("equip")
+			_toast("%d 件遗物已满级" % int(result.count),GOLD)
+			_render_screen())
 
 func _relics() -> void:
 	set_page_fixed(not compact)
@@ -1157,8 +1183,8 @@ func _relics() -> void:
 	var identity:=_vbox(title,4);identity.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	_label(identity,_relic_set_name(selected),19,GOLD)
 	_label(identity,"%s +%d" % [_slot_name(selected.slotId),selected.level],18,TEXT)
-	_label(identity,"★".repeat(int(selected.rarity)),15,_rarity_color(int(selected.rarity)))
-	_progress(identity,int(selected.level),25,GOLD,4)
+	_label(identity,"★".repeat(int(selected.rarity))+" · 满级 +%d" % model.relic_level_cap(selected),15,_rarity_color(int(selected.rarity)))
+	_progress(identity,int(selected.level),model.relic_level_cap(selected),GOLD,4)
 	var stats:=_scroll_column(dv,6)
 	stats.get_parent().name="RelicStatsScroll"
 	_restore_character_list(stats.get_parent(),"relic_detail_"+selected_relic)
@@ -1180,17 +1206,17 @@ func _relics() -> void:
 	_label(stats,"套装效果"+(" · 已装备 %d 件"%set_count if set_count>=0 else ""),12,GOLD,true)
 	_relic_set_details(stats,str(selected.get("setId","")),set_count)
 	var upgrades:=_hbox(dv,6)
-	var upgrade:=_button(upgrades,"强化 +1 · %d 金币" % model.relic_upgrade_cost(int(selected.level)),func():
+	var upgrade:=_button(upgrades,"已满级" if int(selected.level)>=model.relic_level_cap(selected) else "强化 +1 · %d 金币" % model.relic_upgrade_cost(int(selected.level)),func():
 		if _check(model.upgrade_relic(selected_relic)):_ui_sound("equip");_render_screen(),true)
 	upgrade.name="RelicUpgrade"
 	_button_icon(upgrade,"upgrade",true)
 	upgrade.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-	upgrade.disabled=int(selected.level)>=25
+	upgrade.disabled=int(selected.level)>=model.relic_level_cap(selected)
 	var max_cost:int=int(model.relic_upgrade_cost_to_max(selected_relic))
 	var maxup:=_tab_button(upgrades,"升满",func():
-		_confirm("强化至 +25","消耗 %d 金币" % max_cost,func():
+		_confirm("强化至 +%d" % model.relic_level_cap(selected),"消耗 %d 金币" % max_cost,func():
 			if _check(model.upgrade_relic_to_max(selected_relic)):_render_screen()))
-	maxup.disabled=int(selected.level)>=25
+	maxup.disabled=int(selected.level)>=model.relic_level_cap(selected)
 	var actions:=_hbox(dv,6)
 	var equip:=_button(actions,"装备给角色",func():_equip_dialog(selected_relic))
 	equip.name="RelicEquip";equip.size_flags_horizontal=Control.SIZE_EXPAND_FILL;_button_icon(equip,"party")

@@ -858,6 +858,9 @@ func add_relic(relic: Dictionary) -> Dictionary:
 		return _fail("遗物数据无效")
 	return _commit(previous, {"relic": relic})
 
+func relic_level_cap(relic: Dictionary) -> int:
+	return int({3: 15, 4: 20, 5: 25}.get(int(relic.get("rarity", 5)), 25))
+
 func relic_upgrade_cost(level: int) -> int:
 	return 80 + clampi(level, 0, 24) * 20
 
@@ -865,7 +868,7 @@ func relic_upgrade_cost_to_max(uid: String) -> int:
 	var relic := get_relic(uid)
 	var total := 0
 	if not relic.is_empty():
-		for level in range(int(relic.level), 25):
+		for level in range(int(relic.level), relic_level_cap(relic)):
 			total += relic_upgrade_cost(level)
 	return total
 
@@ -888,7 +891,7 @@ func upgrade_relic(uid: String) -> Dictionary:
 	var relic := get_relic(uid)
 	if relic.is_empty():
 		return _fail("遗物不存在")
-	if int(relic.level) >= 25:
+	if int(relic.level) >= relic_level_cap(relic):
 		return _fail("已达最高强化等级")
 	var cost := relic_upgrade_cost(int(relic.level))
 	if state.resources.gold < cost:
@@ -903,7 +906,7 @@ func upgrade_relic_to_max(uid: String) -> Dictionary:
 	var relic := get_relic(uid)
 	if relic.is_empty():
 		return _fail("遗物不存在")
-	if int(relic.level) >= 25:
+	if int(relic.level) >= relic_level_cap(relic):
 		return _fail("已达最高强化等级")
 	var cost := relic_upgrade_cost_to_max(uid)
 	if state.resources.gold < cost:
@@ -913,11 +916,47 @@ func upgrade_relic_to_max(uid: String) -> Dictionary:
 	state.resources.gold -= cost
 	state.stats.totalGoldSpent += cost
 	var boosted: Array = []
-	while int(relic.level) < 25:
+	while int(relic.level) < relic_level_cap(relic):
 		var stat := _upgrade_relic_one(relic)
 		if not stat.is_empty():
 			boosted.append(stat)
-	return _commit(previous, {"newLevel": 25, "oldLevel": old_level, "totalCost": cost, "boostedStats": boosted})
+	return _commit(previous, {"newLevel": int(relic.level), "oldLevel": old_level, "totalCost": cost, "boostedStats": boosted})
+
+func equipped_relic_upgrade_preview(char_id: String) -> Dictionary:
+	var result := {"success": true, "uids": [], "cost": 0, "equippedCount": 0}
+	if not state.ownedCharacters.has(char_id):
+		return {"success": false, "error": "未拥有该角色"}
+	var equipped: Dictionary = state.ownedCharacters[char_id].equippedRelics
+	for slot in catalog.RelicSlots:
+		var uid: String = str(equipped.get(slot.id, ""))
+		var relic := get_relic(uid)
+		if relic.is_empty():continue
+		if relic.get("equippedBy") != char_id or relic.slotId != slot.id:
+			return {"success": false, "error": "遗物装备已变更，请重试"}
+		result.equippedCount += 1
+		if int(relic.level) < relic_level_cap(relic):
+			result.uids.append(uid)
+			result.cost += relic_upgrade_cost_to_max(uid)
+	return result
+
+func upgrade_equipped_relics_to_max(char_id: String) -> Dictionary:
+	var preview := equipped_relic_upgrade_preview(char_id)
+	if not preview.success:return _fail(str(preview.error))
+	if preview.uids.is_empty():
+		return _fail("已全部满级" if int(preview.equippedCount) > 0 else "请先装备遗物")
+	var cost: int = int(preview.cost)
+	if state.resources.gold < cost:return _fail("金币不足，需要 %d 金币" % cost)
+	var previous := state.duplicate(true)
+	var previous_rng: int = rng.state
+	state.resources.gold -= cost
+	state.stats.totalGoldSpent += cost
+	for uid in preview.uids:
+		var relic := get_relic(str(uid))
+		while int(relic.level) < relic_level_cap(relic):
+			_upgrade_relic_one(relic)
+	var result := _commit(previous, {"count": preview.uids.size(), "totalCost": cost})
+	if not result.success:rng.state = previous_rng
+	return result
 
 func upgrade_relic_max(uid: String) -> Dictionary:
 	return upgrade_relic_to_max(uid)

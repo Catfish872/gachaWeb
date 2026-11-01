@@ -1,0 +1,13 @@
+{
+  "started_utc": "2026-11-01T17:37:10Z",
+  "completed_utc": "2026-11-01T17:39:50Z",
+  "elapsed_seconds": 160,
+  "production_sha256": "50dc8344246603f50f8e563f3b9a21a107eb3aaa6d0da832bd1113a0926ddfde",
+  "scope": [
+    "rarity-specific caps 3-star15/4-star20/5-star25, exact bulk costs and legacy over-cap preservation (50 checks)",
+    "highest available rarity per slot before attribute/set optimization; lower-current-score upgrade remains applicable (20 checks)",
+    "desktop OpenGL 960x540 real negative delta preview/apply, mixed-rarity cost16700 and max results, single-item +15 cap presentation (34 checks)"
+  ],
+  "change_manifest": "final-manifest.json",
+  "production_correction": "Explicit bool type in relic_optimizer.gd; focused rarity and GL checks passed after correction."
+}
