@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.6.0
+## 最新正式版：2.6.1
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.6.1/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.6.1) · [中文更新说明](CHANGELOG_2.6.1.md) · [验证记录](validation/release-v261/RELEASE.md)
+
+已装备遗物支持一键满级；自动搭配优先高星；三星、四星、五星强化上限分别为 +15、+20、+25，旧超限遗物保留。沿用固定签名与正式自动更新渠道。
+
+## 历史版本：2.6.0
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.6.0/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.6.0) · [中文更新说明](CHANGELOG_2.6.md) · [验证记录](validation/release-v260/RELEASE.md)
 
