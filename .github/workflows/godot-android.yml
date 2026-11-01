@@ -3,9 +3,9 @@ on:
   push:
     branches: ['main', 'godot/**']
     tags: ['android-v*']
-    paths: ['godot/**', '.github/workflows/godot-android.yml']
+    paths: ['godot/**', '.github/workflows/godot-android.yml', '.github/scripts/**']
   pull_request:
-    paths: ['godot/**', '.github/workflows/godot-android.yml']
+    paths: ['godot/**', '.github/workflows/godot-android.yml', '.github/scripts/**']
   workflow_dispatch:
     inputs:
       publish:
@@ -38,6 +38,7 @@ jobs:
       - name: Validate version and test game
         run: |
           python3 godot/tools/build/validate_version.py
+          python3 .github/scripts/test_release_preflight.py
           python3 godot/tests/test_android_build.py
           python3 godot/tests/test_android_smoke.py
           python3 godot/tests/test_android_kvm.py
@@ -104,11 +105,20 @@ jobs:
           fi
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Preserve an identical published release or require a version bump
+        id: preflight
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        run: python3 .github/scripts/release_preflight.py
       - name: Install pinned engine and templates
+        if: steps.preflight.outputs.publish == 'true'
         run: bash godot/tools/build/install_godot.sh
       - name: Configure SDK
+        if: steps.preflight.outputs.publish == 'true'
         run: bash godot/tools/build/setup_android.sh
       - name: Export and verify production signature
+        if: steps.preflight.outputs.publish == 'true'
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
@@ -116,6 +126,7 @@ jobs:
           ANDROID_SIGNING_CERT_SHA256: ${{ vars.ANDROID_SIGNING_CERT_SHA256 }}
         run: bash godot/tools/build/export_android.sh release "$RUNNER_TEMP/apk"
       - name: Publish verified APK (never overwrite an existing release)
+        if: steps.preflight.outputs.publish == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
