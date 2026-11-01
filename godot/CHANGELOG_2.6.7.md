@@ -1,6 +1,6 @@
 # 2.6.7 无尽成长调整
 
-准备发布。
+已于2026-11-01发布。[下载正式 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.6.7/universal.apk)。
 
 - 无尽以第1层为指数起点，此后每层增长7%；第1层指数倍率为1，第2层为1.07。
 - 共用指数的额外攻击成长同步提前，1.011系数及其他公式、燃烧、中毒机制不变。
