@@ -298,8 +298,39 @@ func _apply_battle_start() -> void:
 				var count = clampi(int(effect.get("count", pool.size())), 0, pool.size())
 				for i in range(count):
 					var index = rng.randi_range(0, pool.size() - 1)
-					apply_status(pool[index], effect.statusId, int(effect.get("duration", 1)), effect.get("value"))
+					apply_status(pool[index], effect.statusId, int(effect.get("duration", 1)), effect.get("value"), _battle_start_source())
 					pool.remove_at(index)
+
+func _battle_start_source() -> Dictionary:
+	var strongest: Dictionary = {}
+	var attack := -1
+	for unit in _alive(state.allies):
+		var current := _effective_atk(unit)
+		if current > attack:
+			strongest = unit
+			attack = current
+	return strongest
+
+func dot_rule(key: String, fallback: float) -> float:
+	return maxf(0.0, float(catalog.get("CombatRules", {}).get(key, fallback)))
+
+func poison_damage_preview(unit: Dictionary) -> Dictionary:
+	var attack_sum := 0.0
+	var count := 0
+	var sources: Dictionary = {}
+	for status in unit.get("statuses", []):
+		if status.get("id", "") != "poison" or int(status.get("duration", 0)) <= 0 or not status.has("dotAttack"): continue
+		var attack := maxf(0.0, float(status.dotAttack))
+		attack_sum += attack
+		count += 1
+		var uid := str(status.get("sourceUid", ""))
+		if not sources.has(uid):sources[uid] = {"uid":uid, "name":str(status.get("sourceName", "")), "attackSum":0.0, "stacks":0}
+		sources[uid].attackSum += attack
+		sources[uid].stacks += 1
+	var coefficient := dot_rule("poisonAttackRatio", 0.02)
+	var growth := dot_rule("poisonStackGrowth", 0.10)
+	var amount := maxi(1, int(attack_sum * coefficient * (1.0 + growth * maxf(0.0, float(count - 1))))) if count > 0 else 0
+	return {"amount":amount, "stacks":count, "sources":sources.values()}
 
 func _alive(units: Array) -> Array:
 	return units.filter(func(unit): return unit.currentHp > 0)
@@ -403,11 +434,21 @@ func _end_round() -> void:
 		if unit.passiveId == "ayla_passive":
 			var friends = _friends(unit)
 			if not friends.is_empty(): _heal(unit, _lowest_hp(friends), maxi(1, int(unit.stats.atk * 0.4)), "ayla_passive", false, "passive")
+		var poison_done := false
 		for status in unit.statuses.duplicate():
 			if unit.currentHp <= 0: break
 			match status.id:
-				"burn": _status_damage(unit, maxi(1, int(unit.baseAtk * 0.18)), "burn")
-				"poison": _status_damage(unit, maxi(1, int(unit.maxHp * 0.05)), "poison")
+				"burn":
+					if status.has("dotAttack"):
+						var amount := maxi(1, int(float(status.dotAttack) * dot_rule("burnAttackRatio", 0.18)))
+						_status_damage(unit, amount, "burn", {"sourceUid":str(status.get("sourceUid", "")), "sourceName":str(status.get("sourceName", ""))})
+				"poison":
+					if not poison_done:
+						poison_done = true
+						var total := poison_damage_preview(unit)
+						if int(total.amount) > 0:
+							var source_uid := str(total.sources[0].uid) if total.sources.size() == 1 else ""
+							_status_damage(unit, int(total.amount), "poison", {"sourceUid":source_uid, "dotSources":total.sources, "poisonStacks":int(total.stacks)})
 				"regen": _heal(unit, unit, maxi(1, int(unit.maxHp * 0.08)), "regen", false, "status")
 			if not status.id in CONTROL_STATUSES and not status.get("persistent",false): status.duration -= 1
 		_cleanup_statuses(unit)
@@ -762,6 +803,9 @@ func _heal(caster: Dictionary, target: Dictionary, amount: int, source: String, 
 
 func apply_status(unit: Dictionary, status_id: String, duration: int, value = null, caster: Dictionary = {}, shield_amount: int = -1) -> bool:
 	if not STATUS_IDS.has(status_id) or duration <= 0 or unit.get("currentHp", 0) <= 0: return false
+	# Statuses are battle-local; snapshots never fall back to the victim's stats.
+	if status_id in ["burn", "poison"] and (caster.is_empty() or not caster.has("stats")):return false
+	var dot_attack := _effective_atk(caster) if status_id in ["burn", "poison"] else 0
 	var existing: Dictionary = {}
 	if status_id != "poison":
 		for status in unit.statuses:
@@ -774,11 +818,21 @@ func apply_status(unit: Dictionary, status_id: String, duration: int, value = nu
 		existing.duration += duration
 		if value != null: existing.value = value
 		if status_id == "shield": existing.shieldHp += shield_amount if shield_amount >= 0 else maxi(0, int(unit.maxHp * (float(value) if value != null else 0.3)))
+	if status_id == "burn" and dot_attack >= int(existing.get("dotAttack", 0)):
+		existing.dotAttack = dot_attack
+		existing.sourceUid = str(caster.get("uid", ""))
+		existing.sourceName = str(caster.get("name", ""))
+	if status_id == "poison":
+		existing.dotAttack = dot_attack
+		existing.sourceUid = str(caster.get("uid", ""))
+		existing.sourceName = str(caster.get("name", ""))
+		existing.duration = 1
+		existing.persistent = true
 	if status_id == "electrify":
 		var chance_bonus := _electrify_source_bonus(caster)
 		existing.electrifySkipChanceBonus = maxf(float(existing.get("electrifySkipChanceBonus", chance_bonus)), chance_bonus)
 	_sync_shield(unit)
-	_emit("status", caster, unit, duration, unit.name + " · " + status_id, {"status": status_id, "statusId": status_id, "duration": duration, "value": value})
+	_emit("status", caster, unit, duration, unit.name + " · " + status_id, {"status": status_id, "statusId": status_id, "duration": int(existing.duration), "value": value, "persistent":bool(existing.get("persistent",false))})
 	return true
 
 func has_status(unit: Dictionary, status_id: String) -> bool:
@@ -887,12 +941,17 @@ func _absorb(unit: Dictionary, amount: int) -> int:
 	_sync_equipment_shields()
 	return remaining
 
-func _status_damage(unit: Dictionary, amount: int, source: String) -> void:
+func _status_damage(unit: Dictionary, amount: int, source: String, details: Dictionary = {}) -> void:
 	if has_status(unit, "invincible"):
 		_emit("miss", {}, unit, 0, unit.name + " 无敌", {"status": source})
 		return
 	unit.currentHp = maxi(0, int(unit.currentHp) - amount)
-	_emit("damage", {}, unit, amount, unit.name + " · " + source + " -%d" % amount, {"status": source, "isCrit": false})
+	var extra := details.duplicate(true)
+	extra.status = source
+	extra.damageSource = source
+	extra.isCrit = false
+	var actor := get_unit(str(details.get("sourceUid", "")))
+	_emit("damage", actor, unit, amount, unit.name + " · " + source + " -%d" % amount, extra)
 
 func element_mult(attacker: String, defender: String) -> float:
 	if not ELEMENT_ADVANTAGE.has(attacker): return 1.0

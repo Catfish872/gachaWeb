@@ -1,6 +1,9 @@
 {
   "CombatRules": {
-    "electrifySkipChance": 0.35
+    "electrifySkipChance": 0.35,
+    "burnAttackRatio": 0.18,
+    "poisonAttackRatio": 0.02,
+    "poisonStackGrowth": 0.10
   },
   "AbyssData": {
     "resetDiamondCost": 100,
@@ -318,7 +321,7 @@
           "name": "焚界开幕",
           "icon": "🌋",
           "target": "开场压制",
-          "description": "每场深渊战斗开始时，所有敌人陷入燃烧 3 回合。",
+          "description": "每场深渊战斗开始时，所有敌人燃烧 3 回合，每轮受到队伍最高攻击力 18% 的伤害。",
           "effects": [
             {
               "type": "enemyBattleStartStatus",
@@ -485,7 +488,7 @@
           "name": "淬毒锋刃",
           "icon": "🌿",
           "target": "中毒构筑",
-          "description": "全队造成直接伤害后，有 25% 概率使目标中毒 2 回合。中毒效果可叠加，每层每回合造成最大生命 5% 的伤害。",
+          "description": "全队造成直接伤害后，有 25% 概率附加 1 层中毒，持续至战斗结束。每层每轮造成施加者攻击力 2% 的伤害；每多一层，中毒总伤害提高 10%。",
           "effects": [
             {
               "type": "applyStatusAfterDamage",

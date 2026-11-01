@@ -1795,12 +1795,106 @@ func _play_battle_sound(events: Array) -> void:
 	_battle_audio_history.append(clip)
 	if _battle_audio_history.size()>32:_battle_audio_history.pop_front()
 
+func _combat_display_events(events: Array) -> Array:
+	# Present repeated procs once; retain their full summed damage.
+	var result: Array = []
+	var grouped: Dictionary = {}
+	var statuses: Dictionary = {}
+	for original in events:
+		var event: Dictionary = original.duplicate(true)
+		var type := str(event.get("type", ""))
+		if type == "damage":
+			var source := str(event.get("status", ""))
+			var channel := source if source in ["burn", "poison"] else ("follow_up" if bool(event.get("follow_up", false)) else "direct")
+			var key := str(event.get("target", ""))+":"+channel
+			if channel == "direct": key += ":"+str(event.get("actor", ""))
+			if grouped.has(key):
+				var prior: Dictionary = result[int(grouped[key])]
+				prior.amount = int(prior.get("amount", 0))+int(event.get("amount", 0))
+				prior.isCrit = bool(prior.get("isCrit", false)) or bool(event.get("isCrit", false))
+				continue
+			grouped[key] = result.size()
+			event.feedbackChannel = channel
+		elif type == "status":
+			var key := str(event.get("target", ""))+":"+str(event.get("statusId", event.get("status", "")))
+			if statuses.has(key): continue
+			statuses[key] = true
+		result.append(event)
+	# Round-end effects follow the attack instead of sharing its visual instant.
+	var direct: Array = []
+	var periodic: Array = []
+	for event in result:
+		if event.get("feedbackChannel", "") in ["burn", "poison"]: periodic.append(event)
+		else: direct.append(event)
+	return direct + periodic
+
+func _combat_damage_caption(event: Dictionary) -> String:
+	var amount := str(int(event.get("amount", 0)))
+	match str(event.get("feedbackChannel", event.get("status", ""))):
+		"burn": return "燃烧 −"+amount
+		"poison": return "中毒 %d层 −%s" % [int(event.get("poisonStacks", event.get("stacks", 1))), amount]
+		"follow_up": return "追加 −"+amount
+	return "−"+amount+("!" if bool(event.get("isCrit", false)) else "")
+
+func _float_damage_feedback(at: Vector2, event: Dictionary, color: Color) -> void:
+	var channel := str(event.get("feedbackChannel", "direct"))
+	if channel == "direct":
+		var number := _label(fx, _combat_damage_caption(event), 30 if event.get("isCrit", false) else 23, color)
+		number.name = "CombatDamage_direct"
+		number.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		number.add_theme_constant_override("outline_size", 5)
+		number.add_theme_color_override("font_outline_color", INK)
+		number.position = at-Vector2(number.get_combined_minimum_size().x*0.5,0)
+		var lifetime := 0.8/sqrt(maxf(1,battle_speed))
+		var motion := number.create_tween().set_parallel()
+		if not extraction_reduced_motion:motion.tween_property(number,"position:y",number.position.y-25,lifetime)
+		motion.tween_property(number,"modulate:a",0.0,lifetime*0.55).set_delay(lifetime*0.45)
+		motion.chain().tween_callback(number.queue_free)
+		return
+	var panel := PanelContainer.new()
+	panel.name = "CombatDamage_"+channel
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fx.add_child(panel)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.035,0.055,0.085,0.94)
+	style.border_color = color.darkened(0.25)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(5)
+	style.content_margin_left=7;style.content_margin_right=7;style.content_margin_top=3;style.content_margin_bottom=3
+	panel.add_theme_stylebox_override("panel", style)
+	var line := _hbox(panel,5)
+	line.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	if channel in ["burn", "poison"]:
+		var icon := TextureRect.new()
+		icon.texture = load("res://assets/ui/status/%s.svg" % channel)
+		icon.custom_minimum_size=Vector2(16,16);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.mouse_filter=Control.MOUSE_FILTER_IGNORE;line.add_child(icon)
+	var label := _label(line, _combat_damage_caption(event), 15, color)
+	label.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	var extent := panel.get_combined_minimum_size()
+	panel.position=Vector2(clampf(at.x-extent.x*0.5,8,size.x-extent.x-8),maxf(8,at.y))
+	var duration := 0.8/sqrt(maxf(1,battle_speed))
+	var tween := panel.create_tween().set_parallel()
+	if not extraction_reduced_motion:tween.tween_property(panel,"position:y",panel.position.y-25,duration)
+	tween.tween_property(panel,"modulate:a",0.0,duration*0.55).set_delay(duration*0.45)
+	tween.chain().tween_callback(panel.queue_free)
+
 func _show_combat_events(events: Array) -> void:
 	var generation := battle_generation
 	await get_tree().process_frame
 	if current_screen != "battle" or generation != battle_generation: return
 	_play_battle_sound(events)
-	for e in events:
+	var periodic_started := false
+	var anchors: Dictionary = {}
+	for uid in unit_cards:
+		var card = unit_cards[uid]
+		if is_instance_valid(card):anchors[uid]=card.global_position+card.size*Vector2(0.5,0.42)
+	for e in _combat_display_events(events):
+		var channel := str(e.get("feedbackChannel", ""))
+		if channel in ["burn", "poison"] and not periodic_started:
+			periodic_started = true
+			await get_tree().create_timer(0.16/maxf(1,battle_speed)).timeout
+			if current_screen != "battle" or generation != battle_generation:return
 		if e.get("type", "") == "skill" and model.catalog.SkillData.get(e.get("skill_id", ""), {}).get("type", "") == "ultimate":
 			fx.flash(_element_color(_battle_event_element(e)))
 			var source_unit := _battle_unit(str(e.get("actor", "")))
@@ -1818,9 +1912,12 @@ func _show_combat_events(events: Array) -> void:
 		var actor = unit_cards.get(str(e.get("actor", "")))
 		if not is_instance_valid(target):
 			continue
-		var pos: Vector2 = target.global_position + target.size * Vector2(0.5, 0.42)
+		var pos: Vector2 = anchors.get(str(e.get("target", "")),target.global_position + target.size * Vector2(0.5, 0.42))
 		var type: String = e.get("type", "")
 		var color := CYAN if type == "heal" else (GOLD if e.get("isCrit", false) else RED)
+		if channel == "burn":color=Color("ffb16d");pos.y-=44
+		elif channel == "poison":color=Color("b8e786");pos.y-=88
+		elif channel == "follow_up":color=Color("d9b9ff");pos.y+=44
 		if type == "heal": fx.heal_ring(pos)
 		if type == "shield": fx.shield_ring(pos)
 		if type in ["damage", "heal", "shield", "miss", "block"]:
@@ -1829,13 +1926,14 @@ func _show_combat_events(events: Array) -> void:
 			if type == "block": text_value = "格挡"
 			if type == "shield": text_value = "护盾 −%d" % e.get("amount", 0)
 			if e.get("isCrit", false): text_value += "!"
-			_float_text(pos, text_value, color, 30 if e.get("isCrit", false) else 23)
+			if type == "damage":_float_damage_feedback(pos,e,color)
+			else:_float_text(pos, text_value, color, 30 if e.get("isCrit", false) else 23)
 			if type=="damage":
 				var origin:Vector2=actor.global_position+actor.size*0.5 if is_instance_valid(actor) else pos+Vector2(-32,0)
-				fx.impact(str(e.get("status",_battle_effect_kind(e))),origin,pos,bool(e.get("isCrit",false)))
+				fx.impact(str(e.get("status",_battle_effect_kind(e))),pos if channel in ["burn", "poison"] else origin,pos,bool(e.get("isCrit",false)))
 			elif type=="shield" and int(_battle_unit(str(e.get("target",""))).get("shield",0))<=0:fx.impact("shield_break",pos,pos)
 			else:fx.burst(pos,color,false)
-			if is_instance_valid(actor) and type == "damage":
+			if is_instance_valid(actor) and type == "damage" and not channel in ["burn", "poison"]:
 				fx.streak(actor.global_position + actor.size * 0.5, pos, _element_color(str(e.get("element", "fire"))))
 				if not extraction_reduced_motion and not actor.has_meta("lunging"):
 					actor.set_meta("lunging",true)
@@ -2710,7 +2808,7 @@ func _show_abyss_rules() -> void:
 	_label(box, "火克风、风克雷、雷克水、水克火。调整技能和目标，可以集中突破敌方关键单位。", 17, TEXT, true)
 	var status_view = load("res://scripts/ui/battle_status_strip.gd")
 	_label(box, "感电：" + status_view.status_description({"id":"electrify"}, model.catalog), 16, CYAN, true).name="BattleRulesElectrify"
-	_label(box, "冰冻、眩晕按完整持续时间生效。中毒可以叠加，每层在回合末造成最大生命 5% 的伤害。首领战超过 20 回合后，每回合攻击提升 5%，上限为 100%。", 16, MUTED, true)
+	_label(box, "燃烧与中毒按施加者攻击造成伤害。中毒本场永久叠层，层数越高，伤害越高。", 16, MUTED, true)
 	_label(box, "自动战斗负责战斗行动。祝福、路线、事件、篝火和商店都会等待你的选择。生命、能量与冷却在本轮远征中延续。", 16, MUTED, true)
 	_button(box, "回到战斗", _clear_overlay, true)
 
@@ -2926,7 +3024,11 @@ func _show_unit_details(unit: Dictionary) -> void:
 		_label(v,str(value[1]),20,TEXT).name="BattleDetail_"+str({"生命":"hp","攻击":"atk","防御":"def"}.get(str(value[0]),"stat"))
 	if float(unit.get("shield",0))>0:_label(box,"护盾 %d" % int(unit.shield),15,CYAN)
 	var status_view = load("res://scripts/ui/battle_status_strip.gd")
-	for status in unit.get("statuses",[]):
+	var grouped_statuses = status_view.new()
+	grouped_statuses.configure(unit.get("statuses",[]),extraction_reduced_motion,model.catalog)
+	var detail_statuses: Array = grouped_statuses.states.duplicate(true)
+	grouped_statuses.free()
+	for status in detail_statuses:
 		var row:=_panel(box,LINE,10)
 		var content:=_vbox(row,4)
 		var heading:=_hbox(content,7)
@@ -2938,7 +3040,7 @@ func _show_unit_details(unit: Dictionary) -> void:
 		if status.get("source","")=="expedition_equipment":
 			_label(heading,"装备护盾 · 剩余 %d" % int(status.get("shieldHp",0)),15,CYAN,true)
 		else:
-			var title:=_label(heading,"%s · 剩余 %d 回合 · %d 层" % [STATUS_NAMES.get(status_id,status_id),int(status.get("duration",0)),int(status.get("stacks",1))],15,GOLD,true)
+			var title:=_label(heading,("%s · %d 层 · ∞" % [STATUS_NAMES.get(status_id,status_id),int(status.get("stacks",1))]) if bool(status.get("persistent",false)) else ("%s · 剩余 %d 回合 · %d 层" % [STATUS_NAMES.get(status_id,status_id),int(status.get("duration",0)),int(status.get("stacks",1))]),15,GOLD,true)
 			title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		_label(content,status_view.status_description(status,model.catalog),13,MUTED,true).name="BattleStatusDetail_"+status_id
 	if unit.get("statuses",[]).is_empty():_label(box,"当前没有持续状态",15,MUTED)

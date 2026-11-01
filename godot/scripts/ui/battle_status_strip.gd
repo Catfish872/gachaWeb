@@ -3,13 +3,13 @@ extends Control
 const Battle = preload("res://scripts/battle_model.gd")
 const STRIP_HEIGHT := 26.0
 const CELL_WIDTH := 58.0
-const COMPACT_CELL_WIDTH := 34.0
+const COMPACT_CELL_WIDTH := 44.0
 const COMPACT_THRESHOLD := 220.0
 const MAX_VISIBLE := 5
 const DEFINITIONS := {
- "burn":["燃烧","回合末受到燃烧伤害"], "freeze":["冰冻","无法行动"],
+ "burn":["燃烧","回合末按施加者攻击造成伤害"], "freeze":["冰冻","无法行动"],
  "stun":["眩晕","无法行动，防御降低30%"], "electrify":["感电","行动时可能跳过本次行动"],
- "poison":["中毒","回合末持续生命伤害，可叠层"], "regen":["再生","回合末恢复最大生命值8%"],
+ "poison":["中毒","战斗内永久叠层，层数越高伤害越高"], "regen":["再生","回合末恢复最大生命值8%"],
  "atk_up":["攻强","攻击力提升"], "def_up":["防强","防御力提升"],
  "spd_down":["减速","速度降低"], "shield":["护盾","吸收伤害"],
  "invincible":["无敌","免疫所有伤害"], "taunt":["嘲讽","强制敌方攻击此目标"],
@@ -49,6 +49,21 @@ func configure(statuses: Array, motion_reduced: bool = false, data: Dictionary =
   if parsed is Dictionary: data = parsed
  reduced_motion = motion_reduced
  states = statuses.duplicate(true)
+ # The model stores each poison layer independently; show one readable stack badge.
+ var grouped: Array = []
+ var poison_index := -1
+ for state in states:
+  if status_id(state) == "poison":
+   if poison_index >= 0:
+    var stack: Dictionary = grouped[poison_index]
+    stack.stacks = int(stack.get("stacks", 1)) + int(state.get("stacks", 1))
+    stack.persistent = bool(stack.get("persistent", false)) or bool(state.get("persistent", false))
+    stack.max_duration = maxi(int(stack.get("max_duration", stack.get("duration", 0))), int(state.get("duration", 0)))
+    stack.duration = mini(int(stack.get("duration", 0)), int(state.get("duration", 0)))
+    continue
+   poison_index = grouped.size()
+  grouped.append(state)
+ states = grouped
  var descriptions := PackedStringArray()
  for state in states:
   var id := status_id(state)
@@ -63,20 +78,6 @@ func configure(statuses: Array, motion_reduced: bool = false, data: Dictionary =
    var asset := id if DEFINITIONS.has(id) else "unknown"
    _textures[id] = load("res://assets/ui/status/%s.svg" % asset)
  tooltip_text = "\n".join(descriptions)
- # The model stores each poison layer independently; show one readable stack badge.
- var grouped: Array = []
- var poison_index := -1
- for state in states:
-  if status_id(state) == "poison":
-   if poison_index >= 0:
-    var stack: Dictionary = grouped[poison_index]
-    stack.stacks = int(stack.get("stacks", 1)) + int(state.get("stacks", 1))
-    stack.max_duration = maxi(int(stack.get("max_duration", stack.get("duration", 0))), int(state.get("duration", 0)))
-    stack.duration = mini(int(stack.get("duration", 0)), int(state.get("duration", 0)))
-    continue
-   poison_index = grouped.size()
-  grouped.append(state)
- states = grouped
  _refresh_capacity()
 
 func set_states(statuses: Array, motion_reduced: bool = false, data: Dictionary = {}) -> void:
@@ -88,6 +89,7 @@ func status_id(state: Dictionary) -> String:
 
 func counter_text(state: Dictionary) -> String:
  if bool(state.get("persistent", false)):
+  if status_id(state) == "poison": return "%d·∞" % int(state.get("stacks", 1))
   return str(int(state.get("shieldHp", 0))) if status_id(state) == "shield" else "∞"
  var turns := str(int(state.get("duration", state.get("turns", 0))))
  if int(state.get("max_duration", 0)) > int(state.get("duration", 0)): turns += "+"
@@ -117,14 +119,18 @@ func _draw() -> void:
   draw_style_box(_chip_style(), Rect2(x, 1, cell_width-3, 24))
   var texture: Texture2D = _textures.get(status_id(state))
   if texture: draw_texture_rect(texture, Rect2(x+3, 4, 18, 18), false)
-  if compact_mode:
+  if status_id(state) == "poison" and bool(state.get("persistent", false)):
+   var stack_text := str(int(state.get("stacks", 1)))
+   draw_string(font, Vector2(x+23, 12), stack_text, HORIZONTAL_ALIGNMENT_LEFT, cell_width-26, 10 if stack_text.length() < 4 else 8, Color("ffd99c"))
+   draw_string(font, Vector2(x+23, 23), "∞", HORIZONTAL_ALIGNMENT_LEFT, cell_width-26, 10, Color("e0e8f0"))
+  elif compact_mode:
    # Main glyph stays 18px; the right corner separates gold stacks from turn count.
    var stacks := int(state.get("stacks", 1))
    if stacks > 1:
-    draw_string(font, Vector2(x+21, 10), ("×%d" % stacks if stacks < 10 else "9+"), HORIZONTAL_ALIGNMENT_LEFT, 12, 8, Color("ffd99c"))
-   draw_string(font, Vector2(x+21, 22 if stacks > 1 else 18), compact_counter_text(state), HORIZONTAL_ALIGNMENT_LEFT, 12, 9, Color("e0e8f0"))
+    draw_string(font, Vector2(x+21, 10), str(stacks), HORIZONTAL_ALIGNMENT_LEFT, 21, 10 if stacks < 1000 else 8, Color("ffd99c"))
+   draw_string(font, Vector2(x+21, 22 if stacks > 1 else 18), compact_counter_text(state), HORIZONTAL_ALIGNMENT_LEFT, 21, 9, Color("e0e8f0"))
   else:
-   draw_string(font, Vector2(x+24, 18), counter_text(state), HORIZONTAL_ALIGNMENT_LEFT, CELL_WIDTH-27, 11, Color("e0e8f0"))
+   draw_string(font, Vector2(x+24, 18), counter_text(state), HORIZONTAL_ALIGNMENT_LEFT, CELL_WIDTH-27, 9 if counter_text(state).length() > 4 else 11, Color("e0e8f0"))
  if hidden_count > 0:
   draw_string(font, Vector2(visible_count*cell_width+1,18), "+%d"%hidden_count, HORIZONTAL_ALIGNMENT_LEFT, 25, 11, Color("c4d9e5"))
 

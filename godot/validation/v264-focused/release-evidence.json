@@ -1,0 +1,34 @@
+{
+  "version": "2.6.4",
+  "version_code": 20604,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_started_utc": "2026-11-01T19:35:40Z",
+  "test_completed_utc": "2026-11-01T19:39:15Z",
+  "test_elapsed_seconds": 215,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-01T19:35:40Z",
+      "completed_utc": "2026-11-01T19:39:15Z",
+      "elapsed_seconds": 215,
+      "production_sha256": "4649e81e59fcc371e48c4f0af89176caf63415fed4a601a05dc3ff14fe384571",
+      "scope": [
+        "caster attack snapshot burn and mixed-source permanent poison, 1/5/10/30/50/100 stacks, source death/missing source, target-stat independence, three modes and new-battle reset (41 checks)",
+        "actual OpenGL2048x945/960x540 direct/burn/poison/follow-up lanes, permanent100+infinity badge and concise tooltip (50 checks)",
+        "100 poison layers one damage event,100 repeated follow-ups summed,4x animated feedback clears within0.8s",
+        "focused release gate (9 tests)"
+      ]
+    }
+  ],
+  "production_sha256": "4649e81e59fcc371e48c4f0af89176caf63415fed4a601a05dc3ff14fe384571",
+  "production_file_count": 828,
+  "scope": [
+    "caster attack snapshot burn and mixed-source permanent poison, 1/5/10/30/50/100 stacks, source death/missing source, target-stat independence, three modes and new-battle reset (41 checks)",
+    "actual OpenGL2048x945/960x540 direct/burn/poison/follow-up lanes, permanent100+infinity badge and concise tooltip (50 checks)",
+    "100 poison layers one damage event,100 repeated follow-ups summed,4x animated feedback clears within0.8s",
+    "focused release gate (9 tests)"
+  ],
+  "limits": [
+    "Focused model and desktop OpenGL review only; no new Android emulator journey or physical-device test."
+  ]
+}
