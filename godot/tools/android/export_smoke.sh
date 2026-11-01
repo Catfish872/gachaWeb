@@ -27,6 +27,7 @@ ENGINE="${GODOT_BIN:-godot}"
 "$ENGINE" --headless --editor --path "$WORK/project" --import --quit > "$OUTPUT/import.log" 2>&1 || { cat "$OUTPUT/import.log"; exit 1; }
 "$ENGINE" --headless --path "$WORK/project" --export-debug 'Android Debug' "$OUTPUT/smoke.apk" > "$OUTPUT/export.log" 2>&1 || { cat "$OUTPUT/export.log"; exit 1; }
 if grep -E 'SCRIPT ERROR|^ERROR:' "$OUTPUT/import.log" "$OUTPUT/export.log"; then exit 1; fi
+bash "$ROOT/tools/build/finalize_apk.sh" "$OUTPUT/smoke.apk" debug
 python3 - "$OUTPUT/smoke.apk" <<'PY'
 import sys, zipfile
 with zipfile.ZipFile(sys.argv[1]) as apk:

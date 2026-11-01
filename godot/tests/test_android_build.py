@@ -85,6 +85,39 @@ class BuildValidationTests(unittest.TestCase):
         self.assertIn(str(facade), (self.root / 'config/godot/editor_settings-4.6.tres').read_text())
         self.assertTrue((sdk / 'build-tools/36.0.0').is_dir())
 
+    def test_finalize_orders_normalization_alignment_and_signing(self):
+        sdk = self.root / 'sdk/build-tools/35.0.1'
+        sdk.mkdir(parents=True)
+        bin_dir = self.root / 'bin'
+        bin_dir.mkdir()
+        log = self.root / 'calls'
+        # Dummy credential names only; this fixture neither generates nor reads keys.
+        scripts = {
+            bin_dir / 'python3': '#!/bin/sh\necho normalize >> "$CALLS"\ncp "$2" "$3"\n',
+            sdk / 'zipalign': '#!/bin/sh\necho zipalign-$1 >> "$CALLS"\nif [ "$1" = "-P" ]; then cp "$5" "$6"; fi\n',
+            sdk / 'apksigner': '#!/bin/sh\necho apksigner-$1 >> "$CALLS"\nif [ "$1" = sign ]; then while [ "$1" != --out ]; do shift; done; cp "$3" "$2"; fi\n',
+            sdk / 'aapt': '#!/bin/sh\necho aapt-$1-$2 >> "$CALLS"\nexit "${BADGING_EXIT:-0}"\n',
+        }
+        for path, body in scripts.items():
+            path.write_text(body)
+            path.chmod(0o755)
+        apk = self.root / 'dummy.apk'
+        apk.write_bytes(b'fixture')
+        env = {**os.environ, 'PATH': str(bin_dir) + os.pathsep + os.environ['PATH'],
+               'CALLS': str(log), 'ANDROID_HOME': str(self.root / 'sdk'),
+               'GODOT_ANDROID_KEYSTORE_DEBUG_PATH': 'unused-fixture',
+               'GODOT_ANDROID_KEYSTORE_DEBUG_USER': 'unused-fixture',
+               'GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD': 'unused-fixture'}
+        command = ['bash', str(ROOT / 'tools/build/finalize_apk.sh'), str(apk), 'debug']
+        subprocess.run(command, env=env, check=True, capture_output=True)
+        self.assertEqual(log.read_text().splitlines(), ['normalize', 'zipalign--P',
+                         'apksigner-sign', 'zipalign--c', 'apksigner-verify', 'aapt-dump-badging'])
+        self.assertEqual(apk.read_bytes(), b'fixture')
+        # A manifest failure remains fatal and never replaces the delivered file.
+        with self.assertRaises(subprocess.CalledProcessError):
+            subprocess.run(command, env={**env, 'BADGING_EXIT': '1'}, check=True, capture_output=True)
+        self.assertEqual(apk.read_bytes(), b'fixture')
+
     def test_apk_valid_and_rejection_fixtures(self):
         fingerprint = 'a' * 64
         badge = f"package: name='org.catfish872.voidrift.debug' versionCode='{self.metadata['version_code']}' versionName='{self.metadata['version_name']}'\nsdkVersion:'24'\ntargetSdkVersion:'36'\nuses-permission: name='android.permission.INTERNET'\nuses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'\n"

@@ -53,6 +53,7 @@ if grep -Eq 'SCRIPT ERROR|^ERROR:' "$WORK/import.log"; then cat "$WORK/import.lo
 "$ENGINE" --headless --path "$ROOT" "$FLAG" "$PRESET" "$OUTPUT/universal.apk" > "$WORK/export.log" 2>&1 || { cat "$WORK/export.log"; exit 1; }
 if grep -Eq 'SCRIPT ERROR|^ERROR:' "$WORK/export.log"; then cat "$WORK/export.log"; exit 1; fi
 [[ -s "$OUTPUT/universal.apk" ]]
+bash "$ROOT/tools/build/finalize_apk.sh" "$OUTPUT/universal.apk" "$MODE"
 python3 "$ROOT/tools/build/verify_apk.py" "$OUTPUT/universal.apk" --sdk "$SDK" --mode "$MODE" --fingerprint "$FINGERPRINT"
 (cd "$OUTPUT" && sha256sum universal.apk > SHA256SUMS.txt)
 echo "Verified $MODE APK and SHA256SUMS.txt ready in $OUTPUT"

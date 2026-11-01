@@ -40,6 +40,7 @@ jobs:
           python3 godot/tools/build/validate_version.py
           python3 .github/scripts/test_release_preflight.py
           python3 godot/tests/test_android_build.py
+          python3 godot/tests/test_android_manifest.py
           python3 godot/tests/test_android_smoke.py
           python3 godot/tests/test_android_kvm.py
           bash godot/tools/test_all.sh
