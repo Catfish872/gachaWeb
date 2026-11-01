@@ -116,6 +116,25 @@ class AndroidManifestTests(unittest.TestCase):
                 self.assertEqual(z.read('META-INF/services/example'),b'not a signature')
                 self.assertEqual(z.read('AndroidManifest.xml'),mod.normalize_axml(data))
 
+    def test_copy_does_not_mutate_original_zip_offsets(self):
+        data,_=fixture()
+        with tempfile.TemporaryDirectory() as d:
+            source,target=Path(d)/'in.apk',Path(d)/'out.apk'
+            with zipfile.ZipFile(source,'w',compression=zipfile.ZIP_DEFLATED) as z:
+                # A removed signature before the payload shifts every output offset.
+                z.writestr('META-INF/CERT.RSA',b'large old signature'*400)
+                z.writestr('AndroidManifest.xml',data)
+                z.writestr('assets/game.pck',bytes(range(256))*16)
+                z.writestr('lib/arm64-v8a/libgodot_android.so',b'native payload'*200)
+            original=source.read_bytes()
+            mod.normalize_apk(source,target)
+            self.assertEqual(source.read_bytes(),original)
+            with zipfile.ZipFile(source) as before, zipfile.ZipFile(target) as after:
+                for name in ('assets/game.pck','lib/arm64-v8a/libgodot_android.so'):
+                    self.assertNotEqual(before.getinfo(name).header_offset,after.getinfo(name).header_offset)
+                    self.assertEqual(before.read(name),after.read(name))
+                self.assertEqual(after.read('AndroidManifest.xml'),mod.normalize_axml(data))
+
     def test_missing_feature_and_invalid_metadata_rejected(self):
         def missing(f,attrs):
             if f == 6: attrs[0]=(0,2,11,3,11)

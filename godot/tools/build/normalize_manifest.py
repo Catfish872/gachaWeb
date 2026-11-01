@@ -5,6 +5,7 @@ No XML reserialization: only the type byte and four-byte data field change.
 Signing is deliberately external; this command never accesses credentials.
 """
 import argparse
+import copy
 from pathlib import Path
 import re
 import struct
@@ -135,7 +136,7 @@ def normalize_apk(source, destination):
                 output.comment = archive.comment
                 for info in infos:
                     if not is_signature(info.filename):
-                        output.writestr(info, normalized if info.filename == 'AndroidManifest.xml' else archive.read(info))
+                        output.writestr(copy.copy(info), normalized if info.filename == 'AndroidManifest.xml' else archive.read(info))
             with zipfile.ZipFile(temporary) as check:
                 expected = {i.filename for i in infos if not is_signature(i.filename)}
                 require(set(check.namelist()) == expected and check.testzip() is None, 'ZIP copy verification failed')
