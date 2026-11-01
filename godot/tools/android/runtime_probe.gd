@@ -77,6 +77,9 @@ func _probe_rect(control: Control) -> Array:
 	return [a.x, a.y, b.x - a.x, b.y - a.y]
 
 func _probe_controls(node: Node, result: Array) -> void:
+	# Story cards use real gui_input-bound panels, not BaseButton. Observe only.
+	if node is Control and not node is BaseButton and node.is_visible_in_tree() and str(node.name).begins_with("StageCard_"):
+		result.append({"name":str(node.name),"text":"","rect":_probe_rect(node),"clip":_probe_clip(node),"scroll_owner":_probe_scroll_owner(node),"selected":str(node.name)=="StageCard_"+selected_stage_id})
 	if current_screen=="battle" and node is Button and node.is_visible_in_tree() and node.text in ["自动","手动"]:
 		result.append({"name":"BattleAutoToggle","text":node.text,"rect":_probe_rect(node),"clip":_probe_clip(node)})
 	if node is BaseButton and node.is_visible_in_tree() and not node.disabled and (str(node.name).begins_with("Menu") or str(node.name).begins_with("Extraction") or str(node.name).begins_with("Atlas") or str(node.name).begins_with("Summon") or str(node.name).begins_with("ShopPurchase_") or str(node.name).begins_with("Character") or str(node.name).begins_with("GrowthSelect_") or str(node.name).begins_with("Relic") or str(node.name).begins_with("Abyss") or str(node.name).begins_with("Story") or str(node.name).begins_with("StageCard_") or str(node.name).begins_with("Dialogue") or node.name in ["BackButton","BattleSettlementContinue","GrowthAutoRelics"]):

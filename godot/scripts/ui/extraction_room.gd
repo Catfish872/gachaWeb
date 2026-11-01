@@ -3,6 +3,7 @@ signal container_selected(id: String)
 signal battle_requested
 signal service_requested(id: String)
 var service_rect := Rect2()
+var service_hit_rect := Rect2()
 var service_id := ""
 var service_sprite: Texture2D
 var enemies: Array = []
@@ -24,6 +25,9 @@ var _touch_id := -1
 var _pan_velocity := Vector2.ZERO
 var _motion_time := 0
 var _pulse := 0.0
+var _layout_anchors: Dictionary = {}
+const INTERACTION_GAP := 154.0
+const INTERACTION_MARGIN := 80.0
 
 func configure(room: Dictionary, boxes: Array, selection: String = "", guards: Array = [], reduce_motion: bool = false) -> void:
 	enemies=guards.duplicate(true);reduced_motion=reduce_motion
@@ -44,7 +48,7 @@ func configure(room: Dictionary, boxes: Array, selection: String = "", guards: A
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	clip_contents = true
 	set_meta("extraction_pan", true)
-	queue_redraw()
+	_resize_room()
 
 func _ready() -> void:
 	resized.connect(_resize_room)
@@ -66,17 +70,39 @@ func _process(delta: float) -> void:
 	if animate:queue_redraw()
 
 func _resize_room() -> void:
-	canvas_size = Vector2(maxf(size.x,600),maxf(size.y,340))
+	var interaction_count:=containers.size()+(0 if service_id.is_empty() else 1)
+	var required_width:=INTERACTION_MARGIN*2+maxi(0,interaction_count-1)*INTERACTION_GAP
+	canvas_size = Vector2(maxf(maxf(size.x,600),required_width),maxf(size.y,340))
+	_layout_interactables()
 	pan = Vector2((size.x-canvas_size.x)/2,(size.y-canvas_size.y)/2)
 	if not containers.is_empty():
 		var focus: Dictionary = containers[0]
 		for box in containers:
 			if str(box.id)==selected: focus=box
-		pan.x=size.x/2-float(focus.get("sceneX",0.5))*canvas_size.x
+		pan.x=size.x/2-float(_layout_anchors.get(str(focus.id),float(focus.get("sceneX",0.5))*canvas_size.x))
 	_clamp_pan(); queue_redraw()
+
+func _layout_interactables() -> void:
+	# Keep the scene's left-to-right composition while separating full labels,
+	# search badges and finger targets. This is presentation-only: no game RNG.
+	_layout_anchors.clear()
+	var points:Array=[]
+	for box in containers:points.append({"id":str(box.id),"x":float(box.get("sceneX",0.5))*canvas_size.x})
+	if not service_id.is_empty():points.append({"id":"__service__","x":canvas_size.x*.52})
+	points.sort_custom(func(a,b):return a.x<b.x if a.x!=b.x else a.id<b.id)
+	var previous:=INTERACTION_MARGIN-INTERACTION_GAP
+	for point in points:
+		point.x=maxf(clampf(point.x,INTERACTION_MARGIN,canvas_size.x-INTERACTION_MARGIN),previous+INTERACTION_GAP)
+		previous=point.x
+	var next:=canvas_size.x-INTERACTION_MARGIN+INTERACTION_GAP
+	for i in range(points.size()-1,-1,-1):
+		points[i].x=minf(float(points[i].x),next-INTERACTION_GAP)
+		next=points[i].x
+	for point in points:_layout_anchors[point.id]=point.x
 
 func container_point(box: Dictionary) -> Vector2:
 	var point:=Vector2(float(box.get("sceneX",0.5)),float(box.get("sceneY",0.65))) * canvas_size + pan
+	point.x=float(_layout_anchors.get(str(box.id),point.x-pan.x))+pan.x
 	# Compact service layouts still show the complete search badge, sprite and name.
 	point.y=clampf(point.y,76,maxf(76,size.y-62))
 	return point
@@ -153,12 +179,14 @@ func _draw() -> void:
 		draw_style_box(_label_box(),label_rect)
 		draw_string(font,point+Vector2(-56,53),title,HORIZONTAL_ALIGNMENT_CENTER,112,14,color)
 	service_rect=Rect2()
+	service_hit_rect=Rect2()
 	if not service_id.is_empty() and service_sprite!=null:
-		var center:=Vector2(size.x*0.52,clampf(size.y*.5,65,maxf(65,size.y-86)))
+		var center:=Vector2(float(_layout_anchors.get("__service__",canvas_size.x*.52))+pan.x,clampf(size.y*.5,65,maxf(65,size.y-86)))
 		service_rect=Rect2(center-Vector2(60,65),Vector2(120,120))
 		draw_circle(center+Vector2(0,35),48,Color(.04,.04,.08,.3))
 		draw_texture_rect(service_sprite,service_rect,false)
 		var label:=Rect2(center+Vector2(-65,58),Vector2(130,25))
+		service_hit_rect=service_rect.merge(label)
 		draw_style_box(_label_box(),label)
 		draw_string(font,label.position+Vector2(3,17),"信使翼匣" if service_id=="relay" else "封印宝库",HORIZONTAL_ALIGNMENT_CENTER,124,14,Color("e0c98d"))
 	draw_rect(Rect2(Vector2.ZERO,size),Color("536659"),false,1)
@@ -206,7 +234,7 @@ func _end(at: Vector2) -> void:
 	if not _dragged and at.distance_to(_press)<10: _activate.call_deferred(at)
 func _activate(at: Vector2) -> void:
 	if not is_inside_tree():return
-	if not service_id.is_empty() and service_rect.grow(10).has_point(at):service_requested.emit(service_id);return
+	if not service_id.is_empty() and service_hit_rect.grow(5).has_point(at):service_requested.emit(service_id);return
 	for rect in enemy_rects:
 		if rect.has_point(at):battle_requested.emit();return
 	for box in containers:

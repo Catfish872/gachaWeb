@@ -1,0 +1,23 @@
+{
+  "version": "2.6.0",
+  "version_code": 20600,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_started_utc": "2026-11-01T16:28:45Z",
+  "test_completed_utc": "2026-11-01T16:33:52Z",
+  "test_elapsed_seconds": 307,
+  "production_sha256": "1a3441d1a5a281301e77ebfda91c440bbb9c3339982950cc21d748db8d054906",
+  "production_file_count": 788,
+  "scope": [
+    "searched-container completion and retained-loot revisit (30 checks)",
+    "themed maps, deterministic relay districts, save compatibility and economic variants (1172 checks)",
+    "desktop OpenGL 2048x945,1280x720,960x540 layout and interaction (230 checks)",
+    "ScreenTouch popup dismissal with no click-through; MouseButton actions and ScreenDrag panning",
+    "6 actual themed backgrounds,6 container atlases,12 loot atlas bindings (68 checks)",
+    "release evidence gate (6 tests)"
+  ],
+  "limits": [
+    "Desktop OpenGL and input-event checks do not certify a new Android emulator journey or a physical phone test.",
+    "Existing unchanged combat, currencies, relic growth and prior native paths reuse their existing evidence."
+  ]
+}

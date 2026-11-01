@@ -1,0 +1,283 @@
+{
+  "generation": "Built-in image generation; original generated pixels preserved in source atlases. AtlasTexture regions are runtime crops, not redrawn images.",
+  "sources": {
+    "ruins": {
+      "file": "assets/extraction/v260/ruins_atlas.png",
+      "size": [
+        1178,
+        1335
+      ],
+      "mode": "RGB",
+      "sha256": "2b8aa9ae76d340c19dd129bdf812c6640b55a758b5bd34c534f37e00297b4f18"
+    },
+    "forest": {
+      "file": "assets/extraction/v260/forest_atlas.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "f10d11d160984328c6485d0c074c92d5f7358fd7ae4f8d045e7488e174e97e5d"
+    },
+    "sanctum": {
+      "file": "assets/extraction/v260/sanctum_atlas.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "e4b8f75b413e02295e2598ba467f294c279da3925683d99ec7caf5357d130cf3"
+    },
+    "objects": {
+      "file": "assets/extraction/v260/objects_atlas.png",
+      "size": [
+        1774,
+        887
+      ],
+      "mode": "RGBA",
+      "sha256": "8bfad8979d0bba328ab1760ca7428a69777c198740d5ffdc0c0b1941672fb4d7"
+    }
+  },
+  "assets": [
+    {
+      "path": "res://assets/extraction/v260/ruins_outer.tres",
+      "source": "ruins",
+      "region": [
+        0,
+        0,
+        1178,
+        662
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/ruins_core.tres",
+      "source": "ruins",
+      "region": [
+        0,
+        673,
+        1178,
+        662
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/forest_outer.tres",
+      "source": "forest",
+      "region": [
+        0,
+        0,
+        1672,
+        465
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/forest_core.tres",
+      "source": "forest",
+      "region": [
+        0,
+        477,
+        1672,
+        464
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/sanctum_outer.tres",
+      "source": "sanctum",
+      "region": [
+        0,
+        0,
+        1672,
+        461
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/sanctum_core.tres",
+      "source": "sanctum",
+      "region": [
+        0,
+        473,
+        1672,
+        468
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/containers/ruins_royal_coffer.tres",
+      "source": "objects",
+      "region": [
+        12,
+        92,
+        306,
+        238
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/containers/ruins_ember_urn.tres",
+      "source": "objects",
+      "region": [
+        348,
+        40,
+        238,
+        298
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/containers/forest_root_hollow.tres",
+      "source": "objects",
+      "region": [
+        606,
+        55,
+        290,
+        276
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/containers/forest_spore_pod.tres",
+      "source": "objects",
+      "region": [
+        916,
+        41,
+        263,
+        299
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/containers/sanctum_astral_casket.tres",
+      "source": "objects",
+      "region": [
+        1204,
+        122,
+        304,
+        212
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/containers/sanctum_prayer_cabinet.tres",
+      "source": "objects",
+      "region": [
+        1544,
+        31,
+        183,
+        308
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/ruins_cinder_medal.tres",
+      "source": "objects",
+      "region": [
+        41,
+        337,
+        225,
+        252
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/ruins_molten_seal.tres",
+      "source": "objects",
+      "region": [
+        344,
+        348,
+        241,
+        239
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/ruins_obsidian_chalice.tres",
+      "source": "objects",
+      "region": [
+        654,
+        347,
+        176,
+        253
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/ruins_sun_crown.tres",
+      "source": "objects",
+      "region": [
+        910,
+        372,
+        323,
+        214
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/forest_amber_acorn.tres",
+      "source": "objects",
+      "region": [
+        1265,
+        335,
+        210,
+        253
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/forest_moon_dew.tres",
+      "source": "objects",
+      "region": [
+        1568,
+        350,
+        136,
+        234
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/forest_verdant_tablet.tres",
+      "source": "objects",
+      "region": [
+        45,
+        592,
+        235,
+        266
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/forest_heart_bloom.tres",
+      "source": "objects",
+      "region": [
+        315,
+        591,
+        274,
+        270
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/sanctum_star_compass.tres",
+      "source": "objects",
+      "region": [
+        623,
+        594,
+        256,
+        255
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/sanctum_meteor_shard.tres",
+      "source": "objects",
+      "region": [
+        948,
+        587,
+        187,
+        260
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/sanctum_orbit_lens.tres",
+      "source": "objects",
+      "region": [
+        1204,
+        592,
+        286,
+        256
+      ]
+    },
+    {
+      "path": "res://assets/extraction/v260/items/sanctum_celestial_clock.tres",
+      "source": "objects",
+      "region": [
+        1507,
+        584,
+        245,
+        281
+      ]
+    }
+  ]
+}

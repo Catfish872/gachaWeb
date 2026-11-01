@@ -1,0 +1,15 @@
+{
+  "started_utc": "2026-11-01T16:43:20Z",
+  "completed_utc": "2026-11-01T16:46:28Z",
+  "elapsed_seconds": 188,
+  "production_sha256": "759377b06c7d41255a05e7628db48c58c3f0a9bf11f339a1f63f61ac23d78a43",
+  "production_file_count": 828,
+  "scope": [
+    "secured-value summary includes courier/BOSS parcels once and excludes lost bags (25 summary/audio checks)",
+    "single successful sale cue, failed-sale silence, global mute/volume routes, 0.48s OGG decoding",
+    "36 new variants exact base mechanical copies; six rarities and native grid dimensions; unchanged base weighted pool",
+    "actual desktop OpenGL dark-background atlas catalog and per-item geometry (74 checks)",
+    "segmented release-evidence gate (9 tests)"
+  ],
+  "change_manifest": "delta-manifest.json"
+}

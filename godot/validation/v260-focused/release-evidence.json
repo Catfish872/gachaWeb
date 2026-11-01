@@ -1,0 +1,62 @@
+{
+  "version": "2.6.0",
+  "version_code": 20600,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_started_utc": "2026-11-01T16:28:45Z",
+  "test_completed_utc": "2026-11-01T16:46:28Z",
+  "test_elapsed_seconds": 495,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-01T16:28:45Z",
+      "completed_utc": "2026-11-01T16:33:52Z",
+      "elapsed_seconds": 307,
+      "production_sha256": "1a3441d1a5a281301e77ebfda91c440bbb9c3339982950cc21d748db8d054906",
+      "production_file_count": 788,
+      "scope": [
+        "searched-container completion and retained-loot revisit (30 checks)",
+        "themed maps, deterministic relay districts, save compatibility and economic variants (1172 checks)",
+        "desktop OpenGL 2048x945,1280x720,960x540 layout and interaction (230 checks)",
+        "ScreenTouch popup dismissal with no click-through; MouseButton actions and ScreenDrag panning",
+        "6 actual themed backgrounds,6 container atlases,12 loot atlas bindings (68 checks)",
+        "release evidence gate (6 tests)"
+      ]
+    },
+    {
+      "started_utc": "2026-11-01T16:43:20Z",
+      "completed_utc": "2026-11-01T16:46:28Z",
+      "elapsed_seconds": 188,
+      "production_sha256": "759377b06c7d41255a05e7628db48c58c3f0a9bf11f339a1f63f61ac23d78a43",
+      "production_file_count": 828,
+      "scope": [
+        "secured-value summary includes courier/BOSS parcels once and excludes lost bags (25 summary/audio checks)",
+        "single successful sale cue, failed-sale silence, global mute/volume routes, 0.48s OGG decoding",
+        "36 new variants exact base mechanical copies; six rarities and native grid dimensions; unchanged base weighted pool",
+        "actual desktop OpenGL dark-background atlas catalog and per-item geometry (74 checks)",
+        "segmented release-evidence gate (9 tests)"
+      ],
+      "change_manifest": "delta-manifest.json"
+    }
+  ],
+  "production_sha256": "759377b06c7d41255a05e7628db48c58c3f0a9bf11f339a1f63f61ac23d78a43",
+  "production_file_count": 828,
+  "scope": [
+    "searched-container completion and retained-loot revisit (30 checks)",
+    "themed maps, deterministic relay districts, save compatibility and economic variants (1172 checks)",
+    "desktop OpenGL 2048x945,1280x720,960x540 layout and interaction (230 checks)",
+    "ScreenTouch popup dismissal with no click-through; MouseButton actions and ScreenDrag panning",
+    "6 actual themed backgrounds,6 container atlases,12 loot atlas bindings (68 checks)",
+    "release evidence gate (6 tests)",
+    "secured-value summary includes courier/BOSS parcels once and excludes lost bags (25 summary/audio checks)",
+    "single successful sale cue, failed-sale silence, global mute/volume routes, 0.48s OGG decoding",
+    "36 new variants exact base mechanical copies; six rarities and native grid dimensions; unchanged base weighted pool",
+    "actual desktop OpenGL dark-background atlas catalog and per-item geometry (74 checks)",
+    "segmented release-evidence gate (9 tests)"
+  ],
+  "limits": [
+    "Desktop OpenGL and input-event checks do not certify a new Android emulator journey or a physical phone test.",
+    "Existing unchanged combat, currencies, relic growth and prior native paths reuse their existing evidence.",
+    "Audio verification covers decoding and interaction routes, not human listening quality.",
+    "Development between test segments is not included in focused test time. Prior coverage applies to unchanged code; the second segment covers the delta manifest."
+  ]
+}

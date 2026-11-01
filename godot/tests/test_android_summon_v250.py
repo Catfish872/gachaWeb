@@ -102,4 +102,19 @@ class SummonEvidence(unittest.TestCase):
         state={'seq':10,'buttons':[], 'extraction':{'phase':'route'},'canvases':{'map':{}}}
         with patch.object(smoke,'tap_page') as tap:
             self.assertIs(smoke.return_extraction_map(state),state);tap.assert_not_called()
+    def test_relic_scope_runs_only_real_remaining_flow_and_reports_reuse(self):
+        with tempfile.TemporaryDirectory() as folder,patch.object(smoke,'relic_input_flow',return_value={'screen':'home'}) as relic,patch.object(smoke,'check_background_resume') as resume,patch.object(smoke,'adb',return_value='alive'),patch.object(smoke,'extraction_flow') as extraction,patch.object(smoke,'summon_input_flow') as summon:
+            smoke.run_relic_scope({'screen':'home'},'component',Path(folder))
+            relic.assert_called_once();resume.assert_called_once();extraction.assert_not_called();summon.assert_not_called()
+            import json
+            report=json.loads((Path(folder)/'result.json').read_text())
+            self.assertEqual(report['scope'],'relic-v250');self.assertEqual(report['reused_evidence']['run'],41320178121)
+            self.assertTrue(report['passed']);self.assertIn('summon single/ten/animation pause',report['not_rerun'])
+    def test_explicit_relic_scope_branches_after_real_install_startup(self):
+        state={'screen':'home','overlay':0,'window':[1280,720],'renderer':{'method':'mobile','driver':'vulkan','adapter':'test-observation'},'android_bridge':{}}
+        with tempfile.TemporaryDirectory() as folder,patch.dict(smoke.os.environ,{'ANDROID_SMOKE_SCOPE':'relic-v250'}),patch.object(smoke,'adb',return_value='package/activity') as adb,patch.object(smoke,'settle_android_configuration'),patch.object(smoke,'wait_for',return_value=state),patch.object(smoke,'validate_android_bridge',return_value={}),patch.object(smoke,'geometry'),patch.object(smoke,'dismiss_fullscreen_education'),patch.object(smoke,'screenshot'),patch.object(smoke,'run_relic_scope') as remainder,patch.object(smoke,'tap') as tap,patch.object(smoke,'extraction_flow') as extraction,patch.object(smoke,'summon_input_flow') as summon:
+            smoke.run(Path('real.apk'),Path(folder))
+            adb.assert_any_call('install','-r','real.apk');adb.assert_any_call('shell','pm','clear',smoke.PACKAGE)
+            remainder.assert_called_once_with(state,'package/activity',Path(folder))
+            tap.assert_not_called();extraction.assert_not_called();summon.assert_not_called()
 if __name__=='__main__':unittest.main()

@@ -1484,6 +1484,16 @@ func _abyss_reward(id: String) -> Dictionary:
 			return r
 	return {}
 
+func _present_abyss_reward(raw: Variant) -> Dictionary:
+	# Refresh display-only copy for old ongoing runs without changing issued effects.
+	var reward:Dictionary=raw.duplicate(true) if raw is Dictionary else _abyss_reward(str(raw)).duplicate(true)
+	var id:String=str(reward.get("id",""))
+	if id=="common_static_blue":
+		reward.description=str(reward.get("description","")).split("感电期间")[0].strip_edges()
+	var definition:Dictionary=_abyss_reward(id)
+	if str(reward.get("icon",""))=="✦" and not definition.is_empty():reward.icon=definition.get("icon","✦")
+	return reward
+
 func _start_battle(config: Dictionary) -> void:
 	_clear_overlay()
 	battle_generation += 1
@@ -2617,7 +2627,7 @@ func _reward_text(rewards: Array) -> String:
 func _show_battle_echoes() -> void:
 	var box := _modal("本轮回响构筑", 720)
 	for raw in model.state.abyss.rogue.get("selectedRewards", []):
-		var reward: Dictionary = raw if raw is Dictionary else _abyss_reward(str(raw))
+		var reward: Dictionary = _present_abyss_reward(raw)
 		var card:=_panel(box,LINE,12)
 		var contents:=_vbox(card,6)
 		preload("res://scripts/ui/reward_rarity.gd").decorate(self,card,contents,str(reward.get("rarity","white")))
@@ -2967,7 +2977,7 @@ func _music_track_for_context() -> String:
 	match _music_context_id:
 		"extraction":
 			if not model.extraction.active():return "medieval_exploration"
-			return {1:"sunset_walk",2:"medieval_exploration",3:"dungeon_mystic"}.get(int(model.extraction.run().get("act",1)),"sunset_walk")
+			return model.extraction.environment_music_track()
 		"abyss":return _exploration_music_track(int(model.state.abyss.get("currentFloor",1))>10)
 		"story":return "medieval_exploration"
 	return "old_tower_inn"

@@ -146,7 +146,7 @@ static func _target_set_picker(app)->void:
 	var rates=app._vbox(app._panel(box,VIOLET.darkened(.6),9),4)
 	app._label(rates,"每 %d 层四星保底 · 每 %d 层五星保底"%[int(info.get("milestoneEvery",5)),int(info.get("fiveStarEvery",10))],14,app.TEXT,true)
 	app._label(rates,"普通层额外掉落 %.0f%% · 额外品质：四星 %.0f%% / 五星 %.0f%%"%[float(info.get("normalChance",0))*100.0,float(info.get("extraRarity4Chance",.8))*100.0,float(info.get("extraRarity5Chance",.2))*100.0],12,app.MUTED,true)
-	app._label(rates,"每 50 层预计 %.0f 件 · 每日星尘晶与记忆分别结算"%float(info.get("expectedPer50",10)),12,app.MUTED,true)
+	app._label(rates,"每 50 层预计 %.0f 件"%float(info.get("expectedPer50",10)),12,app.MUTED,true)
 	var grid=app._grid(box,1 if app.size.x<760 else 2)
 	for option in app.model.relic_set_options():
 		var set_id:String=str(option.id)
@@ -210,7 +210,7 @@ static func _blessings(app,parent:Node,rogue:Dictionary)->void:
 	var content=_scroll(app,parent)
 	var grid=app._grid(content,1 if app.size.x<850 else 3)
 	for raw in rogue.get("pendingChoices",[]):
-		var choice:Dictionary=raw if raw is Dictionary else app._abyss_reward(str(raw))
+		var choice:Dictionary=app._present_abyss_reward(raw)
 		var color:Color={"gold":app.GOLD,"blue":app.CYAN,"white":app.TEXT}.get(str(choice.get("rarity","white")),app.TEXT)
 		var v=_card(app,grid,str(choice.get("name","裂隙回响")),str(choice.get("description","")),color,str(choice.get("id","")).hash(),RuneTheme.effect_key(choice))
 		RewardRarity.decorate(app,v.get_parent(),v,str(choice.get("rarity","white")))
@@ -222,7 +222,7 @@ static func _blessings(app,parent:Node,rogue:Dictionary)->void:
 static func _node(app,parent:Node,phase:String)->void:
 	var node:Dictionary=app.model.node_options()
 	app._label(parent,str(node.get("title","旅途抉择")),23,app.TEXT,true)
-	app._label(parent,str(node.get("description","")),14,app.MUTED,true)
+	if phase!="route":app._label(parent,str(node.get("description","")),14,app.MUTED,true)
 	var content=_scroll(app,parent)
 	var options:Array=node.get("options",[])
 	var grid=app._grid(content,1 if app.size.x<850 else mini(3,maxi(1,options.size())))
@@ -233,7 +233,8 @@ static func _node(app,parent:Node,phase:String)->void:
 		var heading=app._hbox(v,8);app._rune_icon(heading,RuneTheme.effect_key(option),32,color)
 		app._label(heading,str(option.get("label","继续探索")),17,color,true).size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		if not str(option.get("reward","")).is_empty():app._label(v,str(option.reward),13,GREEN,true)
-		if not str(option.get("risk","")).is_empty():app._label(v,str(option.risk),12,app.RED,true)
+		var risk:String=str(option.get("risk",""))
+		if not risk.is_empty() and risk!="进入后再选择具体代价":app._label(v,risk,12,app.RED,true)
 		if str(option.get("reward","")).is_empty() and str(option.get("risk","")).is_empty():app._label(v,str(option.get("description","")),13,app.TEXT,true)
 		var action_gap:=Control.new();action_gap.size_flags_vertical=Control.SIZE_EXPAND_FILL;v.add_child(action_gap)
 		var actions=app._hbox(v,6)
@@ -250,9 +251,26 @@ static func _shop(app,parent:Node)->void:
 	var grid=app._grid(content,1 if app.size.x<850 else 3)
 	for item in app.model.abyss_shop_items():
 		var sold:=bool(item.get("sold",false))
-		var v=_card(app,grid,str(item.get("name","旅行补给")),str(item.get("description","")),app.MUTED if sold else app.GOLD,str(item.id).hash(),RuneTheme.effect_key(item))
-		var b=app._button(v,"已购买" if sold else "购买 · %d 裂隙币"%int(item.get("cost",0)),func():_purchase_shop(app,str(item.id)),not sold)
-		app._button_icon(b,"rift_coin",not sold)
+		var blessing:bool=str(item.get("kind",""))=="blessing"
+		var rarity:String=str(item.get("rarity","white"))
+		var tier:Dictionary=RewardRarity.tier(rarity)
+		var color:Color=tier.color if blessing else GREEN
+		var definition:Dictionary=app._abyss_reward(str(item.get("rewardId",""))) if blessing else item
+		var v=_card(app,grid,str(item.get("name","旅行补给")),str(item.get("description","")),color,str(item.id).hash(),RuneTheme.effect_key(definition))
+		v.get_parent().name="RunShopCard_"+str(item.id)
+		if blessing:
+			RewardRarity.decorate(app,v.get_parent(),v,rarity)
+		else:
+			var category=app._hbox(v,6);v.move_child(category,0)
+			app._rune_icon(category,"bag",16,GREEN)
+			app._label(category,"补给",12,GREEN).name="RunShopSupplyLabel"
+		var title:String="已购入" if sold else ((str(tier.label)+" · 购买 %d")%int(item.get("cost",0)) if blessing else "购买 · %d"%int(item.get("cost",0)))
+		var b=app._button(v,title,func():_purchase_shop(app,str(item.id)),false)
+		app._button_icon(b,"rift_coin",false)
+		b.add_theme_color_override("font_color",color)
+		b.add_theme_color_override("font_hover_color",color.lightened(.2))
+		b.tooltip_text="%s · %d 裂隙币"%[str(item.get("name","补给")),int(item.get("cost",0))]
+		if sold:v.modulate=Color(.7,.7,.7,1)
 		b.name="RunShop_"+str(item.id);b.disabled=sold or not bool(item.get("enabled",true))
 		if b.disabled and not sold:app._label(v,str(item.get("disabledReason","裂隙币不足")),12,app.RED,true)
 	var leave=app._button(parent,"离开商店",func():app._abyss_operation(app.model.leave_abyss_shop(),"已离开旅途商店",true));leave.name="RunShopLeave"
@@ -371,7 +389,7 @@ static func _build_modal(app,rogue:Dictionary)->void:
 	if rewards.is_empty():app._label(box,"通过战斗与奇遇获取回响。",16,app.MUTED,true)
 	var grouped:Dictionary={}
 	for raw in rewards:
-		var reward:Dictionary=raw if raw is Dictionary else app._abyss_reward(str(raw))
+		var reward:Dictionary=app._present_abyss_reward(raw)
 		if not grouped.has(reward.id):grouped[reward.id]={"reward":reward,"count":0}
 		grouped[reward.id].count+=1
 	var grid=app._grid(box,1 if app.size.x<850 else 2)

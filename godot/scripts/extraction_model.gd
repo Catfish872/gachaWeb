@@ -68,6 +68,16 @@ func start_run(difficulty: int = 0) -> Dictionary:
 	var generator := RandomNumberGenerator.new()
 	generator.seed = host.rng.randi()
 	state().run = {"id": host._uid("extraction"), "act": 1, "node": 0, "phase": "route", "difficulty": difficulty, "bag": [], "equipped": [], "party": party.duplicate(true), "containers": [], "routes": [], "activeEncounter": {}, "rngState": str(generator.state), "serial": 0, "roomsCleared": 0, "bossesDefeated": 0, "collectedValue": 0, "room": {}, "blessings": [], "pendingChoices": [], "characterFocus": {}, "roomActions": [], "growthBattles": 0, "startedAt": host._now()}
+	# Cosmetic route order is fixed once and does not consume loot/battle RNG.
+	var environment_rng := RandomNumberGenerator.new()
+	environment_rng.seed = generator.seed ^ 0x260A57
+	var environment_order: Array = ["ruins", "forest", "sanctum"]
+	for index in range(environment_order.size()-1,0,-1):
+		var other := environment_rng.randi_range(0,index)
+		var swap = environment_order[index]
+		environment_order[index] = environment_order[other]
+		environment_order[other] = swap
+	run().environmentOrder = environment_order
 	run().baseMaxHp = _base_party_hp(party)
 	run().securedValue = 0
 	run().securedItems = 0
@@ -99,22 +109,63 @@ func _sync_room() -> void:
 				room.cleared = true
 				run().room.cleared = true
 
+func environment_theme() -> String:
+	if not active(): return ""
+	var order = run().get("environmentOrder", [])
+	if not order is Array or order.size() != MAX_ACTS: return ""
+	return str(order[clampi(int(run().act)-1,0,MAX_ACTS-1)])
+
+func environment_music_track() -> String:
+	var theme := environment_theme()
+	if not theme.is_empty():
+		return str(data.get("environmentThemes",{}).get(theme,{}).get("music","sunset_walk"))
+	return {1:"sunset_walk",2:"medieval_exploration",3:"dungeon_mystic"}.get(int(run().get("act",1)),"sunset_walk")
+
+func _environment_loot_id(base_id: String) -> String:
+	var theme := environment_theme()
+	if theme.is_empty(): return base_id
+	for id in data.items:
+		var definition: Dictionary = data.items[id]
+		if definition.get("variantOf", "") == base_id and definition.get("environmentTheme", "") == theme:
+			return str(id)
+	return base_id
+
+func _relay_room_index(district_roll: float, room_roll: float, vault_index: int, key_index: int) -> int:
+	var district := clampi(int(district_roll * 3.0),0,2)
+	var candidates: Array = []
+	for index in range(district*6,(district+1)*6):
+		if index not in [0,1,2,vault_index,key_index]: candidates.append(index)
+	return int(candidates[clampi(int(room_roll*candidates.size()),0,candidates.size()-1)])
+
 func _generate_map() -> void:
 	var map := {"rooms": [], "edges": [], "districts": [], "currentRoomId": "", "bossRoomId": "", "bossUnlocked": false, "explored": 0, "requiredExploration": 6}
+	var environment := environment_theme()
+	var themed := not environment.is_empty()
+	var config: Dictionary = data.get("environmentThemes",{}).get(environment,{})
+	if themed:
+		map.theme = environment
+		map.name = str(config.get("name",environment))
+		map.environmentVersion = 1
 	var themes := ["ruins", "forest", "sanctum"]
 	var names := ["旧王城遗址", "幽光林地", "星核圣所"]
 	var offset := int(_rand() * 3)
 	var types := ["battle", "battle", "cache", "rest", "event", "elite", "hospital", "workshop", "shrine"]
 	var labels := {"entry":"远征入口", "battle":"巡逻走廊", "cache":"旅人物资站", "rest":"隐蔽营地", "event":"遗迹调查", "elite":"禁卫哨所", "vault":"封存宝库", "hospital":"疗愈药房", "workshop":"符文工坊", "shrine":"星辉神龛", "boss":"封印核心"}
 	var vault := 8 + int(_rand() * 10) if _rand() < float(data.mapEconomy.vaultChance) else -1
-	var relay_index := 3 + int(_rand() * 4)
+	var relay_roll := _rand()
+	var relay_index := 3 + int(relay_roll * 4)
 	var key_index := 9 + int(_rand() * 8) if _rand() < 0.45 else -1
+	if themed: relay_index = _relay_room_index(relay_roll,_rand(),vault,key_index)
 	labels.key_vault = "封存密室"
 	labels.relay = "远征寄存站"
+	if themed: labels.merge(config.get("roomNames",{}),true)
 	for district in range(3):
-		var theme: String = themes[(district + offset + int(run().act) - 1) % 3]
+		var theme: String = environment if themed else themes[(district + offset + int(run().act) - 1) % 3]
 		var pool: Array = data.get("mapBackgrounds", {}).get(theme, ["res://assets/extraction/rooms/%s_1.webp" % theme, "res://assets/extraction/rooms/%s_2.webp" % theme])
-		map.districts.append({"id":"district_%d" % district, "name":names[(district+offset+int(run().act)-1)%3], "theme":theme, "background":("res://assets/extraction/rooms/%s_act%d.webp" % [theme,int(run().act)]) if int(run().act)>1 else pool[0]})
+		if themed: pool = config.backgrounds[district].duplicate()
+		var district_name: String = str(config.depthNames[district]) if themed else names[(district+offset+int(run().act)-1)%3]
+		map.districts.append({"id":"district_%d" % district, "name":district_name, "theme":theme, "background":pool[0] if themed else (("res://assets/extraction/rooms/%s_act%d.webp" % [theme,int(run().act)]) if int(run().act)>1 else pool[0])})
+		if themed: map.districts.back().depth = district
 		for local in range(6):
 			var index := district * 6 + local
 			var kind: String = str(types[int(_rand() * types.size()) % types.size()])
@@ -125,16 +176,21 @@ func _generate_map() -> void:
 			elif index == relay_index: kind = "relay"
 			elif index == key_index: kind = "key_vault"
 			var room_pool: Array = pool.duplicate()
-			if int(run().act)>1:
+			if not themed and int(run().act)>1:
 				var act_background:="res://assets/extraction/rooms/%s_act%d.webp" % [theme,int(run().act)]
 				if index in [0,1]:room_pool=[act_background]
 				else:
 					# One existing background roll is retained; weighting changes only art.
 					for repeat in range(pool.size()*4):room_pool.append(act_background)
-			if kind == "relay": room_pool.append("res://assets/extraction/rooms/courier_waystation.webp")
-			elif kind == "key_vault": room_pool.append("res://assets/extraction/rooms/astral_vault.webp")
+			if not themed and kind == "relay": room_pool.append("res://assets/extraction/rooms/courier_waystation.webp")
+			elif not themed and kind == "key_vault": room_pool.append("res://assets/extraction/rooms/astral_vault.webp")
 			var id := _uid("room")
 			map.rooms.append({"id":id, "name":labels[kind], "type":kind, "description":_room_description(kind), "tier":mini(4,district+1+int(local/3)), "districtId":"district_%d" % district, "x":0.07+(district*2+local%2)*0.14+(_rand()-0.5)*0.012, "y":0.18+int(local/2)*0.31+(_rand()-0.5)*0.012, "visited":index==0, "cleared":index==0, "background":room_pool[int(_rand()*room_pool.size())%room_pool.size()], "containers":[], "actions":[]})
+			if themed:
+				map.rooms.back().environmentTheme = theme
+				map.rooms.back().depth = district
+				map.rooms.back().districtName = district_name
+				if local == 0: map.rooms.back().background = pool[0]
 		# Randomized frontier tree on adjacent lattice cells, plus one local loop.
 		var visited: Array = [0]
 		var candidates: Array = []
@@ -164,6 +220,10 @@ func _generate_map() -> void:
 	var boss_id := _uid("room")
 	var boss_row := int(_rand()*3)
 	map.rooms.append({"id":boss_id, "name":labels.boss, "type":"boss", "description":"击败首领，撤离或深入下一幕", "tier":4, "districtId":"district_2", "x":0.95, "y":0.18+boss_row*0.31, "visited":false, "cleared":false, "background":map.districts[2].background, "containers":[], "actions":[]})
+	if themed:
+		map.rooms.back().environmentTheme = environment
+		map.rooms.back().depth = 2
+		map.rooms.back().districtName = str(config.depthNames[2])
 	map.edges.append([map.rooms[12+boss_row*2+1].id,boss_id])
 	map.currentRoomId = map.rooms[0].id
 	map.bossRoomId = boss_id
@@ -283,14 +343,18 @@ func _populate_room(kind: String) -> void:
 		if district.id == run().room.districtId: theme = district.theme
 	var district_kinds := {"ruins":["wooden_chest", "old_urn", "bookcase"], "forest":["herb_basket", "offering_altar", "old_urn"], "sanctum":["golem_case", "crystal_cache", "alchemy_cabinet"]}
 	kinds.append_array(district_kinds.get(theme, []))
+	if not environment_theme().is_empty():
+		kinds = district_kinds.get(theme, []).duplicate()
+		kinds.append_array(data.get("environmentThemes",{}).get(theme,{}).get("containers",[]))
 	for i in range(count):
 		var object_kind: String = kinds[int(_rand() * kinds.size()) % kinds.size()]
 		var labels := {"wooden_chest":"封存木箱", "old_urn":"古陶瓮", "herb_basket":"采药篮", "alchemy_cabinet":"炼金药柜", "iron_reliquary":"圣物匣", "bookcase":"遗迹书柜", "crystal_cache":"晶石储匣", "weapon_rack":"古代兵器架", "golem_case":"魔偶机匣", "offering_altar":"供奉祭台"}
 		var item_count := int(economy.get("vaultItems", 3)) if kind == "vault" else int(item_counts[0]) + int(_rand() * (int(item_counts[1]) - int(item_counts[0]) + 1))
-		_container(labels[object_kind], item_count, quality, room_pools.get(kind, []))
+		var themed_container: Dictionary = data.get("environmentContainers",{}).get(object_kind,{})
+		_container(str(themed_container.get("name",labels.get(object_kind,"遗留物资"))), item_count, quality, room_pools.get(kind, []))
 		var container: Dictionary = run().containers.back()
 		container.kind = object_kind
-		container.sprite = "res://assets/extraction/containers/%s.png" % object_kind
+		container.sprite = str(themed_container.get("sprite","res://assets/extraction/containers/%s.png" % object_kind))
 		container.sceneX = 0.18 + i * 0.29 + (_rand() - 0.5) * 0.08
 		container.sceneY = 0.55 + _rand() * 0.22
 
@@ -467,7 +531,7 @@ func _container(title: String, count: int, quality: int, categories: Array = [])
 		if quality == 2 and i == count - 1: rarity = maxi(rarity, 4 if int(run().act) == MAX_ACTS else 3)
 		var pool: Array = []
 		for key in data.items:
-			if int(data.items[key].rarity) == rarity: pool.append(key)
+			if int(data.items[key].rarity) == rarity and not data.items[key].has("variantOf"): pool.append(key)
 		var preferred: Array = []
 		for key in pool:
 			if data.items[key].get("category", "") in categories: preferred.append(key)
@@ -480,7 +544,7 @@ func _container(title: String, count: int, quality: int, categories: Array = [])
 			for key in pool:
 				item_roll-=float(data.items[key].get("dropWeight",1.0))
 				if item_roll<=0:picked=str(key);break
-			container.items.append(_make_item(picked))
+			container.items.append(_make_item(_environment_loot_id(picked)))
 	var packed: Array = []
 	for item in container.items:
 		_place(packed, item, Vector2i(6, 8))
@@ -703,10 +767,10 @@ func room_interaction_status() -> Dictionary:
 			else:
 				for action in room_actions():
 					if action.get("enabled",false): status.reasons.append("action:"+str(action.id))
+				# A searched box is complete; its remaining loot stays available on revisit.
 				for container in r.get("containers",[]):
 					for item in container.items:
 						if not item.get("revealed",false): status.reasons.append("search:"+str(container.id)); break
-						if _room_item_available(item,container): status.reasons.append("item:"+str(item.uid)); break
 				if _room_parcel_available(): status.reasons.append("parcel")
 	status.hasRemaining = not status.reasons.is_empty()
 	status.canAutoReturn = str(r.get("phase","")) == "room" and not status.hasRemaining
@@ -795,6 +859,11 @@ func continue_act() -> Dictionary:
 	_generate_map()
 	_routes()
 	return _commit(previous)
+
+static func secured_summary_value(summary: Dictionary) -> int:
+	# Parcels have already left the bag; only a successful exit secures what remains.
+	var carried := int(summary.get("value", 0)) if summary.get("outcome", "") == "extracted" else 0
+	return maxi(0, carried) + maxi(0, int(summary.get("securedValue", 0)))
 
 func _end(outcome: String) -> void:
 	var value := 0
@@ -888,6 +957,12 @@ func valid(value: Variant) -> bool:
 	var r = value.get("run", {})
 	if not r is Dictionary: return false
 	if r.is_empty(): return true
+	if r.has("environmentOrder"):
+		if not r.environmentOrder is Array or r.environmentOrder.size() != MAX_ACTS: return false
+		var environments: Dictionary = {}
+		for theme in r.environmentOrder:
+			if not theme is String or theme not in ["ruins","forest","sanctum"] or environments.has(theme): return false
+			environments[theme] = true
 	for key in ["id", "phase", "rngState"]:
 		if not r.get(key) is String: return false
 	if r.phase not in ["route", "room", "battle", "boss_exit"] or not r.rngState.is_valid_int(): return false

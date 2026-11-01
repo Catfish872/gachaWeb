@@ -140,17 +140,25 @@ static func _departure(app,state: Dictionary) -> void:
 	_button(app,actions,"出发",func():_operate(app,app.model.extraction.start_run(app.extraction_difficulty)),true).name="ExtractionStart"
 	_button(app,actions,"编队",func():app.navigate("party"))
 	var summary: Dictionary=state.get("lastRun",{})
-	if not summary.is_empty():app._label(actions,"上次带出 %s" % _money(int(summary.get("value",0))) if summary.get("outcome","")=="extracted" else "准备再次出发",14,app.MUTED)
+	if not summary.is_empty():
+		var secured_value: int = app.model.extraction.secured_summary_value(summary)
+		app._label(actions,"上次带出 %s" % _money(secured_value) if secured_value > 0 or summary.get("outcome","")=="extracted" else "准备再次出发",14,app.MUTED)
 	var right=_section(app,row,"出战整备",app.GOLD);right.get_parent().size_flags_stretch_ratio=1
-	_utility_slots(app,right)
-	_loadout(app,right,state)
+	var preparation=_scroll(app,right)
+	preparation.get_parent().name="ExtractionPreparationScroll"
+	_utility_slots(app,preparation)
+	_loadout(app,preparation,state)
 	var links=app._hbox(right,6)
+	links.name="ExtractionPreparationActions"
 	_button(app,links,"补给站",func():_switch_panel(app,"shop"))
 	_button(app,links,"打开仓库",func():_switch_panel(app,"stash"))
 
 static func _routes(app,parent: Node,side: Node) -> void:
 	var graph: Dictionary=app.model.extraction.map_state()
 	var status=app._hbox(parent,8)
+	if not str(graph.get("name","")).is_empty():
+		app._label(status,str(graph.name),16,app.GOLD)
+		var space=Control.new();space.size_flags_horizontal=Control.SIZE_EXPAND_FILL;status.add_child(space)
 	app._label(status,"首领通道已开启" if graph.get("bossUnlocked",false) else "探索 %d / %d" % [int(graph.get("explored",0)),int(graph.get("requiredExploration",4))],14,app.GOLD)
 	var map=MapGraph.new();map.name="ExtractionMap";map.configure(graph,app.extraction_reduced_motion)
 	map.custom_minimum_size.y=maxf(235,_height(app)-195);map.size_flags_vertical=Control.SIZE_EXPAND_FILL;parent.add_child(map)
@@ -187,6 +195,7 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 	var top=app._hbox(parent,8)
 	if room.has("eventIcon") and app.has_method("_rune_icon"):app._rune_icon(top,str(room.eventIcon),24,app.GOLD)
 	app._label(top,str(room.get("eventTitle",room.get("name","遗境"))),19,app.GOLD)
+	if not str(room.get("districtName","")).is_empty():app._label(top,str(room.districtName),12,app.MUTED)
 	var spacer=Control.new();spacer.size_flags_horizontal=Control.SIZE_EXPAND_FILL;top.add_child(spacer)
 	_button(app,top,"地图",func():_return_map(app)).name="ExtractionAdvance"
 	var scene=RoomScene.new();scene.name="ExtractionRoomScene"
@@ -330,8 +339,9 @@ static func _show_growth(app,parent: Node) -> void:
 	if choices.is_empty():return
 	var panel=_section(app,parent,"选择本局祝福",app.GOLD)
 	var row=app._hbox(panel,8)
-	for choice in choices:
-		var id:=str(choice.get("choiceId",choice.get("id","")))
+	for raw_choice in choices:
+		var choice:Dictionary=app._present_abyss_reward(raw_choice) if app.has_method("_present_abyss_reward") else raw_choice
+		var id:=str(raw_choice.get("choiceId",raw_choice.get("id","")))
 		var col=_section(app,row,str(choice.get("name","祝福")),app.CYAN)
 		RewardRarity.decorate(app,col.get_parent(),col,str(choice.get("rarity","white")))
 		if app.has_method("_rune_icon"):app._rune_icon(col,preload("res://scripts/ui/rune_theme.gd").effect_key(choice),34,app.GOLD)
@@ -645,8 +655,10 @@ static func _shop(app,state: Dictionary) -> void:
 		var b=_button(app,col,"危险 %d 解锁" % required if locked else "%d 金币 · 购买" % int(d.buyPrice),func():_operate_sound(app,app.model.extraction.buy_supply(item_id),"coin"),not locked)
 		b.name="ExtractionBuy_"+item_id;b.disabled=locked
 	var right=_section(app,row,"携带与储备",app.CYAN);right.get_parent().size_flags_stretch_ratio=1
-	_utility_slots(app,right)
-	_loadout(app,right,state)
+	var preparation=_scroll(app,right)
+	preparation.get_parent().name="ExtractionPreparationScroll"
+	_utility_slots(app,preparation)
+	_loadout(app,preparation,state)
 	_button(app,right,"打开仓库",func():_switch_panel(app,"stash"))
 
 static func _loadout(app,parent: Node,state: Dictionary) -> void:

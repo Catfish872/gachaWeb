@@ -885,8 +885,9 @@ def relic_input_flow(state, output):
     state = wait_for(lambda q: q['overlay'] == 0, 'set-picker closes')
     state = visit(state, 'story')
     old_ids = {item['uid'] for item in state['relics']['inventory']}
+    before_seq = state['seq']
     tap_page(state, 'StageCard_ch1_1')
-    state = wait_for(lambda q: any(b['name'] == 'StoryEnter' for b in q['buttons']), 'actual first story stage selection')
+    state = wait_for(lambda q: q.get('seq', -1) > before_seq and any(b['name'] == 'StageCard_ch1_1' and b.get('selected') for b in q['buttons']) and any(b['name'] == 'StoryEnter' for b in q['buttons']), 'actual first story stage selection')
     tap_page(state, 'StoryEnter')
     state = wait_for(lambda q: q['screen'] == 'battle' or any(b['name'] == 'DialogueSkip' for b in q['buttons']), 'actual prebattle story or combat')
     if state['screen'] != 'battle':
@@ -1016,7 +1017,26 @@ def validate_android_bridge(bridge):
     return policy
 
 
+def run_relic_scope(state, component, output):
+    """Fresh-account real-input remainder; previous same-runtime flows are reused."""
+    state = relic_input_flow(state, output)
+    check_background_resume(component, output)
+    assert adb('shell', 'pidof', PACKAGE).strip(), 'Android app process disappeared'
+    logs = adb('logcat', '-d', '-v', 'threadtime')
+    errors = [line for line in logs.splitlines() if re.search(r'SCRIPT ERROR|Parse Error|FATAL EXCEPTION|Fatal signal|ANR in ' + re.escape(PACKAGE), line) or ('godot' in line.lower() and re.search(r'\bERROR:', line))]
+    assert not errors, '\n'.join(errors)
+    (output / 'result.json').write_text(json.dumps({'passed': True, 'scope': 'relic-v250',
+        'android_api': adb('shell', 'getprop', 'ro.build.version.sdk').strip(),
+        'abi': adb('shell', 'getprop', 'ro.product.cpu.abi').strip(),
+        'checks': ['fresh account/real recommendation/target selection', 'real stage-panel input and story battle-earned relic', 'earned set artwork/real optimizer preview/cancel ownership invariant', 'three background/resume modes', 'runtime error log'],
+        'not_rerun': ['warehouse/search/extraction', 'summon single/ten/animation pause', 'all-page layout'],
+        'reused_evidence': {'run': 41320178121, 'commit': '86460e197bf3454bbb98d02c0822c10fcf3b40f7', 'condition': 'production runtime hash unchanged'}}, indent=2))
+    print('ANDROID RUNTIME RELIC-V250 SCOPE PASSED')
+
+
 def run(apk, output):
+    scope = os.environ.get('ANDROID_SMOKE_SCOPE', 'full')
+    assert scope in ('full', 'relic-v250'), 'Unknown Android smoke scope: ' + scope
     adb('install', '-r', str(apk))
     adb('shell', 'pm', 'clear', PACKAGE)
     adb('shell', 'settings', 'put', 'system', 'accelerometer_rotation', '0')
@@ -1039,6 +1059,9 @@ def run(apk, output):
     dismiss_fullscreen_education(output, state['window'])
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'home after fullscreen education')
     screenshot(output, 'landscape-locked-home', True)
+    if scope == 'relic-v250':
+        run_relic_scope(state, component, output)
+        return
     # Menu is dismissed by the real Android Back event and the game stays alive.
     tap(state, 'MenuButton')
     wait_for(lambda s: s['overlay'] > 0, 'menu before Back')

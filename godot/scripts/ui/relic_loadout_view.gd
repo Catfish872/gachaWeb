@@ -22,15 +22,13 @@ static func show_for(app, char_id:String="", restored_scroll:int=0, show_details
 	for id in ids:chooser.add_item(app._char_name(str(id)))
 	chooser.selected=ids.find(char_id);heading.add_child(chooser)
 	chooser.item_selected.connect(func(index):show_for(app,str(ids[index])))
-	app._label(box,"从当前装备与背包中搭配 · 保留队友装备",12,app.MUTED,true)
 	var progress=app._label(box,"正在整理遗物…",13,app.GOLD,true);progress.name="RelicLoadoutProgress"
 	var comparison=app._vbox(box,8);comparison.name="RelicLoadoutComparison"
 	var footer=app._modal_footer(box)
-	var status=app._label(footer,"搭配消耗 0 金币",12,app.MUTED,true);status.name="RelicLoadoutCost"
 	var actions=app._hbox(footer,9)
 	var cancel=app._button(actions,"取消",app._clear_overlay);cancel.name="RelicLoadoutCancel"
 	var apply=app._button(actions,"正在搭配…",Callable(),true);apply.name="RelicLoadoutApply";apply.disabled=true;apply.size_flags_horizontal=Control.SIZE_EXPAND_FILL;app._button_icon(apply,"check",true)
-	var ui:Dictionary={"panel":panel,"box":box,"role":role,"progress":progress,"comparison":comparison,"status":status,"apply":apply,"chooser":chooser,"charId":char_id,"plan":{},"lastKey":"","applying":false,"restoreScroll":restored_scroll,"detailsOpen":show_details}
+	var ui:Dictionary={"panel":panel,"box":box,"role":role,"progress":progress,"comparison":comparison,"apply":apply,"chooser":chooser,"charId":char_id,"plan":{},"lastKey":"","applying":false,"restoreScroll":restored_scroll,"detailsOpen":show_details}
 	apply.pressed.connect(func():_apply(app,ui))
 	if not app.model.has_method("begin_best_relic_loadout"):
 		progress.text="搭配功能准备中";return
@@ -126,7 +124,6 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	app._label(details,str(plan.get("objectiveLabel","角色收益")),12,app.GOLD,true)
 	ui.bounds=app._label(details,_bound_description(plan),12,app.CYAN,true)
 	for note in plan.get("assumptions",[]):app._label(details,app._localized_combat_text(str(note)),12,app.MUTED,true)
-	app._label(details,"搭配保留遗物现有等级与属性；强化可在遗物详情中操作。",12,app.MUTED,true)
 	var toggle=app._button(notes,"评价条件与差距",func():ui.detailsOpen=not bool(ui.detailsOpen);details.visible=bool(ui.detailsOpen))
 	toggle.name="RelicLoadoutDetails";app._button_icon(toggle,"book");notes.move_child(toggle,0)
 	_restore_scroll(app,scroll,offset)

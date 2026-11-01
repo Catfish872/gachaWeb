@@ -25,7 +25,7 @@ static func show_gain(owner,reward_data:Dictionary,count:int,finished:Callable=C
 	return card
 
 func configure(owner,reward_data:Dictionary,count:int,finished:Callable) -> void:
-	app=owner;reward=reward_data.duplicate(true);stack_count=count;on_dismiss=finished
+	app=owner;reward=app._present_abyss_reward(reward_data);stack_count=count;on_dismiss=finished
 	app.set_meta("rogue_gain_generation",int(app.get_meta("rogue_gain_generation",0))+1)
 	name="RogueRewardGain";z_index=80;mouse_filter=Control.MOUSE_FILTER_STOP;focus_mode=Control.FOCUS_NONE
 	origin_screen=str(app.current_screen);origin_panel=str(app.abyss_panel)
@@ -44,7 +44,7 @@ func configure(owner,reward_data:Dictionary,count:int,finished:Callable) -> void
 	badge.size_flags_horizontal=Control.SIZE_SHRINK_END;badge.size_flags_vertical=Control.SIZE_SHRINK_CENTER
 	app._label(badge,"累计 %d 层" % count,14,tier.color).name="RogueRewardGainStacks"
 	app._label(col,str(reward.get("description","")),14,app.TEXT,true).name="RogueRewardGainDescription"
-	app._label(col,"轻点收起 · 按住阅读",11,app.MUTED).name="RogueRewardGainHint"
+	app._label(col,"轻点任意位置收起",11,app.MUTED).name="RogueRewardGainHint"
 	_ignore_children(self)
 
 func _ignore_children(node:Node) -> void:
@@ -78,13 +78,24 @@ func _process(delta:float) -> void:
 		if remaining<=0:dismiss(true)
 
 func _claim_gesture() -> void:
-	# This non-modal card owns only touches that begin on its visible surface.
-	# The main page must not inherit a scroll gesture from beneath the card.
+	# Reward feedback owns the complete gesture, including taps outside the card.
+	# Dismissing must never activate a purchase or choice underneath it.
 	app._touch_scroll=null
 	app._inertia_scroll=null
 	app._scroll_velocity=0.0
 
+func _input(event:InputEvent) -> void:
+	if _closed:return
+	if event is InputEventScreenTouch or event is InputEventScreenDrag or event is InputEventMouseButton or (event is InputEventMouseMotion and _held):
+		get_viewport().set_input_as_handled()
+		_handle_pointer(event)
+
 func _gui_input(event:InputEvent) -> void:
+	# Also supports direct GUI dispatch; normal pointer events are claimed in _input.
+	_handle_pointer(event)
+	accept_event()
+
+func _handle_pointer(event:InputEvent) -> void:
 	if event is InputEventMouse and event.device==-1:return
 	if event is InputEventScreenTouch:
 		if event.pressed and _touch_id==-1:
@@ -93,20 +104,16 @@ func _gui_input(event:InputEvent) -> void:
 			var tapped:bool=_held and not _dragged and event.position.distance_to(_press)<10
 			_held=false;_touch_id=-1
 			if tapped:dismiss.call_deferred(true)
-		accept_event()
 	elif event is InputEventScreenDrag:
 		if event.index==_touch_id and event.position.distance_to(_press)>10:_dragged=true
-		accept_event()
 	elif event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT:
 		if event.pressed:_claim_gesture();_held=true;_dragged=false;_press=event.position
 		else:
 			var tapped:bool=_held and not _dragged and event.position.distance_to(_press)<10
 			_held=false
 			if tapped:dismiss.call_deferred(true)
-		accept_event()
 	elif event is InputEventMouseMotion and _held:
 		if event.position.distance_to(_press)>10:_dragged=true
-		accept_event()
 
 func dismiss(continue_run:bool=true) -> void:
 	if _closed:return

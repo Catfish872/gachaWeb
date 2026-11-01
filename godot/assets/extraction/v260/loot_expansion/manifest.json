@@ -1,0 +1,877 @@
+{
+  "generation": "Built-in image generation; source image retained unchanged. One layout refinement to preserve complete tips and alpha gutters. Runtime AtlasTexture crops only.",
+  "source": "exec-4e6eb7be-e184-4e30-b160-52099c4f572d.png",
+  "atlas": "assets/extraction/v260/loot_expansion/atlas.png",
+  "sha256": "ece9a577b42e12c901601bc08f48a5be00123834eba86be5da599ab4fb7ca063",
+  "size": [
+    1254,
+    1254
+  ],
+  "mode": "RGBA",
+  "items": [
+    {
+      "id": "ruins_frayed_linen",
+      "base": "cloth",
+      "theme": "ruins",
+      "name": "旧城麻布",
+      "rarity": 0,
+      "size": [
+        2,
+        2
+      ],
+      "value": 20,
+      "cell": [
+        0,
+        0,
+        220,
+        224
+      ],
+      "region": [
+        0,
+        13,
+        220,
+        211
+      ]
+    },
+    {
+      "id": "ruins_rust_hinge",
+      "base": "bolts",
+      "theme": "ruins",
+      "name": "锈蚀门铰",
+      "rarity": 0,
+      "size": [
+        2,
+        1
+      ],
+      "value": 10,
+      "cell": [
+        220,
+        0,
+        422,
+        224
+      ],
+      "region": [
+        220,
+        21,
+        202,
+        202
+      ]
+    },
+    {
+      "id": "ruins_smith_pincers",
+      "base": "pliers",
+      "theme": "ruins",
+      "name": "铁匠钳",
+      "rarity": 1,
+      "size": [
+        1,
+        2
+      ],
+      "value": 20,
+      "cell": [
+        422,
+        0,
+        625,
+        224
+      ],
+      "region": [
+        423,
+        23,
+        169,
+        201
+      ]
+    },
+    {
+      "id": "ruins_copper_lamp",
+      "base": "radio",
+      "theme": "ruins",
+      "name": "旧铜油灯",
+      "rarity": 1,
+      "size": [
+        2,
+        2
+      ],
+      "value": 30,
+      "cell": [
+        625,
+        0,
+        832,
+        224
+      ],
+      "region": [
+        632,
+        36,
+        200,
+        188
+      ]
+    },
+    {
+      "id": "ruins_carpenter_chest",
+      "base": "toolbox",
+      "theme": "ruins",
+      "name": "工匠木箱",
+      "rarity": 2,
+      "size": [
+        3,
+        2
+      ],
+      "value": 150,
+      "cell": [
+        832,
+        0,
+        1045,
+        224
+      ],
+      "region": [
+        832,
+        27,
+        213,
+        195
+      ]
+    },
+    {
+      "id": "ruins_ceremony_cloth",
+      "base": "insulin_case",
+      "theme": "ruins",
+      "name": "绯纹祭布",
+      "rarity": 2,
+      "size": [
+        2,
+        3
+      ],
+      "value": 90,
+      "cell": [
+        1045,
+        0,
+        1254,
+        224
+      ],
+      "region": [
+        1048,
+        36,
+        174,
+        188
+      ]
+    },
+    {
+      "id": "ruins_ember_ore",
+      "base": "rare_ore",
+      "theme": "ruins",
+      "name": "余烬矿簇",
+      "rarity": 3,
+      "size": [
+        2,
+        3
+      ],
+      "value": 405,
+      "cell": [
+        0,
+        224,
+        220,
+        442
+      ],
+      "region": [
+        27,
+        224,
+        193,
+        218
+      ]
+    },
+    {
+      "id": "ruins_knight_vambrace",
+      "base": "servo_arm",
+      "theme": "ruins",
+      "name": "王骑臂甲残件",
+      "rarity": 3,
+      "size": [
+        2,
+        4
+      ],
+      "value": 345,
+      "cell": [
+        220,
+        224,
+        422,
+        442
+      ],
+      "region": [
+        220,
+        224,
+        200,
+        218
+      ]
+    },
+    {
+      "id": "ruins_ruby_brooch",
+      "base": "ruby_necklace",
+      "theme": "ruins",
+      "name": "王庭红玉胸针",
+      "rarity": 4,
+      "size": [
+        2,
+        1
+      ],
+      "value": 240,
+      "cell": [
+        422,
+        224,
+        625,
+        442
+      ],
+      "region": [
+        425,
+        224,
+        200,
+        218
+      ]
+    },
+    {
+      "id": "ruins_lion_sculpture",
+      "base": "quantum_server",
+      "theme": "ruins",
+      "name": "白石狮座",
+      "rarity": 4,
+      "size": [
+        3,
+        3
+      ],
+      "value": 1550,
+      "cell": [
+        625,
+        224,
+        832,
+        442
+      ],
+      "region": [
+        625,
+        224,
+        207,
+        218
+      ]
+    },
+    {
+      "id": "ruins_crimson_feather",
+      "base": "phoenix_feather",
+      "theme": "ruins",
+      "name": "赤焰凤翎",
+      "rarity": 5,
+      "size": [
+        1,
+        3
+      ],
+      "value": 1000,
+      "cell": [
+        832,
+        224,
+        1045,
+        442
+      ],
+      "region": [
+        832,
+        224,
+        213,
+        218
+      ]
+    },
+    {
+      "id": "ruins_dragon_reliquary",
+      "base": "dragon_egg",
+      "theme": "ruins",
+      "name": "玄金龙卵匣",
+      "rarity": 5,
+      "size": [
+        3,
+        3
+      ],
+      "value": 4310,
+      "cell": [
+        1045,
+        224,
+        1254,
+        442
+      ],
+      "region": [
+        1046,
+        224,
+        207,
+        218
+      ]
+    },
+    {
+      "id": "forest_dried_herbs",
+      "base": "wire",
+      "theme": "forest",
+      "name": "枯叶草束",
+      "rarity": 0,
+      "size": [
+        1,
+        1
+      ],
+      "value": 5,
+      "cell": [
+        0,
+        442,
+        220,
+        625
+      ],
+      "region": [
+        39,
+        443,
+        180,
+        180
+      ]
+    },
+    {
+      "id": "forest_seed_pot",
+      "base": "ceramic",
+      "theme": "forest",
+      "name": "裂纹种罐",
+      "rarity": 0,
+      "size": [
+        1,
+        1
+      ],
+      "value": 10,
+      "cell": [
+        220,
+        442,
+        422,
+        625
+      ],
+      "region": [
+        224,
+        442,
+        198,
+        183
+      ]
+    },
+    {
+      "id": "forest_hemp_coil",
+      "base": "motor",
+      "theme": "forest",
+      "name": "古林麻绳",
+      "rarity": 1,
+      "size": [
+        2,
+        2
+      ],
+      "value": 65,
+      "cell": [
+        422,
+        442,
+        625,
+        625
+      ],
+      "region": [
+        425,
+        442,
+        200,
+        183
+      ]
+    },
+    {
+      "id": "forest_seed_basket",
+      "base": "circuit",
+      "theme": "forest",
+      "name": "林间种篮",
+      "rarity": 1,
+      "size": [
+        2,
+        1
+      ],
+      "value": 20,
+      "cell": [
+        625,
+        442,
+        832,
+        625
+      ],
+      "region": [
+        626,
+        443,
+        206,
+        182
+      ]
+    },
+    {
+      "id": "forest_specimen_box",
+      "base": "hard_drive",
+      "theme": "forest",
+      "name": "木纹标本匣",
+      "rarity": 2,
+      "size": [
+        2,
+        1
+      ],
+      "value": 25,
+      "cell": [
+        832,
+        442,
+        1045,
+        625
+      ],
+      "region": [
+        832,
+        443,
+        209,
+        182
+      ]
+    },
+    {
+      "id": "forest_moss_mortar",
+      "base": "sensor",
+      "theme": "forest",
+      "name": "苔石药臼",
+      "rarity": 2,
+      "size": [
+        2,
+        2
+      ],
+      "value": 70,
+      "cell": [
+        1045,
+        442,
+        1254,
+        625
+      ],
+      "region": [
+        1046,
+        442,
+        178,
+        183
+      ]
+    },
+    {
+      "id": "forest_jade_leaf",
+      "base": "jade_pendant",
+      "theme": "forest",
+      "name": "翠叶玉坠",
+      "rarity": 3,
+      "size": [
+        1,
+        1
+      ],
+      "value": 50,
+      "cell": [
+        0,
+        625,
+        220,
+        827
+      ],
+      "region": [
+        0,
+        626,
+        220,
+        201
+      ]
+    },
+    {
+      "id": "forest_herbarium_scroll",
+      "base": "silk_scroll",
+      "theme": "forest",
+      "name": "百草绢卷",
+      "rarity": 3,
+      "size": [
+        1,
+        3
+      ],
+      "value": 180,
+      "cell": [
+        220,
+        625,
+        422,
+        827
+      ],
+      "region": [
+        220,
+        630,
+        198,
+        197
+      ]
+    },
+    {
+      "id": "forest_ivory_stag",
+      "base": "ivory_statue",
+      "theme": "forest",
+      "name": "月鹿牙雕",
+      "rarity": 4,
+      "size": [
+        1,
+        3
+      ],
+      "value": 610,
+      "cell": [
+        422,
+        625,
+        625,
+        827
+      ],
+      "region": [
+        427,
+        625,
+        198,
+        201
+      ]
+    },
+    {
+      "id": "forest_amber_amphora",
+      "base": "vintage_vase",
+      "theme": "forest",
+      "name": "金珀蜜壶",
+      "rarity": 4,
+      "size": [
+        2,
+        3
+      ],
+      "value": 900,
+      "cell": [
+        625,
+        625,
+        832,
+        827
+      ],
+      "region": [
+        626,
+        625,
+        206,
+        201
+      ]
+    },
+    {
+      "id": "forest_radiant_seed",
+      "base": "world_seed",
+      "theme": "forest",
+      "name": "翡翠源种",
+      "rarity": 5,
+      "size": [
+        1,
+        1
+      ],
+      "value": 480,
+      "cell": [
+        832,
+        625,
+        1045,
+        827
+      ],
+      "region": [
+        832,
+        625,
+        213,
+        202
+      ]
+    },
+    {
+      "id": "forest_root_monolith",
+      "base": "oracle_tablet",
+      "theme": "forest",
+      "name": "根脉晶碑",
+      "rarity": 5,
+      "size": [
+        2,
+        3
+      ],
+      "value": 2375,
+      "cell": [
+        1045,
+        625,
+        1254,
+        827
+      ],
+      "region": [
+        1046,
+        625,
+        194,
+        199
+      ]
+    },
+    {
+      "id": "sanctum_faded_chart",
+      "base": "pocket_book",
+      "theme": "sanctum",
+      "name": "褪色星图",
+      "rarity": 0,
+      "size": [
+        1,
+        2
+      ],
+      "value": 10,
+      "cell": [
+        0,
+        827,
+        220,
+        1014
+      ],
+      "region": [
+        0,
+        827,
+        220,
+        187
+      ]
+    },
+    {
+      "id": "sanctum_iron_bell",
+      "base": "tin_cup",
+      "theme": "sanctum",
+      "name": "旧铁祷铃",
+      "rarity": 0,
+      "size": [
+        1,
+        2
+      ],
+      "value": 20,
+      "cell": [
+        220,
+        827,
+        422,
+        1014
+      ],
+      "region": [
+        220,
+        827,
+        202,
+        187
+      ]
+    },
+    {
+      "id": "sanctum_silver_dividers",
+      "base": "thermometer",
+      "theme": "sanctum",
+      "name": "银制量星规",
+      "rarity": 1,
+      "size": [
+        1,
+        2
+      ],
+      "value": 25,
+      "cell": [
+        422,
+        827,
+        625,
+        1014
+      ],
+      "region": [
+        422,
+        827,
+        193,
+        187
+      ]
+    },
+    {
+      "id": "sanctum_ink_bottle",
+      "base": "lubricant",
+      "theme": "sanctum",
+      "name": "星蓝墨瓶",
+      "rarity": 1,
+      "size": [
+        1,
+        2
+      ],
+      "value": 20,
+      "cell": [
+        625,
+        827,
+        832,
+        1014
+      ],
+      "region": [
+        628,
+        829,
+        204,
+        182
+      ]
+    },
+    {
+      "id": "sanctum_brass_astrolabe",
+      "base": "battery",
+      "theme": "sanctum",
+      "name": "黄铜测星仪",
+      "rarity": 2,
+      "size": [
+        1,
+        2
+      ],
+      "value": 30,
+      "cell": [
+        832,
+        827,
+        1045,
+        1014
+      ],
+      "region": [
+        833,
+        827,
+        212,
+        187
+      ]
+    },
+    {
+      "id": "sanctum_constellation_slate",
+      "base": "drone_rotor",
+      "theme": "sanctum",
+      "name": "星纹石板",
+      "rarity": 2,
+      "size": [
+        3,
+        2
+      ],
+      "value": 140,
+      "cell": [
+        1045,
+        827,
+        1254,
+        1014
+      ],
+      "region": [
+        1045,
+        829,
+        185,
+        184
+      ]
+    },
+    {
+      "id": "sanctum_memory_crystal",
+      "base": "thermal_chip",
+      "theme": "sanctum",
+      "name": "幽紫记忆晶",
+      "rarity": 3,
+      "size": [
+        1,
+        1
+      ],
+      "value": 75,
+      "cell": [
+        0,
+        1014,
+        220,
+        1254
+      ],
+      "region": [
+        17,
+        1014,
+        202,
+        195
+      ]
+    },
+    {
+      "id": "sanctum_prayer_manuscript",
+      "base": "research_notes",
+      "theme": "sanctum",
+      "name": "星辉祷典",
+      "rarity": 3,
+      "size": [
+        2,
+        2
+      ],
+      "value": 250,
+      "cell": [
+        220,
+        1014,
+        422,
+        1254
+      ],
+      "region": [
+        222,
+        1014,
+        198,
+        240
+      ]
+    },
+    {
+      "id": "sanctum_votive_holder",
+      "base": "platinum_bar",
+      "theme": "sanctum",
+      "name": "铂银烛台",
+      "rarity": 4,
+      "size": [
+        1,
+        2
+      ],
+      "value": 195,
+      "cell": [
+        422,
+        1014,
+        625,
+        1254
+      ],
+      "region": [
+        433,
+        1014,
+        192,
+        222
+      ]
+    },
+    {
+      "id": "sanctum_orbital_sphere",
+      "base": "star_map",
+      "theme": "sanctum",
+      "name": "宝星浑天仪",
+      "rarity": 4,
+      "size": [
+        2,
+        3
+      ],
+      "value": 990,
+      "cell": [
+        625,
+        1014,
+        832,
+        1254
+      ],
+      "region": [
+        625,
+        1020,
+        197,
+        234
+      ]
+    },
+    {
+      "id": "sanctum_sapphire_scepter",
+      "base": "royal_scepter",
+      "theme": "sanctum",
+      "name": "苍穹蓝晶权杖",
+      "rarity": 5,
+      "size": [
+        1,
+        4
+      ],
+      "value": 1835,
+      "cell": [
+        832,
+        1014,
+        1045,
+        1254
+      ],
+      "region": [
+        853,
+        1014,
+        192,
+        205
+      ]
+    },
+    {
+      "id": "sanctum_eclipse_fossil",
+      "base": "void_fossil",
+      "theme": "sanctum",
+      "name": "蚀日玄岩遗骸",
+      "rarity": 5,
+      "size": [
+        3,
+        3
+      ],
+      "value": 5060,
+      "cell": [
+        1045,
+        1014,
+        1254,
+        1254
+      ],
+      "region": [
+        1045,
+        1039,
+        163,
+        168
+      ]
+    }
+  ]
+}

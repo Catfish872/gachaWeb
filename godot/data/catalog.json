@@ -422,7 +422,7 @@
           "pool": "common",
           "rarity": "blue",
           "name": "汲取之刃",
-          "icon": "✦",
+          "icon": "❤️",
           "target": "生命汲取",
           "description": "全队造成直接伤害时，恢复实际生命伤害的 6%，多份祝福的生命汲取比例累加。",
           "effects": [
@@ -437,7 +437,7 @@
           "pool": "common",
           "rarity": "white",
           "name": "壁垒反击",
-          "icon": "✦",
+          "icon": "🛡️",
           "target": "护盾构筑",
           "description": "全队在护盾存在时，造成的直接伤害提高 12%。",
           "effects": [
@@ -452,7 +452,7 @@
           "pool": "common",
           "rarity": "blue",
           "name": "追猎回路",
-          "icon": "✦",
+          "icon": "🔋",
           "target": "击破构筑",
           "description": "全队以直接伤害击败敌人时，获得 15 点能量。",
           "effects": [
@@ -467,7 +467,7 @@
           "pool": "common",
           "rarity": "blue",
           "name": "终末猎手",
-          "icon": "✦",
+          "icon": "🎯",
           "target": "收割构筑",
           "description": "全队攻击生命低于或等于 35% 的目标时，直接伤害提高 18%。",
           "effects": [
@@ -483,7 +483,7 @@
           "pool": "common",
           "rarity": "white",
           "name": "淬毒锋刃",
-          "icon": "✦",
+          "icon": "🌿",
           "target": "中毒构筑",
           "description": "全队造成直接伤害后，有 25% 概率使目标中毒 2 回合。中毒效果可叠加，每层每回合造成最大生命 5% 的伤害。",
           "effects": [
@@ -500,9 +500,9 @@
           "pool": "common",
           "rarity": "blue",
           "name": "静电传导",
-          "icon": "✦",
+          "icon": "⚡",
           "target": "感电构筑",
-          "description": "全队造成直接伤害后，有 25% 概率使目标感电 2 回合。感电期间每次行动有 35% 概率跳过，重复施加只延长持续，首领同样生效。",
+          "description": "全队造成直接伤害后，有 25% 概率使目标感电 2 回合。",
           "effects": [
             {
               "type": "applyStatusAfterDamage",

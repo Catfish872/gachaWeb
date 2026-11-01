@@ -42,9 +42,11 @@ def soundscape(combat=False):
     return out
 save('assets/audio/music/ruins_ambient.ogg',soundscape())
 save('assets/audio/music/ruins_battle.ogg',soundscape(True))
-for name,dur,f0,f1 in [('tap',.07,600,420),('equip',.22,420,840),('use',.30,520,1040),('coin',.18,880,1320),('back',.09,420,260)]:
+for name,dur,f0,f1 in [('tap',.07,600,420),('equip',.22,420,840),('use',.30,520,1040),('back',.09,420,260)]:
  t=np.arange(int(dur*SR))/SR;phase=2*np.pi*(f0*t+(f1-f0)*t*t/(2*dur));env=np.sin(np.pi*t/dur)**2*np.exp(-t/dur*2)
  save('assets/audio/ui/'+name+'.ogg',np.sin(phase)*env)
+from build_coin_sound import build as build_coin_sound
+build_coin_sound()
 print('Generated 2 original music loops and 5 interface sounds')
 
 # Restrict searching to the low-energy transition between the opening impact
