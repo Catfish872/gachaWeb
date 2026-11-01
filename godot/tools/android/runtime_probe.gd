@@ -27,6 +27,7 @@ func _process(delta: float) -> void:
 	var payload := Marshalls.utf8_to_base64(JSON.stringify({
 		"seq": _probe_sequence, "modal_scrolls": _probe_scrolls(), "screen": current_screen, "window": [get_window().size.x, get_window().size.y],
 		"logical": [size.x, size.y], "overlay": overlay.get_child_count(),
+		"renderer": {"method": RenderingServer.get_current_rendering_method(), "driver": RenderingServer.get_current_rendering_driver_name(), "adapter": RenderingServer.get_video_adapter_name()},
 		"scroll": scroll.scroll_vertical, "scroll_max": scroll.get_v_scroll_bar().max_value - scroll.get_v_scroll_bar().page,
 		"page_width": main_body.size.x, "scroll_width": scroll.size.x,
 		"scroll_rect": _probe_rect(scroll), "scrollbar_rect": _probe_rect(scroll.get_v_scroll_bar()), "buttons": controls, "extraction": _probe_extraction(), "android_bridge": _android_bridge, "canvases": canvases

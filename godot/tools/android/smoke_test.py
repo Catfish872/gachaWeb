@@ -479,6 +479,10 @@ def run(apk, output):
     adb('shell', 'am', 'start', '-W', '-n', component)
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'Android game startup', 90)
     assert state['window'][1] > state['window'][0], 'Portrait startup expected'
+    renderer = state.get('renderer', {})
+    (output / 'renderer.json').write_text(json.dumps(renderer, indent=2))
+    assert renderer.get('method') == 'mobile' and renderer.get('driver') == 'vulkan', f'Expected actual Mobile/Vulkan renderer, not silent fallback: {renderer}'
+    assert renderer.get('adapter'), f'Missing actual graphics adapter: {renderer}'
     bridge = state.get('android_bridge', {})
     assert bridge.get('success') is True, f'Android download/install bridge unavailable: {bridge}'
     assert bridge.get('package') == PACKAGE, f'Android bridge resolved wrong package: {bridge}'
