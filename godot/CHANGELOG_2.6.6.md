@@ -1,6 +1,6 @@
 # 2.6.6 无尽成长起点调整
 
-准备发布。
+已于2026-11-01发布。[下载正式 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.6.6/universal.apk)。
 
 - 无尽指数成长起算点由第50层提前至第25层，从第26层开始增长；指数率仍为6.2%。
 - 共用该起算点的攻击额外成长同步提前，其他公式与燃烧、中毒机制不变。
