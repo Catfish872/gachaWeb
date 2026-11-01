@@ -1,0 +1,159 @@
+{
+  "before": {
+    "active": false,
+    "diamonds": 1600,
+    "owned_ids": [
+      "ember",
+      "zeph"
+    ],
+    "total_pulls": 0,
+    "transaction_digest": "45a3d5a68cb509a6a510b4f46e3fd047a9f36016ebb5c9a8540ef48102e810fc"
+  },
+  "paused": {
+    "active": true,
+    "diamonds": 1440,
+    "epoch": 1,
+    "history": [
+      {
+        "epoch": 1,
+        "index": 0,
+        "stage": "opening",
+        "time": 0.0
+      }
+    ],
+    "index": 0,
+    "owned_ids": [
+      "ember",
+      "zeph",
+      "cinder"
+    ],
+    "paused": true,
+    "progress": 0.294117647058824,
+    "rarity": 3,
+    "ready_frames": 2,
+    "reduced_motion": false,
+    "results": [
+      {
+        "charId": "cinder",
+        "isFeatured": false,
+        "isNew": true,
+        "rarity": 3,
+        "shards": 0
+      }
+    ],
+    "sequence_time": 0.25,
+    "stage": "opening",
+    "stage_time": 0.25,
+    "total_pulls": 1,
+    "transaction_digest": "a28bb0a90fe21e0eafaed49b2015642d05a9a3c3a4d05d321c3b7a71ccbbb045",
+    "visible_cards": 0
+  },
+  "resumed": {
+    "active": true,
+    "diamonds": 1440,
+    "epoch": 1,
+    "history": [
+      {
+        "epoch": 1,
+        "index": 0,
+        "stage": "opening",
+        "time": 0.0
+      }
+    ],
+    "index": 0,
+    "owned_ids": [
+      "ember",
+      "zeph",
+      "cinder"
+    ],
+    "paused": true,
+    "progress": 0.294117647058824,
+    "rarity": 3,
+    "ready_frames": 2,
+    "reduced_motion": false,
+    "results": [
+      {
+        "charId": "cinder",
+        "isFeatured": false,
+        "isNew": true,
+        "rarity": 3,
+        "shards": 0
+      }
+    ],
+    "sequence_time": 0.25,
+    "stage": "opening",
+    "stage_time": 0.25,
+    "total_pulls": 1,
+    "transaction_digest": "a28bb0a90fe21e0eafaed49b2015642d05a9a3c3a4d05d321c3b7a71ccbbb045",
+    "visible_cards": 0
+  },
+  "result": {
+    "active": true,
+    "diamonds": 1440,
+    "epoch": 6,
+    "history": [
+      {
+        "epoch": 1,
+        "index": 0,
+        "stage": "opening",
+        "time": 0.0
+      },
+      {
+        "epoch": 2,
+        "index": 0,
+        "stage": "constellation",
+        "time": 0.85
+      },
+      {
+        "epoch": 3,
+        "index": 0,
+        "stage": "seal",
+        "time": 1.9
+      },
+      {
+        "epoch": 4,
+        "index": 0,
+        "stage": "unseal",
+        "time": 2.45
+      },
+      {
+        "epoch": 5,
+        "index": 0,
+        "stage": "portrait",
+        "time": 3.2
+      },
+      {
+        "epoch": 6,
+        "index": 0,
+        "stage": "result",
+        "time": 3.84999999999999
+      }
+    ],
+    "index": 0,
+    "owned_ids": [
+      "ember",
+      "zeph",
+      "cinder"
+    ],
+    "paused": false,
+    "progress": 0.117647058823529,
+    "rarity": 3,
+    "ready_frames": 2,
+    "reduced_motion": false,
+    "results": [
+      {
+        "charId": "cinder",
+        "isFeatured": false,
+        "isNew": true,
+        "rarity": 3,
+        "shards": 0
+      }
+    ],
+    "sequence_time": 4.04999999999999,
+    "stage": "result",
+    "stage_time": 0.2,
+    "total_pulls": 1,
+    "transaction_digest": "a28bb0a90fe21e0eafaed49b2015642d05a9a3c3a4d05d321c3b7a71ccbbb045",
+    "visible_cards": 0
+  }
+}

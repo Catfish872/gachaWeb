@@ -1,0 +1,24 @@
+{
+  "tag_name": "android-v2.5.0",
+  "target_commitish": "28e15c46079995db7c05c84d3a0427c8907f660f",
+  "draft": false,
+  "prerelease": false,
+  "published_at": "2026-11-01T15:32:03Z",
+  "html_url": "https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.5.0",
+  "assets": [
+    {
+      "name": "SHA256SUMS.txt",
+      "size": 80,
+      "digest": "sha256:94f99be9a6b8c4df09a6035e73a3d960e7f41c0dca0b1f464073588cfc67e577",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/Catfish872/gachaWeb/releases/download/android-v2.5.0/SHA256SUMS.txt"
+    },
+    {
+      "name": "universal.apk",
+      "size": 138305721,
+      "digest": "sha256:b776f6511faf8b3db79ab3e94e91179c1d1b28b97a652bcd8c3d01a024ac0004",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/Catfish872/gachaWeb/releases/download/android-v2.5.0/universal.apk"
+    }
+  ]
+}

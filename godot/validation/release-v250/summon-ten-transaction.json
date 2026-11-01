@@ -1,0 +1,131 @@
+{
+  "before": {
+    "active": false,
+    "diamonds": 1620,
+    "owned_ids": [
+      "ember",
+      "zeph",
+      "cinder"
+    ],
+    "total_pulls": 1,
+    "transaction_digest": "57e31f8b2a37428507e7a8d02c1ae4385928974fd33ef381347e8fce7f196687"
+  },
+  "summary": {
+    "active": true,
+    "diamonds": 20,
+    "epoch": 3,
+    "history": [
+      {
+        "epoch": 1,
+        "index": 0,
+        "stage": "opening",
+        "time": 0.0
+      },
+      {
+        "epoch": 2,
+        "index": 0,
+        "stage": "constellation",
+        "time": 0.85
+      },
+      {
+        "epoch": 3,
+        "index": 0,
+        "stage": "summary",
+        "time": 0.85
+      }
+    ],
+    "index": 0,
+    "owned_ids": [
+      "ember",
+      "zeph",
+      "cinder",
+      "bolt",
+      "gus",
+      "shana",
+      "tide"
+    ],
+    "paused": false,
+    "progress": 1.0,
+    "rarity": 3,
+    "ready_frames": 2,
+    "reduced_motion": false,
+    "results": [
+      {
+        "charId": "bolt",
+        "isFeatured": false,
+        "isNew": true,
+        "rarity": 3,
+        "shards": 0
+      },
+      {
+        "charId": "gus",
+        "isFeatured": false,
+        "isNew": true,
+        "rarity": 4,
+        "shards": 0
+      },
+      {
+        "charId": "shana",
+        "isFeatured": false,
+        "isNew": true,
+        "rarity": 4,
+        "shards": 0
+      },
+      {
+        "charId": "bolt",
+        "isFeatured": false,
+        "isNew": false,
+        "rarity": 3,
+        "shards": 1
+      },
+      {
+        "charId": "bolt",
+        "isFeatured": false,
+        "isNew": false,
+        "rarity": 3,
+        "shards": 1
+      },
+      {
+        "charId": "tide",
+        "isFeatured": false,
+        "isNew": true,
+        "rarity": 3,
+        "shards": 0
+      },
+      {
+        "charId": "ember",
+        "isFeatured": false,
+        "isNew": false,
+        "rarity": 3,
+        "shards": 1
+      },
+      {
+        "charId": "bolt",
+        "isFeatured": false,
+        "isNew": false,
+        "rarity": 3,
+        "shards": 1
+      },
+      {
+        "charId": "ember",
+        "isFeatured": false,
+        "isNew": false,
+        "rarity": 3,
+        "shards": 1
+      },
+      {
+        "charId": "tide",
+        "isFeatured": false,
+        "isNew": false,
+        "rarity": 3,
+        "shards": 1
+      }
+    ],
+    "sequence_time": 2.0,
+    "stage": "summary",
+    "stage_time": 1.15,
+    "total_pulls": 11,
+    "transaction_digest": "24ac72dead73bca8d9638634231fcb562424ca283cd49ab4259f8a4077e07e6b",
+    "visible_cards": 10
+  }
+}

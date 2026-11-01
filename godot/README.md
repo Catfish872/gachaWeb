@@ -1,14 +1,10 @@
 # 虚空裂变 · Godot Android
 
-## 正在验收：2.5.0 统一更新
+## 最新正式版：2.5.0
 
-[查看统一更新内容](CHANGELOG_2.5.md)。抽卡、遗物套装与搭配、连续探索及本批战斗/经济调整将一起发布；最终回归、原生Android与签名验证完成前，最新正式版仍为2.4.0。
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.5.0/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.5.0) · [中文更新说明](CHANGELOG_2.5.md) · [验证记录](validation/release-v250/RELEASE.md)
 
-## 最新正式版：2.4.0
-
-[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.4.0/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.4.0) · [中文更新说明](CHANGELOG_2.4.md) · [验证记录](validation/expedition-v240/RELEASE.md)
-
-无限深渊与每日里程碑奖励、记忆兑换、搜打撤经验、库存手动摆放和快捷补给已上线。界面、头像、场景音乐与战斗反馈同步完善，更新允许使用移动数据。现有正式版继续使用同一签名与自动更新渠道。
+完整抽卡演出、遗物套装与搭配推荐、定向获取、自动回图，以及寄送、战斗和每日奖励调整已统一上线。沿用固定签名与正式自动更新渠道。
 
 以下2.1交付段为历史记录，不代表当前货币、背包、地图及搜索规则；当前版本以更新说明和v9设计文档为准。
 

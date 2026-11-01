@@ -1,0 +1,12 @@
+{
+  "screen": "home",
+  "overlay": 0,
+  "events": [
+    {
+      "monotonic_ms": 17468,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    }
+  ]
+}

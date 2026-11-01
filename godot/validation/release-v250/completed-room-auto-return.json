@@ -1,0 +1,628 @@
+{
+  "before": {
+    "act": 1,
+    "bag_area": 15,
+    "bag_count": 4,
+    "bag_ids": [
+      "supply_1793546289968_2_3018856683",
+      "extraction_1793546322787_3_83181836_item_21",
+      "extraction_1793546322787_3_83181836_item_22",
+      "extraction_1793546322787_3_83181836_item_23"
+    ],
+    "containers": [
+      {
+        "id": "extraction_1793546322787_3_83181836_container_20",
+        "items": [],
+        "unknown": 0
+      }
+    ],
+    "deposit_used": false,
+    "explored": 1,
+    "gold": 49870,
+    "growth_choices": [],
+    "guard_pending": false,
+    "interaction": {
+      "canAutoReturn": true,
+      "hasRemaining": false,
+      "reasons": [],
+      "roomId": "extraction_1793546322787_3_83181836_room_3",
+      "runId": "extraction_1793546322787_3_83181836"
+    },
+    "loadout_ids": [],
+    "map_edges": [
+      [
+        "extraction_1793546322787_3_83181836_room_1",
+        "extraction_1793546322787_3_83181836_room_3"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_1",
+        "extraction_1793546322787_3_83181836_room_2"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_2",
+        "extraction_1793546322787_3_83181836_room_4"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_3",
+        "extraction_1793546322787_3_83181836_room_5"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_5",
+        "extraction_1793546322787_3_83181836_room_6"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_3",
+        "extraction_1793546322787_3_83181836_room_4"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_7",
+        "extraction_1793546322787_3_83181836_room_8"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_8",
+        "extraction_1793546322787_3_83181836_room_10"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_9",
+        "extraction_1793546322787_3_83181836_room_10"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_9",
+        "extraction_1793546322787_3_83181836_room_11"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_10",
+        "extraction_1793546322787_3_83181836_room_12"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_7",
+        "extraction_1793546322787_3_83181836_room_9"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_2",
+        "extraction_1793546322787_3_83181836_room_7"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_4",
+        "extraction_1793546322787_3_83181836_room_9"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_13",
+        "extraction_1793546322787_3_83181836_room_15"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_13",
+        "extraction_1793546322787_3_83181836_room_14"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_15",
+        "extraction_1793546322787_3_83181836_room_16"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_15",
+        "extraction_1793546322787_3_83181836_room_17"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_16",
+        "extraction_1793546322787_3_83181836_room_18"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_14",
+        "extraction_1793546322787_3_83181836_room_16"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_8",
+        "extraction_1793546322787_3_83181836_room_13"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_14",
+        "extraction_1793546322787_3_83181836_room_19"
+      ]
+    ],
+    "map_rooms": [
+      {
+        "cleared": true,
+        "id": "extraction_1793546322787_3_83181836_room_1",
+        "type": "entry",
+        "unlocked": false,
+        "visited": true
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_2",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": true,
+        "id": "extraction_1793546322787_3_83181836_room_3",
+        "type": "rest",
+        "unlocked": false,
+        "visited": true
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_4",
+        "type": "workshop",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_5",
+        "type": "elite",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_6",
+        "type": "relay",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_7",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_8",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_9",
+        "type": "shrine",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_10",
+        "type": "key_vault",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_11",
+        "type": "workshop",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_12",
+        "type": "shrine",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_13",
+        "type": "rest",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_14",
+        "type": "elite",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_15",
+        "type": "event",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_16",
+        "type": "shrine",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_17",
+        "type": "workshop",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_18",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_19",
+        "type": "boss",
+        "unlocked": false,
+        "visited": false
+      }
+    ],
+    "node": 1,
+    "phase": "room",
+    "room_actions": [
+      {
+        "cost": 0,
+        "description": "\u5168\u961f\u6062\u590d35%\uff0c\u5012\u4e0b\u89d2\u8272\u590d\u82cf",
+        "effect": {
+          "heal": 0.35,
+          "revive": true
+        },
+        "id": "recover",
+        "label": "\u5305\u624e\u4f11\u6574",
+        "selected": false,
+        "used": true
+      },
+      {
+        "cost": 0,
+        "description": "\u6062\u590d10%\uff0c\u83b7\u5f9740\u80fd\u91cf\uff0c\u6e05\u7a7a\u51b7\u5374",
+        "effect": {
+          "cooldown": 99,
+          "energy": 40,
+          "heal": 0.1
+        },
+        "id": "meditate",
+        "label": "\u51a5\u60f3\u84c4\u80fd",
+        "selected": false,
+        "used": true
+      },
+      {
+        "cost": 0,
+        "description": "\u641c\u5bfb\u8425\u5730\u7559\u4e0b\u7684\u7269\u8d44",
+        "effect": {
+          "cache": true
+        },
+        "id": "scavenge",
+        "label": "\u5bfb\u627e\u8865\u7ed9",
+        "selected": true,
+        "used": true
+      }
+    ],
+    "room_id": "extraction_1793546322787_3_83181836_room_3",
+    "room_type": "rest",
+    "run_digest": "ea09f3a8cc63eeabeb29633655c36df37066c6f374fbc41518d546bc66b04003",
+    "searching": false,
+    "stash_count": 1,
+    "supplies": [
+      {
+        "exchange_locked": true,
+        "item_id": "medkit",
+        "uid": "supply_1793546289968_2_3018856683"
+      },
+      {
+        "exchange_locked": false,
+        "item_id": "cleanse_censer",
+        "uid": "extraction_1793546322787_3_83181836_item_22"
+      }
+    ]
+  },
+  "after": {
+    "act": 1,
+    "bag_area": 15,
+    "bag_count": 4,
+    "bag_ids": [
+      "supply_1793546289968_2_3018856683",
+      "extraction_1793546322787_3_83181836_item_21",
+      "extraction_1793546322787_3_83181836_item_22",
+      "extraction_1793546322787_3_83181836_item_23"
+    ],
+    "containers": [
+      {
+        "id": "extraction_1793546322787_3_83181836_container_20",
+        "items": [],
+        "unknown": 0
+      }
+    ],
+    "deposit_used": false,
+    "explored": 1,
+    "gold": 49870,
+    "growth_choices": [],
+    "guard_pending": false,
+    "interaction": {
+      "canAutoReturn": false,
+      "hasRemaining": false,
+      "reasons": [],
+      "roomId": "extraction_1793546322787_3_83181836_room_3",
+      "runId": "extraction_1793546322787_3_83181836"
+    },
+    "loadout_ids": [],
+    "map_edges": [
+      [
+        "extraction_1793546322787_3_83181836_room_1",
+        "extraction_1793546322787_3_83181836_room_3"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_1",
+        "extraction_1793546322787_3_83181836_room_2"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_2",
+        "extraction_1793546322787_3_83181836_room_4"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_3",
+        "extraction_1793546322787_3_83181836_room_5"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_5",
+        "extraction_1793546322787_3_83181836_room_6"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_3",
+        "extraction_1793546322787_3_83181836_room_4"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_7",
+        "extraction_1793546322787_3_83181836_room_8"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_8",
+        "extraction_1793546322787_3_83181836_room_10"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_9",
+        "extraction_1793546322787_3_83181836_room_10"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_9",
+        "extraction_1793546322787_3_83181836_room_11"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_10",
+        "extraction_1793546322787_3_83181836_room_12"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_7",
+        "extraction_1793546322787_3_83181836_room_9"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_2",
+        "extraction_1793546322787_3_83181836_room_7"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_4",
+        "extraction_1793546322787_3_83181836_room_9"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_13",
+        "extraction_1793546322787_3_83181836_room_15"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_13",
+        "extraction_1793546322787_3_83181836_room_14"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_15",
+        "extraction_1793546322787_3_83181836_room_16"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_15",
+        "extraction_1793546322787_3_83181836_room_17"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_16",
+        "extraction_1793546322787_3_83181836_room_18"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_14",
+        "extraction_1793546322787_3_83181836_room_16"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_8",
+        "extraction_1793546322787_3_83181836_room_13"
+      ],
+      [
+        "extraction_1793546322787_3_83181836_room_14",
+        "extraction_1793546322787_3_83181836_room_19"
+      ]
+    ],
+    "map_rooms": [
+      {
+        "cleared": true,
+        "id": "extraction_1793546322787_3_83181836_room_1",
+        "type": "entry",
+        "unlocked": false,
+        "visited": true
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_2",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": true,
+        "id": "extraction_1793546322787_3_83181836_room_3",
+        "type": "rest",
+        "unlocked": false,
+        "visited": true
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_4",
+        "type": "workshop",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_5",
+        "type": "elite",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_6",
+        "type": "relay",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_7",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_8",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_9",
+        "type": "shrine",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_10",
+        "type": "key_vault",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_11",
+        "type": "workshop",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_12",
+        "type": "shrine",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_13",
+        "type": "rest",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_14",
+        "type": "elite",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_15",
+        "type": "event",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_16",
+        "type": "shrine",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_17",
+        "type": "workshop",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_18",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793546322787_3_83181836_room_19",
+        "type": "boss",
+        "unlocked": false,
+        "visited": false
+      }
+    ],
+    "node": 1,
+    "phase": "route",
+    "room_actions": [
+      {
+        "cost": 0,
+        "description": "\u5168\u961f\u6062\u590d35%\uff0c\u5012\u4e0b\u89d2\u8272\u590d\u82cf",
+        "effect": {
+          "heal": 0.35,
+          "revive": true
+        },
+        "id": "recover",
+        "label": "\u5305\u624e\u4f11\u6574",
+        "selected": false,
+        "used": true
+      },
+      {
+        "cost": 0,
+        "description": "\u6062\u590d10%\uff0c\u83b7\u5f9740\u80fd\u91cf\uff0c\u6e05\u7a7a\u51b7\u5374",
+        "effect": {
+          "cooldown": 99,
+          "energy": 40,
+          "heal": 0.1
+        },
+        "id": "meditate",
+        "label": "\u51a5\u60f3\u84c4\u80fd",
+        "selected": false,
+        "used": true
+      },
+      {
+        "cost": 0,
+        "description": "\u641c\u5bfb\u8425\u5730\u7559\u4e0b\u7684\u7269\u8d44",
+        "effect": {
+          "cache": true
+        },
+        "id": "scavenge",
+        "label": "\u5bfb\u627e\u8865\u7ed9",
+        "selected": true,
+        "used": true
+      }
+    ],
+    "room_id": "extraction_1793546322787_3_83181836_room_3",
+    "room_type": "rest",
+    "run_digest": "d38eeae8ba0658581d47ce96bd45c698bbcac7bc4c43527c0f36b459d792a400",
+    "searching": false,
+    "stash_count": 1,
+    "supplies": [
+      {
+        "exchange_locked": true,
+        "item_id": "medkit",
+        "uid": "supply_1793546289968_2_3018856683"
+      },
+      {
+        "exchange_locked": false,
+        "item_id": "cleanse_censer",
+        "uid": "extraction_1793546322787_3_83181836_item_22"
+      }
+    ]
+  }
+}

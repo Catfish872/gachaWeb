@@ -1,0 +1,144 @@
+{
+  "art": [
+    {
+      "clip": [
+        629.333374023438,
+        312.0,
+        618.666625976562,
+        312.0
+      ],
+      "rect": [
+        629.333374023438,
+        401.333343505859,
+        26.6666870117188,
+        28.0
+      ],
+      "resource": "res://assets/ui/relics/essence.png",
+      "set_id": ""
+    },
+    {
+      "clip": [
+        74.6666717529297,
+        56.0,
+        1130.66674804688,
+        530.666687011719
+      ],
+      "rect": [
+        90.6666717529297,
+        242.66667175293,
+        85.3333282470703,
+        89.3333282470703
+      ],
+      "resource": "res://assets/relic_sets/wind_voyager/helmet.tres",
+      "set_id": "wind_voyager"
+    },
+    {
+      "clip": [
+        74.6666717529297,
+        56.0,
+        1130.66674804688,
+        530.666687011719
+      ],
+      "rect": [
+        189.333343505859,
+        300.0,
+        32.0,
+        32.0
+      ],
+      "resource": "res://assets/relic_sets/wind_voyager/helmet.tres",
+      "set_id": "wind_voyager"
+    },
+    {
+      "clip": [
+        74.6666717529297,
+        56.0,
+        1130.66674804688,
+        530.666687011719
+      ],
+      "rect": [
+        225.333343505859,
+        300.0,
+        32.0,
+        32.0
+      ],
+      "resource": "res://assets/relic_sets/wind_voyager/chest.tres",
+      "set_id": "wind_voyager"
+    },
+    {
+      "clip": [
+        74.6666717529297,
+        56.0,
+        1130.66674804688,
+        530.666687011719
+      ],
+      "rect": [
+        261.333343505859,
+        300.0,
+        32.0,
+        32.0
+      ],
+      "resource": "res://assets/relic_sets/wind_voyager/belt.tres",
+      "set_id": "wind_voyager"
+    },
+    {
+      "clip": [
+        74.6666717529297,
+        56.0,
+        1130.66674804688,
+        530.666687011719
+      ],
+      "rect": [
+        297.333343505859,
+        300.0,
+        32.0,
+        32.0
+      ],
+      "resource": "res://assets/relic_sets/wind_voyager/boots.tres",
+      "set_id": "wind_voyager"
+    },
+    {
+      "clip": [
+        74.6666717529297,
+        56.0,
+        1130.66674804688,
+        530.666687011719
+      ],
+      "rect": [
+        333.333343505859,
+        300.0,
+        32.0,
+        32.0
+      ],
+      "resource": "res://assets/relic_sets/wind_voyager/necklace.tres",
+      "set_id": "wind_voyager"
+    }
+  ],
+  "equipped": {
+    "bolt": {},
+    "cinder": {},
+    "ember": {},
+    "gus": {},
+    "shana": {},
+    "tide": {},
+    "zeph": {}
+  },
+  "inventory": [],
+  "inventory_count": 0,
+  "inventory_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "recommendations_visible": true,
+  "target": {
+    "difficulty": 0,
+    "expectedFiveStarPer50": 5.0,
+    "expectedFourStarPer50": 5.0,
+    "expectedPer50": 10.0,
+    "expectedSellGoldPer50": 3000.0,
+    "extraRarity4Chance": 0.8,
+    "extraRarity5Chance": 0.2,
+    "fiveStarEvery": 10,
+    "legacy": false,
+    "locked": false,
+    "milestoneEvery": 5,
+    "normalChance": 0.0,
+    "targetSetId": "wind_voyager"
+  }
+}

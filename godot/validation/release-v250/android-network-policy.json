@@ -1,0 +1,7 @@
+{
+  "policy": {
+    "metered_permitted": true,
+    "roaming_permitted": false
+  },
+  "evidence": "Actual Android DownloadManager.Request setter accepted metered data; this is not a completed cellular APK download."
+}
