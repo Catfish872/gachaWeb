@@ -1,10 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 2.6.0 更新准备
+## 最新正式版：2.6.0
 
-环境主题、48种新战利品、搜索交互、带出汇总与祝福界面更新已完成定向验收，尚未发布。[本版更新说明](CHANGELOG_2.6.md)。当前正式下载仍为下方 2.5.0。
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.6.0/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.6.0) · [中文更新说明](CHANGELOG_2.6.md) · [验证记录](validation/release-v260/RELEASE.md)
 
-## 最新正式版：2.5.0
+三幕环境主题、48种新战利品、搜索交互、带出汇总与祝福界面更新已上线。沿用固定签名与正式自动更新渠道。
+
+## 历史版本：2.5.0
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.5.0/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.5.0) · [中文更新说明](CHANGELOG_2.5.md) · [验证记录](validation/release-v250/RELEASE.md)
 
