@@ -37,6 +37,25 @@ static func scale(floor_number: int, enemy_data: Dictionary = {}) -> Dictionary:
 		"spdMod": speed, "scaleMult": 0.90 + first_act * 0.11 + later * 0.14,
 		"curveVersion": VERSION}
 
+## Original web calcInflatedStats: additive linear/exponential blend, with
+## a deterministic floor/enemy bias. Only newly issued endless encounters use it.
+static func uses_web_endless(config: Dictionary) -> bool:
+	return bool(config.get("isAbyss", false)) and not bool(config.get("isExtraction", false)) and int(config.get("difficulty", 0)) == 3 and int(config.get("abyssGrowthVersion", 0)) == 3
+
+static func web_endless_scale(floor_number: int, enemy_id: String) -> Dictionary:
+	var floor_value := float(maxi(floor_number, 1))
+	var n := floor_value - 1.0
+	var exponent_floor := maxf(0.0, floor_value - 50.0)
+	var multiplier := (1.0 + n * 0.33) * 0.70 + pow(1.042, exponent_floor) * 0.30
+	var first_character := enemy_id.unicode_at(0) if not enemy_id.is_empty() else 1
+	var random_bias := (sin(floor_value * float(first_character)) + 1.0) / 2.0
+	return {
+		"hpMod": multiplier * (0.86 + random_bias * 0.36),
+		"atkMod": multiplier * (0.92 + (1.0 - random_bias) * 0.48) * (n * 0.025 + pow(1.011, exponent_floor)),
+		"defMod": multiplier * (1.0 + n * 0.012),
+		"spdMod": 1.0 + n * 0.035,
+		"scaleMult": multiplier, "curveVersion": 3}
+
 static func apply_modifier(mods: Dictionary, encounter: Variant) -> Dictionary:
 	var id := str(encounter.get("id", "")) if encounter is Dictionary else str(encounter)
 	var profile := modifier(id)

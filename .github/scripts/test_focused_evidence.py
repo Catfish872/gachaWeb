@@ -13,11 +13,11 @@ class FocusedEvidenceTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         for folder in ('data', 'scripts', 'assets'):
             (self.root / folder).mkdir()
-        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.6.1', 'version_code': 20601}))
+        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.6.2', 'version_code': 20602}))
         for name in ('main.tscn', 'project.godot', 'export_presets.cfg'):
             (self.root / name).write_text(name)
         files, digest = production_snapshot(self.root)
-        self.record = {'version': '2.6.1', 'version_code': 20601,
+        self.record = {'version': '2.6.2', 'version_code': 20602,
                        'targeted_checks': 'passed', 'ui_visual_review': 'passed',
                        'test_elapsed_seconds': 120, 'scope': ['changed room UI'],
                        'production_sha256': digest, 'production_file_count': len(files),

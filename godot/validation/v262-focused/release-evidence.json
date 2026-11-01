@@ -1,0 +1,39 @@
+{
+  "version": "2.6.2",
+  "version_code": 20602,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "ui_review_basis": "No layout changes. Static short-description review plus unchanged layout evidence from 2.6.1; no new GL run.",
+  "test_started_utc": "2026-11-01T18:34:20Z",
+  "test_completed_utc": "2026-11-01T18:35:34Z",
+  "test_elapsed_seconds": 74,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-01T18:34:20Z",
+      "completed_utc": "2026-11-01T18:35:34Z",
+      "elapsed_seconds": 74,
+      "production_sha256": "8cc958b00466e81692628a626fdd0c06c6fe90368c0764469d5674ff8122966a",
+      "scope": [
+        "original web endless HP/ATK/DEF/SPD exact actual spawns at floors1,50,100,150,200,500 across three enemies",
+        "bounded ranks and extraction unchanged; issued legacy/new encounter save version compatibility",
+        "actual BattleModel floor100 speed468 boss first turn and 12-step smoke",
+        "endless card short description static review; existing UI layout evidence reused, no new GL",
+        "release evidence gate (9 tests); numerical behavior (34 checks)"
+      ]
+    }
+  ],
+  "production_sha256": "8cc958b00466e81692628a626fdd0c06c6fe90368c0764469d5674ff8122966a",
+  "production_file_count": 828,
+  "scope": [
+    "original web endless HP/ATK/DEF/SPD exact actual spawns at floors1,50,100,150,200,500 across three enemies",
+    "bounded ranks and extraction unchanged; issued legacy/new encounter save version compatibility",
+    "actual BattleModel floor100 speed468 boss first turn and 12-step smoke",
+    "endless card short description static review; existing UI layout evidence reused, no new GL",
+    "release evidence gate (9 tests); numerical behavior (34 checks)"
+  ],
+  "limits": [
+    "Only endless growth and compatibility were checked; no full gameplay suite, new GL, native emulator journey or physical-phone validation."
+  ],
+  "snapshot_reconfirmed_utc": "2026-11-01T18:36:49Z",
+  "snapshot_reconfirmation": "Every production file matched the passed snapshot; no tests rerun."
+}

@@ -517,7 +517,7 @@ func _normalize(src: Dictionary) -> Dictionary:
 				unit.cooldowns[key] = int(unit.cooldowns[key])
 	if not result.abyss.rogue.activeEncounter.is_empty():
 		var encounter: Dictionary = result.abyss.rogue.activeEncounter
-		for key in ["floor", "abyssLayer", "staminaCost", "runLength", "seed", "difficulty", "relicRewardVersion"]:
+		for key in ["floor", "abyssLayer", "staminaCost", "runLength", "seed", "difficulty", "relicRewardVersion", "abyssGrowthVersion"]:
 			if encounter.has(key):
 				encounter[key] = int(encounter[key])
 		for key in ["gold", "exp", "diamonds"]:
@@ -1327,6 +1327,7 @@ func prepare_abyss() -> Dictionary:
 		"encounterTier": "boss" if boss else ("elite" if elite else "normal"), "endless":abyss_is_endless(), "runLength":abyss_floor_cap(), "difficulty": int(state.abyss.rogue.difficulty),
 		"rewards": {"gold": 0, "exp": mini(1000000,35 + floor_number * 5), "diamonds": 0},
 		"seed": int(rng.randi()), "token": _uid("battle"), "_team": state.team.duplicate()}
+	if int(config.difficulty) == 3:config.abyssGrowthVersion = 3
 	if floor_number >= 6 and not boss and random_value() < 0.45:
 		config.encounterModifier = AbyssBalance.modifier(str(_pick(["bulwark", "frenzy", "swift"])))
 	if int(state.abyss.rogue.get("relicRewardVersion",0)) >= 1:
@@ -2075,6 +2076,7 @@ func _valid_abyss_encounter(config: Dictionary, value: Dictionary) -> bool:
 			return false
 	if not _integer(config.get("difficulty", 0), 0, 3):
 		return false
+	if config.has("abyssGrowthVersion") and (not _integer(config.abyssGrowthVersion,3,3) or int(config.difficulty) != 3):return false
 	if not _integer(config.get("relicRewardVersion",0),0,1):return false
 	if int(config.get("relicRewardVersion",0)) == 1:
 		if not config.get("targetRelicSetId") is String or not catalog.RelicSets.has(config.targetRelicSetId):return false
@@ -2141,7 +2143,7 @@ func abyss_difficulty_options() -> Array:
 		var hp_percent := int(round((float(modifiers.hpMod) - 1.0) * 100.0))
 		var atk_percent := int(round((float(modifiers.atkMod) - 1.0) * 100.0))
 		var def_percent := int(round((float(modifiers.defMod) - 1.0) * 100.0))
-		result.append({"id": rank, "name": names[rank], "floorCap":abyss_floor_cap(rank), "endless":abyss_is_endless(rank), "description": "基础敌人强度，记忆碎片收益 100%。" if rank == 0 else "敌人生命 +%d%%、攻击 +%d%%、防御 +%d%%；记忆碎片收益 +%d%%。" % [hp_percent, atk_percent, def_percent, rank * 25], "unlocked": unlocked, "selected": rank == int(state.abyss.meta.selectedDifficulty), "enabled": unlocked and not abyss_run_active()})
+		result.append({"id": rank, "name": names[rank], "floorCap":abyss_floor_cap(rank), "endless":abyss_is_endless(rank), "description": "50层后指数成长；记忆碎片收益 +75%。" if rank == 3 else ("基础敌人强度，记忆碎片收益 100%。" if rank == 0 else "敌人生命 +%d%%、攻击 +%d%%、防御 +%d%%；记忆碎片收益 +%d%%。" % [hp_percent, atk_percent, def_percent, rank * 25]), "unlocked": unlocked, "selected": rank == int(state.abyss.meta.selectedDifficulty), "enabled": unlocked and not abyss_run_active()})
 	return result
 
 func set_abyss_difficulty(rank: int) -> Dictionary:

@@ -228,12 +228,14 @@ func _spawn_wave() -> void:
 		if data.is_empty():
 			state.reason = "未知敌人：" + id
 			continue
+		var web_endless: bool = AbyssBalance.uses_web_endless(state.config)
 		var scale = wave.get("scaleMult", state.config.get("scaleMult", 1.0))
-		var mods = abyss_scale(int(state.config.get("floor", 1)), id) if state.config.get("isAbyss", false) else {}
-		if scale is Dictionary: mods = scale
-		elif mods.is_empty(): mods = {"hpMod": scale, "atkMod": scale, "defMod": scale, "spdMod": 1.0}
+		var mods = AbyssBalance.web_endless_scale(int(state.config.get("floor", 1)), id) if web_endless else (abyss_scale(int(state.config.get("floor", 1)), id) if state.config.get("isAbyss", false) else {})
+		if not web_endless:
+			if scale is Dictionary: mods = scale
+			elif mods.is_empty(): mods = {"hpMod": scale, "atkMod": scale, "defMod": scale, "spdMod": 1.0}
 		if state.config.get("isAbyss", false):
-			mods = AbyssBalance.apply_difficulty(mods, int(state.config.get("difficulty", 0)))
+			if not web_endless: mods = AbyssBalance.apply_difficulty(mods, int(state.config.get("difficulty", 0)))
 			mods = AbyssBalance.apply_modifier(mods, state.config.get("encounterModifier", {}))
 		var bs = data.baseStats
 		var final_boss := bool(state.config.get("isExtraction", false)) and bool(state.config.get("isBoss", false)) and bool(data.get("isBoss", false)) and int(state.config.get("act", 1)) == 3 and is_equal_approx(float(state.config.get("finalBossStatMultiplier", 1.0)), 1.15)
@@ -241,7 +243,8 @@ func _spawn_wave() -> void:
 		var stats = {"maxHp": maxi(1, int(bs.hp * mods.get("hpMod", 1) * boss_factor)),
 			"atk": maxi(1, int(bs.atk * mods.get("atkMod", 1) * boss_factor)), "def": maxi(0, int(bs.def * mods.get("defMod", 1) * boss_factor)),
 			"spd": maxf(1, bs.spd * mods.get("spdMod", 1) * boss_factor), "cri": 0.1, "criDmg": 1.5}
-		if _is_abyss:
+		if web_endless: stats.spd = maxf(1.0, floorf(float(stats.spd)))
+		if _is_abyss and not web_endless:
 			var speed_limit := AbyssBalance.MAX_ENEMY_SPEED
 			if state.config.get("isExtraction", false):
 				speed_limit = 120.0
