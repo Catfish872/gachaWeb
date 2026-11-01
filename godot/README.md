@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.6.1
+## 最新正式版：2.6.2
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.6.2/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.6.2) · [中文更新说明](CHANGELOG_2.6.2.md) · [验证记录](validation/release-v262/RELEASE.md)
+
+无尽难度敌人成长恢复原网页版公式。前三档50层模式与搜打撤保持不变，沿用固定签名与正式自动更新渠道。
+
+## 历史版本：2.6.1
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.6.1/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.6.1) · [中文更新说明](CHANGELOG_2.6.1.md) · [验证记录](validation/release-v261/RELEASE.md)
 
