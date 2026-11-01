@@ -40,7 +40,7 @@
   },
   "algorithm": "SHA256 of sorted relative_path + NUL + file_SHA256 + LF UTF-8 records",
   "production_sha256": "cdb15441bd9f33c215787c8946c5c735288aa17c15aa7b72035631c41fd7e6d7",
-  "verification_sha256": "b36b330d6f22281298adac4609582671f0663eb661693d8e429108970e89b4ac",
+  "verification_sha256": "8f0425e27c6686499fd84205b2ad02dd9ee8c2089ae8d349c7ccdefc416d99d6",
   "production_files": {
     "assets/audio/extraction/common.mp3": "f7088a1a162e29b2fe38383553fe9305f020bb47019680a63d50d9183991ea51",
     "assets/audio/extraction/common.mp3.import": "abd666eefdf0ec37c1cb15b940ba9f213b86155cda7118a26b03c088dbf1eb08",
@@ -678,6 +678,7 @@
     "tests/test_android_build.py": "b3391565f4a4e373dc016bcc018624cfb9f1d9f7ed15ac443447ee512fe5c73d",
     "tests/test_android_kvm.py": "6fcc6cb7d21289762c29fd4c10325abf3597f0d5bd90bfcf4dd70813c7d5e775",
     "tests/test_android_manifest.py": "7d35f5eeef16d7a4ff1542221a31b7c50c83a0e24186ea83f0fc5d333bd07c1a",
+    "tests/test_android_probe_notifications.gd": "770ba767597278c05028a7a8af377ec78ee3be8ce1f073bcbbc6976546a408b3",
     "tests/test_android_smoke.py": "efa304a7a245ab2b184b4433a9b16d5d4ac6d5a036d09c3eefd9e75e65b33495",
     "tests/test_art_assets.gd": "fb7dfa9083eb28d99dc42eb0bf029d65237628e1d7b3d334f04c2ee74009ec41",
     "tests/test_balance_v2.gd": "c5c15a5ebf238fb332f716e0ec198b6321d06467d39b5758423e643731d6e358",
@@ -692,7 +693,7 @@
     "tests/test_extraction_ui.gd": "e12f763c0649aaa9f82025c95bb4507b0cb487adeacfc24c0397a953eb90308e",
     "tests/test_extraction_v6.gd": "d30f0f81c85ff5538ad6e7a490c19f2f8fa2273a2ab631754e3510287789a1d2",
     "tests/test_extraction_v7.gd": "0cae410a5d9b10e85f6ffc83df3a5c94f4e18d705e57232213f6a85cb79c5a1a",
-    "tests/test_input_dispatch.gd": "47481359402d9ddd7ca32271000fc30b5ddace81ce8e6278b3b6b8113c94f883",
+    "tests/test_input_dispatch.gd": "d742e0acf86c3da874f017291e06f3177c5975861197598e1b5b2f7edfe080ab",
     "tests/test_integration.gd": "f53f6bafd9cffd6dbfa4254393a17c537308f5a6ce2b49d85fdb43be4b3c2654",
     "tests/test_loot_economy.gd": "275b3f2afe8e765b34ee46baa22d3ac11e05b46bd5c536025c4ba7fd45757b6f",
     "tests/test_looting_feedback.gd": "2c89aab2c249234d460b2391a9815e12863ca9ce687447acd167acdcd97766c1",
@@ -720,8 +721,8 @@
     "tools/android/README.md": "34f670c98097d04cefbeb435e502a5128774bc216f3c4a43e40c88c165b3ee68",
     "tools/android/export_smoke.sh": "28c2d4ff61a033f20de0495d5d5f1be8af796f68f53ffb842806b5cf0749dab4",
     "tools/android/run_emulator.sh": "5ee4d3a7c464992688538e950ebb948c50813ba002bfcc70ff17992c2f590524",
-    "tools/android/runtime_probe.gd": "2d7aa6136aaa594832593754f2566aebbb7015aa6239f5b2e543811b6cbd24c1",
-    "tools/android/smoke_test.py": "d9aa588369ef502aa1337c16d163879d94671154073d8bc4d08474eba49749c4",
-    "tools/test_all.sh": "09977b597ec82f54dcf3e1a4a61493bd4cd38b8215055d83acde61a754c08cec"
+    "tools/android/runtime_probe.gd": "e379dde77d39137c71641ad1ea93be585bc6d644145a592068ed411f9572bc9d",
+    "tools/android/smoke_test.py": "0a4c7acfd72928e45aa812537ac44faa0a3e8aaf48316a3b056c7341a4996008",
+    "tools/test_all.sh": "508c9db751c3fdb84c40cc1bd210620189083eaf0026b9e3e1120895ea812032"
   }
 }

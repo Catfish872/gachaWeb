@@ -4,6 +4,7 @@ extends "res://scripts/main.gd"
 var _probe_clock := 0.0
 var _probe_sequence := 0
 var _android_bridge: Dictionary = {}
+var _probe_back_events: Array = []
 
 func _ready() -> void:
 	super._ready()
@@ -22,9 +23,28 @@ func _process(delta: float) -> void:
 	_emit_probe()
 
 func _notification(what: int) -> void:
-	super._notification(what)
+	var before_back := overlay.get_child_count() if _ready_done and what == NOTIFICATION_WM_GO_BACK_REQUEST else -1
+	# Object.notification already invokes the base script before this observer.
+	# Calling super here would dispatch every native notification twice.
+	if before_back >= 0:
+		_probe_back_trace("notification", before_back)
 	if _ready_done and what in [NOTIFICATION_APPLICATION_PAUSED,NOTIFICATION_APPLICATION_RESUMED]:
 		_emit_probe("paused" if what==NOTIFICATION_APPLICATION_PAUSED else "resumed")
+
+func _unhandled_input(event: InputEvent) -> void:
+	var is_back: bool = event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE
+	var before_back := overlay.get_child_count() if _ready_done and is_back else -1
+	super._unhandled_input(event)
+	if before_back >= 0:
+		_probe_back_trace("escape", before_back)
+
+func _probe_back_trace(source: String, before: int) -> void:
+	# Observe the real native ingress without dispatching or changing any input.
+	var entry := {"source": source, "monotonic_ms": Time.get_ticks_msec(), "observed_overlay": overlay.get_child_count(), "screen": current_screen}
+	if source == "escape":entry["before_overlay"] = before
+	_probe_back_events.append(entry)
+	if _probe_back_events.size() > 16:_probe_back_events.pop_front()
+	print("ANDROID_SMOKE_BACK " + JSON.stringify(entry))
 
 func _emit_probe(event: String="frame") -> void:
 	_probe_sequence += 1
@@ -35,7 +55,7 @@ func _emit_probe(event: String="frame") -> void:
 	var scroll := main_body.get_parent() as ScrollContainer
 	var payload := Marshalls.utf8_to_base64(JSON.stringify({
 		"seq": _probe_sequence, "probe_event":event, "application_paused":bool(get_meta("application_paused",false)), "monotonic_ms": Time.get_ticks_msec(), "loot": loot, "modal_scrolls": _probe_scrolls(), "page_scrolls": _probe_page_scrolls(), "screen": current_screen, "window": [get_window().size.x, get_window().size.y],
-		"logical": [size.x, size.y], "overlay": overlay.get_child_count(),
+		"logical": [size.x, size.y], "overlay": overlay.get_child_count(), "system_back_events": _probe_back_events,
 		"renderer": {"method": RenderingServer.get_current_rendering_method(), "driver": RenderingServer.get_current_rendering_driver_name(), "adapter": RenderingServer.get_video_adapter_name()},
 		"scroll": scroll.scroll_vertical, "scroll_max": scroll.get_v_scroll_bar().max_value - scroll.get_v_scroll_bar().page,
 		"page_width": main_body.size.x, "scroll_width": scroll.size.x,

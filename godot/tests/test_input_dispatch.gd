@@ -25,6 +25,33 @@ func pointer(at: Vector2, pressed: bool) -> void:
 	event.pressed = pressed
 	root.push_input(event, true)
 
+func escape_key() -> void:
+	for down in [true, false]:
+		var event := InputEventKey.new()
+		event.keycode = KEY_ESCAPE
+		event.physical_keycode = KEY_ESCAPE
+		event.pressed = down
+		root.push_input(event, true)
+
+func single_back_actions() -> void:
+	app._clear_overlay()
+	app.navigate("home", false)
+	app.navigation_history.clear()
+	app._show_navigation()
+	await frames()
+	app.notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	check(app.overlay.get_child_count() == 0, "One actual notification closes exactly one menu")
+	app.notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	check(app.overlay.get_child_count() > 0, "Next distinct notification immediately opens exit confirmation")
+	app.notification(Node.NOTIFICATION_WM_GO_BACK_REQUEST)
+	check(app.overlay.get_child_count() == 0, "Third notification immediately closes confirmation")
+	app._show_navigation()
+	escape_key()
+	check(app.overlay.get_child_count() == 0, "One real Escape closes exactly one menu")
+	escape_key()
+	check(app.overlay.get_child_count() > 0, "Next real Escape immediately opens exit confirmation")
+	app._clear_overlay()
+
 func run() -> void:
 	root.size = Vector2i(1080, 1920)
 	app = load("res://main.tscn").instantiate()
@@ -62,6 +89,7 @@ func run() -> void:
 	target.queue_free()
 	await frames()
 	check(state.calls == 2, "Obsolete queued controls cannot execute their action")
+	await single_back_actions()
 	app.queue_free()
 	await frames()
 	# AudioServer releases queued streaming buffers asynchronously.

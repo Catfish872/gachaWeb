@@ -669,6 +669,7 @@ def run(apk, output):
     screenshot(output, 'landscape-locked-menu', True)
     back()
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'Back dismisses menu')
+    (output / 'back-menu.json').write_text(json.dumps({'screen': state['screen'], 'overlay': state['overlay'], 'events': state.get('system_back_events', [])}, indent=2))
     pages = ['story', 'summon', 'party', 'growth', 'relics', 'abyss', 'extraction', 'shop', 'save']
     for page in pages:
         state = visit(state, page)

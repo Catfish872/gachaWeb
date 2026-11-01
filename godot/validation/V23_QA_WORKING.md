@@ -64,3 +64,17 @@
 真实GL证据由协作代理运行、独立查看截图。已确认新遗物装备弹层两角色可见，详情固定动作可见；实际发现底部toast遮挡后改顶端短提示，最终GL96亦通过。搜索、寄存、召唤和角色截图回归此前均已核验。
 
 原生Android实际生命周期、签名、系统返回与搜索后台冻结仍由发布CI执行。离线48及Linux Viewport合成输入具有明确环境边界，最终Android证明应依据原生结果及search-background.json的covered字段。
+
+## CI23 Android Back 修复回归（07:48 UTC）
+
+真实原生CI run41285550698 在首个菜单系统返回检查失败，最终截图为退出确认；探针显示菜单项从seq14存在到seq18消失，但overlay保持2。当时先发现系统返回重复执行可能连续关闭菜单、打开退出确认。随后通过真正Object.notification路径精确定位：测试探针在Godot已经自动调用父层通知后再次super._notification，使单次WM通知被父处理两次。该探针重复父处理已实证，是本次CI问题的直接原因。
+
+调查曾试验120ms系统去重；确认探针根因后已完整撤回该生产变更，保持原玩家连续返回体验。最终生产main与发布前快照完全相同。最终回归通过真正Object.notification分发通知，逐次检验菜单关闭、立刻下一次打开退出、再一次关闭，并验证真实ESC路径；保留原生ADB输入与overlay0门槛。
+
+只读probe额外输出system_back_events和入口前后日志；驱动归档back-menu.json，保留三轮生命周期与签名检查。新原生CI将验证系统真实交付及菜单关闭，而非以合成测试替代。
+
+07:50 UTC补充根因实证：真实Object.notification单次调用，修前system_back_events同毫秒出现2条，修后1条。探针已删除多余super通知调用，普通输入virtual的super保留。新增android_probe_notifications永久套件同时比较普通主场景与探针主场景，检查通知只处理一次、菜单关闭以及暂停/恢复观察顺序。原生CI下一轮仍严格验证overlay0。
+
+最终根因版回归：生产main SHA256恢复原发布快照 `891b0541331d6c024d4a87d70f0e1ee48a61206ce7503d86e0d8c8fd453126a1`，完整生产624文件仍为 `cdb15441bd9f33c215787c8946c5c735288aa17c15aa7b72035631c41fd7e6d7`。input_dispatch改为15项逐次系统/键盘返回；新增probe通知28项通过，覆盖普通场景与探针场景菜单、立即连续真实通知、对话关闭、实际搜索暂停同UID冻结/恢复推进与返回关闭。120ms实验已撤回；实验期间mobile测试确实发现快速返回被节流，恢复版再次复验。只读返回轨迹现保存在探针自身，生产代码无新增状态。
+
+07:53 UTC根因修复终态：恢复版mobile533、input15、probe真实通知28、driver离线48全部通过，probe解析干净。最终验证56文件hash更新为 `8f0425e27c6686499fd84205b2ad02dd9ee8c2089ae8d349c7ccdefc416d99d6`；生产hash保持不变，已更新v230-final-source-manifest.json。等待修复提交的真实AndroidCI验证。
