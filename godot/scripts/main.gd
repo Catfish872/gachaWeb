@@ -13,9 +13,10 @@ const SYMBOL_FONT = preload("res://assets/fonts/NotoSansSymbols2-Regular.ttf")
 const Atmosphere = preload("res://scripts/ui/atmosphere.gd")
 const BattleFX = preload("res://scripts/ui/battle_fx.gd")
 const AbyssView = preload("res://scripts/ui/abyss_view.gd")
+const ExtractionView = preload("res://scripts/ui/extraction_view.gd")
 const UpdateChecker = preload("res://scripts/update_checker.gd")
 const STATUS_NAMES := {"burn": "燃烧", "freeze": "冰冻", "shock": "感电", "electrify": "感电", "poison": "中毒", "regen": "再生", "def_up": "防御提升", "atk_up": "攻击提升", "spd_up": "速度提升", "def_down": "防御降低", "atk_down": "攻击降低", "spd_down": "减速", "taunt": "嘲讽", "shield": "护盾", "bleed": "流血", "stun": "眩晕", "vulnerable": "易伤", "invincible": "无敌"}
-const TABS := [["home", "旅者营地", "01"], ["story", "世界探索", "02"], ["summon", "星辰祈愿", "03"], ["party", "冒险编队", "04"], ["growth", "角色养成", "05"], ["relics", "遗物工坊", "06"], ["abyss", "深渊远征", "07"], ["shop", "补给商店", "08"], ["save", "旅程档案", "09"]]
+const TABS := [["home", "旅者营地", "01"], ["story", "世界探索", "02"], ["summon", "星辰祈愿", "03"], ["party", "冒险编队", "04"], ["growth", "角色养成", "05"], ["relics", "遗物工坊", "06"], ["abyss", "深渊远征", "07"], ["extraction", "遗境搜打撤", "08"], ["shop", "补给商店", "09"], ["save", "旅程档案", "10"]]
 
 var model
 var battle
@@ -45,6 +46,18 @@ var battle_generation := 0
 var settlement_error := false
 var abyss_auto_continue := false
 var abyss_panel := "expedition"
+var extraction_panel := "expedition"
+var extraction_selected := ""
+var extraction_scope := "bag"
+var extraction_difficulty := 0
+var extraction_sound := true
+var extraction_reduced_motion := false
+var extraction_search_generation := 0
+var extraction_searching := false
+var extraction_search_container := ""
+var extraction_auto_pick := true
+var extraction_recent: Dictionary = {}
+var extraction_audio: AudioStreamPlayer
 var battle_log: Array = []
 var last_reward: Dictionary = {}
 var summon_results: Array = []
@@ -151,7 +164,8 @@ func _input(event: InputEvent) -> void:
 			_touch_start = event.position
 			_touch_previous = event.position
 			_touch_dragging = false
-			_touch_scroll = _scroll_at(overlay if overlay.get_child_count() > 0 else shell, event.position)
+			var touch_root: Node = overlay if overlay.get_child_count() > 0 else shell
+			_touch_scroll = null if _extraction_gesture_at(touch_root,event.position) else _scroll_at(touch_root,event.position)
 		elif not event.pressed and event.index == _touch_id:
 			if _touch_dragging:
 				get_viewport().set_input_as_handled()
@@ -164,6 +178,13 @@ func _input(event: InputEvent) -> void:
 			_touch_scroll.scroll_vertical -= int(event.position.y - _touch_previous.y)
 			get_viewport().set_input_as_handled()
 		_touch_previous = event.position
+
+func _extraction_gesture_at(node: Node, at: Vector2) -> bool:
+	if node is Control and not node.is_visible_in_tree(): return false
+	if node is Control and node.get_meta("extraction_pan", false) and node.get_global_rect().has_point(at): return true
+	for child in node.get_children():
+		if _extraction_gesture_at(child,at): return true
+	return false
 
 func _scroll_at(node: Node, at: Vector2) -> ScrollContainer:
 	if node is Control and not node.is_visible_in_tree():
@@ -196,13 +217,20 @@ func _go_back() -> void:
 		_clear_overlay()
 		return
 	if overlay.get_child_count() > 0:
+		if current_screen == "extraction" and extraction_searching:
+			ExtractionView._stop_search(self,false)
 		if settlement_error:
 			_toast("请先重试保存本场战斗结果", RED)
 			return
 		_clear_overlay()
 		return
 	if current_screen == "battle":
-		navigate("abyss" if battle_config.get("isAbyss", false) else "story")
+		navigate(_battle_return_screen())
+	elif current_screen == "extraction" and not extraction_selected.is_empty():
+		extraction_selected = ""
+		_render_screen()
+	elif current_screen == "extraction" and extraction_panel != "expedition":
+		ExtractionView._switch_panel(self, "expedition")
 	elif current_screen == "abyss" and abyss_panel != "expedition":
 		abyss_panel = "expedition"
 		_render_screen()
@@ -360,13 +388,17 @@ func navigate(screen: String, record_history: bool = true) -> void:
 		_toast("请先重试保存本场战斗结果", RED)
 		return
 	if current_screen == "battle" and not battle_settled and screen != "battle":
-		_confirm("离开战斗？", "撤退将结束当前战斗，已消耗的体力保留。深渊撤退会结束本轮构筑。", func():
+		_confirm("离开战斗？", ("撤退将结束本轮搜打撤，背包和本局装备会遗失。角色、仓库与原有养成保留。" if battle_config.get("isExtraction", false) else "撤退将结束当前战斗，已消耗的体力保留。深渊撤退会结束本轮构筑。"), func():
 			if not _check(model.abandon_battle(battle_config, battle.state)):
 				return
 			abyss_auto_continue = false
 			battle_settled = true
 			navigate(screen))
 		return
+	if screen != "extraction":
+		extraction_search_generation += 1
+		extraction_searching = false
+		if is_instance_valid(extraction_audio): extraction_audio.stop()
 	_clear_overlay()
 	if record_history and screen != current_screen and current_screen != "battle":
 		navigation_history.append(current_screen)
@@ -379,7 +411,7 @@ func navigate(screen: String, record_history: bool = true) -> void:
 	main_body.get_parent().set_deferred("scroll_vertical", 0)
 
 func _background_path() -> String:
-	if current_screen == "abyss" or (current_screen == "battle" and battle_config.get("isAbyss", false)):
+	if current_screen in ["abyss", "extraction"] or (current_screen == "battle" and (battle_config.get("isAbyss", false) or battle_config.get("isExtraction", false))):
 		return "res://assets/backgrounds/abyss.png"
 	if current_screen in ["story", "battle"]:
 		return "res://assets/backgrounds/snowfield.png" if selected_chapter == 1 else "res://assets/wilderness.png"
@@ -405,6 +437,7 @@ func _render_screen() -> void:
 		"growth": _growth()
 		"relics": _relics()
 		"abyss": _abyss()
+		"extraction": ExtractionView.render(self)
 		"shop": _shop()
 		"save": _save_screen()
 		"battle": _render_battle()
@@ -898,7 +931,7 @@ func _equip_dialog(uid: String) -> void:
 func _shop() -> void:
 	_page_title("补给商店", "为下一段旅程做好准备")
 	var notice := _panel(main_body, CYAN.darkened(0.5), 18)
-	_label(notice, "离线模拟商店 · 所有礼包即时发放，仅用于游戏体验。标价为原版展示信息，操作不会产生真实付款或订阅。", 15, CYAN, true)
+	_label(notice, "游戏内模拟礼包 · 免费领取", 15, CYAN, true)
 	_section("金币兑换", "使用游戏内金币换取旅途补给")
 	var items := _grid(main_body, 1 if compact else 2)
 	for item in model.catalog.ShopData.itemShop:
@@ -956,7 +989,7 @@ func _save_screen() -> void:
 	var p := _panel(main_body, LINE, 24)
 	var v := _vbox(p, 14)
 	_label(v, "存档迁移与备份", 24, TEXT)
-	_label(v, "导出为可迁移的存档文件。导入会验证数据，并替换当前槽位。可使用原网页版本导出的第三版存档。", 16, MUTED, true)
+	_label(v, "备份进度，或从文件恢复。导入会替换所选档案。", 16, MUTED, true)
 	var row := _flow(v, 14)
 	_button(row, "导出当前档案", _export_dialog, true)
 	_button(row, "导入存档文件", _import_dialog)
@@ -980,7 +1013,7 @@ func _update_panel() -> void:
 	_label(content, "版本与更新", 24, TEXT)
 	var local: Dictionary = updater.local_version
 	_label(content, "当前版本 %s · 构建 %s" % [str(local.get("version_name", "未知")), str(local.get("version_code", "未知"))], 16, MUTED, true)
-	_label(content, "启动后自动连接 GitHub 检查一次正式版本。发现更新后可在手机浏览器下载 APK，再按 Android 提示确认安装。存档保留在本机，更新前建议导出备份。", 14, MUTED, true)
+	_label(content, "启动后检查正式版本，Android 可在 Wi-Fi 下自动下载并校验更新。下载完成后点击安装，由系统确认覆盖升级，保留本机存档。首次从旧测试包迁移时请先导出存档。", 14, MUTED, true)
 	var auto_check := CheckBox.new()
 	auto_check.name = "AutoCheckUpdates"
 	auto_check.text = "启动时自动检查更新"
@@ -990,26 +1023,48 @@ func _update_panel() -> void:
 	auto_check.toggled.connect(func(enabled: bool):
 		updater.auto_check_enabled = enabled
 		_save_preferences())
+	var auto_download := CheckBox.new()
+	auto_download.name = "AutoDownloadUpdates"
+	auto_download.text = "Wi-Fi 下自动下载更新（Android）"
+	auto_download.custom_minimum_size.y = 48
+	auto_download.button_pressed = updater.auto_download_enabled
+	content.add_child(auto_download)
+	auto_download.toggled.connect(func(enabled: bool):
+		updater.auto_download_enabled = enabled
+		_save_preferences())
 	var status: Dictionary = updater.state
 	_label(content, str(status.get("message", "尚未检查更新")), 16, GOLD if status.get("status") == "available" else TEXT, true).name = "UpdateStatus"
 	var actions := _responsive_box(content, compact, 10)
 	var check_button := _button(actions, "检查更新", updater.check_for_updates, true)
 	check_button.name = "CheckForUpdates"
-	check_button.disabled = updater.busy
+	check_button.disabled = updater.busy or not updater.android_updater.record.is_empty()
 	_button(actions, "GitHub 发布页", func():
 		if updater.open_releases() != OK:
 			_toast("无法打开浏览器，请稍后重试。", RED)).name = "OpenReleases"
 	if status.get("status") == "available":
-		_button(content, "在浏览器下载 APK", func():
+		_button(content, "下载更新" if OS.has_feature("android") else "在浏览器下载 APK", func():
 			if updater.open_download() != OK:
-				_toast("无法打开下载链接，请重新检查更新。", RED), true).name = "DownloadUpdate"
+				_toast("下载暂未开始，请查看更新状态或发布页。", RED), true).name = "DownloadUpdate"
 		# Untrusted release prose is plain Label text, never rich text or code.
 		_label(content, "发布说明", 18, GOLD)
 		_label(content, str(status.get("release_notes", "")), 15, MUTED, true).name = "UpdateReleaseNotes"
 
+	if status.get("status") == "downloading":
+		_progress(content, float(status.get("progress", 0)) * 100.0, 100.0, CYAN, 10)
+		_button(content, "取消下载", updater.cancel_download).name = "CancelUpdateDownload"
+	elif status.get("status") in ["downloaded", "install_permission", "installing"]:
+		_button(content, "安装更新 · 保留存档", func():
+			var result: Error = updater.install_update()
+			if result != OK and result != ERR_UNAUTHORIZED:
+				_toast("暂时无法启动系统安装，请查看更新状态。", RED), true).name = "InstallUpdate"
+		if status.get("status") == "install_permission":
+			_button(content, "打开 Android 安装授权设置", func(): updater.open_install_settings()).name = "AllowUpdateInstall"
+	elif status.get("status") == "download_error":
+		_button(content, "清除失败下载并重新检查", func(): updater.cancel_download(); updater.check_for_updates()).name = "RetryUpdateDownload"
+
 func _refresh_update_notice() -> void:
 	if is_instance_valid(update_notice):
-		update_notice.visible = updater.state.get("status") == "available" and current_screen != "battle" and current_screen != "save"
+		update_notice.visible = updater.state.get("status") in ["available", "downloading", "downloaded", "install_permission", "installing", "download_error"] and current_screen != "battle" and current_screen != "save"
 		update_notice.text = str(updater.state.get("message", "发现新版本")) + " · 查看更新"
 
 func _on_update_state_changed(_state: Dictionary) -> void:
@@ -1020,6 +1075,7 @@ func _on_update_state_changed(_state: Dictionary) -> void:
 func _export_dialog(slot: int = -1) -> void:
 	if slot == -1: slot = model.active_slot
 	var d := FileDialog.new()
+	d.use_native_dialog = OS.has_feature("android")
 	d.title = "导出旅程档案"
 	d.access = FileDialog.ACCESS_FILESYSTEM
 	d.file_mode = FileDialog.FILE_MODE_SAVE_FILE
@@ -1037,6 +1093,7 @@ func _export_dialog(slot: int = -1) -> void:
 func _import_dialog(slot: int = -1) -> void:
 	if slot == -1: slot = model.active_slot
 	var d := FileDialog.new()
+	d.use_native_dialog = OS.has_feature("android")
 	d.title = "导入旅程档案"
 	d.access = FileDialog.ACCESS_FILESYSTEM
 	d.file_mode = FileDialog.FILE_MODE_OPEN_FILE
@@ -1045,7 +1102,7 @@ func _import_dialog(slot: int = -1) -> void:
 	add_child(d)
 	d.file_selected.connect(func(path):
 		d.queue_free()
-		_confirm("导入并替换所选档案？", "将以所选文件替换档案 %d。数据通过完整验证后才会写入。旧版档案会保留角色、装备、资源与剧情，并从第 1 层开始新版远征；旧轮次的生命、祝福与待选事件随迁移重置。\n%s" % [slot, path.get_file()], func():
+		_confirm("导入并替换所选档案？", "替换档案 %d？当前版本备份会保留进行中的行动。\n%s" % [slot, path.get_file()], func():
 			if _check(model.import_save(path, slot)):
 				selected_relic = ""
 				_toast("存档已导入", CYAN)
@@ -1102,7 +1159,13 @@ func _start_battle(config: Dictionary) -> void:
 	var is_abyss: bool = config.get("isAbyss", false)
 	if is_abyss:
 		abyss_panel = "expedition"
-	battle.start(config, model.battle_party(is_abyss), model.rogue_effects() if is_abyss else [])
+	if config.get("isExtraction", false):
+		var started: Dictionary = model.extraction.start_battle(battle)
+		if not _check(started):
+			battle_settled = true
+			return
+	else:
+		battle.start(config, model.battle_party(is_abyss), model.rogue_effects() if is_abyss else [])
 	current_screen = "battle"
 	_render_screen()
 	_show_combat_events(battle.state.get("events", []))
@@ -1118,10 +1181,14 @@ func _render_battle() -> void:
 	names.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_label(names, str(battle_config.get("name", "裂隙战斗")), 26, TEXT)
 	_label(names, "第 %d 回合   ·   第 %d 波" % [state.get("turn", 1), int(state.get("wave", 1))], 13, GOLD)
+	if battle_config.get("isExtraction", false):
+		_label(names, "战区封锁倒计时：%d 回合（含当前） · 第 40 回合结束仍未取胜则行动失败" % clampi(41 - int(state.get("turn", 1)), 0, 40), 13, GOLD, true)
+	if battle_config.get("isExtraction", false) and battle_config.get("isBoss", false) and int(battle_config.get("enrageAfterRound", 0)) > 0:
+		_label(names, "首领第 %d 回合起攻击每回合增加 %d%%，最多增加 %d%%" % [int(battle_config.enrageAfterRound) + 1, roundi(float(battle_config.get("enragePerRound", 0)) * 100), roundi(float(battle_config.get("enrageCap", 0)) * 100)], 13, RED, true)
 	var head_controls := _flow(head, 10)
 	_button(head_controls, "自动 · 开启" if battle_auto else "自动 · 关闭", func(): battle_auto = not battle_auto; abyss_auto_continue = abyss_auto_continue and battle_auto; _render_battle(), battle_auto)
 	_button(head_controls, "%d 倍速" % battle_speed, func(): battle_speed = 2.0 if battle_speed == 1.0 else (4.0 if battle_speed == 2.0 else 1.0); _render_battle())
-	_button(head_controls, "撤退", func(): navigate("abyss" if battle_config.get("isAbyss", false) else "story"))
+	_button(head_controls, "撤退", func(): navigate(_battle_return_screen()))
 	var active: Dictionary = battle.current_actor()
 	var active_uid: String = active.get("uid", "")
 	var order := HFlowContainer.new()
@@ -1311,6 +1378,14 @@ func _finish_battle() -> void:
 	if generation != battle_generation or current_screen != "battle":
 		return
 	var victory: bool = battle.state.phase == "victory"
+	if battle_config.get("isExtraction", false):
+		var extraction_box := _modal("遭遇胜利" if victory else "远征失利", 680, 420)
+		if not victory and not str(battle.state.get("reason", "")).is_empty():
+			_center_label(extraction_box, str(battle.state.reason), 22, RED)
+		_center_label(extraction_box, "继续搜索，或在首领出口安全撤离" if victory else "本局物资遗失，旅者与仓库安然无恙", 22, GOLD if victory else RED)
+		_label(extraction_box, "战利品仍在局内，成功撤离后才进入仓库。" if victory else "可免费重新出发，调整路线与补给后再战。", 16, MUTED, true)
+		_button(extraction_box, "返回搜打撤", func(): navigate("extraction"), true)
+		return
 	var run_ended: bool = battle_config.get("isAbyss", false) and (model.state.abyss.rogue.get("runId") == null or str(model.state.abyss.rogue.get("runId", "")).is_empty())
 	if run_ended:
 		abyss_auto_continue = false
@@ -1885,9 +1960,13 @@ func _load_preferences() -> void:
 	var config := ConfigFile.new()
 	if config.load("user://ui-settings.cfg") != OK: return
 	updater.auto_check_enabled = bool(config.get_value("updates", "auto_check", true))
+	updater.auto_download_enabled = bool(config.get_value("updates", "auto_download", true))
 	relic_filter = str(config.get_value("relics", "rarity_filter", "全部"))
 	relic_slot_filter = str(config.get_value("relics", "slot_filter", "全部"))
 	selected_relic = str(config.get_value("relics", "selection", ""))
+	extraction_sound = bool(config.get_value("extraction", "sound", true))
+	extraction_reduced_motion = bool(config.get_value("extraction", "reduced_motion", false))
+	extraction_auto_pick = bool(config.get_value("extraction", "auto_pick", true))
 	for key in salvage_options:
 		salvage_options[key] = bool(config.get_value("salvage", key, false))
 
@@ -1895,9 +1974,13 @@ func _save_preferences() -> void:
 	if test_session: return
 	var config := ConfigFile.new()
 	config.set_value("updates", "auto_check", updater.auto_check_enabled)
+	config.set_value("updates", "auto_download", updater.auto_download_enabled)
 	config.set_value("relics", "rarity_filter", relic_filter)
 	config.set_value("relics", "slot_filter", relic_slot_filter)
 	config.set_value("relics", "selection", selected_relic)
+	config.set_value("extraction", "sound", extraction_sound)
+	config.set_value("extraction", "reduced_motion", extraction_reduced_motion)
+	config.set_value("extraction", "auto_pick", extraction_auto_pick)
 	for key in salvage_options:
 		config.set_value("salvage", key, salvage_options[key])
 	config.save("user://ui-settings.cfg")
@@ -1923,3 +2006,28 @@ func _localized_combat_text(text_value: String) -> String:
 	for id in STATUS_NAMES:
 		text_value = text_value.replace(str(id), str(STATUS_NAMES[id]))
 	return text_value
+
+func _battle_return_screen() -> String:
+	if battle_config.get("isExtraction", false): return "extraction"
+	return "abyss" if battle_config.get("isAbyss", false) else "story"
+
+func _extraction_operation(result: Dictionary, message: String = "") -> void:
+	if not _check(result): return
+	extraction_selected = ""
+	if not message.is_empty(): _toast(message, CYAN)
+	_render_screen()
+
+func _begin_extraction_battle() -> void:
+	var prepared: Dictionary = model.extraction.prepare_battle()
+	if _check(prepared): _start_battle(prepared.config)
+
+func _extraction_play(clip: String) -> void:
+	if not extraction_sound: return
+	var path := "res://assets/audio/extraction/" + clip + ".mp3"
+	if not ResourceLoader.exists(path): return
+	if not is_instance_valid(extraction_audio):
+		extraction_audio = AudioStreamPlayer.new()
+		extraction_audio.volume_db = -10
+		add_child(extraction_audio)
+	extraction_audio.stream = load(path)
+	extraction_audio.play()

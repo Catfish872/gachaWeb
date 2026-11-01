@@ -2,6 +2,7 @@ extends RefCounted
 ## Native, transactional port of the original web v3 game state.
 ## Empty save_dir selects isolated in-memory operation for deterministic tests.
 
+const ExtractionModel = preload("res://scripts/extraction_model.gd")
 const AbyssBalance = preload("res://scripts/abyss_balance.gd")
 const MAX_LEVEL := 10
 const MAX_STAMINA := 100
@@ -12,6 +13,7 @@ const TRAIN_EXP := 100
 const RUN_LENGTH := 20
 const MAX_REWARD_COPIES := 3
 
+var extraction
 var rogue_data: Dictionary = {}
 
 var catalog: Dictionary = {}
@@ -38,6 +40,7 @@ func _init(directory: String = "user://saves") -> void:
 			for index in range(rogue_data[key].size()):
 				rogue_data[key][index] = int(rogue_data[key][index])
 	rng.randomize()
+	extraction = ExtractionModel.new(self)
 	state = default_state()
 	_load_initial()
 
@@ -68,7 +71,7 @@ func default_state() -> Dictionary:
 	ember.shards = 3
 	var zeph := default_character()
 	zeph.shards = 1
-	return {"version": 4, "createdAt": _now(), "lastSaved": _now(),
+	return {"extraction": ExtractionModel.defaults(), "version": 5, "createdAt": _now(), "lastSaved": _now(),
 		"resources": {"diamonds": 1600, "gold": 50000, "stamina": 100, "staminaLastUpdate": _now()},
 		"ownedCharacters": {"ember": ember, "zeph": zeph}, "relics": [], "team": ["ember", "zeph", null], "stageProgress": {},
 		"pityCounters": {"standard": {"count": 0, "count4": 0, "guaranteedFeatured": false}, "limited_kaldi": {"count": 0, "count4": 0, "guaranteedFeatured": false}},
@@ -221,8 +224,24 @@ func export_save(path: String, slot: int = -1) -> Dictionary:
 	var data = state if slot == active_slot else _read_slot(slot)
 	if data == null or not valid_save(data):
 		return _fail("此槽位没有有效存档")
-	var payload := {"game": "void-rift-gacha", "schema": 4, "slotId": "slot%d" % slot, "exportedAt": _now(), "data": data.duplicate(true)}
-	if not _atomic_write(path, payload):
+	var payload := {"game": "void-rift-gacha", "schema": 5, "slotId": "slot%d" % slot, "exportedAt": _now(), "data": data.duplicate(true)}
+	if path.begins_with("content://"):
+		# Android's selected document URI does not support sibling temp files.
+		# The local gameplay save remains atomic; this path writes only the
+		# separate document explicitly selected by the user in the file picker.
+		var document := FileAccess.open(path, FileAccess.WRITE)
+		if document == null: return _fail("无法写入所选文档，请重新选择导出位置")
+		document.store_string(JSON.stringify(payload, "\t"))
+		document.flush()
+		var write_error := document.get_error()
+		document.close()
+		if write_error != OK: return _fail("导出文档写入失败，本地存档保持不变")
+		var verification := FileAccess.open(path, FileAccess.READ)
+		if verification == null: return _fail("导出后无法读取校验，请重新选择支持读取的文档位置")
+		var verified = JSON.parse_string(verification.get_as_text())
+		verification.close()
+		if not verified is Dictionary or verified != payload: return _fail("导出文档校验失败，请重新导出")
+	elif not _atomic_write(path, payload):
 		return _fail(last_error)
 	return {"success": true, "path": path}
 
@@ -231,7 +250,7 @@ func import_save(path: String, slot: int = -1) -> Dictionary:
 		slot = active_slot
 	if slot not in [1, 2, 3]:
 		return _fail("无效存档槽位")
-	if not FileAccess.file_exists(path):
+	if not path.begins_with("content://") and not FileAccess.file_exists(path):
 		return _fail("存档文件不存在")
 	var source_file := FileAccess.open(path, FileAccess.READ)
 	if source_file == null:
@@ -292,7 +311,7 @@ func _number(value: Variant, minimum: float = 0.0, maximum: float = 1.0e15) -> b
 func valid_save(value: Variant) -> bool:
 	if not value is Dictionary or not value.get("resources") is Dictionary or not value.get("ownedCharacters") is Dictionary:
 		return false
-	if not _number(value.get("version", 3), 2, 4) or int(value.get("version", 3)) not in [2, 3, 4] or value.ownedCharacters.is_empty():
+	if not _number(value.get("version", 3), 2, 5) or int(value.get("version", 3)) not in [2, 3, 4, 5] or value.ownedCharacters.is_empty():
 		return false
 	for key in ["diamonds", "gold", "stamina"]:
 		if not _number(value.resources.get(key), 0):
@@ -305,6 +324,8 @@ func valid_save(value: Variant) -> bool:
 	for key in ["stats", "pityCounters", "stageProgress", "dialogueSeen", "chapterGiftClaimed", "abyss", "dailyMissions"]:
 		if value.has(key) and not value[key] is Dictionary:
 			return false
+	if value.has("extraction") and not extraction.valid(value.extraction):
+		return false
 	for id in value.ownedCharacters:
 		var owned = value.ownedCharacters[id]
 		if not catalog.CharacterData.has(id) or not owned is Dictionary:
@@ -440,7 +461,7 @@ func _merge_defaults(base: Dictionary, src: Dictionary) -> Dictionary:
 
 func _normalize(src: Dictionary) -> Dictionary:
 	var result := _merge_defaults(default_state(), src.duplicate(true))
-	result.version = 4
+	result.version = 5
 	# Owned collections replace defaults; preserved extension fields remain round-trippable.
 	result.ownedCharacters = src.ownedCharacters.duplicate(true)
 	for id in result.ownedCharacters:
@@ -544,7 +565,7 @@ func train_character(char_id: String) -> Dictionary:
 	return _commit(previous, result)
 
 func set_team(ids: Array) -> Dictionary:
-	if abyss_run_active():
+	if abyss_run_active() or extraction.active():
 		return _fail("远征途中队伍已锁定，结束远征后可以重新编队")
 	if ids.size() > 3:
 		return _fail("队伍最多容纳三名角色")
@@ -995,6 +1016,7 @@ func get_stage(stage_id: String) -> Dictionary:
 	return {}
 
 func prepare_stage(stage_id: String) -> Dictionary:
+	if extraction.active(): return _fail("请先结束搜打撤探索")
 	if not _issued_config.is_empty() or not state.abyss.rogue.activeEncounter.is_empty():
 		return _fail("请先完成或撤离当前战斗")
 	var config := get_stage(stage_id)
@@ -1057,6 +1079,8 @@ func _chapter_gift(stage_id: String) -> Dictionary:
 	return {"chapterId": config.chapterId, "charId": id, "charName": catalog.CharacterData[id].name, "isNew": is_new, "shardsGained": 0 if is_new else 25}
 
 func finish_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
+	if config.get("isExtraction", false):
+		return extraction.settle_battle(config, battle_state)
 	if _issued_config.is_empty() or config.get("token", "") != _issued_config.get("token", ""):
 		return _fail("战斗已经结算或战斗凭证已失效")
 	if battle_state.has("config"):
@@ -1113,6 +1137,8 @@ func finish_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 	return result
 
 func abandon_battle(config: Dictionary, battle_state: Dictionary = {}) -> Dictionary:
+	if config.get("isExtraction", false):
+		return extraction.retreat()
 	var defeated := battle_state.duplicate(true)
 	defeated.phase = "defeat"
 	return finish_battle(config, defeated)
@@ -1141,6 +1167,7 @@ func _init_rogue_run() -> void:
 	state.abyss.rogue = rogue
 
 func prepare_abyss() -> Dictionary:
+	if extraction.active(): return _fail("请先结束搜打撤探索")
 	if not state.abyss.rogue.activeEncounter.is_empty():
 		_issued_config = state.abyss.rogue.activeEncounter.duplicate(true)
 		return {"success": true, "config": _issued_config.duplicate(true), "resumed": true}

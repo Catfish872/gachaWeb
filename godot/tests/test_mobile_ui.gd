@@ -5,7 +5,7 @@ var app
 var checks := 0
 var failures: Array[String] = []
 const PHONE_SIZES := [Vector2i(1080, 2400), Vector2i(1080, 1920), Vector2i(720, 1600), Vector2i(2400, 1080), Vector2i(1920, 1080)]
-const PAGES := ["home", "story", "summon", "party", "growth", "relics", "abyss", "shop", "save"]
+const PAGES := ["home", "story", "summon", "party", "growth", "relics", "abyss", "extraction", "shop", "save"]
 
 func _initialize() -> void:
 	call_deferred("run")
@@ -253,6 +253,34 @@ func test_battle_back_safety() -> void:
 	await frames()
 	check(app.current_screen == "battle" and app.overlay.get_child_count() == 0, "Back dismisses retreat confirmation and preserves battle")
 
+func test_extraction_touch_ownership() -> void:
+	app.model.rng.seed = 2
+	check(app.model.extraction.start_run(0).success, "Mobile extraction starts ordinary map")
+	app.navigate("extraction")
+	await frames()
+	var map_view = app.main_body.find_child("ExtractionMap", true, false)
+	check(map_view != null, "Extraction exposes map control")
+	if map_view == null: return
+	var scroll: ScrollContainer = app.main_body.get_parent()
+	scroll.ensure_control_visible(map_view)
+	await frames()
+	var visible: Rect2 = map_view.get_global_rect().intersection(scroll.get_global_rect())
+	var old_pan: Vector2 = map_view.offset
+	var old_room: String = app.model.extraction.map_state().currentRoomId
+	var old_scroll: int = scroll.scroll_vertical
+	await drag(visible.get_center() + Vector2(40,0), Vector2(-80,0))
+	check(map_view.offset != old_pan, "Viewport touch dispatch pans extraction map")
+	check(scroll.scroll_vertical == old_scroll, "Map drag does not scroll outer page")
+	check(app.model.extraction.run().phase == "route" and app.model.extraction.map_state().currentRoomId == old_room, "Map drag does not enter a room")
+	# The right-hand margin belongs to page scrolling, not the map canvas.
+	old_pan = map_view.offset
+	var page_rect := scroll.get_global_rect()
+	await drag(Vector2(page_rect.end.x-2, page_rect.position.y+page_rect.size.y*0.75), Vector2(0,-90))
+	check(map_view.offset == old_pan, "Page gutter does not pan map")
+	app.model.extraction.retreat()
+	app.navigate("home")
+	await frames()
+
 func run() -> void:
 	root.size = PHONE_SIZES[0]
 	app = load("res://main.tscn").instantiate()
@@ -276,6 +304,9 @@ func run() -> void:
 		await test_card_drag_and_tap()
 		await test_menu_navigation()
 		await test_back_dispatch()
+	root.size = PHONE_SIZES[0]
+	await frames(16)
+	await test_extraction_touch_ownership()
 	await test_open_modal_rotation()
 	await test_battle_back_safety()
 	app.queue_free()

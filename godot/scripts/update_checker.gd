@@ -1,10 +1,11 @@
 extends Node
-## Read-only release checks, with an optional once-per-session startup check. The browser and user handle APK installation.
+## Release checks plus Android system downloads. The owner confirms installation.
 ## data/version.json is shared with the Android export pipeline.
 ## version_code = major * 10000 + minor * 100 + patch; minor/patch are 0..99.
 
 signal state_changed(state: Dictionary)
 
+const AndroidUpdater = preload("res://scripts/android_updater.gd")
 const REPOSITORY := "Catfish872/gachaWeb"
 const API_URL := "https://api.github.com/repos/" + REPOSITORY + "/releases/latest"
 const RELEASES_URL := "https://github.com/" + REPOSITORY + "/releases"
@@ -23,9 +24,17 @@ var _request: HTTPRequest
 var auto_check_enabled := true
 var _startup_scheduled := false
 var _startup_attempted := false
+var auto_download_enabled := true
+var android_updater: Node
+var release_candidate: Dictionary = {}
+var _auto_download_tag := ""
 
 func _ready() -> void:
 	local_version = read_local_version()
+	android_updater = AndroidUpdater.new()
+	android_updater.name = "AndroidUpdateDownload"
+	android_updater.changed.connect(_on_download_state)
+	add_child(android_updater)
 	_request = HTTPRequest.new()
 	_request.name = "PublicReleaseRequest"
 	_request.timeout = REQUEST_TIMEOUT_SECONDS
@@ -160,6 +169,8 @@ static func evaluate_release(release: Dictionary, metadata: Dictionary) -> Dicti
 		return _status("invalid_response", "发布附件信息缺失。")
 	var download_url := ""
 	var matched := 0
+	var digest := ""
+	var download_size := 0
 	for asset in assets:
 		if not asset is Dictionary or asset.get("name") != RELEASE_ASSET:
 			continue
@@ -171,6 +182,12 @@ static func evaluate_release(release: Dictionary, metadata: Dictionary) -> Dicti
 		if not (asset_size is int or asset_size is float) or not is_finite(float(asset_size)) or float(asset_size) <= 0 or float(asset_size) != floor(float(asset_size)):
 			return _status("invalid_asset", "APK 附件为空或尚未就绪。")
 		download_url = asset_url
+		download_size = int(asset_size)
+		var supplied_digest := str(asset.get("digest", ""))
+		var digest_re := RegEx.new()
+		digest_re.compile("^sha256:[0-9a-f]{64}$")
+		if digest_re.search(supplied_digest) != null:
+			digest = supplied_digest.trim_prefix("sha256:")
 	if matched == 0:
 		return _status("missing_asset", "发现新版本 %s，但尚未提供 universal.apk。" % candidate.version_name)
 	if matched != 1:
@@ -185,11 +202,11 @@ static func evaluate_release(release: Dictionary, metadata: Dictionary) -> Dicti
 		display_notes += "\n……完整说明请查看 GitHub 发布页。"
 	return {"status": "available", "message": "发现新版本 %s" % candidate.version_name,
 		"version_name": candidate.version_name, "version_code": candidate.version_code,
-		"tag": tag, "release_url": release_url, "download_url": download_url,
+		"tag": tag, "release_url": release_url, "download_url": download_url, "sha256": digest, "size": download_size,
 		"release_notes": display_notes if not display_notes.is_empty() else "此版本未填写发布说明。"}
 
 func check_for_updates() -> void:
-	if busy:
+	if busy or (is_instance_valid(android_updater) and not android_updater.record.is_empty()):
 		return
 	if not valid_local_version(local_version):
 		_set_state(_status("configuration_error", "本地版本信息无效，请通过 GitHub 发布页核对安装包。"))
@@ -213,13 +230,48 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 
 func _set_state(next_state: Dictionary) -> void:
 	state = next_state
+	if state.get("status") == "available":
+		release_candidate = state.duplicate(true)
+	state_changed.emit(state.duplicate(true))
+	if state.get("status") == "available" and auto_download_enabled and not state.get("sha256", "").is_empty() and state.get("tag", "") != _auto_download_tag and OS.has_feature("android"):
+		_auto_download_tag = str(state.tag)
+		open_download.call_deferred()
+
+func _on_download_state(download_state: Dictionary) -> void:
+	if is_instance_valid(android_updater) and not android_updater.record.is_empty():
+		var downloaded_version := parse_version(str(android_updater.record.get("tag", "")))
+		var installed_version := parse_version(str(local_version.get("version_name", "")))
+		if not downloaded_version.is_empty() and not installed_version.is_empty() and compare_versions(downloaded_version, installed_version) <= 0:
+			android_updater.cancel()
+			_set_state(_status("up_to_date", "当前已是最新版本，旧更新包已清理"))
+			return
+	state = release_candidate.duplicate(true)
+	state.merge(download_state, true)
 	state_changed.emit(state.duplicate(true))
 
+func probe_android_bridge() -> Dictionary:
+	return android_updater.probe() if is_instance_valid(android_updater) else {"success": false}
+
+func cancel_download() -> void:
+	if is_instance_valid(android_updater):
+		android_updater.cancel()
+
+func install_update() -> Error:
+	return android_updater.install() if is_instance_valid(android_updater) else ERR_UNAVAILABLE
+
+func open_install_settings() -> Error:
+	return android_updater.open_install_settings() if is_instance_valid(android_updater) else ERR_UNAVAILABLE
+
 func open_download() -> Error:
-	# Connected only to an explicit UI button; this opens the browser, not an APK.
-	if state.get("status") != "available" or not trusted_download_url(str(state.get("download_url", "")), str(state.get("tag", ""))):
+	var candidate := release_candidate if not release_candidate.is_empty() else state
+	if not trusted_download_url(str(candidate.get("download_url", "")), str(candidate.get("tag", ""))):
 		return ERR_INVALID_DATA
-	return OS.shell_open(state.download_url)
+	if OS.has_feature("android"):
+		if str(candidate.get("sha256", "")).is_empty():
+			_set_state(_status("download_error", "发布附件缺少 SHA256 校验，请通过发布页下载。"))
+			return ERR_INVALID_DATA
+		return android_updater.begin(str(candidate.download_url), str(candidate.tag), str(candidate.sha256), int(candidate.get("size", 0)))
+	return OS.shell_open(candidate.download_url)
 
 func open_releases() -> Error:
 	var url := RELEASES_URL

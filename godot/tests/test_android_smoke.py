@@ -193,6 +193,55 @@ class AndroidSmokeDriverTests(unittest.TestCase):
                     self.assertEqual(len(restarts), int(failed_mode != 'rapid_again'))
                     self.assertIn('rapid_again resume', events)
 
+    def test_page_control_scroll_uses_android_input(self):
+        state = {'buttons': [{'name': 'ExtractionSearch', 'rect': [20, 600, 100, 50], 'clip': [0, 100, 500, 400]}], 'scroll': 0, 'scroll_max': 500, 'scroll_rect': [0, 100, 500, 400]}
+        shown = {'buttons': [{'name': 'ExtractionSearch', 'rect': [20, 300, 100, 50], 'clip': [0, 100, 500, 400]}], 'scroll': 200, 'scroll_max': 500, 'scroll_rect': [0, 100, 500, 400]}
+        with patch.object(smoke, 'adb') as adb, patch.object(smoke, 'wait_for', return_value=shown):
+            self.assertEqual(smoke.reveal_page_target(state, 'ExtractionSearch'), shown)
+        adb.assert_called_once_with('shell', 'input', 'swipe', '495', '428', '495', '188', '600')
+
+    def test_page_target_missing_fails_before_scroll(self):
+        with patch.object(smoke, 'adb') as adb, self.assertRaisesRegex(AssertionError, 'Missing/duplicate'):
+            smoke.reveal_page_target({'buttons': []}, 'ExtractionStart')
+        adb.assert_not_called()
+
+    def test_safe_map_path_uses_only_connected_noncombat_rooms(self):
+        state = {'extraction': {'room_id': 'a', 'map_rooms': [
+            {'id': 'a', 'type': 'entry', 'visited': True},
+            {'id': 'b', 'type': 'cache', 'visited': True},
+            {'id': 'c', 'type': 'workshop', 'visited': False},
+            {'id': 'd', 'type': 'battle', 'visited': False},
+            {'id': 'e', 'type': 'vault', 'visited': False}],
+            'map_edges': [['a', 'd'], ['d', 'e'], ['a', 'b'], ['b', 'c']]}}
+        self.assertEqual(smoke.safe_exploration_path(state), ['b', 'c'])
+        state['extraction']['map_rooms'][2]['visited'] = True
+        self.assertEqual(smoke.safe_exploration_path(state), [])
+
+    def test_canvas_target_pans_with_real_adb_input(self):
+        state = {'buttons': [{'name': 'ExtractionMapNode_b', 'rect': [500, 200, 40, 40], 'clip': [0, 100, 400, 300]}],
+                 'canvases': {'map': {'clip': [0, 100, 400, 300], 'pan': [0, 0]}}}
+        shown = {'buttons': [{'name': 'ExtractionMapNode_b', 'rect': [200, 200, 40, 40], 'clip': [0, 100, 400, 300]}]}
+        with patch.object(smoke, 'reveal_page_target', return_value=state), patch.object(smoke, 'adb') as adb, patch.object(smoke, 'wait_for', return_value=shown):
+            self.assertEqual(smoke.canvas_target(state, 'ExtractionMapNode_b', 'map'), shown)
+        adb.assert_called_once_with('shell', 'input', 'swipe', '260', '235', '140', '265', '600')
+
+    def test_disconnected_room_cannot_be_tapped(self):
+        state = {'buttons': [{'name': 'ExtractionMapNode_z', 'adjacent': False}], 'extraction': {'room_id': 'a'}}
+        with patch.object(smoke, 'canvas_target', return_value=state), patch.object(smoke, 'tap') as tap, self.assertRaisesRegex(AssertionError, 'disconnected'):
+            smoke.enter_map_room(state, 'z')
+        tap.assert_not_called()
+
+    def test_probe_is_observational_and_reports_extraction_state(self):
+        probe = (ROOT / 'tools/android/runtime_probe.gd').read_text()
+        for forbidden in ['start_run(', 'take_item(', 'reveal_next(', 'settle_battle(', 'start_battle(', 'choose_route(']:
+            self.assertNotIn(forbidden, probe)
+        self.assertIn('"extraction": _probe_extraction()', probe)
+        self.assertIn('"bag_count"', probe)
+        self.assertIn('updater.probe_android_bridge()', probe)
+        self.assertNotIn('download_update(', probe)
+        self.assertNotIn('install_download(', probe)
+        self.assertIn('str(node.name).begins_with("Extraction")', probe)
+
     def test_emulator_export_cannot_mutate_source_presets(self):
         script = (ROOT / 'tools/android/export_smoke.sh').read_text()
         self.assertIn("presets = target / 'export_presets.cfg'", script)

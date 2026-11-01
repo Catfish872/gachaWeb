@@ -87,7 +87,7 @@ class BuildValidationTests(unittest.TestCase):
 
     def test_apk_valid_and_rejection_fixtures(self):
         fingerprint = 'a' * 64
-        badge = f"package: name='org.catfish872.voidrift.debug' versionCode='{self.metadata['version_code']}' versionName='{self.metadata['version_name']}'\nsdkVersion:'24'\ntargetSdkVersion:'36'\nuses-permission: name='android.permission.INTERNET'\n"
+        badge = f"package: name='org.catfish872.voidrift.debug' versionCode='{self.metadata['version_code']}' versionName='{self.metadata['version_name']}'\nsdkVersion:'24'\ntargetSdkVersion:'36'\nuses-permission: name='android.permission.INTERNET'\nuses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'\n"
         signature = 'Signer #1 certificate SHA-256 digest: ' + fingerprint + '\n'
         entries = {
             'assets/data/version.json': json.dumps(self.metadata),

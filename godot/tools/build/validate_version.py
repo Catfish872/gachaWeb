@@ -37,6 +37,7 @@ def validate(root=ROOT, tag=None):
             assert opts[setting] == 'true', f'Required setting disabled: {setting}'
         for setting in ['architectures/x86', 'architectures/x86_64', 'permissions/read_external_storage', 'permissions/write_external_storage', 'gradle_build/use_gradle_build']:
             assert opts[setting] == 'false', f'Unexpected setting enabled: {setting}'
+        assert 'android.permission.REQUEST_INSTALL_PACKAGES' in opts['permissions/custom_permissions'], 'System installer permission missing'
         for pattern in ['tests/*', 'validation/*', 'tools/*', '*.keystore', '*.jks', '*.key']:
             assert pattern in json.loads(preset['exclude_filter']).split(','), f'Missing exclusion: {pattern}'
     return data

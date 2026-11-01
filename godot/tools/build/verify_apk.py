@@ -20,6 +20,7 @@ def verify(apk, sdk, mode, fingerprint):
     assert "sdkVersion:'24'" in badging, 'Unexpected minimum SDK'
     assert "targetSdkVersion:'36'" in badging, 'Unexpected target SDK'
     assert "uses-permission: name='android.permission.INTERNET'" in badging, 'Internet permission missing'
+    assert "uses-permission: name='android.permission.REQUEST_INSTALL_PACKAGES'" in badging, 'System installer permission missing'
     assert 'android.permission.READ_EXTERNAL_STORAGE' not in badging and 'android.permission.WRITE_EXTERNAL_STORAGE' not in badging, 'Unexpected storage permission'
     signature = subprocess.check_output([str(build / 'apksigner'), 'verify', '--verbose', '--print-certs', str(apk)], text=True)
     actual = re.findall(r'^Signer #\d+ certificate SHA-256 digest: ([0-9a-fA-F]+)$', signature, re.M)

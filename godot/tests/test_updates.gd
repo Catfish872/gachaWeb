@@ -23,10 +23,22 @@ func run():
  local = {"version_name":"2.0.0","version_code":20000,"repository":U.REPOSITORY,"release_asset":U.RELEASE_ASSET}
  for bad in ["", "v1", "01.0.0", "2.100.0", "2.0.100", "2.0.1-01", "0.0.0", "https://bad/2.0.1"]:
   check(U.parse_version(bad).is_empty(), "invalid version " + bad)
+ var D = load("res://scripts/android_updater.gd")
+ var saved_download = {"id":123,"tag":"android-v2.1.0","filename":"voidrift-android-v2.1.0.apk","sha256":"a".repeat(64),"size":123456}
+ check(D.valid_record(saved_download), "valid persisted Android download")
+ for change in [{"id":-1},{"id":1.5},{"size":0},{"size":536870913},{"filename":"../payload.apk"},{"filename":"voidrift-other.apk"},{"tag":"android-v2.1.0/evil"},{"sha256":"wrong"}]:
+  var invalid = saved_download.duplicate(true)
+  invalid.merge(change, true)
+  check(not D.valid_record(invalid), "reject invalid persisted update " + str(change.keys()[0]))
  var tag = "android-v2.0.1"
  var url = U.RELEASES_URL + "/download/" + tag + "/universal.apk"
  var good = {"draft":false,"prerelease":false,"tag_name":tag,"html_url":U.RELEASES_URL+"/tag/"+tag,"body":"New release", "assets":[{"name":"universal.apk","state":"uploaded","size":10000,"browser_download_url":url}]}
  check(U.evaluate_release(good,local).status == "available", "new APK available")
+ var signed_digest = good.duplicate(true)
+ signed_digest.assets[0].digest = "sha256:" + "b".repeat(64)
+ check(U.evaluate_release(signed_digest,local).sha256 == "b".repeat(64), "APK digest exposed for native verification")
+ signed_digest.assets[0].digest = "sha1:" + "b".repeat(40)
+ check(U.evaluate_release(signed_digest,local).sha256 == "", "unsupported digest cannot authorize native download")
  for badurl in [url.replace("https:","http:"), url+"?x=1", url.replace("github.com","github.com.evil.test"), url.replace("Catfish872","other"),url.replace("universal.apk","malware.apk")]:
   var bad = good.duplicate(true)
   bad.assets[0].browser_download_url = badurl
@@ -112,7 +124,25 @@ func run():
  app.updater.auto_check_enabled = true
  app._load_preferences()
  check(not app.updater.auto_check_enabled, "opt out persists in application preferences")
+ app.updater.auto_download_enabled = false
+ app._save_preferences()
+ app.updater.auto_download_enabled = true
+ app._load_preferences()
+ check(not app.updater.auto_download_enabled, "Wi-Fi auto-download preference persists")
  app.test_session = true
+ app.navigate("save")
+ for download_status in ["downloading", "downloaded", "install_permission", "installing", "download_error"]:
+  app.updater._on_download_state({"status":download_status,"message":"更新流程测试", "progress":0.5})
+  await process_frame
+  await process_frame
+  if download_status == "downloading":
+   check(app.find_child("CancelUpdateDownload",true,false) != null, "download cancellation button")
+  elif download_status == "download_error":
+   check(app.find_child("RetryUpdateDownload",true,false) != null, "failed update retry button")
+  else:
+   check(app.find_child("InstallUpdate",true,false) != null, "installer confirmation button " + download_status)
+  if download_status == "install_permission":
+   check(app.find_child("AllowUpdateInstall",true,false) != null, "explicit Android settings entry")
  var long_release = good.duplicate(true)
  long_release.tag_name = "android-v209999.99.99"
  long_release.html_url = U.RELEASES_URL + "/tag/" + long_release.tag_name
@@ -138,6 +168,17 @@ func run():
   var notes = app.find_child("UpdateReleaseNotes", true, false)
   check(auto_button.size.y >= 48 and auto_button.get_global_rect().end.x <= app.size.x + 1, "auto check touch target fits phone " + str(phone_size))
   check(notes != null and notes.get_global_rect().end.x <= app.size.x + 1, "long release notes wrap within phone " + str(phone_size))
+ var native_updater = preload("res://scripts/android_updater.gd").new()
+ native_updater._finish_activity_launch(true, true)
+ check(native_updater.state.status == "download_error", "failed installer launch reports error")
+ native_updater._finish_activity_launch(true, false)
+ check(native_updater.state.status == "download_error", "failed settings launch reports error")
+ native_updater._finish_activity_launch(false, true)
+ check(native_updater.state.status == "installing", "successful installer launch reports confirmation")
+ native_updater._set_download_state({"status":"install_permission"})
+ native_updater._finish_activity_launch(false, false)
+ check(native_updater.state.status == "install_permission", "successful settings launch awaits explicit permission")
+ native_updater.free()
  app.queue_free()
  await process_frame
  print("UPDATE TESTS: %d checks, %d failures" % [checks,fails])

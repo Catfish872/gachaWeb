@@ -181,6 +181,180 @@ def reveal_menu_target(state, name):
     raise AssertionError(f'Menu target remains clipped: {name}')
 
 
+
+def reveal_page_target(state, name):
+    """Bring a real page control into view using Android finger scrolling."""
+    for _ in range(16):
+        matches = [b for b in state['buttons'] if b['name'] == name]
+        assert len(matches) == 1, f'Missing/duplicate page target: {name}'
+        target = matches[0]
+        if inside(target['rect'], target['clip']):
+            return state
+        assert state['scroll_max'] > 0, f'Clipped control without scroll range: {name}'
+        x, y, w, h = state['scroll_rect']
+        before = state['scroll']
+        upward = target['rect'][1] >= target['clip'][1]
+        start, end = (.82, .22) if upward else (.22, .82)
+        adb('shell', 'input', 'swipe', str(round(x + w * .99)), str(round(y + h * start)), str(round(x + w * .99)), str(round(y + h * end)), '600')
+        state = wait_for(lambda s: s['scroll'] != before, name + ' page scrolling')
+    raise AssertionError(f'Page target remains clipped: {name}')
+
+
+def tap_page(state, name):
+    state = reveal_page_target(state, name)
+    tap(state, name)
+
+
+def canvas_target(state, name, kind):
+    """Pan a custom-drawn control to a real hit target, never invoke its signal."""
+    viewport_name = 'ExtractionMapViewport' if kind == 'map' else 'ExtractionSceneViewport'
+    state = reveal_page_target(state, viewport_name)
+    for _ in range(16):
+        target = next((b for b in state['buttons'] if b['name'] == name), None)
+        assert target is not None, f'Missing canvas target {name}'
+        if inside(target['rect'], target['clip']):
+            return state
+        canvas = state['canvases'][kind]
+        x, y, w, h = canvas['clip']
+        tx, ty, tw, th = target['rect']
+        cx, cy = x + w / 2, y + h / 2
+        dx = max(-w * .3, min(w * .3, cx - (tx + tw / 2)))
+        dy = max(-h * .3, min(h * .3, cy - (ty + th / 2)))
+        before = canvas['pan']
+        adb('shell', 'input', 'swipe', str(round(cx - dx / 2)), str(round(cy - dy / 2)), str(round(cx + dx / 2)), str(round(cy + dy / 2)), '600')
+        state = wait_for(lambda q: q.get('canvases', {}).get(kind, {}).get('pan') != before, kind + ' pan to target')
+    raise AssertionError(f'Canvas target remains clipped: {name}')
+
+
+def tap_overlay(state, name):
+    state = reveal_menu_target(state, name)
+    tap(state, name)
+
+
+def safe_exploration_path(state):
+    """Breadth-first route through ordinary safe rooms in the observed map."""
+    data = state['extraction']
+    rooms = {room['id']: room for room in data['map_rooms']}
+    start = data['room_id']
+    queue = [(start, [])]
+    seen = {start}
+    while queue:
+        at, path = queue.pop(0)
+        if path and not rooms[at]['visited']:
+            return path
+        for a, b in data['map_edges']:
+            other = b if a == at else a if b == at else None
+            if other is None or other in seen or rooms[other]['type'] in ('battle', 'elite', 'boss', 'vault'):
+                continue
+            seen.add(other)
+            queue.append((other, path + [other]))
+    return []
+
+
+def enter_map_room(state, room_id):
+    name = 'ExtractionMapNode_' + room_id
+    state = canvas_target(state, name, 'map')
+    target = next(b for b in state['buttons'] if b['name'] == name)
+    assert target.get('adjacent') or room_id == state['extraction']['room_id'], 'Driver attempted a disconnected room'
+    tap(state, name)
+    return wait_for(lambda q: q.get('extraction', {}).get('room_id') == room_id and q['extraction']['phase'] == 'room', 'map node enters room')
+
+
+def return_extraction_map(state):
+    tap_page(state, 'ExtractionAdvance')
+    return wait_for(lambda q: q.get('extraction', {}).get('phase') == 'route' and 'map' in q.get('canvases', {}), 'room returns to persistent map')
+
+
+def extraction_flow(state, output):
+    """Use ordinary deterministic loot, real scene taps and ADB gestures only."""
+    state = visit(state, 'extraction')
+    geometry(state)
+    tap_page(state, 'ExtractionTab_stash')
+    state = wait_for(lambda q: any(b['name'] == 'ExtractionSort_stash' for b in q['buttons']), 'extraction stash tab')
+    screenshot(output, 'extraction-stash', False)
+    tap_page(state, 'ExtractionTab_expedition')
+    state = wait_for(lambda q: any(b['name'] == 'ExtractionStart' for b in q['buttons']), 'extraction departure')
+    tap_page(state, 'ExtractionStart')
+    state = wait_for(lambda q: q.get('extraction', {}).get('phase') == 'route' and 'map' in q.get('canvases', {}), 'extraction connected map')
+    state = reveal_page_target(state, 'ExtractionMapViewport')
+    canvas = state['canvases']['map']
+    x, y, w, h = canvas['clip']
+    old_room, old_pan = state['extraction']['room_id'], canvas['pan']
+    adb('shell', 'input', 'swipe', str(round(x + w * .75)), str(round(y + h * .5)), str(round(x + w * .25)), str(round(y + h * .5)), '600')
+    state = wait_for(lambda q: q.get('canvases', {}).get('map', {}).get('pan') != old_pan, 'map finger drag')
+    assert state['extraction']['phase'] == 'route' and state['extraction']['room_id'] == old_room, 'Dragging unintentionally entered a room'
+    geometry(state)
+    screenshot(output, 'extraction-map-drag', False)
+    filled = False
+    collected = False
+    visited_count = 0
+    for _ in range(12):
+        path = safe_exploration_path(state)
+        assert path, 'Deterministic ordinary-loot route ended before collecting an item'
+        for index, room_id in enumerate(path):
+            state = enter_map_room(state, room_id)
+            if index < len(path) - 1:
+                state = return_extraction_map(state)
+        visited_count += 1
+        geometry(state)
+        if visited_count == 1:
+            screenshot(output, 'extraction-room-scene', False)
+        if visited_count == 1 and 'scene' in state.get('canvases', {}):
+            state = reveal_page_target(state, 'ExtractionSceneViewport')
+            cx, cy, cw, ch = state['canvases']['scene']['clip']
+            room_before = state['extraction']['room_id']
+            adb('shell', 'input', 'swipe', str(round(cx + cw * .7)), str(round(cy + ch * .5)), str(round(cx + cw * .3)), str(round(cy + ch * .5)), '600')
+            state = wait_for(lambda q: q['overlay'] == 0 and q['extraction']['room_id'] == room_before, 'scene drag does not open a container')
+        box_ids = [box['id'] for box in state['extraction']['containers'] if box['items']]
+        for box_id in box_ids:
+            name = 'ExtractionSceneContainer_' + box_id
+            state = canvas_target(state, name, 'scene')
+            before_ids = set(state['extraction']['bag_ids'])
+            tap(state, name)
+            state = wait_for(lambda q: q['overlay'] > 0 and any(b['name'] == 'ExtractionSearch' for b in q['buttons']), 'scene sprite opens its own container')
+            tap_overlay(state, 'ExtractionSearch')
+            state = wait_for(lambda q: not q['extraction']['searching'] and any(box['id'] == box_id and box['unknown'] == 0 for box in q['extraction']['containers']), 'automatic sequential reveal and pickup', 45)
+            after_ids = set(state['extraction']['bag_ids'])
+            assert before_ids.issubset(after_ids), 'Automatic packing discarded a carried item'
+            if after_ids - before_ids:
+                collected = True
+            remaining = next(box['items'] for box in state['extraction']['containers'] if box['id'] == box_id)
+            if remaining:
+                # Fully revealed loot remains because it cannot fit. Retrying
+                # automatic pickup must preserve both inventories exactly.
+                tap_overlay(state, 'ExtractionTakeAll')
+                stable_ids, stable_left = sorted(after_ids), sorted(remaining)
+                state = wait_for(lambda q: sorted(q['extraction']['bag_ids']) == stable_ids and any(box['id'] == box_id and sorted(box['items']) == stable_left for box in q['extraction']['containers']), 'full bag preserves overflow loot')
+                screenshot(output, 'extraction-full-bag-container', False)
+                filled = True
+            tap_overlay(state, 'ExtractionCloseContainer')
+            state = wait_for(lambda q: q['overlay'] == 0 and q['extraction']['phase'] == 'room', 'container closes to room')
+            if filled:
+                break
+        if collected:
+            assert collected, 'No real loot was collected'
+            saved_ids = sorted(state['extraction']['bag_ids'])
+            saved_room = state['extraction']['room_id']
+            saved_boxes = {box['id']: sorted(box['items']) for box in state['extraction']['containers']}
+            state = return_extraction_map(state)
+            state = enter_map_room(state, saved_room)
+            assert sorted(state['extraction']['bag_ids']) == saved_ids, 'Map return changed backpack'
+            assert {box['id']: sorted(box['items']) for box in state['extraction']['containers']} == saved_boxes, 'Room revisit rerolled or lost overflow loot'
+            tap_page(state, 'ExtractionTab_bag')
+            state = wait_for(lambda q: any(b['name'] == 'ExtractionSort_bag' for b in q['buttons']), 'bag panel')
+            tap_page(state, 'ExtractionSort_bag')
+            state = wait_for(lambda q: sorted(q['extraction']['bag_ids']) == saved_ids, 'manual sort preserves inventory')
+            geometry(state)
+            screenshot(output, 'extraction-bag-after-search', False)
+            state = visit(state, 'home')
+            state = visit(state, 'extraction')
+            assert sorted(state['extraction']['bag_ids']) == saved_ids, 'Navigation changed inventory'
+            assert state['extraction']['room_id'] == saved_room, 'Navigation moved player'
+            return visit(state, 'home')
+        state = return_extraction_map(state)
+    raise AssertionError('Natural-loot run did not collect any searchable items')
+
+
 def visit(state, page):
     tap(state, 'MenuButton')
     state = wait_for(lambda s: s['overlay'] > 0 and any(b['name'] == 'MenuNav_' + page for b in s['buttons']), 'menu open')
@@ -287,6 +461,9 @@ def run(apk, output):
     adb('shell', 'am', 'start', '-W', '-n', component)
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'Android game startup', 90)
     assert state['window'][1] > state['window'][0], 'Portrait startup expected'
+    bridge = state.get('android_bridge', {})
+    assert bridge.get('success') is True, f'Android download/install bridge unavailable: {bridge}'
+    assert bridge.get('package') == PACKAGE, f'Android bridge resolved wrong package: {bridge}'
     geometry(state)
     dismiss_fullscreen_education(output, state['window'])
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'home after fullscreen education')
@@ -297,7 +474,7 @@ def run(apk, output):
     screenshot(output, 'portrait-menu', False)
     back()
     state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, 'Back dismisses menu')
-    pages = ['story', 'summon', 'party', 'growth', 'relics', 'abyss', 'shop', 'save']
+    pages = ['story', 'summon', 'party', 'growth', 'relics', 'abyss', 'extraction', 'shop', 'save']
     for page in pages:
         state = visit(state, page)
         geometry(state)
@@ -310,6 +487,7 @@ def run(apk, output):
             screenshot(output, 'portrait-' + page + '-scrolled', False)
         back()
         state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, page + ' Android Back')
+    state = extraction_flow(state, output)
     adb('shell', 'settings', 'put', 'system', 'user_rotation', '1')
     adb('emu', 'sensor', 'set', 'acceleration', '9.8:0:0')
     state = wait_for(lambda s: s['window'][0] > s['window'][1] and s['logical'][0] > s['logical'][1], 'landscape adaptation')
@@ -336,7 +514,7 @@ def run(apk, output):
     logs = adb('logcat', '-d', '-v', 'threadtime')
     errors = [line for line in logs.splitlines() if re.search(r'SCRIPT ERROR|Parse Error|FATAL EXCEPTION|Fatal signal|ANR in ' + re.escape(PACKAGE), line) or ('godot' in line.lower() and re.search(r'\bERROR:', line))]
     assert not errors, '\n'.join(errors)
-    (output / 'result.json').write_text(json.dumps({'passed': True, 'android_api': adb('shell', 'getprop', 'ro.build.version.sdk').strip(), 'abi': adb('shell', 'getprop', 'ro.product.cpu.abi').strip(), 'pages': pages, 'checks': ['portrait launch', 'all menu tabs by touch', 'scrolling where content exceeds viewport', 'Android Back', 'landscape adaptation', 'background/resume', 'runtime error log']}, indent=2))
+    (output / 'result.json').write_text(json.dumps({'passed': True, 'android_api': adb('shell', 'getprop', 'ro.build.version.sdk').strip(), 'abi': adb('shell', 'getprop', 'ro.product.cpu.abi').strip(), 'pages': pages, 'checks': ['portrait launch', 'all menu tabs by touch', 'scrolling where content exceeds viewport', 'Android Back', 'landscape adaptation', 'background/resume', 'extraction map drag/connected navigation/scene-container auto-search/auto-pickup/room and bag persistence', 'Android download bridge capability (no download/install)', 'runtime error log']}, indent=2))
     print('ANDROID RUNTIME SMOKE PASSED')
 
 

@@ -31,7 +31,7 @@ func start(config: Dictionary, allies: Array, rogue_effects: Array = []) -> Dict
 	if config.has("seed"):
 		rng.seed = int(config.seed)
 	_events = []
-	_is_abyss = bool(config.get("isAbyss", false))
+	_is_abyss = bool(config.get("isAbyss", false)) or bool(config.get("isExtraction", false))
 	_effects = rogue_effects.duplicate(true) if _is_abyss else []
 	_steps = 0
 	_max_steps = clampi(int(config.get("maxSteps", 10000)), 10, 100000)
@@ -212,14 +212,14 @@ func _spawn_wave() -> void:
 		var mods = abyss_scale(int(state.config.get("floor", 1)), id) if state.config.get("isAbyss", false) else {}
 		if scale is Dictionary: mods = scale
 		elif mods.is_empty(): mods = {"hpMod": scale, "atkMod": scale, "defMod": scale, "spdMod": 1.0}
-		if _is_abyss:
+		if state.config.get("isAbyss", false):
 			mods = AbyssBalance.apply_difficulty(mods, int(state.config.get("difficulty", 0)))
 			mods = AbyssBalance.apply_modifier(mods, state.config.get("encounterModifier", {}))
 		var bs = data.baseStats
 		var stats = {"maxHp": maxi(1, int(bs.hp * mods.get("hpMod", 1))),
 			"atk": maxi(1, int(bs.atk * mods.get("atkMod", 1))), "def": maxi(0, int(bs.def * mods.get("defMod", 1))),
 			"spd": maxf(1, bs.spd * mods.get("spdMod", 1)), "cri": 0.1, "criDmg": 1.5}
-		if _is_abyss: stats.spd = minf(AbyssBalance.MAX_ENEMY_SPEED, stats.spd)
+		if _is_abyss: stats.spd = minf(120.0 if state.config.get("isExtraction", false) else AbyssBalance.MAX_ENEMY_SPEED, stats.spd)
 		state.enemies.append({"uid": "enemy_%d_%d" % [state.wave, i], "id": id, "dataId": id,
 			"name": data.name, "element": data.element, "isAlly": false,
 			"archetype": data.get("type", "normal"), "controlGuard": 0, "controlSkips": 0,
@@ -288,10 +288,14 @@ func _build_queue() -> void:
 	state.turn += 1
 	state.turnOrder = _queue.map(func(unit): return unit.uid)
 	_emit("round", {}, {}, state.turn, "第 %d 回合" % state.turn)
-	if _is_abyss and state.turn in [21, 40]:
+	if state.config.get("isAbyss", false) and state.turn in [21, 40]:
 		for enemy in _alive(state.enemies):
 			if enemy.isBoss:
 				_emit("enrage", enemy, enemy, int((boss_enrage_mult(enemy) - 1.0) * 100), enemy.name + (" · 持久战狂暴：每回合攻击 +5%，最多 +100%" if state.turn == 21 else " · 狂暴达到上限：攻击 +100%"))
+	if state.config.get("isExtraction", false) and int(state.config.get("difficulty", 0)) >= 3 and state.turn in [16, 25]:
+		for enemy in _alive(state.enemies):
+			if enemy.isBoss:
+				_emit("enrage", enemy, enemy, int((boss_enrage_mult(enemy) - 1.0) * 100), enemy.name + (" · 持久战狂暴：每回合攻击 +5%，最多 +50%" if state.turn == 16 else " · 狂暴达到上限：攻击 +50%"))
 	# Zeph's C6 applies before allies act, so its one-round buff can be used.
 	for unit in _alive(state.allies):
 		if unit.id == "zeph" and _c6(unit) and _above_average_speed(unit):
@@ -312,6 +316,9 @@ func _seek_actor() -> void:
 			_end_round()
 			_report_deaths()
 			if _resolve_outcome(): return
+			if state.config.get("isExtraction", false) and int(state.turn) >= 40:
+				_finish("defeat", "战区封锁，行动失败")
+				return
 			_build_queue()
 		if _queue.is_empty():
 			_finish("defeat", "没有可行动单位")
@@ -506,6 +513,8 @@ func _effective_atk(unit: Dictionary) -> int:
 
 func boss_enrage_mult(unit: Dictionary) -> float:
 	if not _is_abyss or unit.isAlly or not unit.isBoss: return 1.0
+	if state.config.get("isExtraction", false):
+		return 1.0 + clampf(float(int(state.get("turn", 1)) - 15) * 0.05, 0.0, 0.5) if int(state.config.get("difficulty", 0)) >= 3 else 1.0
 	return 1.0 + clampf(float(int(state.get("turn", 1)) - 20) * 0.05, 0.0, 1.0)
 
 func _above_average_speed(unit: Dictionary) -> bool:
