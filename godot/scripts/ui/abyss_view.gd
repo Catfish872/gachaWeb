@@ -1,5 +1,6 @@
 extends RefCounted
 const RouteTrack=preload("res://scripts/ui/abyss_route_track.gd")
+const RuneTheme=preload("res://scripts/ui/rune_theme.gd")
 const Sigil=preload("res://scripts/ui/abyss_sigil.gd")
 const VIOLET:=Color("c4a4e8")
 const GREEN:=Color("a9cdb0")
@@ -16,12 +17,14 @@ static func render(app)->void:
 	app.set_page_fixed(wide)
 	var nav=app._hbox(app.main_body,8) if wide else app._flow(app.main_body,8)
 	app._label(nav,"深渊远征",22,VIOLET)
-	app._button(nav,"远征地图",func():app.abyss_panel="expedition";app._render_screen(),app.abyss_panel=="expedition")
-	app._button(nav,"永久成长",func():app.abyss_panel="meta";app._render_screen(),app.abyss_panel=="meta")
+	app._tab_button(nav,"远征地图",func():app.abyss_panel="expedition";app._render_screen(),app.abyss_panel=="expedition")
+	app._tab_button(nav,"永久成长",func():app.abyss_panel="meta";app._render_screen(),app.abyss_panel=="meta")
 	_spacer(nav)
+	app._rune_icon(nav,"coin",20).tooltip_text="裂隙币 · 本轮补给"
 	app._label(nav,"裂隙币 %d"%int(rogue.get("temporaryCurrency",0)),14,app.GOLD)
-	app._label(nav,"记忆碎片 %d"%int(meta.get("currency",0)),14,VIOLET)
-	app._button(nav,"?",func():_help(app))
+	app._rune_icon(nav,"gem",20,VIOLET).tooltip_text="记忆碎片 · 永久成长"
+	app._label(nav,"记忆 %d"%int(meta.get("currency",0)),14,VIOLET)
+	app._tool_button(nav,"book","远征规则",func():_help(app))
 	var body=app._hbox(app.main_body,12) if wide else app._vbox(app.main_body,12)
 	body.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	if app.abyss_panel=="meta":
@@ -43,8 +46,8 @@ static func render(app)->void:
 	var auto=app._button(footer,"连续挑战",Callable(),app.abyss_auto_continue);auto.toggle_mode=true;auto.button_pressed=app.abyss_auto_continue;auto.text="连续挑战 · 开" if app.abyss_auto_continue else "连续挑战 · 关";auto.tooltip_text="自动衔接战斗；遇到祝福和事件时停下选择"
 	auto.toggled.connect(func(on):app.abyss_auto_continue=on;app.battle_auto=true if on else app.battle_auto;auto.text="连续挑战 · 开" if on else "连续挑战 · 关")
 	_spacer(footer)
-	app._button(footer,"队伍",func():_party_modal(app,abyss))
-	app._button(footer,"构筑 %d"%rogue.get("selectedRewards",[]).size(),func():_build_modal(app,rogue))
+	app._button_icon(app._tab_button(footer,"队伍",func():_party_modal(app,abyss)),"party")
+	app._button_icon(app._tab_button(footer,"构筑 %d"%rogue.get("selectedRewards",[]).size(),func():_build_modal(app,rogue)),"star")
 	if active:
 		app._button(footer,"归营",func():app._confirm("结束本轮？","回到营地，保留已获得的永久资源。",func():app.abyss_auto_continue=false;app._abyss_operation(app.model.reset_abyss(),"已返回营地")))
 
@@ -83,7 +86,7 @@ static func _departure(app,parent:Node,floor_number:int,active:bool,abyss:Dictio
 		app._label(v,"上一轮通关 %d 层 · 收获 %d 记忆碎片"%[int(summary.get("floorsCleared",0)),int(summary.get("metaEarned",0))],13,VIOLET,true)
 	_difficulty(app,parent,active)
 	var row=app._hbox(parent,8)
-	var begin=app._button(row,"挑战第 %d 层"%floor_number,func():app._begin_abyss(),true);begin.name="AbyssBegin";begin.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	var begin=app._button(row,"挑战第 %d 层"%floor_number,func():app._begin_abyss(),true);app._button_icon(begin,"sword",true);begin.name="AbyssBegin";begin.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	app._button(row,"调整编队",func():app.navigate("party"))
 
 static func _difficulty(app,parent:Node,active:bool)->void:
@@ -94,14 +97,15 @@ static func _difficulty(app,parent:Node,active:bool)->void:
 		app._label(parent,"本轮难度：%s · 已锁定"%str(selected.get("name","初探")),13,VIOLET,true);return
 	var row=app._grid(parent,2 if app.size.x<850 else 4)
 	for option in app.model.abyss_difficulty_options():
-		var b=app._button(row,str(option.name),func():app._abyss_operation(app.model.set_abyss_difficulty(int(option.id)),""),bool(option.selected))
+		var b=app._tab_button(row,str(option.name),func():app._abyss_operation(app.model.set_abyss_difficulty(int(option.id)),""),bool(option.selected))
 		b.name="AbyssDifficulty_"+str(option.id);b.disabled=not bool(option.enabled);b.tooltip_text=str(option.description)
 	app._label(parent,str(selected.get("description","")),12,app.MUTED,true)
 
-static func _card(app,parent:Node,title:String,desc:String,color:Color,symbol:int)->VBoxContainer:
+static func _card(app,parent:Node,title:String,desc:String,color:Color,symbol:int,semantic:String="")->VBoxContainer:
 	var p=app._panel(parent,color.darkened(0.5),12);p.custom_minimum_size.x=160
 	var v=app._vbox(p,8)
-	_icon(v,color,symbol)
+	if semantic.is_empty():_icon(v,color,symbol)
+	else:app._rune_icon(v,semantic,58,color)
 	var name=app._label(v,title,18,color,true);name.max_lines_visible=2
 	var text=app._label(v,desc,14,app.TEXT,true);text.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	return v
@@ -113,9 +117,10 @@ static func _blessings(app,parent:Node,rogue:Dictionary)->void:
 	for raw in rogue.get("pendingChoices",[]):
 		var choice:Dictionary=raw if raw is Dictionary else app._abyss_reward(str(raw))
 		var color:Color={"gold":app.GOLD,"blue":app.CYAN,"white":app.TEXT}.get(str(choice.get("rarity","white")),app.TEXT)
-		var v=_card(app,grid,str(choice.get("name","裂隙回响")),str(choice.get("description","")),color,str(choice.get("id","")).hash())
+		var v=_card(app,grid,str(choice.get("name","裂隙回响")),str(choice.get("description","")),color,str(choice.get("id","")).hash(),RuneTheme.effect_key(choice))
 		app._label(v,str(choice.get("target","全队")),12,app.MUTED,true)
 		var b=app._button(v,"融入构筑",func():app._abyss_operation(app.model.choose_abyss_reward(str(choice.get("choiceId",choice.get("id","")))),"回响已融入本轮构筑",true),true)
+		app._button_icon(b,"check",true)
 		b.name="Blessing_"+str(choice.get("choiceId",choice.get("id","")))
 
 static func _node(app,parent:Node,phase:String)->void:
@@ -129,7 +134,7 @@ static func _node(app,parent:Node,phase:String)->void:
 	for option in options:
 		var panel=app._panel(grid,color.darkened(0.5),10)
 		var v=app._vbox(panel,6)
-		var heading=app._hbox(v,8);_icon(heading,color,str(option.id).hash(),32)
+		var heading=app._hbox(v,8);app._rune_icon(heading,RuneTheme.effect_key(option),32,color)
 		app._label(heading,str(option.get("label","继续探索")),17,color,true).size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		if not str(option.get("reward","")).is_empty():app._label(v,str(option.reward),13,GREEN,true)
 		if not str(option.get("risk","")).is_empty():app._label(v,str(option.risk),12,app.RED,true)
@@ -139,6 +144,7 @@ static func _node(app,parent:Node,phase:String)->void:
 		app._button(actions,"详情",func():_detail(app,str(option.get("label","旅途抉择")),str(option.get("description",""))))
 		var cost:=int(option.get("cost",0))
 		var b=app._button(actions,("选择 · %d 裂隙币"%cost) if cost>0 else "选择",func():app._abyss_operation(app.model.choose_abyss_node(str(option.id)),"",true),true)
+		app._button_icon(b,"coin" if cost>0 else "check",true)
 		b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.name="NodeChoice_"+str(option.id);b.disabled=not bool(option.get("enabled",true))
 		if b.disabled:app._label(v,str(option.get("disabledReason","暂不可用")),12,app.RED,true)
 
@@ -147,8 +153,9 @@ static func _shop(app,parent:Node)->void:
 	var grid=app._grid(content,1 if app.size.x<850 else 3)
 	for item in app.model.abyss_shop_items():
 		var sold:=bool(item.get("sold",false))
-		var v=_card(app,grid,str(item.get("name","旅行补给")),str(item.get("description","")),app.MUTED if sold else app.GOLD,str(item.id).hash())
+		var v=_card(app,grid,str(item.get("name","旅行补给")),str(item.get("description","")),app.MUTED if sold else app.GOLD,str(item.id).hash(),RuneTheme.effect_key(item))
 		var b=app._button(v,"已购买" if sold else "购买 · %d 裂隙币"%int(item.get("cost",0)),func():app._abyss_operation(app.model.purchase_abyss_item(str(item.id)),"补给已收入行囊"),not sold)
+		app._button_icon(b,"coin",not sold)
 		b.name="RunShop_"+str(item.id);b.disabled=sold or not bool(item.get("enabled",true))
 		if b.disabled and not sold:app._label(v,str(item.get("disabledReason","裂隙币不足")),12,app.RED,true)
 	var leave=app._button(parent,"离开商店",func():app._abyss_operation(app.model.leave_abyss_shop(),"已离开旅途商店",true));leave.name="RunShopLeave"
@@ -156,7 +163,7 @@ static func _shop(app,parent:Node)->void:
 static func _meta(app,parent:Node,meta:Dictionary,active:bool,wide:bool)->void:
 	var intro=_pane(app,parent,"记忆营地",VIOLET)
 	intro.get_parent().size_flags_horizontal=Control.SIZE_FILL;intro.get_parent().custom_minimum_size.x=210 if wide else 0
-	_icon(intro,VIOLET,2)
+	app._rune_icon(intro,"gem",58,VIOLET)
 	app._label(intro,str(int(meta.get("currency",0))),36,app.GOLD)
 	app._label(intro,"记忆碎片",16,VIOLET)
 	app._label(intro,"跨轮保留，强化下一次远征。",14,app.MUTED,true)
@@ -169,7 +176,7 @@ static func _meta(app,parent:Node,meta:Dictionary,active:bool,wide:bool)->void:
 	for upgrade in app.model.meta_upgrade_list():
 		var p=app._panel(grid,VIOLET.darkened(0.6),10)
 		var v=app._vbox(p,6)
-		var row=app._hbox(v,8);_icon(row,VIOLET,str(upgrade.id).hash(),38);var title=app._vbox(row,3);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		var row=app._hbox(v,8);app._rune_icon(row,RuneTheme.effect_key(upgrade),38,VIOLET);var title=app._vbox(row,3);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		app._label(title,str(upgrade.name),18,app.TEXT,true)
 		var level:=int(upgrade.level);var maximum:=int(upgrade.maxLevel)
 		app._label(title,"等级 %d / %d"%[level,maximum],12,VIOLET)
@@ -177,9 +184,10 @@ static func _meta(app,parent:Node,meta:Dictionary,active:bool,wide:bool)->void:
 		var short_desc={"vitality":"生命 +4% / 级","offense":"攻击 +3% / 级","recovery":"战后回复 +1.5% / 级","supply":"开局裂隙币 +15 / 级"}
 		app._label(detail_row,short_desc.get(str(upgrade.id),str(upgrade.description)),13,app.MUTED,true)
 		_spacer(detail_row)
-		var info=app._button(row,"详情",func():_detail(app,str(upgrade.name),str(upgrade.description)));info.custom_minimum_size.y=32
+		app._tool_button(row,"book","成长详情",func():_detail(app,str(upgrade.name),str(upgrade.description)))
 		var capped:=level>=maximum
 		var b=app._button(v,"已满级" if capped else "升级 · %d 碎片"%int(upgrade.get("cost",0)),func():app._abyss_operation(app.model.purchase_meta_upgrade(str(upgrade.id)),"营地升级完成"),not capped)
+		app._button_icon(b,"gem",not capped)
 		b.name="MetaUpgrade_"+str(upgrade.id);b.disabled=capped or not bool(upgrade.get("enabled",false))
 		if b.disabled and not capped:b.text="本轮结束后可升级" if active else "记忆碎片不足 · %d"%int(upgrade.get("cost",0))
 
@@ -212,7 +220,9 @@ static func _build_modal(app,rogue:Dictionary)->void:
 	for entry in grouped.values():
 		var reward:Dictionary=entry.reward
 		var p=app._panel(grid,VIOLET.darkened(0.6),10);var v=app._vbox(p,6)
-		app._label(v,"%s ×%d"%[reward.name,entry.count],18,app.GOLD,true)
+		var heading=app._hbox(v,8)
+		app._rune_icon(heading,RuneTheme.effect_key(reward),30,VIOLET)
+		app._label(heading,"%s ×%d"%[reward.name,entry.count],18,app.GOLD,true)
 		app._label(v,str(reward.description),14,app.MUTED,true)
 	app._button(app._modal_footer(box),"返回",app._clear_overlay)
 

@@ -49,6 +49,13 @@ func start(config: Dictionary, allies: Array, rogue_effects: Array = []) -> Dict
 			state.allies.append(unit)
 	_apply_rogue_stats()
 	_spawn_wave()
+	if config.get("isExtraction", false):
+		for unit in state.allies:
+			var amount := int(config.get("equipmentShields",{}).get(unit.id,0))
+			if amount > 0:
+				unit.statuses.append({"id":"shield","duration":1,"value":null,"stacks":1,"shieldHp":amount,"source":"expedition_equipment","persistent":true})
+				_sync_shield(unit)
+		_sync_equipment_shields()
 	_apply_battle_start()
 	_build_queue()
 	_seek_actor()
@@ -386,7 +393,7 @@ func _end_round() -> void:
 				"burn": _status_damage(unit, maxi(1, int(unit.baseAtk * 0.18)), "burn")
 				"poison": _status_damage(unit, maxi(1, int(unit.maxHp * (0.015 if _is_abyss and unit.isBoss else 0.05))), "poison")
 				"regen": _heal(unit, unit, maxi(1, int(unit.maxHp * 0.08)), "regen", false, "status")
-			if not status.id in CONTROL_STATUSES: status.duration -= 1
+			if not status.id in CONTROL_STATUSES and not status.get("persistent",false): status.duration -= 1
 		_cleanup_statuses(unit)
 		if unit.currentHp > 0 and unit.passiveId == "tide_passive":
 			_heal(unit, unit, maxi(1, int(unit.maxHp * (0.06 if _c6(unit) else 0.03))), "tide_passive", false, "passive")
@@ -655,7 +662,7 @@ func apply_status(unit: Dictionary, status_id: String, duration: int, value = nu
 	var existing: Dictionary = {}
 	if status_id != "poison":
 		for status in unit.statuses:
-			if status.id == status_id and status.duration > 0: existing = status; break
+			if status.id == status_id and status.duration > 0 and status.get("source","") != "expedition_equipment": existing = status; break
 	if existing.is_empty():
 		existing = {"id": status_id, "duration": duration, "value": value, "stacks": 1}
 		if status_id == "shield": existing.shieldHp = maxi(0, int(unit.maxHp * (float(value) if value != null else 0.3)))
@@ -705,14 +712,17 @@ func _sync_shield(unit: Dictionary) -> void:
 
 func _absorb(unit: Dictionary, amount: int) -> int:
 	var remaining = amount
-	for status in unit.statuses:
+	var shields: Array = unit.statuses.duplicate()
+	shields.sort_custom(func(a,b): return int(a.get("source","")=="expedition_equipment") < int(b.get("source","")=="expedition_equipment"))
+	for status in shields:
 		if status.id == "shield" and status.duration > 0:
 			var absorbed = mini(remaining, int(status.get("shieldHp", 0)))
 			status.shieldHp -= absorbed
 			remaining -= absorbed
-			if absorbed > 0: _emit("shield", unit, unit, absorbed, "护盾吸收 %d" % absorbed)
+			if absorbed > 0: _emit("shield", unit, unit, absorbed, "护盾吸收 %d" % absorbed, {"source":status.get("source","skill")})
 			if status.shieldHp <= 0: status.duration = 0
 	_cleanup_statuses(unit)
+	_sync_equipment_shields()
 	return remaining
 
 func _status_damage(unit: Dictionary, amount: int, source: String) -> void:
@@ -759,3 +769,11 @@ func _publish() -> void:
 
 func _error(message: String) -> Dictionary:
 	return {"success": false, "error": message, "events": []}
+
+func _sync_equipment_shields() -> void:
+	if not state.get("config",{}).get("isExtraction",false): return
+	var total := 0
+	for unit in state.allies:
+		for status in unit.statuses:
+			if status.get("source","") == "expedition_equipment" and status.duration > 0: total += int(status.get("shieldHp",0))
+	state.equipmentShieldRemaining = total

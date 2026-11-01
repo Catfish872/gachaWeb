@@ -325,6 +325,7 @@ func run() -> void:
 		await frames(16)
 		print("MOBILE VIEWPORT physical=", root.size, " logical=", root.content_scale_size, " app=", app.size)
 		check(minf(app.size.x, app.size.y) <= 540.5, "Phone short edge preserves touch density " + str(physical_size))
+		if not OS.has_feature("mobile"):check(app._usable_rect()==Rect2(Vector2.ZERO,app.size),"Desktop mobile simulation does not clip to monitor safe area")
 		check(root.size == physical_size, "Window accepts physical phone resolution " + str(physical_size))
 		check(absf(app.size.x / app.size.y - float(physical_size.x) / physical_size.y) < 0.02, "Logical viewport matches phone aspect " + str(physical_size))
 		for page in PAGES:

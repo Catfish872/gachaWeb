@@ -17,7 +17,7 @@ func _init() -> void:
   check(d.width >= 1 and d.height >= 1 and d.width*d.height <= 9,"bounded footprint")
   check(d.value > 0,"every common item has resale value")
   if d.has("buyPrice"): check(d.buyPrice > d.value,"no purchase resale arbitrage")
- for count in counts: check(count == 16,"sixteen items each rarity")
+ check(counts == [18,22,26,21,22,19],"128-item rarity distribution")
  var knobs: Dictionary = ex.data.get("lootEconomy",{})
  for act in range(1,4):
   for risk in range(6):

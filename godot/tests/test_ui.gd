@@ -14,7 +14,7 @@ func check(condition: bool, message: String) -> void:
 		push_error("UI CHECK: " + message)
 
 func find_button(node: Node, needle: String) -> Button:
-	if node is Button and needle in node.text:
+	if node is Button and (str(node.name)==needle or needle in node.text):
 		return node
 	for child in node.get_children():
 		var found := find_button(child, needle)
@@ -62,31 +62,38 @@ func run() -> void:
 	check("炎牙斩" in texts(app.main_body), "Skills exposed")
 	app.navigate("shop")
 	var gems_before: int = app.model.state.resources.diamonds
-	find_button(app.main_body, "免费领取").pressed.emit()
+	find_button(app.main_body, "购买").pressed.emit()
 	check(app.model.state.resources.diamonds > gems_before, "Simulated recharge button grants bundle")
 	app.navigate("summon")
 	var saved_balance: int = app.model.state.resources.diamonds
 	app.model.state.resources.diamonds = 15
 	app.navigate("summon")
-	check(find_button(app.main_body, "祈愿1次").disabled and find_button(app.main_body, "祈愿10次").disabled, "Insufficient currency disables summon buttons")
+	check(find_button(app.main_body, "SummonPull_1").disabled and find_button(app.main_body, "SummonPull_10").disabled, "Insufficient currency disables summon buttons")
+	for amount in [1,10]:
+		var cta=find_button(app.main_body,"SummonPull_"+str(amount))
+		check(cta!=null,"named summon action exists")
+		if cta!=null:
+			var copy:=texts(cta).split("\n")
+			check(copy.has("单次祈愿" if amount==1 else "十连祈愿"),"summon action exposes dedicated title label")
+			check(copy.has(str(int(app.model.catalog.GachaPoolData.pools[app.selected_pool].costPerPull)*amount)),"summon action exposes exact dedicated cost label")
 	app.model.state.resources.diamonds = 160
 	app.navigate("summon")
-	check(not find_button(app.main_body, "祈愿1次").disabled and find_button(app.main_body, "祈愿10次").disabled, "Affordability handles single and ten-pull independently")
+	check(not find_button(app.main_body, "SummonPull_1").disabled and find_button(app.main_body, "SummonPull_10").disabled, "Affordability handles single and ten-pull independently")
 	app.model.state.resources.diamonds = saved_balance
 	app.navigate("summon")
 	app.model.rng.seed = 45
 	app._pull(1)
 	await frame()
 	check(app.summon_results.size() == 1, "Single pull through UI")
-	find_button(app.overlay, "揭晓旅者").pressed.emit()
+	find_button(app.overlay, "SummonReveal").pressed.emit()
 	check(app.summon_flipped, "Reveal button flips card")
-	find_button(app.overlay, "查看结果").pressed.emit()
+	find_button(app.overlay, "SummonNext").pressed.emit()
 	check("祈愿结果" in texts(app.overlay), "Summon summary visible")
-	find_button(app.overlay, "收下").pressed.emit()
+	find_button(app.overlay, "SummonAccept").pressed.emit()
 	check(app.overlay.get_child_count() == 0, "Summon closes")
 	app.model.state.resources.diamonds = 100000
 	app._pull(10)
-	find_button(app.overlay, "全部揭示").pressed.emit()
+	find_button(app.overlay, "SummonSkip").pressed.emit()
 	check(app.summon_results.size() == 10, "Ten-pull and skip reveal")
 	app._clear_overlay()
 	for id in app.model.catalog.CharacterData:
@@ -121,7 +128,9 @@ func run() -> void:
 	check("全部未强化" in texts(app.overlay), "Batch salvage unupgraded control")
 	app._clear_overlay()
 	app.navigate("save")
-	check("旅者 10 位" in texts(app.main_body), "Save summary matches owned count")
+	var owned_summary := app.main_body.find_child("SaveStat_%d_party" % app.model.active_slot, true, false) as Label
+	check(owned_summary != null and owned_summary.is_visible_in_tree() and owned_summary.text == "10", "Save summary matches owned count")
+	check(owned_summary != null and "旅者" in texts(owned_summary.get_parent()).split("\n"), "Save owned count retains dedicated traveler caption")
 	find_button(app.main_body, "切换至此档案").pressed.emit()
 	find_button(app.overlay, "确认").pressed.emit()
 	check(app.model.active_slot == 2, "Save slot switch confirmed")
@@ -208,8 +217,8 @@ func run() -> void:
 	app._pull(10)
 	app._summon_summary()
 	await frame()
-	check(find_button(app.overlay, "再祈愿 10 次") != null, "Repeat ten-pull control exposed")
-	find_button(app.overlay, "收下").pressed.emit()
+	check(find_button(app.overlay, "SummonAgain") != null, "Repeat ten-pull control exposed")
+	find_button(app.overlay, "SummonAccept").pressed.emit()
 	# Automatic combat pauses at every real v2 decision and resumes only after
 	# each nested choice has been explicitly resolved through its UI button.
 	app.model.reset_abyss()

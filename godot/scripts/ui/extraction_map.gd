@@ -21,15 +21,24 @@ var _pinching := false
 var _velocity := Vector2.ZERO
 var _last_motion_ms := 0
 var _toolbar: HBoxContainer
+var _motion_layer: Control
+var reduced_motion := false:
+	set(value):
+		reduced_motion = value
+		if is_instance_valid(_motion_layer):
+			_motion_layer.set_process(not value)
+			_motion_layer.queue_redraw()
+		queue_redraw()
 const WORLD := Vector2(1320, 850)
 const PAD := Vector2(100, 120)
 const GOLD := Color("edcf94")
 const CYAN := Color("91dfd4")
 const MUTED := Color("71828a")
-const TYPE_NAMES := {"entry":"入口", "cache":"物资", "battle":"敌人", "elite":"精英", "event":"奇遇", "rest":"营地", "boss":"首领", "hospital":"药房", "workshop":"工坊", "vault":"宝库", "shrine":"神龛"}
+const TYPE_NAMES := {"entry":"入口", "cache":"物资", "battle":"敌人", "elite":"精英", "event":"奇遇", "rest":"营地", "boss":"首领", "hospital":"药房", "workshop":"工坊", "vault":"宝库", "shrine":"神龛", "key_vault":"钥匙房", "relay":"寄存点"}
 const THEME_COLORS := {"ruins":Color("756553"), "forest":Color("3f7165"), "sanctum":Color("62648b")}
 
-func configure(value: Dictionary) -> void:
+func configure(value: Dictionary, reduce_motion: bool=false) -> void:
+	reduced_motion = reduce_motion
 	graph = value.duplicate(true)
 	rooms.clear()
 	for room in graph.get("rooms", []): rooms[str(room.id)] = room
@@ -46,6 +55,13 @@ func configure(value: Dictionary) -> void:
 
 func _ready() -> void:
 	resized.connect(_resize)
+	_motion_layer = RouteMotion.new()
+	_motion_layer.name = "AtlasRouteMotion"
+	_motion_layer.atlas = self
+	_motion_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_motion_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_motion_layer)
+	_motion_layer.set_process(not reduced_motion)
 	_toolbar = HBoxContainer.new()
 	_toolbar.name = "AtlasTools"
 	_toolbar.add_theme_constant_override("separation", 5)
@@ -94,9 +110,12 @@ func _resize() -> void:
 	_last_view_center = _view_rect().get_center()
 	queue_redraw()
 
-func _world_point(room: Dictionary) -> Vector2:
+func _unscaled_point(room: Dictionary) -> Vector2:
 	var normalized := Vector2(float(room.get("x", 0.5)), float(room.get("y", 0.5)))
-	return (PAD + normalized * (WORLD - PAD * 2.0)) * zoom
+	return PAD + normalized * (WORLD - PAD * 2.0)
+
+func _world_point(room: Dictionary) -> Vector2:
+	return _unscaled_point(room) * zoom
 
 func room_point(id: String) -> Vector2:
 	return _world_point(rooms.get(id, {})) + offset
@@ -109,11 +128,51 @@ func adjacent_ids() -> Array:
 		elif edge[1] == current: result.append(str(edge[0]))
 	return result
 
+func reachable_ids() -> Array:
+	# Travel permission comes from the model. The fallback only preserves
+	# physical-neighbor behavior for older callers and isolated previews.
+	var candidates: Array = graph.get("reachableRoomIds", adjacent_ids())
+	var result: Array = []
+	for value in candidates:
+		var id := str(value)
+		if rooms.has(id) and id != str(graph.get("currentRoomId", "")) and id not in result:
+			result.append(id)
+	return result
+
+func travel_path(id: String) -> Array:
+	var current := str(graph.get("currentRoomId", ""))
+	if id == current:return [current]
+	if id not in reachable_ids():return []
+	var paths: Dictionary = graph.get("travelPaths", {})
+	var path: Array = paths.get(id, [current,id] if id in adjacent_ids() else []).duplicate()
+	if path.size()<2 or str(path[0])!=current or str(path[-1])!=id:return []
+	for index in range(path.size()):
+		path[index]=str(path[index])
+		if not rooms.has(path[index]):return []
+		if index>0 and not _edge_exists(path[index-1],path[index]):return []
+	return path
+
+func _edge_exists(a: String,b: String) -> bool:
+	for edge in graph.get("edges",[]):
+		if (str(edge[0])==a and str(edge[1])==b) or (str(edge[0])==b and str(edge[1])==a):return true
+	return false
+
+func _on_path(path: Array,a: String,b: String) -> bool:
+	for index in range(1,path.size()):
+		if (path[index-1]==a and path[index]==b) or (path[index-1]==b and path[index]==a):return true
+	return false
+
+func frontier_ids() -> Array:
+	var result: Array = []
+	for id in reachable_ids():
+		if not bool(rooms[id].get("visited",false)):result.append(id)
+	return result
+
 func _known(id: String) -> bool:
 	# Surveyed and adjacent landmarks use full contrast. Distant rooms retain
 	# their type icon so players can plan a route without seeing their loot.
 	var room: Dictionary = rooms[id]
-	return bool(room.get("visited",false)) or id in adjacent_ids() or bool(room.get("discovered",false)) or room.get("type","") in ["boss","vault","shrine","elite"]
+	return bool(room.get("visited",false)) or id in reachable_ids() or bool(room.get("discovered",false)) or room.get("type","") in ["boss","vault","shrine","elite","key_vault","relay"]
 
 func _district_bounds(district_id: String) -> Rect2:
 	var first := true
@@ -139,18 +198,25 @@ func _draw() -> void:
 			points.append(_screen(Vector2(x,y)))
 		draw_polyline(points,Color(0.23,0.38,0.41,0.13),1.0,true)
 	for district in graph.get("districts", []): _draw_district(district)
-	var adjacent := adjacent_ids()
+	var adjacent := reachable_ids()
+	var selected_path := travel_path(selected_room_id)
 	for edge in graph.get("edges", []):
 		var a := str(edge[0]); var b := str(edge[1])
 		if not rooms.has(a) or not rooms.has(b): continue
-		var near := a == str(graph.get("currentRoomId","")) or b == str(graph.get("currentRoomId",""))
+		var near := (a == str(graph.get("currentRoomId","")) and b in adjacent) or (b == str(graph.get("currentRoomId","")) and a in adjacent)
 		var explored := bool(rooms[a].get("visited",false)) and bool(rooms[b].get("visited",false))
-		var color := CYAN if near else (Color("738e8a") if explored else Color("384c54"))
+		var highlighted := _on_path(selected_path,a,b)
+		var color := GOLD if highlighted else (CYAN if near else (Color("738e8a") if explored else Color("384c54")))
 		var from := room_point(a); var to := room_point(b)
 		draw_line(from,to,Color("081217"),7.0,true)
-		if near or explored:
-			draw_line(from,to,color,2.5 if near else 1.6,true)
-			if near: _arrow(from.lerp(to,0.56), (to-from).normalized() if a == str(graph.get("currentRoomId","")) else (from-to).normalized(),color)
+		if near or explored or highlighted:
+			draw_line(from,to,color,3.0 if highlighted else 2.5 if near else 1.6,true)
+			if highlighted:
+				var forward := false
+				for i in range(1,selected_path.size()):
+					if selected_path[i-1]==a and selected_path[i]==b:forward=true;break
+				_arrow(from.lerp(to,0.56),(to-from).normalized() if forward else (from-to).normalized(),color)
+			elif near: _arrow(from.lerp(to,0.56), (to-from).normalized() if a == str(graph.get("currentRoomId","")) else (from-to).normalized(),color)
 		else:
 			_dashed(from,to,color)
 	# Draw lower priority nodes first; selected rings are always legible.
@@ -158,6 +224,7 @@ func _draw() -> void:
 		if id != selected_room_id: _draw_room(str(id),adjacent)
 	if rooms.has(selected_room_id): _draw_room(selected_room_id,adjacent)
 	_draw_chrome()
+	if is_instance_valid(_motion_layer):_motion_layer.queue_redraw()
 
 func _draw_district(district: Dictionary) -> void:
 	var theme := str(district.get("theme","ruins"))
@@ -215,11 +282,13 @@ func _draw_room(id: String, adjacent: Array) -> void:
 	var boss := kind == "boss"
 	var color := CYAN if id in adjacent else Color("8b9ba1")
 	if kind in ["elite","battle"]: color = Color("d88b7e") if known else MUTED
-	if kind in ["vault","shrine"]: color = Color("c6a3e3")
+	if kind in ["vault","shrine","key_vault"]: color = Color("c6a3e3")
 	if boss: color = GOLD if graph.get("bossUnlocked",false) else Color("ae877a")
 	if current: color = GOLD
 	var radius := clampf(24 * sqrt(zoom),15,25)
 	var selected := id == selected_room_id
+	if id in adjacent and not visited and not current:
+		draw_arc(center,radius+4,0,TAU,40,Color(CYAN,.32),1.1,true)
 	if selected:
 		draw_circle(center,radius+7,Color(color,.12))
 		draw_arc(center,radius+6,-PI*.4,PI*.4,24,color,1.6,true)
@@ -236,7 +305,7 @@ func _draw_room(id: String, adjacent: Array) -> void:
 		var badge := center+Vector2(radius*.75,radius*.7)
 		draw_circle(badge,6,Color("132b2a"));draw_arc(badge,6,0,TAU,16,CYAN,1.0,true)
 		draw_polyline(PackedVector2Array([badge+Vector2(-3,0),badge+Vector2(-1,2),badge+Vector2(3,-2)]),CYAN,1.0,true)
-	if boss and not graph.get("bossUnlocked",false):
+	if (boss and not graph.get("bossUnlocked",false)) or (kind == "key_vault" and not room.get("unlocked",false)):
 		var lock := center+Vector2(radius*.7,-radius*.7)
 		draw_circle(lock,7,Color("1b2228"));_draw_icon(lock,"lock",4,GOLD)
 	# Only one persistent label. Full names and actions live in the adjacent
@@ -252,10 +321,12 @@ func _draw_room(id: String, adjacent: Array) -> void:
 func _draw_icon(p: Vector2, kind: String, r: float, color: Color) -> void:
 	var w := maxf(1.3,r*.13)
 	match kind:
-		"cache","vault":
+		"cache","vault","relay":
 			draw_rect(Rect2(p+Vector2(-r,-r*.55),Vector2(r*2,r*1.3)),color,false,w)
 			draw_line(p+Vector2(-r,-r*.1),p+Vector2(r,-r*.1),color,w,true)
 			draw_rect(Rect2(p+Vector2(-r*.15,-r*.25),Vector2(r*.3,r*.5)),color)
+			if kind == "relay":
+				_arrow(p+Vector2(0,-r*.9),Vector2.DOWN,color,r*.35)
 			if kind == "vault":
 				draw_line(p+Vector2(-r*.65,-r*.9),p+Vector2(r*.65,-r*.9),color,w,true)
 		"battle","elite":
@@ -289,6 +360,11 @@ func _draw_icon(p: Vector2, kind: String, r: float, color: Color) -> void:
 			draw_line(p+Vector2(r*.8,0),p+Vector2(r*.8,r),color,w,true)
 			draw_line(p,p+Vector2(0,r*.8),color,w,true)
 			_arrow(p,Vector2.UP,color,r*.35)
+		"key_vault":
+			draw_rect(Rect2(p+Vector2(-r,-r*.9),Vector2(r*2,r*1.8)),color,false,w)
+			draw_circle(p+Vector2(-r*.3,-r*.1),r*.26,color)
+			draw_line(p+Vector2(-r*.1,-r*.1),p+Vector2(r*.65,-r*.1),color,w,true)
+			draw_line(p+Vector2(r*.5,-r*.1),p+Vector2(r*.5,r*.3),color,w,true)
 		"lock":
 			draw_rect(Rect2(p+Vector2(-r,-r*.1),Vector2(r*2,r*1.2)),color,false,w)
 			draw_arc(p+Vector2(0,-r*.1),r*.6,PI,TAU,12,color,w,true)
@@ -341,7 +417,10 @@ func _clamp_offset() -> void:
 	var centered := view.get_center() - content.get_center()*zoom
 	for axis in range(2):
 		var extent: float = content.size[axis]*zoom
-		if extent <= view.size[axis]:
+		# Vector2 uses float32 while zoom is float64: fitted extents can be
+		# a few ulps above the viewport. Do not unlock the 24px pan margin
+		# for invisible subpixel overflow at the exact fitted boundary.
+		if extent <= view.size[axis] + 0.01:
 			# fit_view uses the same content center. A first drag must never
 			# jump from content-centered to decorative-world-centered framing.
 			offset[axis] = centered[axis]
@@ -447,7 +526,7 @@ func _content_bounds() -> Rect2:
 	var first := true
 	var bounds := Rect2()
 	for id in rooms:
-		var point := _world_point(rooms[id])/zoom
+		var point := _unscaled_point(rooms[id])
 		if first:bounds=Rect2(point,Vector2.ONE);first=false
 		else:bounds=bounds.expand(point)
 	return Rect2(bounds.position-Vector2(85,145),bounds.size+Vector2(170,235))
@@ -472,3 +551,47 @@ func focus_current() -> void:
 	if not current.is_empty():offset=_view_rect().get_center()-_world_point(current)
 	selected_room_id=str(graph.get("currentRoomId",""))
 	_velocity=Vector2.ZERO;_clamp_offset();queue_redraw()
+
+
+func _draw_route_motion(canvas: Control, phase: float) -> void:
+	if reduced_motion:return
+	var pulse := (sin(phase*TAU)+1.0)*0.5
+	var view := _view_rect()
+	for id in frontier_ids():
+		var center := room_point(id)
+		var radius := clampf(24*sqrt(zoom),15,25)+5.0+pulse*2.5
+		if not view.grow(-radius).has_point(center):continue
+		canvas.draw_arc(center,radius,0,TAU,40,Color(CYAN,.08+pulse*.20),1.4,true)
+	var path := travel_path(selected_room_id)
+	if path.size()<2:return
+	var lengths: Array[float]=[]
+	var total := 0.0
+	for i in range(1,path.size()):
+		var length := room_point(path[i-1]).distance_to(room_point(path[i]))
+		lengths.append(length);total+=length
+	if total<1:return
+	# One low-speed marker travels along the entire validated route rather
+	# than flashing every road or suggesting a straight-line teleport.
+	var distance := fposmod(phase*72.0,total)
+	for i in range(lengths.size()):
+		if distance<=lengths[i]:
+			var point := room_point(path[i]).lerp(room_point(path[i+1]),distance/maxf(1,lengths[i]))
+			if view.grow(-5).has_point(point):
+				canvas.draw_circle(point,4.0,Color(GOLD,.12))
+				canvas.draw_circle(point,1.8,Color(GOLD,.8))
+			break
+		distance-=lengths[i]
+
+class RouteMotion extends Control:
+	var atlas
+	var phase := 0.0
+	var _elapsed := 0.0
+	func _process(delta: float) -> void:
+		if not is_instance_valid(atlas) or atlas.reduced_motion or not is_visible_in_tree():return
+		phase+=delta/2.8
+		_elapsed+=delta
+		if _elapsed>=1.0/30.0:
+			_elapsed=0.0
+			if not atlas.frontier_ids().is_empty() or atlas.travel_path(atlas.selected_room_id).size()>1:queue_redraw()
+	func _draw() -> void:
+		if is_instance_valid(atlas):atlas._draw_route_motion(self,phase)

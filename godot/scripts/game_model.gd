@@ -71,7 +71,7 @@ func default_state() -> Dictionary:
 	ember.shards = 3
 	var zeph := default_character()
 	zeph.shards = 1
-	return {"extraction": ExtractionModel.defaults(), "version": 6, "createdAt": _now(), "lastSaved": _now(),
+	return {"extraction": ExtractionModel.defaults(), "version": 7, "createdAt": _now(), "lastSaved": _now(),
 		"resources": {"diamonds": 1600, "gold": 50000, "stamina": 100, "staminaLastUpdate": _now()},
 		"ownedCharacters": {"ember": ember, "zeph": zeph}, "relics": [], "team": ["ember", "zeph", null], "stageProgress": {},
 		"pityCounters": {"standard": {"count": 0, "count4": 0, "guaranteedFeatured": false}, "limited_kaldi": {"count": 0, "count4": 0, "guaranteedFeatured": false}},
@@ -200,6 +200,7 @@ func load_slot(slot: int) -> Dictionary:
 		save_blocked = previous_blocked
 		return _fail(last_error)
 	_issued_config.clear()
+	extraction.reset_runtime()
 	recover_stamina()
 	return {"success": true, "slot": slot}
 
@@ -285,6 +286,7 @@ func import_save(path: String, slot: int = -1) -> Dictionary:
 		save_blocked = old_blocked
 	else:
 		_issued_config.clear()
+		extraction.reset_runtime()
 		recover_stamina()
 	return result
 
@@ -302,6 +304,7 @@ func reset_slot(slot: int = -1) -> Dictionary:
 		state = replacement
 		save_blocked = false
 		_issued_config.clear()
+		extraction.reset_runtime()
 	last_error = ""
 	return {"success": true, "slot": slot}
 
@@ -311,7 +314,7 @@ func _number(value: Variant, minimum: float = 0.0, maximum: float = 1.0e15) -> b
 func valid_save(value: Variant) -> bool:
 	if not value is Dictionary or not value.get("resources") is Dictionary or not value.get("ownedCharacters") is Dictionary:
 		return false
-	if not _number(value.get("version", 3), 2, 6) or int(value.get("version", 3)) not in [2, 3, 4, 5, 6] or value.ownedCharacters.is_empty():
+	if not _number(value.get("version", 3), 2, 7) or int(value.get("version", 3)) not in [2, 3, 4, 5, 6, 7] or value.ownedCharacters.is_empty():
 		return false
 	for key in ["diamonds", "gold", "stamina"]:
 		if not _number(value.resources.get(key), 0):
@@ -461,7 +464,7 @@ func _merge_defaults(base: Dictionary, src: Dictionary) -> Dictionary:
 
 func _normalize(src: Dictionary) -> Dictionary:
 	var result := _merge_defaults(default_state(), src.duplicate(true))
-	result.version = 6
+	result.version = 7
 	extraction.migrate_state(result, int(src.get("version", 3)))
 	# Owned collections replace defaults; preserved extension fields remain round-trippable.
 	result.ownedCharacters = src.ownedCharacters.duplicate(true)

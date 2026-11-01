@@ -128,7 +128,7 @@ func simulate(profile:Dictionary,rank:int,policy:String,seed_value:int)->Diction
 			if policy!="casual" and option.id=="recover" and health(x)>0.75:continue
 			if option.cost>0:continue
 			must(x.choose_room_action(option.id),"room action");row.actions+=1;break
-		if not x.growth_choices().is_empty():continue
+		if not x.growth_choices().is_empty() or x.run().phase=="battle":continue
 		for container in x.containers():
 			while x.reveal_next(container.id).success:row.searches+=1
 			for item in x._find_container(container.id).items.duplicate(true):

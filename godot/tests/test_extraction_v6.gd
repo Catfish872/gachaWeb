@@ -35,7 +35,7 @@ func _init() -> void:
 	old.extraction.credits=321
 	old.extraction.stash=[{"uid":"legacy","itemId":"medkit","x":0,"y":0,"rotated":false,"revealed":true}]
 	g.state=g._normalize(old)
-	ck(g.state.version==6 and g.state.resources.gold==421 and x.state().credits==0,"wallet migration")
+	ck(g.state.version==7 and g.state.resources.gold==421 and x.state().credits==0,"wallet migration")
 	var legacy_value:int=x.item_value(x.state().stash[0])
 	ck(legacy_value==int(x.item_def("medkit").legacyValue),"old physical value")
 	g.state=g._normalize(g.state)

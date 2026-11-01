@@ -333,7 +333,7 @@ func _test_persistence() -> void:
 	legacy.erase("chapterGiftClaimed")
 	legacy.customExtension = {"note": "preserved"}
 	write_json(invalid, legacy)
-	check(m.import_save(invalid).success and m.state.version == 6 and m.state.abyss.currentFloor == 1 and m.state.customExtension.note == "preserved", "v2 migration fills additions and preserves extension fields")
+	check(m.import_save(invalid).success and m.state.version == 7 and m.state.abyss.currentFloor == 1 and m.state.customExtension.note == "preserved", "v2 migration fills additions and preserves extension fields")
 	check(m.reset_slot(2).success and m.active_slot == 3, "inactive slot reset leaves active selection")
 	var corrupted_path := directory.path_join("slot3.json")
 	var corrupt_file := FileAccess.open(corrupted_path, FileAccess.WRITE)

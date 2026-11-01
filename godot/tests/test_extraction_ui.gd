@@ -13,9 +13,9 @@ func descendants(node: Node) -> Array:
 	var result: Array=[]
 	for child in node.get_children():result.append(child);result.append_array(descendants(child))
 	return result
-func button(name: String) -> Button:
+func button(name: String) -> BaseButton:
 	for node in descendants(app.overlay)+descendants(app.main_body):
-		if node is Button and (str(node.name)==name or str(node.name).begins_with(name)):return node
+		if node is BaseButton and (str(node.name)==name or str(node.name).begins_with(name)):return node
 	return null
 func press(name: String) -> bool:
 	var b:=button(name);check(b!=null,"button "+name)
@@ -86,9 +86,10 @@ func run() -> void:
 	var initial_room: String=app.model.extraction.map_state().currentRoomId
 	check(is_equal_approx(map.zoom,map._minimum_zoom()),"new map starts fitted after layout")
 	var offset: Vector2=map.offset
+	var fit_before:="size=%s view=%s content=%s zoom=%s offset=%s auto=%s"%[map.size,map._view_rect(),map._content_bounds(),map.zoom,map.offset,map._auto_fit]
 	check(app._extraction_gesture_at(app.shell,map.global_position+Vector2(100,100)),"map owns touch pan")
 	drag(map,Vector2(190,170),Vector2(50,60));await frames()
-	check(map.offset.is_equal_approx(offset),"fitted map stays stable on drag")
+	check(map.offset.is_equal_approx(offset),"fitted map stays stable on drag BEFORE "+fit_before+" AFTER size=%s view=%s content=%s zoom=%s offset=%s auto=%s"%[map.size,map._view_rect(),map._content_bounds(),map.zoom,map.offset,map._auto_fit])
 	for step in 8:
 		if map._content_bounds().size.x*map.zoom>map._view_rect().size.x+30:break
 		press("AtlasZoomIn");await frames()
@@ -120,20 +121,22 @@ func run() -> void:
 	check(app.model.state.extraction.run.bag.size()==bag_before,"scene swipe grants no loot")
 	check(scene.pan!=origin_pan or scene.canvas_size.x<=scene.size.x,"scene pan responds within bounds")
 	scene.pan.x=clampf(scene.size.x/2-float(first.sceneX)*scene.canvas_size.x,minf(0,scene.size.x-scene.canvas_size.x),0)
+	app.extraction_auto_pick=false;app.extraction_reduced_motion=false
 	tap(scene,scene.container_point(first));await frames()
-	check(button("ExtractionSearch")!=null,"scene tap opens searchable container")
+	check(button("ExtractionCloseContainer")!=null and app.extraction_searching,"scene tap automatically starts searching")
+	check(button("ExtractionSearch")==null and button("ExtractionStopSearch")==null,"search requires no extra start or stop button")
 	var grid=app.overlay.find_child("ExtractionContainer_"+str(first.id),true,false)
 	check(grid!=null,"container spatial grid")
 	if grid!=null:
 		var item: Dictionary=grid.items[0]
 		check(grid._get_tooltip(Vector2(int(item.x)*grid.cell+6,int(item.y)*grid.cell+6))=="未搜索物资","hidden tooltip")
-	# Manual setting preserves optional selection; two fast starts remain single scan.
-	app.extraction_auto_pick=false
-	press("ExtractionSearch");press("ExtractionStopSearch");await frames()
-	check(not app.extraction_searching,"stop available immediately")
-	press("ExtractionSearch")
-	await create_timer(1.2).timeout;await frames()
-	check(not app.extraction_searching,"sequential scan completes")
+	# Closing cancels immediately; reopening resumes with no extra search button.
+	press("ExtractionCloseContainer");await frames()
+	check(not app.extraction_searching,"closing immediately cancels auto search")
+	app.extraction_reduced_motion=true
+	press("ExtractionOpenContainer_"+str(first.id));await frames()
+	await wait_search()
+	check(not app.extraction_searching,"automatic sequential scan completes")
 	var current: Dictionary=app.model.extraction.containers()[0]
 	for item in current.items:check(item.revealed,"all items revealed")
 	press("ExtractionTakeAll");await frames()
@@ -159,27 +162,48 @@ func run() -> void:
 	check(choose_resource_room(),"second room fixture")
 	await frames()
 	boxes=app.model.extraction.containers();first=boxes[0]
-	press("ExtractionOpenContainer_"+str(first.id));await frames()
 	app.extraction_auto_pick=true;app.extraction_reduced_motion=false
+	press("ExtractionOpenContainer_"+str(first.id));await frames()
 	var stable_grid=app.overlay.find_child("ExtractionContainer_"+str(first.id),true,false)
 	var stable_id: int=stable_grid.get_instance_id()
-	press("ExtractionSearch")
-	var visible_reveal:=false
-	var revealed_at:=0.0
-	var reveal_duration:=0.0
+	var first_visible_at: Dictionary={}
+	var visible_duration: Dictionary={}
+	var source_uids: Array=_find_box(str(first.id)).items.map(func(item):return str(item.uid))
+	var bag_before_auto: Array=app.model.state.extraction.run.bag.map(func(item):return str(item.uid))
+	var identified: Dictionary={}
 	var start_time:=Time.get_ticks_msec()/1000.0
-	while app.extraction_searching and Time.get_ticks_msec()/1000.0-start_time<12.0:
+	while app.extraction_searching and Time.get_ticks_msec()/1000.0-start_time<45.0:
 		await process_frame
 		var current_grid=app.overlay.find_child("ExtractionContainer_"+str(first.id),true,false)
 		check(current_grid!=null and current_grid.get_instance_id()==stable_id,"continuous search preserves grid identity")
-		var showing:=false
+		var visible_now:Array=[]
 		for visible_item in current_grid.items:
-			if current_grid.definitions.get(str(visible_item.itemId),{}).get("kind","")!="unknown":showing=true
-		if showing and not visible_reveal:
-			visible_reveal=true;revealed_at=Time.get_ticks_msec()/1000.0
-		if showing and visible_reveal:reveal_duration=maxf(reveal_duration,Time.get_ticks_msec()/1000.0-revealed_at)
-	check(visible_reveal,"auto pickup visibly reveals item before collecting")
-	check(reveal_duration>=0.20,"normal reveal remains observable for at least 200ms")
+			var uid:=str(visible_item.uid)
+			var definition:Dictionary=current_grid.definitions.get(str(visible_item.itemId),{})
+			if definition.get("kind","")=="unknown":continue
+			var bounds:Rect2=current_grid.item_rect(visible_item)
+			bounds.position+=current_grid.global_position
+			var clip:Rect2=Rect2(Vector2.ZERO,app.size)
+			var ancestor=current_grid.get_parent()
+			while ancestor!=null:
+				if ancestor is Control and ancestor.clip_contents:clip=clip.intersection(ancestor.get_global_rect())
+				ancestor=ancestor.get_parent()
+			if clip.intersection(bounds).get_area()<bounds.get_area()*0.95:continue
+			if not current_grid.textures.has(str(visible_item.itemId)):continue
+			var now:=Time.get_ticks_msec()/1000.0
+			if not first_visible_at.has(uid):first_visible_at[uid]=now
+			visible_now.append(uid)
+			visible_duration[uid]=maxf(float(visible_duration.get(uid,0)),now-first_visible_at[uid])
+			identified[uid]=str(definition.get("name",""))
+		for uid in first_visible_at.keys():
+			if not visible_now.has(uid):first_visible_at.erase(uid)
+	var verified_visible_pickups:=0
+	var final_bag_uids:Array=app.model.state.extraction.run.bag.map(func(item):return str(item.uid))
+	for uid in final_bag_uids:
+		if bag_before_auto.has(uid):continue
+		check(source_uids.has(uid),"automatic pickup retains exact source UID")
+		if float(visible_duration.get(uid,0))>=0.20 and not identified.get(uid,"").is_empty():verified_visible_pickups+=1
+	check(verified_visible_pickups>0,"same UID is identifiable and visible at least 200ms before exact-UID pickup")
 	check(not app.extraction_searching,"continuous search completes within bounded time")
 	app.extraction_reduced_motion=true
 	await frames()
@@ -198,9 +222,9 @@ func run() -> void:
 	# Cancellation before reveal.
 	check(choose_resource_room(),"cancel fixture");await frames()
 	first=app.model.extraction.containers()[0]
-	press("ExtractionOpenContainer_"+str(first.id));await frames()
 	app.extraction_reduced_motion=false
-	press("ExtractionSearch");await create_timer(0.1).timeout
+	press("ExtractionOpenContainer_"+str(first.id));await frames()
+	await create_timer(0.1).timeout
 	app._go_back();await create_timer(1.2).timeout
 	check(not app.extraction_searching,"back cancels search")
 	check(app.model.state.extraction.run.bag.is_empty(),"cancel grants no loot")
@@ -221,9 +245,9 @@ func run() -> void:
 	first=app.model.extraction.containers()[0]
 	var container_count: int=first.items.size()
 	app._render_screen();await frames()
-	press("ExtractionOpenContainer_"+str(first.id));await frames()
 	app.extraction_reduced_motion=true;app.extraction_auto_pick=true
-	press("ExtractionSearch");await create_timer(1.3).timeout;await frames()
+	press("ExtractionOpenContainer_"+str(first.id));await frames()
+	await wait_search()
 	check(app.model.state.extraction.run.bag==full_before,"full bag preserves every existing item")
 	var left: Dictionary=_find_box(str(first.id))
 	check(left.items.size()==container_count,"unfitted items remain in container")
@@ -297,9 +321,8 @@ func run() -> void:
 	check(choose_resource_room(),"cancel-after-reveal room")
 	await frames()
 	var cancel_box: Dictionary=app.model.extraction.containers()[0]
-	press("ExtractionOpenContainer_"+str(cancel_box.id));await frames()
 	app.extraction_auto_pick=true;app.extraction_reduced_motion=false
-	press("ExtractionSearch")
+	press("ExtractionOpenContainer_"+str(cancel_box.id));await frames()
 	var pending_uid:=""
 	var cancel_deadline:=Time.get_ticks_msec()+5000
 	while pending_uid.is_empty() and Time.get_ticks_msec()<cancel_deadline:
@@ -307,12 +330,11 @@ func run() -> void:
 		for item in _find_box(str(cancel_box.id)).get("items",[]):
 			if item.get("revealed",false):pending_uid=str(item.uid);break
 	check(not pending_uid.is_empty(),"observe revealed pending pickup")
-	press("ExtractionStopSearch")
+	press("ExtractionCloseContainer");await frames()
 	var cancelled_bag: Array=app.model.state.extraction.run.bag.duplicate(true)
 	await create_timer(0.7).timeout
 	check(app.model.state.extraction.run.bag==cancelled_bag,"stop cancels pending pickup")
 	check(_find_box(str(cancel_box.id)).get("items",[]).any(func(item):return str(item.uid)==pending_uid),"cancelled revealed item stays in container")
-	press("ExtractionCloseContainer");await frames()
 	app.queue_free();await frames()
 	# AudioServer releases queued streaming buffers asynchronously.
 	await create_timer(0.3).timeout
@@ -323,3 +345,9 @@ func _find_box(id: String) -> Dictionary:
 	for box in app.model.extraction.containers():
 		if str(box.id)==id:return box
 	return {}
+
+func wait_search(seconds: float=12.0) -> void:
+	var deadline:=Time.get_ticks_msec()+int(seconds*1000)
+	while app.extraction_searching and Time.get_ticks_msec()<deadline:await process_frame
+	check(not app.extraction_searching,"search reaches bounded terminal state")
+	await frames()

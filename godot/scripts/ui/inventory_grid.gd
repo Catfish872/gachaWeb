@@ -19,6 +19,11 @@ var scan_uid := ""
 var scan_progress := 0.0
 var flash_uid := ""
 var flash_time := 0.0
+var reduced_motion := false
+var movement_duration := 0.25
+var movements: Dictionary = {}
+var flashes: Dictionary = {}
+var arrivals: Dictionary = {}
 var _press := Vector2.ZERO
 var _pressed := false
 var _press_time := 0.0
@@ -29,7 +34,17 @@ var _last_point := Vector2.ZERO
 var _pointer_global := Vector2.ZERO
 
 func configure(width: int, height: int, contents: Array, defs: Dictionary, selection: String = "") -> void:
+	var previous: Dictionary = {}
+	for old in items: previous[str(old.get("uid",""))] = visual_rect(old)
 	columns = width; rows = height; items = contents.duplicate(true); definitions = defs; selected_uid = selection
+	var live: Dictionary = {}
+	for item in items:
+		var uid:=str(item.get("uid",""));live[uid]=true
+		var target:=item_rect(item)
+		if not reduced_motion and previous.has(uid) and previous[uid]!=target:
+			movements[uid]={"from":previous[uid],"elapsed":0.0}
+	for uid in movements.keys():
+		if not live.has(uid):movements.erase(uid)
 	for id in defs:
 		if textures.has(id): continue
 		var path := str(defs[id].get("icon", "res://assets/items/extraction/" + str(id) + ".png"))
@@ -42,6 +57,10 @@ func configure(width: int, height: int, contents: Array, defs: Dictionary, selec
 
 func _ready() -> void:
 	resized.connect(_resize_grid)
+	var scroll=_scroll_container()
+	if scroll!=null:
+		scroll.get_v_scroll_bar().value_changed.connect(func(_value):queue_redraw())
+		scroll.resized.connect(queue_redraw)
 	_resize_grid()
 
 func _resize_grid() -> void:
@@ -50,6 +69,17 @@ func _resize_grid() -> void:
 	queue_redraw()
 
 func _process(delta: float) -> void:
+	var animated:=not movements.is_empty() or not flashes.is_empty() or not arrivals.is_empty()
+	for uid in movements.keys():
+		movements[uid].elapsed+=delta
+		if float(movements[uid].elapsed)>=movement_duration:movements.erase(uid)
+	for uid in flashes.keys():
+		flashes[uid]=float(flashes[uid])-delta
+		if float(flashes[uid])<=0:flashes.erase(uid)
+	for uid in arrivals.keys():
+		arrivals[uid]=float(arrivals[uid])-delta
+		if float(arrivals[uid])<=0:arrivals.erase(uid)
+	if animated:queue_redraw()
 	if flash_time > 0:
 		flash_time = maxf(0, flash_time-delta); queue_redraw()
 	if _pressed and multi_select:
@@ -72,7 +102,22 @@ func set_scan(uid: String, progress: float) -> void:
 	scan_uid=uid; scan_progress=progress; queue_redraw()
 
 func reveal_flash(uid: String) -> void:
-	flash_uid=uid; flash_time=0.55; queue_redraw()
+	if reduced_motion:return
+	flash_uid=uid; flash_time=0.55; flashes[uid]=0.55; queue_redraw()
+
+func arrival_flash(uid: String) -> void:
+	if reduced_motion:return
+	arrivals[uid]=0.65;queue_redraw()
+
+func visual_rect(item: Dictionary) -> Rect2:
+	var target:=item_rect(item)
+	var uid:=str(item.get("uid",""))
+	if reduced_motion or not movements.has(uid):return target
+	var move: Dictionary=movements[uid]
+	var t:=clampf(float(move.elapsed)/movement_duration,0.0,1.0)
+	t=1.0-pow(1.0-t,3)
+	var origin: Rect2=move.from
+	return Rect2(origin.position.lerp(target.position,t),origin.size.lerp(target.size,t))
 
 func item_size(item: Dictionary) -> Vector2i:
 	var d: Dictionary=definitions.get(str(item.get("itemId","")),{})
@@ -92,7 +137,7 @@ func _draw() -> void:
 	for item in items:
 		var id:=str(item.get("itemId",""));var uid:=str(item.get("uid",""))
 		var d: Dictionary=definitions.get(id,{})
-		var rect:=item_rect(item)
+		var rect:=visual_rect(item)
 		var unknown: bool=d.get("kind","")=="unknown"
 		var color: Color=COLORS[clampi(int(d.get("rarity",0)),0,5)]
 		var chosen:=uid==selected_uid or selected_uids.has(uid)
@@ -117,7 +162,7 @@ func _draw() -> void:
 				var title:=str(d.get("name","物资"))
 				draw_rect(Rect2(rect.position.x,rect.end.y-18,rect.size.x,18),Color(0.025,0.04,0.065,0.85))
 				draw_string(font,Vector2(rect.position.x+4,rect.end.y-5),title,HORIZONTAL_ALIGNMENT_LEFT,rect.size.x-8,11,color.lightened(0.2))
-		if uid==scan_uid:
+		if uid==scan_uid and not reduced_motion:
 			# Clipped diagonal scan marks give the active unknown item a distinct state.
 			for stripe in range(-int(rect.size.y),int(rect.size.x),12):
 				var a:=Vector2(rect.position.x+maxi(0,stripe),rect.position.y+maxi(0,-stripe))
@@ -126,12 +171,43 @@ func _draw() -> void:
 			var y:=rect.position.y+rect.size.y*scan_progress
 			draw_rect(Rect2(rect.position,Vector2(rect.size.x,rect.size.y*scan_progress)),Color(0.35,0.85,0.9,0.10))
 			draw_line(Vector2(rect.position.x,y),Vector2(rect.end.x,y),Color("9ce4e3"),2,true)
-		if uid==flash_uid and flash_time>0:
-			draw_rect(rect,Color(color,flash_time*0.6))
+		if flashes.has(uid):
+			var power:=float(flashes[uid])/0.55
+			draw_rect(rect,Color(color,power*0.28))
+			draw_rect(rect.grow(1),Color(color,power),false,2)
+		if arrivals.has(uid):
+			var power:=float(arrivals[uid])/0.65
+			draw_rect(item_rect(item),Color(color,power*0.18))
+			draw_rect(item_rect(item).grow(2+4*(1-power)),Color(color,power),false,2)
+			for y in item_size(item).y:
+				for x in item_size(item).x:
+					var pos:=Vector2((int(item.get("x",0))+x)*cell,(int(item.get("y",0))+y)*cell)
+					draw_rect(Rect2(pos+Vector2.ONE,Vector2.ONE*(cell-2)),Color(color,power*0.6),false,1)
 		if selected_uids.has(uid):
 			draw_circle(rect.position+Vector2(10,10),8,Color("dfbd78"))
 			draw_line(rect.position+Vector2(6,10),rect.position+Vector2(9,13),Color("172431"),2)
 			draw_line(rect.position+Vector2(9,13),rect.position+Vector2(14,7),Color("172431"),2)
+	_draw_scroll_edges()
+
+func _scroll_container():
+	var node=get_parent()
+	while node!=null:
+		if node is ScrollContainer:return node
+		node=node.get_parent()
+	return null
+
+func _draw_scroll_edges() -> void:
+	var scroll=_scroll_container()
+	if scroll==null:return
+	var top:float=scroll.global_position.y-global_position.y
+	var bottom:float=top+scroll.size.y
+	var edge:=14.0
+	if top>1:
+		for step in 7:
+			draw_rect(Rect2(0,top+step*2,size.x,2),Color(.055,.085,.12,(1-float(step)/7)*.85))
+	if bottom<size.y-1:
+		for step in 7:
+			draw_rect(Rect2(0,bottom-edge+step*2,size.x,2),Color(.055,.085,.12,float(step)/7*.85))
 
 func _get_tooltip(at_position: Vector2) -> String:
 	var item:=_item_at(at_position)

@@ -1,0 +1,538 @@
+{
+  "generator": "built-in image_gen",
+  "sprites": [
+    {
+      "id": "armor_0",
+      "path": "res://assets/items/expedition_v230/armor_0.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        0,
+        0,
+        256,
+        267
+      ],
+      "size": [
+        291,
+        291
+      ],
+      "sha256": "f05708f177e9e88ce3574a8992bcc0fee73a8a4cb6686a176b9178569145e855"
+    },
+    {
+      "id": "armor_1",
+      "path": "res://assets/items/expedition_v230/armor_1.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        256,
+        0,
+        512,
+        267
+      ],
+      "size": [
+        291,
+        291
+      ],
+      "sha256": "5890caa6ab3e225787430e43698f9e4bab6589629e6218a10a52034ecfd44863"
+    },
+    {
+      "id": "armor_2",
+      "path": "res://assets/items/expedition_v230/armor_2.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        512,
+        0,
+        768,
+        267
+      ],
+      "size": [
+        291,
+        291
+      ],
+      "sha256": "1dc06a21c45e83a4de798d0c21bfe75b71b81f3f07ecd239bab015aa1641d418"
+    },
+    {
+      "id": "armor_3",
+      "path": "res://assets/items/expedition_v230/armor_3.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        768,
+        0,
+        1024,
+        267
+      ],
+      "size": [
+        291,
+        291
+      ],
+      "sha256": "adb9947c3d13aca85dd8b2e7d5c04134fd59234328aa57b6eb3afc5be35b8403"
+    },
+    {
+      "id": "armor_4",
+      "path": "res://assets/items/expedition_v230/armor_4.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        1024,
+        0,
+        1280,
+        267
+      ],
+      "size": [
+        291,
+        291
+      ],
+      "sha256": "86fe4c5e16a2d5f0ad11005bdd9cd106089589de323781f5ab8b5b5cf4987597"
+    },
+    {
+      "id": "armor_5",
+      "path": "res://assets/items/expedition_v230/armor_5.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        1280,
+        0,
+        1536,
+        267
+      ],
+      "size": [
+        291,
+        291
+      ],
+      "sha256": "6bfa7e70d134ef0ab74c8b61109ae393d4b3e1eea14a9d53dfcfa44db991acb0"
+    },
+    {
+      "id": "pack_1",
+      "path": "res://assets/items/expedition_v230/pack_1.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        0,
+        267,
+        256,
+        510
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "sha256": "912782893f33ea0249442f301c5529fd01c3eb169fe2b82f7eeb48b0cb996ce3"
+    },
+    {
+      "id": "pack_2",
+      "path": "res://assets/items/expedition_v230/pack_2.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        256,
+        267,
+        512,
+        510
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "sha256": "07e239ffa42ff5190ce79209251a64ff011d9d0b4cbc3aef590337038d404cca"
+    },
+    {
+      "id": "pack_3",
+      "path": "res://assets/items/expedition_v230/pack_3.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        512,
+        267,
+        768,
+        510
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "sha256": "c1e88032551e99781a9bd0c85ec499ba3367d160e97815c4136c865ad1dcd423"
+    },
+    {
+      "id": "pack_4",
+      "path": "res://assets/items/expedition_v230/pack_4.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        768,
+        267,
+        1024,
+        510
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "sha256": "578eeca5ed16de461b5fb42f024072984e3bd504ed0c65e7f8720ffa40a69acd"
+    },
+    {
+      "id": "pack_5",
+      "path": "res://assets/items/expedition_v230/pack_5.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        1024,
+        267,
+        1280,
+        510
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "sha256": "305d16b50956c2922a5453494268c05e7f404ba223fece2a7f71d1ad839dfb4d"
+    },
+    {
+      "id": "key_ruins",
+      "path": "res://assets/items/expedition_v230/key_ruins.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        0,
+        510,
+        256,
+        754
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "sha256": "d06ee258d23f5ad6cf07a1340a04a4670d8ec3558f07181500a13c7f2bce1204"
+    },
+    {
+      "id": "key_forest",
+      "path": "res://assets/items/expedition_v230/key_forest.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        256,
+        510,
+        512,
+        754
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "sha256": "6c52503f0ff8c22cda82af7bd90eae9d588c733d0acb4f2dff4b757a2f091ba8"
+    },
+    {
+      "id": "key_sanctum",
+      "path": "res://assets/items/expedition_v230/key_sanctum.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        512,
+        510,
+        768,
+        754
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "sha256": "f71e10f05c0a24d3e55f3dc414c956c804f374998adf2e1a30b9d931fede86c2"
+    },
+    {
+      "id": "repair_patch",
+      "path": "res://assets/items/expedition_v230/repair_patch.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        768,
+        510,
+        1024,
+        754
+      ],
+      "size": [
+        280,
+        280
+      ],
+      "sha256": "cc9fb2750579785af682af2b12894555082e5c631afd7c4cc5b509083e7211aa"
+    },
+    {
+      "id": "repair_kit",
+      "path": "res://assets/items/expedition_v230/repair_kit.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        1024,
+        510,
+        1315,
+        754
+      ],
+      "size": [
+        315,
+        315
+      ],
+      "sha256": "088d4dbcec55299c7b2f636cca1ad089ddd141104612ff88eb26c208212395fe"
+    },
+    {
+      "id": "energy_tonic",
+      "path": "res://assets/items/expedition_v230/energy_tonic.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        1315,
+        510,
+        1536,
+        754
+      ],
+      "size": [
+        268,
+        268
+      ],
+      "sha256": "da76a132bd347ee4c47c91abd9f0186680c6c01b2ead35a957b7796a848812ac"
+    },
+    {
+      "id": "revival_incense",
+      "path": "res://assets/items/expedition_v230/revival_incense.png",
+      "source": "exec-ff5e79e1-3eb2-4e79-838d-8db6ae42cd68.png",
+      "crop": [
+        0,
+        754,
+        256,
+        1024
+      ],
+      "size": [
+        294,
+        294
+      ],
+      "sha256": "f510e29e6e5eaf77bd4e9cf50208d1c13aeb8a2e1f82022119a351ca3e587e7f"
+    },
+    {
+      "id": "repair_core",
+      "path": "res://assets/items/expedition_v230/repair_core.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        0,
+        0,
+        330,
+        325
+      ],
+      "size": [
+        354,
+        354
+      ],
+      "sha256": "227e82ea2a66fb63db4f223867cacbda4bed31af76e6d1f6e5ca242b32ff531b"
+    },
+    {
+      "id": "energy_flask",
+      "path": "res://assets/items/expedition_v230/energy_flask.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        330,
+        0,
+        640,
+        325
+      ],
+      "size": [
+        349,
+        349
+      ],
+      "sha256": "c430db410027a7505830471d850d9841c8e0f4d6af2cf1b38c5f557b8577b74e"
+    },
+    {
+      "id": "energy_crystal",
+      "path": "res://assets/items/expedition_v230/energy_crystal.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        640,
+        0,
+        930,
+        325
+      ],
+      "size": [
+        349,
+        349
+      ],
+      "sha256": "b3bbbb9360df8cfa2ce1760eb85d4287603653053f2cd3e5e4e28383b19a16e5"
+    },
+    {
+      "id": "revival_bloom",
+      "path": "res://assets/items/expedition_v230/revival_bloom.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        930,
+        0,
+        1254,
+        325
+      ],
+      "size": [
+        349,
+        349
+      ],
+      "sha256": "303131e7b193260e2bb3ff15d7726c95365b9263016140327514fee5c1931398"
+    },
+    {
+      "id": "revival_phoenix",
+      "path": "res://assets/items/expedition_v230/revival_phoenix.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        0,
+        325,
+        330,
+        635
+      ],
+      "size": [
+        354,
+        354
+      ],
+      "sha256": "e4887a49edf03eb150667295210deb316650b29d792a6562ecfb276233d5c436"
+    },
+    {
+      "id": "cleanse_salt",
+      "path": "res://assets/items/expedition_v230/cleanse_salt.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        330,
+        325,
+        640,
+        635
+      ],
+      "size": [
+        334,
+        334
+      ],
+      "sha256": "81149f0bce780c704a49b91c4ee237791031e6087c9b2d46082d426331df2698"
+    },
+    {
+      "id": "cleanse_water",
+      "path": "res://assets/items/expedition_v230/cleanse_water.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        640,
+        325,
+        930,
+        635
+      ],
+      "size": [
+        334,
+        334
+      ],
+      "sha256": "f82752dedb8e23206cc61bd772bdcf244b97d9cfbe0e3f590b9f41d658a8e63f"
+    },
+    {
+      "id": "cleanse_censer",
+      "path": "res://assets/items/expedition_v230/cleanse_censer.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        930,
+        325,
+        1254,
+        635
+      ],
+      "size": [
+        348,
+        348
+      ],
+      "sha256": "4de36d66d7e97a59cd19791a2be8de44ed42401c001f799220ba5e9896f6a3dd"
+    },
+    {
+      "id": "ration_0",
+      "path": "res://assets/items/expedition_v230/ration_0.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        0,
+        635,
+        330,
+        906
+      ],
+      "size": [
+        354,
+        354
+      ],
+      "sha256": "6ead4225acf124aa8371149da046d5f96b179cfccfb5fc52c2613181917ca2e8"
+    },
+    {
+      "id": "ration_1",
+      "path": "res://assets/items/expedition_v230/ration_1.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        330,
+        635,
+        640,
+        906
+      ],
+      "size": [
+        334,
+        334
+      ],
+      "sha256": "5a919e904af6801c12cf325424491de0e03177ba3ee982a78cc4aa758dda169f"
+    },
+    {
+      "id": "ration_2",
+      "path": "res://assets/items/expedition_v230/ration_2.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        640,
+        635,
+        930,
+        906
+      ],
+      "size": [
+        314,
+        314
+      ],
+      "sha256": "6d4aeeb4b5f859bb88c62f4087bd7758adac541ef5282989c355f8842713101c"
+    },
+    {
+      "id": "ration_3",
+      "path": "res://assets/items/expedition_v230/ration_3.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        930,
+        635,
+        1254,
+        906
+      ],
+      "size": [
+        348,
+        348
+      ],
+      "sha256": "05c358c295a11ffc8814da5e2abaca829997dd5600fe934567ec2054eee7471d"
+    },
+    {
+      "id": "ration_4",
+      "path": "res://assets/items/expedition_v230/ration_4.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        0,
+        906,
+        330,
+        1254
+      ],
+      "size": [
+        372,
+        372
+      ],
+      "sha256": "0f19a32741e37056bf4df02fb0272e9dcf450f52f0cb6def7b15a285a031f9f9"
+    },
+    {
+      "id": "ration_5",
+      "path": "res://assets/items/expedition_v230/ration_5.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        330,
+        906,
+        640,
+        1254
+      ],
+      "size": [
+        372,
+        372
+      ],
+      "sha256": "43b395eca1556d45a0f49e6a18a5b63eecfdd812c4769df78a1b026e1ace20f1"
+    },
+    {
+      "id": "relay_chest",
+      "path": "res://assets/items/expedition_v230/relay_chest.png",
+      "source": "exec-10010bc6-8cd7-417a-86c9-0c55ae136958.png",
+      "crop": [
+        640,
+        906,
+        930,
+        1254
+      ],
+      "size": [
+        372,
+        372
+      ],
+      "sha256": "2953a82cd8ccb4a0841c73b92a1d03949ee996698667e7e1ded8859c8a3e2363"
+    }
+  ],
+  "backgrounds": [
+    "res://assets/extraction/rooms/astral_vault.webp",
+    "res://assets/extraction/rooms/courier_waystation.webp"
+  ],
+  "notes": "32 inventory items plus courier prop. Original imagegen alpha retained. Sprite extraction uses visually inspected empty atlas gutters plus transparent canvas padding. No repainting or background subtraction."
+}

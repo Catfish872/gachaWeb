@@ -1,0 +1,4583 @@
+{
+	"errors": [],
+	"hashes": {
+		"data/extraction.json": "7c4d05b0cafc9026c66096a7a0c48fc44fcd2361456d2e6366254996129ffb12",
+		"scripts/battle_model.gd": "215789a49e7b3ad1d86e979f001f820935dc3102171780465e98c0facc6e1d7d",
+		"scripts/extraction_model.gd": "d5296b687c81555b90454ca0fc3a90674ed88a8abf945afbd830851f98085172",
+		"scripts/game_model.gd": "7b4d3e988755666268e616432599b106bb2d0b33438c61081a81afc7f5c0162c"
+	},
+	"method": "Paired legal team fixtures. Real BattleModel steps, actual gold delta plus new sellable assets; no CPU time used. Estimated 4x time = .2125s per step + explicit navigation/decision/search assumptions. Fast/deliberate are sensitivity scenarios, not observed human times. Extraction exits first boss; abyss clears or fails floor20. Excludes gems/stamina value, keeps deaths and zero rewards.",
+	"rows": [
+		{
+			"actions": 5,
+			"battles": 3,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 9,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 960
+				}
+			],
+			"gold": 960,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 15,
+			"searchSeconds": 24.65,
+			"searches": 20,
+			"secondsDeliberate": 145.65,
+			"secondsFast": 74.85,
+			"seed": 11300000,
+			"steps": 40,
+			"success": true,
+			"travel": 10
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1040
+				}
+			],
+			"gold": 1040,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 14,
+			"searchSeconds": 37.13,
+			"searches": 31,
+			"secondsDeliberate": 177.13,
+			"secondsFast": 94.83,
+			"seed": 11300000,
+			"steps": 40,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 328.6625,
+			"secondsFast": 160.6625,
+			"seed": 11300000,
+			"steps": 229,
+			"success": true
+		},
+		{
+			"actions": 4,
+			"battles": 5,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3085
+				}
+			],
+			"gold": 3085,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 20,
+			"searchSeconds": 47.6,
+			"searches": 35,
+			"secondsDeliberate": 183.0,
+			"secondsFast": 106.5,
+			"seed": 11300001,
+			"steps": 56,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 4,
+			"battles": 6,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 9,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2920
+				}
+			],
+			"gold": 2920,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 24,
+			"searchSeconds": 42.24,
+			"searches": 33,
+			"secondsDeliberate": 182.0525,
+			"secondsFast": 104.4525,
+			"seed": 11300001,
+			"steps": 65,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 339.1875,
+			"secondsFast": 168.1875,
+			"seed": 11300001,
+			"steps": 255,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1040
+				}
+			],
+			"gold": 1040,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 14,
+			"searchSeconds": 24.43,
+			"searches": 21,
+			"secondsDeliberate": 154.005,
+			"secondsFast": 77.705,
+			"seed": 11300002,
+			"steps": 38,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2385
+				}
+			],
+			"gold": 2385,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 11,
+			"searchSeconds": 25.78,
+			"searches": 21,
+			"secondsDeliberate": 148.0175,
+			"secondsFast": 74.7175,
+			"seed": 11300002,
+			"steps": 27,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"battles": 11,
+			"choices": 19,
+			"floors": 10,
+			"gold": 2825,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 182.7125,
+			"secondsFast": 86.7125,
+			"seed": 11300002,
+			"steps": 121,
+			"success": false
+		},
+		{
+			"actions": 5,
+			"battles": 6,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1990
+				}
+			],
+			"gold": 1990,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 25,
+			"searchSeconds": 42.97,
+			"searches": 34,
+			"secondsDeliberate": 196.995,
+			"secondsFast": 110.895,
+			"seed": 11300003,
+			"steps": 66,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"actions": 7,
+			"battles": 3,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 6,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2005
+				}
+			],
+			"gold": 2005,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 13,
+			"searchSeconds": 45.14,
+			"searches": 38,
+			"secondsDeliberate": 188.0775,
+			"secondsFast": 103.2775,
+			"seed": 11300003,
+			"steps": 35,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"battles": 11,
+			"choices": 18,
+			"floors": 10,
+			"gold": 2825,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 178.775,
+			"secondsFast": 85.775,
+			"seed": 11300003,
+			"steps": 126,
+			"success": false
+		},
+		{
+			"actions": 4,
+			"battles": 5,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1430
+				}
+			],
+			"gold": 1430,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 18,
+			"searchSeconds": 41.41,
+			"searches": 32,
+			"secondsDeliberate": 170.11,
+			"secondsFast": 96.61,
+			"seed": 11300004,
+			"steps": 48,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"actions": 5,
+			"battles": 4,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2160
+				}
+			],
+			"gold": 2160,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 15,
+			"searchSeconds": 42.36,
+			"searches": 32,
+			"secondsDeliberate": 185.435,
+			"secondsFast": 101.535,
+			"seed": 11300004,
+			"steps": 38,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"battles": 11,
+			"choices": 19,
+			"floors": 10,
+			"gold": 2825,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 185.2625,
+			"secondsFast": 89.2625,
+			"seed": 11300004,
+			"steps": 133,
+			"success": false
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 8,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 8,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2615
+				}
+			],
+			"gold": 2615,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 17,
+			"searchSeconds": 52.67,
+			"searches": 39,
+			"secondsDeliberate": 203.7325,
+			"secondsFast": 115.8325,
+			"seed": 11300005,
+			"steps": 45,
+			"success": true,
+			"travel": 11
+		},
+		{
+			"actions": 7,
+			"battles": 4,
+			"blessings": 8,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 8,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3765
+				}
+			],
+			"gold": 3765,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 18,
+			"searchSeconds": 61.17,
+			"searches": 44,
+			"secondsDeliberate": 221.445,
+			"secondsFast": 128.045,
+			"seed": 11300005,
+			"steps": 46,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 342.8,
+			"secondsFast": 171.8,
+			"seed": 11300005,
+			"steps": 272,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 6,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1790
+				}
+			],
+			"gold": 1790,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 21,
+			"searchSeconds": 43.94,
+			"searches": 33,
+			"secondsDeliberate": 186.265,
+			"secondsFast": 106.165,
+			"seed": 11300006,
+			"steps": 58,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1720
+				}
+			],
+			"gold": 1720,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 16,
+			"searchSeconds": 28.41,
+			"searches": 22,
+			"secondsDeliberate": 166.9725,
+			"secondsFast": 86.5725,
+			"seed": 11300006,
+			"steps": 45,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 335.675,
+			"secondsFast": 167.675,
+			"seed": 11300006,
+			"steps": 262,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 5,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 9,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1230
+				}
+			],
+			"gold": 1230,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 17,
+			"searchSeconds": 30.11,
+			"searches": 27,
+			"secondsDeliberate": 165.0975,
+			"secondsFast": 87.5975,
+			"seed": 11300007,
+			"steps": 47,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"actions": 8,
+			"battles": 6,
+			"blessings": 9,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 6,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 9,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1225
+				}
+			],
+			"gold": 1225,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 18,
+			"searchSeconds": 44.07,
+			"searches": 39,
+			"secondsDeliberate": 238.5575,
+			"secondsFast": 125.4575,
+			"seed": 11300007,
+			"steps": 47,
+			"success": true,
+			"travel": 21
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 328.9875,
+			"secondsFast": 157.9875,
+			"seed": 11300007,
+			"steps": 207,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 3,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 6,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4270
+				}
+			],
+			"gold": 4270,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 14,
+			"searchSeconds": 47.18,
+			"searches": 36,
+			"secondsDeliberate": 177.755,
+			"secondsFast": 100.955,
+			"seed": 11300008,
+			"steps": 38,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 7,
+			"battles": 3,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 6,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4200
+				}
+			],
+			"gold": 4200,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 14,
+			"searchSeconds": 46.88,
+			"searches": 36,
+			"secondsDeliberate": 195.2425,
+			"secondsFast": 107.4425,
+			"seed": 11300008,
+			"steps": 37,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 334.725,
+			"secondsFast": 163.725,
+			"seed": 11300008,
+			"steps": 234,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 7,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 5,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 7,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2190
+				}
+			],
+			"gold": 2190,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 14,
+			"searchSeconds": 39.86,
+			"searches": 32,
+			"secondsDeliberate": 193.7975,
+			"secondsFast": 102.8975,
+			"seed": 11300009,
+			"steps": 35,
+			"success": true,
+			"travel": 15
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2975
+				}
+			],
+			"gold": 2975,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 12,
+			"searchSeconds": 59.05,
+			"searches": 45,
+			"secondsDeliberate": 212.35,
+			"secondsFast": 121.45,
+			"seed": 11300009,
+			"steps": 32,
+			"success": true,
+			"travel": 17
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 333.2375,
+			"secondsFast": 162.2375,
+			"seed": 11300009,
+			"steps": 227,
+			"success": true
+		},
+		{
+			"actions": 4,
+			"battles": 3,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2405
+				}
+			],
+			"gold": 2405,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 14,
+			"searchSeconds": 34.79,
+			"searches": 28,
+			"secondsDeliberate": 153.6525,
+			"secondsFast": 83.8525,
+			"seed": 11300010,
+			"steps": 37,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"actions": 5,
+			"battles": 3,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 5,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1420
+				}
+			],
+			"gold": 1420,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 10,
+			"searchSeconds": 39.1,
+			"searches": 35,
+			"secondsDeliberate": 169.8375,
+			"secondsFast": 91.5375,
+			"seed": 11300010,
+			"steps": 27,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"battles": 10,
+			"choices": 18,
+			"floors": 9,
+			"gold": 1775,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 177.8375,
+			"secondsFast": 85.8375,
+			"seed": 11300010,
+			"steps": 131,
+			"success": false
+		},
+		{
+			"actions": 4,
+			"battles": 5,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1945
+				}
+			],
+			"gold": 1945,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 20,
+			"searchSeconds": 38.4,
+			"searches": 30,
+			"secondsDeliberate": 178.1625,
+			"secondsFast": 98.6625,
+			"seed": 11300011,
+			"steps": 53,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 7,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 7,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 765
+				}
+			],
+			"gold": 765,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 13,
+			"searchSeconds": 29.81,
+			"searches": 27,
+			"secondsDeliberate": 173.7475,
+			"secondsFast": 88.4475,
+			"seed": 11300011,
+			"steps": 35,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 348.9625,
+			"secondsFast": 177.9625,
+			"seed": 11300011,
+			"steps": 301,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 5,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 9,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3425
+				}
+			],
+			"gold": 3425,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 20,
+			"searchSeconds": 41.94,
+			"searches": 33,
+			"secondsDeliberate": 181.34,
+			"secondsFast": 102.34,
+			"seed": 11300012,
+			"steps": 56,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 5,
+			"battles": 6,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3955
+				}
+			],
+			"gold": 3955,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 21,
+			"searchSeconds": 43.51,
+			"searches": 32,
+			"secondsDeliberate": 196.685,
+			"secondsFast": 110.585,
+			"seed": 11300012,
+			"steps": 62,
+			"success": true,
+			"travel": 18
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 335.7875,
+			"secondsFast": 164.7875,
+			"seed": 11300012,
+			"steps": 239,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 6,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2530
+				}
+			],
+			"gold": 2530,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 14,
+			"searchSeconds": 37.29,
+			"searches": 28,
+			"secondsDeliberate": 179.1525,
+			"secondsFast": 95.7525,
+			"seed": 11300013,
+			"steps": 37,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 4,
+			"battles": 6,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 6,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1970
+				}
+			],
+			"gold": 1970,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 19,
+			"searchSeconds": 44.41,
+			"searches": 37,
+			"secondsDeliberate": 196.035,
+			"secondsFast": 109.435,
+			"seed": 11300013,
+			"steps": 50,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 341.4125,
+			"secondsFast": 173.4125,
+			"seed": 11300013,
+			"steps": 289,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 7,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2005
+				}
+			],
+			"gold": 2005,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 22,
+			"searchSeconds": 46.38,
+			"searches": 36,
+			"secondsDeliberate": 205.1425,
+			"secondsFast": 114.9425,
+			"seed": 11300014,
+			"steps": 53,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"actions": 6,
+			"battles": 5,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2400
+				}
+			],
+			"gold": 2400,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 18,
+			"searchSeconds": 39.88,
+			"searches": 31,
+			"secondsDeliberate": 191.3675,
+			"secondsFast": 103.8675,
+			"seed": 11300014,
+			"steps": 47,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 325.9,
+			"secondsFast": 157.9,
+			"seed": 11300014,
+			"steps": 216,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 1,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1865
+				}
+			],
+			"gold": 1865,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 7,
+			"searchSeconds": 39.15,
+			"searches": 30,
+			"secondsDeliberate": 149.6875,
+			"secondsFast": 81.5875,
+			"seed": 11300015,
+			"steps": 19,
+			"success": true,
+			"travel": 10
+		},
+		{
+			"actions": 8,
+			"battles": 2,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2130
+				}
+			],
+			"gold": 2130,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "starter",
+			"risk": 0,
+			"rounds": 9,
+			"searchSeconds": 57.22,
+			"searches": 44,
+			"secondsDeliberate": 199.745,
+			"secondsFast": 113.545,
+			"seed": 11300015,
+			"steps": 26,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "starter",
+			"risk": 0,
+			"secondsDeliberate": 329.3,
+			"secondsFast": 161.3,
+			"seed": 11300015,
+			"steps": 232,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 3,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 13,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1456
+				}
+			],
+			"gold": 1456,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 23,
+			"searchSeconds": 24.65,
+			"searches": 20,
+			"secondsDeliberate": 155.0,
+			"secondsFast": 84.2,
+			"seed": 11300000,
+			"steps": 84,
+			"success": true,
+			"travel": 10
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 11,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1640
+				}
+			],
+			"gold": 1640,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 26,
+			"searchSeconds": 37.93,
+			"searches": 31,
+			"secondsDeliberate": 188.7675,
+			"secondsFast": 106.4675,
+			"seed": 11300000,
+			"steps": 91,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 319.7375,
+			"secondsFast": 151.7375,
+			"seed": 11300000,
+			"steps": 187,
+			"success": true
+		},
+		{
+			"battles": 11,
+			"choices": 18,
+			"floors": 10,
+			"gold": 2825,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 213.625,
+			"secondsFast": 120.625,
+			"seed": 11300000,
+			"steps": 290,
+			"success": false
+		},
+		{
+			"actions": 4,
+			"battles": 5,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 11,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 5128
+				}
+			],
+			"gold": 5128,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 30,
+			"searchSeconds": 48.0,
+			"searches": 35,
+			"secondsDeliberate": 193.3875,
+			"secondsFast": 116.8875,
+			"seed": 11300001,
+			"steps": 103,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 4,
+			"battles": 6,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 12,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4672
+				}
+			],
+			"gold": 4672,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 43,
+			"searchSeconds": 42.64,
+			"searches": 33,
+			"secondsDeliberate": 199.8775,
+			"secondsFast": 122.2775,
+			"seed": 11300001,
+			"steps": 147,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 323.4625,
+			"secondsFast": 152.4625,
+			"seed": 11300001,
+			"steps": 181,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 352.3625,
+			"secondsFast": 181.3625,
+			"seed": 11300001,
+			"steps": 317,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1920
+				}
+			],
+			"gold": 1920,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 22,
+			"searchSeconds": 26.23,
+			"searches": 21,
+			"secondsDeliberate": 163.6675,
+			"secondsFast": 87.3675,
+			"seed": 11300002,
+			"steps": 75,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4440
+				}
+			],
+			"gold": 4440,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 18,
+			"searchSeconds": 28.08,
+			"searches": 21,
+			"secondsDeliberate": 157.9675,
+			"secondsFast": 84.6675,
+			"seed": 11300002,
+			"steps": 63,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 326.65,
+			"secondsFast": 155.65,
+			"seed": 11300002,
+			"steps": 196,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 391.675,
+			"secondsFast": 220.675,
+			"seed": 11300002,
+			"steps": 502,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 6,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3864
+				}
+			],
+			"gold": 3864,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 38,
+			"searchSeconds": 44.87,
+			"searches": 34,
+			"secondsDeliberate": 213.5575,
+			"secondsFast": 127.4575,
+			"seed": 11300003,
+			"steps": 135,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"actions": 7,
+			"battles": 3,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4128
+				}
+			],
+			"gold": 4128,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 21,
+			"searchSeconds": 47.89,
+			"searches": 38,
+			"secondsDeliberate": 198.9025,
+			"secondsFast": 114.1025,
+			"seed": 11300003,
+			"steps": 73,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 311.6625,
+			"secondsFast": 143.6625,
+			"seed": 11300003,
+			"steps": 149,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 344.175,
+			"secondsFast": 176.175,
+			"seed": 11300003,
+			"steps": 302,
+			"success": true
+		},
+		{
+			"actions": 4,
+			"battles": 5,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 40,
+					"won": false
+				}
+			],
+			"bosses": 0,
+			"choices": 3,
+			"deadAllies": 2,
+			"endingAct": 1,
+			"exitValues": [],
+			"gold": 0,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 57,
+			"searchSeconds": 37.89,
+			"searches": 28,
+			"secondsDeliberate": 186.8775,
+			"secondsFast": 116.3775,
+			"seed": 11300004,
+			"steps": 167,
+			"success": false,
+			"travel": 12
+		},
+		{
+			"actions": 5,
+			"battles": 4,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 16,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 1,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4440
+				}
+			],
+			"gold": 4440,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 30,
+			"searchSeconds": 43.41,
+			"searches": 32,
+			"secondsDeliberate": 199.66,
+			"secondsFast": 115.76,
+			"seed": 11300004,
+			"steps": 100,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 329.2,
+			"secondsFast": 158.2,
+			"seed": 11300004,
+			"steps": 208,
+			"success": true
+		},
+		{
+			"battles": 10,
+			"choices": 18,
+			"floors": 9,
+			"gold": 1775,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 194.4125,
+			"secondsFast": 102.4125,
+			"seed": 11300004,
+			"steps": 209,
+			"success": false
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 8,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 8,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4448
+				}
+			],
+			"gold": 4448,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 31,
+			"searchSeconds": 54.47,
+			"searches": 39,
+			"secondsDeliberate": 219.1325,
+			"secondsFast": 131.2325,
+			"seed": 11300005,
+			"steps": 109,
+			"success": true,
+			"travel": 11
+		},
+		{
+			"actions": 7,
+			"battles": 4,
+			"blessings": 8,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 11,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 8,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 5792
+				}
+			],
+			"gold": 5792,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 32,
+			"searchSeconds": 63.27,
+			"searches": 44,
+			"secondsDeliberate": 236.9325,
+			"secondsFast": 143.5325,
+			"seed": 11300005,
+			"steps": 109,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 327.5,
+			"secondsFast": 156.5,
+			"seed": 11300005,
+			"steps": 200,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 374.675,
+			"secondsFast": 203.675,
+			"seed": 11300005,
+			"steps": 422,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 6,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 22,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 2,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3432
+				}
+			],
+			"gold": 3432,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 51,
+			"searchSeconds": 46.34,
+			"searches": 33,
+			"secondsDeliberate": 210.765,
+			"secondsFast": 130.665,
+			"seed": 11300006,
+			"steps": 162,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 12,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2824
+				}
+			],
+			"gold": 2824,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 32,
+			"searchSeconds": 29.21,
+			"searches": 22,
+			"secondsDeliberate": 181.3725,
+			"secondsFast": 100.9725,
+			"seed": 11300006,
+			"steps": 109,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 313.575,
+			"secondsFast": 145.575,
+			"seed": 11300006,
+			"steps": 158,
+			"success": true
+		},
+		{
+			"battles": 10,
+			"choices": 17,
+			"floors": 9,
+			"gold": 1775,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 197.0625,
+			"secondsFast": 108.0625,
+			"seed": 11300006,
+			"steps": 245,
+			"success": false
+		},
+		{
+			"actions": 5,
+			"battles": 5,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 16,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 1,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2560
+				}
+			],
+			"gold": 2560,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 32,
+			"searchSeconds": 32.21,
+			"searches": 27,
+			"secondsDeliberate": 181.2225,
+			"secondsFast": 103.7225,
+			"seed": 11300007,
+			"steps": 113,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"actions": 8,
+			"battles": 6,
+			"blessings": 9,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 12,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 9,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2664
+				}
+			],
+			"gold": 2664,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 29,
+			"searchSeconds": 45.97,
+			"searches": 39,
+			"secondsDeliberate": 251.9325,
+			"secondsFast": 138.8325,
+			"seed": 11300007,
+			"steps": 101,
+			"success": true,
+			"travel": 21
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 316.875,
+			"secondsFast": 145.875,
+			"seed": 11300007,
+			"steps": 150,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 346.2,
+			"secondsFast": 175.2,
+			"seed": 11300007,
+			"steps": 288,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 3,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 7344
+				}
+			],
+			"gold": 7344,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 23,
+			"searchSeconds": 48.83,
+			"searches": 36,
+			"secondsDeliberate": 189.3925,
+			"secondsFast": 112.5925,
+			"seed": 11300008,
+			"steps": 85,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 7,
+			"battles": 3,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 6752
+				}
+			],
+			"gold": 6752,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 19,
+			"searchSeconds": 47.48,
+			"searches": 36,
+			"secondsDeliberate": 202.2175,
+			"secondsFast": 114.4175,
+			"seed": 11300008,
+			"steps": 67,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 323.25,
+			"secondsFast": 152.25,
+			"seed": 11300008,
+			"steps": 180,
+			"success": true
+		},
+		{
+			"battles": 10,
+			"choices": 18,
+			"floors": 9,
+			"gold": 1775,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 194.625,
+			"secondsFast": 102.625,
+			"seed": 11300008,
+			"steps": 210,
+			"success": false
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 7,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 11,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 7,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3224
+				}
+			],
+			"gold": 3224,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 29,
+			"searchSeconds": 41.61,
+			"searches": 32,
+			"secondsDeliberate": 209.5725,
+			"secondsFast": 118.6725,
+			"seed": 11300009,
+			"steps": 101,
+			"success": true,
+			"travel": 15
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 9,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3408
+				}
+			],
+			"gold": 3408,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 23,
+			"searchSeconds": 61.15,
+			"searches": 45,
+			"secondsDeliberate": 224.4375,
+			"secondsFast": 133.5375,
+			"seed": 11300009,
+			"steps": 79,
+			"success": true,
+			"travel": 17
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 322.825,
+			"secondsFast": 151.825,
+			"seed": 11300009,
+			"steps": 178,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 379.35,
+			"secondsFast": 208.35,
+			"seed": 11300009,
+			"steps": 444,
+			"success": true
+		},
+		{
+			"actions": 4,
+			"battles": 3,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 13,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3856
+				}
+			],
+			"gold": 3856,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 23,
+			"searchSeconds": 34.99,
+			"searches": 28,
+			"secondsDeliberate": 163.415,
+			"secondsFast": 93.615,
+			"seed": 11300010,
+			"steps": 82,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"actions": 5,
+			"battles": 3,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 2312
+				}
+			],
+			"gold": 2312,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 17,
+			"searchSeconds": 41.1,
+			"searches": 35,
+			"secondsDeliberate": 179.275,
+			"secondsFast": 100.975,
+			"seed": 11300010,
+			"steps": 62,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 328.5625,
+			"secondsFast": 157.5625,
+			"seed": 11300010,
+			"steps": 205,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 358.7375,
+			"secondsFast": 187.7375,
+			"seed": 11300010,
+			"steps": 347,
+			"success": true
+		},
+		{
+			"actions": 4,
+			"battles": 5,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3104
+				}
+			],
+			"gold": 3104,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 30,
+			"searchSeconds": 38.7,
+			"searches": 30,
+			"secondsDeliberate": 188.875,
+			"secondsFast": 109.375,
+			"seed": 11300011,
+			"steps": 102,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 7,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 7,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 1280
+				}
+			],
+			"gold": 1280,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 21,
+			"searchSeconds": 30.21,
+			"searches": 27,
+			"secondsDeliberate": 182.2225,
+			"secondsFast": 96.9225,
+			"seed": 11300011,
+			"steps": 73,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 326.8625,
+			"secondsFast": 155.8625,
+			"seed": 11300011,
+			"steps": 197,
+			"success": true
+		},
+		{
+			"battles": 10,
+			"choices": 18,
+			"floors": 9,
+			"gold": 1775,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 199.3,
+			"secondsFast": 107.3,
+			"seed": 11300011,
+			"steps": 232,
+			"success": false
+		},
+		{
+			"actions": 5,
+			"battles": 5,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 28,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 2,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 6120
+				}
+			],
+			"gold": 6120,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 45,
+			"searchSeconds": 44.69,
+			"searches": 33,
+			"secondsDeliberate": 203.0025,
+			"secondsFast": 124.0025,
+			"seed": 11300012,
+			"steps": 145,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 5,
+			"battles": 6,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 11,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 6872
+				}
+			],
+			"gold": 6872,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 31,
+			"searchSeconds": 44.96,
+			"searches": 32,
+			"secondsDeliberate": 208.1225,
+			"secondsFast": 122.0225,
+			"seed": 11300012,
+			"steps": 109,
+			"success": true,
+			"travel": 18
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 319.0,
+			"secondsFast": 148.0,
+			"seed": 11300012,
+			"steps": 160,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 365.1125,
+			"secondsFast": 194.1125,
+			"seed": 11300012,
+			"steps": 377,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 14,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 2,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4088
+				}
+			],
+			"gold": 4088,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 29,
+			"searchSeconds": 37.69,
+			"searches": 28,
+			"secondsDeliberate": 193.1525,
+			"secondsFast": 109.7525,
+			"seed": 11300013,
+			"steps": 101,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 4,
+			"battles": 6,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 7,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3176
+				}
+			],
+			"gold": 3176,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 33,
+			"searchSeconds": 44.81,
+			"searches": 37,
+			"secondsDeliberate": 210.2475,
+			"secondsFast": 123.6475,
+			"seed": 11300013,
+			"steps": 115,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 324.8375,
+			"secondsFast": 156.8375,
+			"seed": 11300013,
+			"steps": 211,
+			"success": true
+		},
+		{
+			"battles": 10,
+			"choices": 17,
+			"floors": 9,
+			"gold": 1775,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 199.6125,
+			"secondsFast": 110.6125,
+			"seed": 11300013,
+			"steps": 257,
+			"success": false
+		},
+		{
+			"actions": 5,
+			"battles": 7,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 3712
+				}
+			],
+			"gold": 3712,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 46,
+			"searchSeconds": 47.83,
+			"searches": 36,
+			"secondsDeliberate": 228.6925,
+			"secondsFast": 138.4925,
+			"seed": 11300014,
+			"steps": 157,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"actions": 6,
+			"battles": 5,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 15,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4680
+				}
+			],
+			"gold": 4680,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 41,
+			"searchSeconds": 41.23,
+			"searches": 31,
+			"secondsDeliberate": 212.6925,
+			"secondsFast": 125.1925,
+			"seed": 11300014,
+			"steps": 141,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 309.5375,
+			"secondsFast": 141.5375,
+			"seed": 11300014,
+			"steps": 139,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 341.4125,
+			"secondsFast": 173.4125,
+			"seed": 11300014,
+			"steps": 289,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 1,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 8,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4024
+				}
+			],
+			"gold": 4024,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 8,
+			"searchSeconds": 41.05,
+			"searches": 30,
+			"secondsDeliberate": 153.7125,
+			"secondsFast": 85.6125,
+			"seed": 11300015,
+			"steps": 29,
+			"success": true,
+			"travel": 10
+		},
+		{
+			"actions": 8,
+			"battles": 2,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 12,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 5872
+				}
+			],
+			"gold": 5872,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "grown",
+			"risk": 2,
+			"rounds": 14,
+			"searchSeconds": 59.77,
+			"searches": 44,
+			"secondsDeliberate": 207.82,
+			"secondsFast": 121.62,
+			"seed": 11300015,
+			"steps": 52,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 0,
+			"secondsDeliberate": 317.6125,
+			"secondsFast": 149.6125,
+			"seed": 11300015,
+			"steps": 177,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "grown",
+			"risk": 2,
+			"secondsDeliberate": 340.35,
+			"secondsFast": 172.35,
+			"seed": 11300015,
+			"steps": 284,
+			"success": true
+		},
+		{
+			"actions": 8,
+			"battles": 3,
+			"blessings": 8,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 15,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 8,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 17540
+				}
+			],
+			"gold": 17540,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 22,
+			"searchSeconds": 43.2,
+			"searches": 30,
+			"secondsDeliberate": 216.4,
+			"secondsFast": 120.1,
+			"seed": 11300000,
+			"steps": 88,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 8,
+			"battles": 3,
+			"blessings": 8,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 16,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 8,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 17540
+				}
+			],
+			"gold": 17540,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 21,
+			"searchSeconds": 43.2,
+			"searches": 30,
+			"secondsDeliberate": 214.275,
+			"secondsFast": 117.975,
+			"seed": 11300000,
+			"steps": 78,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 291.1625,
+			"secondsFast": 120.1625,
+			"seed": 11300000,
+			"steps": 29,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 293.925,
+			"secondsFast": 122.925,
+			"seed": 11300000,
+			"steps": 42,
+			"success": true
+		},
+		{
+			"actions": 7,
+			"battles": 2,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 21,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 11000
+				}
+			],
+			"gold": 11000,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 25,
+			"searchSeconds": 32.83,
+			"searches": 26,
+			"secondsDeliberate": 188.0925,
+			"secondsFast": 102.8925,
+			"seed": 11300001,
+			"steps": 93,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"actions": 8,
+			"battles": 1,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 20,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 7940
+				}
+			],
+			"gold": 7940,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 20,
+			"searchSeconds": 37.24,
+			"searches": 28,
+			"secondsDeliberate": 200.6025,
+			"secondsFast": 108.0025,
+			"seed": 11300001,
+			"steps": 77,
+			"success": true,
+			"travel": 17
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 291.5875,
+			"secondsFast": 120.5875,
+			"seed": 11300001,
+			"steps": 31,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 295.4125,
+			"secondsFast": 124.4125,
+			"seed": 11300001,
+			"steps": 49,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 2,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 18,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 2,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 14600
+				}
+			],
+			"gold": 14600,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 28,
+			"searchSeconds": 32.32,
+			"searches": 24,
+			"secondsDeliberate": 174.9075,
+			"secondsFast": 100.5075,
+			"seed": 11300002,
+			"steps": 111,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 21,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 9740
+				}
+			],
+			"gold": 9740,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 31,
+			"searchSeconds": 45.82,
+			"searches": 34,
+			"secondsDeliberate": 191.3325,
+			"secondsFast": 115.0325,
+			"seed": 11300002,
+			"steps": 113,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 293.925,
+			"secondsFast": 122.925,
+			"seed": 11300002,
+			"steps": 42,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 296.2625,
+			"secondsFast": 125.2625,
+			"seed": 11300002,
+			"steps": 53,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 4,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 15,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 7520
+				}
+			],
+			"gold": 7520,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 26,
+			"searchSeconds": 45.78,
+			"searches": 36,
+			"secondsDeliberate": 199.955,
+			"secondsFast": 117.555,
+			"seed": 11300003,
+			"steps": 102,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 7,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 13,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 7,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 6860
+				}
+			],
+			"gold": 6860,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 24,
+			"searchSeconds": 53.21,
+			"searches": 42,
+			"secondsDeliberate": 219.0475,
+			"secondsFast": 128.1475,
+			"seed": 11300003,
+			"steps": 91,
+			"success": true,
+			"travel": 15
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 295.625,
+			"secondsFast": 124.625,
+			"seed": 11300003,
+			"steps": 50,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 296.2625,
+			"secondsFast": 125.2625,
+			"seed": 11300003,
+			"steps": 53,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 2,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 12,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 5780
+				}
+			],
+			"gold": 5780,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 24,
+			"searchSeconds": 44.89,
+			"searches": 38,
+			"secondsDeliberate": 183.6525,
+			"secondsFast": 108.4525,
+			"seed": 11300004,
+			"steps": 93,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 7,
+			"battles": 1,
+			"blessings": 2,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 14,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 2,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 10660
+				}
+			],
+			"gold": 10660,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 14,
+			"searchSeconds": 35.49,
+			"searches": 28,
+			"secondsDeliberate": 167.465,
+			"secondsFast": 90.865,
+			"seed": 11300004,
+			"steps": 54,
+			"success": true,
+			"travel": 16
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 286.375,
+			"secondsFast": 118.375,
+			"seed": 11300004,
+			"steps": 30,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 288.7125,
+			"secondsFast": 120.7125,
+			"seed": 11300004,
+			"steps": 41,
+			"success": true
+		},
+		{
+			"actions": 7,
+			"battles": 1,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 15,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 7660
+				}
+			],
+			"gold": 7660,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 15,
+			"searchSeconds": 48.22,
+			"searches": 39,
+			"secondsDeliberate": 180.4575,
+			"secondsFast": 105.3575,
+			"seed": 11300005,
+			"steps": 67,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"actions": 5,
+			"battles": 3,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 13380
+				}
+			],
+			"gold": 13380,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 16,
+			"searchSeconds": 40.88,
+			"searches": 31,
+			"secondsDeliberate": 179.6925,
+			"secondsFast": 101.3925,
+			"seed": 11300005,
+			"steps": 65,
+			"success": true,
+			"travel": 15
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 289.775,
+			"secondsFast": 121.775,
+			"seed": 11300005,
+			"steps": 46,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 292.5375,
+			"secondsFast": 124.5375,
+			"seed": 11300005,
+			"steps": 59,
+			"success": true
+		},
+		{
+			"actions": 3,
+			"battles": 7,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 13,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4260
+				}
+			],
+			"gold": 4260,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 37,
+			"searchSeconds": 30.92,
+			"searches": 24,
+			"secondsDeliberate": 182.4575,
+			"secondsFast": 107.7575,
+			"seed": 11300006,
+			"steps": 139,
+			"success": true,
+			"travel": 15
+		},
+		{
+			"actions": 3,
+			"battles": 8,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 19,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 5860
+				}
+			],
+			"gold": 5860,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 51,
+			"searchSeconds": 41.28,
+			"searches": 31,
+			"secondsDeliberate": 224.88,
+			"secondsFast": 137.08,
+			"seed": 11300006,
+			"steps": 184,
+			"success": true,
+			"travel": 23
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 287.225,
+			"secondsFast": 119.225,
+			"seed": 11300006,
+			"steps": 34,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 290.2,
+			"secondsFast": 122.2,
+			"seed": 11300006,
+			"steps": 48,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 3,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 26,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 12980
+				}
+			],
+			"gold": 12980,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 33,
+			"searchSeconds": 36.37,
+			"searches": 24,
+			"secondsDeliberate": 184.0575,
+			"secondsFast": 109.2575,
+			"seed": 11300007,
+			"steps": 135,
+			"success": true,
+			"travel": 11
+		},
+		{
+			"actions": 8,
+			"battles": 3,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 15,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 12520
+				}
+			],
+			"gold": 12520,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 19,
+			"searchSeconds": 43.25,
+			"searches": 30,
+			"secondsDeliberate": 189.4875,
+			"secondsFast": 106.6875,
+			"seed": 11300007,
+			"steps": 67,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 293.925,
+			"secondsFast": 122.925,
+			"seed": 11300007,
+			"steps": 42,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 296.2625,
+			"secondsFast": 125.2625,
+			"seed": 11300007,
+			"steps": 53,
+			"success": true
+		},
+		{
+			"actions": 1,
+			"battles": 5,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 19,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 4660
+				}
+			],
+			"gold": 4660,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 31,
+			"searchSeconds": 22.37,
+			"searches": 19,
+			"secondsDeliberate": 140.0075,
+			"secondsFast": 83.0075,
+			"seed": 11300008,
+			"steps": 123,
+			"success": true,
+			"travel": 8
+		},
+		{
+			"actions": 6,
+			"battles": 4,
+			"blessings": 7,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 10,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 7,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 5680
+				}
+			],
+			"gold": 5680,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 24,
+			"searchSeconds": 42.84,
+			"searches": 33,
+			"secondsDeliberate": 202.0275,
+			"secondsFast": 115.6275,
+			"seed": 11300008,
+			"steps": 95,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 289.1375,
+			"secondsFast": 121.1375,
+			"seed": 11300008,
+			"steps": 43,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 290.4125,
+			"secondsFast": 122.4125,
+			"seed": 11300008,
+			"steps": 49,
+			"success": true
+		},
+		{
+			"actions": 4,
+			"battles": 4,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 16,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 8580
+				}
+			],
+			"gold": 8580,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 32,
+			"searchSeconds": 41.65,
+			"searches": 30,
+			"secondsDeliberate": 192.1375,
+			"secondsFast": 115.2375,
+			"seed": 11300009,
+			"steps": 127,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"actions": 7,
+			"battles": 3,
+			"blessings": 7,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 16,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 7,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 12500
+				}
+			],
+			"gold": 12500,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 30,
+			"searchSeconds": 53.37,
+			"searches": 39,
+			"secondsDeliberate": 226.2325,
+			"secondsFast": 133.9325,
+			"seed": 11300009,
+			"steps": 117,
+			"success": true,
+			"travel": 15
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 292.8625,
+			"secondsFast": 121.8625,
+			"seed": 11300009,
+			"steps": 37,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 294.35,
+			"secondsFast": 123.35,
+			"seed": 11300009,
+			"steps": 44,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 4,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 19,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 7900
+				}
+			],
+			"gold": 7900,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 41,
+			"searchSeconds": 35.51,
+			"searches": 27,
+			"secondsDeliberate": 201.3225,
+			"secondsFast": 117.4225,
+			"seed": 11300010,
+			"steps": 145,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 5,
+			"battles": 4,
+			"blessings": 8,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 14,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 8,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 9700
+				}
+			],
+			"gold": 9700,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 50,
+			"searchSeconds": 51.75,
+			"searches": 40,
+			"secondsDeliberate": 230.2125,
+			"secondsFast": 143.3125,
+			"seed": 11300010,
+			"steps": 181,
+			"success": true,
+			"travel": 12
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 291.1625,
+			"secondsFast": 120.1625,
+			"seed": 11300010,
+			"steps": 29,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 296.05,
+			"secondsFast": 125.05,
+			"seed": 11300010,
+			"steps": 52,
+			"success": true
+		},
+		{
+			"actions": 3,
+			"battles": 5,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 16,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 6200
+				}
+			],
+			"gold": 6200,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 31,
+			"searchSeconds": 32.99,
+			"searches": 23,
+			"secondsDeliberate": 174.0525,
+			"secondsFast": 103.0525,
+			"seed": 11300011,
+			"steps": 125,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 3,
+			"battles": 4,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 22,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 16540
+				}
+			],
+			"gold": 16540,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 33,
+			"searchSeconds": 40.49,
+			"searches": 28,
+			"secondsDeliberate": 184.69,
+			"secondsFast": 111.79,
+			"seed": 11300011,
+			"steps": 128,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 293.925,
+			"secondsFast": 122.925,
+			"seed": 11300011,
+			"steps": 42,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 297.325,
+			"secondsFast": 126.325,
+			"seed": 11300011,
+			"steps": 58,
+			"success": true
+		},
+		{
+			"actions": 4,
+			"battles": 5,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 9,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 7140
+				}
+			],
+			"gold": 7140,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 21,
+			"searchSeconds": 39.72,
+			"searches": 29,
+			"secondsDeliberate": 177.345,
+			"secondsFast": 103.845,
+			"seed": 11300012,
+			"steps": 90,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 5,
+			"battles": 4,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 9,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 6920
+				}
+			],
+			"gold": 6920,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 16,
+			"searchSeconds": 34.41,
+			"searches": 27,
+			"secondsDeliberate": 183.86,
+			"secondsFast": 99.96,
+			"seed": 11300012,
+			"steps": 68,
+			"success": true,
+			"travel": 18
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 293.5,
+			"secondsFast": 122.5,
+			"seed": 11300012,
+			"steps": 40,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 294.775,
+			"secondsFast": 123.775,
+			"seed": 11300012,
+			"steps": 46,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 4,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 21,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 7360
+				}
+			],
+			"gold": 7360,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 36,
+			"searchSeconds": 45.22,
+			"searches": 34,
+			"secondsDeliberate": 190.1825,
+			"secondsFast": 118.2825,
+			"seed": 11300013,
+			"steps": 141,
+			"success": true,
+			"travel": 10
+		},
+		{
+			"actions": 5,
+			"battles": 5,
+			"blessings": 6,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 14,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 6,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 8980
+				}
+			],
+			"gold": 8980,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 43,
+			"searchSeconds": 40.14,
+			"searches": 28,
+			"secondsDeliberate": 210.1525,
+			"secondsFast": 125.1525,
+			"seed": 11300013,
+			"steps": 153,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 290.525,
+			"secondsFast": 119.525,
+			"seed": 11300013,
+			"steps": 26,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 292.225,
+			"secondsFast": 121.225,
+			"seed": 11300013,
+			"steps": 34,
+			"success": true
+		},
+		{
+			"actions": 5,
+			"battles": 4,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 11,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 11580
+				}
+			],
+			"gold": 11580,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 25,
+			"searchSeconds": 57.94,
+			"searches": 43,
+			"secondsDeliberate": 207.915,
+			"secondsFast": 127.015,
+			"seed": 11300014,
+			"steps": 94,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"actions": 5,
+			"battles": 4,
+			"blessings": 5,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 18,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 5,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 19160
+				}
+			],
+			"gold": 19160,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 35,
+			"searchSeconds": 56.58,
+			"searches": 41,
+			"secondsDeliberate": 215.2675,
+			"secondsFast": 134.3675,
+			"seed": 11300014,
+			"steps": 135,
+			"success": true,
+			"travel": 14
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 286.375,
+			"secondsFast": 118.375,
+			"seed": 11300014,
+			"steps": 30,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 40,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 288.075,
+			"secondsFast": 120.075,
+			"seed": 11300014,
+			"steps": 38,
+			"success": true
+		},
+		{
+			"actions": 6,
+			"battles": 6,
+			"blessings": 3,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 17,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 3,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 12080
+				}
+			],
+			"gold": 12080,
+			"mode": "extraction",
+			"policy": "casual",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 50,
+			"searchSeconds": 41.81,
+			"searches": 32,
+			"secondsDeliberate": 214.11,
+			"secondsFast": 133.01,
+			"seed": 11300015,
+			"steps": 192,
+			"success": true,
+			"travel": 15
+		},
+		{
+			"actions": 6,
+			"battles": 5,
+			"blessings": 4,
+			"bossRounds": [
+				{
+					"act": 1,
+					"rounds": 23,
+					"won": true
+				}
+			],
+			"bosses": 1,
+			"choices": 4,
+			"deadAllies": 0,
+			"endingAct": 1,
+			"exitValues": [
+				{
+					"act": 1,
+					"gold": 9240
+				}
+			],
+			"gold": 9240,
+			"mode": "extraction",
+			"policy": "poi",
+			"profile": "limited_c6_gear25",
+			"risk": 5,
+			"rounds": 50,
+			"searchSeconds": 41.65,
+			"searches": 30,
+			"secondsDeliberate": 210.8125,
+			"secondsFast": 130.8125,
+			"seed": 11300015,
+			"steps": 189,
+			"success": true,
+			"travel": 13
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 0,
+			"secondsDeliberate": 294.5625,
+			"secondsFast": 123.5625,
+			"seed": 11300015,
+			"steps": 45,
+			"success": true
+		},
+		{
+			"battles": 20,
+			"choices": 41,
+			"floors": 20,
+			"gold": 7150,
+			"mode": "abyss",
+			"profile": "limited_c6_gear25",
+			"risk": 3,
+			"secondsDeliberate": 297.1125,
+			"secondsFast": 126.1125,
+			"seed": 11300015,
+			"steps": 57,
+			"success": true
+		}
+	]
+}

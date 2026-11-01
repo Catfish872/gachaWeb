@@ -20,6 +20,67 @@ def chunk_lines(state):
 
 
 class AndroidSmokeDriverTests(unittest.TestCase):
+    def loot_frame(self, seq, ms, source_uid='', bag_uid='', box='box'):
+        def item(uid):return {'uid':uid,'revealed':True,'name':'晶片','icon_loaded':True,'rect':[10,10,40,40],'clip':[0,0,100,100]}
+        return {'seq':seq,'monotonic_ms':ms,'loot':{'container_id':box,'source':[item(source_uid)] if source_uid else [],'bag':[item(bag_uid)] if bag_uid else []}}
+
+    def test_pickup_visibility_tracks_same_uid_and_actual_destination(self):
+        frames=[self.loot_frame(2,100,'a'),self.loot_frame(3,200,'a'),self.loot_frame(4,310,'a'),self.loot_frame(5,500,bag_uid='a')]
+        self.assertEqual(smoke.visible_pickup_uids(frames,'box',1),{'a'})
+        self.assertEqual(smoke.visible_pickup_uids(frames,'box',3),set())
+        frames[-1]=self.loot_frame(5,500,bag_uid='b')
+        self.assertEqual(smoke.visible_pickup_uids(frames,'box',1),set())
+
+    def test_unrelated_icons_cannot_fake_continuous_visible_dwell(self):
+        frames=[self.loot_frame(2,100,'a'),self.loot_frame(3,210,'b'),self.loot_frame(4,320,'c'),self.loot_frame(5,500,bag_uid='a')]
+        self.assertEqual(smoke.visible_pickup_uids(frames,'box',1),set())
+
+    def test_visibility_gap_does_not_count_as_same_uid_dwell(self):
+        frames=[self.loot_frame(2,100,'a'),self.loot_frame(3,200),self.loot_frame(4,400,'a'),self.loot_frame(5,500,bag_uid='a')]
+        self.assertEqual(smoke.visible_pickup_uids(frames,'box',1),set())
+
+    def test_hidden_clipped_missing_icon_and_other_container_are_not_visible_proof(self):
+        for mutation in ['hidden','clipped','missing','other']:
+            frames=[self.loot_frame(2,100,'a'),self.loot_frame(3,310,'a'),self.loot_frame(4,500,bag_uid='a')]
+            for frame in frames[:2]:
+                item=frame['loot']['source'][0]
+                if mutation=='hidden':item['revealed']=False
+                elif mutation=='clipped':item['rect']=[90,10,40,40]
+                elif mutation=='missing':item['icon_loaded']=False
+                else:frame['loot']['container_id']='other'
+            self.assertEqual(smoke.visible_pickup_uids(frames,'box',1),set(),mutation)
+
+    def test_long_scan_detection_uses_observed_progress_not_hidden_rarity(self):
+        a={'monotonic_ms':100,'loot':{'container_id':'box','scan_uid':'u','scan_progress':.1}}
+        b={'monotonic_ms':200,'loot':{'container_id':'box','scan_uid':'u','scan_progress':.15}}
+        self.assertTrue(smoke.scan_has_background_window(a,b))
+        b['loot']['scan_progress']=.5
+        self.assertFalse(smoke.scan_has_background_window(a,b))
+        b['loot']['scan_progress']=.15;b['loot']['scan_uid']='other'
+        self.assertFalse(smoke.scan_has_background_window(a,b))
+
+    def test_paused_wall_clock_is_not_visible_dwell_evidence(self):
+        a=self.loot_frame(2,100,'a')
+        paused=self.loot_frame(3,200,'a');paused['application_paused']=True
+        resumed=self.loot_frame(4,6000,'a')
+        collected=self.loot_frame(5,6100,bag_uid='a')
+        self.assertEqual(smoke.visible_pickup_uids([a,paused,resumed,collected],'box',1),set())
+
+    def test_actual_pause_resume_requires_same_progress_and_ownership(self):
+        from tempfile import TemporaryDirectory
+        before={'seq':10}
+        paused={'seq':11,'application_paused':True,'extraction':{'searching':True,'bag_ids':[]},'loot':{'scan_uid':'u','scan_progress':.3,'source':[{'uid':'u','revealed':False}]}}
+        resumed=json.loads(json.dumps(paused));resumed['seq']=12;resumed['application_paused']=False
+        with TemporaryDirectory() as directory,patch.object(smoke,'adb') as adb,patch.object(smoke,'wait_for_completed_background'),patch.object(smoke,'wait_probe_event',side_effect=[paused,resumed]):
+            coverage={}
+            smoke.check_search_background(before,'pkg/Activity',Path(directory),coverage)
+            self.assertTrue(coverage['covered'])
+            self.assertEqual(adb.call_args_list[0].args,('shell','input','keyevent','KEYCODE_HOME'))
+            self.assertEqual(adb.call_args_list[1].args,('shell','am','start','-W','-n','pkg/Activity'))
+        resumed['loot']['scan_progress']=.8
+        with TemporaryDirectory() as directory,patch.object(smoke,'adb'),patch.object(smoke,'wait_for_completed_background'),patch.object(smoke,'wait_probe_event',side_effect=[paused,resumed]),self.assertRaisesRegex(AssertionError,'progress jumped'):
+            smoke.check_search_background(before,'pkg/Activity',Path(directory),{})
+
     def map_drag_frame(self, zoom=.3, can_pan=False, pan=(10, 20), room='entry'):
         return {'seq': 1, 'extraction': {'room_id': room, 'phase': 'route'}, 'canvases': {'map': {'zoom': zoom, 'selected_room': room, 'can_pan_x': can_pan, 'pan': list(pan), 'clip': [32, 268, 734, 324]}}}
 
@@ -75,6 +136,36 @@ class AndroidSmokeDriverTests(unittest.TestCase):
             self.assertTrue(wait.call_args.args[0](entered))
             stale=dict(entered,seq=20)
             self.assertFalse(wait.call_args.args[0](stale))
+
+    def far_travel_state(self):
+        return {'seq':10,'extraction':{'room_id':'entry','phase':'route','map_edges':[['entry','middle'],['middle','far']],'map_rooms':[{'id':'entry','type':'entry','visited':True},{'id':'middle','type':'cache','visited':True},{'id':'far','type':'rest','visited':False}]},'canvases':{'map':{'selected_room':'far'}},'buttons':[{'name':'ExtractionMapNode_far','adjacent':False,'reachable':True,'travel_path':['entry','middle','far']}]}
+
+    def test_distant_selected_room_uses_verified_safe_existing_edges(self):
+        initial=self.far_travel_state()
+        entered={'seq':11,'extraction':{'room_id':'far','phase':'room'}}
+        with patch.object(smoke,'canvas_target',return_value=initial),patch.object(smoke,'tap') as tap,patch.object(smoke,'wait_for',return_value=entered):
+            self.assertEqual(smoke.enter_map_room(initial,'far'),entered)
+            tap.assert_called_once_with(initial,'ExtractionMapNode_far')
+
+    def test_distant_travel_rejects_shortcut_unsafe_or_locked_intermediate(self):
+        for case in ['shortcut','unvisited','battle','uncleared_vault']:
+            state=self.far_travel_state()
+            room=state['extraction']['map_rooms'][1]
+            if case=='shortcut':state['extraction']['map_edges'].pop()
+            elif case=='unvisited':room['visited']=False
+            elif case=='battle':room['type']='battle';room['cleared']=False
+            else:room['type']='vault';room['cleared']=False
+            with patch.object(smoke,'canvas_target',return_value=state),patch.object(smoke,'tap') as tap,self.assertRaises(AssertionError):
+                smoke.enter_map_room(state,'far')
+            tap.assert_not_called()
+
+    def test_locked_key_vault_exterior_is_a_valid_visited_corridor(self):
+        initial=self.far_travel_state()
+        initial['extraction']['map_rooms'][1].update(type='key_vault',unlocked=False)
+        entered={'seq':11,'extraction':{'room_id':'far','phase':'room'}}
+        with patch.object(smoke,'canvas_target',return_value=initial),patch.object(smoke,'tap') as tap,patch.object(smoke,'wait_for',return_value=entered):
+            self.assertEqual(smoke.enter_map_room(initial,'far'),entered)
+            tap.assert_called_once()
 
     def test_map_fit_wait_rejects_stale_and_unfitted_observation(self):
         initial={'seq': 4, 'canvases': {'map': {'auto_fit': False, 'zoom': .8, 'fit_zoom': .3}}}
@@ -264,10 +355,10 @@ class AndroidSmokeDriverTests(unittest.TestCase):
                     self.assertIn('rapid_again resume', events)
 
     def test_page_control_scroll_uses_android_input(self):
-        state = {'buttons': [{'name': 'ExtractionSearch', 'rect': [20, 600, 100, 50], 'clip': [0, 100, 500, 400]}], 'scroll': 0, 'scroll_max': 500, 'scroll_rect': [0, 100, 500, 400]}
-        shown = {'buttons': [{'name': 'ExtractionSearch', 'rect': [20, 300, 100, 50], 'clip': [0, 100, 500, 400]}], 'scroll': 200, 'scroll_max': 500, 'scroll_rect': [0, 100, 500, 400]}
+        state = {'buttons': [{'name': 'ExtractionCloseContainer', 'rect': [20, 600, 100, 50], 'clip': [0, 100, 500, 400]}], 'scroll': 0, 'scroll_max': 500, 'scroll_rect': [0, 100, 500, 400]}
+        shown = {'buttons': [{'name': 'ExtractionCloseContainer', 'rect': [20, 300, 100, 50], 'clip': [0, 100, 500, 400]}], 'scroll': 200, 'scroll_max': 500, 'scroll_rect': [0, 100, 500, 400]}
         with patch.object(smoke, 'adb') as adb, patch.object(smoke, 'wait_for', return_value=shown):
-            self.assertEqual(smoke.reveal_page_target(state, 'ExtractionSearch'), shown)
+            self.assertEqual(smoke.reveal_page_target(state, 'ExtractionCloseContainer'), shown)
         adb.assert_called_once_with('shell', 'input', 'swipe', '425', '380', '425', '220', '900')
 
     def test_page_swipe_avoids_native_scrollbar_and_map(self):

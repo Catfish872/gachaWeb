@@ -105,7 +105,7 @@ func simulate(profile: Dictionary, rank: int, exit_act: int, policy: String, see
      if action.enabled and action.cost == 0:
       must(x.choose_room_action(action.id), "active room choice")
       break
-    if not x.growth_choices().is_empty(): continue
+    if not x.growth_choices().is_empty() or x.run().phase=="battle": continue
     loot_room(x, row)
     use_supplies(x)
     if str(x.run().phase) == "room":

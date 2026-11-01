@@ -92,7 +92,7 @@ func _init() -> void:
 	old.erase("extraction")
 	check(game.valid_save(old), "v4 accepted")
 	var migrated = game._normalize(old)
-	check(migrated.version == 6 and migrated.extraction.stash.is_empty(), "v6 defaults")
+	check(migrated.version == 7 and migrated.extraction.stash.is_empty(), "v6 defaults")
 	check(migrated.abyss == old.abyss, "v4 abyss preserved")
 	# Failed storage must restore physical objects and run phase.
 	check(ex.start_run().success, "rollback run")
@@ -184,7 +184,7 @@ func _init() -> void:
 	combat.state.enemies[0].currentHp = 1
 	while combat.state.phase not in ["victory","defeat"]: combat.auto_step()
 	check(combat.state.phase == "victory", "round40 lethal action wins before seal")
-	check(ex.data.items.size() == 96, "ninety-six distinct catalog items")
+	check(ex.data.items.size() == 128, "128 distinct catalog items")
 	var rarity_counts := [0,0,0,0,0,0]
 	var equipped_trials := 0
 	for item_id in ex.data.items:
@@ -203,7 +203,7 @@ func _init() -> void:
 			while combat.state.phase not in ["victory","defeat"]: combat.auto_step()
 			check(combat.state.phase == "victory", "equipment effect actual combat "+item_id)
 			equipped_trials += 1
-	for count in rarity_counts: check(count == 16, "sixteen items per rarity")
+	check(rarity_counts == [18,22,26,21,22,19], "128-item rarity distribution")
 	check(equipped_trials >= 16,"mechanically distinct equipment coverage")
 	test_maps()
 	print("EXTRACTION CORE: ", checks, " checks, ", failures, " failures")
@@ -306,7 +306,16 @@ func test_maps() -> void:
 			while engine.state.phase not in ["victory", "defeat"]: engine.auto_step()
 			check(ex.settle_battle(ex.run().activeEncounter, engine.state).success and ex.active(), "map real combat cleared")
 		while not ex.growth_choices().is_empty(): check(ex.choose_growth(ex.growth_choices()[0].choiceId).success, "resolve earned growth")
-		if kind in ["rest", "event"]: check(ex.choose_room_action(ex.room_actions()[0].id).success, "active room choice " + kind)
+		if kind in ["rest", "event"]:
+			for option in ex.room_actions():
+				if option.enabled:
+					check(ex.choose_room_action(option.id).success, "active room choice " + kind)
+					break
+		if ex.run().phase == "battle":
+			var event_engine = Battle.new(game.catalog)
+			check(ex.start_battle(event_engine).success,"optional event battle starts")
+			while event_engine.state.phase not in ["victory","defeat"]: event_engine.auto_step()
+			check(ex.settle_battle(ex.run().activeEncounter,event_engine.state).success and ex.active(),"optional event battle resolves")
 		while not ex.growth_choices().is_empty(): check(ex.choose_growth(ex.growth_choices()[0].choiceId).success, "resolve room growth")
 		if kind == "vault":
 			check(ex.containers().size() == 2 and ex.containers()[0].items.size() == 3 and ex.containers()[1].items.size() == 3, "guarded vault rewards two times three")

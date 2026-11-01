@@ -109,13 +109,97 @@ func run() -> void:
  native.size=Vector2(575,332);await process_frame;await process_frame
  check(is_equal_approx(native.zoom,native._minimum_zoom()),"overview restores responsive fit")
  native.queue_free();await process_frame
+ # v2.3: travel hints follow model reachability, never a visual shortcut.
+ var travel_graph := fixture()
+ travel_graph.reachableRoomIds=["r1","r2","r3"]
+ travel_graph.travelPaths={"r1":["r0","r1"],"r2":["r0","r1","r2"],"r3":["r0","r1","r2","r3"]}
+ var travel_map=load("res://scripts/ui/extraction_map.gd").new()
+ travel_map.configure(travel_graph,true);root.add_child(travel_map);travel_map.size=Vector2(660,400)
+ await process_frame
+ check(travel_map.adjacent_ids()==["r1"],"physical neighbor API unchanged")
+ check(travel_map.reachable_ids()==["r1","r2","r3"],"model reachable component and frontier consumed")
+ check(travel_map.travel_path("r3")==["r0","r1","r2","r3"],"full safe travel path preserved")
+ check(travel_map.frontier_ids()==["r3"],"only unvisited reachable frontier pulses")
+ check(travel_map.travel_path("r4").is_empty(),"unreachable destination has no path hint")
+ travel_map.graph.travelPaths.r3=["r0","r3"]
+ check(travel_map.travel_path("r3").is_empty(),"route hint rejects disconnected straight shortcut")
+ travel_map.graph.travelPaths.r3=["r1","r2","r3"]
+ check(travel_map.travel_path("r3").is_empty(),"route hint starts at current room")
+ travel_map.graph.travelPaths.r3=["r0","r1","r2","r3"]
+ travel_map.graph.reachableRoomIds=[]
+ check(travel_map.reachable_ids().is_empty() and travel_map.frontier_ids().is_empty(),"explicit blocked movement has no fallback or pulse")
+ travel_map.graph.reachableRoomIds=["r3"]
+ check(not travel_map.get_node("AtlasRouteMotion").is_processing(),"reduced motion stops animation clock")
+ var motion_phase: float=travel_map.get_node("AtlasRouteMotion").phase
+ travel_map.get_node("AtlasRouteMotion")._process(1.0)
+ check(travel_map.get_node("AtlasRouteMotion").phase==motion_phase,"reduced motion has static route")
+ travel_map.reduced_motion=false
+ check(travel_map.get_node("AtlasRouteMotion").is_processing(),"animation resumes when preference disabled")
+ travel_map.get_node("AtlasRouteMotion")._process(.5)
+ check(travel_map.get_node("AtlasRouteMotion").phase>motion_phase,"pulse clock advances")
+ check(travel_map.get_node("AtlasRouteMotion").mouse_filter==Control.MOUSE_FILTER_IGNORE,"animation overlay never captures touches")
+ travel_map.reduced_motion=true
+ check(travel_map.travel_path("r3")==["r0","r1","r2","r3"],"motion preference retains travel affordance")
+ check(travel_map.TYPE_NAMES.has("key_vault") and travel_map.TYPE_NAMES.has("relay"),"key room and relay named icons reserved")
+ travel_map.queue_free();await process_frame
+ # Joint model/control regression: cache -> visited entrance -> unexplored
+ # camp is one selected destination, not three repeated map taps.
+ var journey=load("res://scripts/game_model.gd").new("")
+ journey.rng.seed=2;journey.extraction.start_run(0)
+ var cache_id := ""
+ for option in journey.extraction.route_options():
+  if option.type=="cache":cache_id=option.id;break
+ check(not cache_id.is_empty(),"seed2 initial cache reachable")
+ check(journey.extraction.enter_room(cache_id).success,"joint enters real cache")
+ check(journey.extraction.advance_room().success,"joint returns to map")
+ var journey_map=load("res://scripts/ui/extraction_map.gd").new()
+ journey_map.configure(journey.extraction.map_state(),true);root.add_child(journey_map);journey_map.size=Vector2(660,400)
+ await process_frame;await process_frame
+ var camp_id := ""
+ for option in journey.extraction.route_options():
+  if option.type=="rest" and option.path.size()>2:camp_id=option.id;break
+ check(not camp_id.is_empty(),"nonadjacent camp reachable through surveyed corridor")
+ if not camp_id.is_empty():
+  check(camp_id not in journey_map.adjacent_ids() and camp_id in journey_map.reachable_ids(),"logical travel distinguished from neighbor edge")
+  check(journey_map.travel_path(camp_id).size()==3,"joint full corridor rendered")
+  var travel_results:Array=[]
+  journey_map.room_previewed.connect(func(_id):pass)
+  journey_map.room_selected.connect(func(id):travel_results.append(journey.extraction.enter_room(id)))
+  var camp_point:Vector2=journey_map.room_point(camp_id)
+  var explored_before:int=journey.extraction.run().map.explored
+  var previous_boxes:Array=journey.extraction.containers().duplicate(true)
+  touch(journey_map,0,camp_point,true);touch(journey_map,0,camp_point,false);await process_frame
+  check(journey.extraction.run().map.currentRoomId==cache_id,"first distant tap previews without moving")
+  touch(journey_map,0,camp_point,true);touch(journey_map,0,camp_point,false);await process_frame
+  check(travel_results.size()==1 and travel_results[0].success,"second distant tap executes valid model travel")
+  check(journey.extraction.run().map.currentRoomId==camp_id,"joint travel reaches frontier directly")
+  check(journey.extraction.run().map.explored==explored_before+1,"transit does not replay exploration rewards")
+  for room in journey.extraction.run().map.rooms:
+   if room.id==cache_id:check(room.containers==previous_boxes,"travel preserves previous container state")
+ journey_map.queue_free();await process_frame
  # Actual generated maps must fit a compact panel without intersecting
  # travel routes or overlapping 44 px touch targets.
  var Game=load("res://scripts/game_model.gd")
  var minimum_distance := INF
- for seed in 100:
+ for seed in 200:
   var game=Game.new("");game.rng.seed=seed;game.extraction.start_run(0)
   map.configure(game.extraction.map_state());map.size=Vector2(510,340);map.fit_view()
+  # Fitted float32 extents must not unlock the 24px overscroll margin.
+  # Seed1 at 575x332 and seed2 at 516x1000 reproduced this before the fix.
+  for dimensions in [Vector2(510,340),Vector2(575,332),Vector2(516,600),Vector2(516,1000),Vector2(660,400)]:
+   map.size=dimensions;map.fit_view()
+   var fitted_offset:Vector2=map.offset
+   var stable_bounds:Rect2=map._content_bounds()
+   touch(map,0,Vector2(190,170),true);motion(map,0,Vector2(50,60));touch(map,0,Vector2(50,60),false)
+   for frame in 5:map._process(1.0/60.0)
+   check(map.offset.is_equal_approx(fitted_offset),"fitted drag remains fixed seed=%d size=%s"%[seed,dimensions])
+   check(map._auto_fit,"fit drag preserves responsive camera")
+   map.zoom_at(map._view_rect().get_center(),map.zoom*1.8)
+   check(map._content_bounds()==stable_bounds,"world bounds independent of zoom")
+   var zoomed_offset:Vector2=map.offset
+   touch(map,0,Vector2(190,170),true);motion(map,0,Vector2(50,60));touch(map,0,Vector2(50,60),false)
+   check(map.offset.x<zoomed_offset.x-12,"real zoom still pans seed=%d size=%s"%[seed,dimensions])
+  map.size=Vector2(510,340);map.fit_view()
   var ids: Array=map.rooms.keys()
   for a in range(ids.size()):
    check(map._view_rect().has_point(map.room_point(ids[a])),"actual seed fits "+str(seed))

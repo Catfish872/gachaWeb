@@ -1,0 +1,50 @@
+[
+  {
+    "file": "assets/audio/music/licensed/old_tower_inn.ogg",
+    "duration": 105.48244897959184,
+    "finite": true,
+    "peak": 0.7237921953201294,
+    "rms": 0.0822337195277214,
+    "bytes": 1580632
+  },
+  {
+    "file": "assets/audio/music/licensed/dungeon_mystic.ogg",
+    "duration": 66.8560544217687,
+    "finite": true,
+    "peak": 0.4524027705192566,
+    "rms": 0.12684527039527893,
+    "bytes": 815240
+  },
+  {
+    "file": "assets/audio/ui/pickup.ogg",
+    "duration": 0.17709750566893423,
+    "finite": true,
+    "peak": 0.10590144991874695,
+    "rms": 0.023348717018961906,
+    "bytes": 4591
+  },
+  {
+    "file": "assets/audio/ui/repair.ogg",
+    "duration": 0.4170975056689342,
+    "finite": true,
+    "peak": 0.1052689403295517,
+    "rms": 0.0231536366045475,
+    "bytes": 5930
+  },
+  {
+    "file": "assets/audio/ui/key.ogg",
+    "duration": 0.39709750566893426,
+    "finite": true,
+    "peak": 0.0998283326625824,
+    "rms": 0.019974874332547188,
+    "bytes": 5810
+  },
+  {
+    "file": "assets/audio/ui/relay.ogg",
+    "duration": 0.6770975056689342,
+    "finite": true,
+    "peak": 0.13591471314430237,
+    "rms": 0.03270560875535011,
+    "bytes": 6641
+  }
+]

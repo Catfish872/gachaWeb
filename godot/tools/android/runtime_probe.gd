@@ -16,16 +16,25 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super._process(delta)
 	_probe_clock += delta
-	if _probe_clock < 0.5 or not _ready_done:
+	if _probe_clock < (0.1 if extraction_searching else 0.5) or not _ready_done:
 		return
 	_probe_clock = 0.0
+	_emit_probe()
+
+func _notification(what: int) -> void:
+	super._notification(what)
+	if _ready_done and what in [NOTIFICATION_APPLICATION_PAUSED,NOTIFICATION_APPLICATION_RESUMED]:
+		_emit_probe("paused" if what==NOTIFICATION_APPLICATION_PAUSED else "resumed")
+
+func _emit_probe(event: String="frame") -> void:
 	_probe_sequence += 1
 	var controls: Array = []
 	_probe_controls(self, controls)
 	var canvases := _probe_canvases(controls)
+	var loot := _probe_loot(controls)
 	var scroll := main_body.get_parent() as ScrollContainer
 	var payload := Marshalls.utf8_to_base64(JSON.stringify({
-		"seq": _probe_sequence, "modal_scrolls": _probe_scrolls(), "page_scrolls": _probe_page_scrolls(), "screen": current_screen, "window": [get_window().size.x, get_window().size.y],
+		"seq": _probe_sequence, "probe_event":event, "application_paused":bool(get_meta("application_paused",false)), "monotonic_ms": Time.get_ticks_msec(), "loot": loot, "modal_scrolls": _probe_scrolls(), "page_scrolls": _probe_page_scrolls(), "screen": current_screen, "window": [get_window().size.x, get_window().size.y],
 		"logical": [size.x, size.y], "overlay": overlay.get_child_count(),
 		"renderer": {"method": RenderingServer.get_current_rendering_method(), "driver": RenderingServer.get_current_rendering_driver_name(), "adapter": RenderingServer.get_video_adapter_name()},
 		"scroll": scroll.scroll_vertical, "scroll_max": scroll.get_v_scroll_bar().max_value - scroll.get_v_scroll_bar().page,
@@ -45,8 +54,8 @@ func _probe_rect(control: Control) -> Array:
 	return [a.x, a.y, b.x - a.x, b.y - a.y]
 
 func _probe_controls(node: Node, result: Array) -> void:
-	if node is Button and node.is_visible_in_tree() and not node.disabled and (str(node.name).begins_with("Menu") or str(node.name).begins_with("Extraction") or str(node.name).begins_with("Atlas") or node.name == "BackButton"):
-		result.append({"name": str(node.name), "text": node.text, "rect": _probe_rect(node), "clip": _probe_clip(node)})
+	if node is BaseButton and node.is_visible_in_tree() and not node.disabled and (str(node.name).begins_with("Menu") or str(node.name).begins_with("Extraction") or str(node.name).begins_with("Atlas") or node.name == "BackButton"):
+		result.append({"name": str(node.name), "text": node.text if node is Button else node.tooltip_text, "rect": _probe_rect(node), "clip": _probe_clip(node)})
 	for child in node.get_children():
 		_probe_controls(child, result)
 
@@ -54,7 +63,7 @@ func _probe_clip(control: Control) -> Array:
 	var clip := Rect2(Vector2.ZERO, Vector2(get_window().size))
 	var parent := control.get_parent()
 	while parent != null:
-		if parent is ScrollContainer:
+		if parent is Control and parent.clip_contents:
 			var r := _probe_rect(parent)
 			clip = clip.intersection(Rect2(r[0], r[1], r[2], r[3]))
 		parent = parent.get_parent()
@@ -90,7 +99,7 @@ func _probe_extraction() -> Dictionary:
 		"node": int(run.get("node", 0)), "bag_count": bag_ids.size(), "bag_ids": bag_ids,
 		"bag_area": bag_area, "containers": containers, "searching": extraction_searching,
 		"room_id": str(graph.get("currentRoomId", "")), "explored": int(graph.get("explored", 0)),
-		"map_rooms": graph.get("rooms", []).map(func(room): return {"id": str(room.id), "type": str(room.type), "visited": bool(room.visited)}), "map_edges": graph.get("edges", []),
+		"map_rooms": graph.get("rooms", []).map(func(room): return {"id": str(room.id), "type": str(room.type), "visited": bool(room.visited), "cleared": bool(room.get("cleared",false)), "unlocked": bool(room.get("unlocked",false))}), "map_edges": graph.get("edges", []),
 		"room_type": str(run.get("room", {}).get("type", "")),
 		"stash_count": data.get("stash", []).size(), "gold": int(model.state.resources.get("gold", 0))}
 
@@ -117,14 +126,14 @@ func _probe_canvases(controls: Array) -> Dictionary:
 			var inner := _probe_local_rect(map_view, map_view._view_rect())
 			var region := Rect2(clip[0],clip[1],clip[2],clip[3]).intersection(Rect2(inner[0],inner[1],inner[2],inner[3]))
 			clip = [region.position.x,region.position.y,region.size.x,region.size.y]
-		result.map = {"rect": _probe_rect(map_view), "clip": clip, "pan": [map_view.offset.x, map_view.offset.y], "zoom": map_view.zoom, "fit_zoom": map_view._minimum_zoom(), "auto_fit": map_view._auto_fit, "selected_room": map_view.selected_room_id, "can_pan_x": map_view._content_bounds().size.x * map_view.zoom > map_view._view_rect().size.x}
+		result.map = {"rect": _probe_rect(map_view), "clip": clip, "pan": [map_view.offset.x, map_view.offset.y], "zoom": map_view.zoom, "fit_zoom": map_view._minimum_zoom(), "auto_fit": map_view._auto_fit, "selected_room": map_view.selected_room_id, "can_pan_x": map_view._content_bounds().size.x * map_view.zoom > map_view._view_rect().size.x + 0.01}
 		controls.append({"name": "ExtractionMapViewport", "rect": _probe_rect(map_view), "clip": _probe_clip(map_view)})
 		var adjacent: Array = map_view.adjacent_ids()
 		for room in map_view.graph.get("rooms", []):
 			var id := str(room.id)
 			var point: Vector2 = map_view.room_point(id)
 			controls.append({"name": "ExtractionMapNode_" + id, "rect": _probe_local_rect(map_view, Rect2(point-Vector2(22,22), Vector2(44,44))), "clip": clip,
-				"room_id": id, "type": str(room.get("type", "")), "adjacent": id in adjacent,
+				"room_id": id, "type": str(room.get("type", "")), "adjacent": id in adjacent, "reachable": id in map_view.reachable_ids(), "travel_path": map_view.travel_path(id),
 				"visited": bool(room.get("visited", false)), "locked": room.get("type", "") == "boss" and not map_view.graph.get("bossUnlocked", false)})
 	var scene_view = main_body.find_child("ExtractionRoomScene", true, false)
 	if scene_view != null:
@@ -140,4 +149,21 @@ func _probe_page_scrolls() -> Array:
 	var result: Array=[]
 	for node in main_body.find_children("*","ScrollContainer",true,false):
 		if node.is_visible_in_tree():result.append({"id":str(node.get_path()),"rect":_probe_rect(node),"value":node.scroll_vertical,"max":maxf(0,node.get_v_scroll_bar().max_value-node.get_v_scroll_bar().page)})
+	return result
+
+func _probe_loot(controls: Array) -> Dictionary:
+	var id:=str(overlay.get_meta("extraction_container",""))
+	var result:Dictionary={"container_id":id,"source":[],"bag":[],"scan_uid":"","scan_progress":0.0}
+	if id.is_empty():return result
+	for pair in [["source","ExtractionContainer_"+id],["bag","ExtractionGrid_search_bag"]]:
+		var grid=overlay.find_child(pair[1],true,false)
+		if not is_instance_valid(grid):continue
+		var clip:=_probe_canvas_clip(grid)
+		if pair[0]=="source":result.scan_uid=grid.scan_uid;result.scan_progress=grid.scan_progress
+		for item in grid.items:
+			var definition:Dictionary=grid.definitions.get(str(item.itemId),{})
+			var known:bool=definition.get("kind","")=="unknown" if pair[0]=="source" else false
+			var entry:Dictionary={"uid":str(item.uid),"revealed":not known,"name":str(definition.get("name","")) if not known else "", "icon_loaded":grid.textures.has(str(item.itemId)),"rect":_probe_local_rect(grid,grid.item_rect(item)),"clip":clip}
+			result[pair[0]].append(entry)
+			if pair[0]=="source" and not known:controls.append({"name":"ExtractionLootItem_"+str(item.uid),"rect":entry.rect,"clip":clip})
 	return result

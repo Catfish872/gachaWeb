@@ -4,7 +4,38 @@ const MapGraph = preload("res://scripts/ui/extraction_map.gd")
 const RoomScene = preload("res://scripts/ui/extraction_room.gd")
 const COLORS := [Color("9ca7b5"), Color("74bc9a"), Color("68ade8"), Color("bc8be8"), Color("efc774"), Color("ed7884")]
 const RARITIES := ["普通", "优良", "稀有", "史诗", "传说", "至臻"]
-const ROOM_NAMES := {"entry":"入口", "battle":"交战", "elite":"精英", "cache":"物资", "rest":"营地", "event":"奇遇", "boss":"首领", "vault":"藏宝室", "shrine":"祭坛", "hospital":"药房", "workshop":"工坊"}
+const SEARCH_SECONDS := [0.45, 0.65, 0.95, 1.35, 2.0, 2.8]
+const ROOM_NAMES := {"entry":"入口", "battle":"交战", "elite":"精英", "cache":"物资", "rest":"营地", "event":"奇遇", "boss":"首领", "vault":"藏宝室", "shrine":"祭坛", "hospital":"药房", "workshop":"工坊", "relay":"寄存站", "key_vault":"钥匙密室"}
+
+static func _button(app,parent: Node,text: String,action: Callable,primary: bool=false) -> Button:
+	var button: Button=app._button(parent,text,action,primary)
+	if not app.has_method("_button_icon"):return button
+	var key:=""
+	if text in ["地图","探索","出发","前往","继续深入"]:key="path"
+	elif text in ["背包","仓库","打开仓库","收下","收下全部","一键换入","确认换入","携带","整理","自动整理"]:key="bag"
+	elif text in ["构筑","查看本局构筑"]:key="star"
+	elif text in ["编队"]:key="party"
+	elif text in ["更多","菜单"]:key="menu"
+	elif text.begins_with("出售") or text.contains("购买"):key="coin"
+	elif text in ["装备","直接装备","卸回背包","更换背包","卸下"]:key="gear"
+	elif text in ["使用","直接使用"]:key="heart"
+	elif text in ["收藏","收藏所选","藏品"]:key="book"
+	elif text.begins_with("修复") or text.begins_with("装配护盾装备"):key="shield"
+	elif text in ["返回","放回","撤离"]:key="back"
+	elif text in ["选择","多选","确认寄存"]:key="check"
+	if not key.is_empty():app._button_icon(button,key,primary)
+	return button
+
+static func _used_cells(app,items: Array) -> int:
+	var total:=0
+	for item in items:
+		var d:Dictionary=app.model.extraction.item_def(str(item.get("itemId","")))
+		total+=int(d.get("width",1))*int(d.get("height",1))
+	return total
+
+static func _bag_cells(app) -> int:
+	var dims:Vector2i=app.model.extraction.dimensions("bag")
+	return dims.x*dims.y
 
 static func _height(app) -> float:
 	return app.content_height() if app.has_method("content_height") else maxf(400,app.size.y-100)
@@ -39,10 +70,12 @@ static func render(app) -> void:
 	var tabs: Array=[["expedition","探索"],["stash","仓库"],["shop","补给站"],["collection","藏品"]] if run.is_empty() else [["expedition","探索"],["bag","背包"],["build","构筑"]]
 	for tab in tabs:
 		var id: String=tab[0]
-		app._button(nav,tab[1],func():_switch_panel(app,id),app.extraction_panel==id).name="ExtractionTab_"+id
+		var tab_button=app._tab_button(nav,tab[1],func():_switch_panel(app,id),app.extraction_panel==id)
+		tab_button.name="ExtractionTab_"+id
+		app._button_icon(tab_button,{"expedition":"path","stash":"bag","bag":"bag","build":"star","shop":"coin","collection":"book"}.get(id,"star"))
 	var spacer=Control.new();spacer.size_flags_horizontal=Control.SIZE_EXPAND_FILL;nav.add_child(spacer)
 	if not run.is_empty():app._label(nav,"第 %d 幕 · 危险 %d" % [int(run.act),int(run.difficulty)],15,app.CYAN)
-	app._button(nav,"?",func():_help(app)).name="ExtractionHelp"
+	app._tool_button(nav,"book","遗境指引",func():_help(app)).name="ExtractionHelp"
 	match app.extraction_panel:
 		"stash":_stash(app,state);return
 		"shop":_shop(app,state);return
@@ -62,12 +95,14 @@ static func render(app) -> void:
 	else:_scene(app,left,run)
 	_party_status(app,right,run)
 	_equipment_slots(app,right,run)
-	var bag_panel=_section(app,right,"背包  %d 件 · %s 金币" % [run.get("bag",[]).size(),_money(_value(app,run.get("bag",[])))])
-	var grid=_grid_widget(app,bag_panel,"bag",run.get("bag",[]),6,5,34)
+	_utility_slots(app,right,true)
+	var bag_panel=_section(app,right,"背包 %d / %d 格 · %s 金币" % [_used_cells(app,run.get("bag",[])),_bag_cells(app),_money(_value(app,run.get("bag",[])))])
+	var bag_scroll=_scroll(app,bag_panel)
+	var grid=_grid_widget(app,bag_scroll,"bag",run.get("bag",[]),6,5,28)
 	grid.item_selected.connect(func(uid):app.extraction_selected=uid;app.extraction_scope="bag";_switch_panel(app,"bag",false))
 	var actions=app._hbox(right,6)
-	app._button(actions,"整理",func():_operate(app,app.model.extraction.sort_grid("bag"))).name="ExtractionSort_bag"
-	app._button(actions,"更多",func():_run_menu(app))
+	_button(app,actions,"整理",func():_sort_animated(app,"bag")).name="ExtractionSort_bag"
+	_button(app,actions,"更多",func():_run_menu(app))
 
 static func _departure(app,state: Dictionary) -> void:
 	var row=_workspace(app,app.main_body,12);row.size_flags_vertical=Control.SIZE_EXPAND_FILL
@@ -79,7 +114,7 @@ static func _departure(app,state: Dictionary) -> void:
 	var risk=app._hbox(left,6)
 	for level in range(app.model.extraction.max_difficulty()+1):
 		var d:=level
-		var b=app._button(risk,"危险 %d" % level,func():app.extraction_difficulty=d;app._render_screen(),app.extraction_difficulty==level)
+		var b=_button(app,risk,"危险 %d" % level,func():app.extraction_difficulty=d;app._render_screen(),app.extraction_difficulty==level)
 		b.disabled=level>int(state.get("unlockedDifficulty",0))
 	var team=app._hbox(left,8)
 	for unit in app.model.extraction.departure_party():
@@ -92,20 +127,22 @@ static func _departure(app,state: Dictionary) -> void:
 		app._label(stats,"防御 %d" % int(unit.stats.def),12,app.MUTED)
 		stats.name="ExtractionPartyStats_"+str(unit.id)
 	var actions=app._hbox(left,8)
-	app._button(actions,"出发",func():_operate(app,app.model.extraction.start_run(app.extraction_difficulty)),true).name="ExtractionStart"
-	app._button(actions,"编队",func():app.navigate("party"))
+	_button(app,actions,"出发",func():_operate(app,app.model.extraction.start_run(app.extraction_difficulty)),true).name="ExtractionStart"
+	_button(app,actions,"编队",func():app.navigate("party"))
 	var summary: Dictionary=state.get("lastRun",{})
 	if not summary.is_empty():app._label(actions,"上次带出 %s" % _money(int(summary.get("value",0))) if summary.get("outcome","")=="extracted" else "准备再次出发",14,app.MUTED)
 	var right=_section(app,row,"出战整备",app.GOLD);right.get_parent().size_flags_stretch_ratio=1
+	_utility_slots(app,right)
 	_loadout(app,right,state)
-	app._button(right,"前往补给站",func():_switch_panel(app,"shop"))
-	app._button(right,"打开仓库",func():_switch_panel(app,"stash"))
+	var links=app._hbox(right,6)
+	_button(app,links,"补给站",func():_switch_panel(app,"shop"))
+	_button(app,links,"打开仓库",func():_switch_panel(app,"stash"))
 
 static func _routes(app,parent: Node,side: Node) -> void:
 	var graph: Dictionary=app.model.extraction.map_state()
 	var status=app._hbox(parent,8)
 	app._label(status,"首领通道已开启" if graph.get("bossUnlocked",false) else "探索 %d / %d" % [int(graph.get("explored",0)),int(graph.get("requiredExploration",4))],14,app.GOLD)
-	var map=MapGraph.new();map.name="ExtractionMap";map.configure(graph)
+	var map=MapGraph.new();map.name="ExtractionMap";map.configure(graph,app.extraction_reduced_motion)
 	map.custom_minimum_size.y=maxf(235,_height(app)-195);map.size_flags_vertical=Control.SIZE_EXPAND_FILL;parent.add_child(map)
 	map.room_selected.connect(func(id):_map_choice(app,id))
 	if map.has_signal("room_previewed"):
@@ -117,7 +154,7 @@ static func _routes(app,parent: Node,side: Node) -> void:
 			for candidate in app.model.extraction.map_state().get("rooms",[]):
 				if str(candidate.get("id",""))==str(id):room=candidate;break
 			app._label(preview,str(room.get("name",ROOM_NAMES.get(str(room.get("type","")),"据点"))),16,app.GOLD,true)
-			app._button(preview,"前往",func():_map_choice(app,id),true))
+			_button(app,preview,"前往",func():_map_choice(app,id),true))
 
 static func _map_choice(app,id: String) -> void:
 	var graph: Dictionary=app.model.extraction.map_state()
@@ -131,30 +168,56 @@ static func _map_choice(app,id: String) -> void:
 static func _scene(app,parent: Node,run: Dictionary) -> void:
 	var room: Dictionary=app.model.extraction.room_scene()
 	var room_actions: Array=app.model.extraction.room_actions() if app.model.extraction.has_method("room_actions") else []
+	var is_relay:=str(run.get("room",{}).get("type",""))=="relay"
 	var room_done:=not room_actions.is_empty()
+	var action_extra:=0
+	for action in room_actions:
+		if not str(action.get("disabledReason","")).is_empty():action_extra=maxi(action_extra,22)
+		if not action.get("encounterPreview",{}).is_empty():action_extra=maxi(action_extra,8)
 	for action in room_actions:
 		if not action.get("used",false):room_done=false
 	var top=app._hbox(parent,8)
-	app._label(top,str(room.get("name","遗境")),19,app.GOLD)
+	if room.has("eventIcon") and app.has_method("_rune_icon"):app._rune_icon(top,str(room.eventIcon),24,app.GOLD)
+	app._label(top,str(room.get("eventTitle",room.get("name","遗境"))),19,app.GOLD)
 	var spacer=Control.new();spacer.size_flags_horizontal=Control.SIZE_EXPAND_FILL;top.add_child(spacer)
-	app._button(top,"地图",func():_return_map(app)).name="ExtractionAdvance"
+	_button(app,top,"地图",func():_return_map(app)).name="ExtractionAdvance"
 	var scene=RoomScene.new();scene.name="ExtractionRoomScene"
-	scene.configure(room,app.model.extraction.containers(),str(room.get("selectedContainer","")))
-	scene.custom_minimum_size.y=maxf(150,_height(app)-(250 if room_done else 290 if not room_actions.is_empty() else 215));scene.size_flags_vertical=Control.SIZE_EXPAND_FILL;parent.add_child(scene)
+	var guards: Array=[]
+	if str(run.get("phase",""))=="battle":
+		for enemy_id in run.get("activeEncounter",{}).get("enemies",[]):
+			guards.append({"id":str(enemy_id),"name":str(app.model.catalog.get("EnemyData",{}).get(str(enemy_id),{}).get("name",enemy_id))})
+	scene.configure(room,app.model.extraction.containers() if guards.is_empty() else [],str(room.get("selectedContainer","")),guards,app.extraction_reduced_motion)
+	scene.battle_requested.connect(app._begin_extraction_battle)
+	scene.service_requested.connect(func(service):
+		if service=="relay":_deposit_preview(app)
+		elif service=="unlock":_operate_sound(app,app.model.extraction.choose_room_action("unlock"),"key"))
+	scene.custom_minimum_size.y=maxf(150,_height(app)-(250 if room_done else 290+action_extra if not room_actions.is_empty() or is_relay else 215));scene.size_flags_vertical=Control.SIZE_EXPAND_FILL;parent.add_child(scene)
 	scene.container_selected.connect(func(id):
 		if run.get("phase","")=="battle":app._toast("击败守卫后搜寻",app.RED);return
 		if app._check(app.model.extraction.choose_container(id)):_open_container(app,id))
 	var actions=app._hbox(parent,6)
 	var phase:=str(run.get("phase",""))
-	if phase=="battle":app._button(actions,"迎战",app._begin_extraction_battle,true).name="ExtractionBattle"
+	if phase=="battle":_button(app,actions,"迎战",app._begin_extraction_battle,true).name="ExtractionBattle"
 	elif phase=="boss_exit":
-		app._button(actions,"撤离",func():_confirm_departure(app,true),true).name="ExtractionExit"
-		if int(run.get("act",1))<3:app._button(actions,"继续深入",func():_operate(app,app.model.extraction.continue_act())).name="ExtractionNextAct"
+		_button(app,actions,"撤离",func():_confirm_departure(app,true),true).name="ExtractionExit"
+		if int(run.get("act",1))<3:_button(app,actions,"继续深入",func():_operate(app,app.model.extraction.continue_act())).name="ExtractionNextAct"
 	for box in app.model.extraction.containers():
 		var id:=str(box.id)
-		var button=app._button(actions,str(box.get("name","容器")),func():
+		var button=_button(app,actions,str(box.get("name","容器")),func():
 			if app._check(app.model.extraction.choose_container(id)):_open_container(app,id))
 		button.name="ExtractionOpenContainer_"+id;button.disabled=phase=="battle"
+		if ResourceLoader.exists(str(box.get("sprite",""))):
+			button.icon=load(str(box.sprite));button.expand_icon=true;button.add_theme_constant_override("icon_max_width",24)
+	if is_relay:
+		var panel=app._panel(parent,app.GOLD.darkened(0.55),8)
+		var relay=app._hbox(panel,10)
+		if app.has_method("_rune_icon"):app._rune_icon(relay,"bag",36,app.GOLD)
+		var text=app._vbox(relay,3);text.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		var used:bool=run.get("room",{}).get("depositUsed",false)
+		app._label(text,"物资已送回" if used else "远征信使",17,app.GOLD)
+		app._label(text,"本次寄存完成" if used else "2 × 2 格 · 自动挑选最高总价值物资",12,app.TEXT,true)
+		var send=_button(app,relay,"查看寄存",func():_deposit_preview(app),true)
+		send.name="ExtractionDepositPreview";send.disabled=used
 	if room_done:
 		var result=app._panel(parent,app.CYAN.darkened(0.6),8)
 		var result_row=app._hbox(result,8)
@@ -168,11 +231,78 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 		for action in room_actions:
 			var id:=str(action.get("id",action.get("actionId","")))
 			var choice=_section(app,choices,str(action.get("label","互动")),app.CYAN)
+			var option_icon:="shield" if id.contains("repair") else "energy" if id.contains("energy") or id in ["meditate","listen"] else "heart" if id.contains("heal") or id in ["recover","share","shelter","rest"] or id.contains("revive") else "bag" if id.contains("supply") or id.contains("deposit") or id in ["scavenge","search","open"] else "star"
+			var specific_icons:={"mend":"shield","inscribe":"star","salvage":"bag","transmute":"fire","attune":"energy","scrap":"bag","challenge":"sword","key":"gear","depart":"path"}
+			option_icon=str(specific_icons.get(id,option_icon))
+			var preview: Dictionary=action.get("encounterPreview",{})
+			if not preview.is_empty():
+				var guards_row=app._hbox(choice,4);guards_row.name="ExtractionEncounterPreview_"+id
+				for enemy_id in preview.get("enemies",[]):_icon(guards_row,{"icon":"res://assets/enemies/"+str(enemy_id)+".png"},32)
+				app._label(guards_row,"精英战" if preview.get("isElite",false) or str(preview.get("kind",""))=="elite" else "交战",11,app.RED)
+			elif app.has_method("_rune_icon"):app._rune_icon(choice,option_icon,24,app.CYAN)
 			app._label(choice,str(action.get("description","")),12,app.TEXT,true)
 			var cost:=int(action.get("cost",0))
 			var caption:="已选择" if action.get("used",false) else "%d 金币" % cost if cost>0 else "选择"
-			var b=app._button(choice,caption,func():_operate(app,app.model.extraction.choose_room_action(id)),true)
+			var b=_button(app,choice,caption,func():
+				if id in ["deposit","send","relay"] and app.model.extraction.has_method("preview_deposit"):_deposit_preview(app)
+				else:_operate_sound(app,app.model.extraction.choose_room_action(id),"key" if id=="unlock" else "use"),true)
+			b.name="ExtractionRoomAction_"+id
 			b.disabled=not bool(action.get("enabled",true))
+			if b.disabled and not str(action.get("disabledReason","")).is_empty():
+				app._label(choice,str(action.disabledReason),11,app.MUTED,true)
+
+static func _deposit_preview(app) -> void:
+	var plan: Dictionary=app.model.extraction.preview_deposit()
+	if not app._check(plan):return
+	var box=app._modal("信使寄存",900,480)
+	app.overlay.set_meta("deposit_selection",[])
+	var row=app._hbox(box,12)
+	var source=_section(app,row,"随身背包",app.CYAN)
+	var source_scroll=_scroll(app,source,240)
+	var bag=_grid_widget(app,source_scroll,"deposit_bag",app.model.state.extraction.run.get("bag",[]),6,5,38)
+	bag.name="ExtractionDepositBag"
+	bag.item_selected.connect(func(uid):
+		var selected: Array=app.overlay.get_meta("deposit_selection",[]).duplicate()
+		if selected.has(uid):selected.erase(uid)
+		else:selected.append(uid)
+		app.overlay.set_meta("deposit_selection",selected)
+		bag.selected_uid="";bag.selected_uids=selected;bag.queue_redraw()
+		_refresh_deposit(app))
+	var dest=_section(app,row,"寄存格 · 2 × 2",app.GOLD)
+	var preview=app._vbox(dest,8);preview.name="ExtractionDepositPlan"
+	var actions=app._hbox(box,8)
+	_button(app,actions,"自动选贵",func():
+		app.overlay.set_meta("deposit_selection",[]);bag.selected_uid="";bag.selected_uids.clear();bag.queue_redraw();_refresh_deposit(app)).name="ExtractionDepositAuto"
+	var confirm=_button(app,actions,"确认寄存",func():
+		var current: Dictionary=app.overlay.get_meta("deposit_plan",{})
+		_complete_deposit(app,current,app.overlay.get_meta("deposit_selection",[])),true)
+	confirm.name="ExtractionDepositConfirm"
+	_button(app,actions,"返回",app._clear_overlay)
+	_refresh_deposit(app)
+
+static func _complete_deposit(app,plan: Dictionary,selected: Array) -> void:
+	var result: Dictionary=app.model.extraction.deposit_items(str(plan.get("planHash","")),selected)
+	if not app._check(result):return
+	if app.has_method("_ui_sound"):app._ui_sound("relay")
+	app._clear_overlay();app._render_screen();app._toast("物资已送回仓库",app.CYAN)
+
+static func _refresh_deposit(app) -> void:
+	var selected: Array=app.overlay.get_meta("deposit_selection",[])
+	var plan: Dictionary=app.model.extraction.preview_deposit(selected)
+	app.overlay.set_meta("deposit_plan",plan)
+	var parent=app.overlay.find_child("ExtractionDepositPlan",true,false)
+	app._clear(parent)
+	var confirm=app.overlay.find_child("ExtractionDepositConfirm",true,false)
+	confirm.disabled=not bool(plan.get("success",false)) or not bool(plan.get("enabled",true))
+	if not plan.get("success",false):
+		app._label(parent,str(plan.get("message",plan.get("error","这些物品装不下，请减少选择"))),15,app.GOLD,true)
+		app._label(parent,"点选背包物品取消选择",13,app.MUTED,true)
+		return
+	var grid=_grid_widget(app,parent,"deposit",plan.get("items",[]),2,2,52)
+	grid.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	app._label(parent,"已自动挑选最高总价值" if selected.is_empty() else "已手选 %d 件" % selected.size(),13,app.CYAN)
+	app._label(parent,"%d 件 · %s 金币" % [plan.get("uids",[]).size(),_money(int(plan.get("value",0)))],16,app.GOLD)
+	app._label(parent,"寄存费 %d 金币 · 安全送回仓库" % int(plan.get("fee",0)),12,app.MUTED,true)
 
 static func _show_growth(app,parent: Node) -> void:
 	if not app.model.extraction.has_method("growth_choices"):return
@@ -183,8 +313,9 @@ static func _show_growth(app,parent: Node) -> void:
 	for choice in choices:
 		var id:=str(choice.get("choiceId",choice.get("id","")))
 		var col=_section(app,row,str(choice.get("name","祝福")),app.CYAN)
+		if app.has_method("_rune_icon"):app._rune_icon(col,preload("res://scripts/ui/rune_theme.gd").effect_key(choice),34,app.GOLD)
 		app._label(col,str(choice.get("description",choice.get("desc",""))),13,app.TEXT,true)
-		app._button(col,"选择",func():_operate(app,app.model.extraction.choose_growth(id)),true)
+		_button(app,col,"选择",func():_operate(app,app.model.extraction.choose_growth(id)),true)
 
 static func _party_status(app,parent: Node,run: Dictionary) -> void:
 	var row=app._hbox(parent,6)
@@ -216,13 +347,51 @@ static func _equipment_slots(app,parent: Node,run: Dictionary) -> void:
 			var ghost=_icon(col,icon_def,30);ghost.modulate=Color(0.5,0.65,0.7,0.22)
 			app._center_label(col,"战术装备",10,app.MUTED)
 
+static func _utility_slots(app,parent: Node,compact: bool=false) -> void:
+	if not app.model.extraction.has_method("equipment_status"):return
+	var status: Dictionary=app.model.extraction.equipment_status()
+	var row=app._hbox(parent,6);row.name="ExtractionUtilitySlots"
+	for slot in ["armor","backpack"]:
+		var info: Dictionary=status.get(slot,{})
+		var item: Dictionary=info.get("item",{})
+		var panel=app._panel(row,app.CYAN.darkened(0.65),5)
+		var line=app._hbox(panel,6)
+		var icon_name:="shield" if slot=="armor" else "bag"
+		if not item.is_empty():
+			_icon(line,app.model.extraction.item_def(str(item.get("itemId",""))),32 if compact else 42)
+		else:_icon(line,{"icon":"res://assets/ui/runes/"+icon_name+".svg"},24)
+		var col=app._vbox(line,2);col.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		if slot=="armor":
+			var maximum:=float(info.get("max",0));var current:=float(info.get("current",0))
+			app._label(col,"护盾 %d%%" % roundi(100.0*current/maximum) if maximum>0 else "未装护盾",12,app.CYAN)
+			if maximum>0:
+				app._progress(col,current,maximum,app.CYAN,3)
+				if not compact:
+					var d:Dictionary=app.model.extraction.item_def(str(item.get("itemId","")))
+					app._label(col,str(d.get("name","护盾装备")),11,_rarity(d))
+					app._label(col,"吸收 %d / %d" % [int(current),int(maximum)],11,app.MUTED)
+		else:
+			app._label(col,"背包 %d 格" % int(info.get("cells",30)),12,app.GOLD)
+			if not compact:app._label(col,str(app.model.extraction.item_def(str(item.get("itemId",""))).get("name","旅人背包")),11,app.MUTED)
+		if not compact and not item.is_empty():
+			var slot_id:=str(slot)
+			_button(app,col,"卸下",func():_operate_sound(app,app.model.extraction.remove_utility_slot(slot_id),"equip")).name="ExtractionRemoveUtility_"+slot_id
+	if not compact and app.model.state.extraction.get("run",{}).is_empty() and app.model.extraction.has_method("repair_quote"):
+		var quote: Dictionary=app.model.extraction.repair_quote()
+		if int(quote.get("missing",0))>0:
+			var repair=_button(app,parent,"修复护盾装备 · %d 金币" % int(quote.get("cost",0)),func():_operate_sound(app,app.model.extraction.repair_equipment(),"repair"))
+			repair.name="ExtractionRepair";repair.disabled=not bool(quote.get("enabled",false))
+
 static func _grid_widget(app,parent: Node,scope: String,items: Array,columns: int,rows: int,cell_size: float=42) -> Control:
+	if scope in ["bag","search_bag","deposit_bag"]:
+		var dims: Vector2i=app.model.extraction.dimensions("bag")
+		columns=dims.x;rows=dims.y
 	var defs: Dictionary={}
 	var displayed: Array=items.duplicate(true)
 	for item in displayed:
 		defs[str(item.itemId)]=app.model.extraction.item_def(str(item.itemId))
 		if app.model.extraction.has_method("item_value"):item.displayValue=app.model.extraction.item_value(item)
-	var grid=Grid.new();grid.name="ExtractionGrid_"+scope;grid.preferred_cell=cell_size
+	var grid=Grid.new();grid.name="ExtractionGrid_"+scope;grid.preferred_cell=cell_size;grid.reduced_motion=app.extraction_reduced_motion
 	grid.configure(columns,rows,displayed,defs,app.extraction_selected if app.extraction_scope==scope else "")
 	parent.add_child(grid)
 	grid.size_flags_horizontal=Control.SIZE_SHRINK_CENTER;grid.custom_minimum_size.x=columns*cell_size
@@ -230,15 +399,17 @@ static func _grid_widget(app,parent: Node,scope: String,items: Array,columns: in
 
 static func _bag(app,run: Dictionary) -> void:
 	var row=_workspace(app,app.main_body,12);row.size_flags_vertical=Control.SIZE_EXPAND_FILL
-	var left=_section(app,row,"随身背包",app.CYAN)
+	var left=_section(app,row,"随身背包 · %d / %d 格" % [_used_cells(app,run.get("bag",[])),_bag_cells(app)],app.CYAN)
 	_party_status(app,left,run)
-	var grid=_grid_widget(app,left,"bag",run.get("bag",[]),6,5,42)
+	var bag_scroll=_scroll(app,left)
+	var grid=_grid_widget(app,bag_scroll,"bag",run.get("bag",[]),6,5,42)
 	var right=_section(app,row,"角色与装备",app.GOLD)
 	_equipment_slots(app,right,run)
+	_utility_slots(app,right)
 	var detail=app._vbox(right,6);detail.name="ExtractionItemDetail"
 	_render_inventory_detail(app,detail,"bag",run.get("bag",[]))
 	grid.item_selected.connect(func(uid):app.extraction_scope="bag";app.extraction_selected=uid;app._clear(detail);_render_inventory_detail(app,detail,"bag",run.get("bag",[])))
-	app._button(left,"自动整理",func():_operate(app,app.model.extraction.sort_grid("bag"))).name="ExtractionSort_bag"
+	_button(app,left,"自动整理",func():_sort_animated(app,"bag")).name="ExtractionSort_bag"
 	_show_growth(app,right)
 
 static func _render_inventory_detail(app,parent: Node,scope: String,items: Array) -> void:
@@ -246,7 +417,7 @@ static func _render_inventory_detail(app,parent: Node,scope: String,items: Array
 		for item in app.model.state.extraction.run.get("equipped",[]):
 			if str(item.uid)==app.extraction_selected:
 				_item_title(app,parent,app.model.extraction.item_def(str(item.itemId)))
-				app._button(parent,"卸回背包",func():_operate_sound(app,app.model.extraction.unequip_item(str(item.uid)),"equip"))
+				_button(app,parent,"卸回背包",func():_operate_sound(app,app.model.extraction.unequip_item(str(item.uid)),"equip"))
 				return
 	for item in items:
 		if app.extraction_scope==scope and str(item.uid)==app.extraction_selected:_selected(app,parent,scope,item);return
@@ -257,16 +428,20 @@ static func _selected(app,parent: Node,scope: String,item: Dictionary) -> void:
 	if app.model.extraction.has_method("item_value"):d.value=app.model.extraction.item_value(item)
 	_item_title(app,parent,d)
 	var actions=app._flow(parent,6)
+	var utility_slot:=str(d.get("slot",""))
+	if utility_slot in ["armor","backpack"] and app.model.extraction.has_method("set_utility_slot"):
+		_button(app,actions,"装配护盾装备" if utility_slot=="armor" else "更换背包",func():_operate_sound(app,app.model.extraction.set_utility_slot(utility_slot,uid),"equip"),true)
 	if scope=="bag":
-		if d.get("kind","")=="equipment":app._button(actions,"装备",func():_operate_sound(app,app.model.extraction.equip_item(uid),"equip"),true)
+		if d.get("kind","")=="equipment" and utility_slot.is_empty():_button(app,actions,"装备",func():_operate_sound(app,app.model.extraction.equip_item(uid),"equip"),true)
 		if d.get("kind","")=="consumable":
-			var use_button=app._button(actions,"使用",func():_operate_sound(app,app.model.extraction.use_item(uid),"use"),true)
+			var use_button=_button(app,actions,"使用",func():_operate_sound(app,app.model.extraction.use_item(uid),"use"),true)
+			use_button.name="ExtractionUse_"+uid
 			use_button.disabled=not app.model.extraction.can_use_consumable(str(item.itemId))
-		app._button(actions,"丢弃",func():app._confirm("丢弃物资？",str(d.get("name","物资")),func():_operate(app,app.model.extraction.discard_item(uid))))
+		_button(app,actions,"丢弃",func():app._confirm("丢弃物资？",str(d.get("name","物资")),func():_operate(app,app.model.extraction.discard_item(uid))))
 	else:
-		app._button(actions,"出售",func():_operate_sound(app,app.model.extraction.sell_item(uid),"coin"))
-		app._button(actions,"收藏",func():_operate(app,app.model.extraction.collect_item(uid)))
-		app._button(actions,"携带",func():_operate(app,app.model.extraction.bring_item(uid)),true)
+		_button(app,actions,"出售",func():_operate_sound(app,app.model.extraction.sell_item(uid),"coin"))
+		_button(app,actions,"收藏",func():_operate(app,app.model.extraction.collect_item(uid)))
+		if utility_slot.is_empty():_button(app,actions,"携带",func():_operate(app,app.model.extraction.bring_item(uid)),true)
 
 static func _stash(app,state: Dictionary) -> void:
 	var row=_workspace(app,app.main_body,12);row.size_flags_vertical=Control.SIZE_EXPAND_FILL
@@ -290,15 +465,15 @@ static func _stash(app,state: Dictionary) -> void:
 			if uids.has(str(item.uid)):value+=app.model.extraction.item_value(item) if app.model.extraction.has_method("item_value") else int(app.model.extraction.item_def(str(item.itemId)).get("value",0))
 		app._label(detail,"出售可得 %s 金币" % _money(value),18,app.GOLD)
 		app._clear(batch)
-		app._button(batch,"出售所选",func():_batch_operation(app,"sell_items",grid.selected_uids),true).disabled=uids.is_empty()
-		app._button(batch,"收藏所选",func():_batch_operation(app,"collect_items",grid.selected_uids)).disabled=uids.is_empty()
-		app._button(batch,"取消选择",func():grid.multi_select=false;grid.set_meta("inventory_selection",false);grid.selected_uids.clear();grid.queue_redraw();app._clear(batch);app._clear(detail);_render_inventory_detail(app,detail,"stash",state.get("stash",[]))))
-	app._button(actions,"多选",func():grid.multi_select=not grid.multi_select;grid.set_meta("inventory_selection",grid.multi_select);selection_label.text="划过物品连续选择" if grid.multi_select else "点选查看详情")
-	app._button(actions,"整理",func():_operate(app,app.model.extraction.sort_grid("stash"))).name="ExtractionSort_stash"
-	if not state.get("mailbox",[]).is_empty():app._button(right,"领取待收物资",func():_operate(app,app.model.extraction.claim_mail()),true)
+		_button(app,batch,"出售所选",func():_batch_operation(app,"sell_items",grid.selected_uids),true).disabled=uids.is_empty()
+		_button(app,batch,"收藏所选",func():_batch_operation(app,"collect_items",grid.selected_uids)).disabled=uids.is_empty()
+		_button(app,batch,"取消选择",func():grid.multi_select=false;grid.set_meta("inventory_selection",false);grid.selected_uids.clear();grid.queue_redraw();app._clear(batch);app._clear(detail);_render_inventory_detail(app,detail,"stash",state.get("stash",[]))))
+	_button(app,actions,"多选",func():grid.multi_select=not grid.multi_select;grid.set_meta("inventory_selection",grid.multi_select);selection_label.text="划过物品连续选择" if grid.multi_select else "点选查看详情")
+	_button(app,actions,"整理",func():_sort_animated(app,"stash")).name="ExtractionSort_stash"
+	if not state.get("mailbox",[]).is_empty():_button(app,right,"领取待收物资",func():_operate(app,app.model.extraction.claim_mail()),true)
 	if state.get("run",{}).is_empty():
 		app._label(right,"已携带 %d / 3 件" % state.get("loadout",[]).size(),14,app.GOLD)
-		app._button(right,"查看出战整备",func():_switch_panel(app,"expedition"))
+		_button(app,right,"查看出战整备",func():_switch_panel(app,"expedition"))
 
 static func _batch_operation(app,method: String,uids: Array) -> void:
 	if app.model.extraction.has_method(method):_operate_sound(app,app.model.extraction.call(method,uids.duplicate()),"coin" if method=="sell_items" else "tap")
@@ -315,11 +490,15 @@ static func _shop(app,state: Dictionary) -> void:
 		var p=app._panel(cards,_rarity(d).darkened(0.65),8);p.custom_minimum_size.x=135
 		var col=app._vbox(p,5);var line=app._hbox(col,4);_icon(line,d,42)
 		app._label(line,str(d.get("name",id)),13,_rarity(d),true)
-		var b=app._button(col,"危险 %d 解锁" % required if locked else "%d 金币 · 购买" % int(d.buyPrice),func():_operate_sound(app,app.model.extraction.buy_supply(item_id),"coin"),not locked)
+		var effect=app._label(col,str(d.get("description","")),12,app.TEXT,true)
+		effect.name="ExtractionSupplyEffect_"+item_id
+		app._label(col,"%d × %d 格" % [int(d.get("width",1)),int(d.get("height",1))],11,app.MUTED)
+		var b=_button(app,col,"危险 %d 解锁" % required if locked else "%d 金币 · 购买" % int(d.buyPrice),func():_operate_sound(app,app.model.extraction.buy_supply(item_id),"coin"),not locked)
 		b.name="ExtractionBuy_"+item_id;b.disabled=locked
 	var right=_section(app,row,"携带与储备",app.CYAN);right.get_parent().size_flags_stretch_ratio=1
+	_utility_slots(app,right)
 	_loadout(app,right,state)
-	app._button(right,"打开仓库",func():_switch_panel(app,"stash"))
+	_button(app,right,"打开仓库",func():_switch_panel(app,"stash"))
 
 static func _loadout(app,parent: Node,state: Dictionary) -> void:
 	if not state.get("run",{}).is_empty():app._label(parent,"行动中，补给存入仓库",14,app.MUTED,true);return
@@ -330,14 +509,14 @@ static func _loadout(app,parent: Node,state: Dictionary) -> void:
 		if i<loadout.size():
 			var item: Dictionary=loadout[i];var d: Dictionary=app.model.extraction.item_def(str(item.itemId))
 			_icon(row,d,36);app._label(row,str(d.get("name","物资")),13,_rarity(d),true)
-			app._button(row,"放回",func():_operate(app,app.model.extraction.store_item(str(item.uid))))
+			_button(app,row,"放回",func():_operate(app,app.model.extraction.store_item(str(item.uid))))
 		else:app._label(row,"空位 · 从仓库携带",13,app.MUTED)
 
 static func _run_menu(app) -> void:
 	var box=app._modal("行动选项",420,230)
-	app._button(box,"查看本局构筑",func():app._clear_overlay();_switch_panel(app,"build"))
-	app._button(box,"放弃本次行动",func():app._confirm("结束行动？","随身物资将遗失。",func():_operate(app,app.model.extraction.retreat())))
-	app._button(box,"返回",app._clear_overlay,true)
+	_button(app,box,"查看本局构筑",func():app._clear_overlay();_switch_panel(app,"build"))
+	_button(app,box,"放弃本次行动",func():app._confirm("结束行动？","随身物资将遗失。",func():_operate(app,app.model.extraction.retreat())))
+	_button(app,box,"返回",app._clear_overlay,true)
 
 static func _build(app,run: Dictionary) -> void:
 	var col=_scroll(app,app.main_body)
@@ -348,6 +527,7 @@ static func _build(app,run: Dictionary) -> void:
 		var cards=app._grid(col,3 if app.size.x>=900 else 2)
 		for blessing in blessings:
 			var card=_section(app,cards,str(blessing.get("name","祝福")),app.GOLD)
+			if app.has_method("_rune_icon"):app._rune_icon(card,preload("res://scripts/ui/rune_theme.gd").effect_key(blessing),30,app.GOLD)
 			app._label(card,str(blessing.get("description","")),14,app.TEXT,true)
 			if int(blessing.get("stacks",1))>1:app._label(card,"叠加 %d 层" % int(blessing.stacks),13,app.CYAN)
 	_equipment_slots(app,col,run)
@@ -398,6 +578,7 @@ static func _container(app,id: String) -> Dictionary:
 static func _open_container(app,id: String) -> void:
 	var container:=_container(app,id)
 	if container.is_empty():return
+	_stop_search(app,false)
 	app.extraction_search_container=id
 	var box=app._modal("",1150,520)
 	box.add_theme_constant_override("separation",8)
@@ -408,32 +589,31 @@ static func _open_container(app,id: String) -> void:
 	var heading=app._hbox(box,8)
 	app._label(heading,str(container.get("name","搜寻物资")),22,app.GOLD)
 	var spacer=Control.new();spacer.size_flags_horizontal=Control.SIZE_EXPAND_FILL;heading.add_child(spacer)
-	app._button(heading,"×",func():_close_container(app)).name="ExtractionCloseContainer"
+	_button(app,heading,"×",func():_close_container(app)).name="ExtractionCloseContainer"
 	var controls=app._hbox(box,8);controls.name="ExtractionSearchToolbar"
-	var primary=app._button(controls,"搜索",func():
-		if app.extraction_searching:_stop_search(app,true)
-		else:_search(app,id),true)
-	primary.name="ExtractionSearch"
 	var toggle=CheckButton.new();toggle.text="自动收下";toggle.button_pressed=app.extraction_auto_pick;toggle.custom_minimum_size.y=40
 	controls.add_child(toggle);toggle.name="ExtractionAutoPick"
 	toggle.toggled.connect(func(on):app.extraction_auto_pick=on;app._save_preferences())
 	var status=app._label(controls,"逐件发现物资",13,app.MUTED,true);status.name="ExtractionSearchStatus";status.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	var split=app._hbox(box,10);split.name="ExtractionLootSplit"
 	var source=_section(app,split,"容器",app.CYAN)
-	var dest=_section(app,split,"随身背包",app.GOLD)
+	var bag_dimensions: Vector2i=app.model.extraction.dimensions("bag")
+	var dest=_section(app,split,"背包 %d / %d 格" % [_used_cells(app,app.model.state.extraction.run.get("bag",[])),bag_dimensions.x*bag_dimensions.y],app.GOLD)
+	dest.get_child(0).name="ExtractionSearchBagHeading"
 	var information=_section(app,split,"物资详情",app.CYAN)
 	var preferred:=minf(52,floorf((app.size.x-144)/18))
 	app.overlay.set_meta("loot_cell",preferred)
 	var source_scroll=_scroll(app,source,preferred*5)
 	source_scroll.get_parent().name="ExtractionContainerScroll"
-	var container_grid=Grid.new();container_grid.name="ExtractionContainer_"+id;container_grid.preferred_cell=preferred
+	var container_grid=Grid.new();container_grid.name="ExtractionContainer_"+id;container_grid.preferred_cell=preferred;container_grid.reduced_motion=app.extraction_reduced_motion
 	source_scroll.add_child(container_grid)
 	container_grid.item_selected.connect(func(uid):_select_container_item(app,id,uid))
 	var bottom=app._hbox(source,6);bottom.name="ExtractionContainerActions"
-	app._button(bottom,"收下全部",func():_take_all(app,id),true).name="ExtractionTakeAll"
-	app._button(bottom,"一键换入",func():_smart_loot(app,id)).name="ExtractionSmartLoot"
+	_button(app,bottom,"收下全部",func():_take_all(app,id),true).name="ExtractionTakeAll"
+	_button(app,bottom,"一键换入",func():_smart_loot(app,id)).name="ExtractionSmartLoot"
 	var progress=app._progress(source,0,1,app.CYAN,3);progress.name="SearchProgress_"+id
-	var bag_grid=_grid_widget(app,dest,"search_bag",app.model.state.extraction.run.get("bag",[]),6,5,preferred)
+	var bag_scroll=_scroll(app,dest,preferred*5)
+	var bag_grid=_grid_widget(app,bag_scroll,"search_bag",app.model.state.extraction.run.get("bag",[]),6,5,preferred)
 	bag_grid.item_selected.connect(func(uid):
 		app.overlay.set_meta("manual_loot_selection","bag:"+str(uid))
 		var detail=app.overlay.find_child("ExtractionSearchDetail",true,false);app._clear(detail)
@@ -442,25 +622,26 @@ static func _open_container(app,id: String) -> void:
 			var d: Dictionary=app.model.extraction.item_def(str(item.itemId)).duplicate(true)
 			if app.model.extraction.has_method("item_value"):d.value=app.model.extraction.item_value(item)
 			_item_title(app,detail,d)
-			if d.get("kind","")=="consumable":app._button(detail,"使用",func():app._check(app.model.extraction.use_item(uid));_refresh_search_grids(app,id))
-			if d.get("kind","")=="equipment":app._button(detail,"装备",func():app._check(app.model.extraction.equip_item(uid));_refresh_search_grids(app,id)))
+			if d.get("kind","")=="consumable":_button(app,detail,"使用",func():app._check(app.model.extraction.use_item(uid));_refresh_search_grids(app,id))
+			if str(d.get("slot","")) in ["armor","backpack"]:
+				_button(app,detail,"装配",func():app._check(app.model.extraction.set_utility_slot(str(d.slot),uid));_refresh_search_grids(app,id))
+			elif d.get("kind","")=="equipment":_button(app,detail,"装备",func():app._check(app.model.extraction.equip_item(uid));_refresh_search_grids(app,id)))
 	var history=app._hbox(dest,5);history.name="ExtractionLootHistory"
 	var detail=app._vbox(information,8);detail.name="ExtractionSearchDetail"
 	_party_status(app,detail,app.model.state.extraction.run)
 	app._label(detail,"点选物资查看详情",14,app.MUTED,true)
 	app._label(detail,"背包满时，也可直接使用补给或替换装备。",13,app.MUTED,true)
 	_refresh_search_grids(app,id);_refresh_search_controls(app,id)
+	_search.call_deferred(app,id)
 
 static func _refresh_search_controls(app,id: String) -> void:
-	var primary=app.overlay.find_child("ExtractionSearch",true,false)
-	if not is_instance_valid(primary):primary=app.overlay.find_child("ExtractionStopSearch",true,false)
-	if not is_instance_valid(primary):return
-	var unknown:=false
+	var status=app.overlay.find_child("ExtractionSearchStatus",true,false)
+	if not is_instance_valid(status):return
+	var unknown:=0
 	for item in _container(app,id).get("items",[]):
-		if not item.get("revealed",false):unknown=true
-	primary.name="ExtractionStopSearch" if app.extraction_searching else "ExtractionSearch"
-	primary.text="暂停搜索" if app.extraction_searching else "搜索" if unknown else "已搜完"
-	primary.disabled=not app.extraction_searching and not unknown
+		if not item.get("revealed",false):unknown+=1
+	status.modulate=Color.WHITE
+	status.text="搜索中…" if unknown>0 else "已搜完 · 仍有物资" if not _container(app,id).get("items",[]).is_empty() else "已取空"
 
 static func _refresh_search_grids(app,id: String) -> void:
 	var grid=app.overlay.find_child("ExtractionContainer_"+id,true,false)
@@ -480,7 +661,10 @@ static func _refresh_search_grids(app,id: String) -> void:
 	for item in bag_items:
 		bag_defs[str(item.itemId)]=app.model.extraction.item_def(str(item.itemId))
 		if app.model.extraction.has_method("item_value"):item.displayValue=app.model.extraction.item_value(item)
-	bag.configure(6,5,bag_items,bag_defs)
+	var bag_dims: Vector2i=app.model.extraction.dimensions("bag")
+	bag.configure(bag_dims.x,bag_dims.y,bag_items,bag_defs)
+	var heading=app.overlay.find_child("ExtractionSearchBagHeading",true,false)
+	if is_instance_valid(heading):heading.text="背包 %d / %d 格" % [_used_cells(app,bag_items),bag_dims.x*bag_dims.y]
 	bag.size_flags_horizontal=Control.SIZE_SHRINK_CENTER;bag.custom_minimum_size.x=float(app.overlay.get_meta("loot_cell",44))*6
 
 static func _select_container_item(app,id: String,uid: String,automatic: bool=false) -> void:
@@ -496,12 +680,13 @@ static func _select_container_item(app,id: String,uid: String,automatic: bool=fa
 		var description=app._vbox(detail,3);description.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		_item_title(app,description,d)
 		var actions=app._flow(detail,5);actions.size_flags_stretch_ratio=0.7
-		app._button(actions,"收下",func():_take_one(app,id,uid),true).name="ExtractionPickup_"+uid
+		_button(app,actions,"收下",func():_take_one(app,id,uid),true).name="ExtractionPickup_"+uid
 		if d.get("kind","")=="consumable" and app.model.extraction.has_method("use_container_item"):
-			var use_button=app._button(actions,"直接使用",func():_container_action(app,id,"use_container_item",uid),true)
+			var use_button=_button(app,actions,"直接使用",func():_container_action(app,id,"use_container_item",uid),true)
+			use_button.name="ExtractionUse_"+uid
 			use_button.disabled=not app.model.extraction.can_use_consumable(str(item.itemId))
-		if d.get("kind","")=="equipment" and app.model.extraction.has_method("equip_container_item"):
-			app._button(actions,"直接装备",func():_container_equip(app,id,uid),true)
+		if (d.get("kind","")=="equipment" or str(d.get("slot","")) in ["armor","backpack"]) and app.model.extraction.has_method("equip_container_item"):
+			_button(app,actions,"直接装备",func():_container_equip(app,id,uid),true).name="ExtractionEquip_"+uid
 		return
 
 static func _container_action(app,id: String,method: String,uid: String) -> void:
@@ -512,24 +697,35 @@ static func _container_action(app,id: String,method: String,uid: String) -> void
 		app._label(detail,"已装备" if method=="equip_container_item" else "已使用",16,app.CYAN)
 
 static func _container_equip(app,id: String,uid: String) -> void:
+	for item in _container(app,id).get("items",[]):
+		if str(item.uid)==uid and str(app.model.extraction.item_def(str(item.itemId)).get("slot","")) in ["armor","backpack"]:
+			_container_action(app,id,"equip_container_item",uid);return
 	var equipped: Array=app.model.state.extraction.run.get("equipped",[])
 	if equipped.size()<3:_container_action(app,id,"equip_container_item",uid);return
 	var detail=app.overlay.find_child("ExtractionSearchDetail",true,false);app._clear(detail)
 	app._label(detail,"选择替换装备",15,app.GOLD)
 	for old in equipped:
 		var old_uid:=str(old.uid);var d: Dictionary=app.model.extraction.item_def(str(old.itemId))
-		app._button(detail,str(d.get("name","装备")),func():
-			if app._check(app.model.extraction.equip_container_item(id,uid,old_uid)):_refresh_search_grids(app,id);app._clear(detail);app._label(detail,"已装备，旧装备留在容器中",14,app.CYAN))
+		_button(app,detail,str(d.get("name","装备")),func():
+			if app._check(app.model.extraction.equip_container_item(id,uid,old_uid)):_refresh_search_grids(app,id);app._clear(detail);app._label(detail,"已装备，旧装备留在容器中",14,app.CYAN)).name="ExtractionReplace_"+old_uid
 
 static func _take_one(app,id: String,uid: String) -> void:
+	var origin: Dictionary={}
+	for item in _container(app,id).get("items",[]):
+		if str(item.uid)==uid:origin=item.duplicate(true);break
 	if app._check(app.model.extraction.take_item(id,uid)):
-		if app.has_method("_ui_sound"):app._ui_sound("tap")
-		app.model.extraction.sort_grid("bag");_refresh_search_grids(app,id)
+		if app.has_method("_ui_sound"):app._ui_sound("pickup")
+		_fly_to_bag(app,id,origin,app.model.extraction.item_def(str(origin.get("itemId",""))))
+		_refresh_search_grids(app,id)
 		var detail=app.overlay.find_child("ExtractionSearchDetail",true,false);app._clear(detail);app._label(detail,"已收入背包",16,app.CYAN)
 
 static func _take_all(app,id: String) -> void:
+	var before: Array=_container(app,id).get("items",[]).duplicate(true)
 	var result: Dictionary=app.model.extraction.take_all_revealed(id)
 	if app._check(result):
+		if app.has_method("_ui_sound") and not result.get("taken",[]).is_empty():app._ui_sound("pickup")
+		for item in before:
+			if result.get("taken",[]).has(str(item.uid)):_fly_to_bag(app,id,item,app.model.extraction.item_def(str(item.itemId)))
 		if not result.get("left",[]).is_empty():app._toast("背包已满，可直接使用补给或更换装备",app.GOLD)
 		var detail=app.overlay.find_child("ExtractionSearchDetail",true,false)
 		if is_instance_valid(detail):app._clear(detail);app._label(detail,"已收入 %d 件物资" % result.get("taken",[]).size(),16,app.CYAN,true)
@@ -538,18 +734,27 @@ static func _take_all(app,id: String) -> void:
 static func _smart_loot(app,id: String) -> void:
 	_stop_search(app,true)
 	var plan: Dictionary=app.model.extraction.plan_smart_loot(id)
-	if not plan.get("success",false):app._toast("当前背包已保留更合适的物资",app.CYAN);return
+	if not plan.get("success",false):app._toast("当前背包已保留更合适的物资",app.CYAN);_search.call_deferred(app,id);return
 	var detail=app.overlay.find_child("ExtractionSearchDetail",true,false);app._clear(detail)
 	app._label(detail,"换入 %d 件 · 价值 +%s" % [plan.get("added",[]).size(),_money(int(plan.get("gain",0)))],17,app.GOLD,true)
-	app._button(detail,"确认换入",func():
-		if app._check(app.model.extraction.apply_smart_loot(id,str(plan.get("planHash","")))):_refresh_search_grids(app,id);app._clear(detail);app._label(detail,"已换入，替换物资留在容器中",14,app.CYAN),true).name="ExtractionSmartConfirm"
-	app._button(detail,"取消",func():app._clear(detail)).name="ExtractionSmartCancel"
+	_button(app,detail,"确认换入",func():_smart_confirm(app,id,str(plan.get("planHash",""))),true).name="ExtractionSmartConfirm"
+	_button(app,detail,"取消",func():app._clear(detail);_search.call_deferred(app,id)).name="ExtractionSmartCancel"
+
+static func _smart_confirm(app,id: String,hash: String) -> void:
+	var before: Array=_container(app,id).get("items",[]).duplicate(true)
+	var result: Dictionary=app.model.extraction.apply_smart_loot(id,hash)
+	if app._check(result):
+		for item in before:_fly_to_bag(app,id,item,app.model.extraction.item_def(str(item.itemId)))
+		_refresh_search_grids(app,id)
+		var detail=app.overlay.find_child("ExtractionSearchDetail",true,false)
+		app._clear(detail);app._label(detail,"已换入，替换物资留在容器中",14,app.CYAN)
+	_search.call_deferred(app,id)
 
 static func _search_alive(app,generation: int,id: String) -> bool:
 	return is_instance_valid(app) and app.current_screen=="extraction" and app.extraction_search_generation==generation and app.overlay.get_child_count()>0 and str(app.overlay.get_meta("extraction_container",""))==id
 
 static func _search(app,id: String) -> void:
-	if app.extraction_searching:return
+	if app.extraction_searching or str(app.overlay.get_meta("extraction_container",""))!=id or app.overlay.get_child_count()==0 or app.current_screen!="extraction":return
 	app.extraction_searching=true;app.extraction_search_generation+=1
 	var generation: int=app.extraction_search_generation
 	_refresh_search_controls(app,id)
@@ -560,16 +765,18 @@ static func _search(app,id: String) -> void:
 		if next.is_empty():break
 		var grid=app.overlay.find_child("ExtractionContainer_"+id,true,false)
 		var status=app.overlay.find_child("ExtractionSearchStatus",true,false)
-		status.text="搜索中…"
-		var duration:=0.09 if app.extraction_reduced_motion else 0.65
-		var start:=Time.get_ticks_msec()
+		status.text="搜索中…";status.modulate=Color.WHITE
+		var rarity_before:=clampi(int(app.model.extraction.item_def(str(next.itemId)).get("rarity",0)),0,5)
+		var duration:=search_duration(rarity_before,app.extraction_reduced_motion)
+		var elapsed:=0.0
 		var source_scroll=app.overlay.find_child("ExtractionContainerScroll",true,false)
 		if is_instance_valid(source_scroll):
 			var target_rect: Rect2=grid.item_rect(next)
 			if target_rect.end.y>source_scroll.scroll_vertical+source_scroll.size.y:source_scroll.scroll_vertical=ceili(target_rect.end.y-source_scroll.size.y)
-		while float(Time.get_ticks_msec()-start)/1000.0<duration:
+		while elapsed<duration:
 			if not _search_alive(app,generation,id):return
-			var ratio:=float(Time.get_ticks_msec()-start)/(duration*1000)
+			if not app.get_meta("application_paused",false):elapsed+=minf(0.05,app.get_process_delta_time())
+			var ratio:=clampf(elapsed/duration,0,1)
 			grid.set_scan(str(next.uid),ratio)
 			var progress=app.overlay.find_child("SearchProgress_"+id,true,false);progress.value=ratio
 			await app.get_tree().process_frame
@@ -598,18 +805,23 @@ static func _search(app,id: String) -> void:
 	elif is_instance_valid(app.extraction_audio):app.extraction_audio.stop()
 	_refresh_search_controls(app,id)
 	var status=app.overlay.find_child("ExtractionSearchStatus",true,false)
-	if is_instance_valid(status):status.text="搜索完成"
+	if is_instance_valid(status):_refresh_search_controls(app,id)
 
 static func _auto_collect_after(app,generation: int,id: String,latest: Dictionary,d: Dictionary) -> void:
-	var duration:=0.04 if app.extraction_reduced_motion else 0.38
-	var start:=Time.get_ticks_msec()
-	while float(Time.get_ticks_msec()-start)/1000.0<duration:
+	var duration:=0.38
+	var elapsed:=0.0
+	while elapsed<duration:
 		if not _search_alive(app,generation,id):return
+		if not app.get_meta("application_paused",false):elapsed+=minf(0.05,app.get_process_delta_time())
 		await app.get_tree().process_frame
 	if not _search_alive(app,generation,id):return
-	if app.extraction_auto_pick:
+	var still_present:=false
+	for current in _container(app,id).get("items",[]):
+		if str(current.uid)==str(latest.uid):still_present=true;break
+	if app.extraction_auto_pick and still_present:
 		var take: Dictionary=app.model.extraction.take_item(id,str(latest.uid))
 		if take.get("success",false):
+			if app.has_method("_ui_sound") and int(d.get("rarity",0))<3:app._ui_sound("pickup")
 			app.extraction_recent.taken=true
 			_fly_to_bag(app,id,latest,d)
 			_refresh_search_grids(app,id)
@@ -630,18 +842,52 @@ static func _auto_collect_after(app,generation: int,id: String,latest: Dictionar
 	if _search_alive(app,generation,id):app.overlay.set_meta("pending_loot",maxi(0,int(app.overlay.get_meta("pending_loot",0))-1))
 
 static func _fly_to_bag(app,id: String,item: Dictionary,d: Dictionary) -> void:
-	if app.extraction_reduced_motion:return
 	var source=app.overlay.find_child("ExtractionContainer_"+id,true,false);var bag=app.overlay.find_child("ExtractionGrid_search_bag",true,false)
 	if not is_instance_valid(source) or not is_instance_valid(bag):return
-	var icon=_icon(app.overlay,d,38);icon.size=Vector2(38,38)
-	icon.global_position=source.global_position+source.item_rect(item).get_center()-Vector2(19,19)
-	var tween=app.create_tween();tween.set_parallel(true)
-	tween.tween_property(icon,"global_position",bag.global_position+Vector2(25,25),0.25).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-	tween.tween_property(icon,"modulate:a",0.0,0.3)
-	var icon_ref: WeakRef=weakref(icon)
+	var destination: Dictionary={}
+	for current in app.model.state.extraction.run.get("bag",[]):
+		if str(current.uid)==str(item.uid):destination=current;break
+	if destination.is_empty():return
+	if app.extraction_reduced_motion:bag.arrival_flash(str(item.uid));return
+	var origin: Rect2=_transfer_rect(source,item,d)
+	var target: Rect2=_transfer_rect(bag,destination,d)
+	var scroll=bag.get_parent()
+	while scroll!=null and not scroll is ScrollContainer:scroll=scroll.get_parent()
+	if scroll is ScrollContainer:
+		if target.end.y>scroll.scroll_vertical+scroll.size.y:scroll.scroll_vertical=ceili(target.end.y-scroll.size.y)
+		elif target.position.y<scroll.scroll_vertical:scroll.scroll_vertical=floori(target.position.y)
+	var icon=_icon(app.overlay,d,minf(52,minf(origin.size.x,origin.size.y)))
+	icon.name="ExtractionTransfer_"+str(item.uid)
+	icon.size=Vector2.ONE*minf(52,minf(origin.size.x,origin.size.y))
+	icon.global_position=source.global_position+origin.get_center()-icon.size/2
+	var tween=icon.create_tween();tween.set_parallel(true)
+	tween.tween_property(icon,"global_position",bag.global_position+target.get_center()-icon.size/2,0.28).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(icon,"scale",Vector2.ONE*0.8,0.28)
+	var bag_ref: WeakRef=weakref(bag);var uid:=str(item.uid)
 	tween.chain().tween_callback(func():
-		var target=icon_ref.get_ref()
-		if target!=null:target.queue_free())
+		var live_bag=bag_ref.get_ref()
+		if live_bag!=null:live_bag.arrival_flash(uid))
+	tween.tween_property(icon,"modulate:a",0.0,0.10)
+	tween.chain().tween_callback(icon.queue_free)
+
+static func _transfer_rect(grid,item: Dictionary,d: Dictionary) -> Rect2:
+	var w:=int(d.get("width",1));var h:=int(d.get("height",1))
+	if item.get("rotated",false):var old:=w;w=h;h=old
+	return Rect2(int(item.get("x",0))*grid.cell+2,int(item.get("y",0))*grid.cell+2,w*grid.cell-4,h*grid.cell-4)
+
+static func search_duration(rarity: int,_reduced: bool=false) -> float:
+	return float(SEARCH_SECONDS[clampi(rarity,0,5)])
+
+static func _sort_animated(app,scope: String) -> void:
+	var result: Dictionary=app.model.extraction.sort_grid(scope)
+	if not app._check(result):return
+	var grid=app.main_body.find_child("ExtractionGrid_"+scope,true,false)
+	if not is_instance_valid(grid):return
+	var state: Dictionary=app.model.state.extraction
+	var items: Array=(state.get("stash",[]) if scope=="stash" else state.get("run",{}).get("bag",[])).duplicate(true)
+	for item in items:item.displayValue=app.model.extraction.item_value(item)
+	grid.configure(grid.columns,grid.rows,items,app.model.extraction.data.items,grid.selected_uid)
+	if app.has_method("_ui_sound"):app._ui_sound("tap")
 
 static func _stop_search(app,refresh: bool=true) -> void:
 	app.extraction_search_generation+=1;app.extraction_searching=false
@@ -676,9 +922,9 @@ static func _help(app) -> void:
 	var box=app._modal("探索指南",760,440)
 	for line in ["沿连线探索据点，击败首领后可撤离。", "搜寻时，左侧是容器，右侧是背包。物资揭示后自动收下。", "背包满了，可直接使用补给、替换装备。长按仓库物品进入批量选择。", "每场战斗最多40回合。角色与遗物成长完整继承。"]:app._label(box,line,15,app.TEXT,true)
 	var actions=app._hbox(box,8)
-	app._button(actions,"音效：开" if app.extraction_sound else "音效：关",func():app.extraction_sound=not app.extraction_sound;app._save_preferences();_help(app))
-	app._button(actions,"快速搜索：开" if app.extraction_reduced_motion else "快速搜索：关",func():app.extraction_reduced_motion=not app.extraction_reduced_motion;app._save_preferences();_help(app))
-	app._button(actions,"返回",app._clear_overlay,true)
+	_button(app,actions,"音效：开" if app.extraction_sound else "音效：关",func():app.extraction_sound=not app.extraction_sound;app._save_preferences();_help(app))
+	_button(app,actions,"减少动效：开" if app.extraction_reduced_motion else "减少动效：关",func():app.extraction_reduced_motion=not app.extraction_reduced_motion;app._save_preferences();_help(app))
+	_button(app,actions,"返回",app._clear_overlay,true)
 static func _confirm_departure(app,extraction: bool) -> void:
 	var left:=0
 	for box in app.model.extraction.containers():left+=box.get("items",[]).size()

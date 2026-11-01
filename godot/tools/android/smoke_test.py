@@ -85,7 +85,7 @@ def wait_for(predicate, description, timeout=30):
     raise AssertionError(f'Timed out: {description}; last state={last}')
 
 
-def tap(state, name):
+def tap(state, name, settle=.7):
     matches = [b for b in state['buttons'] if b['name'] == name]
     assert len(matches) == 1, f'Missing/duplicate visible button: {name}'
     x, y, w, h = matches[0]['rect']
@@ -94,7 +94,7 @@ def tap(state, name):
     clip = matches[0].get('clip', [0, 0, width, height])
     assert inside(matches[0]['rect'], clip), f'Button clipped: {name}'
     adb('shell', 'input', 'tap', str(round(x + w / 2)), str(round(y + h / 2)))
-    time.sleep(.7)
+    time.sleep(settle)
 
 
 def back():
@@ -273,7 +273,18 @@ def enter_map_room(state, room_id):
     name = 'ExtractionMapNode_' + room_id
     state = canvas_target(state, name, 'map')
     target = next(b for b in state['buttons'] if b['name'] == name)
-    assert target.get('adjacent') or room_id == state['extraction']['room_id'], 'Driver attempted a disconnected room'
+    current = state['extraction']['room_id']
+    if not target.get('adjacent') and room_id != current:
+        path = target.get('travel_path', [])
+        assert target.get('reachable') and len(path) >= 3 and path[0] == current and path[-1] == room_id, 'Driver attempted a disconnected or unreachable distant room'
+        edges = {frozenset(edge) for edge in state['extraction']['map_edges']}
+        rooms = {room['id']: room for room in state['extraction']['map_rooms']}
+        assert all(frozenset([left, right]) in edges for left, right in zip(path, path[1:])), 'Travel path skips an actual map edge'
+        for intermediate in path[1:-1]:
+            room = rooms[intermediate]
+            safe = room['visited'] and (room['type'] not in ('battle','elite','vault','boss') or room.get('cleared',False))
+            assert safe, 'Travel path bypasses an unvisited or uncleared combat room'
+            # A locked key-vault interior does not block its visited exterior corridor.
     before_seq = state['seq']
     already_selected = state['canvases']['map']['selected_room'] == room_id
     tap(state, name)
@@ -325,7 +336,107 @@ def verify_map_finger_drag(state):
     return state
 
 
-def extraction_flow(state, output):
+def wait_probe_event(after_seq, event, timeout=20):
+    deadline=time.monotonic()+timeout
+    while time.monotonic()<deadline:
+        states=snapshots(adb('logcat','-d','-v','brief'))
+        for state in states:
+            if state['seq']>after_seq and state.get('probe_event')==event:
+                return state
+        time.sleep(.1)
+    raise AssertionError('Missing actual Android lifecycle notification: '+event)
+
+
+def scan_has_background_window(previous, current):
+    old, new = previous.get('loot',{}), current.get('loot',{})
+    uid=new.get('scan_uid','')
+    if not uid or uid!=old.get('scan_uid') or new.get('container_id')!=old.get('container_id'):
+        return False
+    elapsed=(current.get('monotonic_ms',0)-previous.get('monotonic_ms',0))/1000
+    progress=new.get('scan_progress',0)-old.get('scan_progress',0)
+    if elapsed<=0 or progress<=0:
+        return False
+    estimated_duration=elapsed/progress
+    return estimated_duration>=1.3 and estimated_duration*(1-new.get('scan_progress',1))>=.8
+
+
+def loot_ownership(state):
+    extraction=state['extraction']
+    return {'bag':sorted(extraction['bag_ids']), 'source':sorted((item['uid'],item['revealed']) for item in state.get('loot',{}).get('source',[]))}
+
+
+def check_search_background(state, component, output, coverage):
+    adb('shell','input','keyevent','KEYCODE_HOME')
+    paused=wait_probe_event(state['seq'],'paused')
+    wait_for_completed_background(output)
+    adb('shell','am','start','-W','-n',component)
+    resumed=wait_probe_event(paused['seq'],'resumed')
+    coverage['attempts']=coverage.get('attempts',0)+1
+    uid=paused.get('loot',{}).get('scan_uid','')
+    if not uid or not paused['extraction']['searching']:
+        coverage['reason']='Natural scan completed before Android pause notification; no slowdown was injected'
+        return resumed
+    assert paused.get('application_paused') and not resumed.get('application_paused'), 'Android pause flag did not follow actual lifecycle'
+    assert resumed['loot']['scan_uid']==uid, 'Background resume skipped the active searched item'
+    assert abs(resumed['loot']['scan_progress']-paused['loot']['scan_progress'])<=.02, 'Search progress jumped while backgrounded'
+    assert loot_ownership(resumed)==loot_ownership(paused), 'Background search silently revealed or transferred loot'
+    coverage.update({'covered':True,'uid':uid,'paused_progress':paused['loot']['scan_progress'],'resumed_progress':resumed['loot']['scan_progress']})
+    (output/'search-background.json').write_text(json.dumps(coverage,indent=2))
+    return resumed
+
+
+def monitor_automatic_search(state, box_id, before_seq, component, output, coverage):
+    deadline=time.monotonic()+70
+    seen_seq=before_seq
+    previous=state
+    while time.monotonic()<deadline:
+        states=snapshots(adb('logcat','-d','-v','brief'))
+        fresh=[q for q in states if q['seq']>seen_seq and q.get('loot',{}).get('container_id')==box_id]
+        if fresh:
+            current=fresh[-1]
+            preceding=fresh[-2] if len(fresh)>1 else previous
+            seen_seq=current['seq']
+            if not coverage.get('covered') and coverage.get('attempts',0)<2 and scan_has_background_window(preceding,current):
+                current=check_search_background(current,component,output,coverage)
+                seen_seq=current['seq']
+            if not current['extraction']['searching'] and any(box['id']==box_id and box['unknown']==0 for box in current['extraction']['containers']):
+                return current
+            previous=current
+        time.sleep(.1)
+    raise AssertionError('Automatic search never reached a complete state')
+
+
+def visible_pickup_uids(states, container_id, after_seq):
+    """Evidence is per visible UID, not a continuous stream of unrelated icons."""
+    seen = {}
+    durations = {}
+    collected = set()
+    for state in states:
+        if state.get('seq', -1) <= after_seq:
+            continue
+        if state.get('application_paused',False):
+            seen={}
+            continue
+        loot = state.get('loot', {})
+        if loot.get('container_id') != container_id:
+            continue
+        now = state.get('monotonic_ms', 0)
+        visible_now = set()
+        for item in loot.get('source', []):
+            if item.get('revealed') and item.get('icon_loaded') and item.get('name') and min(item['rect'][2:]) >= 24 and inside(item['rect'], item['clip']):
+                first, _ = seen.get(item['uid'], (now, now))
+                seen[item['uid']] = (first, now)
+                visible_now.add(item['uid'])
+                durations[item['uid']] = max(durations.get(item['uid'], 0), now - first)
+        seen = {uid: span for uid, span in seen.items() if uid in visible_now}
+        for item in loot.get('bag', []):
+            uid = item['uid']
+            if durations.get(uid, 0) >= 200 and item.get('icon_loaded') and min(item['rect'][2:]) >= 24 and inside(item['rect'], item['clip']):
+                collected.add(uid)
+    return collected
+
+
+def extraction_flow(state, output, component, search_background):
     """Use ordinary deterministic loot, real scene taps and ADB gestures only."""
     state = visit(state, 'extraction')
     geometry(state)
@@ -347,12 +458,23 @@ def extraction_flow(state, output):
     visited_count = 0
     for _ in range(12):
         path = safe_exploration_path(state)
+        if not path and collected:
+            return visit(state,'home')
         assert path, 'Deterministic ordinary-loot route ended before collecting an item'
         for index, room_id in enumerate(path):
             state = enter_map_room(state, room_id)
             if index < len(path) - 1:
                 state = return_extraction_map(state)
         visited_count += 1
+        # Exercise a real rest-room choice to obtain ordinary supplies, without
+        # granting fixture loot or changing rarity/search speed through the probe.
+        supply_action='ExtractionRoomAction_scavenge'
+        if state['extraction'].get('room_type') in ('rest','hospital') and any(button['name']==supply_action for button in state['buttons']):
+            before_supply_seq=state['seq']
+            carried_before=sorted(state['extraction']['bag_ids'])
+            tap_page(state,supply_action)
+            state=wait_for(lambda q: q['seq']>before_supply_seq and q['extraction']['phase']=='room' and bool(q['extraction']['containers']), 'rest supply choice creates an ordinary searchable container')
+            assert sorted(state['extraction']['bag_ids'])==carried_before, 'Rest supply choice bypassed searching and granted bag loot'
         geometry(state)
         if visited_count == 1:
             screenshot(output, 'extraction-room-scene', True)
@@ -367,13 +489,16 @@ def extraction_flow(state, output):
             name = 'ExtractionSceneContainer_' + box_id
             state = canvas_target(state, name, 'scene')
             before_ids = set(state['extraction']['bag_ids'])
-            tap(state, name)
-            state = wait_for(lambda q: q['overlay'] > 0 and any(b['name'] == 'ExtractionSearch' for b in q['buttons']), 'scene sprite opens its own container')
-            tap_overlay(state, 'ExtractionSearch')
-            state = wait_for(lambda q: not q['extraction']['searching'] and any(box['id'] == box_id and box['unknown'] == 0 for box in q['extraction']['containers']), 'automatic sequential reveal and pickup', 45)
+            before_seq = state['seq']
+            tap(state, name, settle=.05)
+            state = wait_for(lambda q: q['seq'] > before_seq and q['overlay'] > 0 and q.get('loot', {}).get('container_id') == box_id and any(b['name'] == 'ExtractionCloseContainer' for b in q['buttons']), 'scene sprite opens its own automatically searched container')
+            assert not any(b['name'] in ('ExtractionSearch', 'ExtractionStopSearch') for b in state['buttons']), 'Container still requires an extra search action'
+            state = monitor_automatic_search(state, box_id, before_seq, component, output, search_background)
             after_ids = set(state['extraction']['bag_ids'])
             assert before_ids.issubset(after_ids), 'Automatic packing discarded a carried item'
             if after_ids - before_ids:
+                evidence = visible_pickup_uids(snapshots(adb('logcat', '-d', '-v', 'brief')), box_id, before_seq)
+                assert evidence.intersection(after_ids - before_ids), 'No exact picked-up UID was visibly identifiable for 200ms in its container'
                 collected = True
             remaining = next(box['items'] for box in state['extraction']['containers'] if box['id'] == box_id)
             if remaining:
@@ -394,6 +519,11 @@ def extraction_flow(state, output):
             saved_room = state['extraction']['room_id']
             saved_boxes = {box['id']: sorted(box['items']) for box in state['extraction']['containers']}
             state = return_extraction_map(state)
+            far = next((button for button in state['buttons'] if button.get('reachable') and not button.get('adjacent') and button.get('type') in ('entry','rest','cache','hospital','workshop','shrine') and len(button.get('travel_path', [])) >= 3), None)
+            if far is not None:
+                state = enter_map_room(state, far['room_id'])
+                assert sorted(state['extraction']['bag_ids']) == saved_ids, 'Safe route automatically consumed or granted items'
+                state = return_extraction_map(state)
             state = enter_map_room(state, saved_room)
             assert sorted(state['extraction']['bag_ids']) == saved_ids, 'Map return changed backpack'
             assert {box['id']: sorted(box['items']) for box in state['extraction']['containers']} == saved_boxes, 'Room revisit rerolled or lost overflow loot'
@@ -407,7 +537,11 @@ def extraction_flow(state, output):
             state = visit(state, 'extraction')
             assert sorted(state['extraction']['bag_ids']) == saved_ids, 'Navigation changed inventory'
             assert state['extraction']['room_id'] == saved_room, 'Navigation moved player'
-            return visit(state, 'home')
+            search_background['rooms_observed']=visited_count
+            if search_background.get('covered') or visited_count>=4:
+                return visit(state, 'home')
+            state = return_extraction_map(state)
+            continue
         state = return_extraction_map(state)
     raise AssertionError('Natural-loot run did not collect any searchable items')
 
@@ -548,7 +682,9 @@ def run(apk, output):
             screenshot(output, 'landscape-locked-' + page + '-scrolled', True)
         back()
         state = wait_for(lambda s: s['screen'] == 'home' and s['overlay'] == 0, page + ' Android Back')
-    state = extraction_flow(state, output)
+    search_background={"covered":False,"attempts":0,"reason":"No natural long scan with a safe remaining interval was observed"}
+    state = extraction_flow(state, output, component, search_background)
+    (output/"search-background.json").write_text(json.dumps(search_background,indent=2))
     adb('shell', 'settings', 'put', 'system', 'user_rotation', '1')
     adb('emu', 'sensor', 'set', 'acceleration', '9.8:0:0')
     state = wait_for(lambda s: s['window'][0] > s['window'][1] and s['logical'][0] > s['logical'][1], 'landscape adaptation')
@@ -578,7 +714,7 @@ def run(apk, output):
     logs = adb('logcat', '-d', '-v', 'threadtime')
     errors = [line for line in logs.splitlines() if re.search(r'SCRIPT ERROR|Parse Error|FATAL EXCEPTION|Fatal signal|ANR in ' + re.escape(PACKAGE), line) or ('godot' in line.lower() and re.search(r'\bERROR:', line))]
     assert not errors, '\n'.join(errors)
-    (output / 'result.json').write_text(json.dumps({'passed': True, 'android_api': adb('shell', 'getprop', 'ro.build.version.sdk').strip(), 'abi': adb('shell', 'getprop', 'ro.product.cpu.abi').strip(), 'pages': pages, 'checks': ['landscape launch while system portrait', 'all menu tabs by touch', 'scrolling where content exceeds viewport', 'Android Back', 'landscape adaptation', 'background/resume', 'extraction map drag/connected navigation/scene-container auto-search/auto-pickup/room and bag persistence', 'Android download bridge capability (no download/install)', 'runtime error log']}, indent=2))
+    (output / 'result.json').write_text(json.dumps({'passed': True, 'search_background': search_background, 'android_api': adb('shell', 'getprop', 'ro.build.version.sdk').strip(), 'abi': adb('shell', 'getprop', 'ro.product.cpu.abi').strip(), 'pages': pages, 'checks': ['landscape launch while system portrait', 'all menu tabs by touch', 'scrolling where content exceeds viewport', 'Android Back', 'landscape adaptation', 'background/resume', 'extraction map drag/connected navigation/scene-container auto-search/auto-pickup/room and bag persistence', 'Android download bridge capability (no download/install)', 'runtime error log']}, indent=2))
     print('ANDROID RUNTIME SMOKE PASSED')
 
 
