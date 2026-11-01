@@ -84,10 +84,18 @@ func run() -> void:
 	check(map!=null,"actual map control")
 	check(app.model.extraction.map_state().rooms.size()>=12,"multiple rooms")
 	var initial_room: String=app.model.extraction.map_state().currentRoomId
+	check(is_equal_approx(map.zoom,map._minimum_zoom()),"new map starts fitted after layout")
 	var offset: Vector2=map.offset
 	check(app._extraction_gesture_at(app.shell,map.global_position+Vector2(100,100)),"map owns touch pan")
 	drag(map,Vector2(190,170),Vector2(50,60));await frames()
-	check(map.offset!=offset,"map swipes pan")
+	check(map.offset.is_equal_approx(offset),"fitted map stays stable on drag")
+	for step in 8:
+		if map._content_bounds().size.x*map.zoom>map._view_rect().size.x+30:break
+		press("AtlasZoomIn");await frames()
+	offset=map.offset
+	var anchor:Vector2=map._view_rect().get_center()
+	drag(map,anchor+Vector2(40,0),anchor-Vector2(40,0));await frames()
+	check(map.offset.x<offset.x-12,"zoomed map swipe visibly pans left")
 	check(app.model.extraction.map_state().currentRoomId==initial_room,"swipe never enters room")
 	var adjacent: Array=app.model.extraction.route_options()
 	if not adjacent.is_empty():

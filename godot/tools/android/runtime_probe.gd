@@ -45,7 +45,7 @@ func _probe_rect(control: Control) -> Array:
 	return [a.x, a.y, b.x - a.x, b.y - a.y]
 
 func _probe_controls(node: Node, result: Array) -> void:
-	if node is Button and node.is_visible_in_tree() and not node.disabled and (str(node.name).begins_with("Menu") or str(node.name).begins_with("Extraction") or node.name == "BackButton"):
+	if node is Button and node.is_visible_in_tree() and not node.disabled and (str(node.name).begins_with("Menu") or str(node.name).begins_with("Extraction") or str(node.name).begins_with("Atlas") or node.name == "BackButton"):
 		result.append({"name": str(node.name), "text": node.text, "rect": _probe_rect(node), "clip": _probe_clip(node)})
 	for child in node.get_children():
 		_probe_controls(child, result)
@@ -117,7 +117,7 @@ func _probe_canvases(controls: Array) -> Dictionary:
 			var inner := _probe_local_rect(map_view, map_view._view_rect())
 			var region := Rect2(clip[0],clip[1],clip[2],clip[3]).intersection(Rect2(inner[0],inner[1],inner[2],inner[3]))
 			clip = [region.position.x,region.position.y,region.size.x,region.size.y]
-		result.map = {"rect": _probe_rect(map_view), "clip": clip, "pan": [map_view.offset.x, map_view.offset.y]}
+		result.map = {"rect": _probe_rect(map_view), "clip": clip, "pan": [map_view.offset.x, map_view.offset.y], "zoom": map_view.zoom, "fit_zoom": map_view._minimum_zoom(), "auto_fit": map_view._auto_fit, "selected_room": map_view.selected_room_id, "can_pan_x": map_view._content_bounds().size.x * map_view.zoom > map_view._view_rect().size.x}
 		controls.append({"name": "ExtractionMapViewport", "rect": _probe_rect(map_view), "clip": _probe_clip(map_view)})
 		var adjacent: Array = map_view.adjacent_ids()
 		for room in map_view.graph.get("rooms", []):

@@ -287,12 +287,20 @@ func test_extraction_touch_ownership() -> void:
 	var scroll: ScrollContainer = app.main_body.get_parent()
 	scroll.ensure_control_visible(map_view)
 	await frames()
+	check(is_equal_approx(map_view.zoom,map_view._minimum_zoom()),"New mobile map starts fitted after layout")
 	var visible: Rect2 = map_view.get_global_rect().intersection(scroll.get_global_rect())
 	var old_pan: Vector2 = map_view.offset
 	var old_room: String = app.model.extraction.map_state().currentRoomId
 	var old_scroll: int = scroll.scroll_vertical
 	await drag(visible.get_center() + Vector2(40,0), Vector2(-80,0))
-	check(map_view.offset != old_pan, "Viewport touch dispatch pans extraction map")
+	check(map_view.offset.is_equal_approx(old_pan),"Fitted overview drag stays stable")
+	for step in 8:
+		if map_view._content_bounds().size.x*map_view.zoom>map_view._view_rect().size.x+30:break
+		var zoom_button=map_view.get_node("AtlasTools/AtlasZoomIn")
+		await pointer_click(zoom_button.get_global_rect().get_center())
+	old_pan=map_view.offset
+	await drag(visible.get_center() + Vector2(40,0), Vector2(-80,0))
+	check(map_view.offset.x < old_pan.x-12, "Viewport touch dispatch visibly pans zoomed map left")
 	check(scroll.scroll_vertical == old_scroll, "Map drag does not scroll outer page")
 	check(app.model.extraction.run().phase == "route" and app.model.extraction.map_state().currentRoomId == old_room, "Map drag does not enter a room")
 	# The right-hand margin belongs to page scrolling, not the map canvas.

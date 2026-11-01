@@ -47,15 +47,68 @@ func run() -> void:
   check(map.zoom>before,"pinch zooms")
   check(travels.size()==1,"pinch never travels")
   map.focus_current();check(map.zoom>=.75,"locate readable zoom")
+  for zoom_step in 8:
+   if map._content_bounds().size.x*map.zoom>map._view_rect().size.x+1:break
+   map.get_node("AtlasTools/AtlasZoomIn").pressed.emit()
+  check(map._content_bounds().size.x*map.zoom>map._view_rect().size.x,"zoomed map has horizontal travel")
   var old: Vector2=map.offset
   touch(map,0,anchor,true);motion(map,0,anchor-Vector2(100,50));touch(map,0,anchor-Vector2(100,50),false)
   check(map.offset!=old,"drag pans")
   check(travels.size()==1,"drag never travels")
   map.zoom_at(anchor,100);check(map.zoom<=1.8,"upper zoom clamp")
   map.zoom_at(anchor,.001);check(map.zoom>=.2,"lower zoom clamp")
+ # Native landscape CI regression: overview may fit horizontally and must
+ # stay steady on drag. Zoom using the real map button before testing pan.
+ for dimensions in [Vector2(575,254),Vector2(734.7,324)]:
+  map.size=dimensions;map.fit_view()
+  var before: Vector2=map.offset
+  var center: Vector2=map._view_rect().get_center()
+  touch(map,0,center+Vector2(80,0),true);motion(map,0,center-Vector2(80,0));touch(map,0,center-Vector2(80,0),false)
+  check(map.offset==before,"overview drag stays centered without first-touch jump")
+  for zoom_step in 8:
+   if map._content_bounds().size.x*map.zoom>map._view_rect().size.x+1:break
+   map.get_node("AtlasTools/AtlasZoomIn").pressed.emit()
+  check(map._content_bounds().size.x*map.zoom>map._view_rect().size.x,"native-size zoom unlocks horizontal travel")
+  before=map.offset
+  touch(map,0,center+Vector2(80,0),true);motion(map,0,center-Vector2(80,0));touch(map,0,center-Vector2(80,0),false)
+  check(map.offset.x!=before.x,"native-size zoomed horizontal drag moves map")
+  map.get_node("AtlasTools/AtlasFit").pressed.emit()
+  check(is_equal_approx(map.zoom,map._minimum_zoom()),"overview button resets zoom")
  check(map._known("r0") and map._known("r1"),"current and neighbor visible")
  check(map._known("r13") and map._known("r18"),"surveyed landmarks visible")
  check(not map._known("r7"),"remote ordinary detail is unsurveyed")
+ # The exact native CI graph and final logical canvas size. No explicit fit
+ # call is allowed before these initial-layout assertions.
+ var native_game=load("res://scripts/game_model.gd").new("")
+ native_game.rng.seed=2;native_game.extraction.start_run(0)
+ var native=load("res://scripts/ui/extraction_map.gd").new()
+ native.configure(native_game.extraction.map_state());root.add_child(native)
+ for layout_size in [Vector2(320,320),Vector2(800,500),Vector2(575,332)]:
+  native.size=layout_size
+  await process_frame;await process_frame
+  check(is_equal_approx(native.zoom,native._minimum_zoom()),"untouched resize remains overview "+str(layout_size))
+  for id in native.rooms:check(native._view_rect().has_point(native.room_point(id)),"default native layout contains "+id)
+ check(native._view_rect().size==Vector2(551,243),"exact CI logical inner rectangle")
+ var native_center: Vector2=native._view_rect().get_center()
+ var native_before: Vector2=native.offset
+ var native_selected: String=native.selected_room_id
+ touch(native,0,native_center+Vector2(100,0),true);motion(native,0,native_center-Vector2(100,0));touch(native,0,native_center-Vector2(100,0),false)
+ check(native.offset==native_before and native.selected_room_id==native_selected,"seed2 overview drag stable and no navigation")
+ for zoom_step in 8:
+  if native._content_bounds().size.x*native.zoom>native._view_rect().size.x+60:break
+  native.get_node("AtlasTools/AtlasZoomIn").pressed.emit()
+ native_before=native.offset
+ touch(native,0,native_center+Vector2(100,0),true);motion(native,0,native_center-Vector2(100,0));touch(native,0,native_center-Vector2(100,0),false)
+ check(native.offset.x<native_before.x-12,"seed2 zoomed finger drag moves left over12px")
+ check(native.selected_room_id==native_selected,"seed2 drag keeps selection")
+ native.zoom_at(native_center,1.25)
+ var manual_zoom: float=native.zoom
+ native.size=Vector2(660,400);await process_frame;await process_frame
+ check(is_equal_approx(native.zoom,manual_zoom),"manual zoom survives resize")
+ native.get_node("AtlasTools/AtlasFit").pressed.emit()
+ native.size=Vector2(575,332);await process_frame;await process_frame
+ check(is_equal_approx(native.zoom,native._minimum_zoom()),"overview restores responsive fit")
+ native.queue_free();await process_frame
  # Actual generated maps must fit a compact panel without intersecting
  # travel routes or overlapping 44 px touch targets.
  var Game=load("res://scripts/game_model.gd")

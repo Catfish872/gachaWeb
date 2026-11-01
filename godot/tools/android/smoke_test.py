@@ -274,15 +274,55 @@ def enter_map_room(state, room_id):
     state = canvas_target(state, name, 'map')
     target = next(b for b in state['buttons'] if b['name'] == name)
     assert target.get('adjacent') or room_id == state['extraction']['room_id'], 'Driver attempted a disconnected room'
+    before_seq = state['seq']
+    already_selected = state['canvases']['map']['selected_room'] == room_id
     tap(state, name)
-    state = wait_for(lambda q: q.get('extraction', {}).get('phase') == 'route' and any(b['name'] == name for b in q['buttons']), 'first map tap previews without travel')
-    tap(state, name)
-    return wait_for(lambda q: q.get('extraction', {}).get('room_id') == room_id and q['extraction']['phase'] == 'room', 'map node enters room')
+    if not already_selected:
+        state = wait_for(lambda q, since=before_seq: q.get('seq', -1) > since and q.get('extraction', {}).get('phase') == 'route' and q.get('canvases', {}).get('map', {}).get('selected_room') == room_id and any(b['name'] == name for b in q['buttons']), 'first map tap previews without travel')
+        before_seq = state['seq']
+        tap(state, name)
+    return wait_for(lambda q, since=before_seq: q.get('seq', -1) > since and q.get('extraction', {}).get('room_id') == room_id and q['extraction']['phase'] == 'room', 'map node enters room')
 
 
 def return_extraction_map(state):
     tap_page(state, 'ExtractionAdvance')
     return wait_for(lambda q: q.get('extraction', {}).get('phase') == 'route' and 'map' in q.get('canvases', {}), 'room returns to persistent map')
+
+
+def restore_map_overview(state):
+    before_seq = state['seq']
+    tap_page(state, 'AtlasFit')
+    return wait_for(lambda q, since=before_seq: q.get('seq', -1) > since and q.get('canvases', {}).get('map', {}).get('auto_fit', False) and abs(q['canvases']['map']['zoom'] - q['canvases']['map']['fit_zoom']) < .0001, 'map overview restored by real button')
+
+
+def verify_map_finger_drag(state):
+    """Zoom with real controls before testing panning of a fitted overview."""
+    state = reveal_page_target(state, 'ExtractionMapViewport')
+    old_room = state['extraction']['room_id']
+    canvas = state['canvases']['map']
+    if not canvas['can_pan_x']:
+        x, y, w, h = canvas['clip']
+        old_pan, old_selected = canvas['pan'], canvas['selected_room']
+        before_seq = state['seq']
+        adb('shell', 'input', 'swipe', str(round(x + w * .75)), str(round(y + h * .5)), str(round(x + w * .25)), str(round(y + h * .5)), '600')
+        state = wait_for(lambda q, since=before_seq: q.get('seq', -1) > since and q.get('extraction', {}).get('phase') == 'route' and q['extraction']['room_id'] == old_room, 'overview drag stays in current room')
+        assert state['canvases']['map']['selected_room'] == old_selected, 'Overview drag selected a room'
+        assert state['canvases']['map']['pan'] == old_pan, 'Fitted overview unexpectedly shifted horizontally'
+    for _ in range(8):
+        canvas = state['canvases']['map']
+        if canvas['can_pan_x']:
+            break
+        old_zoom = canvas['zoom']
+        tap_page(state, 'AtlasZoomIn')
+        state = wait_for(lambda q: q.get('canvases', {}).get('map', {}).get('zoom', 0) > old_zoom, 'map real zoom button')
+    assert state['canvases']['map']['can_pan_x'], 'Map never becomes horizontally pannable after real zoom taps'
+    canvas = state['canvases']['map']
+    x, y, w, h = canvas['clip']
+    old_pan = canvas['pan']
+    adb('shell', 'input', 'swipe', str(round(x + w * .75)), str(round(y + h * .5)), str(round(x + w * .25)), str(round(y + h * .5)), '600')
+    state = wait_for(lambda q: q.get('canvases', {}).get('map', {}).get('pan', old_pan)[0] < old_pan[0] - 12, 'map finger drag visibly moves left')
+    assert state['extraction']['phase'] == 'route' and state['extraction']['room_id'] == old_room, 'Dragging unintentionally entered a room'
+    return state
 
 
 def extraction_flow(state, output):
@@ -296,15 +336,12 @@ def extraction_flow(state, output):
     state = wait_for(lambda q: any(b['name'] == 'ExtractionStart' for b in q['buttons']), 'extraction departure')
     tap_page(state, 'ExtractionStart')
     state = wait_for(lambda q: q.get('extraction', {}).get('phase') == 'route' and 'map' in q.get('canvases', {}), 'extraction connected map')
-    state = reveal_page_target(state, 'ExtractionMapViewport')
     canvas = state['canvases']['map']
-    x, y, w, h = canvas['clip']
-    old_room, old_pan = state['extraction']['room_id'], canvas['pan']
-    adb('shell', 'input', 'swipe', str(round(x + w * .75)), str(round(y + h * .5)), str(round(x + w * .25)), str(round(y + h * .5)), '600')
-    state = wait_for(lambda q: q.get('canvases', {}).get('map', {}).get('pan') != old_pan, 'map finger drag')
-    assert state['extraction']['phase'] == 'route' and state['extraction']['room_id'] == old_room, 'Dragging unintentionally entered a room'
+    assert canvas['auto_fit'] and abs(canvas['zoom'] - canvas['fit_zoom']) < .0001, 'New expedition map must start fitted without manual repair'
+    state = verify_map_finger_drag(state)
     geometry(state)
     screenshot(output, 'extraction-map-drag', True)
+    state = restore_map_overview(state)
     filled = False
     collected = False
     visited_count = 0

@@ -20,15 +20,75 @@ def chunk_lines(state):
 
 
 class AndroidSmokeDriverTests(unittest.TestCase):
-    def test_map_preview_requires_second_real_tap(self):
-        initial = {'extraction': {'room_id': 'entry', 'phase': 'route'}, 'buttons': [{'name': 'ExtractionMapNode_cache', 'adjacent': True}]}
-        entered = {'extraction': {'room_id': 'cache', 'phase': 'room'}}
-        with patch.object(smoke, 'canvas_target', return_value=initial), patch.object(smoke, 'tap') as tap, patch.object(smoke, 'wait_for', side_effect=[initial, entered]) as wait:
+    def map_drag_frame(self, zoom=.3, can_pan=False, pan=(10, 20), room='entry'):
+        return {'seq': 1, 'extraction': {'room_id': room, 'phase': 'route'}, 'canvases': {'map': {'zoom': zoom, 'selected_room': room, 'can_pan_x': can_pan, 'pan': list(pan), 'clip': [32, 268, 734, 324]}}}
+
+    def test_map_drag_zooms_real_overview_before_real_swipe(self):
+        initial=self.map_drag_frame()
+        zoomed=self.map_drag_frame(.5, True)
+        moved=self.map_drag_frame(.5, True, (-30, 20))
+        with patch.object(smoke, 'reveal_page_target', return_value=initial), patch.object(smoke, 'tap_page') as tap, patch.object(smoke, 'adb') as adb, patch.object(smoke, 'wait_for', side_effect=[initial, zoomed, moved]) as wait:
+            self.assertEqual(smoke.verify_map_finger_drag(initial), moved)
+            tap.assert_called_once_with(initial, 'AtlasZoomIn')
+            self.assertFalse(wait.call_args_list[1].args[0](initial))
+            self.assertTrue(wait.call_args_list[1].args[0](zoomed))
+            self.assertFalse(wait.call_args_list[2].args[0](zoomed))
+            self.assertFalse(wait.call_args_list[2].args[0](self.map_drag_frame(.5, True, (9.9, 20))))
+            self.assertFalse(wait.call_args_list[2].args[0](self.map_drag_frame(.5, True, (30, 20))))
+            self.assertTrue(wait.call_args_list[2].args[0](moved))
+            self.assertEqual(adb.call_count, 2)
+            adb.assert_called_with('shell', 'input', 'swipe', '582', '430', '216', '430', '600')
+
+    def test_map_drag_already_zoomed_still_requires_pan_and_no_travel(self):
+        initial=self.map_drag_frame(.8, True)
+        moved=self.map_drag_frame(.8, True, (-30, 20), 'wrong-room')
+        with patch.object(smoke, 'reveal_page_target', return_value=initial), patch.object(smoke, 'tap_page') as tap, patch.object(smoke, 'adb'), patch.object(smoke, 'wait_for', return_value=moved), self.assertRaisesRegex(AssertionError, 'unintentionally entered'):
+            smoke.verify_map_finger_drag(initial)
+        tap.assert_not_called()
+
+    def test_map_preview_requires_fresh_selection_and_second_real_tap(self):
+        initial = {'seq': 10, 'extraction': {'room_id': 'entry', 'phase': 'route'}, 'buttons': [{'name': 'ExtractionMapNode_cache', 'adjacent': True, 'rect': [1,2,3,4]}], 'canvases': {'map': {'selected_room': 'entry'}}}
+        preview = json.loads(json.dumps(initial))
+        preview['seq'] = 11
+        preview['canvases']['map']['selected_room'] = 'cache'
+        preview['buttons'][0]['rect'] = [30,40,3,4]
+        entered = {'seq': 12, 'extraction': {'room_id': 'cache', 'phase': 'room'}}
+        with patch.object(smoke, 'canvas_target', return_value=initial), patch.object(smoke, 'tap') as tap, patch.object(smoke, 'wait_for', side_effect=[preview, entered]) as wait:
             self.assertEqual(smoke.enter_map_room(initial, 'cache'), entered)
             self.assertEqual(tap.call_count, 2)
-            self.assertTrue(wait.call_args_list[0].args[0](initial))
-            self.assertFalse(wait.call_args_list[0].args[0](entered))
+            self.assertEqual(tap.call_args_list[1].args, (preview, 'ExtractionMapNode_cache'))
+            predicate=wait.call_args_list[0].args[0]
+            self.assertFalse(predicate(initial))
+            stale=json.loads(json.dumps(preview));stale['seq']=10
+            self.assertFalse(predicate(stale))
+            self.assertTrue(predicate(preview))
+            self.assertFalse(predicate(entered))
             self.assertTrue(wait.call_args_list[1].args[0](entered))
+
+    def test_map_revisit_selected_current_room_needs_one_real_tap(self):
+        initial={'seq': 20, 'extraction': {'room_id': 'cache', 'phase': 'route'}, 'canvases': {'map': {'selected_room': 'cache'}}, 'buttons': [{'name': 'ExtractionMapNode_cache', 'adjacent': False}]}
+        entered={'seq': 21, 'extraction': {'room_id': 'cache', 'phase': 'room'}}
+        with patch.object(smoke, 'canvas_target', return_value=initial), patch.object(smoke, 'tap') as tap, patch.object(smoke, 'wait_for', return_value=entered) as wait:
+            self.assertEqual(smoke.enter_map_room(initial,'cache'),entered)
+            tap.assert_called_once_with(initial,'ExtractionMapNode_cache')
+            self.assertEqual(wait.call_count,1)
+            self.assertTrue(wait.call_args.args[0](entered))
+            stale=dict(entered,seq=20)
+            self.assertFalse(wait.call_args.args[0](stale))
+
+    def test_map_fit_wait_rejects_stale_and_unfitted_observation(self):
+        initial={'seq': 4, 'canvases': {'map': {'auto_fit': False, 'zoom': .8, 'fit_zoom': .3}}}
+        fitted={'seq': 5, 'canvases': {'map': {'auto_fit': True, 'zoom': .3, 'fit_zoom': .3}}}
+        with patch.object(smoke, 'tap_page') as tap, patch.object(smoke, 'wait_for', return_value=fitted) as wait:
+            self.assertEqual(smoke.restore_map_overview(initial),fitted)
+            tap.assert_called_once_with(initial,'AtlasFit')
+            predicate=wait.call_args.args[0]
+            self.assertFalse(predicate(initial))
+            stale=json.loads(json.dumps(fitted));stale['seq']=4
+            self.assertFalse(predicate(stale))
+            unfitted=json.loads(json.dumps(fitted));unfitted['canvases']['map']['zoom']=.7
+            self.assertFalse(predicate(unfitted))
+            self.assertTrue(predicate(fitted))
 
     def test_reads_only_complete_probe_records(self):
         state = {'seq': 1, 'screen': 'home'}

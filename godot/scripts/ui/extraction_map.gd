@@ -14,6 +14,8 @@ var _pressed := false
 var _dragged := false
 var _touch_id := -1
 var _initial := true
+var _auto_fit := true
+var _last_view_center := Vector2.ZERO
 var _touches: Dictionary = {}
 var _pinching := false
 var _velocity := Vector2.ZERO
@@ -32,12 +34,14 @@ func configure(value: Dictionary) -> void:
 	rooms.clear()
 	for room in graph.get("rooms", []): rooms[str(room.id)] = room
 	selected_room_id = str(graph.get("currentRoomId", ""))
+	_auto_fit = true
 	custom_minimum_size = Vector2(0, 320)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	clip_contents = true
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	set_meta("extraction_pan", true)
+	if is_inside_tree(): fit_view()
 	queue_redraw()
 
 func _ready() -> void:
@@ -76,10 +80,18 @@ func _view_rect() -> Rect2:
 func _resize() -> void:
 	if _toolbar:
 		_toolbar.position = Vector2(maxf(12,size.x-218), 8)
-	if _initial and size.x > 40 and size.y > 100:
-		fit_view()
+	if size.x > 40 and size.y > 100:
+		if _initial or _auto_fit:
+			# Containers can negotiate several sizes after _ready. Keep the
+			# untouched map in overview until the final layout has settled.
+			fit_view()
+		else:
+			var center_world := (_last_view_center-offset)/zoom
+			zoom = maxf(zoom, _minimum_zoom())
+			offset = _view_rect().get_center()-center_world*zoom
 		_initial = false
-	_clamp_offset()
+		_clamp_offset()
+	_last_view_center = _view_rect().get_center()
 	queue_redraw()
 
 func _world_point(room: Dictionary) -> Vector2:
@@ -325,10 +337,18 @@ func _draw_chrome() -> void:
 
 func _clamp_offset() -> void:
 	var view := _view_rect()
+	var content := _content_bounds()
+	var centered := view.get_center() - content.get_center()*zoom
 	for axis in range(2):
-		var extent: float = WORLD[axis]*zoom
-		if extent<=view.size[axis]: offset[axis]=view.position[axis]+(view.size[axis]-extent)/2
-		else: offset[axis]=clampf(offset[axis],view.end[axis]-extent-24,view.position[axis]+24)
+		var extent: float = content.size[axis]*zoom
+		if extent <= view.size[axis]:
+			# fit_view uses the same content center. A first drag must never
+			# jump from content-centered to decorative-world-centered framing.
+			offset[axis] = centered[axis]
+		else:
+			var lower: float = view.end[axis] - content.end[axis]*zoom - 24.0
+			var upper: float = view.position[axis] - content.position[axis]*zoom + 24.0
+			offset[axis] = clampf(offset[axis], lower, upper)
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
@@ -381,7 +401,10 @@ func _move(at: Vector2) -> void:
 		var now := Time.get_ticks_msec()
 		var delta := maxf(.008,float(now-_last_motion_ms)/1000.0)
 		_velocity=_velocity.lerp((at-_last)/delta,.6).limit_length(1800)
-		offset+=at-_last;_clamp_offset();queue_redraw();_last_motion_ms=now
+		var before := offset
+		offset+=at-_last;_clamp_offset()
+		if not offset.is_equal_approx(before): _auto_fit=false
+		queue_redraw();_last_motion_ms=now
 	_last=at
 
 func _end(at: Vector2) -> void:
@@ -413,6 +436,7 @@ func _activate(at: Vector2) -> void:
 	if previous==candidate or room_previewed.get_connections().is_empty():room_selected.emit(candidate)
 
 func zoom_at(anchor: Vector2, next_zoom: float) -> void:
+	_auto_fit = false
 	var world := (anchor-offset)/zoom
 	zoom=clampf(next_zoom,_minimum_zoom(),1.8)
 	offset=anchor-world*zoom
@@ -434,12 +458,15 @@ func _minimum_zoom() -> float:
 	return clampf(minf(view.size.x/content.size.x,view.size.y/content.size.y),.2,1.0)
 
 func fit_view() -> void:
+	_auto_fit = true
 	zoom=_minimum_zoom()
 	var view := _view_rect()
 	offset=view.get_center()-_content_bounds().get_center()*zoom
+	_last_view_center = view.get_center()
 	_velocity=Vector2.ZERO;queue_redraw()
 
 func focus_current() -> void:
+	_auto_fit = false
 	zoom=maxf(_minimum_zoom(),.75)
 	var current: Dictionary=rooms.get(str(graph.get("currentRoomId","")),{})
 	if not current.is_empty():offset=_view_rect().get_center()-_world_point(current)
