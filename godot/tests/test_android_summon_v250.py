@@ -78,4 +78,28 @@ class SummonEvidence(unittest.TestCase):
         before['extraction']['interaction']['canAutoReturn']=False
         with self.assertRaises(AssertionError):smoke.verify_completed_container_close(before,after)
         after['extraction']['phase']='room';smoke.verify_completed_container_close(before,after)
+    def test_return_map_restores_retained_auxiliary_tab_by_real_input(self):
+        for phase in ['room','route']:
+            for tab in ['bag','build']:
+                start={'seq':10,'buttons':[{'name':'ExtractionTab_expedition'},{'name':'ExtractionTab_'+tab}], 'extraction':{'phase':phase},'canvases':{}}
+                explored=copy.deepcopy(start);explored['seq']=11
+                if phase=='room':explored['buttons'].append({'name':'ExtractionAdvance'})
+                else:explored['canvases']['map']={}
+                final=copy.deepcopy(explored);final['seq']=12;final['extraction']['phase']='route';final['canvases']['map']={}
+                expected=[explored,final] if phase=='room' else [explored]
+                def waiting(predicate,description):
+                    q=expected.pop(0)
+                    stale=copy.deepcopy(q);stale['seq']=10
+                    self.assertFalse(predicate(stale),'must reject pre-click/stale observation')
+                    self.assertTrue(predicate(q),description)
+                    return q
+                with self.subTest(phase=phase,tab=tab),patch.object(smoke,'tap_page') as tap,patch.object(smoke,'wait_for',side_effect=waiting):
+                    actual=smoke.return_extraction_map(start)
+                    self.assertIn('map',actual['canvases'])
+                    self.assertEqual([c.args[1] for c in tap.call_args_list],['ExtractionTab_expedition']+(['ExtractionAdvance'] if phase=='room' else []))
+                    self.assertFalse(expected)
+    def test_return_map_visible_map_needs_no_extra_click(self):
+        state={'seq':10,'buttons':[], 'extraction':{'phase':'route'},'canvases':{'map':{}}}
+        with patch.object(smoke,'tap_page') as tap:
+            self.assertIs(smoke.return_extraction_map(state),state);tap.assert_not_called()
 if __name__=='__main__':unittest.main()

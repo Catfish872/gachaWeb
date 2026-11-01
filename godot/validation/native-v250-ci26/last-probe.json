@@ -1,0 +1,665 @@
+{
+  "android_bridge": {
+    "install_allowed": false,
+    "network_policy": {
+      "metered_permitted": true,
+      "roaming_permitted": false
+    },
+    "package": "org.catfish872.voidrift.debug",
+    "success": true
+  },
+  "application_paused": false,
+  "battle_state": {
+    "auto": false,
+    "is_service_guard": false,
+    "phase": ""
+  },
+  "buttons": [
+    {
+      "clip": [
+        0.0,
+        0.0,
+        1280.0,
+        720.0
+      ],
+      "name": "BackButton",
+      "rect": [
+        16.0,
+        10.6666669845581,
+        105.333335876465,
+        63.9999971389771
+      ],
+      "scroll_owner": "",
+      "text": "\u8fd4\u56de"
+    },
+    {
+      "clip": [
+        0.0,
+        0.0,
+        1280.0,
+        720.0
+      ],
+      "name": "MenuButton",
+      "rect": [
+        713.333374023438,
+        10.6666669845581,
+        105.333312988281,
+        63.9999971389771
+      ],
+      "scroll_owner": "",
+      "text": "\u83dc\u5355"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionTab_expedition",
+      "rect": [
+        80.0,
+        85.3333358764648,
+        116.0,
+        58.6666641235352
+      ],
+      "scroll_owner": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll",
+      "text": "\u63a2\u7d22"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionTab_bag",
+      "rect": [
+        206.66667175293,
+        85.3333358764648,
+        116.000015258789,
+        58.6666641235352
+      ],
+      "scroll_owner": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll",
+      "text": "\u80cc\u5305"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionTab_build",
+      "rect": [
+        333.333343505859,
+        85.3333358764648,
+        116.0,
+        58.6666641235352
+      ],
+      "scroll_owner": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll",
+      "text": "\u6784\u7b51"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionKeyring",
+      "rect": [
+        1136.0,
+        85.3333358764648,
+        58.6666259765625,
+        58.6666641235352
+      ],
+      "scroll_owner": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll",
+      "text": ""
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionHelp",
+      "rect": [
+        1205.33337402344,
+        85.3333358764648,
+        58.6666259765625,
+        58.6666641235352
+      ],
+      "scroll_owner": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll",
+      "text": ""
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionSort_bag",
+      "rect": [
+        29.3333339691162,
+        637.333374023438,
+        145.333337783813,
+        58.6666870117188
+      ],
+      "scroll_owner": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll",
+      "text": "\u81ea\u52a8\u6574\u7406"
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "name": "ExtractionQuickSupplies",
+      "rect": [
+        182.66667175293,
+        637.333374023438,
+        105.33332824707,
+        58.6666870117188
+      ],
+      "scroll_owner": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll",
+      "text": "\u8865\u7ed9"
+    }
+  ],
+  "canvases": {},
+  "extraction": {
+    "act": 1,
+    "bag_area": 15,
+    "bag_count": 4,
+    "bag_ids": [
+      "extraction_1793545696341_3_83181836_item_21",
+      "supply_1793545664584_2_3018856683",
+      "extraction_1793545696341_3_83181836_item_23",
+      "extraction_1793545696341_3_83181836_item_22"
+    ],
+    "containers": [
+      {
+        "id": "extraction_1793545696341_3_83181836_container_20",
+        "items": [],
+        "unknown": 0
+      }
+    ],
+    "deposit_used": false,
+    "explored": 2,
+    "gold": 49870,
+    "growth_choices": [],
+    "guard_pending": false,
+    "interaction": {
+      "canAutoReturn": true,
+      "hasRemaining": false,
+      "reasons": [],
+      "roomId": "extraction_1793545696341_3_83181836_room_3",
+      "runId": "extraction_1793545696341_3_83181836"
+    },
+    "loadout_ids": [],
+    "map_edges": [
+      [
+        "extraction_1793545696341_3_83181836_room_1",
+        "extraction_1793545696341_3_83181836_room_3"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_1",
+        "extraction_1793545696341_3_83181836_room_2"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_2",
+        "extraction_1793545696341_3_83181836_room_4"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_3",
+        "extraction_1793545696341_3_83181836_room_5"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_5",
+        "extraction_1793545696341_3_83181836_room_6"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_3",
+        "extraction_1793545696341_3_83181836_room_4"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_7",
+        "extraction_1793545696341_3_83181836_room_8"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_8",
+        "extraction_1793545696341_3_83181836_room_10"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_9",
+        "extraction_1793545696341_3_83181836_room_10"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_9",
+        "extraction_1793545696341_3_83181836_room_11"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_10",
+        "extraction_1793545696341_3_83181836_room_12"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_7",
+        "extraction_1793545696341_3_83181836_room_9"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_2",
+        "extraction_1793545696341_3_83181836_room_7"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_4",
+        "extraction_1793545696341_3_83181836_room_9"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_13",
+        "extraction_1793545696341_3_83181836_room_15"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_13",
+        "extraction_1793545696341_3_83181836_room_14"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_15",
+        "extraction_1793545696341_3_83181836_room_16"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_15",
+        "extraction_1793545696341_3_83181836_room_17"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_16",
+        "extraction_1793545696341_3_83181836_room_18"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_14",
+        "extraction_1793545696341_3_83181836_room_16"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_8",
+        "extraction_1793545696341_3_83181836_room_13"
+      ],
+      [
+        "extraction_1793545696341_3_83181836_room_14",
+        "extraction_1793545696341_3_83181836_room_19"
+      ]
+    ],
+    "map_rooms": [
+      {
+        "cleared": true,
+        "id": "extraction_1793545696341_3_83181836_room_1",
+        "type": "entry",
+        "unlocked": false,
+        "visited": true
+      },
+      {
+        "cleared": true,
+        "id": "extraction_1793545696341_3_83181836_room_2",
+        "type": "cache",
+        "unlocked": false,
+        "visited": true
+      },
+      {
+        "cleared": true,
+        "id": "extraction_1793545696341_3_83181836_room_3",
+        "type": "rest",
+        "unlocked": false,
+        "visited": true
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_4",
+        "type": "workshop",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_5",
+        "type": "elite",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_6",
+        "type": "relay",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_7",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_8",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_9",
+        "type": "shrine",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_10",
+        "type": "key_vault",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_11",
+        "type": "workshop",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_12",
+        "type": "shrine",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_13",
+        "type": "rest",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_14",
+        "type": "elite",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_15",
+        "type": "event",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_16",
+        "type": "shrine",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_17",
+        "type": "workshop",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_18",
+        "type": "cache",
+        "unlocked": false,
+        "visited": false
+      },
+      {
+        "cleared": false,
+        "id": "extraction_1793545696341_3_83181836_room_19",
+        "type": "boss",
+        "unlocked": false,
+        "visited": false
+      }
+    ],
+    "node": 1,
+    "phase": "room",
+    "room_actions": [
+      {
+        "cost": 0,
+        "description": "\u5168\u961f\u6062\u590d35%\uff0c\u5012\u4e0b\u89d2\u8272\u590d\u82cf",
+        "effect": {
+          "heal": 0.35,
+          "revive": true
+        },
+        "id": "recover",
+        "label": "\u5305\u624e\u4f11\u6574",
+        "selected": false,
+        "used": true
+      },
+      {
+        "cost": 0,
+        "description": "\u6062\u590d10%\uff0c\u83b7\u5f9740\u80fd\u91cf\uff0c\u6e05\u7a7a\u51b7\u5374",
+        "effect": {
+          "cooldown": 99,
+          "energy": 40,
+          "heal": 0.1
+        },
+        "id": "meditate",
+        "label": "\u51a5\u60f3\u84c4\u80fd",
+        "selected": false,
+        "used": true
+      },
+      {
+        "cost": 0,
+        "description": "\u641c\u5bfb\u8425\u5730\u7559\u4e0b\u7684\u7269\u8d44",
+        "effect": {
+          "cache": true
+        },
+        "id": "scavenge",
+        "label": "\u5bfb\u627e\u8865\u7ed9",
+        "selected": true,
+        "used": true
+      }
+    ],
+    "room_id": "extraction_1793545696341_3_83181836_room_3",
+    "room_type": "rest",
+    "run_digest": "dfd64d275aa0b598f8a4c1a22808311a5b608c1e3081bb2c5e1948a1ed697fcc",
+    "searching": false,
+    "stash_count": 1,
+    "supplies": [
+      {
+        "exchange_locked": true,
+        "item_id": "medkit",
+        "uid": "supply_1793545664584_2_3018856683"
+      },
+      {
+        "exchange_locked": false,
+        "item_id": "cleanse_censer",
+        "uid": "extraction_1793545696341_3_83181836_item_22"
+      }
+    ]
+  },
+  "inventory": {},
+  "logical": [
+    960.0,
+    540.0
+  ],
+  "loot": {
+    "bag": [],
+    "container_id": "extraction_1793545696341_3_83181836_container_20",
+    "scan_progress": 0.0,
+    "scan_uid": "",
+    "source": []
+  },
+  "modal_scrolls": [],
+  "monotonic_ms": 207924,
+  "overlay": 0,
+  "page_scrolls": [
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "id": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll/PageContent/@HBoxContainer@4991/@PanelContainer@4992/@VBoxContainer@4993/@ScrollContainer@5012",
+      "max": 0.0,
+      "name": "@ScrollContainer@5012",
+      "rect": [
+        29.3333339691162,
+        310.666687011719,
+        589.333353042603,
+        316.0
+      ],
+      "value": 0
+    },
+    {
+      "clip": [
+        16.0,
+        85.3333358764648,
+        1248.0,
+        624.0
+      ],
+      "id": "/root/StellarWish/Shell/@VBoxContainer@4/@HBoxContainer@24/PageScroll/PageContent/@HBoxContainer@4991/@PanelContainer@5014/@VBoxContainer@5015/@ScrollContainer@5019",
+      "max": 0.0,
+      "name": "@ScrollContainer@5019",
+      "rect": [
+        661.333374023438,
+        222.66667175293,
+        589.333374023438,
+        473.33332824707
+      ],
+      "value": 0
+    }
+  ],
+  "page_width": 936.0,
+  "probe_event": "frame",
+  "relics": {
+    "art": [],
+    "equipped": {
+      "ember": {},
+      "zeph": {}
+    },
+    "inventory": [],
+    "inventory_count": 0,
+    "inventory_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "recommendations_visible": false,
+    "target": {
+      "difficulty": 0,
+      "expectedFiveStarPer50": 5.0,
+      "expectedFourStarPer50": 5.0,
+      "expectedPer50": 10.0,
+      "expectedSellGoldPer50": 3000.0,
+      "extraRarity4Chance": 0.8,
+      "extraRarity5Chance": 0.2,
+      "fiveStarEvery": 10,
+      "legacy": false,
+      "locked": false,
+      "milestoneEvery": 5,
+      "normalChance": 0.0,
+      "targetSetId": "flame_oath"
+    }
+  },
+  "renderer": {
+    "adapter": "SwiftShader Device (Subzero)",
+    "driver": "vulkan",
+    "method": "mobile"
+  },
+  "screen": "extraction",
+  "scroll": 0,
+  "scroll_max": 0.0,
+  "scroll_rect": [
+    16.0,
+    85.3333358764648,
+    1248.0,
+    623.999977111816
+  ],
+  "scroll_width": 936.0,
+  "scrollbar_rect": [
+    1264.0,
+    85.3333358764648,
+    10.6666259765625,
+    623.999977111816
+  ],
+  "seq": 380,
+  "summon": {
+    "active": false,
+    "diamonds": 1600,
+    "owned_ids": [
+      "ember",
+      "zeph"
+    ],
+    "total_pulls": 0,
+    "transaction_digest": "45a3d5a68cb509a6a510b4f46e3fd047a9f36016ebb5c9a8540ef48102e810fc"
+  },
+  "system_back_events": [
+    {
+      "monotonic_ms": 16639,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 22785,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 29176,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 35473,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 41829,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 47732,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 54094,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 60027,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 65892,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    },
+    {
+      "monotonic_ms": 74529,
+      "observed_overlay": 0,
+      "screen": "home",
+      "source": "notification"
+    }
+  ],
+  "window": [
+    1280,
+    720
+  ]
+}

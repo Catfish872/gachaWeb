@@ -391,11 +391,21 @@ def verify_completed_container_close(before, after):
 
 
 def return_extraction_map(state):
+    # Model phase survives navigation independently of the selected UI tab.
+    # Returning from Home may correctly restore Bag or Build, neither of which
+    # contains the room-only Advance action. Use the real Explore tab first.
+    if 'map' not in state.get('canvases', {}) and not any(b['name'] == 'ExtractionAdvance' for b in state['buttons']):
+        before_seq = state['seq']
+        tap_page(state, 'ExtractionTab_expedition')
+        state = wait_for(lambda q: q.get('seq', -1) > before_seq and (
+            'map' in q.get('canvases', {}) or any(b['name'] == 'ExtractionAdvance' for b in q['buttons'])),
+            'actual Explore tab restores room actions or map')
     if state['extraction']['phase'] == 'route':
         assert 'map' in state.get('canvases', {}), 'Automatically returned route must render its actual map'
         return state
+    before_seq = state['seq']
     tap_page(state, 'ExtractionAdvance')
-    return wait_for(lambda q: q.get('extraction', {}).get('phase') == 'route' and 'map' in q.get('canvases', {}), 'room returns to persistent map')
+    return wait_for(lambda q: q.get('seq', -1) > before_seq and q.get('extraction', {}).get('phase') == 'route' and 'map' in q.get('canvases', {}), 'room returns to persistent map')
 
 
 def restore_map_overview(state):
