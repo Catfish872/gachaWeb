@@ -1,6 +1,6 @@
 # 2.7.0 烬金灯火
 
-定向验收已完成，尚未发布。
+已于2026-11-02发布。[下载正式 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.0/universal.apk)。
 
 - 新五星角色「瑟琳」与配套技能、命座、遗物套装、推荐搭配和火体系祝福。
 - 新剧情、任务与场景，配套角色表情、主视觉、剧情插画及战斗表现。

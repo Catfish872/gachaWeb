@@ -119,4 +119,6 @@
 
 ## 本期应用记录
 
-2.7.0 的角色、故事、深渊、搜打撤与界面检查已按本流程完成。统一验收于 2026 年 11 月 2 日 04:01:15 至 04:10:15 UTC 进行，耗时 540 秒，覆盖瑟琳 92 项、剧情通过、深渊预算 9 项、搜打撤 78 项、两尺寸桌面渲染 117 项、最后界面微调 10 项和证据门禁 9 项，均通过。实际平台为桌面 OpenGL 与合成输入；安卓实机和主观音频试听使用各自后续证据。正式发布仍待本次确认，详细状态见 [瑟琳定案](SELIN_V270_DESIGN.md) 及 `godot/validation/v270-focused/release-evidence.json`。
+2.7.0 的角色、故事、深渊、搜打撤与界面检查已按本流程完成。统一验收于 2026 年 11 月 2 日 04:01:15 至 04:10:15 UTC 进行，耗时 540 秒，覆盖瑟琳 92 项、剧情通过、深渊预算 9 项、搜打撤 78 项、两尺寸桌面渲染 117 项、最后界面微调 10 项和证据门禁 9 项，均通过。实际平台为桌面 OpenGL 与合成输入；安卓实机和主观音频试听使用各自后续证据。2.7.0 已于 2026-11-02 04:26:33 UTC（北京时间 12:26:33）正式发布，详细状态见 [瑟琳定案](SELIN_V270_DESIGN.md) 及 `godot/validation/v270-focused/release-evidence.json`。
+
+本期发布标签为 `android-v2.7.0`，运行版本提交 `0fbdf64007d110cce59a4440f4ba31265b95600a`。[构建记录](https://github.com/Catfish872/gachaWeb/actions/runs/41388287212)中的两个任务均成功，固定签名 v2 与 v3 验证通过。[正式发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.7.0)与[安卓安装包](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.0/universal.apk)已上线，安装包大小 183,619,846 字节，SHA256 为 `6dd01b50388ac8af0171735f5a881390f516554d24352973325995a17c701d88`。此记录将发布工件与前述验收证据关联，后续纯文档更新保留相同运行版本。

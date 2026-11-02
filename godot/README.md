@@ -1,6 +1,14 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.6.7
+## 最新正式版：2.7.0 · 烬金灯火
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.0/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.7.0) · [中文更新说明](CHANGELOG_2.7.0.md) · [验证记录](validation/release-v270/RELEASE.md)
+
+瑟琳、角色剧情、火体系祝福、配套遗物与灯火探索主题现已上线，包含71张新美术和配套音乐音效。每局固定三幕，从四主题随机选三种；新敌人与场景同步加入深渊。沿用固定签名与正式更新渠道。
+
+[角色发布流程](../docs/CHARACTER_RELEASE_PIPELINE.md) · [本版内容设计](../docs/SELIN_V270_DESIGN.md) · [美术来源清单](../docs/art_v270/README.md)
+
+## 历史版本：2.6.7
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.6.7/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.6.7) · [中文更新说明](CHANGELOG_2.6.7.md) · [发布记录](validation/release-v267/RELEASE.md)
 
