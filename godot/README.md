@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.7.0 · 烬金灯火
+## 最新正式版：2.7.1 · 灯火故事修订
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.1/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.7.1) · [中文更新说明](CHANGELOG_2.7.1.md) · [验证记录](validation/release-v271/RELEASE.md)
+
+第三章137段对白与瑟琳简介、语录已修订，保留原有战斗机制与奖励。[写作实例参考](../docs/NARRATIVE_WRITING_REFERENCE.md)收录具体原稿、改稿及取舍过程。
+
+## 历史版本：2.7.0 · 烬金灯火
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.0/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.7.0) · [中文更新说明](CHANGELOG_2.7.0.md) · [验证记录](validation/release-v270/RELEASE.md)
 
