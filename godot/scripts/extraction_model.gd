@@ -23,7 +23,7 @@ func _init(owner) -> void:
 	if parsed is Dictionary: data = parsed
 
 static func defaults() -> Dictionary:
-	return {"credits": 0, "stash": [], "loadout": [], "mailbox": [], "collection": [], "unlockedDifficulty": 0, "run": {}, "lastRun": {}, "runs": 0, "utility": {"armor": {}, "backpack": {}}, "keyring": []}
+	return {"credits": 0, "stash": [], "tactical": [], "equipmentRules": 1, "loadout": [], "mailbox": [], "collection": [], "unlockedDifficulty": 0, "run": {}, "lastRun": {}, "runs": 0, "utility": {"armor": {}, "backpack": {}}, "keyring": []}
 
 func state() -> Dictionary:
 	return host.state.extraction
@@ -41,6 +41,7 @@ func _fail(message: String) -> Dictionary:
 	return host._fail(message)
 
 func _commit(previous: Dictionary, result: Dictionary = {}) -> Dictionary:
+	if int(state().get("equipmentRules", 0)) == 0 and run().get("phase", "") != "battle": _migrate_equipment(state())
 	_sync_room()
 	return host._commit(previous, result)
 
@@ -88,6 +89,8 @@ func start_run(difficulty: int = 0) -> Dictionary:
 			host.state = previous
 			return _fail("携带物品无法放入背包，请减少携带数量")
 	state().loadout = []
+	run().equipped = state().get("tactical", []).duplicate(true)
+	state().tactical = []
 	_routes()
 	return _commit(previous, {"message": "出发，击败每幕首领后可以撤离"})
 
@@ -304,6 +307,7 @@ func choose_route(id: String) -> Dictionary:
 	return enter_room(id)
 
 func enter_room(id: String) -> Dictionary:
+	if active() and run().get("phase", "") != "battle" and not _valid_equipment_set(run().equipped): return _fail("请腾出背包空间并卸下同类装备")
 	if not active() or run().phase not in ["route", "room", "boss_exit"]: return _fail("请先结束当前战斗")
 	if not run().get("pendingChoices", []).is_empty(): return _fail("先选择一项祝福")
 	var previous: Dictionary = host.state.duplicate(true)
@@ -578,7 +582,7 @@ func settle_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 		if kind == "boss":
 			run().phase = "boss_exit"
 			run().bossesDefeated += 1
-			_container("首领保险柜", 4, 2)
+			_container("首领保险柜", 4, 2, [], true)
 		else:
 			run().phase = "room"
 			if service_guard:
@@ -593,13 +597,16 @@ func settle_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 	if result.success: _engine = null
 	return result
 
-func _container(title: String, count: int, quality: int, categories: Array = []) -> void:
+func _container(title: String, count: int, quality: int, categories: Array = [], boss_reward: bool = false) -> void:
 	var container := {"id": _uid("container"), "name": title, "kind": "safe" if quality == 2 else "supply", "width": 6, "height": 8, "revealed": 0, "items": [], "quality": quality, "sprite": "res://assets/extraction/containers/rune_vault.png" if quality == 2 else "res://assets/extraction/containers/wooden_chest.png", "sceneX": 0.2 + _rand() * 0.6, "sceneY": 0.55 + _rand() * 0.22}
 	var weights: Array = data.get("rarityWeightsByAct", [[32,20,32,13,2.8,0.2],[23,15,34,21,6.5,0.5],[15,10,34,28,12,1]])[int(run().act)-1].duplicate()
 	var economy: Dictionary = data.get("lootEconomy", {})
 	weights[3] = float(weights[3]) + quality * float(economy.get("qualityPurpleWeight", 3)) + float(economy.get("riskPurpleWeight", 2)) * int(run().difficulty)
 	weights[4] = float(weights[4]) + quality * float(economy.get("qualityGoldWeight", 2)) + float(economy.get("riskGoldWeight", 1)) * int(run().difficulty)
 	weights[5] = float(weights[5]) + quality * float(economy.get("qualityRedWeight", 0.7)) + float(economy.get("riskRedWeight", 0.05)) * int(run().difficulty)
+	if boss_reward:
+		weights[4] = float(weights[4]) + float(economy.get("bossGoldWeight", 1.0))
+		weights[5] = float(weights[5]) + float(economy.get("bossRedWeight", 0.15))
 	for i in range(count):
 		var total := 0.0
 		for w in weights: total += float(w)
@@ -628,8 +635,22 @@ func _container(title: String, count: int, quality: int, categories: Array = [])
 	var packed: Array = []
 	for item in container.items:
 		_place(packed, item, Vector2i(6, 8))
+	if boss_reward and packed.size() != container.items.size():
+		packed = _repack_boss_reward(container.items)
 	container.items = packed
 	run().containers.append(container)
+
+func _repack_boss_reward(items: Array) -> Array:
+	var packed := _packed_copy(items, Vector2i(6, 8))
+	# All four current loot shapes fit; preserve draw/reveal order after reflow.
+	assert(packed.size() == items.size(), "Boss reward must retain every rolled item")
+	var ordered: Array = []
+	for item in items:
+		for placed in packed:
+			if placed.uid == item.uid:
+				ordered.append(placed)
+				break
+	return ordered
 
 func containers() -> Array:
 	return run().get("containers", []).duplicate(true)
@@ -753,42 +774,74 @@ func sort_grid(scope: String) -> Dictionary:
 	else: run().bag = packed
 	return _commit(previous)
 
+func equipped_items() -> Array:
+	return run().get("equipped", []) if active() else state().get("tactical", [])
+
+func equipment_conflict(item: Dictionary, replace_uid: String = "") -> String:
+	for old in equipped_items():
+		if str(old.uid) != replace_uid and _same_equipment_family(item, old): return str(old.uid)
+	return ""
+
+func _same_equipment_family(a: Dictionary, b: Dictionary) -> bool:
+	if a.itemId == b.itemId: return true
+	return _damage_reduction_item(a) and _damage_reduction_item(b)
+
+func _damage_reduction_item(item: Dictionary) -> bool:
+	for effect in item_def(str(item.itemId)).get("effects", []):
+		if effect.get("type") == "damageTakenMult" and float(effect.get("value", 0)) < 0: return true
+	return false
+
+func _equipment_reduction(item: Dictionary) -> float:
+	var reduction := 0.0
+	for effect in item_def(str(item.itemId)).get("effects", []):
+		if effect.get("type") == "damageTakenMult": reduction += maxf(0.0, -float(effect.get("value", 0)))
+	return reduction
+
+func protected_item(uid: String) -> bool:
+	for item in equipped_items() + state().get("loadout", []):
+		if str(item.uid) == uid: return true
+	for item in state().get("utility", {}).values():
+		if str(item.get("uid", "")) == uid: return true
+	return false
+
 func equip_item(uid: String, replace_uid: String = "") -> Dictionary:
-	if not can_prepare_supplies(): return _fail("战斗结束后再整备")
+	if active() and not can_prepare_supplies(): return _fail("战斗结束后再整备")
+	var source: Array = run().bag if active() else state().stash
+	var equipped: Array = equipped_items()
 	var selected: Dictionary = {}
-	for entry in run().bag:
+	for entry in source:
 		if entry.uid == uid: selected=entry;break
 	if selected.is_empty(): return _fail("物品不存在")
 	var d := item_def(selected.itemId)
 	if d.get("kind")=="utility": return set_utility_slot(str(d.slot),uid)
 	if d.get("kind")!="equipment": return _fail("这件物品无法装备")
 	var old: Dictionary = {}
-	for item in run().equipped:
+	for item in equipped:
 		if item.uid == replace_uid: old=item;break
 	if not replace_uid.is_empty() and old.is_empty(): return _fail("替换装备已经改变")
-	if run().equipped.size()>=3 and old.is_empty(): return _fail("选择一件装备替换")
+	if not equipment_conflict(selected, replace_uid).is_empty(): return _fail("同类装备限一件，请替换已穿戴装备")
+	if equipped.size()>=3 and old.is_empty(): return _fail("选择一件装备替换")
 	var previous: Dictionary = host.state.duplicate(true)
-	run().bag.erase(selected)
-	if not old.is_empty():
-		run().equipped.erase(old)
-		var remaining: Array = run().bag.duplicate(true)
-		remaining.append(old.duplicate(true))
-		var packed := _packed_copy(remaining,dimensions("bag"))
-		if packed.size()!=remaining.size():
-			host.state=previous
-			return _fail("背包装不下换出的装备")
-		run().bag=packed
-	run().equipped.append(selected)
+	var remaining: Array = source.duplicate(true)
+	for entry in remaining:
+		if entry.uid == uid: remaining.erase(entry);break
+	if not old.is_empty(): remaining.append(old.duplicate(true))
+	var packed := _packed_copy(remaining,dimensions("bag" if active() else "stash"))
+	if packed.size()!=remaining.size(): return _fail("空间不足，请先整理物品")
+	source.assign(packed)
+	if not old.is_empty(): equipped.erase(old)
+	equipped.append(selected)
 	return _commit(previous,{"message":"已装备「%s」" % d.name})
 
 func unequip_item(uid: String) -> Dictionary:
-	if not can_prepare_supplies(): return _fail("战斗结束后再整备")
-	for i in range(run().equipped.size()):
-		var item: Dictionary = run().equipped[i]
+	if active() and not can_prepare_supplies(): return _fail("战斗结束后再整备")
+	var equipped: Array = equipped_items()
+	var source: Array = run().bag if active() else state().stash
+	for item in equipped:
 		if item.uid != uid: continue
 		var previous: Dictionary = host.state.duplicate(true)
-		if not _place(run().bag, item.duplicate(true), dimensions("bag")): return _fail("背包空间不足")
-		run().equipped.remove_at(i)
+		if not _place(source, item.duplicate(true), dimensions("bag" if active() else "stash")): return _fail("空间不足，请先整理物品")
+		equipped.erase(item)
 		return _commit(previous)
 	return _fail("物品不存在")
 
@@ -903,8 +956,9 @@ func _room_item_available(item: Dictionary, container: Dictionary) -> bool:
 		if other.uid != item.uid: source.append(other.duplicate(true))
 	var bounds := Vector2i(int(container.width),int(container.height))
 	if definition.get("kind") == "equipment":
-		if run().equipped.size() < 3: return true
+		if run().equipped.size() < 3 and equipment_conflict(item).is_empty(): return true
 		for old in run().equipped:
+			if not equipment_conflict(item, str(old.uid)).is_empty(): continue
 			var replacement := source.duplicate(true)
 			replacement.append(old.duplicate(true))
 			if _packed_copy(replacement,bounds).size() == replacement.size(): return true
@@ -954,12 +1008,14 @@ func _end(outcome: String) -> void:
 
 func extract() -> Dictionary:
 	if not active() or run().phase != "boss_exit": return _fail("击败本幕首领后才能撤离")
-	var storage := _storage_plan(run().bag + run().equipped)
+	if not _valid_equipment_set(run().equipped): return _fail("请先卸下同类装备或整理待领取区")
+	var storage := _storage_plan(run().bag)
 	if not storage.success: return storage
 	var previous: Dictionary = host.state.duplicate(true)
 	state().stash = storage.stash
 	state().mailbox = storage.mailbox
 	if int(run().act) == max_acts(): state().unlockedDifficulty = maxi(int(state().unlockedDifficulty), mini(max_difficulty(), int(run().difficulty) + 1))
+	state().tactical = run().equipped.duplicate(true)
 	_end("extracted")
 	return _commit(previous, {"ended": true, "lastRun": state().lastRun.duplicate(true), "message": "撤离成功，战利品已入库；超出空间的物品保存在待领取区"})
 
@@ -975,6 +1031,7 @@ func retreat() -> Dictionary:
 	return result
 
 func sell_item(uid: String) -> Dictionary:
+	if protected_item(uid): return _fail("请先卸下已穿戴或携带物品")
 	if active(): return _fail("请在本局结束后处理仓库")
 	for i in range(state().stash.size()):
 		var item: Dictionary = state().stash[i]
@@ -987,6 +1044,7 @@ func sell_item(uid: String) -> Dictionary:
 	return _fail("物品不存在")
 
 func collect_item(uid: String) -> Dictionary:
+	if protected_item(uid): return _fail("请先卸下已穿戴或携带物品")
 	if active(): return _fail("请在本局结束后收藏")
 	for i in range(state().stash.size()):
 		var item: Dictionary = state().stash[i]
@@ -1029,6 +1087,8 @@ func valid(value: Variant) -> bool:
 		if item_def(key_item.itemId).get("kind")!="key":return false
 	if not _valid_items(value.get("stash", []), ids, Vector2i(STASH_WIDTH, STASH_HEIGHT)): return false
 	if not _valid_items(value.get("mailbox", []), ids): return false
+	if not value.get("tactical", []) is Array or value.get("tactical", []).size() > 3: return false
+	if not _valid_items(value.get("tactical", []), ids) or not _valid_equipment_set(value.get("tactical", [])): return false
 	if value.get("loadout", []).size() > 3 or not _valid_items(value.get("loadout", []), ids): return false
 	var collected: Dictionary = {}
 	for id in value.get("collection", []):
@@ -1037,6 +1097,7 @@ func valid(value: Variant) -> bool:
 	var r = value.get("run", {})
 	if not r is Dictionary: return false
 	if r.is_empty(): return true
+	if not value.get("tactical", []).is_empty(): return false
 	if not host._integer(r.get("maxActs",3),3,MAX_ACTS): return false
 	if r.has("environmentOrder"):
 		if not r.environmentOrder is Array or r.environmentOrder.size() != int(r.get("maxActs",3)): return false
@@ -1058,6 +1119,7 @@ func valid(value: Variant) -> bool:
 		if not r.get(key) is Array: return false
 	if r.equipped.size() > 3 or r.containers.size() > 10 or r.routes.size() > 19 or r.party.is_empty() or r.party.size() > 3: return false
 	if not _valid_items(r.bag, ids, _bag_bounds(value)) or not _valid_items(r.equipped, ids): return false
+	if int(value.get("equipmentRules", 0)) >= 1 and not _valid_equipment_set(r.equipped): return false
 	for item in r.equipped:
 		if item_def(item.itemId).kind != "equipment": return false
 	for option in r.routes:
@@ -1343,6 +1405,7 @@ func apply_smart_loot(container_id: String, expected_hash: String) -> Dictionary
 # appraisal so migration never removes value earned under the previous economy.
 func migrate_state(value: Dictionary, source_version: int) -> void:
 	var ex: Dictionary = value.extraction
+	_migrate_equipment(ex)
 	if source_version < 6:
 		value.resources.gold = int(value.resources.gold) + int(ex.get("credits", 0))
 		ex.credits = 0
@@ -1387,6 +1450,54 @@ func migrate_state(value: Dictionary, source_version: int) -> void:
 			for unit in ex.run.party:
 				if int(host.catalog.CharacterData[unit.id].rarity) == 5: ex.run.characterFocus[unit.id] = 1.0
 		if not ex.run.has("growthBattles"): ex.run.growthBattles = 0
+
+func _valid_equipment_set(items: Array) -> bool:
+	var seen: Array = []
+	for item in items:
+		if item_def(str(item.itemId)).get("kind") != "equipment": return false
+		for old in seen:
+			if _same_equipment_family(item, old): return false
+		seen.append(item)
+	return true
+
+func _migrate_equipment(original: Dictionary) -> void:
+	if original.get("run", {}).get("phase", "") == "battle":
+		# Keep the issued encounter and its equipment effects intact until settlement.
+		if not _valid_equipment_set(original.run.equipped): original.equipmentRules = 0
+		return
+	var ex := original.duplicate(true)
+	if not ex.has("tactical"): ex.tactical = []
+	var r: Dictionary = ex.get("run", {})
+	var equipped: Array = r.get("equipped", []) if not r.is_empty() else ex.tactical
+	var ordered := equipped.duplicate(true)
+	ordered.sort_custom(func(a,b):
+		var da := item_def(str(a.itemId)); var db := item_def(str(b.itemId))
+		var reduction_a := _equipment_reduction(a); var reduction_b := _equipment_reduction(b)
+		if not is_equal_approx(reduction_a, reduction_b): return reduction_a > reduction_b
+		if int(da.rarity) != int(db.rarity): return int(da.rarity) > int(db.rarity)
+		return item_value(a) > item_value(b))
+	var retained: Array = []
+	for item in ordered:
+		var conflict := false
+		for old in retained:
+			if _same_equipment_family(item, old): conflict = true; break
+		if not conflict: retained.append(item); continue
+		var source: Array = r.bag if not r.is_empty() else ex.stash
+		var bounds := _bag_bounds(ex) if not r.is_empty() else Vector2i(STASH_WIDTH, STASH_HEIGHT)
+		if not _place(source, item.duplicate(true), bounds):
+			if ex.mailbox.size() >= 10000:
+				original.equipmentRules = 0
+				return
+			ex.mailbox.append(item.duplicate(true))
+		ex.equipmentNotice = "同类装备已退回背包或待领取区"
+	# Preserve slot order and each surviving instance's UID.
+	for item in equipped.duplicate():
+		var keep := false
+		for saved in retained:
+			if saved.uid == item.uid: keep = true; break
+		if not keep: equipped.erase(item)
+	ex.equipmentRules = 1
+	original.assign(ex)
 
 func _preserve_legacy_values(items: Array) -> void:
 	for item in items: item.legacyValue = int(item_def(item.itemId).get("legacyValue", item_def(item.itemId).value))
@@ -1545,6 +1656,7 @@ func room_actions() -> Array:
 	return result
 
 func choose_room_action(action_id: String) -> Dictionary:
+	if active() and run().get("phase", "") != "battle" and not _valid_equipment_set(run().equipped): return _fail("请腾出背包空间并卸下同类装备")
 	if not active() or run().phase not in ["room", "boss_exit"]: return _fail("请进入房间后操作")
 	var allowed := false
 	for option in room_actions():
@@ -1618,6 +1730,7 @@ func equip_container_item(container_id: String, uid: String, replace_uid: String
 	for i in range(run().equipped.size()):
 		if run().equipped[i].uid == replace_uid: replace_index = i
 	if not replace_uid.is_empty() and replace_index < 0: return _fail("替换装备已经改变")
+	if not equipment_conflict(item, replace_uid).is_empty(): return _fail("同类装备限一件，请替换已穿戴装备")
 	if run().equipped.size() >= 3 and replace_index < 0: return _fail("选择一件装备替换")
 	var previous: Dictionary = host.state.duplicate(true)
 	container.items.remove_at(index)
@@ -1643,6 +1756,7 @@ func sell_items(uids: Array) -> Dictionary:
 	var seen := {}
 	for uid in uids:
 		if not uid is String or seen.has(uid): continue
+		if protected_item(uid): continue
 		seen[uid] = true
 		for item in state().stash:
 			if item.uid == uid: targets.append(item)
@@ -1662,6 +1776,7 @@ func collect_items(uids: Array) -> Dictionary:
 	var definitions: Array = state().collection.duplicate()
 	for uid in uids:
 		if not uid is String or seen.has(uid): continue
+		if protected_item(uid): continue
 		seen[uid] = true
 		var found := false
 		for item in state().stash:
@@ -1803,7 +1918,7 @@ func equipment_status() -> Dictionary:
 	var condition := float(armor.get("condition",1.0)) if not armor.is_empty() else 0.0
 	var bounds := dimensions("bag")
 	var cost := int(ceil(float(item_def(str(armor.get("itemId", ""))).get("repairPrice",0)) * (1.0-condition)))
-	return {"armor":{"item":armor.duplicate(true),"max":maximum,"current":int(round(maximum*condition)),"percent":condition,"repairCost":cost}, "backpack":{"item":pack.duplicate(true),"width":bounds.x,"height":bounds.y,"cells":bounds.x*bounds.y},"tactical":run().get("equipped",[]).duplicate(true)}
+	return {"armor":{"item":armor.duplicate(true),"max":maximum,"current":int(round(maximum*condition)),"percent":condition,"repairCost":cost}, "backpack":{"item":pack.duplicate(true),"width":bounds.x,"height":bounds.y,"cells":bounds.x*bounds.y},"tactical":equipped_items().duplicate(true)}
 
 func supply_preview(id: String) -> Dictionary:
 	var d := item_def(id).duplicate(true)

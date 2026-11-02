@@ -1,0 +1,40 @@
+{
+  "version": "2.7.6",
+  "version_code": 20706,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 151,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-02T08:47:30Z",
+      "completed_utc": "2026-11-02T08:50:01Z",
+      "elapsed_seconds": 151,
+      "production_sha256": "17d5a0661446b495e54129191771a06ddb5e530f00b89e64b1d885ea0ef855df",
+      "scope": [
+        "persistent tactical UID departure/extraction/reload and sale guards; unequip sale; same-item and reduction-family restrictions",
+        "legacy duplicate preservation and overflow mailbox, safe-boundary migration and issued config RNG preservation",
+        "retreat original tactical loss with utility retention",
+        "boss-only gold plus1 red plus0.15, ordinary-container seeded output/RNG unchanged, four-draw floors and exact difficult packing counterexample",
+        "2048x945 and960x540 actual three-slot preparation, worn warehouse details and real sell-all click protecting worn UIDs"
+      ]
+    }
+  ],
+  "production_sha256": "458aaf67aa4ae57000e6bffb6b93f33705b22e80869cf6a4430ae04e83411b43",
+  "production_file_count": 1004,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "persistent tactical UID departure/extraction/reload and sale guards; unequip sale; same-item and reduction-family restrictions",
+    "legacy duplicate preservation and overflow mailbox, safe-boundary migration and issued config RNG preservation",
+    "retreat original tactical loss with utility retention",
+    "boss-only gold plus1 red plus0.15, ordinary-container seeded output/RNG unchanged, four-draw floors and exact difficult packing counterexample",
+    "2048x945 and960x540 actual three-slot preparation, worn warehouse details and real sell-all click protecting worn UIDs"
+  ],
+  "limits": [
+    "Desktop GL only; no Android device",
+    "No full-suite or broad economic simulation"
+  ]
+}

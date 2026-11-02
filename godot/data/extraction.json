@@ -3439,6 +3439,8 @@
     "qualityPurpleWeight": 3,
     "qualityGoldWeight": 2,
     "qualityRedWeight": 0.7,
+    "bossGoldWeight": 1.0,
+    "bossRedWeight": 0.15,
     "riskAppraisalMultiplier": [
       1,
       1.15,
