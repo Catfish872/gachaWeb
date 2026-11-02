@@ -1,0 +1,33 @@
+{
+  "started_utc": "2026-11-02T06:00:00Z",
+  "completed_utc": "2026-11-02T06:01:46Z",
+  "elapsed_seconds": 106,
+  "production_sha256": "7741c710f8b2c3bb2be94e12270e963b78770cf797c146be7b98cde255b75ccf",
+  "production_file_count": 1003,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "checks": {
+    "background": 232,
+    "hedor_budget": 46,
+    "desktop_gl": 54
+  },
+  "screens": [
+    2048,
+    945,
+    960,
+    540
+  ],
+  "scope": [
+    "extraction room background and legacy issued config RNG immutability",
+    "Hedor tier attack budgets and legacy boss isolation",
+    "summon after trial bottom actions",
+    "abandon copy and cancel",
+    "both modes reward art and owned count"
+  ],
+  "limitations": [
+    "Desktop OpenGL only; no Android device run",
+    "No full suite or legacy regression",
+    "Benign desktop XServer and fixture exit resource warnings retained in GL log"
+  ],
+  "fixture_correction": "Added unique instanceId to prepared blessings before scoped GL rerun; no production change during tests"
+}

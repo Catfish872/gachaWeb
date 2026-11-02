@@ -98,7 +98,7 @@ static func render(app) -> void:
 	var left=app._vbox(workspace,6);left.size_flags_horizontal=Control.SIZE_EXPAND_FILL;left.size_flags_stretch_ratio=1.65
 	var right=app._vbox(workspace,8);right.size_flags_horizontal=Control.SIZE_EXPAND_FILL;right.size_flags_stretch_ratio=1.0
 	right.custom_minimum_size.x=280
-	if app.model.extraction.has_method("growth_choices") and not app.model.extraction.growth_choices().is_empty():_show_growth(app,left)
+	if app.model.extraction.has_method("growth_choices") and not app.model.extraction.growth_choices().is_empty():_show_growth(app,left,true)
 	elif str(run.get("phase","route"))=="route":_routes(app,left,right)
 	else:_scene(app,left,run)
 	_party_status(app,right,run)
@@ -333,18 +333,23 @@ static func _refresh_deposit(app,prepared_plan: Dictionary={}) -> void:
 	app._label(parent,"%d 件 · %s 金币" % [plan.get("uids",[]).size(),_money(int(plan.get("value",0)))],16,app.GOLD)
 	app._label(parent,"寄送费 %d 金币 · 安全送回仓库" % int(plan.get("fee",0)),12,app.MUTED,true)
 
-static func _show_growth(app,parent: Node) -> void:
+static func _show_growth(app,parent: Node,constrained: bool=false) -> void:
 	if not app.model.extraction.has_method("growth_choices"):return
 	var choices: Array=app.model.extraction.growth_choices()
 	if choices.is_empty():return
 	var panel=_section(app,parent,"选择本局祝福",app.GOLD)
-	var row=app._hbox(panel,8)
+	var content=_scroll(app,panel) if constrained else panel
+	if constrained:content.get_parent().name="ExtractionGrowthScroll"
+	var row=app._grid(content,1)
+	# The same cards also appear in the narrower bag sidebar; use their actual width.
+	row.resized.connect(func():row.columns=clampi(int((row.size.x+14.0)/210.0),1,3))
 	for raw_choice in choices:
 		var choice:Dictionary=app._present_abyss_reward(raw_choice) if app.has_method("_present_abyss_reward") else raw_choice
 		var id:=str(raw_choice.get("choiceId",raw_choice.get("id","")))
-		var col=_section(app,row,str(choice.get("name","祝福")),app.CYAN)
+		var col=app._vbox(app._panel(row,app.LINE,12),8)
 		RewardRarity.decorate(app,col.get_parent(),col,str(choice.get("rarity","white")))
-		if app.has_method("_rune_icon"):app._reward_art_icon(col,choice,34)
+		app._reward_choice_header(col,choice,app._owned_reward_count(app.model.extraction.run().get("blessings",[]),str(choice.get("id",""))))
+		app._label(col,str(choice.get("name","祝福")),16,app.CYAN,true)
 		app._label(col,str(choice.get("description",choice.get("desc",""))),13,app.TEXT,true)
 		var spacer=Control.new();spacer.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(spacer)
 		_button(app,col,"选择",func():
@@ -750,16 +755,28 @@ static func _toggle_supply_lock(app,uid: String) -> void:
 		app._ui_sound("equip")
 
 static func _confirm_abandon(app) -> void:
-	var box=app._modal("放弃本次行动？",540,270)
+	var box=app._modal("放弃本次行动？",580,340)
 	var notice=app._panel(box,app.RED.darkened(.65),12)
 	var summary=app._hbox(notice,12);app._rune_icon(summary,"bag",32,app.RED)
-	var copy=app._vbox(summary,4)
+	var copy=app._vbox(summary,6)
+	copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	copy.name="ExtractionAbandonSummary"
+	var run:Dictionary=app.model.extraction.run()
+	var items:Array=run.get("bag",[])+run.get("equipped",[])
+	var value:=0
+	for item in items:value+=int(app.model.extraction.item_value(item))
 	app._label(copy,"随身物资将遗失",17,app.TEXT,true)
+	app._label(copy,"背包与战术装备共 %d 件 · 价值 %s 金币" % [items.size(),_money(value)],14,app.MUTED,true)
+	app._label(copy,"本局祝福随行动结束清空",13,app.MUTED,true)
 	app._label(copy,"已寄送物资保留",13,app.CYAN,true)
 	var actions=app._hbox(app._modal_footer(box),12)
-	_button(app,actions,"继续探索",app._clear_overlay,true).name="ExtractionAbandonCancel"
-	_button(app,actions,"确认放弃",func():
-		app._clear_overlay();_stop_search(app,false);_operate(app,app.model.extraction.retreat())).name="ExtractionAbandonConfirm"
+	var cancel=_button(app,actions,"继续探索",app._clear_overlay,true)
+	cancel.name="ExtractionAbandonCancel"
+	cancel.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	var confirm=_button(app,actions,"确认放弃",func():
+		app._clear_overlay();_stop_search(app,false);_operate(app,app.model.extraction.retreat()))
+	confirm.name="ExtractionAbandonConfirm"
+	confirm.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 
 static func _build(app,run: Dictionary) -> void:
 	var col=_scroll(app,app.main_body)

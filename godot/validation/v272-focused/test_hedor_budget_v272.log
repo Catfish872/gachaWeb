@@ -1,0 +1,49 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: run starts
+PASS: full HP budget rank 0
+PASS: attack conversion rank 0
+PASS: themed boss and lamps rank 0
+PASS: generated ATK with one final multiplier rank 0
+PASS: issued encounter preserved rank 0
+PASS: full HP budget rank 1
+PASS: attack conversion rank 1
+PASS: themed boss and lamps rank 1
+PASS: generated ATK with one final multiplier rank 1
+PASS: issued encounter preserved rank 1
+PASS: full HP budget rank 2
+PASS: attack conversion rank 2
+PASS: themed boss and lamps rank 2
+PASS: generated ATK with one final multiplier rank 2
+PASS: issued encounter preserved rank 2
+PASS: full HP budget rank 3
+PASS: attack conversion rank 3
+PASS: themed boss and lamps rank 3
+PASS: generated ATK with one final multiplier rank 3
+PASS: issued encounter preserved rank 3
+PASS: full HP budget rank 4
+PASS: attack conversion rank 4
+PASS: themed boss and lamps rank 4
+PASS: generated ATK with one final multiplier rank 4
+PASS: rank4 calibrated attack
+PASS: issued encounter preserved rank 4
+PASS: full HP budget rank 5
+PASS: attack conversion rank 5
+PASS: themed boss and lamps rank 5
+PASS: generated ATK with one final multiplier rank 5
+PASS: rank5 calibrated attack
+PASS: issued encounter preserved rank 5
+PASS: legacy boss pool ruins
+PASS: legacy escorts ruins
+PASS: legacy base isolation ruins battle
+PASS: legacy base isolation ruins elite
+PASS: legacy boss pool forest
+PASS: legacy escorts forest
+PASS: legacy base isolation forest battle
+PASS: legacy base isolation forest elite
+PASS: legacy boss pool sanctum
+PASS: legacy escorts sanctum
+PASS: legacy base isolation sanctum battle
+PASS: legacy base isolation sanctum elite
+PASS: generation leaves abyss pool unchanged
+HEDOR_BUDGET_V272 failures: 0

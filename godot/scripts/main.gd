@@ -536,6 +536,8 @@ func navigate(screen: String, record_history: bool = true) -> void:
 func _background_path() -> String:
 	if current_screen == "battle" and battle_config.has("background"):
 		return str(battle_config.background)
+	if current_screen == "battle" and battle_config.get("isExtraction", false):
+		return model.extraction.battle_background_path()
 	if current_screen == "story" and selected_chapter == 2:
 		return str(model.get_stage(selected_stage_id).get("background", "res://assets/content_v270/backgrounds/snow_inn.png"))
 	if current_screen in ["abyss", "extraction"] or (current_screen == "battle" and (battle_config.get("isAbyss", false) or battle_config.get("isExtraction", false))):
@@ -763,7 +765,7 @@ func _summon() -> void:
 	row.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	var background:="res://assets/content_v270/banner/selin_banner.png" if featured=="selin" else "res://assets/backgrounds/summon_sanctum.png"
 	if not ResourceLoader.exists(background):background=""
-	var stage:=_portrait_environment(row,featured,330,background)
+	var stage:=_portrait_environment(row,featured,260 if compact else 0,background)
 	stage.size_flags_stretch_ratio=1.6
 	stage.name="SummonStage"
 	var banner:=_vbox(stage,8);banner.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
@@ -777,11 +779,15 @@ func _summon() -> void:
 	preview.offset_left=20;preview.offset_right=152;preview.offset_top=-64;preview.offset_bottom=-20
 	_button_icon(preview,"book")
 	var side:=_vbox(row,10);side.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-	_label(side,pool.name,30,TEXT)
-	_label(side,pool.subtitle,14,GOLD,true)
+	# Only secondary copy scrolls: trial and purchase actions stay within the viewport.
+	var details:=_vbox(side,10) if compact else _scroll_column(side,10)
+	details.name="SummonDetails"
+	if not compact:details.get_parent().name="SummonDetailsScroll"
+	_label(details,pool.name,30,TEXT)
+	_label(details,pool.subtitle,14,GOLD,true)
 	var pity:Dictionary=model.state.get("pityCounters",{}).get(selected_pool,{})
 	var count:int=int(pity.get("count",0))
-	var info:=_vbox(_panel(side,GOLD.darkened(.7),10),6)
+	var info:=_vbox(_panel(details,GOLD.darkened(.7),10),6)
 	var pity_row:=_hbox(info,8);_rune_icon(pity_row,"star",24,GOLD)
 	_label(pity_row,"五星保底",14,MUTED)
 	_label(pity_row,"%d / %d" % [count,pool.pity.hard],20,GOLD)
@@ -794,8 +800,7 @@ func _summon() -> void:
 			if _check(result):_start_battle(result.config))
 		trial.name = "SelinTrial"
 		_button_icon(trial,"sword")
-		_label(side,"首通 160 星尘晶" if not model.state.stageProgress.get("trial_selin",{}).get("cleared",false) else "已领取首通奖励 · 可再次体验",13,CYAN)
-	var gap:=Control.new();gap.size_flags_vertical=Control.SIZE_EXPAND_FILL;side.add_child(gap)
+		_label(side,"首通 160 星尘晶" if not model.state.stageProgress.get("trial_selin",{}).get("cleared",false) else "已领取首通奖励 · 可再次体验",13,CYAN,true).name="SelinTrialReward"
 	var current:=_hbox(side,6);_rune_icon(current,"gem",21)
 	_label(current,"持有 %d" % int(model.state.resources.get(pool.currency,0)),14,CYAN)
 	var actions:=_responsive_box(side,compact,10)
@@ -3254,3 +3259,29 @@ func _dialogue_background_path() -> String:
 
 func _reward_art_icon(parent: Node, reward: Dictionary, edge: int) -> TextureRect:
 	return _skill_art_icon(parent, _present_abyss_reward(reward), edge)
+
+
+func _owned_reward_count(rewards: Array, reward_id: String) -> int:
+	# Run arrays contain one entry per awarded instance; shared pool IDs/effects are unrelated.
+	var count := 0
+	for raw in rewards:
+		var id := str(raw.get("id", "")) if raw is Dictionary else str(raw)
+		if id == reward_id and not reward_id.is_empty():count += 1
+	return count
+
+func _reward_choice_header(parent: Node, reward: Dictionary, owned: int) -> void:
+	var row := _hbox(parent, 8)
+	row.name = "RewardChoiceHeader"
+	var art := _reward_art_icon(row, reward, 44)
+	art.name = "RewardChoiceIcon"
+	art.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	var gap := Control.new()
+	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(gap)
+	var badge := _panel(row, CYAN.darkened(.6) if owned > 0 else LINE, 5)
+	badge.name = "RewardOwnedBadge"
+	badge.size_flags_horizontal = Control.SIZE_SHRINK_END
+	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var label := _label(badge, "已持有 %d 层" % owned if owned > 0 else "未持有", 12, CYAN if owned > 0 else MUTED)
+	label.name = "RewardOwnedCount"
+	label.set_meta("owned_count", owned)

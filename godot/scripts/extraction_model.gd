@@ -118,6 +118,31 @@ func environment_theme() -> String:
 	if not order is Array or order.size() != max_acts(): return ""
 	return str(order[clampi(int(run().act)-1,0,max_acts()-1)])
 
+func battle_background_path() -> String:
+	# Reuse the scenery chosen when the map was generated. This read-only
+	# fallback also serves issued legacy encounters without changing their RNG/config.
+	var room: Dictionary = run().get("room", {})
+	var background := str(room.get("background", ""))
+	if not background.is_empty(): return background
+	var map: Dictionary = run().get("map", {})
+	var district_id := str(room.get("districtId", ""))
+	for node in map.get("rooms", []):
+		if node.get("id", "") == map.get("currentRoomId", ""):
+			background = str(node.get("background", ""))
+			if not background.is_empty(): return background
+			district_id = str(node.get("districtId", district_id))
+	var theme := environment_theme()
+	for district in map.get("districts", []):
+		if district.get("id", "") == district_id:
+			background = str(district.get("background", ""))
+			if not background.is_empty(): return background
+			theme = str(district.get("theme", theme))
+	var backgrounds: Array = data.get("environmentThemes", {}).get(theme, {}).get("backgrounds", [])
+	if not backgrounds.is_empty():
+		var depth := clampi(int(district_id.trim_prefix("district_")), 0, backgrounds.size() - 1)
+		if not backgrounds[depth].is_empty(): return str(backgrounds[depth][0])
+	return "res://assets/extraction/rooms/ruins_1.webp"
+
 func environment_music_track() -> String:
 	var theme := environment_theme()
 	if theme == "lantern":
@@ -402,7 +427,11 @@ func _theme_encounter_budget(kind: String, enemies: Array, act: int, rank: int) 
 	for stat in ["hp","atk"]: expected[stat] *= reference_count
 	if kind == "boss":
 		for escort in (["dark_knight","thunder_hawk"] if rank >= 5 else ["dark_knight"] if rank >= 4 else []):
-			for stat in ["hp","atk"]: expected[stat] += float(host.catalog.EnemyData[escort].baseStats[stat])
+			var escort_base: Dictionary = host.catalog.EnemyData[escort].baseStats
+			expected.hp += float(escort_base.hp)
+			# Preserve encounter durability while converting single-target escort
+			# offense into the boss's stronger party-wide skill budget.
+			expected.atk += float(escort_base.atk) * 0.25
 	for enemy_id in enemies:
 		var base: Dictionary = host.catalog.EnemyData[enemy_id].baseStats
 		for stat in actual: actual[stat] += float(base[stat])
@@ -418,7 +447,9 @@ func _generate_encounter(kind: String) -> void:
 		pool = ["dark_knight", "stone_golem"]
 		count = 1 if act < 3 else 2
 	elif kind == "boss":
-		pool = host.catalog.AbyssData.pools.boss
+		# Legacy themes retain their original boss budgets; themed bosses are
+		# selected below with their own encounter normalization.
+		pool = ["boss_flame_lord", "boss_storm_witch"]
 		count = 1
 	var themed_pool: Array = data.get("environmentThemes",{}).get(environment_theme(),{}).get("enemies",{}).get(kind,[])
 	if not themed_pool.is_empty(): pool = themed_pool
@@ -448,6 +479,7 @@ func _generate_encounter(kind: String) -> void:
 	# its rank4/5 escorts. Keeping shared mods old also avoids double scaling.
 	for stat in ["hpMod", "atkMod", "defMod", "spdMod"]: mods[stat] *= depth_factor
 	var config := {"id": _uid("encounter"), "token": _uid("battle"), "name": "第 %d 幕 · %s" % [act, "首领" if kind == "boss" else "精英" if kind == "elite" else "巡逻队"], "isExtraction": true, "maxRounds": 40, "isAbyss": false, "isBoss": kind == "boss", "isElite": kind == "elite", "enemies": enemies, "waves": [{"enemies": enemies.duplicate()}], "scaleMult": mods, "seed": int(_rand() * 2147483000), "rewards": {}, "staminaCost": 0, "difficulty": rank, "act": act, "maxActs": max_acts(), "kind": kind, "healingMultiplier": 1.0, "enrageAfterRound": 15 if rank >= 3 else 0, "enragePerRound": 0.05 if rank >= 3 else 0.0, "enrageCap": 0.5 if rank >= 3 else 0.0}
+	config.background = battle_background_path()
 	config.depthTier = depth_tier
 	config.depthStatMultiplier = depth_factor
 	config.finalBossStatMultiplier = final_boss_factor

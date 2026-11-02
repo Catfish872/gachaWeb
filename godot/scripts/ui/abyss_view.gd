@@ -177,13 +177,15 @@ static func _choose_target_set(app,set_id:String)->void:
 	var definition:Dictionary=app.model.catalog.get("RelicSets",{}).get(set_id,{})
 	app._toast("目标套装 · "+str(definition.get("name","")),VIOLET)
 
-static func _card(app,parent:Node,title:String,desc:String,color:Color,symbol:int,semantic:String="",reward:Dictionary={})->VBoxContainer:
+static func _card(app,parent:Node,title:String,desc:String,color:Color,symbol:int,semantic:String="",reward:Dictionary={},owned:int=-1)->VBoxContainer:
 	var p=app._panel(parent,color.darkened(0.5),12);p.custom_minimum_size.x=160
 	var v=app._vbox(p,8)
-	if not reward.is_empty():app._reward_art_icon(v,reward,44)
+	if owned>=0:app._reward_choice_header(v,reward,owned)
+	elif not reward.is_empty():app._reward_art_icon(v,reward,44)
 	elif semantic.is_empty():_icon(v,color,symbol)
 	else:app._rune_icon(v,semantic,44,color)
-	var name=app._label(v,title,18,color,true);name.max_lines_visible=2
+	var name=app._label(v,title,18,color,true)
+	if reward.is_empty():name.max_lines_visible=2
 	var text=app._label(v,desc,14,app.TEXT,true);text.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	return v
 
@@ -213,7 +215,7 @@ static func _blessings(app,parent:Node,rogue:Dictionary)->void:
 	for raw in rogue.get("pendingChoices",[]):
 		var choice:Dictionary=app._present_abyss_reward(raw)
 		var color:Color={"gold":app.GOLD,"blue":app.CYAN,"white":app.TEXT}.get(str(choice.get("rarity","white")),app.TEXT)
-		var v=_card(app,grid,str(choice.get("name","裂隙回响")),str(choice.get("description","")),color,str(choice.get("id","")).hash(),RuneTheme.effect_key(choice),choice)
+		var v=_card(app,grid,str(choice.get("name","裂隙回响")),str(choice.get("description","")),color,str(choice.get("id","")).hash(),RuneTheme.effect_key(choice),choice,app._owned_reward_count(rogue.get("selectedRewards",[]),str(choice.get("id",""))))
 		RewardRarity.decorate(app,v.get_parent(),v,str(choice.get("rarity","white")))
 		app._label(v.find_child("RewardRarityBadge",true,false),str(choice.get("target","全队")),12,app.MUTED,true)
 		var b=app._button(v,"融入构筑",func():_reward_operation(app,app.model.choose_abyss_reward(str(choice.get("choiceId",choice.get("id","")))),"回响已融入本轮构筑",true),true)

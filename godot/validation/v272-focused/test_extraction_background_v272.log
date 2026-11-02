@@ -1,0 +1,235 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: run starts
+PASS: ruins district 0 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: ruins district 0 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: ruins district 0 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: ruins district 1 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: ruins district 1 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: ruins district 1 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: ruins district 2 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: ruins district 2 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: ruins district 2 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: forest district 0 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: forest district 0 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: forest district 0 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: forest district 1 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: forest district 1 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: forest district 1 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: forest district 2 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: forest district 2 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: forest district 2 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: sanctum district 0 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: sanctum district 0 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: sanctum district 0 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: sanctum district 1 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: sanctum district 1 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: sanctum district 1 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: sanctum district 2 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: sanctum district 2 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: sanctum district 2 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: lantern district 0 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: lantern district 0 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: lantern district 0 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: lantern district 1 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: lantern district 1 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: lantern district 1 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: lantern district 2 battle uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: lantern district 2 elite uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: lantern district 2 boss uses chosen room
+PASS: background resource exists
+PASS: repeat entry preserves encounter and RNG
+PASS: saved encounter restores same scenery
+PASS: theme/district music retained
+PASS: legacy encounter uses current room
+PASS: legacy issued config and RNG unchanged
+PASS: legacy room uses saved map node
+PASS: legacy map uses saved district
+PASS: abyss default unchanged
+PASS: explicit story background unchanged
+PASS: pre-map legacy fallback exists
+EXTRACTION BACKGROUND FAILURES: 0

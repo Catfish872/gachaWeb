@@ -1,0 +1,41 @@
+{
+  "version": "2.7.2",
+  "version_code": 20702,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 106,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-02T06:00:00Z",
+      "completed_utc": "2026-11-02T06:01:46Z",
+      "elapsed_seconds": 106,
+      "production_sha256": "7741c710f8b2c3bb2be94e12270e963b78770cf797c146be7b98cde255b75ccf",
+      "scope": [
+        "extraction room background and legacy issued config RNG immutability",
+        "Hedor tier attack budgets and legacy boss isolation",
+        "summon after trial bottom actions",
+        "abandon copy and cancel",
+        "both modes reward art and owned count"
+      ]
+    }
+  ],
+  "production_sha256": "f05aa27695a795dff9243fb43fd2eeead020c9c92c0932d761299237007e24b5",
+  "production_file_count": 1003,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "extraction room background and legacy issued config RNG immutability",
+    "Hedor tier attack budgets and legacy boss isolation",
+    "summon after trial bottom actions",
+    "abandon copy and cancel",
+    "both modes reward art and owned count"
+  ],
+  "limits": [
+    "Desktop OpenGL only; no Android device run",
+    "No full suite or legacy regression",
+    "Benign desktop XServer and fixture exit resource warnings retained in GL log"
+  ]
+}
