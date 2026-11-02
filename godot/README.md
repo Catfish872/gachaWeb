@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.7.1 · 灯火故事修订
+## 最新正式版：2.7.2 · 界面与遭遇修复
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.2/universal.apk) · [更新说明](CHANGELOG_2.7.2.md) · [验证记录](validation/release-v272/RELEASE.md)
+
+修复试用返回、放弃确认与祝福显示；搜打撤背景固定并隔离跨玩法 BOSS 数值。[跨玩法数值案例](../docs/CROSS_MODE_ENEMY_BALANCE.md)记录具体根因与预算修正。
+
+## 历史版本：2.7.1 · 灯火故事修订
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.1/universal.apk) · [发布页](https://github.com/Catfish872/gachaWeb/releases/tag/android-v2.7.1) · [中文更新说明](CHANGELOG_2.7.1.md) · [验证记录](validation/release-v271/RELEASE.md)
 
