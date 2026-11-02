@@ -1,5 +1,5 @@
 extends RefCounted
-## Curated source-space portraits. Original full-body art remains unchanged.
+## Curated source-space portraits. Bust regions are composition anchors only.
 ## Faces are inspected individually; this is not a shared top-center guess.
 
 const FACE_REGIONS := {
@@ -51,6 +51,9 @@ static func get_texture(id: String, mode: String = "face") -> Texture2D:
 	if not ResourceLoader.exists(path): return null
 	var source: Texture2D = load(path)
 	if source == null: return null
+	if mode == "bust":
+		_cache[key] = source
+		return source
 	var region := region_for(id, mode)
 	if not Rect2(Vector2.ZERO, source.get_size()).encloses(region): return null
 	var avatar := AtlasTexture.new()

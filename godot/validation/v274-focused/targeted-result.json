@@ -1,0 +1,28 @@
+{
+  "started_utc": "2026-11-02T06:55:30Z",
+  "completed_utc": "2026-11-02T07:00:29Z",
+  "elapsed_seconds": 299,
+  "production_sha256": "0fd8ef3ae286d875a7753848deccc35a918b07512c1b1db3184d4aa96ad59dcd",
+  "production_file_count": 1004,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "checks": {
+    "full_source_composition": 34,
+    "reveal_only_fade": 5
+  },
+  "scope": [
+    "desktop GL 2048x945 and 960x540 actual growth: Selin Kaldi Ayla Cinder; party comparison",
+    "complete transparent illustration sampling and physical frame bottom; face and full battle source paths preserved",
+    "summon shared bust card and single reveal; reveal-only bottom thirty-pixel alpha fade"
+  ],
+  "incremental_evidence": "34 checks retained after opt-in reveal fade; 5 checks cover final reveal-only shader change. Parent reviewed actual images and final soft-edge image.",
+  "fixture_correction": "Initial assertion required extension below old region; corrected to extension beyond internal box horizontally or vertically, with independent actual frame-bottom equality. Production unchanged during this correction.",
+  "limits": [
+    "Desktop GL, not Android device",
+    "Full composition fixture retained exit resource warning; reveal delta clean"
+  ],
+  "logs": [
+    "gl.log",
+    "fade-gl.log"
+  ]
+}

@@ -2,6 +2,7 @@ extends Control
 ## Presentation consumes an immutable copy of an already committed pull.
 ## No timers/tweens own the state: a visible-frame clock and epoch drive every stage.
 const Avatars = preload("res://scripts/ui/character_avatar.gd")
+const CharacterBust = preload("res://scripts/ui/character_bust.gd")
 const OPENING := 0.85
 const CONSTELLATION := 1.05
 const SEAL := 0.52
@@ -31,7 +32,7 @@ var _voice: AudioStreamPlayer
 var _audio_history: Array = []
 var _art: Array[Texture2D] = []
 var _background: Texture2D
-var _portrait: TextureRect
+var _portrait: CharacterBust
 var _copy: VBoxContainer
 var _title: Label
 var _subtitle: Label
@@ -183,7 +184,7 @@ func _advance() -> void:
 		show_summary()
 	else:
 		index += 1
-		_portrait.texture = _art[index]
+		_portrait.configure(str(results[index].charId))
 		_enter("seal")
 
 func show_summary() -> void:
@@ -239,11 +240,10 @@ func _build() -> void:
 	_subtitle = app._label(self, "群星循着你的呼唤，缓缓汇聚", 13, app.MUTED)
 	_counter = app._label(self, "", 14, app.GOLD)
 	_hint = app._center_label(self, "让星光指引相遇", 14, app.MUTED)
-	_portrait = TextureRect.new()
+	_portrait = CharacterBust.new()
 	_portrait.name = "SummonRevealPortrait"
-	_portrait.texture = _art[index]
-	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_portrait.enable_bottom_fade(30.0)
+	_portrait.configure(str(results[index].charId))
 	_portrait.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_portrait)
 	_copy = app._vbox(self, 9)
@@ -383,10 +383,8 @@ func _build_summary() -> void:
 		card.name = "SummonResult_%s_%d" % [result.charId, i]
 		card.modulate.a = 0
 		var column: VBoxContainer = app._vbox(card, 3)
-		var art: TextureRect = TextureRect.new()
-		art.texture = Avatars.get_texture(str(result.charId), "bust")
-		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		var art := CharacterBust.new()
+		art.configure(str(result.charId))
 		art.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		column.add_child(art)
 		var captions := [app._center_label(column, str(data.name), 15, color), app._center_label(column, "★".repeat(int(data.rarity)), 11, color), app._center_label(column, "初次相遇" if result.get("isNew",false) else "碎片 +%d" % result.get("shards",0), 12, app.CYAN)]
@@ -503,7 +501,9 @@ func _draw() -> void:
 			_star(center,24*flip,Color(color,.9))
 			if flip > .3: draw_arc(center,radius*.32*flip,0,TAU,48,Color(color,.7),1.3,true)
 		else:
-			draw_texture_rect(_art[index],rect.grow(-10),false,Color(1,1,1,(p-.5)*2))
+			var portrait_rects := CharacterBust.composition_rects(rect.grow(-10), _art[index].get_size(), Avatars.region_for(str(results[index].charId), "bust"))
+			if portrait_rects.size() == 2:
+				draw_texture_rect_region(_art[index], portrait_rects[0], portrait_rects[1], Color(1,1,1,(p-.5)*2))
 	if stage == "legendary":
 		var p := clampf(stage_time/LEGENDARY,0,1)
 		if not reduced_motion:

@@ -1,6 +1,7 @@
 extends Control
 
 const CharacterAvatars = preload("res://scripts/ui/character_avatar.gd")
+const CharacterBust = preload("res://scripts/ui/character_bust.gd")
 const RuneTheme = preload("res://scripts/ui/rune_theme.gd")
 const SummonSequence = preload("res://scripts/ui/summon_sequence.gd")
 
@@ -2544,8 +2545,17 @@ func _portrait(parent: Node, id: String, height: float, _wide: bool = false, ene
 	if not ResourceLoader.exists(path):
 		path = "res://assets/portraits/%s.svg" % id
 	if ResourceLoader.exists(path):
-		var t := TextureRect.new()
 		var style:String=avatar_style if not avatar_style.is_empty() else ("face" if height>0 and height<=80 and not _wide else "")
+		if style == "bust" and not enemy and CharacterAvatars.BUST_REGIONS.has(id):
+			var bust := CharacterBust.new()
+			bust.name = "CharacterPortraitTexture"
+			bust.configure(id)
+			bust.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			c.add_child(bust)
+			c.set_meta("portrait_mode", "bust")
+			c.set_meta("portrait_id", id)
+			return c
+		var t := TextureRect.new()
 		var avatar:Texture2D=CharacterAvatars.get_texture(id,style) if not enemy and not style.is_empty() else null
 		t.texture = avatar if avatar!=null else load(path)
 		c.set_meta("portrait_mode",style if avatar!=null else "full")
@@ -3262,7 +3272,8 @@ func _portrait_environment(parent:Node,id:String,height:float=240,background_pat
 	var aura=load("res://scripts/ui/character_aura.gd").new();aura.tint=tint.lightened(.25);aura.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);stage.add_child(aura)
 	var portrait:=_portrait(stage,id,0,false,false,avatar_style)
 	portrait.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	portrait.offset_top=8;portrait.offset_bottom=-8
+	if avatar_style != "bust":
+		portrait.offset_top=8;portrait.offset_bottom=-8
 	return stage
 
 func _summon_cta(parent:Node,amount:int,cost:int,action:Callable)->Button:
