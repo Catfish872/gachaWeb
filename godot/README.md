@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.7.3 · 角色展示与抽卡优化
+## 最新正式版：2.7.4 · 立绘边缘优化
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.4/universal.apk) · [更新说明](CHANGELOG_2.7.4.md) · [验证记录](validation/release-v274/RELEASE.md)
+
+半身展示保留完整透明立绘，在真实画框边缘裁切，消除悬浮方形切边；单抽展示增加轻微底部渐隐。头像、战斗全身与原立绘资源不变。
+
+## 历史版本：2.7.3 · 角色展示与抽卡优化
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.3/universal.apk) · [更新说明](CHANGELOG_2.7.3.md) · [验证记录](validation/release-v273/RELEASE.md)
 
