@@ -115,6 +115,9 @@ func _draw() -> void:
 	for effect in impacts:_draw_impact(effect)
 
 func _draw_ultimate(u: Dictionary) -> void:
+	if str(u.actor) == "selin":
+		_draw_lantern_ultimate(u)
+		return
 	var t:=1.0-float(u.life)/1.1
 	var alpha:=sin(t*PI)
 	var c: Color=u.color
@@ -163,7 +166,7 @@ func impact(kind: String, from: Vector2, to: Vector2, critical: bool = false) ->
 	if kind in ["shield", "def_up", "invincible"]:
 		shield_ring(to)
 		return
-	if not kind in ["slash", "blunt", "fire", "water", "ice", "thunder", "wind", "shield_break", "poison", "bleed", "vulnerable", "atk_up", "spd_down", "taunt", "stun"]: kind = "blunt"
+	if not kind in ["slash", "blunt", "fire", "water", "ice", "thunder", "wind", "shield_break", "poison", "bleed", "vulnerable", "atk_up", "spd_down", "taunt", "stun", "ember_oath", "ember_lantern_burn", "ember_lantern_direct", "detonation"]: kind = "blunt"
 	var color: Color = ELEMENT_COLORS.get(kind, Color("f4d8a0"))
 	if kind == "poison": color = Color("b6de84")
 	if kind in ["bleed", "vulnerable"]: color = Color("ff8b9b")
@@ -180,6 +183,13 @@ func _draw_impact(effect: Dictionary) -> void:
 	var r := (16.0+t*30.0)*scale_factor
 	var c := Color(effect.color, alpha)
 	match str(effect.kind):
+		"ember_oath", "ember_lantern_burn", "ember_lantern_direct", "detonation":
+			var gold := Color(1.0, 0.83, 0.49, alpha * 0.65)
+			var radius := 10.0 + t * 8.0
+			draw_circle(p, radius, Color(1.0, 0.78, 0.38, alpha * 0.07))
+			draw_arc(p, radius, 0.25, PI - 0.25, 20, gold, 1.2, true)
+			draw_arc(p, radius, PI + 0.25, TAU - 0.25, 20, gold, 1.2, true)
+			draw_circle(p, 2.0, Color(1.0, 0.96, 0.79, alpha * 0.55))
 		"slash":
 			for i in range(2):
 				var offset := Vector2(i*10, i*4)
@@ -245,3 +255,34 @@ func _draw_impact(effect: Dictionary) -> void:
 				var center := p+Vector2(cos(i*TAU/3+t)*r,sin(i*TAU/3+t)*r*0.4-20)
 				draw_line(center-Vector2(5,0),center+Vector2(5,0),c,2,true)
 				draw_line(center-Vector2(0,5),center+Vector2(0,5),c,2,true)
+
+func _draw_lantern_ultimate(u: Dictionary) -> void:
+	# A narrow light-road, not a dragon silhouette or a full-screen opaque cut-in.
+	var t := clampf(1.0 - float(u.life) / 1.1, 0.0, 1.0)
+	var fade := minf(1.0, (1.0 - t) * 4.0)
+	var copper := Color("e7ac66")
+	var ivory := Color("fff1ca")
+	var path := PackedVector2Array()
+	for i in range(33):
+		var f := float(i) / 32.0
+		var point: Vector2 = u.a.lerp(u.b, f)
+		point.y -= sin(f * PI) * 24.0
+		path.append(point)
+	var shown := clampi(int(t * 64.0) + 2, 2, path.size())
+	var lit_path := path.slice(0, shown)
+	draw_polyline(lit_path, Color(copper, fade * 0.12), 7.0, true)
+	draw_polyline(lit_path, Color(copper, fade * 0.72), 1.3, true)
+	for lamp in range(5):
+		var ignite := clampf((t - float(lamp) * 0.095) * 9.0, 0.0, 1.0)
+		if ignite <= 0.0:continue
+		var f := (float(lamp) + 0.5) / 5.0
+		var at: Vector2 = u.a.lerp(u.b, f)
+		at.y -= sin(f * PI) * 24.0
+		var alpha := fade * ignite
+		draw_circle(at, 12.0, Color(copper, alpha * 0.10))
+		draw_circle(at, 7.0, Color(ivory, alpha * 0.16))
+		var frame := PackedVector2Array([at + Vector2(-4,-6), at + Vector2(4,-6), at + Vector2(6,5), at + Vector2(-6,5), at + Vector2(-4,-6)])
+		draw_polyline(frame, Color(copper, alpha), 1.2, true)
+		draw_arc(at + Vector2(0,-7), 3.0, PI, TAU, 12, Color(ivory, alpha), 1.0, true)
+		draw_line(at + Vector2(-5,7), at + Vector2(5,7), Color(copper, alpha), 1.2, true)
+		draw_colored_polygon(PackedVector2Array([at+Vector2(0,-4),at+Vector2(2.5,1),at+Vector2(0,4),at+Vector2(-2.5,1)]),Color(ivory,alpha))

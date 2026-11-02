@@ -1,0 +1,41 @@
+{
+  "version": "2.6.8",
+  "version_code": 20608,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "ui_review_basis": "Static review of unchanged layout and updated binding behavior; prior layout evidence reused. No new GL run.",
+  "test_started_utc": "2026-11-02T02:47:30Z",
+  "test_completed_utc": "2026-11-02T02:49:35Z",
+  "test_elapsed_seconds": 125,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-02T02:47:30Z",
+      "completed_utc": "2026-11-02T02:49:35Z",
+      "elapsed_seconds": 125,
+      "production_sha256": "7635de027e7418faa7e8c90dd8ea3e607eea0fc96a2095b34f41971e86aa58e8",
+      "scope": [
+        "speed-based ally segments reordered by formation; enemy boundaries, slow/death/freeze, round-end once, published turnOrder",
+        "normal/elite/guard one three-choice blessing each win; exactly-once choose/save; elite per-entry6/3.6/1.4;Bossgold and6x6parcel;failure no award (81 checks)",
+        "repair items in healing/supply containers with treasure-pool precedence",
+        "actual smart-loot apply: idle gear replacement+1026, worn/locked protection,outgoing equipment retained,59-cell16-item geometry repack,unlocked outgoing consumables auto-heal (32 checks)",
+        "existing UI turnOrder/three-choice bindings static review; prior unchanged layout reused, NO new GL",
+        "release evidence gate (9 tests)"
+      ]
+    }
+  ],
+  "production_sha256": "7635de027e7418faa7e8c90dd8ea3e607eea0fc96a2095b34f41971e86aa58e8",
+  "production_file_count": 828,
+  "scope": [
+    "speed-based ally segments reordered by formation; enemy boundaries, slow/death/freeze, round-end once, published turnOrder",
+    "normal/elite/guard one three-choice blessing each win; exactly-once choose/save; elite per-entry6/3.6/1.4;Bossgold and6x6parcel;failure no award (81 checks)",
+    "repair items in healing/supply containers with treasure-pool precedence",
+    "actual smart-loot apply: idle gear replacement+1026, worn/locked protection,outgoing equipment retained,59-cell16-item geometry repack,unlocked outgoing consumables auto-heal (32 checks)",
+    "existing UI turnOrder/three-choice bindings static review; prior unchanged layout reused, NO new GL",
+    "release evidence gate (9 tests)"
+  ],
+  "limits": [
+    "No new GL, Android emulator or physical-device validation.",
+    "Local runtime source was recovered by exact Git blob identity from the published source. Missing unchanged assets inherit verified SHA256 only after equality checks across complete Git trees; CI recomputes the full checkout before signing."
+  ],
+  "production_manifest": "final-manifest.json"
+}

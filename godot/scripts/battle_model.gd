@@ -5,7 +5,7 @@ extends RefCounted
 const AbyssBalance = preload("res://scripts/abyss_balance.gd")
 
 const CONTROL_STATUSES = ["freeze", "stun", "electrify"]
-const STATUS_IDS = ["burn", "freeze", "stun", "poison", "electrify", "regen", "atk_up", "def_up", "spd_down", "shield", "invincible", "taunt"]
+const STATUS_IDS = ["burn", "freeze", "stun", "poison", "electrify", "regen", "atk_up", "def_up", "spd_down", "shield", "invincible", "taunt", "ember_oath", "ember_lantern_burn", "ember_lantern_direct"]
 const ELEMENT_ADVANTAGE = {
 	"fire": ["wind", "water"], "water": ["fire", "thunder"],
 	"wind": ["thunder", "fire"], "thunder": ["water", "wind"]
@@ -171,6 +171,7 @@ func _hold_healing_skill(actor: Dictionary, skill: Dictionary) -> bool:
 func _take_action(actor: Dictionary, sid: String, target_id: String) -> Dictionary:
 	_events = []
 	_execute_skill(actor, sid, target_id)
+	_after_active_action(actor)
 	_consume_action_statuses(actor)
 	_steps += 1
 	_cursor += 1
@@ -237,8 +238,9 @@ func _spawn_wave() -> void:
 		if state.config.get("isAbyss", false):
 			if not web_endless: mods = AbyssBalance.apply_difficulty(mods, int(state.config.get("difficulty", 0)))
 			mods = AbyssBalance.apply_modifier(mods, state.config.get("encounterModifier", {}))
-		var bs = data.baseStats
-		var final_boss := bool(state.config.get("isExtraction", false)) and bool(state.config.get("isBoss", false)) and bool(data.get("isBoss", false)) and int(state.config.get("act", 1)) == 3 and is_equal_approx(float(state.config.get("finalBossStatMultiplier", 1.0)), 1.15)
+		# New chapter enemies carry a separate abyss budget; story and expeditions retain their own base.
+		var bs: Dictionary = data.get("abyssBaseStats", data.baseStats) if state.config.get("isAbyss", false) and not state.config.get("isExtraction", false) else data.baseStats
+		var final_boss := bool(state.config.get("isExtraction", false)) and bool(state.config.get("isBoss", false)) and bool(data.get("isBoss", false)) and int(state.config.get("act", 1)) == int(state.config.get("maxActs", 3)) and is_equal_approx(float(state.config.get("finalBossStatMultiplier", 1.0)), 1.15)
 		var boss_factor := 1.15 if final_boss else 1.0
 		var stats = {"maxHp": maxi(1, int(bs.hp * mods.get("hpMod", 1) * boss_factor)),
 			"atk": maxi(1, int(bs.atk * mods.get("atkMod", 1) * boss_factor)), "def": maxi(0, int(bs.def * mods.get("defMod", 1) * boss_factor)),
@@ -329,7 +331,11 @@ func poison_damage_preview(unit: Dictionary) -> Dictionary:
 		sources[uid].stacks += 1
 	var coefficient := dot_rule("poisonAttackRatio", 0.02)
 	var growth := dot_rule("poisonStackGrowth", 0.10)
-	var amount := maxi(1, int(attack_sum * coefficient * (1.0 + growth * maxf(0.0, float(count - 1))))) if count > 0 else 0
+	var amplified_attack := 0.0
+	for entry in sources.values():
+		var source := get_unit(str(entry.uid))
+		amplified_attack += float(entry.attackSum) * (1.0 + _external_deepening(source, unit))
+	var amount := maxi(1, int(amplified_attack * coefficient * (1.0 + growth * maxf(0.0, float(count - 1))))) if count > 0 else 0
 	return {"amount":amount, "stacks":count, "sources":sources.values()}
 
 func _alive(units: Array) -> Array:
@@ -348,6 +354,7 @@ func _build_queue() -> void:
 		var bv = b.stats.spd * modifiers(b).spdMult
 		if av == bv: return a.isAlly and not b.isAlly
 		return av > bv)
+	_order_contiguous_allies()
 	_cursor = 0
 	state.turn += 1
 	state.turnOrder = _queue.map(func(unit): return unit.uid)
@@ -367,6 +374,25 @@ func _build_queue() -> void:
 			if not friends.is_empty():
 				friends.sort_custom(func(a,b): return a.stats.spd * modifiers(a).spdMult < b.stats.spd * modifiers(b).spdMult)
 				apply_status(friends[0], "atk_up", 1, 0.3, unit)
+
+func _order_contiguous_allies() -> void:
+	# Speed decides enemy boundaries; formation decides order inside each ally run.
+	var formation: Dictionary = {}
+	for i in range(state.allies.size()):
+		formation[state.allies[i].uid] = i
+	var start := 0
+	while start < _queue.size():
+		if not _queue[start].isAlly:
+			start += 1
+			continue
+		var end := start + 1
+		while end < _queue.size() and _queue[end].isAlly:
+			end += 1
+		var allies := _queue.slice(start, end)
+		allies.sort_custom(func(a, b): return formation[a.uid] < formation[b.uid])
+		for i in range(allies.size()):
+			_queue[start + i] = allies[i]
+		start = end
 
 func _seek_actor() -> void:
 	# Even an invalid/control-only party can never recurse or block the UI.
@@ -440,7 +466,7 @@ func _end_round() -> void:
 			match status.id:
 				"burn":
 					if status.has("dotAttack"):
-						var amount := maxi(1, int(float(status.dotAttack) * dot_rule("burnAttackRatio", 0.18)))
+						var amount := maxi(1, int(float(status.dotAttack) * dot_rule("burnAttackRatio", 0.18) * burn_damage_multiplier(get_unit(str(status.get("sourceUid", ""))), unit)))
 						_status_damage(unit, amount, "burn", {"sourceUid":str(status.get("sourceUid", "")), "sourceName":str(status.get("sourceName", ""))})
 				"poison":
 					if not poison_done:
@@ -450,11 +476,15 @@ func _end_round() -> void:
 							var source_uid := str(total.sources[0].uid) if total.sources.size() == 1 else ""
 							_status_damage(unit, int(total.amount), "poison", {"sourceUid":source_uid, "dotSources":total.sources, "poisonStacks":int(total.stacks)})
 				"regen": _heal(unit, unit, maxi(1, int(unit.maxHp * 0.08)), "regen", false, "status")
-			if not status.id in CONTROL_STATUSES and not status.get("persistent",false): status.duration -= 1
-		_cleanup_statuses(unit)
 		if unit.currentHp > 0 and unit.passiveId == "tide_passive":
 			_heal(unit, unit, maxi(1, int(unit.maxHp * (0.06 if _c6(unit) else 0.03))), "tide_passive", false, "passive")
 		for sid in unit.cooldowns: unit.cooldowns[sid] = maxi(0, int(unit.cooldowns[sid]) - 1)
+
+	# Settle every source before expiring buffs: ally ordering must not change DOT amplification.
+	for unit in state.allies + state.enemies:
+		for status in unit.statuses:
+			if not status.id in CONTROL_STATUSES and not status.get("persistent", false): status.duration -= 1
+		_cleanup_statuses(unit)
 
 func _available(unit: Dictionary) -> Array:
 	var result: Array = []
@@ -471,6 +501,20 @@ func _available(unit: Dictionary) -> Array:
 	return result
 
 func _enemy_choice(unit: Dictionary, skills: Array) -> String:
+	if unit.get("aiPattern", "") in ["telegraphed", "low_hp_charge"] and unit.skills.size() >= 2:
+		var warning := str(unit.skills[0])
+		var heavy := str(unit.skills[1])
+		if unit.get("chargeReady", false) and skills.has(heavy):
+			unit.chargeReady = false
+			unit.chargeSpent = true
+			return heavy
+		var can_charge: bool = unit.aiPattern == "telegraphed" or (not unit.get("chargeSpent", false) and float(unit.currentHp) / unit.maxHp < 0.35)
+		if can_charge and skills.has(warning):
+			unit.chargeReady = true
+			return warning
+		# The third skill is the ordinary strike above the charge threshold.
+		if unit.skills.size() > 2 and skills.has(unit.skills[2]): return str(unit.skills[2])
+		if skills.has(warning): return warning
 	# Expedition enemies use their damaging cooldowns; story AI is preserved.
 	if _is_abyss and unit.aiPattern == "aggressive":
 		var best := ""
@@ -569,6 +613,13 @@ func _execute_skill(caster: Dictionary, sid: String, selected: String = "") -> v
 	if had_heal: _gain_owner_action_energy(caster, "energyOnActiveHeal")
 	if caster.id == "ayla" and _c6(caster) and had_heal:
 		for friend in _friends(caster): apply_status(friend, "regen", 1, null, caster)
+
+	if caster.get("id", "") == "selin" and kind == "ultimate":
+		# Native hits and C6 resolve before refreshing the team aura.
+		if _c6(caster):
+			for foe in _foes(caster): _extra_damage(caster, foe, 0.6, "fire", "selin_ult_c6")
+		for friend in _friends(caster):
+			if friend.uid != caster.uid: _refresh_combat_buff(friend, "ember_oath", 0.8, 2, caster)
 
 func action_energy_gain(caster: Dictionary, skill: Dictionary) -> int:
 	if not caster.get("isAlly", false) or skill.get("type", "") == "ultimate": return 0
@@ -723,22 +774,24 @@ func _damage(caster: Dictionary, target: Dictionary, skill: Dictionary, sid: Str
 func _owner_follow_up_multiplier(caster: Dictionary, target: Dictionary) -> float:
 	# Direct set damage bonuses also cover follow-up hits. Trigger processing still
 	# returns at the existing follow_up boundary, so these hits start no proc chains.
-	var status := 0.0
+	var status := _timed_status_value(caster, "ember_lantern_direct") if has_status(target, "burn") else 0.0
 	var speed := 0.0
 	for effect in caster.get("ownerEffects", []):
 		if effect.get("type", "") == "damageVsStatus" and has_status(target, str(effect.get("statusId", ""))): status += float(effect.get("value", 0.0))
 		elif effect.get("type", "") == "damageWhenFasterThanTarget" and effective_speed(caster) > effective_speed(target): speed += float(effect.get("value", 0.0))
-	return maxf(0.1, 1.0 + status) * maxf(0.1, 1.0 + speed)
+	return maxf(0.1, 1.0 + status) * maxf(0.1, 1.0 + speed) * (1.0 + _external_deepening(caster, target))
 
 func _damage_multiplier(caster: Dictionary, target: Dictionary, kind: String, include_taken: bool = true) -> float:
 	var result = 1.0
 	if caster.isAlly:
 		var key = {"normal": "normalDmgBonus", "skill": "skillDmgBonus", "ultimate": "ultDmgBonus"}.get(kind, "")
 		result *= 1.0 + float(caster.stats.get(key, 0.0))
-		if caster.passiveId == "kaldi_passive" and has_status(target, "burn"): result *= 1.2
-		if caster.passiveId == "cinder_passive" and kind in ["skill", "ultimate"] and has_status(target, "burn"): result *= 1.7 if _c6(caster) else 1.4
-		if caster.id == "bolt" and _c6(caster) and has_status(target, "electrify"): result *= 1.35
-	var buckets = {"status": 0.0, "type": 0.0, "typeStatus": 0.0, "shield": 0.0, "execute": 0.0, "speed": 0.0}
+		var deepening := _external_deepening(caster, target)
+		if caster.passiveId == "kaldi_passive" and has_status(target, "burn"): deepening += 0.2
+		if caster.passiveId == "cinder_passive" and kind in ["skill", "ultimate"] and has_status(target, "burn"): deepening += 0.7 if _c6(caster) else 0.4
+		if caster.id == "bolt" and _c6(caster) and has_status(target, "electrify"): deepening += 0.35
+		result *= 1.0 + deepening
+	var buckets = {"status": _timed_status_value(caster, "ember_lantern_direct") if has_status(target, "burn") else 0.0, "type": 0.0, "typeStatus": 0.0, "shield": 0.0, "execute": 0.0, "speed": 0.0}
 	for effect in _effects + caster.get("ownerEffects", []):
 		var value = float(effect.get("value", 0))
 		match effect.get("type", ""):
@@ -805,6 +858,9 @@ func apply_status(unit: Dictionary, status_id: String, duration: int, value = nu
 	if not STATUS_IDS.has(status_id) or duration <= 0 or unit.get("currentHp", 0) <= 0: return false
 	# Statuses are battle-local; snapshots never fall back to the victim's stats.
 	if status_id in ["burn", "poison"] and (caster.is_empty() or not caster.has("stats")):return false
+	if status_id == "burn" and caster.get("isAlly", false):
+		duration += int(_effect_sum("burnDurationAdd"))
+		if caster.get("id", "") == "selin" and _c6(caster): duration += 1
 	var dot_attack := _effective_atk(caster) if status_id in ["burn", "poison"] else 0
 	var existing: Dictionary = {}
 	if status_id != "poison":
@@ -999,3 +1055,51 @@ func _sync_equipment_shields() -> void:
 		for status in unit.statuses:
 			if status.get("source","") == "expedition_equipment" and status.duration > 0: total += int(status.get("shieldHp",0))
 	state.equipmentShieldRemaining = total
+
+# These named buffs refresh; blessing copies remain additive in _effects.
+func _refresh_combat_buff(unit: Dictionary, id: String, value: float, duration: int, source: Dictionary) -> void:
+	for status in unit.statuses:
+		if status.id == id:
+			status.duration = duration
+			status.value = value
+			status.sourceUid = source.uid
+			return
+	unit.statuses.append({"id":id,"duration":duration,"value":value,"stacks":1,"sourceUid":source.uid})
+	_emit("status", source, unit, duration, unit.name + " · " + {"ember_oath":"烬灯誓约","ember_lantern_burn":"织焰","ember_lantern_direct":"引火"}.get(id,id), {"status":id,"statusId":id,"duration":duration,"value":value})
+
+func _timed_status_value(unit: Dictionary, id: String) -> float:
+	var result := 0.0
+	for status in unit.get("statuses", []):
+		if status.get("id", "") == id and int(status.get("duration", 0)) > 0: result = maxf(result, float(status.get("value", 0)))
+	return result
+
+func _external_deepening(caster: Dictionary, target: Dictionary) -> float:
+	if caster.is_empty() or not caster.get("isAlly", false) or not has_status(target, "burn"): return 0.0
+	return _timed_status_value(caster, "ember_oath")
+
+func burn_damage_multiplier(caster: Dictionary, target: Dictionary) -> float:
+	if caster.is_empty() or not caster.get("isAlly", false): return 1.0
+	var amp := _effect_sum("burnDamageAmp") + _timed_status_value(caster, "ember_lantern_burn")
+	return maxf(0.0, 1.0 + amp) * (1.0 + _external_deepening(caster, target))
+
+func burn_remaining_turns(target: Dictionary) -> int:
+	var turns := 0
+	for status in target.get("statuses", []):
+		if status.get("id", "") == "burn": turns = maxi(turns, int(status.get("duration", 0)))
+	return turns
+
+func _after_active_action(caster: Dictionary) -> void:
+	if caster.get("passiveId", "") != "selin_passive" or int(caster.get("currentHp", 0)) <= 0: return
+	var detonated := false
+	for target in _foes(caster):
+		var turns := burn_remaining_turns(target)
+		if turns <= 0: continue
+		detonated = true
+		var amount := maxi(1, int(_effective_atk(caster) * (0.15 + 0.001 * turns) * burn_damage_multiplier(caster, target)))
+		# Status damage bypasses defence, crit and every on-hit/energy/lifesteal chain.
+		_status_damage(target, amount, "burn", {"sourceUid":caster.uid,"sourceName":caster.name,"skill_id":"selin_passive","detonation":true,"follow_up":true,"element":"fire"})
+	if detonated:
+		for effect in caster.get("ownerEffects", []):
+			if effect.get("type", "") != "onBurnDetonation": continue
+			for friend in _friends(caster): _refresh_combat_buff(friend, "ember_lantern_burn", float(effect.get("partyBurnAmp", 0.4)), 2, caster)
+			_refresh_combat_buff(caster, "ember_lantern_direct", float(effect.get("ownerDirectAmp", 0.25)), 2, caster)

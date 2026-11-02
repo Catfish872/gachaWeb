@@ -3,7 +3,7 @@
     "electrifySkipChance": 0.35,
     "burnAttackRatio": 0.18,
     "poisonAttackRatio": 0.02,
-    "poisonStackGrowth": 0.10
+    "poisonStackGrowth": 0.1
   },
   "AbyssData": {
     "resetDiamondCost": 100,
@@ -25,15 +25,22 @@
         "goblin",
         "fire_imp",
         "ice_wolf",
-        "dark_knight"
+        "thunder_hawk",
+        "ash_moth",
+        "lamp_wraith",
+        "furnace_guard",
+        "furnace_cantor",
+        "cracked_puppet"
       ],
       "elite": [
+        "dark_knight",
         "stone_golem",
-        "thunder_hawk"
+        "lamp_overseer"
       ],
       "boss": [
         "boss_flame_lord",
-        "boss_storm_witch"
+        "boss_storm_witch",
+        "boss_hedor"
       ]
     },
     "rogue": {
@@ -250,7 +257,13 @@
               "statusId": "burn",
               "value": 0.14
             }
-          ]
+          ],
+          "sharedPoolId": "fire_core",
+          "eligibleCharacters": [
+            "kaldi",
+            "selin"
+          ],
+          "iconPath": "res://assets/content_v270/blessings/fire_claw.png"
         },
         {
           "id": "kaldi_burn_spread_blue",
@@ -269,7 +282,13 @@
               "duration": 2,
               "chance": 0.35
             }
-          ]
+          ],
+          "sharedPoolId": "fire_core",
+          "eligibleCharacters": [
+            "kaldi",
+            "selin"
+          ],
+          "iconPath": "res://assets/content_v270/blessings/linked_lanterns.png"
         },
         {
           "id": "kaldi_ult_burn_blue",
@@ -328,97 +347,13 @@
               "statusId": "burn",
               "duration": 3
             }
-          ]
-        },
-        {
-          "id": "ayla_heal_amp_white",
-          "pool": "character",
-          "characterId": "ayla",
-          "rarity": "white",
-          "name": "霜语祷文",
-          "icon": "✨",
-          "target": "治疗构筑",
-          "description": "全队造成的治疗量提高 16%。",
-          "effects": [
-            {
-              "type": "healMult",
-              "value": 0.16
-            }
-          ]
-        },
-        {
-          "id": "ayla_regen_guard_blue",
-          "pool": "character",
-          "characterId": "ayla",
-          "rarity": "blue",
-          "name": "极光余辉",
-          "icon": "💚",
-          "target": "再生构筑",
-          "description": "处于再生的我方单位受到的直接伤害降低 15%。",
-          "effects": [
-            {
-              "type": "damageTakenWhileStatus",
-              "statusId": "regen",
-              "value": -0.15
-            }
-          ]
-        },
-        {
-          "id": "ayla_freeze_break_blue",
-          "pool": "character",
-          "characterId": "ayla",
-          "rarity": "blue",
-          "name": "碎冰棱镜",
-          "icon": "❄️",
-          "target": "冻结构筑",
-          "description": "全队攻击冰冻目标时，直接伤害提高 22%。",
-          "effects": [
-            {
-              "type": "damageVsStatus",
-              "statusId": "freeze",
-              "value": 0.22
-            }
-          ]
-        },
-        {
-          "id": "ayla_heal_regen_gold",
-          "pool": "character",
-          "characterId": "ayla",
-          "rarity": "gold",
-          "name": "圣女回声",
-          "icon": "🌌",
-          "target": "治疗构筑",
-          "description": "全队每次治疗后，为治疗目标附加 2 回合再生。",
-          "effects": [
-            {
-              "type": "statusAfterHeal",
-              "statusId": "regen",
-              "duration": 2
-            }
-          ]
-        },
-        {
-          "id": "ayla_open_freeze_gold",
-          "pool": "character",
-          "characterId": "ayla",
-          "rarity": "gold",
-          "name": "永霜帷幕",
-          "icon": "🧊",
-          "target": "控场构筑",
-          "description": "每场深渊战斗开始时，随机 1 名敌人冰冻 1 回合，全队攻击冻结目标时额外获得 15 点能量。",
-          "effects": [
-            {
-              "type": "enemyBattleStartStatus",
-              "statusId": "freeze",
-              "duration": 1,
-              "count": 1
-            },
-            {
-              "type": "energyOnHitStatus",
-              "statusId": "freeze",
-              "value": 15
-            }
-          ]
+          ],
+          "sharedPoolId": "fire_core",
+          "eligibleCharacters": [
+            "kaldi",
+            "selin"
+          ],
+          "iconPath": "res://assets/content_v270/blessings/ember_prism.png"
         },
         {
           "id": "common_vampiric_blue",
@@ -512,6 +447,178 @@
               "statusId": "electrify",
               "chance": 0.25,
               "duration": 2
+            }
+          ]
+        },
+        {
+          "id": "kaldi_ult_amp_white",
+          "pool": "character",
+          "characterId": "kaldi",
+          "eligibleCharacters": [
+            "kaldi"
+          ],
+          "rarity": "white",
+          "name": "引焰长歌",
+          "icon": "🔥",
+          "target": "终结技",
+          "description": "全队终结技伤害提高10%。",
+          "effects": [
+            {
+              "type": "skillTypeDamage",
+              "skillType": "ultimate",
+              "value": 0.1
+            }
+          ],
+          "iconPath": "res://assets/content_v270/blessings/dragon_scale.png"
+        },
+        {
+          "id": "selin_burn_duration_white",
+          "pool": "character",
+          "characterId": "selin",
+          "eligibleCharacters": [
+            "selin"
+          ],
+          "rarity": "white",
+          "name": "灯芯长明",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队施加的燃烧延长1回合。",
+          "effects": [
+            {
+              "type": "burnDurationAdd",
+              "value": 1
+            }
+          ],
+          "iconPath": "res://assets/content_v270/blessings/flame_blossom.png"
+        },
+        {
+          "id": "selin_burn_energy_blue",
+          "pool": "character",
+          "characterId": "selin",
+          "eligibleCharacters": [
+            "selin"
+          ],
+          "rarity": "blue",
+          "name": "焰流回环",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队每次命中燃烧目标，获得6点能量。",
+          "effects": [
+            {
+              "type": "energyOnHitStatus",
+              "statusId": "burn",
+              "value": 6
+            }
+          ],
+          "iconPath": "res://assets/content_v270/blessings/sheltered_ember.png"
+        },
+        {
+          "id": "selin_burn_amp_gold",
+          "pool": "character",
+          "characterId": "selin",
+          "eligibleCharacters": [
+            "selin"
+          ],
+          "rarity": "gold",
+          "name": "万灯续明",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队燃烧伤害提高25%。",
+          "effects": [
+            {
+              "type": "burnDamageAmp",
+              "value": 0.25
+            }
+          ],
+          "iconPath": "res://assets/content_v270/blessings/furnace_heart.png"
+        },
+        {
+          "id": "ayla_heal_amp_white",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "white",
+          "name": "霜语祷文",
+          "icon": "✨",
+          "target": "治疗构筑",
+          "description": "全队造成的治疗量提高 16%。",
+          "effects": [
+            {
+              "type": "healMult",
+              "value": 0.16
+            }
+          ]
+        },
+        {
+          "id": "ayla_regen_guard_blue",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "blue",
+          "name": "极光余辉",
+          "icon": "💚",
+          "target": "再生构筑",
+          "description": "处于再生的我方单位受到的直接伤害降低 15%。",
+          "effects": [
+            {
+              "type": "damageTakenWhileStatus",
+              "statusId": "regen",
+              "value": -0.15
+            }
+          ]
+        },
+        {
+          "id": "ayla_freeze_break_blue",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "blue",
+          "name": "碎冰棱镜",
+          "icon": "❄️",
+          "target": "冻结构筑",
+          "description": "全队攻击冰冻目标时，直接伤害提高 22%。",
+          "effects": [
+            {
+              "type": "damageVsStatus",
+              "statusId": "freeze",
+              "value": 0.22
+            }
+          ]
+        },
+        {
+          "id": "ayla_heal_regen_gold",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "gold",
+          "name": "圣女回声",
+          "icon": "🌌",
+          "target": "治疗构筑",
+          "description": "全队每次治疗后，为治疗目标附加 2 回合再生。",
+          "effects": [
+            {
+              "type": "statusAfterHeal",
+              "statusId": "regen",
+              "duration": 2
+            }
+          ]
+        },
+        {
+          "id": "ayla_open_freeze_gold",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "gold",
+          "name": "永霜帷幕",
+          "icon": "🧊",
+          "target": "控场构筑",
+          "description": "每场深渊战斗开始时，随机 1 名敌人冰冻 1 回合，全队攻击冻结目标时额外获得 15 点能量。",
+          "effects": [
+            {
+              "type": "enemyBattleStartStatus",
+              "statusId": "freeze",
+              "duration": 1,
+              "count": 1
+            },
+            {
+              "type": "energyOnHitStatus",
+              "statusId": "freeze",
+              "value": 15
             }
           ]
         }
@@ -1006,6 +1113,62 @@
           }
         ]
       }
+    },
+    "selin": {
+      "id": "selin",
+      "name": "烬灯·瑟琳",
+      "title": "长夜引灯人",
+      "rarity": 5,
+      "element": "fire",
+      "role": "support",
+      "baseStats": {
+        "hp": 1000,
+        "atk": 70,
+        "spd": 104,
+        "cri": 0.12,
+        "criDmg": 1.5,
+        "def": 80
+      },
+      "growthRate": {
+        "hp": 100,
+        "atk": 4,
+        "spd": 0,
+        "def": 4
+      },
+      "skills": [
+        "selin_normal",
+        "selin_skill",
+        "selin_ult"
+      ],
+      "passiveId": "selin_passive",
+      "passiveDesc": "行动结束时，引爆所有燃烧目标：造成攻击力15%＋每剩余燃烧回合0.1%的燃烧伤害。",
+      "synergyIds": [
+        "fire_duo"
+      ],
+      "description": "沿着熄灭的灯渠寻找失落火种的引灯人，以铜灯与焰丝为同行者照亮归途。",
+      "flavorText": "「把火留给前行的人。」",
+      "color": "#edaa60",
+      "colorDark": "#592d32",
+      "image": "assets/content_v270/characters/selin.png",
+      "relicObjective": {
+        "type": "damage",
+        "label": "燃烧协同",
+        "referenceStatuses": [
+          "burn"
+        ],
+        "teamBurnReference": 0.72,
+        "recommendedSets": [
+          {
+            "setId": "ember_lantern",
+            "reason": "每次引爆都能维持全队燃烧增伤，同时提高自身直伤与追击。"
+          },
+          {
+            "setId": "flame_oath",
+            "reason": "稳定提高攻击与燃烧目标伤害。"
+          }
+        ]
+      },
+      "portrait": "assets/content_v270/portraits/selin_face.png"
     }
   },
   "ElementNames": {
@@ -1191,6 +1354,14 @@
       "buff": {
         "c6_type": "passive_enhance",
         "c6_burnBonus": 0.7
+      }
+    },
+    "selin": {
+      "label": "长夜万灯",
+      "desc": "终结技追加一次攻击力60%的全体火属性伤害；自身施加的燃烧延长1回合。",
+      "buff": {
+        "c6_type": "selin_lantern",
+        "c6_bonus": 0.6
       }
     }
   },
@@ -2025,6 +2196,309 @@
         "text": "火与冰的羁绊在此铸就——旅行者的故事，才刚刚开始……",
         "portrait": null
       }
+    ],
+    "ch3_1_pre": [
+      {
+        "speaker": "narrator",
+        "text": "风雪退去，旧驿站的铜铃露出冰面。铃下，是一条仍有余温的灯渠。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这枚铭牌……「炎脉不灭」。和荒原找到的一样。",
+        "portrait": null,
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "selin",
+        "text": "别碰灯芯。火还在，路却认不得人了。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "那就让它认认我的火。",
+        "portrait": "kaldi"
+      },
+      {
+        "speaker": "selin",
+        "text": "先把蛾群引开。这里还有人在等天亮。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_1_post": [
+      {
+        "speaker": "selin",
+        "text": "我是瑟琳，守灯人。北边的风雪停了，炉心却开始向外抽火。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "ayla",
+        "text": "所以镇上的灯才一盏盏灭掉？",
+        "portrait": "ayla"
+      },
+      {
+        "speaker": "selin",
+        "text": "是。愿意搭把手的话，沿这条渠走。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_2_pre": [
+      {
+        "speaker": "narrator",
+        "text": "灯油沿坡向上流动。游魂抱着空灯，挡在渠口。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "它们把最后一点光都护住了。先拆掉那层灯幕。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_2_post": [
+      {
+        "speaker": "traveler",
+        "text": "铭牌的纹路，能接上渠边的刻痕。",
+        "portrait": null,
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "selin",
+        "text": "这是旧火路的通行牌。原来它还没有被遗忘。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_3_pre": [
+      {
+        "speaker": "narrator",
+        "text": "灰桥另一侧，鸣炉声唤醒了沉睡的铜甲。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "重锤举起时，别硬接。先打断后面的鸣炉侍。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "看明白了。我们开路，你护灯。",
+        "portrait": "kaldi"
+      }
+    ],
+    "ch3_3_post": [
+      {
+        "speaker": "selin",
+        "text": "守灯人不是替火找主人。是替走夜路的人，留一个方向。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那就一起走到路的尽头。",
+        "portrait": null,
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch3_4_pre": [
+      {
+        "speaker": "narrator",
+        "text": "小镇没有灯，也没有炊烟。监工把街角最后一盏灯锁在掌中。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "灯是留给人的。把它还回来。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_4_post": [
+      {
+        "speaker": "narrator",
+        "text": "幕间 · 借一束火",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "链灯落在窗沿。瑟琳从自己的灯芯分出细小的火，挨家点亮旧灯。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "你的灯暗了。",
+        "portrait": "ayla"
+      },
+      {
+        "speaker": "selin",
+        "text": "借出去的光，会照着人回来。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "那我的也借你一点。不是龙的契约，就是一束火。",
+        "portrait": "kaldi"
+      },
+      {
+        "speaker": "selin",
+        "text": "好。等炉心重新亮起，我请大家喝热汤。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_5_pre": [
+      {
+        "speaker": "narrator",
+        "text": "铜墙上映着无数旧名字。炉甲不再辨认守灯人的徽记。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "裂炉傀儡快撑不住了。听到警鸣，就先让它停下来。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_5_post": [
+      {
+        "speaker": "traveler",
+        "text": "赫铎的名字，刻在最早的一排。",
+        "portrait": null,
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "selin",
+        "text": "第一位司炉者。后来他把身体留在炉里，让灯路再也不用熄灭。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_6_pre": [
+      {
+        "speaker": "narrator",
+        "text": "引火井倒悬在穹顶。火丝像雨一样向上升起。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "他仍在供火吗？",
+        "portrait": "ayla"
+      },
+      {
+        "speaker": "selin",
+        "text": "不。他在收回所有火，想把早已逝去的人再照亮一次。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_6_post": [
+      {
+        "speaker": "narrator",
+        "text": "铭牌嵌入井沿，封闭的火路重新贯通。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "「炎脉不灭」，不是说谁都不能离开。",
+        "portrait": null,
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "selin",
+        "text": "是说，总会有人接着点灯。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_7_pre": [
+      {
+        "speaker": "narrator",
+        "text": "最后一座灯塔，只剩侧炉还在搏动。监工守着通往炉心的锁门。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "侧炉还在供给它力量。先灭侧灯，再开门。",
+        "portrait": "selin"
+      }
+    ],
+    "ch3_7_post": [
+      {
+        "speaker": "narrator",
+        "text": "幕间 · 留下的灯",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "这是老师留给我的灯。他说，别为了守住一盏灯，让整座城的人困在黑夜里。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "那就走吧。不是去熄火，是去让火回到该在的地方。",
+        "portrait": "kaldi"
+      },
+      {
+        "speaker": "narrator",
+        "text": "瑟琳把旧灯留在门边。它照着来路，也照着归路。",
+        "portrait": null
+      }
+    ],
+    "ch3_8_pre": [
+      {
+        "speaker": "narrator",
+        "text": "炉心之上，青铜巨像缓缓转身。无数细灯被吸向胸口的空洞。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "「归火……所有人……归来……」",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "赫铎，外面的人还在等。让灯路走下去吧。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们会带她回来，也会带光回来。",
+        "portrait": null,
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch3_8_post": [
+      {
+        "speaker": "narrator",
+        "text": "失序的炉轮停下。巨像没有倒塌，只把双手缓缓松开。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "看，火自己知道路。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "narrator",
+        "text": "灯渠一段段亮起，光越过灰桥，回到每一扇窗前。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "你的灯又亮了。",
+        "portrait": "ayla"
+      },
+      {
+        "speaker": "selin",
+        "text": "这次，是大家借给我的。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "热汤的约定，可别忘了。",
+        "portrait": "kaldi"
+      },
+      {
+        "speaker": "selin",
+        "text": "不会。下次走夜路，就叫上我。",
+        "portrait": "selin"
+      },
+      {
+        "speaker": "narrator",
+        "text": "炉门外，一条尚未踏足的灯路，正朝更远的群山延伸。",
+        "portrait": null
+      }
     ]
   },
   "EnemyData": {
@@ -2192,7 +2666,8 @@
         ],
         "exp": 25
       },
-      "color": "#93c5fd"
+      "color": "#93c5fd",
+      "abyssMinFloor": 4
     },
     "thunder_hawk": {
       "id": "thunder_hawk",
@@ -2218,7 +2693,8 @@
         ],
         "exp": 28
       },
-      "color": "#fde047"
+      "color": "#fde047",
+      "abyssMinFloor": 4
     },
     "dark_knight": {
       "id": "dark_knight",
@@ -2280,6 +2756,279 @@
       },
       "color": "#a855f7",
       "isBoss": true
+    },
+    "ash_moth": {
+      "id": "ash_moth",
+      "name": "灰翅蛾群",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 1100,
+        "atk": 115,
+        "def": 35,
+        "spd": 108
+      },
+      "skills": [
+        "ash_moth_dust"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/ash_moth.png",
+      "abyssBaseStats": {
+        "hp": 360,
+        "atk": 60,
+        "def": 20,
+        "spd": 100
+      }
+    },
+    "lamp_wraith": {
+      "id": "lamp_wraith",
+      "name": "夺灯游魂",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 1500,
+        "atk": 105,
+        "def": 50,
+        "spd": 100
+      },
+      "skills": [
+        "lamp_wraith_veil",
+        "lamp_wraith_touch"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/lamp_wraith.png",
+      "abyssBaseStats": {
+        "hp": 400,
+        "atk": 55,
+        "def": 30,
+        "spd": 90
+      },
+      "abyssMinFloor": 4
+    },
+    "furnace_guard": {
+      "id": "furnace_guard",
+      "name": "炉甲卫",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 2100,
+        "atk": 150,
+        "def": 105,
+        "spd": 76
+      },
+      "skills": [
+        "furnace_guard_warn",
+        "furnace_guard_heavy"
+      ],
+      "aiPattern": "telegraphed",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/furnace_guard.png",
+      "abyssBaseStats": {
+        "hp": 500,
+        "atk": 60,
+        "def": 60,
+        "spd": 75
+      },
+      "abyssMinFloor": 4
+    },
+    "furnace_cantor": {
+      "id": "furnace_cantor",
+      "name": "鸣炉侍",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 1500,
+        "atk": 115,
+        "def": 55,
+        "spd": 110
+      },
+      "skills": [
+        "furnace_cantor_hymn",
+        "furnace_cantor_strike"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/furnace_cantor.png",
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 50,
+        "def": 25,
+        "spd": 95
+      },
+      "abyssMinFloor": 4
+    },
+    "cracked_puppet": {
+      "id": "cracked_puppet",
+      "name": "裂炉傀儡",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 1700,
+        "atk": 140,
+        "def": 60,
+        "spd": 85
+      },
+      "skills": [
+        "cracked_puppet_warn",
+        "cracked_puppet_burst",
+        "cracked_puppet_hit"
+      ],
+      "aiPattern": "low_hp_charge",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/cracked_puppet.png",
+      "abyssBaseStats": {
+        "hp": 430,
+        "atk": 55,
+        "def": 35,
+        "spd": 85
+      },
+      "abyssMinFloor": 4
+    },
+    "lamp_overseer": {
+      "id": "lamp_overseer",
+      "name": "缚灯监工",
+      "icon": "✦",
+      "type": "elite",
+      "element": "fire",
+      "baseStats": {
+        "hp": 6200,
+        "atk": 210,
+        "def": 105,
+        "spd": 102
+      },
+      "skills": [
+        "lamp_overseer_chain",
+        "lamp_overseer_sweep"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/lamp_overseer.png",
+      "abyssBaseStats": {
+        "hp": 1000,
+        "atk": 78,
+        "def": 90,
+        "spd": 80
+      }
+    },
+    "boss_hedor": {
+      "id": "boss_hedor",
+      "name": "失序司炉者·赫铎",
+      "icon": "✦",
+      "type": "boss",
+      "element": "fire",
+      "baseStats": {
+        "hp": 16000,
+        "atk": 235,
+        "def": 130,
+        "spd": 100
+      },
+      "skills": [
+        "hedor_hammer",
+        "hedor_embers"
+      ],
+      "aiPattern": "boss",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/boss_hedor.png",
+      "isBoss": true,
+      "phaseThreshold": 0.5,
+      "phase2Skills": [
+        "hedor_core",
+        "hedor_chain"
+      ],
+      "abyssBaseStats": {
+        "hp": 4500,
+        "atk": 125,
+        "def": 60,
+        "spd": 95
+      }
+    },
+    "furnace_lamp": {
+      "id": "furnace_lamp",
+      "name": "侧炉灯",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 2800,
+        "atk": 30,
+        "def": 55,
+        "spd": 90
+      },
+      "skills": [
+        "furnace_lamp_feed"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/furnace_lamp.png",
+      "abyssBaseStats": {
+        "hp": 425,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      }
     }
   },
   "EnemySkillData": {
@@ -2546,12 +3295,253 @@
           "value": 0.3
         }
       ]
+    },
+    "ash_moth_dust": {
+      "name": "灰烬扑翼",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 0.8,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "lamp_wraith_veil": {
+      "name": "借灯成幕",
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "shield",
+          "value": 0.12,
+          "duration": 2
+        }
+      ],
+      "cooldown": 2,
+      "animation": "fireball"
+    },
+    "lamp_wraith_touch": {
+      "name": "夺灯",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.1,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "furnace_guard_warn": {
+      "name": "炉锤蓄势",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "atk_up",
+          "value": 0.15,
+          "duration": 2
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "furnace_guard_heavy": {
+      "name": "铜炉重击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 2.4,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "furnace_cantor_hymn": {
+      "name": "鸣炉长歌",
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "atk_up",
+          "value": 0.2,
+          "duration": 2
+        }
+      ],
+      "cooldown": 3,
+      "animation": "fireball"
+    },
+    "furnace_cantor_strike": {
+      "name": "叩炉",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "cracked_puppet_warn": {
+      "name": "裂炉警鸣",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "atk_up",
+          "value": 0.15,
+          "duration": 2
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "cracked_puppet_burst": {
+      "name": "裂炉迸发",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 2,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "cracked_puppet_hit": {
+      "name": "裂壳撞击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.1,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "lamp_overseer_chain": {
+      "name": "缚灯锁链",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.4,
+          "element": "fire"
+        },
+        {
+          "type": "status",
+          "target": "single_enemy",
+          "statusId": "spd_down",
+          "value": 0.2,
+          "duration": 2
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "lamp_overseer_sweep": {
+      "name": "灰桥扫荡",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.1,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "hedor_hammer": {
+      "name": "司炉重锤",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.7,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "hedor_embers": {
+      "name": "倒流炉火",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 0.9,
+          "element": "fire"
+        },
+        {
+          "type": "status",
+          "target": "all",
+          "statusId": "burn",
+          "value": 0,
+          "duration": 2
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "hedor_core": {
+      "name": "炉心失序",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.6,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "hedor_chain": {
+      "name": "焰链审判",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 2.1,
+          "element": "fire"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "furnace_lamp_feed": {
+      "name": "侧炉供火",
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "atk_up",
+          "value": 0.15,
+          "duration": 1
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
     }
   },
   "GachaPoolData": {
     "activePools": [
       "standard",
-      "limited_kaldi"
+      "limited_kaldi",
+      "limited_selin"
     ],
     "pools": {
       "standard": {
@@ -2655,6 +3645,58 @@
         "color": "#dc2626",
         "gradientFrom": "#450a0a",
         "gradientTo": "#7f1d1d"
+      },
+      "limited_selin": {
+        "id": "limited_selin",
+        "name": "烬夜有灯",
+        "subtitle": "限定祈愿 · 烬灯·瑟琳",
+        "type": "limited",
+        "banner": "✦",
+        "costPerPull": 160,
+        "currency": "diamonds",
+        "description": "烬灯·瑟琳概率提升，五星75%为当期角色；歪后下次必出。",
+        "endTime": null,
+        "rates": {
+          "3": 0.834,
+          "4": 0.15,
+          "5": 0.016
+        },
+        "pity": {
+          "soft": 73,
+          "hard": 90,
+          "softIncrease": 0.06
+        },
+        "guaranteedFeatured": true,
+        "featuredRate5": 0.75,
+        "featuredRate4": 0.5,
+        "featured5": [
+          "selin"
+        ],
+        "pool5": [
+          "selin",
+          "kaldi",
+          "ayla"
+        ],
+        "featured4": [
+          "gus",
+          "shana"
+        ],
+        "pool4": [
+          "gus",
+          "shana",
+          "lorin"
+        ],
+        "pool3": [
+          "ember",
+          "zeph",
+          "bolt",
+          "tide",
+          "cinder"
+        ],
+        "color": "#f3b267",
+        "gradientFrom": "#211825",
+        "gradientTo": "#6b322b",
+        "excludeFeaturedFromOffBanner": true
       }
     }
   },
@@ -3073,6 +4115,43 @@
         }
       ],
       "color": "#90b9e8"
+    },
+    "ember_lantern": {
+      "id": "ember_lantern",
+      "name": "烬灯织誓",
+      "theme": "烬灯",
+      "color": "#edaa60",
+      "slotIcons": {
+        "helmet": "res://assets/content_v270/relics/ember_lantern_helmet.png",
+        "chest": "res://assets/content_v270/relics/ember_lantern_chest.png",
+        "belt": "res://assets/content_v270/relics/ember_lantern_belt.png",
+        "boots": "res://assets/content_v270/relics/ember_lantern_boots.png",
+        "necklace": "res://assets/content_v270/relics/ember_lantern_necklace.png"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "攻击力提高12%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "主动引爆燃烧后，全队燃烧伤害提高40%；佩戴者对燃烧目标的直伤与追击提高25%，持续2回合。",
+          "effects": [
+            {
+              "type": "onBurnDetonation",
+              "partyBurnAmp": 0.4,
+              "ownerDirectAmp": 0.25
+            }
+          ]
+        }
+      ]
     }
   },
   "ShopData": {
@@ -3934,6 +5013,88 @@
         }
       ],
       "animation": "mega_fire"
+    },
+    "selin_normal": {
+      "id": "selin_normal",
+      "name": "挑灯引火",
+      "icon": "🔥",
+      "iconPath": "res://assets/content_v270/skills/selin_normal.png",
+      "type": "normal",
+      "element": "fire",
+      "cooldown": 0,
+      "energyGain": 25,
+      "animation": "slash",
+      "description": "对单体敌人造成攻击力162%的火属性伤害，附加1回合燃烧。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.62,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "target": "single",
+          "statusId": "burn",
+          "duration": 1,
+          "chance": 1
+        }
+      ]
+    },
+    "selin_skill": {
+      "id": "selin_skill",
+      "name": "织焰成途",
+      "icon": "🔥",
+      "iconPath": "res://assets/content_v270/skills/selin_skill.png",
+      "type": "skill",
+      "element": "fire",
+      "cooldown": 3,
+      "energyGain": 75,
+      "animation": "explosion",
+      "description": "对全体敌人造成攻击力117%的火属性伤害，附加2回合燃烧。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 1.17,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "burn",
+          "duration": 2,
+          "chance": 1
+        }
+      ]
+    },
+    "selin_ult": {
+      "id": "selin_ult",
+      "name": "万灯归烬",
+      "icon": "🔥",
+      "iconPath": "res://assets/content_v270/skills/selin_ultimate.png",
+      "type": "ultimate",
+      "element": "fire",
+      "cooldown": 0,
+      "energyGain": 0,
+      "animation": "mega_fire",
+      "description": "对全体敌人造成攻击力252%的火属性伤害，附加3回合燃烧。其他队员对燃烧目标伤害加深80%，持续2回合。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 2.52,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "burn",
+          "duration": 3,
+          "chance": 1
+        }
+      ],
+      "energyCost": 100
     }
   },
   "StageData": {
@@ -4184,6 +5345,236 @@
               "diamonds": 80
             },
             "isBoss": true
+          }
+        ]
+      },
+      {
+        "id": "ch3",
+        "name": "第三章：余烬灯途",
+        "description": "循着雪下的旧灯路，穿过熄灯小镇，走向失序炉心。",
+        "unlocked": false,
+        "unlockCondition": "ch2_5",
+        "stages": [
+          {
+            "id": "ch3_1",
+            "name": "3-1 雪尽旧驿",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "ash_moth",
+                  "ash_moth"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v270/backgrounds/snow_inn.png",
+            "rewards": {
+              "gold": [
+                98,
+                138
+              ],
+              "exp": 110
+            },
+            "firstClearRewards": {
+              "diamonds": 60
+            }
+          },
+          {
+            "id": "ch3_2",
+            "name": "3-2 逆流灯渠",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "lamp_wraith",
+                  "ash_moth"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v270/backgrounds/ash_bridge.png",
+            "rewards": {
+              "gold": [
+                106,
+                146
+              ],
+              "exp": 130
+            },
+            "firstClearRewards": {
+              "diamonds": 60
+            }
+          },
+          {
+            "id": "ch3_3",
+            "name": "3-3 灰桥截路",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "furnace_guard",
+                  "furnace_cantor"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v270/backgrounds/ash_bridge.png",
+            "rewards": {
+              "gold": [
+                114,
+                154
+              ],
+              "exp": 150
+            },
+            "firstClearRewards": {
+              "diamonds": 60
+            }
+          },
+          {
+            "id": "ch3_4",
+            "name": "3-4 无灯小镇",
+            "staminaCost": 12,
+            "waves": [
+              {
+                "enemies": [
+                  "lamp_overseer",
+                  "lamp_wraith"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v270/backgrounds/unlit_town.png",
+            "rewards": {
+              "gold": [
+                122,
+                162
+              ],
+              "exp": 170
+            },
+            "firstClearRewards": {
+              "diamonds": 140
+            },
+            "isElite": true,
+            "firstClearRewardLabel": "幕间 · 借一束火",
+            "firstClearRelic": {
+              "rarity": 5,
+              "slotId": "helmet",
+              "setId": "ember_lantern"
+            }
+          },
+          {
+            "id": "ch3_5",
+            "name": "3-5 铜火回廊",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "cracked_puppet",
+                  "furnace_guard"
+                ]
+              },
+              {
+                "enemies": [
+                  "furnace_cantor",
+                  "ash_moth"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v270/backgrounds/copper_gallery.png",
+            "rewards": {
+              "gold": [
+                130,
+                170
+              ],
+              "exp": 190
+            },
+            "firstClearRewards": {
+              "diamonds": 60
+            }
+          },
+          {
+            "id": "ch3_6",
+            "name": "3-6 倒悬引火井",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "lamp_wraith",
+                  "cracked_puppet"
+                ]
+              },
+              {
+                "enemies": [
+                  "furnace_guard",
+                  "furnace_cantor"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v270/backgrounds/inverted_well.png",
+            "rewards": {
+              "gold": [
+                138,
+                178
+              ],
+              "exp": 210
+            },
+            "firstClearRewards": {
+              "diamonds": 60
+            }
+          },
+          {
+            "id": "ch3_7",
+            "name": "3-7 最后一座灯塔",
+            "staminaCost": 12,
+            "waves": [
+              {
+                "enemies": [
+                  "lamp_overseer",
+                  "furnace_lamp"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v270/backgrounds/copper_gallery.png",
+            "rewards": {
+              "gold": [
+                146,
+                186
+              ],
+              "exp": 230
+            },
+            "firstClearRewards": {
+              "diamonds": 140
+            },
+            "isElite": true,
+            "firstClearRewardLabel": "幕间 · 留下的灯"
+          },
+          {
+            "id": "ch3_8",
+            "name": "3-8 炉心归火",
+            "staminaCost": 12,
+            "waves": [
+              {
+                "enemies": [
+                  "boss_hedor",
+                  "furnace_lamp",
+                  "furnace_lamp"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v270/backgrounds/furnace_core.png",
+            "rewards": {
+              "gold": [
+                154,
+                194
+              ],
+              "exp": 250
+            },
+            "firstClearRewards": {
+              "diamonds": 220
+            },
+            "isBoss": true,
+            "firstClearRewardLabel": "余烬灯途 · 完章",
+            "firstClearRelic": {
+              "rarity": 5,
+              "slotId": "necklace",
+              "setId": "ember_lantern"
+            }
           }
         ]
       }

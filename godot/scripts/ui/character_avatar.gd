@@ -29,6 +29,7 @@ const BUST_REGIONS := {
 static var _cache: Dictionary = {}
 
 static func source_path(id: String) -> String:
+	if id == "selin":return "res://assets/content_v270/characters/selin.png"
 	return "res://assets/characters/%s.png" % ("kaldi-battle" if id == "kaldi" else id)
 
 static func region_for(id: String, mode: String = "face") -> Rect2:
@@ -36,6 +37,9 @@ static func region_for(id: String, mode: String = "face") -> Rect2:
 	return regions.get(id, Rect2())
 
 static func get_texture(id: String, mode: String = "face") -> Texture2D:
+	if id == "selin":
+		var path := "res://assets/content_v270/portraits/selin_face.png" if mode == "face" else "res://assets/content_v270/characters/selin.png"
+		return load(path) if ResourceLoader.exists(path) else null
 	if not FACE_REGIONS.has(id): return null
 	var key := id + ":" + ("bust" if mode == "bust" else "face")
 	if _cache.has(key): return _cache[key]

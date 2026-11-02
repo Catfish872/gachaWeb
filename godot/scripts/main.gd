@@ -19,14 +19,14 @@ const BattleFX = preload("res://scripts/ui/battle_fx.gd")
 const AbyssView = preload("res://scripts/ui/abyss_view.gd")
 const ExtractionView = preload("res://scripts/ui/extraction_view.gd")
 const UpdateChecker = preload("res://scripts/update_checker.gd")
-const STATUS_NAMES := {"burn": "燃烧", "freeze": "冰冻", "shock": "感电", "electrify": "感电", "poison": "中毒", "regen": "再生", "def_up": "防御提升", "atk_up": "攻击提升", "spd_up": "速度提升", "def_down": "防御降低", "atk_down": "攻击降低", "spd_down": "减速", "taunt": "嘲讽", "shield": "护盾", "bleed": "流血", "stun": "眩晕", "vulnerable": "易伤", "invincible": "无敌"}
+const STATUS_NAMES := {"ember_oath":"烬灯誓约", "ember_lantern_burn":"织焰", "ember_lantern_direct":"引火", "burn": "燃烧", "freeze": "冰冻", "shock": "感电", "electrify": "感电", "poison": "中毒", "regen": "再生", "def_up": "防御提升", "atk_up": "攻击提升", "spd_up": "速度提升", "def_down": "防御降低", "atk_down": "攻击降低", "spd_down": "减速", "taunt": "嘲讽", "shield": "护盾", "bleed": "流血", "stun": "眩晕", "vulnerable": "易伤", "invincible": "无敌"}
 const TABS := [["home", "旅者营地", "01"], ["story", "世界探索", "02"], ["summon", "星辰祈愿", "03"], ["party", "冒险编队", "04"], ["growth", "角色养成", "05"], ["relics", "遗物工坊", "06"], ["abyss", "深渊远征", "07"], ["extraction", "遗境搜打撤", "08"], ["shop", "补给商店", "09"], ["save", "旅程档案", "10"]]
 
 var model
 var battle
 var current_screen := "home"
 var selected_character := "kaldi"
-var selected_pool := "limited_kaldi"
+var selected_pool := "limited_selin"
 var selected_chapter := 0
 var selected_stage_id := ""
 var story_list_positions: Dictionary = {}
@@ -534,6 +534,10 @@ func navigate(screen: String, record_history: bool = true) -> void:
 	main_body.get_parent().set_deferred("scroll_vertical", 0)
 
 func _background_path() -> String:
+	if current_screen == "battle" and battle_config.has("background"):
+		return str(battle_config.background)
+	if current_screen == "story" and selected_chapter == 2:
+		return str(model.get_stage(selected_stage_id).get("background", "res://assets/content_v270/backgrounds/snow_inn.png"))
 	if current_screen in ["abyss", "extraction"] or (current_screen == "battle" and (battle_config.get("isAbyss", false) or battle_config.get("isExtraction", false))):
 		return "res://assets/backgrounds/abyss.png"
 	if current_screen in ["story", "battle"]:
@@ -644,7 +648,7 @@ func _story() -> void:
 		var chapter_button:=_button(tabs,str(chapters[i].name),func():_select_story_chapter(i),selected_chapter==i)
 		chapter_button.name="StoryChapter_"+str(i)
 		var chapter_open:bool=bool(chapters[i].get("unlocked",false)) or bool(model.state.stageProgress.get(chapters[i].get("unlockCondition",""),{}).get("cleared",false))
-		_button_icon(chapter_button,("fire" if i==0 else "ice") if chapter_open else "lock",selected_chapter==i)
+		_button_icon(chapter_button,("ice" if i==1 else "fire") if chapter_open else "lock",selected_chapter==i)
 	var row := _responsive_box(main_body,compact,16)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var stages_panel := _panel(row,LINE,10)
@@ -680,7 +684,7 @@ func _story() -> void:
 	preview.size_flags_stretch_ratio=1.15
 	var pv:=_vbox(preview,8)
 	var selected:Dictionary=stage_map.get(selected_stage_id,chapter.stages[0])
-	var banner:=_scene_panel(pv,_background_path(),110)
+	var banner:=_scene_panel(pv,str(selected.get("background", _background_path())),110)
 	banner.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	_label(pv,str(selected.name),25,TEXT,true)
 	var description:=_label(pv,str(chapter.description),14,MUTED,true)
@@ -691,9 +695,15 @@ func _story() -> void:
 			var enemy_name:String=str(model.catalog.EnemyData.get(enemy_id,{}).get("name",enemy_id))
 			if enemy_name not in names:names.append(enemy_name)
 	var tags:=_flow(pv,6)
-	for name in names:
-		var chip:=_panel(tags,RED.darkened(0.65),5)
-		_label(chip,str(name),12,MUTED)
+	var enemy_seen: Array = []
+	for wave in selected.get("waves", []):
+		for enemy_id in wave.get("enemies", []):
+			if enemy_id in enemy_seen:continue
+			enemy_seen.append(enemy_id)
+			var chip:=_hbox(_panel(tags,RED.darkened(0.65),5),5)
+			var enemy_art:=_portrait(chip,str(enemy_id),32,false,true)
+			enemy_art.custom_minimum_size.x=32;enemy_art.size_flags_horizontal=Control.SIZE_FILL
+			_label(chip,str(model.catalog.EnemyData[enemy_id].name),12,MUTED)
 	var info:=_hbox(pv,8)
 	_story_chip(info,"energy","体力",str(int(selected.get("staminaCost",6))),CYAN)
 	_story_chip(info,"sword","敌群","%d 波" % selected.get("waves",[]).size(),MUTED)
@@ -748,17 +758,17 @@ func _summon() -> void:
 		tab.name="SummonPool_"+str(id)
 	_tool_button(nav,"book","概率与规则",_pool_details).name="SummonRules"
 	var pool:Dictionary=pools[selected_pool]
-	var featured:String="kaldi" if selected_pool=="limited_kaldi" else "ayla"
+	var featured:String=str(pool.featured5[0]) if pool.type=="limited" else "ayla"
 	var row:=_responsive_box(main_body,compact,16)
 	row.size_flags_vertical=Control.SIZE_EXPAND_FILL
-	var background:="res://assets/backgrounds/summon_sanctum.png"
+	var background:="res://assets/content_v270/banner/selin_banner.png" if featured=="selin" else "res://assets/backgrounds/summon_sanctum.png"
 	if not ResourceLoader.exists(background):background=""
 	var stage:=_portrait_environment(row,featured,330,background)
 	stage.size_flags_stretch_ratio=1.6
 	stage.name="SummonStage"
 	var banner:=_vbox(stage,8);banner.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
 	banner.offset_left=22;banner.offset_top=20;banner.offset_right=-22
-	_label(banner,"UP · 限定旅者" if selected_pool=="limited_kaldi" else "常驻祈愿 · 群星相逢",13,GOLD)
+	_label(banner,"UP · 限定旅者" if pool.type=="limited" else "常驻祈愿 · 群星相逢",13,GOLD)
 	_label(banner,_char_name(featured),25,TEXT)
 	_label(banner,"★★★★★",16,GOLD)
 	_ignore_children(banner)
@@ -778,6 +788,13 @@ func _summon() -> void:
 	_progress(info,count,pool.pity.hard,GOLD,6)
 	_label(info,"当前五星概率 %.2f%%" % (float(model.pity_info(selected_pool).get("rate5",.016))*100.0),12,CYAN)
 	_label(info,"下次五星必为限定角色" if pity.get("guaranteedFeatured",false) else "每十次至少获得四星旅者",13,MUTED,true)
+	if featured == "selin":
+		var trial := _button(side,"借火同行 · 角色试用",func():
+			var result: Dictionary = model.prepare_selin_trial()
+			if _check(result):_start_battle(result.config))
+		trial.name = "SelinTrial"
+		_button_icon(trial,"sword")
+		_label(side,"首通 160 星尘晶" if not model.state.stageProgress.get("trial_selin",{}).get("cleared",false) else "已领取首通奖励 · 可再次体验",13,CYAN)
 	var gap:=Control.new();gap.size_flags_vertical=Control.SIZE_EXPAND_FILL;side.add_child(gap)
 	var current:=_hbox(side,6);_rune_icon(current,"gem",21)
 	_label(current,"持有 %d" % int(model.state.resources.get(pool.currency,0)),14,CYAN)
@@ -832,7 +849,7 @@ func _summon_character_preview(id:String,back:Callable=Callable()) -> void:
 	_label(copy,"已加入收藏" if model.state.ownedCharacters.has(id) else "尚未获得",14,CYAN)
 	for sid in data.get("skills",[]):
 		var skill:Dictionary=model.catalog.SkillData.get(sid,{})
-		var heading:=_hbox(copy,6);_rune_icon(heading,RuneTheme.effect_key(skill),22)
+		var heading:=_hbox(copy,6);_skill_art_icon(heading,skill,22)
 		_label(heading,str(skill.get("name",sid)),16,TEXT)
 		_label(copy,str(skill.get("description","")),12,MUTED,true)
 	var close:=_button(_modal_footer(box),"返回",func():
@@ -997,7 +1014,7 @@ func _growth() -> void:
 				var skill:Dictionary=model.catalog.SkillData[sid]
 				var cell:=_panel(body,_element_color(data.element).darkened(0.5),10);var cv:=_vbox(cell,5)
 				var heading:=_hbox(cv,8)
-				_rune_icon(heading,{"normal":"sword","skill":"energy" if data.element=="thunder" else str(data.element),"ultimate":"burst"}.get(skill.type,"star"),26,_element_color(data.element))
+				_skill_art_icon(heading,skill,26)
 				_label(heading,skill.name,20,TEXT)
 				_label(heading,{"normal":"普通攻击","skill":"战技","ultimate":"终结技"}.get(skill.type,"技能"),12,CYAN)
 				_label(cv,skill.description,14,MUTED,true)
@@ -1518,6 +1535,7 @@ func _present_abyss_reward(raw: Variant) -> Dictionary:
 		reward.description=str(reward.get("description","")).split("感电期间")[0].strip_edges()
 	var definition:Dictionary=_abyss_reward(id)
 	if str(reward.get("icon",""))=="✦" and not definition.is_empty():reward.icon=definition.get("icon","✦")
+	if definition.has("iconPath"):reward.iconPath=definition.iconPath
 	return reward
 
 func _start_battle(config: Dictionary) -> void:
@@ -1621,8 +1639,8 @@ func _render_battle() -> void:
 			inner.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 			inner.offset_left=9;inner.offset_right=-9;inner.offset_top=6;inner.offset_bottom=-6
 			var icon:=TextureRect.new()
-			icon.texture=_icon_texture(RuneTheme.effect_key(skill))
-			icon.modulate=INK if selected_skill==sid else _element_color(str(active.get("element","wind")))
+			icon.texture=load(str(skill.iconPath)) if ResourceLoader.exists(str(skill.get("iconPath",""))) else _icon_texture(RuneTheme.effect_key(skill))
+			icon.modulate=Color.WHITE if ResourceLoader.exists(str(skill.get("iconPath",""))) else INK if selected_skill==sid else _element_color(str(active.get("element","wind")))
 			icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			icon.custom_minimum_size=Vector2(34,34)
 			inner.add_child(icon)
@@ -1677,7 +1695,9 @@ func _battle_unit_card(parent: Node, unit: Dictionary, active_uid: String) -> vo
 	var name_label := _label(badge,str(unit.name),14,TEXT,true)
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_label.max_lines_visible = 1
-	_label(badge,_element_name(unit.get("element","")),10,color)
+	var furnace_phase: bool = unit.get("id", "") == "boss_hedor" and bool(unit.get("inPhase2", false))
+	var phase_badge := _label(badge,"炉心Ⅱ" if furnace_phase else _element_name(unit.get("element","")),10,Color("ffe8b5") if furnace_phase else color)
+	if furnace_phase:phase_badge.name="HedorPhaseTwoBadge"
 	var art := _portrait(v,unit.id,138,false,not ally)
 	var ground=load("res://scripts/ui/unit_ground.gd").new()
 	ground.accent=GOLD if selected else CYAN
@@ -1685,6 +1705,12 @@ func _battle_unit_card(parent: Node, unit: Dictionary, active_uid: String) -> vo
 	ground.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	art.add_child(ground);art.move_child(ground,0)
 	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	if furnace_phase:
+		var aura = load("res://scripts/ui/furnace_phase_aura.gd").new()
+		aura.name = "HedorPhaseTwoAura"
+		aura.reduced_motion = extraction_reduced_motion
+		aura.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		art.add_child(aura)
 	_progress(v,unit.get("currentHp",0),maxi(1,int(unit.get("maxHp",1))),CYAN if ally else RED,7)
 	var hp_label:=_center_label(v,"%s / %s" % [_battle_number(float(unit.get("currentHp",0))),_battle_number(float(unit.get("maxHp",1)))],14,MUTED)
 	hp_label.clip_text=true
@@ -1779,8 +1805,14 @@ func _battle_sound_clip(events: Array) -> String:
 func _play_battle_sound(events: Array) -> void:
 	if not sound_enabled or bool(get_meta("application_paused",false)):return
 	var clip:=_battle_sound_clip(events)
+	var lantern_clip := ""
+	for event in events:
+		if event.get("type","")=="skill" and str(event.get("skill_id","")).begins_with("selin_"):
+			lantern_clip={"selin_normal":"selin_basic","selin_skill":"selin_skill","selin_ult":"selin_ultimate"}.get(str(event.get("skill_id","")),"chain_swing")
 	if clip.is_empty() or Time.get_ticks_msec()-_last_battle_sound_msec<90:return
 	var path:="res://assets/audio/battle/"+clip+".ogg"
+	if not lantern_clip.is_empty() and ResourceLoader.exists("res://assets/audio/content_v270/"+lantern_clip+".ogg"):
+		path="res://assets/audio/content_v270/"+lantern_clip+".ogg";clip=lantern_clip
 	if not ResourceLoader.exists(path):return
 	_last_battle_sound_msec=Time.get_ticks_msec()
 	var voices:Array=get_tree().get_nodes_in_group("battle_audio")
@@ -1805,7 +1837,7 @@ func _combat_display_events(events: Array) -> Array:
 		var type := str(event.get("type", ""))
 		if type == "damage":
 			var source := str(event.get("status", ""))
-			var channel := source if source in ["burn", "poison"] else ("follow_up" if bool(event.get("follow_up", false)) else "direct")
+			var channel := "detonation" if bool(event.get("detonation", false)) else source if source in ["burn", "poison"] else ("follow_up" if bool(event.get("follow_up", false)) else "direct")
 			var key := str(event.get("target", ""))+":"+channel
 			if channel == "direct": key += ":"+str(event.get("actor", ""))
 			if grouped.has(key):
@@ -1824,13 +1856,14 @@ func _combat_display_events(events: Array) -> Array:
 	var direct: Array = []
 	var periodic: Array = []
 	for event in result:
-		if event.get("feedbackChannel", "") in ["burn", "poison"]: periodic.append(event)
+		if event.get("feedbackChannel", "") in ["burn", "poison", "detonation"]: periodic.append(event)
 		else: direct.append(event)
 	return direct + periodic
 
 func _combat_damage_caption(event: Dictionary) -> String:
 	var amount := str(int(event.get("amount", 0)))
 	match str(event.get("feedbackChannel", event.get("status", ""))):
+		"detonation": return "引爆 −"+amount
 		"burn": return "燃烧 −"+amount
 		"poison": return "中毒 %d层 −%s" % [int(event.get("poisonStacks", event.get("stacks", 1))), amount]
 		"follow_up": return "追加 −"+amount
@@ -1864,9 +1897,9 @@ func _float_damage_feedback(at: Vector2, event: Dictionary, color: Color) -> voi
 	panel.add_theme_stylebox_override("panel", style)
 	var line := _hbox(panel,5)
 	line.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	if channel in ["burn", "poison"]:
+	if channel in ["burn", "poison", "detonation"]:
 		var icon := TextureRect.new()
-		icon.texture = load("res://assets/ui/status/%s.svg" % channel)
+		icon.texture = load("res://assets/content_v270/skills/selin_passive.png" if channel == "detonation" else "res://assets/ui/status/%s.svg" % channel)
 		icon.custom_minimum_size=Vector2(16,16);icon.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;icon.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.mouse_filter=Control.MOUSE_FILTER_IGNORE;line.add_child(icon)
 	var label := _label(line, _combat_damage_caption(event), 15, color)
@@ -1891,7 +1924,7 @@ func _show_combat_events(events: Array) -> void:
 		if is_instance_valid(card):anchors[uid]=card.global_position+card.size*Vector2(0.5,0.42)
 	for e in _combat_display_events(events):
 		var channel := str(e.get("feedbackChannel", ""))
-		if channel in ["burn", "poison"] and not periodic_started:
+		if channel in ["burn", "poison", "detonation"] and not periodic_started:
 			periodic_started = true
 			await get_tree().create_timer(0.16/maxf(1,battle_speed)).timeout
 			if current_screen != "battle" or generation != battle_generation:return
@@ -1907,6 +1940,15 @@ func _show_combat_events(events: Array) -> void:
 			var destination_card = unit_cards.get(target_uid)
 			var origin: Vector2 = source_card.get_global_rect().get_center() if is_instance_valid(source_card) else size * Vector2(0.25,0.5)
 			var destination: Vector2 = destination_card.get_global_rect().get_center() if is_instance_valid(destination_card) else size * Vector2(0.75,0.5)
+			if source_unit.get("id", "") == "selin":
+				origin = anchors.get(str(e.get("actor", "")), origin)
+				destination = anchors.get(target_uid, destination)
+				var linked: Array = []
+				for hit in events:
+					var hit_uid := str(hit.get("target", ""))
+					if hit.get("type", "") == "damage" and hit.get("actor", "") == e.get("actor", "") and hit_uid not in linked and anchors.has(hit_uid):
+						linked.append(hit_uid)
+						fx.streak(origin, anchors[hit_uid], Color("f2cf8d"))
 			fx.ultimate(str(source_unit.get("id","")),_battle_event_element(e),origin,destination)
 		var target = unit_cards.get(str(e.get("target", "")))
 		var actor = unit_cards.get(str(e.get("actor", "")))
@@ -1917,6 +1959,7 @@ func _show_combat_events(events: Array) -> void:
 		var color := CYAN if type == "heal" else (GOLD if e.get("isCrit", false) else RED)
 		if channel == "burn":color=Color("ffb16d");pos.y-=44
 		elif channel == "poison":color=Color("b8e786");pos.y-=88
+		elif channel == "detonation":color=Color("ffe0a1");pos.y-=132
 		elif channel == "follow_up":color=Color("d9b9ff");pos.y+=44
 		if type == "heal": fx.heal_ring(pos)
 		if type == "shield": fx.shield_ring(pos)
@@ -1930,10 +1973,10 @@ func _show_combat_events(events: Array) -> void:
 			else:_float_text(pos, text_value, color, 30 if e.get("isCrit", false) else 23)
 			if type=="damage":
 				var origin:Vector2=actor.global_position+actor.size*0.5 if is_instance_valid(actor) else pos+Vector2(-32,0)
-				fx.impact(str(e.get("status",_battle_effect_kind(e))),pos if channel in ["burn", "poison"] else origin,pos,bool(e.get("isCrit",false)))
+				fx.impact("detonation" if channel == "detonation" else str(e.get("status",_battle_effect_kind(e))),pos if channel in ["burn", "poison", "detonation"] else origin,pos,bool(e.get("isCrit",false)))
 			elif type=="shield" and int(_battle_unit(str(e.get("target",""))).get("shield",0))<=0:fx.impact("shield_break",pos,pos)
 			else:fx.burst(pos,color,false)
-			if is_instance_valid(actor) and type == "damage" and not channel in ["burn", "poison"]:
+			if is_instance_valid(actor) and type == "damage" and not channel in ["burn", "poison", "detonation"]:
 				fx.streak(actor.global_position + actor.size * 0.5, pos, _element_color(str(e.get("element", "fire"))))
 				if not extraction_reduced_motion and not actor.has_meta("lunging"):
 					actor.set_meta("lunging",true)
@@ -2066,7 +2109,7 @@ func _render_battle_settlement(result:Dictionary,victory:bool,run_ended:bool) ->
 				award_text="第 %d 层 · %s +%d"%[int(daily_award.get("floor",0)),"难度补领" if int(daily_award.get("previousPaid",0))>0 else "每日首通",int(daily_award.amount)]
 			_label(daily_row,award_text,15,GOLD,true).name="SettlementDailyAwardText"
 		if result.get("firstClear",false):
-			var first:=_hbox(scroll_content,7);_rune_icon(first,"check",18,CYAN);_label(first,"首次通关",14,CYAN)
+			var first:=_hbox(scroll_content,7);_rune_icon(first,"check",18,CYAN);_label(first,str(battle_config.get("firstClearRewardLabel","首次通关")),14,CYAN)
 		var relic:Dictionary=result.get("relic",{})
 		if relic.is_empty() and rewards.get("relicDrop") is Dictionary:relic=rewards.relicDrop
 		if not relic.is_empty():
@@ -2104,7 +2147,7 @@ func _render_battle_settlement(result:Dictionary,victory:bool,run_ended:bool) ->
 		_label(endrow,"本轮通关 %d 层 · 获得 %d 记忆碎片" % [int(summary.get("floorsCleared",0)),int(summary.get("metaEarned",0))],16,CYAN,true)
 	var proceed:=_button(_modal_footer(box), "返回营地 · 继续旅程   →" if run_ended else "继续旅程   →", func():
 		_clear_overlay()
-		var next_screen := "abyss" if battle_config.get("isAbyss", false) else "story"
+		var next_screen := "summon" if battle_config.get("isTrial",false) else "abyss" if battle_config.get("isAbyss", false) else "story"
 		var key: String = str(battle_config.get("id", "")) + "_post"
 		if victory and not battle_config.get("isAbyss", false) and not model.state.get("dialogueSeen", {}).get(key, false):
 			_play_dialogue(key, func(): navigate(next_screen))
@@ -2160,7 +2203,7 @@ func _render_dialogue() -> void:
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	overlay.add_child(bg)
 	var art := TextureRect.new()
-	art.texture = load(_background_path())
+	art.texture = load(_dialogue_background_path())
 	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	art.modulate = Color(0.65, 0.65, 0.7)
@@ -2170,7 +2213,7 @@ func _render_dialogue() -> void:
 	var line: Dictionary = dialogue_lines[dialogue_index]
 	var speaker: String = line.get("speaker", "narrator")
 	var portrait_id = line.get("portrait")
-	if portrait_id is String and model.catalog.CharacterData.has(portrait_id):
+	if portrait_id is String and model.catalog.CharacterData.has(portrait_id) and not _dialogue_has_cg():
 		var portrait := _portrait(overlay, portrait_id, size.y * 0.62, true)
 		portrait.position = Vector2(size.x * 0.52, size.y * 0.06)
 		portrait.size.x = size.x * 0.44
@@ -2220,8 +2263,9 @@ func _render_mobile_dialogue() -> void:
 	if speaker == "narrator": speaker_name = "旅者纪事"
 	if speaker == "traveler": speaker_name = "旅行者"
 	var v := _modal(speaker_name, 700, size.y - 24)
+	if _dialogue_has_cg():_scene_panel(v,_dialogue_background_path(),160)
 	var portrait_id = line.get("portrait")
-	if portrait_id is String and model.catalog.CharacterData.has(portrait_id):
+	if portrait_id is String and model.catalog.CharacterData.has(portrait_id) and not _dialogue_has_cg():
 		_portrait(v, portrait_id, 180)
 	dialogue_prose = _label(v, str(line.get("text", "")), 19, TEXT, true)
 	dialogue_prose.name="DialogueProse"
@@ -2450,6 +2494,11 @@ func _portrait(parent: Node, id: String, height: float, _wide: bool = false, ene
 	c.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	parent.add_child(c)
 	var path := ("res://assets/enemies/%s.png" if enemy else "res://assets/characters/%s.png") % id
+	var defined: Dictionary = model.catalog.EnemyData.get(id,{}) if enemy else model.catalog.CharacterData.get(id,{})
+	var defined_path := str(defined.get("portrait", "")) if enemy else str(defined.get("image", ""))
+	if not defined_path.is_empty():
+		if not defined_path.begins_with("res://"):defined_path="res://"+defined_path
+		if ResourceLoader.exists(defined_path):path=defined_path
 	if id=="kaldi" and not enemy and ResourceLoader.exists("res://assets/characters/kaldi-battle.png"):
 		path="res://assets/characters/kaldi-battle.png"
 	if not ResourceLoader.exists(path):
@@ -2918,7 +2967,7 @@ func _sync_music() -> void:
 				_music_cancel_tween(player,"music_fade");_music_cancel_tween(player,"duck_tween")
 				player.stream_paused=true
 		return
-	var path:="res://assets/audio/music/licensed/"+track+".ogg"
+	var path:="res://assets/audio/content_v270/"+track+".ogg" if track in ["lantern_road","lantern_hall","lantern_core"] else "res://assets/audio/music/licensed/"+track+".ogg"
 	if not ResourceLoader.exists(path):return
 	var target:AudioStreamPlayer=_music_pool.get(track)
 	if not is_instance_valid(target):
@@ -3052,6 +3101,9 @@ func _show_music_credits() -> void:
 		var card:=_vbox(_panel(box,LINE,12),4)
 		_label(card,entry[0],18,GOLD)
 		_label(card,entry[1]+" · CC0",14,MUTED)
+	var lantern:=_vbox(_panel(box,LINE,12),4)
+	_label(lantern,"余烬灯途 · 灯渠夜行 · 炉心归火",18,GOLD)
+	_label(lantern,"游戏原创配乐",14,MUTED)
 	_button(_modal_footer(box),"返回",_show_audio_settings)
 
 func _stop_reveal_voices() -> void:
@@ -3093,20 +3145,24 @@ func _music_track_for_context() -> String:
 	# Functional pages inherit the scene they were opened from. Inventory,
 	# upgrades, shops, menus and previews never choose a new score themselves.
 	if current_screen=="home":_music_context_id="hub"
-	elif current_screen=="story":_music_context_id="story"
+	elif current_screen=="story":_music_context_id="lantern" if selected_chapter==2 else "story"
 	elif current_screen=="extraction":_music_context_id="extraction" if model.extraction.active() else "story"
 	elif current_screen=="abyss":_music_context_id="abyss"
 	elif current_screen=="battle":
 		_music_context_id="extraction" if battle_config.get("isExtraction",false) else "abyss" if battle_config.get("isAbyss",false) else "story"
+		if not battle_config.get("isExtraction",false) and (str(battle_config.get("id","")).begins_with("ch3_") or battle_config.get("isTrial",false)):_music_context_id="lantern"
 		var boss:bool=battle_config.get("kind","")=="boss" or battle_config.get("isBoss",false)
 		for enemy_id in battle_config.get("enemies",[]):
 			if str(enemy_id).begins_with("boss_"):boss=true
-		if boss:return "determined_pursuit"
+		if boss:
+			if battle_config.get("enemies",[]).has("boss_hedor"):return "lantern_core"
+			return "determined_pursuit"
 	match _music_context_id:
 		"extraction":
 			if not model.extraction.active():return "medieval_exploration"
 			return model.extraction.environment_music_track()
 		"abyss":return _exploration_music_track(int(model.state.abyss.get("currentFloor",1))>10)
+		"lantern":return "lantern_road"
 		"story":return "medieval_exploration"
 	return "old_tower_inn"
 
@@ -3179,3 +3235,22 @@ func _summon_cta(parent:Node,amount:int,cost:int,action:Callable)->Button:
 	_label(price,str(cost),13,INK if amount==10 else MUTED)
 	_ignore_children(content)
 	return b
+
+func _skill_art_icon(parent: Node, skill: Dictionary, edge: int) -> TextureRect:
+	var icon := _rune_icon(parent, RuneTheme.effect_key(skill), edge)
+	var path := str(skill.get("iconPath", ""))
+	if ResourceLoader.exists(path):icon.texture=load(path);icon.modulate=Color.WHITE
+	return icon
+
+func _dialogue_cg_path() -> String:
+	return {"ch3_4_post":"res://assets/content_v270/cg/borrowed_flame.png","ch3_8_post":"res://assets/content_v270/cg/lantern_homecoming.png"}.get(dialogue_key, "")
+
+func _dialogue_has_cg() -> bool:
+	var path := _dialogue_cg_path()
+	return not path.is_empty() and ResourceLoader.exists(path)
+
+func _dialogue_background_path() -> String:
+	return _dialogue_cg_path() if _dialogue_has_cg() else _background_path()
+
+func _reward_art_icon(parent: Node, reward: Dictionary, edge: int) -> TextureRect:
+	return _skill_art_icon(parent, _present_abyss_reward(reward), edge)

@@ -1,0 +1,341 @@
+{
+  "CharacterData": {
+    "selin": {
+      "id": "selin",
+      "name": "烬灯·瑟琳",
+      "title": "长夜引灯人",
+      "rarity": 5,
+      "element": "fire",
+      "role": "support",
+      "baseStats": {
+        "hp": 1000,
+        "atk": 70,
+        "spd": 104,
+        "cri": 0.12,
+        "criDmg": 1.5,
+        "def": 80
+      },
+      "growthRate": {
+        "hp": 100,
+        "atk": 4,
+        "spd": 0,
+        "def": 4
+      },
+      "skills": [
+        "selin_normal",
+        "selin_skill",
+        "selin_ult"
+      ],
+      "passiveId": "selin_passive",
+      "passiveDesc": "行动结束时，引爆所有燃烧目标：造成攻击力15%＋每剩余燃烧回合0.1%的燃烧伤害。",
+      "synergyIds": [
+        "fire_duo"
+      ],
+      "description": "沿着熄灭的灯渠寻找失落火种的引灯人，以铜灯与焰丝为同行者照亮归途。",
+      "flavorText": "「把火留给前行的人。」",
+      "color": "#edaa60",
+      "colorDark": "#592d32",
+      "image": "assets/content_v270/characters/selin.png",
+      "relicObjective": {
+        "type": "damage",
+        "label": "燃烧协同",
+        "referenceStatuses": [
+          "burn"
+        ],
+        "teamBurnReference": 0.72,
+        "recommendedSets": [
+          {
+            "setId": "ember_lantern",
+            "reason": "每次引爆都能维持全队燃烧增伤，同时提高自身直伤与追击。"
+          },
+          {
+            "setId": "flame_oath",
+            "reason": "稳定提高攻击与燃烧目标伤害。"
+          }
+        ]
+      },
+      "portrait": "assets/content_v270/portraits/selin_face.png"
+    }
+  },
+  "SkillData": {
+    "selin_normal": {
+      "id": "selin_normal",
+      "name": "挑灯引火",
+      "icon": "🔥",
+      "iconPath": "res://assets/content_v270/skills/selin_normal.png",
+      "type": "normal",
+      "element": "fire",
+      "cooldown": 0,
+      "energyGain": 25,
+      "animation": "slash",
+      "description": "对单体敌人造成攻击力162%的火属性伤害，附加1回合燃烧。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.62,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "target": "single",
+          "statusId": "burn",
+          "duration": 1,
+          "chance": 1
+        }
+      ]
+    },
+    "selin_skill": {
+      "id": "selin_skill",
+      "name": "织焰成途",
+      "icon": "🔥",
+      "iconPath": "res://assets/content_v270/skills/selin_skill.png",
+      "type": "skill",
+      "element": "fire",
+      "cooldown": 3,
+      "energyGain": 75,
+      "animation": "explosion",
+      "description": "对全体敌人造成攻击力117%的火属性伤害，附加2回合燃烧。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 1.17,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "burn",
+          "duration": 2,
+          "chance": 1
+        }
+      ]
+    },
+    "selin_ult": {
+      "id": "selin_ult",
+      "name": "万灯归烬",
+      "icon": "🔥",
+      "iconPath": "res://assets/content_v270/skills/selin_ultimate.png",
+      "type": "ultimate",
+      "element": "fire",
+      "cooldown": 0,
+      "energyGain": 0,
+      "animation": "mega_fire",
+      "description": "对全体敌人造成攻击力252%的火属性伤害，附加3回合燃烧。其他队员对燃烧目标伤害加深80%，持续2回合。",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 2.52,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "burn",
+          "duration": 3,
+          "chance": 1
+        }
+      ],
+      "energyCost": 100
+    }
+  },
+  "ConstellationC6": {
+    "selin": {
+      "label": "长夜万灯",
+      "desc": "终结技追加一次攻击力60%的全体火属性伤害；自身施加的燃烧延长1回合。",
+      "buff": {
+        "c6_type": "selin_lantern",
+        "c6_bonus": 0.6
+      }
+    }
+  },
+  "RelicSets": {
+    "ember_lantern": {
+      "id": "ember_lantern",
+      "name": "烬灯织誓",
+      "theme": "烬灯",
+      "color": "#edaa60",
+      "slotIcons": {
+        "helmet": "res://assets/content_v270/relics/ember_lantern_helmet.png",
+        "chest": "res://assets/content_v270/relics/ember_lantern_chest.png",
+        "belt": "res://assets/content_v270/relics/ember_lantern_belt.png",
+        "boots": "res://assets/content_v270/relics/ember_lantern_boots.png",
+        "necklace": "res://assets/content_v270/relics/ember_lantern_necklace.png"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "攻击力提高12%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "主动引爆燃烧后，全队燃烧伤害提高40%；佩戴者对燃烧目标的直伤与追击提高25%，持续2回合。",
+          "effects": [
+            {
+              "type": "onBurnDetonation",
+              "partyBurnAmp": 0.4,
+              "ownerDirectAmp": 0.25
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "AbyssRewardUpserts": [
+    {
+      "id": "kaldi_burn_amp_white",
+      "pool": "character",
+      "characterId": "kaldi",
+      "rarity": "white",
+      "name": "余烬辨识",
+      "icon": "🔥",
+      "target": "燃烧构筑",
+      "description": "全队攻击燃烧目标时，造成的直接伤害提高 14%。",
+      "effects": [
+        {
+          "type": "damageVsStatus",
+          "statusId": "burn",
+          "value": 0.14
+        }
+      ],
+      "sharedPoolId": "fire_core",
+      "eligibleCharacters": [
+        "kaldi",
+        "selin"
+      ]
+    },
+    {
+      "id": "kaldi_burn_spread_blue",
+      "pool": "character",
+      "characterId": "kaldi",
+      "rarity": "blue",
+      "name": "龙炎蔓延",
+      "icon": "💥",
+      "target": "燃烧构筑",
+      "description": "全队造成火属性伤害后，有 35% 概率使目标燃烧 2 回合。",
+      "effects": [
+        {
+          "type": "applyStatusAfterDamage",
+          "element": "fire",
+          "statusId": "burn",
+          "duration": 2,
+          "chance": 0.35
+        }
+      ],
+      "sharedPoolId": "fire_core",
+      "eligibleCharacters": [
+        "kaldi",
+        "selin"
+      ]
+    },
+    {
+      "id": "kaldi_start_burn_gold",
+      "pool": "character",
+      "characterId": "kaldi",
+      "rarity": "gold",
+      "name": "焚界开幕",
+      "icon": "🌋",
+      "target": "开场压制",
+      "description": "每场深渊战斗开始时，所有敌人燃烧 3 回合，每轮受到队伍最高攻击力 18% 的伤害。",
+      "effects": [
+        {
+          "type": "enemyBattleStartStatus",
+          "statusId": "burn",
+          "duration": 3
+        }
+      ],
+      "sharedPoolId": "fire_core",
+      "eligibleCharacters": [
+        "kaldi",
+        "selin"
+      ]
+    },
+    {
+      "id": "kaldi_ult_amp_white",
+      "pool": "character",
+      "characterId": "kaldi",
+      "eligibleCharacters": [
+        "kaldi"
+      ],
+      "rarity": "white",
+      "name": "引焰长歌",
+      "icon": "🔥",
+      "target": "终结技",
+      "description": "全队终结技伤害提高10%。",
+      "effects": [
+        {
+          "type": "skillTypeDamage",
+          "skillType": "ultimate",
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": "selin_burn_duration_white",
+      "pool": "character",
+      "characterId": "selin",
+      "eligibleCharacters": [
+        "selin"
+      ],
+      "rarity": "white",
+      "name": "灯芯长明",
+      "icon": "🔥",
+      "target": "燃烧构筑",
+      "description": "全队施加的燃烧延长1回合。",
+      "effects": [
+        {
+          "type": "burnDurationAdd",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "selin_burn_energy_blue",
+      "pool": "character",
+      "characterId": "selin",
+      "eligibleCharacters": [
+        "selin"
+      ],
+      "rarity": "blue",
+      "name": "焰流回环",
+      "icon": "🔥",
+      "target": "燃烧构筑",
+      "description": "全队每次命中燃烧目标，获得6点能量。",
+      "effects": [
+        {
+          "type": "energyOnHitStatus",
+          "statusId": "burn",
+          "value": 6
+        }
+      ]
+    },
+    {
+      "id": "selin_burn_amp_gold",
+      "pool": "character",
+      "characterId": "selin",
+      "eligibleCharacters": [
+        "selin"
+      ],
+      "rarity": "gold",
+      "name": "万灯续明",
+      "icon": "🔥",
+      "target": "燃烧构筑",
+      "description": "全队燃烧伤害提高25%。",
+      "effects": [
+        {
+          "type": "burnDamageAmp",
+          "value": 0.25
+        }
+      ]
+    }
+  ]
+}

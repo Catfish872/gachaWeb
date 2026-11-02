@@ -58,7 +58,7 @@ func setup(owner_app, committed_results: Array, selected_pool: String, gentle: b
 	name = "SummonSequence"
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_background = load("res://assets/backgrounds/summon_sanctum.png")
+	_background = load("res://assets/content_v270/banner/selin_banner.png" if selected_pool == "limited_selin" else "res://assets/backgrounds/summon_sanctum.png")
 	for result in results:
 		_art.append(load(Avatars.source_path(str(result.charId))))
 

@@ -1,0 +1,81 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: new run starts
+PASS: new run always three acts
+PASS: three unique environments from available pool
+PASS: new run valid save
+PASS: legacy three-act fallback
+PASS: legacy read does not regenerate map
+PASS: new theme three submaps
+PASS: district music 0
+PASS: district music 1
+PASS: district music 2
+PASS: theme HP budget battle
+PASS: theme attack budget battle
+PASS: theme HP budget elite
+PASS: theme attack budget elite
+PASS: theme HP budget boss
+PASS: theme attack budget boss
+PASS: rank5 includes old escort budget
+PASS: budget calculation consumes no RNG or rewrites issued encounter
+PASS: final multiplier act 2
+PASS: final multiplier act 3
+PASS: legacy final boss retained
+PASS: variant economy lantern_wick
+PASS: variant economy lantern_chain
+PASS: variant economy lantern_mantle
+PASS: variant economy lantern_pitch_tube
+PASS: variant economy lantern_lens
+PASS: variant economy lantern_regulator
+PASS: variant economy lantern_tongs
+PASS: variant economy lantern_bellows
+PASS: variant economy lantern_cell
+PASS: variant economy lantern_prism
+PASS: variant economy lantern_rotor
+PASS: variant economy lantern_toolcase
+PASS: variant economy lantern_seal
+PASS: variant economy lantern_glass
+PASS: variant economy lantern_verse
+PASS: variant economy lantern_ore
+PASS: variant economy lantern_signet
+PASS: variant economy lantern_statue
+PASS: variant economy lantern_reliquary
+PASS: variant economy lantern_orrery
+PASS: variant economy lantern_heart
+PASS: variant economy lantern_archive
+PASS: variant economy lantern_sun
+PASS: variant economy lantern_feather
+PASS: 24 variants across six qualities
+PASS: new theme key costs 500
+PASS: three act quality curve retained
+PASS: three act prices unchanged
+PASS: parcel sizes retained
+PASS: repair supply repair_patch
+PASS: repair supply repair_kit
+PASS: repair supply repair_core
+PASS: unique reward common_atk_white
+PASS: unique reward common_hp_white
+PASS: unique reward common_def_white
+PASS: unique reward common_energy_white
+PASS: unique reward common_crit_blue
+PASS: unique reward common_open_shield_blue
+PASS: unique reward common_victory_heal_blue
+PASS: unique reward common_open_energy_gold
+PASS: unique reward common_guard_gold
+PASS: unique reward common_overdrive_gold
+PASS: unique reward kaldi_burn_amp_white
+PASS: unique reward kaldi_burn_spread_blue
+PASS: unique reward kaldi_ult_burn_blue
+PASS: unique reward kaldi_burn_execute_gold
+PASS: unique reward kaldi_start_burn_gold
+PASS: unique reward common_vampiric_blue
+PASS: unique reward common_shield_edge_white
+PASS: unique reward common_kill_energy_blue
+PASS: unique reward common_execute_blue
+PASS: unique reward common_venom_white
+PASS: unique reward common_static_blue
+PASS: unique reward kaldi_ult_amp_white
+PASS: unique reward selin_burn_duration_white
+PASS: unique reward selin_burn_energy_blue
+PASS: unique reward selin_burn_amp_gold
+LANTERN EXPEDITION FAILURES: 0

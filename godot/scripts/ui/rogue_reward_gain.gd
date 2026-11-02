@@ -36,7 +36,7 @@ func configure(owner,reward_data:Dictionary,count:int,finished:Callable) -> void
 	Rarity.decorate(app,self,col,str(reward.get("rarity","white")))
 	var tier:Dictionary=Rarity.tier(str(reward.get("rarity","white")))
 	var row=app._hbox(col,12)
-	var icon=app._rune_icon(row,Runes.effect_key(reward),44,tier.color);icon.name="RogueRewardGainIcon"
+	var icon=app._reward_art_icon(row,reward,44);icon.name="RogueRewardGainIcon"
 	var copy=app._vbox(row,3);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	app._label(copy,"获得回响",12,app.MUTED).name="RogueRewardGainCaption"
 	app._label(copy,str(reward.get("name","回响")),20,tier.color,true).name="RogueRewardGainName"

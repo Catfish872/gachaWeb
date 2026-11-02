@@ -782,6 +782,8 @@ func pull(pool_id: String, count: int) -> Dictionary:
 		var candidates: Array = pool["pool%d" % rarity]
 		if featured and not pool.get("featured%d" % rarity, []).is_empty():
 			candidates = pool["featured%d" % rarity]
+		if rarity == 5 and not featured and bool(pool.get("excludeFeaturedFromOffBanner", false)):
+			candidates = candidates.filter(func(candidate): return not pool.get("featured5", []).has(candidate))
 		# The source's non-featured branch includes Kaldi. Preserve its exact RNG/pity semantics.
 		var id: String = _pick(candidates)
 		var is_new: bool = not state.ownedCharacters.has(id)
@@ -1148,6 +1150,27 @@ func prepare_stage(stage_id: String) -> Dictionary:
 		_issued_config = config
 	return result
 
+func prepare_selin_trial() -> Dictionary:
+	if extraction.active() or abyss_run_active() or not _issued_config.is_empty():
+		return _fail("请先结束当前探索")
+	var party: Array = []
+	var zero_cst := {"hpPercent":0.0,"atkPercent":0.0,"defPercent":0.0,"normalDmgBonus":0.0,"skillDmgBonus":0.0,"ultDmgBonus":0.0,"skillCdReduce":0,"custom":{}}
+	for id in ["selin", "kaldi", "ayla"]:
+		var data: Dictionary = catalog.CharacterData[id]
+		var gear: Array = []
+		var set_id := "ember_lantern" if id == "selin" else "flame_oath" if id == "kaldi" else "aurora_prayer"
+		if not catalog.RelicSets.has(set_id):set_id = "ember_lantern"
+		for slot in catalog.RelicSlots:
+			var relic := _generate_relic_with_source(5, str(slot.id), set_id, func():return 0.35, "trial_" + id + "_" + str(slot.id))
+			relic.level = 8
+			gear.append(relic)
+		var evaluated := RelicSets.evaluate(catalog, gear)
+		var stats := computed_stats(id, 5, {"constellation":zero_cst,"awakening":0,"relics":RelicSets.attribute_bonuses(catalog, gear),"relicSetBonuses":evaluated.statBonuses})
+		party.append({"id":id,"name":data.name,"element":data.element,"stats":stats,"skills":data.skills.duplicate(),"passiveId":data.get("passiveId",""),"ownerEffects":evaluated.ownerEffects,"level":5,"constellation":0,"saveData":default_character(),"maxHp":stats.maxHp,"currentHp":stats.maxHp,"energy":100,"cooldowns":{},"trialRelics":gear})
+	var config := {"id":"trial_selin","name":"借火同行 · 瑟琳试用","isTrial":true,"isAbyss":false,"isBoss":false,"background":"res://assets/content_v270/backgrounds/unlit_town.png","waves":[{"enemies":["furnace_guard","lamp_wraith"]},{"enemies":["lamp_overseer","furnace_lamp"]}],"enemies":["furnace_guard","lamp_wraith"],"scaleMult":1.0,"rewards":{"gold":[0,0],"exp":0,"diamonds":0},"firstClearRewards":{"diamonds":160},"token":_uid("trial"),"_team":[],"partySnapshot":party}
+	_issued_config = config
+	return {"success":true,"config":config.duplicate(true)}
+
 func _stage_rewards(config: Dictionary, first_clear: bool) -> Dictionary:
 	var source: Dictionary = config.get("rewards", {})
 	if bool(config.get("isAbyss", false)):
@@ -1158,6 +1181,10 @@ func _stage_rewards(config: Dictionary, first_clear: bool) -> Dictionary:
 	var roll := random_value()
 	var rarity := 5 if roll < 0.05 else (4 if roll < 0.4 else 3)
 	var rewards := {"gold": gold, "exp": int(source.get("exp", 20)), "diamonds": int(source.get("diamonds", 0)), "relicDrop": {"slotId": slot.id, "rarity": rarity}}
+	if bool(config.get("isTrial", false)):
+		rewards.erase("relicDrop")
+	if first_clear and config.has("firstClearRelic"):
+		rewards.relicDrop = config.firstClearRelic.duplicate(true)
 	if first_clear:
 		for key in config.get("firstClearRewards", {}):
 			if key in ["gold", "exp", "diamonds"]:
@@ -1284,6 +1311,24 @@ func _init_rogue_run() -> void:
 		rogue.characterFocus[id] = 1.0 / rogue.eligibleCharacters.size()
 	state.abyss.rogue = rogue
 
+func abyss_enemy_pool(floor_number: int) -> Array:
+	var tier := "boss" if floor_number % 10 == 0 else "elite" if floor_number % 5 == 0 else "normal"
+	var candidates: Array = []
+	for id in catalog.AbyssData.pools.get(tier, []):
+		if catalog.EnemyData.has(id) and floor_number >= int(catalog.EnemyData[id].get("abyssMinFloor", 1)):
+			candidates.append(id)
+	return candidates
+
+func abyss_encounter_background(enemies: Array, encounter_seed: int) -> String:
+	if enemies.has("boss_hedor"):
+		return "res://assets/content_v270/backgrounds/furnace_core.png"
+	var has_lantern := false
+	for id in enemies:
+		if catalog.EnemyData.get(id, {}).has("abyssBaseStats"):has_lantern = true
+	if not has_lantern:return "res://assets/backgrounds/abyss.png"
+	var scenes := ["snow_inn", "ash_bridge", "unlit_town", "copper_gallery", "inverted_well", "furnace_core"]
+	return "res://assets/content_v270/backgrounds/%s.png" % scenes[posmod(encounter_seed, scenes.size())]
+
 func prepare_abyss() -> Dictionary:
 	if extraction.active(): return _fail("请先结束搜打撤探索")
 	if abyss_run_active() and abyss_floor_cap() > 0 and int(state.abyss.currentFloor) > abyss_floor_cap():
@@ -1306,18 +1351,11 @@ func prepare_abyss() -> Dictionary:
 	var floor_number := int(state.abyss.currentFloor)
 	var boss: bool = floor_number % 10 == 0
 	var elite: bool = floor_number % 5 == 0 and not boss
-	var enemy_pool: Array = ["wolf", "goblin", "fire_imp"]
+	var enemy_pool: Array = abyss_enemy_pool(floor_number)
 	var count := 2
-	if floor_number >= 4:
-		enemy_pool.append_array(["ice_wolf", "thunder_hawk"])
-	if floor_number >= 7:
-		count += int(random_value() * 2)
-	if boss:
-		enemy_pool = catalog.AbyssData.pools.boss
-		count = 1
-	elif elite:
-		enemy_pool = ["dark_knight", "stone_golem"]
-		count = 1 if floor_number == 5 else 2
+	if floor_number >= 7:count += int(random_value() * 2)
+	if boss:count = 1
+	elif elite:count = 1 if floor_number == 5 else 2
 	var enemies: Array = []
 	for _index in range(count):
 		enemies.append(_pick(enemy_pool))
@@ -1327,6 +1365,7 @@ func prepare_abyss() -> Dictionary:
 		"encounterTier": "boss" if boss else ("elite" if elite else "normal"), "endless":abyss_is_endless(), "runLength":abyss_floor_cap(), "difficulty": int(state.abyss.rogue.difficulty),
 		"rewards": {"gold": 0, "exp": mini(1000000,35 + floor_number * 5), "diamonds": 0},
 		"seed": int(rng.randi()), "token": _uid("battle"), "_team": state.team.duplicate()}
+	config.background = abyss_encounter_background(enemies, int(config.seed))
 	if int(config.difficulty) == 3:config.abyssGrowthVersion = 3
 	if floor_number >= 6 and not boss and random_value() < 0.45:
 		config.encounterModifier = AbyssBalance.modifier(str(_pick(["bulwark", "frenzy", "swift"])))
@@ -1359,12 +1398,25 @@ func _weighted_pick(items: Array, weights: Array) -> Variant:
 			return items[index]
 	return items.back()
 
+func reward_eligible_for_characters(reward: Dictionary, eligible: Array) -> bool:
+	if reward.get("pool", "common") != "character": return true
+	for id in reward.get("eligibleCharacters", [reward.get("characterId", "")]):
+		if id in eligible: return true
+	return false
+
+func reward_character_weight(reward: Dictionary, focus: Dictionary, _eligible: Array) -> float:
+	if reward.get("pool", "common") == "common": return 1.0
+	# A shared reward is one ticket. Two owners never add their focus together.
+	if not str(reward.get("sharedPoolId", "")).is_empty(): return 1.0
+	return maxf(0.01, float(focus.get(reward.get("characterId", ""), 0.25)))
+
 func _available_abyss_rewards(rogue: Dictionary = {}) -> Array:
 	if rogue.is_empty(): rogue = state.abyss.rogue
 	var result: Array = []
-	var eligible: Array = rogue.eligibleCharacters
+	var seen: Dictionary = {}
 	for reward in catalog.AbyssData.rogue.rewards:
-		if reward.pool != "character" or reward.get("characterId", "") in eligible:
+		if not seen.has(reward.id) and reward_eligible_for_characters(reward, rogue.eligibleCharacters):
+			seen[reward.id] = true
 			result.append(reward)
 	return result
 
@@ -1387,7 +1439,7 @@ func _draw_abyss_reward(preferred_pool: String, excluded: Array, forced_rarity: 
 	var candidates: Array = rarity_pool if not rarity_pool.is_empty() else (filtered if not filtered.is_empty() else all)
 	var weights: Array = []
 	for reward in candidates:
-		weights.append(1.0 if reward.pool == "common" else maxf(0.01, float(state.abyss.rogue.characterFocus.get(reward.get("characterId", ""), 0.25))))
+		weights.append(reward_character_weight(reward, state.abyss.rogue.characterFocus, state.abyss.rogue.eligibleCharacters))
 	var chosen = _weighted_pick(candidates, weights)
 	return {} if chosen == null else chosen.duplicate(true)
 
@@ -1410,6 +1462,7 @@ func generate_abyss_choices(floor_number: int, force_rarity: String = "") -> Arr
 	return result
 
 func _update_abyss_focus(reward: Dictionary) -> void:
+	if not str(reward.get("sharedPoolId", "")).is_empty(): return
 	var id: String = reward.get("characterId", "")
 	var rogue: Dictionary = state.abyss.rogue
 	var ids: Array = rogue.eligibleCharacters

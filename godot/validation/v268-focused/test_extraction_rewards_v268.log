@@ -1,0 +1,84 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: start extraction
+PASS: enter battle
+PASS: start battle
+PASS: unfinished encounter gives no blessing
+PASS: settle victory
+PASS: repeat settlement rejected
+PASS: later battle win offers three
+PASS: one growth count per encounter
+PASS: pending choice is save-valid
+PASS: reload preserves same offer
+PASS: choose after reload
+PASS: repeat choice rejected
+PASS: exactly one blessing applied
+PASS: start extraction
+PASS: enter elite
+PASS: start battle
+PASS: unfinished encounter gives no blessing
+PASS: settle victory
+PASS: repeat settlement rejected
+PASS: later elite win offers three
+PASS: one growth count per encounter
+PASS: pending choice is save-valid
+PASS: reload preserves same offer
+PASS: choose after reload
+PASS: repeat choice rejected
+PASS: exactly one blessing applied
+PASS: start extraction
+PASS: enter rest
+PASS: start battle
+PASS: unfinished encounter gives no blessing
+PASS: settle victory
+PASS: repeat settlement rejected
+PASS: later rest win offers three
+PASS: one growth count per encounter
+PASS: pending choice is save-valid
+PASS: reload preserves same offer
+PASS: choose after reload
+PASS: repeat choice rejected
+PASS: exactly one blessing applied
+PASS: guard cleared
+PASS: rest actions retained after blessing
+PASS: service interaction keeps room open
+PASS: start boss fixture
+PASS: enter unlocked boss
+PASS: start battle
+PASS: unfinished encounter gives no blessing
+PASS: settle victory
+PASS: repeat settlement rejected
+PASS: boss exit preserved
+PASS: boss parcel preserved
+PASS: boss offers three gold
+PASS: blessing precedes next act
+PASS: boss blessing selectable
+PASS: continue act preserved
+PASS: start extraction
+PASS: enter battle
+PASS: start battle
+PASS: unfinished encounter gives no blessing
+PASS: settle defeat
+PASS: repeat settlement rejected
+PASS: defeat ends run without reward
+PASS: start extraction
+PASS: enter battle
+PASS: ordinary/event per-entry weights retained
+PASS: elite per-entry weights improved
+PASS: boss gold pool retained
+PASS: repair_patch in healing pool
+PASS: repair_patch in supply pool
+PASS: repair_patch outside treasure pool
+PASS: repair_kit in healing pool
+PASS: repair_kit in supply pool
+PASS: repair_kit outside treasure pool
+PASS: repair_core in healing pool
+PASS: repair_core in supply pool
+PASS: repair_core outside treasure pool
+PASS: herb_basket uses medical pool
+PASS: vault priority retained
+PASS: alchemy_cabinet uses medical pool
+PASS: vault priority retained
+PASS: production smart loot replaces surplus gear
+PASS: worn gear untouched
+V268 EXTRACTION: 81 passed, 0 failed

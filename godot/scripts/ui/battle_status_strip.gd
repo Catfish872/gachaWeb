@@ -7,6 +7,9 @@ const COMPACT_CELL_WIDTH := 44.0
 const COMPACT_THRESHOLD := 220.0
 const MAX_VISIBLE := 5
 const DEFINITIONS := {
+ "ember_oath":["烬灯誓约","对燃烧目标伤害加深80%"],
+ "ember_lantern_burn":["织焰","燃烧伤害提高40%"],
+ "ember_lantern_direct":["引火","对燃烧目标的直伤与追击提高25%"],
  "burn":["燃烧","回合末按施加者攻击造成伤害"], "freeze":["冰冻","无法行动"],
  "stun":["眩晕","无法行动，防御降低30%"], "electrify":["感电","行动时可能跳过本次行动"],
  "poison":["中毒","战斗内永久叠层，层数越高伤害越高"], "regen":["再生","回合末恢复最大生命值8%"],

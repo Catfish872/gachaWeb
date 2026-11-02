@@ -1,0 +1,108 @@
+{
+  "subjective_listening_verified": false,
+  "checks": [
+    {
+      "id": "lantern_road",
+      "duration_seconds": 72.0,
+      "peak_dbfs": -11.632169441219933,
+      "rms_dbfs": -24.003067469289576,
+      "finite": true,
+      "clipped": false,
+      "loop_boundary_jump": 0.004730224609375,
+      "within_track_99_9_percentile_step": 0.0174560546875,
+      "seam_pass": true,
+      "integrated_lufs": -22.48,
+      "true_peak_dbtp": -11.63
+    },
+    {
+      "id": "lantern_hall",
+      "duration_seconds": 70.0,
+      "peak_dbfs": -11.057823983275084,
+      "rms_dbfs": -24.001866982573603,
+      "finite": true,
+      "clipped": false,
+      "loop_boundary_jump": 0.0029296875,
+      "within_track_99_9_percentile_step": 0.0244140625,
+      "seam_pass": true,
+      "integrated_lufs": -22.38,
+      "true_peak_dbtp": -11.05
+    },
+    {
+      "id": "lantern_core",
+      "duration_seconds": 68.57145124716553,
+      "peak_dbfs": -10.228593234129526,
+      "rms_dbfs": -24.00510124294774,
+      "finite": true,
+      "clipped": false,
+      "loop_boundary_jump": 0.005645751953125,
+      "within_track_99_9_percentile_step": 0.022247314453125,
+      "seam_pass": true,
+      "integrated_lufs": -22.4,
+      "true_peak_dbtp": -10.23
+    },
+    {
+      "id": "wick_ignite",
+      "duration_seconds": 0.27709750566893426,
+      "peak_dbfs": -10.324647388592288,
+      "rms_dbfs": -27.941220450788652,
+      "finite": true,
+      "clipped": false
+    },
+    {
+      "id": "chain_swing",
+      "duration_seconds": 0.31709750566893424,
+      "peak_dbfs": -9.929998269174863,
+      "rms_dbfs": -24.090707720188668,
+      "finite": true,
+      "clipped": false
+    },
+    {
+      "id": "thread_gather",
+      "duration_seconds": 0.43709750566893424,
+      "peak_dbfs": -10.11658188290786,
+      "rms_dbfs": -22.809926037769756,
+      "finite": true,
+      "clipped": false
+    },
+    {
+      "id": "ember_detonate",
+      "duration_seconds": 0.23709750566893423,
+      "peak_dbfs": -9.730257157780798,
+      "rms_dbfs": -27.14099752595898,
+      "finite": true,
+      "clipped": false
+    },
+    {
+      "id": "selin_basic",
+      "duration_seconds": 0.25709750566893425,
+      "peak_dbfs": -10.069136406009221,
+      "rms_dbfs": -28.0096388435031,
+      "finite": true,
+      "clipped": false
+    },
+    {
+      "id": "selin_skill",
+      "duration_seconds": 0.5006802721088436,
+      "peak_dbfs": -9.816822776663201,
+      "rms_dbfs": -22.908539793143024,
+      "finite": true,
+      "clipped": false
+    },
+    {
+      "id": "selin_ultimate",
+      "duration_seconds": 1.12,
+      "peak_dbfs": -9.465366808879033,
+      "rms_dbfs": -29.024604971781613,
+      "finite": true,
+      "clipped": false
+    },
+    {
+      "id": "lantern_reveal",
+      "duration_seconds": 0.6970975056689342,
+      "peak_dbfs": -9.667911189600977,
+      "rms_dbfs": -26.134152527137317,
+      "finite": true,
+      "clipped": false
+    }
+  ]
+}

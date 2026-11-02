@@ -35,7 +35,7 @@ const GOLD := Color("edcf94")
 const CYAN := Color("91dfd4")
 const MUTED := Color("71828a")
 const TYPE_NAMES := {"entry":"入口", "cache":"物资", "battle":"敌人", "elite":"精英", "event":"奇遇", "rest":"营地", "boss":"首领", "hospital":"药房", "workshop":"工坊", "vault":"宝库", "shrine":"神龛", "key_vault":"钥匙房", "relay":"寄存点"}
-const THEME_COLORS := {"ruins":Color("756553"), "forest":Color("3f7165"), "sanctum":Color("62648b")}
+const THEME_COLORS := {"ruins":Color("756553"), "forest":Color("3f7165"), "sanctum":Color("62648b"), "lantern":Color("a8753f")}
 
 func configure(value: Dictionary, reduce_motion: bool=false) -> void:
 	reduced_motion = reduce_motion
@@ -257,6 +257,10 @@ func _draw_district(district: Dictionary) -> void:
 			var triangle := PackedVector2Array([pos+Vector2(0,-radius),pos+Vector2(radius*.7,radius*.6),pos+Vector2(-radius*.7,radius*.6)])
 			draw_colored_polygon(triangle,Color(color,0.42))
 			draw_line(pos,pos+Vector2(0,radius),Color(color.lightened(.1),.35),1.0)
+		elif theme == "lantern":
+			draw_circle(pos,radius*.4,Color(color.lightened(.2),.3))
+			draw_line(pos+Vector2(0,-radius),pos+Vector2(0,-radius*.35),Color(color,.5),1.0)
+			draw_arc(pos,radius*.48,0,TAU,12,Color(color.lightened(.3),.5),1.0,true)
 		elif theme == "ruins":
 			draw_rect(Rect2(pos,Vector2(radius*1.8,radius)),Color(color,.28),false,1.0)
 			draw_line(pos+Vector2(radius*.5,0),pos+Vector2(radius*.5,radius),Color(color,.35),1.0)

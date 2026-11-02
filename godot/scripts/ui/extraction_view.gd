@@ -202,7 +202,7 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 	var guards: Array=[]
 	if str(run.get("phase",""))=="battle":
 		for enemy_id in run.get("activeEncounter",{}).get("enemies",[]):
-			guards.append({"id":str(enemy_id),"name":str(app.model.catalog.get("EnemyData",{}).get(str(enemy_id),{}).get("name",enemy_id))})
+			guards.append({"id":str(enemy_id),"name":str(app.model.catalog.get("EnemyData",{}).get(str(enemy_id),{}).get("name",enemy_id)),"portrait":str(app.model.catalog.get("EnemyData",{}).get(str(enemy_id),{}).get("portrait","res://assets/enemies/"+str(enemy_id)+".png"))})
 	scene.configure(room,app.model.extraction.containers() if phase!="battle" else [],str(room.get("selectedContainer","")),guards,app.extraction_reduced_motion)
 	scene.battle_requested.connect(app._begin_extraction_battle)
 	scene.service_requested.connect(func(service):
@@ -217,7 +217,7 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 	if phase=="battle":_button(app,actions,"迎战",app._begin_extraction_battle,true).name="ExtractionBattle"
 	elif phase=="boss_exit":
 		_button(app,actions,"撤离",func():_confirm_departure(app,true),true).name="ExtractionExit"
-		if int(run.get("act",1))<3:_button(app,actions,"继续深入",func():_operate(app,app.model.extraction.continue_act())).name="ExtractionNextAct"
+		if int(run.get("act",1))<app.model.extraction.max_acts():_button(app,actions,"继续深入",func():_operate(app,app.model.extraction.continue_act())).name="ExtractionNextAct"
 	for box in ([] if phase=="battle" else app.model.extraction.containers()):
 		var id:=str(box.id)
 		var button=_button(app,actions,str(box.get("name","容器")),func():
@@ -264,7 +264,7 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 			var preview: Dictionary=action.get("encounterPreview",{})
 			if not preview.is_empty():
 				var guards_row=app._hbox(choice,4);guards_row.name="ExtractionEncounterPreview_"+id
-				for enemy_id in preview.get("enemies",[]):_icon(guards_row,{"icon":"res://assets/enemies/"+str(enemy_id)+".png"},32)
+				for enemy_id in preview.get("enemies",[]):_icon(guards_row,{"icon":str(app.model.catalog.get("EnemyData",{}).get(str(enemy_id),{}).get("portrait","res://assets/enemies/"+str(enemy_id)+".png"))},32)
 				app._label(guards_row,"精英战" if preview.get("isElite",false) or str(preview.get("kind",""))=="elite" else "交战",11,app.RED)
 			app._label(choice,str(action.get("description","")),12,app.TEXT,true)
 			var cost:=int(action.get("cost",0))
@@ -344,7 +344,7 @@ static func _show_growth(app,parent: Node) -> void:
 		var id:=str(raw_choice.get("choiceId",raw_choice.get("id","")))
 		var col=_section(app,row,str(choice.get("name","祝福")),app.CYAN)
 		RewardRarity.decorate(app,col.get_parent(),col,str(choice.get("rarity","white")))
-		if app.has_method("_rune_icon"):app._rune_icon(col,preload("res://scripts/ui/rune_theme.gd").effect_key(choice),34,app.GOLD)
+		if app.has_method("_rune_icon"):app._reward_art_icon(col,choice,34)
 		app._label(col,str(choice.get("description",choice.get("desc",""))),13,app.TEXT,true)
 		var spacer=Control.new();spacer.size_flags_vertical=Control.SIZE_EXPAND_FILL;col.add_child(spacer)
 		_button(app,col,"选择",func():
@@ -771,7 +771,7 @@ static func _build(app,run: Dictionary) -> void:
 		for blessing in blessings:
 			var card=_section(app,cards,str(blessing.get("name","祝福")),app.GOLD)
 			RewardRarity.decorate(app,card.get_parent(),card,str(blessing.get("rarity","white")))
-			if app.has_method("_rune_icon"):app._rune_icon(card,preload("res://scripts/ui/rune_theme.gd").effect_key(blessing),30,app.GOLD)
+			if app.has_method("_rune_icon"):app._reward_art_icon(card,blessing,30)
 			app._label(card,str(blessing.get("description","")),14,app.TEXT,true)
 			if int(blessing.get("stacks",1))>1:app._label(card,"叠加 %d 层" % int(blessing.stacks),13,app.CYAN)
 	_equipment_slots(app,col,run)

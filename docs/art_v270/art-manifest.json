@@ -1,0 +1,1360 @@
+{
+  "version": "2.7.0",
+  "generator": "built-in image_gen",
+  "style": "烬金灯火",
+  "runtimeRoot": "res://assets/content_v270/",
+  "sourceUse": "Original fictional game assets generated for this project; no third-party photo or private user images used.",
+  "assets": [
+    {
+      "file": "backgrounds/snow_inn.png",
+      "source": "exec-632ae563-00a6-4cce-bc4d-92b13c4d4120.png",
+      "method": "original generated image",
+      "sha256": "37aa03b9bf8dc642d0d8e7b402c70e8777b975756d792bb24e3a388f4bd11e39",
+      "bytes": 3430934
+    },
+    {
+      "file": "backgrounds/ash_bridge.png",
+      "source": "exec-a8d53759-fe87-4011-8dca-24ff051b95a3.png",
+      "method": "original generated image",
+      "sha256": "08de825c0f17e16e1e6bd85e704fa6591fa4320cb9a4981297a04f5e7778757c",
+      "bytes": 3187063
+    },
+    {
+      "file": "backgrounds/unlit_town.png",
+      "source": "exec-b96e4420-01d6-4a14-aa53-e1482cea87f1.png",
+      "method": "original generated image",
+      "sha256": "9e44985d36a9d2252d51973cf423625422291f7141ddbc08b481221cbece2abf",
+      "bytes": 3055570
+    },
+    {
+      "file": "backgrounds/copper_gallery.png",
+      "source": "exec-6010229b-8e3d-42c5-a55a-3cbbd1155af7.png",
+      "method": "original generated image",
+      "sha256": "1e65fdc60985dfb92d8d2d6a5b07a80c290055d322e9edcca8590fa5b33c8fca",
+      "bytes": 3119277
+    },
+    {
+      "file": "backgrounds/inverted_well.png",
+      "source": "exec-b3632c33-8162-4516-8b26-f4b0c12338b0.png",
+      "method": "original generated image",
+      "sha256": "ea26d0432d6ce4f2e1545faee036f561b1c8bf0c48de59048373e5794dbbddfb",
+      "bytes": 3002476
+    },
+    {
+      "file": "backgrounds/furnace_core.png",
+      "source": "exec-306cf86d-0c04-430f-89c2-93b170b179f1.png",
+      "method": "original generated image",
+      "sha256": "f9d8002982ad63c460d5380dd7b3b9c7fae09ddb8e1373507274f7219a88eb68",
+      "bytes": 3210049
+    },
+    {
+      "file": "banner/selin_banner.png",
+      "source": "exec-30084a5b-1302-4d4c-9f17-52e54b09ee20.png",
+      "method": "original generated image",
+      "sha256": "c8aff406d8e01818b0c724cae2ca6123fe7e0d12a1f09902ffdcc7738b9feec6",
+      "bytes": 2730252
+    },
+    {
+      "file": "cg/borrowed_flame.png",
+      "source": "exec-17383cd3-7202-448c-b959-d228f8eba74b.png",
+      "method": "original generated image",
+      "sha256": "47ffc3db064486096f8a5afa558250c6baf39909d49b7e23392636a03b2abe1c",
+      "bytes": 2632354
+    },
+    {
+      "file": "cg/lantern_homecoming.png",
+      "source": "exec-13e7ec82-46b8-44e4-9495-4de0c6b5719e.png",
+      "method": "original generated image",
+      "sha256": "f56fd83c19dd18c690b0b9c83ad4ca7f5fc7ef436a0c541059b8d0d351ee9429",
+      "bytes": 3181543
+    },
+    {
+      "file": "characters/selin.png",
+      "source": "exec-e48718ec-5357-45c8-b193-b893b28af12d.png",
+      "method": "original generated image",
+      "sha256": "07a0ec71eb5eff68239c67bbd26271c2f527b089168b422a4aab12a1cb6e9cb3",
+      "bytes": 2654978
+    },
+    {
+      "file": "portraits/selin_neutral.png",
+      "source": "exec-a082fc53-4b60-4e58-a235-aa021703ff43.png",
+      "sourceRect": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "canvas": [
+        640,
+        640
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "384c3178f8e9e3d970ff48af2285d325396537ff9c0e789f81fd8dc23227c4e1",
+      "bytes": 665907
+    },
+    {
+      "file": "portraits/selin_smile.png",
+      "source": "exec-a082fc53-4b60-4e58-a235-aa021703ff43.png",
+      "sourceRect": [
+        627,
+        0,
+        627,
+        627
+      ],
+      "canvas": [
+        640,
+        640
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "62ebe6f23bacecb38a1cd2e1aa1f016e45326fb1a7304705c5114ff331aca144",
+      "bytes": 667046
+    },
+    {
+      "file": "portraits/selin_concern.png",
+      "source": "exec-a082fc53-4b60-4e58-a235-aa021703ff43.png",
+      "sourceRect": [
+        0,
+        627,
+        627,
+        627
+      ],
+      "canvas": [
+        640,
+        640
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "bcea9746d91c5bca6b6ce9d7fdd5ff9e73ac2fd560241b374e4c351fff24171d",
+      "bytes": 677371
+    },
+    {
+      "file": "portraits/selin_resolve.png",
+      "source": "exec-a082fc53-4b60-4e58-a235-aa021703ff43.png",
+      "sourceRect": [
+        627,
+        627,
+        627,
+        627
+      ],
+      "canvas": [
+        640,
+        640
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "bc0eb9587428751ca46c04c53380e08af577e04359fc6c7e0cd6944abb1eb726",
+      "bytes": 668199
+    },
+    {
+      "file": "portraits/selin_face.png",
+      "source": "exec-a082fc53-4b60-4e58-a235-aa021703ff43.png",
+      "sourceRect": [
+        100,
+        20,
+        420,
+        420
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "f7e252179006eb40b41eb56deff77b9f407530d886c71cff33799af5c780de82",
+      "bytes": 460866
+    },
+    {
+      "file": "enemies/ash_moth.png",
+      "source": "exec-a5a5e343-8fe3-4b6e-b09c-04d4c78773a2.png",
+      "sourceRect": [
+        0,
+        0,
+        418,
+        390
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "a61ea0396c4a31b9bf4cbc00b113af1bcf3126c6767aa3ec5edc8a28538718e3",
+      "bytes": 289850
+    },
+    {
+      "file": "enemies/lamp_wraith.png",
+      "source": "exec-a5a5e343-8fe3-4b6e-b09c-04d4c78773a2.png",
+      "sourceRect": [
+        418,
+        0,
+        418,
+        410
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "3a7b05735d33a7196caa6c0c24c59a7558f8651ed16d76f86299b943fe4bfc2a",
+      "bytes": 292009
+    },
+    {
+      "file": "enemies/furnace_guard.png",
+      "source": "exec-a5a5e343-8fe3-4b6e-b09c-04d4c78773a2.png",
+      "sourceRect": [
+        836,
+        0,
+        418,
+        400
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "34e612b8592608904afe45bbead9678057958778876f8682bebd5adb0a71c39f",
+      "bytes": 337496
+    },
+    {
+      "file": "enemies/furnace_cantor.png",
+      "source": "exec-a5a5e343-8fe3-4b6e-b09c-04d4c78773a2.png",
+      "sourceRect": [
+        0,
+        390,
+        425,
+        430
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "a127aeaa21cc607e91d238c46b506cb6bfc1ff9b1ffeec80be1f7e2929852615",
+      "bytes": 274002
+    },
+    {
+      "file": "enemies/cracked_puppet.png",
+      "source": "exec-a5a5e343-8fe3-4b6e-b09c-04d4c78773a2.png",
+      "sourceRect": [
+        430,
+        400,
+        400,
+        425
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "d7827a0a7a6ac2c8b7f0d811c4c19134dd57e9e60901e63c64f825a31ddd80c5",
+      "bytes": 311656
+    },
+    {
+      "file": "enemies/lamp_overseer.png",
+      "source": "exec-a5a5e343-8fe3-4b6e-b09c-04d4c78773a2.png",
+      "sourceRect": [
+        840,
+        402,
+        414,
+        423
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "24593d005cb2725abfa7f7274d9decbaf8fba222e99d45fd80162c775ce0e13a",
+      "bytes": 367455
+    },
+    {
+      "file": "enemies/boss_hedor.png",
+      "source": "exec-a5a5e343-8fe3-4b6e-b09c-04d4c78773a2.png",
+      "sourceRect": [
+        0,
+        815,
+        440,
+        439
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "ed05436fc355d1458654dbf671c14492b298335890e94bcc6f99755b519b8454",
+      "bytes": 431229
+    },
+    {
+      "file": "enemies/furnace_lamp.png",
+      "source": "exec-a5a5e343-8fe3-4b6e-b09c-04d4c78773a2.png",
+      "sourceRect": [
+        470,
+        825,
+        330,
+        429
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "4c49c70e191953c61f69940b1c4950b8026b6b81f095365a9deaf31e7ce15531",
+      "bytes": 249331
+    },
+    {
+      "file": "enemies/furnace_lamp_overheat.png",
+      "source": "exec-a5a5e343-8fe3-4b6e-b09c-04d4c78773a2.png",
+      "sourceRect": [
+        855,
+        825,
+        399,
+        429
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "5dec2011d025c81ddca6e636e2fef602324c196e832689103200eceddb6fcd11",
+      "bytes": 277320
+    },
+    {
+      "file": "containers/lantern_chain_coffer.png",
+      "source": "exec-ccc43d95-b04d-40ee-916c-0407983996e4.png",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "3306ad50541ffbe1156088ab425be2775d613786f06d6bc56c1f16b774a0225f",
+      "bytes": 307807
+    },
+    {
+      "file": "containers/lantern_medicine.png",
+      "source": "exec-ccc43d95-b04d-40ee-916c-0407983996e4.png",
+      "sourceRect": [
+        512,
+        0,
+        512,
+        512
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "c00f8da02f41296369ebcd39aa7d469c8b9ba125f3a190bad3685086c0f7ae7a",
+      "bytes": 352115
+    },
+    {
+      "file": "containers/lantern_tool_cabinet.png",
+      "source": "exec-ccc43d95-b04d-40ee-916c-0407983996e4.png",
+      "sourceRect": [
+        1024,
+        0,
+        512,
+        512
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "88617720d8b78a1ec3bc7d353ca09a41cfa41e9ad64c8f771a37ef1978d14567",
+      "bytes": 339871
+    },
+    {
+      "file": "containers/lantern_ash_altar.png",
+      "source": "exec-ccc43d95-b04d-40ee-916c-0407983996e4.png",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        512
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "5fa2119fcd97a9fe85a77c06aae6356d7661ae3bcb1e91873c78537d85ca299d",
+      "bytes": 353708
+    },
+    {
+      "file": "containers/lantern_amber_chest.png",
+      "source": "exec-ccc43d95-b04d-40ee-916c-0407983996e4.png",
+      "sourceRect": [
+        512,
+        512,
+        512,
+        512
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "191063667aedd643c43e4819fae7c77da5af8da8a79ab0a424ca98d9a6a3067a",
+      "bytes": 311211
+    },
+    {
+      "file": "containers/lantern_core_vault.png",
+      "source": "exec-ccc43d95-b04d-40ee-916c-0407983996e4.png",
+      "sourceRect": [
+        1024,
+        512,
+        512,
+        512
+      ],
+      "canvas": [
+        512,
+        512
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "sha256": "8d8ce79d5d2b2cb45d7ef8a6b71943592ca419adec6e8af192ca611343cf808e",
+      "bytes": 386407
+    },
+    {
+      "file": "loot/lantern_wick.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        4,
+        4,
+        252,
+        242
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "9f2d0c685cd93f5df1e6572b99c2e5e49b7ef53d3235c29f846c70e2839569e5",
+      "bytes": 75195
+    },
+    {
+      "file": "loot/lantern_chain.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        264,
+        4,
+        242,
+        242
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "189f8fc3415b13065c60b6e26212c694288ea73435cda27b4ed2df28dcf114de",
+      "bytes": 76876
+    },
+    {
+      "file": "loot/lantern_mantle.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        514,
+        4,
+        252,
+        242
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "189a21fa5202d59f2c1303e1e63c75d11aa08327b588dbfebfba07a96005a89f",
+      "bytes": 71697
+    },
+    {
+      "file": "loot/lantern_pitch_tube.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        774,
+        4,
+        232,
+        242
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "3714253ec43d3bbbc3c39da6eee9c38f94f50f8fc450c031a43e46938823446b",
+      "bytes": 54140
+    },
+    {
+      "file": "loot/lantern_lens.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        1014,
+        4,
+        236,
+        242
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "befb9625af21621984ec61d03187069da326e8ad2ce6790a5f71a8b111db09ab",
+      "bytes": 70315
+    },
+    {
+      "file": "loot/lantern_regulator.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        4,
+        254,
+        252,
+        232
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "2e5fa7d0983e520d37e692eaf1c7ee4386745ac4647343b490b1c5f387135737",
+      "bytes": 82781
+    },
+    {
+      "file": "loot/lantern_tongs.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        280,
+        260,
+        211,
+        228
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "38c033599237266bfd9be511896d5b30cbbd5167ad8b6b0b9efac5df592bbf91",
+      "bytes": 49306
+    },
+    {
+      "file": "loot/lantern_bellows.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        514,
+        254,
+        252,
+        232
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "7ac1027cab156f8e07e1d7d4fe7c765f97f1e690c23926c2de9052c0d3164a74",
+      "bytes": 71735
+    },
+    {
+      "file": "loot/lantern_cell.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        788,
+        260,
+        212,
+        226
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "190cf5022a34d03fa5914e91f80570e566a0a5c6cc04f8e06e738a304093194f",
+      "bytes": 71217
+    },
+    {
+      "file": "loot/lantern_prism.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        1014,
+        254,
+        236,
+        232
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "020d6fc89d1646c939b25e9a145b0224ffe74f2ba2bdc729e29c368b7de011c8",
+      "bytes": 73772
+    },
+    {
+      "file": "loot/lantern_rotor.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        4,
+        494,
+        252,
+        237
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "3000303b1d6210c7e95341cfbf8f0e0224a1cb5e0c5b5719ca42a195711cd6eb",
+      "bytes": 88866
+    },
+    {
+      "file": "loot/lantern_toolcase.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        264,
+        494,
+        242,
+        237
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "48dcc70ba65cb176e8a6d238456e00305d5a82cfc700ac7f2b6f31fa0d1d8d1f",
+      "bytes": 98257
+    },
+    {
+      "file": "loot/lantern_seal.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        535,
+        498,
+        220,
+        216
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "2df0cb99cbf04b11535ba7a22c7e90e31528098e1d31f58964a281fadb12c7fe",
+      "bytes": 84645
+    },
+    {
+      "file": "loot/lantern_glass.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        775,
+        502,
+        225,
+        208
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "185c2b19b05664745d9d3755c871d141fd5d2093f36d7350fb52561c7bfc4b03",
+      "bytes": 81364
+    },
+    {
+      "file": "loot/lantern_verse.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        1014,
+        494,
+        236,
+        237
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "6f303906275e67c4829dd85900d797c21c54d3c9df7cd579443c92e5cb8eff48",
+      "bytes": 81475
+    },
+    {
+      "file": "loot/lantern_ore.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        12,
+        745,
+        240,
+        208
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "4ac5ed5063a063b8a6568b96870856ff17a23492b22788102b9219d454a01061",
+      "bytes": 86284
+    },
+    {
+      "file": "loot/lantern_signet.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        264,
+        739,
+        242,
+        220
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "f91eda078b088cd13496da3f4d1b3583f59922ae49300fe90a3eee039c57fa3d",
+      "bytes": 84632
+    },
+    {
+      "file": "loot/lantern_statue.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        520,
+        716,
+        234,
+        247
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "a49425263fd59d246f7bca7de6345b20b0448c2126e7316357606c8eb191d4a3",
+      "bytes": 98164
+    },
+    {
+      "file": "loot/lantern_reliquary.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        774,
+        739,
+        232,
+        220
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "db512a18db41e9f4c9f0d915600f330e0c8472eb796260236b08c26d1c0377a2",
+      "bytes": 99643
+    },
+    {
+      "file": "loot/lantern_orrery.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        1014,
+        739,
+        236,
+        220
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "7087fb3b2d9097934e7d4207597e1195f37d381e350b1b32bbb00ea48aa7422c",
+      "bytes": 105121
+    },
+    {
+      "file": "loot/lantern_heart.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        8,
+        967,
+        244,
+        271
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "9a27b5a1e9b50b84be609d42146f3926953fa0276d69e05f4c2c19671c6e19ee",
+      "bytes": 81989
+    },
+    {
+      "file": "loot/lantern_archive.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        264,
+        967,
+        242,
+        283
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "d0c06c86e38db071391d3ec182cdf0ab45a4c539405bcf8de03056eee936709f",
+      "bytes": 87528
+    },
+    {
+      "file": "loot/lantern_sun.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        533,
+        970,
+        218,
+        266
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "60cc949fa5ce2ed27bf8170fb0a35a7f08d70858fb3be4cffe1388a10bb75bd6",
+      "bytes": 75818
+    },
+    {
+      "file": "loot/lantern_feather.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        774,
+        967,
+        232,
+        283
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "e2e71bc17e8ab1b143e28f195b5a5626b1d378b776392f5859939e663369337d",
+      "bytes": 71458
+    },
+    {
+      "file": "loot/key_lantern.png",
+      "source": "exec-06b60289-428a-45c2-880f-baecd18f1c77.png",
+      "sourceRect": [
+        1014,
+        967,
+        236,
+        283
+      ],
+      "canvas": [
+        256,
+        256
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "a75d85fcc0407367d1c6698659426ccf77ab3c44f7fdf5ac6c0f4bcc9a7a5d47",
+      "bytes": 47260
+    },
+    {
+      "file": "relics/ember_lantern_helmet.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        3,
+        3,
+        316,
+        304
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "8a89589bb7f38135cddd81fa7ff0b29898a46b8e42911c4effcd8e3a17c5a0d9",
+      "bytes": 173778
+    },
+    {
+      "file": "relics/ember_lantern_chest.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        325,
+        3,
+        317,
+        304
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "18e7355581c67c4f7fe8e1f78e5241bf655fd3205688f880ef77abd9a0e8dbce",
+      "bytes": 211079
+    },
+    {
+      "file": "relics/ember_lantern_belt.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        665,
+        8,
+        295,
+        296
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "2142764becc59d18a876b68d46907e9b1e966cb3236aedfdb4b83e9edc0d2827",
+      "bytes": 202893
+    },
+    {
+      "file": "relics/ember_lantern_boots.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        1010,
+        5,
+        271,
+        303
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "4a64b5f579e3dcc80292e7554b83c3c064df69b63ba6b2bf0e3133c3e6339ee5",
+      "bytes": 166501
+    },
+    {
+      "file": "relics/ember_lantern_necklace.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        3,
+        313,
+        316,
+        294
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "56bf4adc68aa87492640c86f55cb96cb09b59f9f5290c5b8110ff3602ece6681",
+      "bytes": 171743
+    },
+    {
+      "file": "skills/selin_normal.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        325,
+        313,
+        317,
+        294
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "bcb68d498f1a8739f04d839f59e434d6c0f9d3fc13366677c868a4ecae764c70",
+      "bytes": 191428
+    },
+    {
+      "file": "skills/selin_skill.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        648,
+        313,
+        316,
+        294
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "cee80db734e04b938a839c9db862828ad5dabbd667c90b8c03bb09948aaf8c5a",
+      "bytes": 223443
+    },
+    {
+      "file": "skills/selin_ultimate.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        970,
+        313,
+        317,
+        294
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "e5de22d57936355d99dbf6ce74422723ab624dcbdf2296e0e49685e83e749911",
+      "bytes": 263840
+    },
+    {
+      "file": "skills/selin_passive.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        3,
+        613,
+        316,
+        292
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "775b7c35766aa6022c3821c8750897f9f685877c99933b88bc678e47dacab6b8",
+      "bytes": 238759
+    },
+    {
+      "file": "blessings/fire_claw.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        325,
+        613,
+        317,
+        292
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "87b70462c0dbd6c88884b5d68670762e0f9d67beddfc35282edbaeaf81079a71",
+      "bytes": 208576
+    },
+    {
+      "file": "blessings/linked_lanterns.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        650,
+        610,
+        313,
+        280
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "1a7054de6cf92964c9337e54893b900561f13ba7cf6e309ef3a338ddb2a83609",
+      "bytes": 209422
+    },
+    {
+      "file": "blessings/ember_prism.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        980,
+        616,
+        305,
+        278
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "9693fefa68e47e37ab0129527e218799d8c04db1fbe363d5ab1af837b901e257",
+      "bytes": 218952
+    },
+    {
+      "file": "blessings/dragon_scale.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        3,
+        911,
+        316,
+        305
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "14de8e54cddfdd43653e76c22606433a1e2f4342ddaa28eba59e48278a50de94",
+      "bytes": 184084
+    },
+    {
+      "file": "blessings/flame_blossom.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        325,
+        911,
+        317,
+        305
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "f503482460daf30212f5f9c0e71887cf6aac2137e4743281b822945a241623ec",
+      "bytes": 229116
+    },
+    {
+      "file": "blessings/sheltered_ember.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        648,
+        911,
+        316,
+        305
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "54ced292e248c19aeb5a79a793c436730b1408826d537baaab8dce123cb270d9",
+      "bytes": 220043
+    },
+    {
+      "file": "blessings/furnace_heart.png",
+      "source": "exec-715ac925-424c-435d-98c1-e50e1190bcd4.png",
+      "sourceRect": [
+        970,
+        911,
+        317,
+        305
+      ],
+      "canvas": [
+        384,
+        384
+      ],
+      "padding_min": 16,
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "sha256": "26d4ec8250add18b913e0592848af4c81b59b375b0bc7f5627ad292b3a693324",
+      "bytes": 232933
+    }
+  ]
+}

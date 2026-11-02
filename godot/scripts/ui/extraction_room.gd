@@ -32,7 +32,7 @@ const INTERACTION_MARGIN := 80.0
 func configure(room: Dictionary, boxes: Array, selection: String = "", guards: Array = [], reduce_motion: bool = false) -> void:
 	enemies=guards.duplicate(true);reduced_motion=reduce_motion
 	for enemy in enemies:
-		var path:="res://assets/enemies/"+str(enemy.get("id",""))+".png"
+		var path:=str(enemy.get("portrait","res://assets/enemies/"+str(enemy.get("id",""))+".png"))
 		if ResourceLoader.exists(path):enemy_sprites[str(enemy.id)]=load(path)
 	scene = room.duplicate(true); containers = boxes.duplicate(true); selected = selection
 	service_id="" if scene.get("servicesLocked",false) or not enemies.is_empty() else "relay" if scene.get("type","")=="relay" else "unlock" if scene.get("type","")=="key_vault" and not scene.get("unlocked",false) else ""

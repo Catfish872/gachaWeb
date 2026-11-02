@@ -89,6 +89,12 @@ var _linear_floor_safe := false
 var _normalizer_safe := false
 var _raw_slot_max: Array = []
 var _domain_set_stats: Dictionary = {}
+var _selin_upper := false
+var _selin_rewards: Array = []
+var _selin_burn_attack := 0.0
+var _selin_team_damage := 0.0
+var _selin_team_burn_attack := 0.0
+var _selin_set_amp := 0.0
 var _domain_effect_factor := 1.0
 var _domain_skill_factor := 1.0
 var _branch_work: Dictionary = {}
@@ -148,7 +154,7 @@ static func _relic_fingerprint_bytes(relic: Variant) -> PackedByteArray:
 	return var_to_bytes([relic.get("uid"),relic.get("slotId"),relic.get("setId",""),relic.get("rarity"),relic.get("level"),relic.get("equippedBy"),_canonical_variant(main),subs,_canonical_variant(extras)])
 
 static func _fingerprint_header(game, char_id: String, context: Dictionary) -> String:
-	return var_to_bytes(_canonical_variant({"version":"relic-reference-v3-highest-rarity","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size()})).hex_encode() + "\n"
+	return var_to_bytes(_canonical_variant({"version":"relic-reference-v3-highest-rarity","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size(),"team":game.state.team,"ownedCharacters":game.state.ownedCharacters})).hex_encode() + "\n"
 
 static func plan_fingerprint(game, char_id: String, context: Dictionary = {}) -> String:
 	var digest := HashingContext.new()
@@ -224,6 +230,7 @@ func _numeric_domain_safe() -> bool:
 	return is_finite(combat_upper) and combat_upper<SAFE_INTEGER
 
 func _has_linear_floor_safety() -> bool:
+	if _char_id == "selin": return false # Team contributions are affine, not source-homogeneous.
 	# Positive permanent attributes only increase the no-relic source. Prove all
 	# scored hits/heals are above their max(1, amount) floor before normalizing.
 	if _profile.type=="survival": return false
@@ -770,7 +777,7 @@ func _objective_key(stats: Dictionary,effects: Array,upper: bool) -> String:
 		if _profile.type=="damage": values.append(stats.criDmg)
 		for sid in _catalog.CharacterData[_char_id].skills:
 			values.append(int(floor(float(_catalog.SkillData[sid].get("energyGain",15))*maxf(0.0,1.0+float(stats.energyRate)))))
-	var kinds: Array = ["damageTakenMult","skillShieldMult"] if _profile.type=="survival" else (["activeSkillHealMult","energyOnCrit","energyOnActiveHeal"] if _profile.type=="healing" else ["damageVsStatus","damageWhenFasterThanTarget","energyOnCrit","energyOnActiveHeal"])
+	var kinds: Array = ["damageTakenMult","skillShieldMult"] if _profile.type=="survival" else (["activeSkillHealMult","energyOnCrit","energyOnActiveHeal"] if _profile.type=="healing" else ["damageVsStatus","damageWhenFasterThanTarget","energyOnCrit","energyOnActiveHeal","onBurnDetonation"])
 	var relevant: Array = []
 	var speed_relevant: bool = _catalog.CharacterData[_char_id].get("passiveId","")=="zeph_passive"
 	for effect in effects:
@@ -804,6 +811,8 @@ func _evaluate(stats: Dictionary,effects: Array,upper: bool = false) -> float:
 		actor.c6Used = true # Repeatable full-HP index excludes one-use immunity.
 		var incoming: float = _battle.expected_effect_damage(attacker,actor,{"type":"enemy","element":"neutral"},{"type":"damage","multiplier":1.0,"scalingStat":"atk"})
 		result = (float(actor.maxHp)+own_shield)*float(_context.incomingRawHit)/maxf(1.0,incoming)
+	elif _char_id == "selin":
+		result = _evaluate_selin(actor, target, upper)
 	else:
 		_prepare_skills(actor,target)
 		_policy_optimal = upper or _context.policy=="optimal"
@@ -910,12 +919,92 @@ func preview() -> Dictionary:
 	var useful:bool=not _before.is_empty() and _best.get("relicUids",{}) != _before.get("relicUids",{})
 	var proven := not _cancelled and _phase=="done" and upper<=_score
 	var objective := str(_profile.get("type","damage"))
-	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"highestRarities":_highest_rarity.duplicate(),"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":{"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective),"objectiveLabel":{"damage":"参考场景六次行动期望伤害","healing":"参考场景六次行动潜在治疗","survival":"施放自身护盾后的有效承伤"}.get(objective,objective),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
+	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"highestRarities":_highest_rarity.duplicate(),"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":("队伍贡献" if _char_id=="selin" else {"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective)),"objectiveLabel":("六次行动协同收益" if _char_id=="selin" else {"damage":"参考场景六次行动期望伤害","healing":"参考场景六次行动潜在治疗","survival":"施放自身护盾后的有效承伤"}.get(objective,objective)),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
 
 func _assumptions() -> Array:
+	if _char_id == "selin": return ["按当前编队统计自身输出、引爆和队友燃烧增益；目标维持6回合燃烧。", "六次行动内计入充能、终结技覆盖与套装首次引爆后的生效时机。"]
 	if _profile.get("type","")=="survival": return ["满血施放一次自身战技护盾，以中性基础伤害 %d 的直接攻击计算等效生命。"%int(_context.incomingRawHit),"采用真实防御、减伤及满血格挡期望；一次性无敌、队友护盾、持续回复和实战战术另行发挥作用。","同收益先补齐空槽，再保留已有装备；仅使用未装备和当前角色遗物，等级与金币保持原样。"]
 	var result: Array = ["%d 次自身行动，起始能量 %d；按自动战斗优先级（终结技→战技→普攻），速度仅参与条件判定。"%[int(_context.actions),int(_context.initialEnergy)],"%d 个持续存活的中性敌人，防御 %.0f、其他单位速度 %.0f；自身可施加状态的条件潜能：%s（本基准按全程覆盖计算）。"%[int(_context.enemyCount),float(_context.enemyDefense),float(_context.otherSpeed),("、".join(_context.targetStatuses) if not _context.targetStatuses.is_empty() else "无")],"真实技能缩放、暴击封顶、整套阈值、命座及能量触发；固定参考场景的最优性与具体战斗结果分别展示。"]
 	if _context.policy=="optimal": result[0] = "%d 次自身行动；显式选择最优合法手动技能策略，速度仅参与条件判定。"%int(_context.actions)
 	if _profile.get("type","")=="healing": result.append("三名友方持续有足够缺失生命：统计主动治疗和角色直接治疗被动；满血实际恢复为零，再生与护盾单独发挥作用。")
 	else: result.append("统计自身直接伤害与直接追击；队友增益、控制收益及目标自身属性决定的持续伤害单独发挥作用。")
 	return result
+
+func _evaluate_selin(actor: Dictionary, target: Dictionary, upper: bool) -> float:
+	_selin_upper = upper
+	_prepare_skills(actor, target)
+	_policy_optimal = upper or _context.policy == "optimal"
+	_selin_team_damage = 0.0
+	_selin_team_burn_attack = 0.0
+	for id in _game.state.team:
+		if id == null or id == _char_id or not _game.state.ownedCharacters.has(id): continue
+		var friend: Dictionary = _battle._make_ally({"id":id,"stats":_game.computed_stats(id),"constellation":int(_game.state.ownedCharacters[id].constellation),"ownerEffects":Sets.evaluate(_catalog,_game.equipped_relics(id)).ownerEffects},1)
+		var average := 0.0
+		for sid in friend.skills:
+			var skill: Dictionary = _catalog.SkillData[sid]
+			for effect in skill.get("effects", []):
+				if effect.get("type", "") != "damage": continue
+				var targets := int(_context.enemyCount) if effect.get("target", "") in ["all","all_enemies","chain3"] else 1
+				# Divide out the existing rare bucket before adding 80 percentage points.
+				var innate := 0.2 if friend.passiveId == "kaldi_passive" else (0.7 if int(friend.constellation)>=6 else 0.4) if friend.passiveId == "cinder_passive" and skill.type in ["skill","ultimate"] else 0.0
+				average += targets * _battle.expected_effect_damage(friend,target,skill,effect) / (1.0 + innate)
+		_selin_team_damage += average / maxf(1.0,float(friend.skills.size()))
+		var can_burn: bool = friend.get("passiveId", "") == "ember_passive"
+		for sid in friend.skills:
+			for effect in _catalog.SkillData[sid].get("effects", []):
+				if effect.get("statusId", "") == "burn": can_burn = true
+		if can_burn: _selin_team_burn_attack = maxf(_selin_team_burn_attack,float(friend.stats.atk))
+	_selin_burn_attack = float(actor.stats.atk)
+	_selin_set_amp = 0.0
+	var direct_amp := 0.0
+	for effect in actor.ownerEffects:
+		if effect.get("type", "") == "onBurnDetonation":
+			_selin_set_amp = maxf(_selin_set_amp,float(effect.get("partyBurnAmp",0.4)))
+			direct_amp = maxf(direct_amp,float(effect.get("ownerDirectAmp",0.25)))
+	_selin_rewards = []
+	for lit in [false,true]:
+		var rewards: Array = []
+		actor.statuses = [{"id":"ember_lantern_direct","duration":2,"value":direct_amp}] if lit else []
+		for sid in actor.skills:
+			var skill: Dictionary = _catalog.SkillData[sid]
+			var reward := 0.0
+			for effect in skill.get("effects", []):
+				if effect.get("type", "") == "damage":
+					var count := int(_context.enemyCount) if effect.get("target", "") in ["all","all_enemies","chain3"] else 1
+					reward += count * _battle.expected_effect_damage(actor,target,skill,effect)
+			if skill.type == "ultimate" and int(actor.constellation) >= 6:
+				reward += int(_context.enemyCount) * _battle.predict_effect_damage(actor,target,{"type":"follow_up","element":"fire"},{"multiplier":0.6,"rawAtk":true},false,true)
+			# Current active action's detonation sees only the previously active set.
+			reward += int(_context.enemyCount) * _selin_burn_attack * 0.156 * (1.0 + (_selin_set_amp if lit else 0.0))
+			rewards.append(reward)
+		_selin_rewards.append(rewards)
+	_memo.clear()
+	return _selin_value(int(_context.actions),int(_context.initialEnergy),0,0,false)
+
+func _selin_value(turns: int, energy: int, cooldown: int, aura: int, lit: bool) -> float:
+	if turns <= 0: return 0.0
+	var key := str([turns,energy,cooldown,aura,lit])
+	if _memo.has(key): return float(_memo[key])
+	var best := 0.0
+	for index in _auto_skill_order:
+		var skill: Dictionary = _skills[index]
+		if skill.type == "ultimate" and energy < skill.cost: continue
+		if skill.type == "skill" and cooldown > 0: continue
+		var next_energy := 0 if skill.type == "ultimate" else mini(100,energy+int(skill.gain))
+		var next_cd := maxi(0,int(skill.cooldown)-1) if skill.type == "skill" else maxi(0,cooldown-1)
+		var active_aura := 2 if skill.type == "ultimate" else aura
+		var value := float(_selin_rewards[int(lit)][index])
+		value += _selin_team_damage * (0.8 if active_aura > 0 else 0.0)
+		var burn_source := maxf(_selin_burn_attack, _selin_team_burn_attack)
+		var burn_deepening := 1.8 if _selin_team_burn_attack > _selin_burn_attack and active_aura > 0 else 1.0
+		if _selin_upper:
+			# Keep a monotone safe bound when the strongest burn source changes owner.
+			burn_source = maxf(_selin_burn_attack, _selin_team_burn_attack * (1.8 if active_aura > 0 else 1.0))
+			burn_deepening = 1.0
+		# Ordinary burn keeps its strongest source; team baseline cancels between loadouts.
+		value += int(_context.enemyCount) * burn_source * 0.18 * (1.0 + _selin_set_amp) * burn_deepening
+		for branch in _transitions[index]: value += float(branch.p)*_selin_value(turns-1,mini(100,next_energy+int(branch.energy)),next_cd,maxi(0,active_aura-1),true)
+		best = maxf(best,value)
+		if not _policy_optimal: break
+	_memo[key] = best
+	return best

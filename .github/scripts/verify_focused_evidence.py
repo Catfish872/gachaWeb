@@ -24,8 +24,8 @@ def production_snapshot(root):
 
 def verify(root, record):
     version = json.loads((root / 'data/version.json').read_text())
-    if version['version_name'] != '2.6.6' or version['version_code'] != 20606:
-        raise ValueError('This evidence gate is scoped to release 2.6.6; prepare a new focused review for another version.')
+    if version['version_name'] != '2.7.0' or version['version_code'] != 20700:
+        raise ValueError('This evidence gate is scoped to release 2.7.0; prepare a new focused review for another version.')
     if record.get('version') != version['version_name'] or record.get('version_code') != version['version_code']:
         raise ValueError('Focused evidence belongs to a different release.')
     if record.get('targeted_checks') != 'passed' or record.get('ui_visual_review') != 'passed':
@@ -65,45 +65,14 @@ def verify(root, record):
     return len(files), digest
 
 
-def verify_v267_constant_only(root, record):
-    # Narrow 2.6.7 release exception: no gameplay test result is asserted.
-    if record.get('version') != '2.6.7' or record.get('version_code') != 20607:
-        raise ValueError('Constant-only review is restricted to 2.6.7 / 20607.')
-    if record.get('targeted_checks') != 'not_run_requested' or record.get('test_elapsed_seconds') != 0:
-        raise ValueError('This release must accurately report that gameplay tests were not run.')
-    if record.get('review_mode') != 'exact_v266_to_v267_constant_diff':
-        raise ValueError('The exact constant-only review is required.')
-    files, digest = production_snapshot(root)
-    if len(files) != 828 or digest != record.get('production_sha256'):
-        raise ValueError('Current production snapshot differs from the reviewed constant change.')
-    normalized = dict(files)
-    replacements = {
-        'scripts/abyss_balance.gd': [('maxf(0.0, floor_value - 1.0)', 'maxf(0.0, floor_value - 25.0)', 1), ('pow(1.07, exponent_floor)', 'pow(1.062, exponent_floor)', 1)],
-        'scripts/game_model.gd': [('每层指数成长7%', '25层后指数成长', 1)],
-        'data/version.json': [('2.6.7', '2.6.6', 1), ('20607', '20606', 1)],
-        'export_presets.cfg': [('2.6.7', '2.6.6', 2), ('20607', '20606', 2)],
-    }
-    for path, edits in replacements.items():
-        data = (root / path).read_bytes()
-        for new, old, count in edits:
-            if data.count(new.encode()) != count:
-                raise ValueError('Unexpected constant or version edit: ' + path)
-            data = data.replace(new.encode(), old.encode())
-        normalized[path] = hashlib.sha256(data).hexdigest()
-    previous_digest = hashlib.sha256(''.join(f'{p}\0{normalized[p]}\n' for p in sorted(normalized)).encode()).hexdigest()
-    if previous_digest != '7c0bb768d0a6949750056fe3ad7315d1329d186f97728a72b80a0609b8bcd853':
-        raise ValueError('Changes exceed the exact verified 2.6.6 baseline plus exponent/version replacements.')
-    return len(files), digest
-
-
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2] / 'godot'
-    path = root / 'validation/v267-focused/release-evidence.json'
+    path = root / 'validation/v270-focused/release-evidence.json'
     if not path.is_file():
-        raise SystemExit('Constant-only release record is missing; signing remains blocked.')
+        raise SystemExit('Focused release evidence is missing; signing remains blocked.')
     try:
-        count, digest = verify_v267_constant_only(root, json.loads(path.read_text()))
+        count, digest = verify(root, json.loads(path.read_text()))
     except (ValueError, KeyError, OSError) as error:
         raise SystemExit(str(error)) from error
-    print(f'Exact 2.6.7 constant-only source diff verified: {count} files, SHA256 {digest}')
-    print('Gameplay tests: NOT RUN as requested. Prior 2.6.6 results are background only, not current test results.')
+    print(f'Focused 2.7.0 evidence verified: {count} files, SHA256 {digest}')
+    print('Only declared affected checks apply; no broad suite is started.')

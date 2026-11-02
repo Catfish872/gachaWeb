@@ -1832,7 +1832,11 @@
       "buyPrice": 70,
       "description": "修复护甲25%容量。战斗外使用。",
       "repair": 0.25,
-      "v7Value": 14
+      "v7Value": 14,
+      "lootCategories": [
+        "补给",
+        "疗愈用品"
+      ]
     },
     "repair_kit": {
       "name": "修甲工具组",
@@ -1847,7 +1851,11 @@
       "buyPrice": 130,
       "description": "修复护甲50%容量。战斗外使用。",
       "repair": 0.5,
-      "v7Value": 26
+      "v7Value": 26,
+      "lootCategories": [
+        "补给",
+        "疗愈用品"
+      ]
     },
     "repair_core": {
       "name": "复原星核",
@@ -1862,7 +1870,11 @@
       "buyPrice": 240,
       "description": "修复护甲100%容量。战斗外使用。",
       "repair": 1.0,
-      "v7Value": 48
+      "v7Value": 48,
+      "lootCategories": [
+        "补给",
+        "疗愈用品"
+      ]
     },
     "energy_tonic": {
       "name": "灵能露剂",
@@ -2913,6 +2925,432 @@
       "v7Value": 5060,
       "variantOf": "void_fossil",
       "environmentTheme": "sanctum"
+    },
+    "lantern_wick": {
+      "name": "旧驿灯芯",
+      "rarity": 0,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 5,
+      "icon": "res://assets/content_v270/loot/lantern_wick.png",
+      "effects": [],
+      "description": "浸过松脂的旧灯芯，还留着一点暖意。",
+      "category": "遗迹珍藏",
+      "legacyValue": 70,
+      "v6Value": 5,
+      "v7Value": 5,
+      "variantOf": "wire",
+      "environmentTheme": "lantern"
+    },
+    "lantern_chain": {
+      "name": "断裂铜链",
+      "rarity": 0,
+      "width": 2,
+      "height": 1,
+      "kind": "loot",
+      "value": 10,
+      "icon": "res://assets/content_v270/loot/lantern_chain.png",
+      "effects": [],
+      "description": "铜链上的磨痕，记着守灯人的脚步。",
+      "category": "遗迹珍藏",
+      "legacyValue": 150,
+      "v6Value": 10,
+      "v7Value": 10,
+      "variantOf": "bolts",
+      "environmentTheme": "lantern"
+    },
+    "lantern_mantle": {
+      "name": "灰灯罩布",
+      "rarity": 0,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "category": "纺织品",
+      "value": 20,
+      "icon": "res://assets/content_v270/loot/lantern_mantle.png",
+      "effects": [],
+      "description": "一块熏灰的灯罩布，边角绣着驿名。",
+      "legacyValue": 210,
+      "v6Value": 20,
+      "v7Value": 20,
+      "variantOf": "cloth",
+      "environmentTheme": "lantern"
+    },
+    "lantern_pitch_tube": {
+      "name": "松脂封管",
+      "rarity": 0,
+      "width": 1,
+      "height": 2,
+      "kind": "loot",
+      "category": "工具",
+      "value": 15,
+      "icon": "res://assets/content_v270/loot/lantern_pitch_tube.png",
+      "effects": [],
+      "description": "封存松脂的细管，炉边常见的引火料。",
+      "legacyValue": 180,
+      "v6Value": 15,
+      "v7Value": 15,
+      "variantOf": "tape",
+      "environmentTheme": "lantern"
+    },
+    "lantern_lens": {
+      "name": "琥珀灯镜",
+      "rarity": 1,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 10,
+      "icon": "res://assets/content_v270/loot/lantern_lens.png",
+      "effects": [],
+      "description": "琥珀色灯镜，将微弱火光聚成一束。",
+      "category": "遗迹珍藏",
+      "legacyValue": 130,
+      "v6Value": 10,
+      "v7Value": 10,
+      "variantOf": "lens",
+      "environmentTheme": "lantern"
+    },
+    "lantern_regulator": {
+      "name": "灯流调节板",
+      "rarity": 1,
+      "width": 2,
+      "height": 1,
+      "kind": "loot",
+      "value": 20,
+      "icon": "res://assets/content_v270/loot/lantern_regulator.png",
+      "effects": [],
+      "description": "调节引火渠流量的旧铜板。",
+      "category": "遗迹珍藏",
+      "legacyValue": 240,
+      "v6Value": 20,
+      "v7Value": 20,
+      "variantOf": "circuit",
+      "environmentTheme": "lantern"
+    },
+    "lantern_tongs": {
+      "name": "守灯铜钳",
+      "rarity": 1,
+      "width": 1,
+      "height": 2,
+      "kind": "loot",
+      "category": "工具",
+      "value": 20,
+      "icon": "res://assets/content_v270/loot/lantern_tongs.png",
+      "effects": [],
+      "description": "长柄铜钳，夹过无数滚烫灯芯。",
+      "legacyValue": 250,
+      "v6Value": 20,
+      "v7Value": 20,
+      "variantOf": "pliers",
+      "environmentTheme": "lantern"
+    },
+    "lantern_bellows": {
+      "name": "手摇炉风箱",
+      "rarity": 1,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "category": "零件",
+      "value": 65,
+      "icon": "res://assets/content_v270/loot/lantern_bellows.png",
+      "effects": [],
+      "description": "转动摇柄，炉火便重新呼吸。",
+      "legacyValue": 760,
+      "v6Value": 65,
+      "v7Value": 65,
+      "variantOf": "motor",
+      "environmentTheme": "lantern"
+    },
+    "lantern_cell": {
+      "name": "长明蓄火筒",
+      "rarity": 2,
+      "width": 1,
+      "height": 2,
+      "kind": "loot",
+      "value": 30,
+      "icon": "res://assets/content_v270/loot/lantern_cell.png",
+      "effects": [],
+      "description": "巡灯人长途携带的蓄火筒。",
+      "category": "遗迹珍藏",
+      "legacyValue": 370,
+      "v6Value": 30,
+      "v7Value": 30,
+      "variantOf": "battery",
+      "environmentTheme": "lantern"
+    },
+    "lantern_prism": {
+      "name": "回廊聚光棱",
+      "rarity": 2,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 70,
+      "icon": "res://assets/content_v270/loot/lantern_prism.png",
+      "effects": [],
+      "description": "将一道火光分向数座灯塔的棱镜。",
+      "category": "遗迹珍藏",
+      "legacyValue": 840,
+      "v6Value": 70,
+      "v7Value": 70,
+      "variantOf": "sensor",
+      "environmentTheme": "lantern"
+    },
+    "lantern_rotor": {
+      "name": "铜羽送风轮",
+      "rarity": 2,
+      "width": 3,
+      "height": 2,
+      "kind": "loot",
+      "category": "零件",
+      "value": 140,
+      "icon": "res://assets/content_v270/loot/lantern_rotor.png",
+      "effects": [],
+      "description": "送风轮的铜羽依旧转动轻盈。",
+      "legacyValue": 1650,
+      "v6Value": 140,
+      "v7Value": 140,
+      "variantOf": "drone_rotor",
+      "environmentTheme": "lantern"
+    },
+    "lantern_toolcase": {
+      "name": "巡灯修缮箱",
+      "rarity": 2,
+      "width": 2,
+      "height": 3,
+      "kind": "loot",
+      "category": "疗愈用品",
+      "value": 90,
+      "icon": "res://assets/content_v270/loot/lantern_toolcase.png",
+      "effects": [],
+      "description": "沉甸甸的巡灯工具箱，内壁刻着交班名册。",
+      "legacyValue": 1060,
+      "v6Value": 90,
+      "v7Value": 90,
+      "variantOf": "insulin_case",
+      "environmentTheme": "lantern"
+    },
+    "lantern_seal": {
+      "name": "司炉刻印",
+      "rarity": 3,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 45,
+      "icon": "res://assets/content_v270/loot/lantern_seal.png",
+      "effects": [],
+      "description": "司炉者验证火种的刻印。",
+      "category": "遗迹珍藏",
+      "legacyValue": 550,
+      "v6Value": 45,
+      "v7Value": 45,
+      "variantOf": "processor",
+      "environmentTheme": "lantern"
+    },
+    "lantern_glass": {
+      "name": "凝火琉璃",
+      "rarity": 3,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 205,
+      "icon": "res://assets/content_v270/loot/lantern_glass.png",
+      "effects": [],
+      "description": "炉火凝结成温润的琉璃。",
+      "category": "遗迹珍藏",
+      "legacyValue": 2470,
+      "v6Value": 205,
+      "v7Value": 205,
+      "variantOf": "crystal",
+      "environmentTheme": "lantern"
+    },
+    "lantern_verse": {
+      "name": "不熄灯谣卷",
+      "rarity": 3,
+      "width": 1,
+      "height": 3,
+      "kind": "loot",
+      "category": "古物",
+      "value": 180,
+      "icon": "res://assets/content_v270/loot/lantern_verse.png",
+      "effects": [],
+      "description": "灯谣写在绢上，火色仍未褪去。",
+      "legacyValue": 2140,
+      "v6Value": 180,
+      "v7Value": 180,
+      "variantOf": "silk_scroll",
+      "environmentTheme": "lantern"
+    },
+    "lantern_ore": {
+      "name": "赤髓炉矿",
+      "rarity": 3,
+      "width": 2,
+      "height": 3,
+      "kind": "loot",
+      "category": "材料",
+      "value": 405,
+      "icon": "res://assets/content_v270/loot/lantern_ore.png",
+      "effects": [],
+      "description": "矿石深处，一线赤光缓缓流转。",
+      "legacyValue": 4880,
+      "v6Value": 405,
+      "v7Value": 405,
+      "variantOf": "rare_ore",
+      "environmentTheme": "lantern"
+    },
+    "lantern_signet": {
+      "name": "守灯人金徽",
+      "rarity": 4,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 130,
+      "icon": "res://assets/content_v270/loot/lantern_signet.png",
+      "effects": [],
+      "description": "守灯人交班时传下的金徽。",
+      "category": "遗迹珍藏",
+      "legacyValue": 1530,
+      "v6Value": 130,
+      "v7Value": 130,
+      "variantOf": "gold_watch",
+      "environmentTheme": "lantern"
+    },
+    "lantern_statue": {
+      "name": "借火者铜像",
+      "rarity": 4,
+      "width": 2,
+      "height": 3,
+      "kind": "loot",
+      "value": 855,
+      "icon": "res://assets/content_v270/loot/lantern_statue.png",
+      "effects": [],
+      "description": "铜像捧着一团小火，仿佛正在递给你。",
+      "category": "遗迹珍藏",
+      "legacyValue": 10260,
+      "v6Value": 855,
+      "v7Value": 855,
+      "variantOf": "idol",
+      "environmentTheme": "lantern"
+    },
+    "lantern_reliquary": {
+      "name": "千灯纪念龛",
+      "rarity": 4,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 690,
+      "icon": "res://assets/content_v270/loot/lantern_reliquary.png",
+      "effects": [],
+      "description": "小龛里，每盏微灯都刻着一个名字。",
+      "category": "遗迹珍藏",
+      "legacyValue": 8280,
+      "v6Value": 690,
+      "v7Value": 690,
+      "variantOf": "crown",
+      "environmentTheme": "lantern"
+    },
+    "lantern_orrery": {
+      "name": "九曜引火仪",
+      "rarity": 4,
+      "width": 3,
+      "height": 3,
+      "kind": "loot",
+      "category": "遗迹装置",
+      "value": 1550,
+      "icon": "res://assets/content_v270/loot/lantern_orrery.png",
+      "effects": [],
+      "description": "九道铜环，曾将城中灯火引向同一处。",
+      "legacyValue": 18630,
+      "v6Value": 1550,
+      "v7Value": 1550,
+      "variantOf": "quantum_server",
+      "environmentTheme": "lantern"
+    },
+    "lantern_heart": {
+      "name": "初燃炉心",
+      "rarity": 5,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 1415,
+      "icon": "res://assets/content_v270/loot/lantern_heart.png",
+      "effects": [],
+      "description": "封存最初火种的炉心。",
+      "category": "遗迹珍藏",
+      "legacyValue": 17000,
+      "v6Value": 1415,
+      "v7Value": 1415,
+      "variantOf": "red_core",
+      "environmentTheme": "lantern"
+    },
+    "lantern_archive": {
+      "name": "万家灯籍",
+      "rarity": 5,
+      "width": 2,
+      "height": 1,
+      "kind": "loot",
+      "value": 790,
+      "icon": "res://assets/content_v270/loot/lantern_archive.png",
+      "effects": [],
+      "description": "记下万家灯火的薄薄名册。",
+      "category": "遗迹珍藏",
+      "legacyValue": 9500,
+      "v6Value": 790,
+      "v7Value": 790,
+      "variantOf": "archive",
+      "environmentTheme": "lantern"
+    },
+    "lantern_sun": {
+      "name": "昼夜不灭灯",
+      "rarity": 5,
+      "width": 3,
+      "height": 3,
+      "kind": "loot",
+      "value": 4310,
+      "icon": "res://assets/content_v270/loot/lantern_sun.png",
+      "effects": [],
+      "description": "不分昼夜，灯心始终亮着。",
+      "category": "遗迹珍藏",
+      "legacyValue": 51750,
+      "v6Value": 4310,
+      "v7Value": 4310,
+      "variantOf": "dragon_egg",
+      "environmentTheme": "lantern"
+    },
+    "lantern_feather": {
+      "name": "归火金羽",
+      "rarity": 5,
+      "width": 1,
+      "height": 3,
+      "kind": "loot",
+      "category": "奇珍",
+      "value": 1000,
+      "icon": "res://assets/content_v270/loot/lantern_feather.png",
+      "effects": [],
+      "description": "传说归火之鸟只会留下一片金羽。",
+      "legacyValue": 12000,
+      "v6Value": 1000,
+      "v7Value": 1000,
+      "variantOf": "phoenix_feather",
+      "environmentTheme": "lantern"
+    },
+    "key_lantern": {
+      "name": "长明密藏钥匙",
+      "rarity": 2,
+      "width": 1,
+      "height": 1,
+      "kind": "key",
+      "value": 40,
+      "icon": "res://assets/content_v270/loot/key_lantern.png",
+      "effects": [],
+      "category": "补给",
+      "buyPrice": 500,
+      "description": "开启烬灯驿路的长明密藏。",
+      "keyTheme": "lantern",
+      "v7Value": 40,
+      "dropWeight": 0.08,
+      "variantOf": "key_ruins",
+      "environmentTheme": "lantern"
     }
   },
   "rarityWeightsByAct": [
@@ -3153,6 +3591,89 @@
         "sanctum_astral_casket",
         "sanctum_prayer_cabinet"
       ]
+    },
+    "lantern": {
+      "name": "烬灯驿路",
+      "music": "lantern_road",
+      "depthNames": [
+        "灰桥外驿",
+        "铜火内廊",
+        "归火炉心"
+      ],
+      "backgrounds": [
+        [
+          "res://assets/content_v270/backgrounds/snow_inn.png",
+          "res://assets/content_v270/backgrounds/ash_bridge.png"
+        ],
+        [
+          "res://assets/content_v270/backgrounds/unlit_town.png",
+          "res://assets/content_v270/backgrounds/copper_gallery.png"
+        ],
+        [
+          "res://assets/content_v270/backgrounds/inverted_well.png",
+          "res://assets/content_v270/backgrounds/furnace_core.png"
+        ]
+      ],
+      "roomNames": {
+        "entry": "灰桥驿口",
+        "battle": "巡灯栈道",
+        "cache": "旧驿货棚",
+        "rest": "留灯休憩处",
+        "event": "失落灯铭",
+        "elite": "司炉关隘",
+        "vault": "封存灯库",
+        "hospital": "守灯药庐",
+        "workshop": "铜火修缮所",
+        "shrine": "借火祭台",
+        "boss": "归火炉心",
+        "key_vault": "长明密藏",
+        "relay": "送灯驿站"
+      },
+      "containers": [
+        "lantern_chain_coffer",
+        "lantern_medicine",
+        "lantern_tool_cabinet",
+        "lantern_ash_altar",
+        "lantern_amber_chest",
+        "lantern_core_vault"
+      ],
+      "enemies": {
+        "battle": [
+          "ash_moth",
+          "lamp_wraith",
+          "furnace_guard",
+          "furnace_cantor",
+          "cracked_puppet"
+        ],
+        "elite": [
+          "lamp_overseer"
+        ],
+        "boss": [
+          "boss_hedor"
+        ]
+      },
+      "encounterBudget": {
+        "hpRatio": 1.08,
+        "atkRatio": 1.05,
+        "normalEarly": [
+          "wolf",
+          "goblin",
+          "fire_imp"
+        ],
+        "normalLate": [
+          "ice_wolf",
+          "thunder_hawk",
+          "fire_imp"
+        ],
+        "elite": [
+          "dark_knight",
+          "stone_golem"
+        ],
+        "boss": [
+          "boss_flame_lord",
+          "boss_storm_witch"
+        ]
+      }
     }
   },
   "environmentContainers": {
@@ -3179,6 +3700,50 @@
     "sanctum_prayer_cabinet": {
       "name": "祈星典柜",
       "sprite": "res://assets/extraction/v260/containers/sanctum_prayer_cabinet.tres"
+    },
+    "lantern_chain_coffer": {
+      "name": "铜链灯匣",
+      "sprite": "res://assets/content_v270/containers/lantern_chain_coffer.png"
+    },
+    "lantern_medicine": {
+      "name": "守灯药柜",
+      "sprite": "res://assets/content_v270/containers/lantern_medicine.png"
+    },
+    "lantern_tool_cabinet": {
+      "name": "炉工工具柜",
+      "sprite": "res://assets/content_v270/containers/lantern_tool_cabinet.png"
+    },
+    "lantern_ash_altar": {
+      "name": "灰烬供台",
+      "sprite": "res://assets/content_v270/containers/lantern_ash_altar.png"
+    },
+    "lantern_amber_chest": {
+      "name": "琥珀灯箱",
+      "sprite": "res://assets/content_v270/containers/lantern_amber_chest.png"
+    },
+    "lantern_core_vault": {
+      "name": "封存炉心柜",
+      "sprite": "res://assets/content_v270/containers/lantern_core_vault.png"
     }
+  },
+  "containerLootCategories": {
+    "herb_basket": [
+      "补给",
+      "疗愈用品"
+    ],
+    "alchemy_cabinet": [
+      "补给",
+      "疗愈用品"
+    ],
+    "lantern_medicine": [
+      "补给",
+      "疗愈用品"
+    ],
+    "lantern_tool_cabinet": [
+      "工具",
+      "零件",
+      "整备",
+      "装备"
+    ]
   }
 }

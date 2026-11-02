@@ -1,0 +1,51 @@
+{
+  "version": "2.7.0",
+  "version_code": 20700,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_started_utc": "2026-11-02T04:01:15Z",
+  "test_completed_utc": "2026-11-02T04:10:15Z",
+  "test_elapsed_seconds": 540,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-02T04:01:15Z",
+      "completed_utc": "2026-11-02T04:10:15Z",
+      "elapsed_seconds": 540,
+      "production_sha256": "3d2d96632c5971c252a10b80fb66929c87b6a96d35b143c168686217118d349d",
+      "scope": [
+        "Selin mechanics, constellation/set synergy, recommendation and shared blessings (92 model checks)",
+        "Story progression and rewards (passed); new abyss same-floor stat budgets (9 checks); extraction four-themes choose-three, maps, supplies and rewards (78 checks)",
+        "Actual desktop OpenGL 960x540 and 2048x945 limited banner, summon sequence, character skills/set recommendation, trial, chapter 3 boss/reward and exploration (117 checks)",
+        "Final main/battle_fx UI-only change: detonation separate label and soft lantern ring; focused 960x540 OpenGL recheck (10 checks)",
+        "Focused evidence gate (9 tests)"
+      ]
+    }
+  ],
+  "production_sha256": "3d2d96632c5971c252a10b80fb66929c87b6a96d35b143c168686217118d349d",
+  "production_file_count": 1003,
+  "scope": [
+    "Selin mechanics, constellation/set synergy, recommendation and shared blessings (92 model checks)",
+    "Story progression and rewards (passed); new abyss same-floor stat budgets (9 checks); extraction four-themes choose-three, maps, supplies and rewards (78 checks)",
+    "Actual desktop OpenGL 960x540 and 2048x945 limited banner, summon sequence, character skills/set recommendation, trial, chapter 3 boss/reward and exploration (117 checks)",
+    "Final main/battle_fx UI-only change: detonation separate label and soft lantern ring; focused 960x540 OpenGL recheck (10 checks)",
+    "Focused evidence gate (9 tests)"
+  ],
+  "reused_prior_evidence": "../v268-focused/release-evidence.json",
+  "limits": [
+    "Desktop OpenGL llvmpipe and synthetic input do not certify a physical Android phone or a new native emulator journey.",
+    "Audio decoding and technical metrics were reviewed; subjective listening quality is not claimed.",
+    "Existing v268 focused evidence is reused; no old full suite was rerun.",
+    "Only the final UI-only adjustment was rechecked after the earlier 117-case GL run; unchanged model evidence is reused."
+  ],
+  "ui_delta_review": {
+    "prior_production_sha256": "62451db2ec71ac0cab521d2ade8492b6e132f54277068a93e92e05ba61d26c0f",
+    "final_production_sha256": "3d2d96632c5971c252a10b80fb66929c87b6a96d35b143c168686217118d349d",
+    "changed_production_paths": [
+      "scripts/main.gd",
+      "scripts/ui/battle_fx.gd"
+    ],
+    "checks": 10,
+    "render_size": "960x540",
+    "reuse": "Model code unchanged; prior model results and unchanged portions of the two-size UI review retained."
+  }
+}
