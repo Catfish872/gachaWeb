@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.7.4 · 立绘边缘优化
+## 最新正式版：2.7.5 · 补给操作与战斗节奏
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.5/universal.apk) · [更新说明](CHANGELOG_2.7.5.md) · [验证记录](validation/release-v275/RELEASE.md)
+
+商店购买保留滚动位置；玩家持续伤害计入防御、减伤与护盾，新远征敌人爆发后留出恢复机会。[数值设计案例](../docs/CROSS_MODE_ENEMY_BALANCE.md)记录对照与规则。
+
+## 历史版本：2.7.4 · 立绘边缘优化
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.4/universal.apk) · [更新说明](CHANGELOG_2.7.4.md) · [验证记录](validation/release-v274/RELEASE.md)
 
