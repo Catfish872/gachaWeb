@@ -1,0 +1,39 @@
+{
+  "version": "2.7.1",
+  "version_code": 20701,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_started_utc": "2026-11-02T04:45:20Z",
+  "test_completed_utc": "2026-11-02T04:46:45Z",
+  "test_elapsed_seconds": 85,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-02T04:45:20Z",
+      "completed_utc": "2026-11-02T04:46:45Z",
+      "elapsed_seconds": 85,
+      "production_sha256": "89a93b8c7f392c79cf1a66706059728d48c527e03976cadf8b2ad2c3f35800a2",
+      "scope": [
+        "Narrative schema whitelist: 137 chapter-three dialogue frames plus Selin biography/quote and chapter description; prior chapters, skills and rewards unchanged",
+        "Actual desktop OpenGL 960x540 third-chapter dialogue layout and two reviewed screenshots (23 checks)",
+        "Existing gameplay mechanics coverage reused; no gameplay model suite or full regression rerun"
+      ]
+    }
+  ],
+  "production_sha256": "97861c3b2a8482d9f236fbc2d3dd520db030e638917e1dc285e0f372d14ff85c",
+  "production_file_count": 1003,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "Narrative schema whitelist: 137 chapter-three dialogue frames plus Selin biography/quote and chapter description; prior chapters, skills and rewards unchanged",
+    "Actual desktop OpenGL 960x540 third-chapter dialogue layout and two reviewed screenshots (23 checks)",
+    "Existing gameplay mechanics coverage reused; no gameplay model suite or full regression rerun"
+  ],
+  "limits": [
+    "No new Android device or emulator validation.",
+    "No new full gameplay or gate test suite was run; CI performs required exact-source, build and signing preflight.",
+    "GL reported an XServer BadValue warning and exit resource warnings; all 23 scoped assertions passed."
+  ]
+}

@@ -1145,8 +1145,8 @@
       "synergyIds": [
         "fire_duo"
       ],
-      "description": "沿着熄灭的灯渠寻找失落火种的引灯人，以铜灯与焰丝为同行者照亮归途。",
-      "flavorText": "「把火留给前行的人。」",
+      "description": "往来于驿站与小镇的守灯人，熟悉沿途的每一盏铜灯。她正沿着倒流的灯渠，寻找沿路铜灯熄灭的原因。",
+      "flavorText": "「路上冷吧？靠近些，我把灯提高一点。」",
       "color": "#edaa60",
       "colorDark": "#592d32",
       "image": "assets/content_v270/characters/selin.png",
@@ -2200,113 +2200,334 @@
     "ch3_1_pre": [
       {
         "speaker": "narrator",
-        "text": "风雪退去，旧驿站的铜铃露出冰面。铃下，是一条仍有余温的灯渠。",
+        "text": "风暴平息后，积雪下渐渐露出了通往山外的石路。路边的旧驿站里，隐约传来咳嗽声。",
         "portrait": null
       },
       {
-        "speaker": "traveler",
-        "text": "这枚铭牌……「炎脉不灭」。和荒原找到的一样。",
-        "portrait": null,
-        "speakerName": "旅行者"
-      },
-      {
-        "speaker": "selin",
-        "text": "别碰灯芯。火还在，路却认不得人了。",
-        "portrait": "selin"
+        "speaker": "ayla",
+        "text": "驿站里好像还有人……我们过去看看，他们也许需要帮助。",
+        "portrait": "ayla",
+        "element": "water"
       },
       {
         "speaker": "kaldi",
-        "text": "那就让它认认我的火。",
-        "portrait": "kaldi"
+        "text": "有人在就好！我们过去帮忙，顺便找个地方让大家暖和暖和。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "门口还有行李，屋里的灯却全熄了。大家是被困在里面了吗？",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "后院响起一阵铜铃声。一名提灯的年轻女子守在门前，挥动灯链，驱赶扑向屋檐的灰蛾。",
+        "portrait": null
       },
       {
         "speaker": "selin",
-        "text": "先把蛾群引开。这里还有人在等天亮。",
-        "portrait": "selin"
+        "text": "屋里的人请再等一等！我把蛾群引到外面，大家就能出来了。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "她一个人应付这么多蛾子……旅行者，我们过去帮忙！",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "姑娘，往院子中间退一些！这些虫子就交给我们吧！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "谢谢你们！它们会追着火光聚过来，我来把它们引开。",
+        "portrait": "selin",
+        "element": "fire"
       }
     ],
     "ch3_1_post": [
       {
+        "speaker": "narrator",
+        "text": "灰蛾散去，瑟琳推开驿站的木门。几名旅人扶着门框出来，艾拉连忙上前查看他们的伤势。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "你也受伤了吗？刚才看你一直守在这里。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
         "speaker": "selin",
-        "text": "我是瑟琳，守灯人。北边的风雪停了，炉心却开始向外抽火。",
-        "portrait": "selin"
+        "text": "只是有些累了。我叫瑟琳，是这条路上的守灯人。你们来得真及时。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "守灯人？沿路那些铜灯，都是你照管的？",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "嗯。灯下有一道刻着符文的浅渠，把山里的炉火送到驿站和镇上，供大家照明取暖。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "可这几天，火光一直沿着灯渠往回流。我赶来时，驿站的灯已经熄了。",
+        "portrait": "selin",
+        "element": "fire"
       },
       {
         "speaker": "ayla",
-        "text": "所以镇上的灯才一盏盏灭掉？",
-        "portrait": "ayla"
+        "text": "镇上也会受到影响吧？那里还有多少人？",
+        "portrait": "ayla",
+        "element": "water"
       },
       {
         "speaker": "selin",
-        "text": "是。愿意搭把手的话，沿这条渠走。",
-        "portrait": "selin"
+        "text": "还有许多住户。我想回去看看，可这些蛾子一直围着驿站……",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "等这里的旅人安顿好，我们陪你回镇上。路上也能互相照应。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "众人收拾出避风的房间，用驿站存下的木柴点燃壁炉。艾拉替旅人处理好伤口，又留下了饮水。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "这些木柴够大家暖和一阵了。瑟琳，旅人们也安顿好了，我们出发吧。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "selin",
+        "text": "嗯，谢谢大家。沿途的路我熟悉，我来带路。",
+        "portrait": "selin",
+        "element": "fire"
       }
     ],
     "ch3_2_pre": [
       {
         "speaker": "narrator",
-        "text": "灯油沿坡向上流动。游魂抱着空灯，挡在渠口。",
+        "text": "离开驿站后，众人沿着灯渠走上山坡。渠中的细小火光贴着石壁，缓缓流向高处。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这些火光真的在往山上流……源头的火炉出了什么事？",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "我也想弄清楚。先经过前面的灰桥，就能到镇上，再从镇后进入炉房。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "几道灰白的身影从渠口升起，怀里抱着沿路取下的铜灯。灯火在它们周围连成一片光幕。",
         "portrait": null
       },
       {
         "speaker": "selin",
-        "text": "它们把最后一点光都护住了。先拆掉那层灯幕。",
-        "portrait": "selin"
+        "text": "又是这些夺灯游魂！大家小心，它们会用灯火保护自己。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "难怪沿路的灯架都空了。我们先破除光幕，把那些灯取回来！",
+        "portrait": "kaldi",
+        "element": "fire"
       }
     ],
     "ch3_2_post": [
       {
+        "speaker": "narrator",
+        "text": "游魂消散后，瑟琳俯身收拾散落的铜灯。旅行者在渠边发现了一道熟悉的龙纹。",
+        "portrait": null
+      },
+      {
         "speaker": "traveler",
-        "text": "铭牌的纹路，能接上渠边的刻痕。",
+        "text": "这个纹样……我在荒原找到的铭牌上，也有同样的龙纹。",
         "portrait": null,
-        "speakerName": "旅行者"
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者取出那枚烧焦的铭牌，拂去表面的尘灰。背面的字迹依然清楚——「炎脉不灭」。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "还真是！这条灯路，难道也和龙族有关？",
+        "portrait": "kaldi",
+        "element": "fire"
       },
       {
         "speaker": "selin",
-        "text": "这是旧火路的通行牌。原来它还没有被遗忘。",
-        "portrait": "selin"
+        "text": "老师给我看过旧图，早年修筑灯渠时，人们借用了炎脉的火种。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "这应该是当时的通行牌。炉房里有些旧机关，可能还认得它。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那就好好收着。说不定到了炉房，它还能帮上忙。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "嗯。等镇上的灯重新亮起来，我带你们看看那些旧图。",
+        "portrait": "selin",
+        "element": "fire"
       }
     ],
     "ch3_3_pre": [
       {
         "speaker": "narrator",
-        "text": "灰桥另一侧，鸣炉声唤醒了沉睡的铜甲。",
+        "text": "灰桥横跨在山谷上方，桥头的铜甲随着炉鸣声缓缓转动，将通往小镇的道路挡住。",
         "portrait": null
       },
       {
         "speaker": "selin",
-        "text": "重锤举起时，别硬接。先打断后面的鸣炉侍。",
-        "portrait": "selin"
+        "text": "这些炉甲卫以前会让旅人通过……我试着给它们看过徽记，它们还是举起了重锤。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "后面的鸣炉侍一响，铜甲里的火就变亮了。它在给守卫补充力量。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "嗯，我们先阻止鸣炉侍。重锤落下前，大家记得及时躲避。",
+        "portrait": "selin",
+        "element": "fire"
       },
       {
         "speaker": "kaldi",
-        "text": "看明白了。我们开路，你护灯。",
-        "portrait": "kaldi"
+        "text": "听明白了！瑟琳，照看好收回来的铜灯，我和旅行者来开路。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我会留意大家的伤势。桥面很窄，我们靠近些，相互照应。",
+        "portrait": "ayla",
+        "element": "water"
       }
     ],
     "ch3_3_post": [
       {
-        "speaker": "selin",
-        "text": "守灯人不是替火找主人。是替走夜路的人，留一个方向。",
-        "portrait": "selin"
+        "speaker": "narrator",
+        "text": "炉鸣声渐渐平息，桥头的铜甲垂下了重锤。瑟琳走到桥边，重新挂起一盏铜灯。",
+        "portrait": null
       },
       {
         "speaker": "traveler",
-        "text": "那就一起走到路的尽头。",
+        "text": "这盏灯，也要带回镇上吗？",
         "portrait": null,
-        "speakerName": "旅行者"
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "留在这里吧。刚才驿站的旅人休息好以后，还要经过这座桥。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "哈哈，连他们往后的路都想好了。你这个守灯人，还真是忙啊。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "以前老师也这样等我。出门再晚，过桥时总能看见这盏灯。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "瑟琳轻轻拨正灯罩，朝桥的另一端望去。山坡下的小镇渐渐清晰，街道却笼罩在暮色中。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "镇子就在下面了……平时这个时候，各家的炉灶都该亮起来了。",
+        "portrait": "selin",
+        "element": "fire"
       }
     ],
     "ch3_4_pre": [
       {
         "speaker": "narrator",
-        "text": "小镇没有灯，也没有炊烟。监工把街角最后一盏灯锁在掌中。",
+        "text": "街边的门窗紧紧关着，风吹过空荡的灯架。听见瑟琳的脚步声，一扇木窗悄悄打开。",
         "portrait": null
       },
       {
         "speaker": "selin",
-        "text": "灯是留给人的。把它还回来。",
-        "portrait": "selin"
+        "text": "我回来了，还带了几位愿意帮忙的朋友。大家先在屋里等一等。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "街角传来锁链拖行的声音。缚灯监工攥着一串铜灯，游魂围在它身旁，伸手探向窗口。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "窗边还有孩子！旅行者，我们过去保护他们！",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "selin",
+        "text": "那些灯是镇上人过冬要用的。把灯放下，让他们好好待在家里！",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "姑娘们放心，我去挡住监工。旅行者，街边的游魂交给你！",
+        "portrait": "kaldi",
+        "element": "fire"
       }
     ],
     "ch3_4_post": [
@@ -2317,100 +2538,296 @@
       },
       {
         "speaker": "narrator",
-        "text": "链灯落在窗沿。瑟琳从自己的灯芯分出细小的火，挨家点亮旧灯。",
+        "text": "锁链散落在街角，关紧的门窗渐渐打开。瑟琳把收回的铜灯放上窗沿，挨家询问住户的情况。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "艾拉留意到瑟琳手臂上的擦伤，替她仔细包扎好。瑟琳道了谢，继续把铜灯递给等候的住户。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "大家把炉灶准备好吧。我先分些灯火出来，今晚就能暖和些了。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "细小的火苗从她的灯芯引出，一盏盏旧灯亮了起来。轮到街尾那户时，瑟琳手中的光已经很淡。",
         "portrait": null
       },
       {
         "speaker": "ayla",
-        "text": "你的灯暗了。",
-        "portrait": "ayla"
+        "text": "瑟琳，你的手一直在发抖。先休息一下吧，我陪你把剩下几家照看好。",
+        "portrait": "ayla",
+        "element": "water"
       },
       {
         "speaker": "selin",
-        "text": "借出去的光，会照着人回来。",
-        "portrait": "selin"
+        "text": "谢谢……刚才那孩子一直缩在被子里，我想让她早点暖和起来。",
+        "portrait": "selin",
+        "element": "fire"
       },
       {
         "speaker": "kaldi",
-        "text": "那我的也借你一点。不是龙的契约，就是一束火。",
-        "portrait": "kaldi"
+        "text": "这事怎么少得了我？把铜灯拿过来，我的火焰可多着呢！",
+        "portrait": "kaldi",
+        "element": "fire"
       },
       {
         "speaker": "selin",
-        "text": "好。等炉心重新亮起，我请大家喝热汤。",
-        "portrait": "selin"
+        "text": "慢一点，灯芯只用一点火就够了。对，就是这样。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "卡尔迪收拢掌中的火焰，小心送进灯罩。瑟琳望着重新明亮的灯芯，终于松了口气。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "等炉房恢复供火，我请大家喝热汤。镇上那家小店，我从小就常去。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "哈哈，我可记住了！一碗就够了——碗要大些。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "大家也都安顿好了。瑟琳，休息一会儿，我们再去炉房。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
       }
     ],
     "ch3_5_pre": [
       {
         "speaker": "narrator",
-        "text": "铜墙上映着无数旧名字。炉甲不再辨认守灯人的徽记。",
+        "text": "镇后的石阶通向炉房。众人穿过厚重的铜门，回廊两侧刻着一排排名字，炉火映得字迹忽明忽暗。",
         "portrait": null
       },
       {
         "speaker": "selin",
-        "text": "裂炉傀儡快撑不住了。听到警鸣，就先让它停下来。",
-        "portrait": "selin"
+        "text": "这里记着历代修筑灯渠、照管炉火的人。老师以前带我来过。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "墙边的傀儡在冒烟，它身上的裂缝越来越大了。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "尖锐的警鸣忽然响起。裂炉傀儡拖着发红的身躯逼近，炉甲卫也从回廊深处转过身来。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "大家小心！它里面积了太多炉火，得尽快让它停止活动。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "我们一起对付它！艾拉，留意后面，那里还有鸣炉侍的声音。",
+        "portrait": "kaldi",
+        "element": "fire"
       }
     ],
     "ch3_5_post": [
       {
+        "speaker": "narrator",
+        "text": "回廊安静下来，旅行者擦去铜墙上的积灰。最早的一排名字旁，还留着司炉者的记录。",
+        "portrait": null
+      },
+      {
         "speaker": "traveler",
-        "text": "赫铎的名字，刻在最早的一排。",
+        "text": "赫铎……这里说，他把自己的身体留在炉中，让灯渠持续得到炉火。",
         "portrait": null,
-        "speakerName": "旅行者"
+        "speakerName": "旅行者",
+        "element": "wind"
       },
       {
         "speaker": "selin",
-        "text": "第一位司炉者。后来他把身体留在炉里，让灯路再也不用熄灭。",
-        "portrait": "selin"
+        "text": "他是第一位司炉者。老师说过，那时山路常有旅人冻伤，他就想让沿途的灯一直亮着。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "原来这么多年，都是他守着这里……",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "narrator",
+        "text": "瑟琳伸手抚过墙上的名字。靠近炉房的一侧，旧记录下面又刻下了许多深浅不一的新痕。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "「把火带回来……大家就能回来。」这句话，为什么刻了这么多遍？",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "我上次来时，这里还是空的……也许赫铎出了什么事。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "穿过前面的引火井就能靠近炉心。我们过去看看，或许还能帮他。",
+        "portrait": "selin",
+        "element": "fire"
       }
     ],
     "ch3_6_pre": [
       {
         "speaker": "narrator",
-        "text": "引火井倒悬在穹顶。火丝像雨一样向上升起。",
+        "text": "引火井悬在高高的穹顶下，沿途汇来的火丝不断升起。井边的铜环已经偏离原位，堵住了通向小镇的灯渠。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "火光全被引到上面去了。难怪镇上的灯会熄灭。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "炉房深处传来含混的低语。那声音反复呼唤几个名字，与回廊铜墙上的名字相同。",
         "portrait": null
       },
       {
         "speaker": "ayla",
-        "text": "他仍在供火吗？",
-        "portrait": "ayla"
+        "text": "他在呼唤以前的同伴吗？",
+        "portrait": "ayla",
+        "element": "water"
       },
       {
         "speaker": "selin",
-        "text": "不。他在收回所有火，想把早已逝去的人再照亮一次。",
-        "portrait": "selin"
+        "text": "这些名字……老师说，他们很早就离世了。赫铎却一直守在炉里。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "墙上那句「大家就能回来」……他或许以为，收回炉火就能让他们回来。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "如果真是这样，他一定等了很久……我们得去见见他，也得让炉火重新送到镇上。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "井沿的游魂转向众人，身后的傀儡发出警鸣。瑟琳握紧灯链，向同伴靠近了一步。",
+        "portrait": null
       }
     ],
     "ch3_6_post": [
       {
         "speaker": "narrator",
-        "text": "铭牌嵌入井沿，封闭的火路重新贯通。",
+        "text": "清理井边的守卫后，众人在铜环下找到一个凹槽。槽边的龙纹，与铭牌上的纹路正好吻合。",
         "portrait": null
       },
       {
         "speaker": "traveler",
-        "text": "「炎脉不灭」，不是说谁都不能离开。",
+        "text": "瑟琳，你看这个凹槽。通行牌应该可以放进这里。",
         "portrait": null,
-        "speakerName": "旅行者"
+        "speakerName": "旅行者",
+        "element": "wind"
       },
       {
         "speaker": "selin",
-        "text": "是说，总会有人接着点灯。",
-        "portrait": "selin"
+        "text": "嗯，我来扶住铜环，你把铭牌放进去，慢慢转动试试。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "铭牌嵌入凹槽，沉重的铜环缓缓归位。堵塞的灯渠重新贯通，一缕火光顺着石壁流向山下。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "有用了！「炎脉不灭」，这块老铭牌还真帮了大忙。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "可大部分炉火还在往上涌……赫铎仍在收回它们。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "selin",
+        "text": "通路已经恢复了。接下来，我们去炉心，让他停下这座引火井。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们陪你过去。镇上的人也在等大家平安回去。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
       }
     ],
     "ch3_7_pre": [
       {
         "speaker": "narrator",
-        "text": "最后一座灯塔，只剩侧炉还在搏动。监工守着通往炉心的锁门。",
+        "text": "引火井后方，最后一座灯塔紧挨着炉心的铜门。缚灯监工守在台阶上，锁链一直延伸到侧炉灯下。",
         "portrait": null
       },
       {
+        "speaker": "traveler",
+        "text": "侧炉灯每亮一次，监工身上的火焰就跟着升高。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
         "speaker": "selin",
-        "text": "侧炉还在供给它力量。先灭侧灯，再开门。",
-        "portrait": "selin"
+        "text": "它在借侧炉的力量守住铜门。我们先熄灭侧炉灯，再一起对付监工。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "瑟琳，你的脸色有些发白。刚才的伤还疼吗？",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "selin",
+        "text": "伤已经好多了。只是想到门后的赫铎……我有些害怕，怕自己帮不上他。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "还有我们呢！先把眼前这家伙解决，往后的事，大家一起想办法。",
+        "portrait": "kaldi",
+        "element": "fire"
       }
     ],
     "ch3_7_post": [
@@ -2420,83 +2837,197 @@
         "portrait": null
       },
       {
+        "speaker": "narrator",
+        "text": "铜门缓缓开启，热风吹得灯罩轻轻作响。瑟琳在门边蹲下，将手里的旧灯放在石阶上。",
+        "portrait": null
+      },
+      {
         "speaker": "selin",
-        "text": "这是老师留给我的灯。他说，别为了守住一盏灯，让整座城的人困在黑夜里。",
-        "portrait": "selin"
+        "text": "这是老师留给我的灯。他教我修灯、认路，还总担心我出门时忘记添灯油。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "他一定很惦记你。你也一直好好照顾着这盏灯。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "selin",
+        "text": "嗯。刚才经过镇上，我还在想，要是老师在这里，他会怎么办。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "后来听见大家重新烧起炉灶，我就明白了。他最在意的，也是这些过日子的人。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "这盏灯留在门边，等回来时，我们一眼就能找到出口。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "好。我也想带着赫铎出来，让他看看镇上现在的样子。",
+        "portrait": "selin",
+        "element": "fire"
       },
       {
         "speaker": "kaldi",
-        "text": "那就走吧。不是去熄火，是去让火回到该在的地方。",
-        "portrait": "kaldi"
+        "text": "那就一起努力吧！等事情办完，我们四个人还要回去喝汤呢。",
+        "portrait": "kaldi",
+        "element": "fire"
       },
       {
         "speaker": "narrator",
-        "text": "瑟琳把旧灯留在门边。它照着来路，也照着归路。",
+        "text": "瑟琳轻轻应了一声，站到同伴身边。旧灯在门边摇曳，将四人的影子映上了铜墙。",
         "portrait": null
       }
     ],
     "ch3_8_pre": [
       {
         "speaker": "narrator",
-        "text": "炉心之上，青铜巨像缓缓转身。无数细灯被吸向胸口的空洞。",
+        "text": "炉心上方，青铜巨像缓缓转过身来。细密的火丝从四面汇入它的胸口，沉重的炉轮随之加快转动。",
         "portrait": null
       },
       {
         "speaker": "narrator",
-        "text": "「归火……所有人……归来……」",
+        "text": "「把火带回来……大家……回来吧……」",
         "portrait": null
       },
       {
         "speaker": "selin",
-        "text": "赫铎，外面的人还在等。让灯路走下去吧。",
-        "portrait": "selin"
+        "text": "赫铎，我们从镇上来。分给大家的火只能暂时取暖，他们正盼着炉房重新供火。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "巨像俯下身，胸口的炉火剧烈翻涌。它仍在低声呼唤铜墙上的名字，握住重锤的手越来越紧。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "他好像只能听见过去的声音……瑟琳，小心！",
+        "portrait": "ayla",
+        "element": "water"
       },
       {
         "speaker": "traveler",
-        "text": "我们会带她回来，也会带光回来。",
+        "text": "炉轮还在抽取火光。我们一起阻止它，先让赫铎平静下来！",
         "portrait": null,
-        "speakerName": "旅行者"
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "两边的侧炉也在给他供火！我来应付正面，大家互相照应！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "赫铎，这些年辛苦你了。今天有人陪着你，我们一起让镇上的灯亮起来。",
+        "portrait": "selin",
+        "element": "fire"
       }
     ],
     "ch3_8_post": [
       {
         "speaker": "narrator",
-        "text": "失序的炉轮停下。巨像没有倒塌，只把双手缓缓松开。",
+        "text": "急转的炉轮渐渐停下，青铜巨像松开了重锤，缓缓垂下双臂。胸口聚集的火光沿着灯渠散开。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "炉膛里传来沙哑的声音，轻得几乎被火声淹没：「外面有人来了……镇上的灯，还亮着吗？」",
         "portrait": null
       },
       {
         "speaker": "selin",
-        "text": "看，火自己知道路。",
-        "portrait": "selin"
+        "text": "炉火已经顺着灯渠回去了，大家很快就能暖和起来。赫铎，我们就是从镇上来看你的。",
+        "portrait": "selin",
+        "element": "fire"
       },
       {
         "speaker": "narrator",
-        "text": "灯渠一段段亮起，光越过灰桥，回到每一扇窗前。",
+        "text": "巨像缓缓转向铜门，胸口的火焰平稳了些。瑟琳走近几步，将沿途收回的一盏铜灯放在它身旁。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "你先休息吧。等安顿好镇上的人，我会再来看你，告诉你大家过得怎么样。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "众人回到铜门旁，瑟琳提起留下的旧灯。暖光重新充满灯罩，照亮了她沾着灰尘的脸。",
         "portrait": null
       },
       {
         "speaker": "ayla",
-        "text": "你的灯又亮了。",
-        "portrait": "ayla"
+        "text": "脸色好多了。过来一些，你额头上还有灰，我替你擦干净。",
+        "portrait": "ayla",
+        "element": "water"
       },
       {
         "speaker": "selin",
-        "text": "这次，是大家借给我的。",
-        "portrait": "selin"
-      },
-      {
-        "speaker": "kaldi",
-        "text": "热汤的约定，可别忘了。",
-        "portrait": "kaldi"
-      },
-      {
-        "speaker": "selin",
-        "text": "不会。下次走夜路，就叫上我。",
-        "portrait": "selin"
+        "text": "谢谢你，艾拉。刚才站在炉心前，听到你们的声音，我才安心下来。",
+        "portrait": "selin",
+        "element": "fire"
       },
       {
         "speaker": "narrator",
-        "text": "炉门外，一条尚未踏足的灯路，正朝更远的群山延伸。",
+        "text": "山下的灯渠一段段亮起，光越过灰桥，回到小镇的窗前。有人打开窗户，朝山路上挥动手臂。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "他们看见我们了！走吧，大家都在等着。",
+        "portrait": null,
+        "speakerName": "旅行者",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "嗯……赫铎要是也能看见就好了。等炉房冷却些，我想再回来看看他。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "到时候叫上我们！现在先回镇上，那碗热汤，我可是盼了一路。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "哈哈，记着呢。你要的大碗，我会特意跟店主说的。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "以后我们去更远的地方，你也愿意一起来吗？",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "selin",
+        "text": "愿意。等这里安顿好，我也想看看山外的路。这次，就让我给大家提灯吧。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "瑟琳提起铜灯，与三人一同走下山坡。街边飘来热汤的香气，等候的住户已经迎到了路口。",
         "portrait": null
       }
     ]
@@ -5351,7 +5882,7 @@
       {
         "id": "ch3",
         "name": "第三章：余烬灯途",
-        "description": "循着雪下的旧灯路，穿过熄灯小镇，走向失序炉心。",
+        "description": "风雪平息后，循着旧驿站熄灭的灯火，与守灯人瑟琳一同寻找小镇失去的炉火。",
         "unlocked": false,
         "unlockCondition": "ch2_5",
         "stages": [
