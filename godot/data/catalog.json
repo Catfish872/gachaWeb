@@ -3319,6 +3319,10 @@
         "atk": 60,
         "def": 20,
         "spd": 100
+      },
+      "expeditionAI": {
+        "aoeChance": 0.25,
+        "fallbackSkill": "ash_moth_dive_expedition"
       }
     },
     "lamp_wraith": {
@@ -3456,7 +3460,10 @@
         "def": 35,
         "spd": 85
       },
-      "abyssMinFloor": 4
+      "abyssMinFloor": 4,
+      "expeditionAI": {
+        "aoeChance": 0.25
+      }
     },
     "lamp_overseer": {
       "id": "lamp_overseer",
@@ -3489,6 +3496,11 @@
         "atk": 78,
         "def": 90,
         "spd": 80
+      },
+      "expeditionAI": {
+        "aoeChance": 0.25,
+        "recoveryAfterDamage": true,
+        "idleChance": 0.25
       }
     },
     "boss_hedor": {
@@ -3528,6 +3540,10 @@
         "atk": 125,
         "def": 60,
         "spd": 95
+      },
+      "expeditionAI": {
+        "aoeChance": 0.25,
+        "recoveryAfterDamage": true
       }
     },
     "furnace_lamp": {
@@ -4063,6 +4079,19 @@
           "statusId": "atk_up",
           "value": 0.15,
           "duration": 1
+        }
+      ],
+      "cooldown": 0,
+      "animation": "fireball"
+    },
+    "ash_moth_dive_expedition": {
+      "name": "灰翅扑击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.8,
+          "element": "fire"
         }
       ],
       "cooldown": 0,

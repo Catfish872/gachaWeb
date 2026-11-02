@@ -31,6 +31,10 @@ var selected_pool := "limited_selin"
 var selected_chapter := 0
 var selected_stage_id := ""
 var story_list_positions: Dictionary = {}
+var shop_list_positions: Dictionary = {}
+var _shop_page_key := ""
+var _shop_page_restore_pending := false
+var _shop_page_generation := 0
 var growth_panel := "stats"
 var selected_relic := ""
 var relic_filter := "全部"
@@ -548,6 +552,12 @@ func _background_path() -> String:
 	return "res://assets/backgrounds/camp.png"
 
 func _render_screen() -> void:
+	# The mobile outer viewport survives rebuilds, but its range temporarily shrinks.
+	# Capture it before removing the old content, using the previous view's key.
+	if not _shop_page_key.is_empty() and not _shop_page_restore_pending:
+		shop_list_positions[_shop_page_key] = page_scroll.scroll_vertical
+	_shop_page_key = ""
+	_shop_page_generation += 1
 	var backdrop := get_node_or_null("SceneBackdrop") as TextureRect
 	if backdrop != null:
 		backdrop.texture = load(_background_path())
@@ -580,6 +590,10 @@ func _render_screen() -> void:
 		"save": _save_screen()
 		"battle": _render_battle()
 	main_body.modulate.a = 1.0
+	if current_screen == "shop":
+		_restore_shop_page("shop/page")
+	elif current_screen == "extraction" and extraction_panel == "shop":
+		_restore_shop_page("extraction/shop/page/"+str(get_meta("extraction_shop_filter","all")))
 
 func _update_resources() -> void:
 	if not is_instance_valid(header_resources):
@@ -1342,6 +1356,7 @@ func _shop() -> void:
 		_label(column,"旅途补给" if category=="item" else "旅者礼遇",22,GOLD)
 		var list:=_scroll_column(column,10)
 		list.get_parent().name="ShopScroll_"+category
+		_restore_shop_list(list.get_parent(), "shop/"+category)
 		if compact:list.get_parent().custom_minimum_size.y=380
 		var entries=model.catalog.ShopData.itemShop if category=="item" else model.catalog.ShopData.rechargeItems
 		for item in entries:
@@ -2610,18 +2625,35 @@ func _character_ownership_badge(parent: Node, id: String, small: bool=false) -> 
 	if owned and not small:
 		_label(row,"Lv.%d" % int(model.state.ownedCharacters[id].get("level",1)),12,TEXT)
 
+func _restore_shop_page(key: String) -> void:
+	_shop_page_key = key
+	_shop_page_restore_pending = true
+	var generation := _shop_page_generation
+	var desired := int(shop_list_positions.get(key, 0))
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if generation != _shop_page_generation or not is_instance_valid(page_scroll):return
+	page_scroll.scroll_vertical = desired
+	_shop_page_restore_pending = false
+
+func _restore_shop_list(scroll: ScrollContainer, key: String) -> void:
+	_restore_list_position(scroll, key, shop_list_positions)
+
 func _restore_character_list(scroll: ScrollContainer, key: String) -> void:
+	_restore_list_position(scroll, key, character_list_positions)
+
+func _restore_list_position(scroll: ScrollContainer, key: String, positions: Dictionary) -> void:
 	# Capture state continuously, then restore only after the new list is laid out.
 	# Detached old controls cannot overwrite the remembered position during teardown.
-	var desired:int=int(character_list_positions.get(key,0))
+	var desired:int=int(positions.get(key,0))
 	var tree:=get_tree()
 	await tree.process_frame
 	await tree.process_frame
 	if not is_instance_valid(scroll) or not scroll.is_inside_tree():return
 	scroll.scroll_vertical=desired
-	character_list_positions[key]=scroll.scroll_vertical
+	positions[key]=scroll.scroll_vertical
 	scroll.get_v_scroll_bar().value_changed.connect(func(value:float):
-		if is_instance_valid(scroll) and scroll.is_inside_tree():character_list_positions[key]=int(value))
+		if is_instance_valid(scroll) and scroll.is_inside_tree():positions[key]=int(value))
 
 func _bind_card_tap(card: Control, action: Callable) -> void:
 	card.mouse_filter = Control.MOUSE_FILTER_PASS

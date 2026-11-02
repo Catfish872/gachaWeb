@@ -1,0 +1,60 @@
+{
+  "version": "2.7.5",
+  "version_code": 20705,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 327,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-02T07:42:00Z",
+      "completed_utc": "2026-11-02T07:45:13Z",
+      "elapsed_seconds": 193,
+      "production_sha256": "6dec75e949ce70d8dd0bdec51000b502450b9cdcc68be5fbae7c133918343f26",
+      "scope": [
+        "960x540 and 640x960 desktop GL supply repeated purchase retains inner and outer scroll",
+        "filter return retains per-category scroll",
+        "key purchase twice close and reopen retain bottom",
+        "insufficient gold state immutable",
+        "purchase immediately followed by navigation prevents stale deferred restore"
+      ]
+    },
+    {
+      "started_utc": "2026-11-02T07:56:00Z",
+      "completed_utc": "2026-11-02T07:58:14Z",
+      "elapsed_seconds": 134,
+      "production_sha256": "b6be7845dd3b0f508f97d8c6ad3ce895bddd8211d535a49eaa54f99387f59475",
+      "scope": [
+        "player burn poison effective DEF and existing90percentDR cap, shields and equipment durability ledger, mixed/dead/missing sources, invincibility, enemy DOT unchanged",
+        "new enemies quarter AoE config and deterministic0/1 boundaries, recovery after AoE and across phase/control skip, only-AoE fallback, puppet one-time warning, story/oldenemy exclusion",
+        "real recovery auto_step emitted UI skill identity and unchanged RNG"
+      ]
+    }
+  ],
+  "production_sha256": "ac24b79f97149e9ab825a3c1ea2803a8112b4369c1b3216c161a042538c025f1",
+  "production_file_count": 1004,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "960x540 and 640x960 desktop GL supply repeated purchase retains inner and outer scroll",
+    "filter return retains per-category scroll",
+    "key purchase twice close and reopen retain bottom",
+    "insufficient gold state immutable",
+    "purchase immediately followed by navigation prevents stale deferred restore",
+    "player burn poison effective DEF and existing90percentDR cap, shields and equipment durability ledger, mixed/dead/missing sources, invincibility, enemy DOT unchanged",
+    "new enemies quarter AoE config and deterministic0/1 boundaries, recovery after AoE and across phase/control skip, only-AoE fallback, puppet one-time warning, story/oldenemy exclusion",
+    "real recovery auto_step emitted UI skill identity and unchanged RNG"
+  ],
+  "limits": [
+    "Actual button pressed callbacks in desktop GL; no Android touch claim",
+    "Prior intentional insufficient-gold toast remains in key screenshot; subsequent purchase and exact deduction verified",
+    "Fixture exit resource warning retained",
+    "No numerical balance changes or unrelated mode tests",
+    "headless mechanism checks only; UI layouts unchanged",
+    "Prior shop visual evidence reused; no shop rerun",
+    "No full battle simulations or unrelated modes"
+  ],
+  "incremental_evidence": "First segment shop GL 44 checks retained; second segment adds headless player DOT defense and enemy pacing 79 checks. Shop presentation files unchanged after first review."
+}

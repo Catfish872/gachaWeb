@@ -1,0 +1,32 @@
+{
+  "started_utc": "2026-11-02T07:56:00Z",
+  "completed_utc": "2026-11-02T07:58:14Z",
+  "elapsed_seconds": 134,
+  "combined_test_elapsed_seconds": 327,
+  "prior_segment": {
+    "path": "validation/supply-scroll-focused/targeted-result.json",
+    "elapsed_seconds": 193,
+    "checks": 44
+  },
+  "production_sha256": "b6be7845dd3b0f508f97d8c6ad3ce895bddd8211d535a49eaa54f99387f59475",
+  "production_file_count": 1004,
+  "targeted_checks": "passed",
+  "checks": {
+    "player_dot_defense": "passed",
+    "enemy_pacing": 79
+  },
+  "scope": [
+    "player burn poison effective DEF and existing90percentDR cap, shields and equipment durability ledger, mixed/dead/missing sources, invincibility, enemy DOT unchanged",
+    "new enemies quarter AoE config and deterministic0/1 boundaries, recovery after AoE and across phase/control skip, only-AoE fallback, puppet one-time warning, story/oldenemy exclusion",
+    "real recovery auto_step emitted UI skill identity and unchanged RNG"
+  ],
+  "limits": [
+    "headless mechanism checks only; UI layouts unchanged",
+    "Prior shop visual evidence reused; no shop rerun",
+    "No full battle simulations or unrelated modes"
+  ],
+  "logs": [
+    "test_player_dot_defense_v275.log",
+    "test_enemy_pacing_v275.log"
+  ]
+}

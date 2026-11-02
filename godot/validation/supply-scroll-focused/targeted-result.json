@@ -1,0 +1,23 @@
+{
+  "started_utc": "2026-11-02T07:42:00Z",
+  "completed_utc": "2026-11-02T07:45:13Z",
+  "elapsed_seconds": 193,
+  "production_sha256": "6dec75e949ce70d8dd0bdec51000b502450b9cdcc68be5fbae7c133918343f26",
+  "production_file_count": 1004,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "checks": 44,
+  "scope": [
+    "960x540 and 640x960 desktop GL supply repeated purchase retains inner and outer scroll",
+    "filter return retains per-category scroll",
+    "key purchase twice close and reopen retain bottom",
+    "insufficient gold state immutable",
+    "purchase immediately followed by navigation prevents stale deferred restore"
+  ],
+  "limits": [
+    "Actual button pressed callbacks in desktop GL; no Android touch claim",
+    "Prior intentional insufficient-gold toast remains in key screenshot; subsequent purchase and exact deduction verified",
+    "Fixture exit resource warning retained",
+    "No numerical balance changes or unrelated mode tests"
+  ]
+}

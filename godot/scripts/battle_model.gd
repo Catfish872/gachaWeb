@@ -4,6 +4,7 @@ extends RefCounted
 
 const AbyssBalance = preload("res://scripts/abyss_balance.gd")
 
+const ENEMY_RECOVERY_SKILL := "enemy_recover"
 const CONTROL_STATUSES = ["freeze", "stun", "electrify"]
 const STATUS_IDS = ["burn", "freeze", "stun", "poison", "electrify", "regen", "atk_up", "def_up", "spd_down", "shield", "invincible", "taunt", "ember_oath", "ember_lantern_burn", "ember_lantern_direct"]
 const ELEMENT_ADVANTAGE = {
@@ -80,6 +81,8 @@ func get_unit(uid: String) -> Dictionary:
 	return {}
 
 func skill_data(skill_id: String, is_ally: bool = true) -> Dictionary:
+	if not is_ally and skill_id == ENEMY_RECOVERY_SKILL:
+		return {"name": "收势调整", "effects": [], "animation": "fireball"}
 	return catalog.get("SkillData" if is_ally else "EnemySkillData", {}).get(skill_id, {})
 
 func available_actions() -> Array:
@@ -171,6 +174,7 @@ func _hold_healing_skill(actor: Dictionary, skill: Dictionary) -> bool:
 func _take_action(actor: Dictionary, sid: String, target_id: String) -> Dictionary:
 	_events = []
 	_execute_skill(actor, sid, target_id)
+	_record_enemy_pacing(actor, sid)
 	_after_active_action(actor)
 	_consume_action_statuses(actor)
 	_steps += 1
@@ -498,9 +502,20 @@ func _available(unit: Dictionary) -> Array:
 		if int(unit.cooldowns.get(sid, 0)) > 0: continue
 		if unit.isAlly and data.get("type", "") == "ultimate" and unit.energy < int(data.get("energyCost", 100)): continue
 		result.append(sid)
+	var pacing := _enemy_pacing_config(unit)
+	if not pacing.is_empty():
+		var fallback := str(pacing.get("fallbackSkill", ""))
+		if not fallback.is_empty() and not skill_data(fallback, false).is_empty() and int(unit.cooldowns.get(fallback, 0)) <= 0 and not result.has(fallback):
+			result.append(fallback)
+		if not result.has(ENEMY_RECOVERY_SKILL): result.append(ENEMY_RECOVERY_SKILL)
 	return result
 
 func _enemy_choice(unit: Dictionary, skills: Array) -> String:
+	var pacing := _enemy_pacing_config(unit)
+	if not pacing.is_empty(): return _paced_enemy_choice(unit, skills, pacing)
+	return _legacy_enemy_choice(unit, skills)
+
+func _legacy_enemy_choice(unit: Dictionary, skills: Array) -> String:
 	if unit.get("aiPattern", "") in ["telegraphed", "low_hp_charge"] and unit.skills.size() >= 2:
 		var warning := str(unit.skills[0])
 		var heavy := str(unit.skills[1])
@@ -542,6 +557,72 @@ func _enemy_choice(unit: Dictionary, skills: Array) -> String:
 		var p2 = skills.filter(func(sid): return unit.phase2Skills.has(sid))
 		if not p2.is_empty(): return p2[rng.randi_range(0, p2.size() - 1)]
 	return skills[rng.randi_range(0, skills.size() - 1)]
+
+# Pacing is opt-in and mode-local. Missing keys on older battle dictionaries are safe.
+func _enemy_pacing_config(unit: Dictionary) -> Dictionary:
+	if unit.get("isAlly", true) or not _is_abyss: return {}
+	var data: Dictionary = catalog.get("EnemyData", {}).get(str(unit.get("dataId", unit.get("id", ""))), {})
+	var pacing = data.get("expeditionAI", {})
+	return pacing if pacing is Dictionary else {}
+
+func _enemy_skill_is_aoe(sid: String) -> bool:
+	# Classify declared hostile targets, even with one survivor or a dead caster.
+	# Team shields/buffs target all_allies and do not count as hostile area attacks.
+	for effect in skill_data(sid, false).get("effects", []):
+		if str(effect.get("target", "single")) not in ["all", "all_enemies", "chain3"]: continue
+		if effect.get("type", "") == "damage": return true
+		if effect.get("type", "") == "status" and effect.get("statusId", "") in ["burn", "poison", "freeze", "stun", "electrify", "spd_down"]: return true
+	return false
+
+func _record_enemy_pacing(unit: Dictionary, sid: String) -> void:
+	var pacing := _enemy_pacing_config(unit)
+	if pacing.is_empty(): return
+	if unit.get("aiPattern", "") == "low_hp_charge" and unit.skills.size() >= 2:
+		if sid == str(unit.skills[0]): unit.chargeReady = true
+		elif sid == str(unit.skills[1]):
+			unit.chargeReady = false
+			unit.chargeSpent = true
+	if sid == ENEMY_RECOVERY_SKILL:
+		unit.pacingRecoveryPending = false
+		return
+	var requires_recovery := _enemy_skill_is_aoe(sid)
+	for effect in skill_data(sid, false).get("effects", []):
+		if effect.get("type", "") == "damage" and pacing.get("recoveryAfterDamage", false): requires_recovery = true
+	# Only an executed recovery action clears this; phase changes and control skips do not.
+	if requires_recovery: unit.pacingRecoveryPending = true
+
+func _paced_enemy_choice(unit: Dictionary, skills: Array, pacing: Dictionary) -> String:
+	if unit.get("pacingRecoveryPending", false): return ENEMY_RECOVERY_SKILL
+	var candidates: Array = skills.filter(func(sid): return sid != ENEMY_RECOVERY_SKILL)
+	# Preserve the puppet's one-time low-HP warning and charge state. A failed
+	# intent roll waits without reapplying the warning buff or consuming its charge.
+	var low_hp_charge: bool = unit.get("aiPattern", "") == "low_hp_charge" and unit.skills.size() >= 2
+	if low_hp_charge:
+		var warning := str(unit.skills[0])
+		var heavy := str(unit.skills[1])
+		if unit.get("chargeSpent", false) or (not unit.get("chargeReady", false) and float(unit.currentHp) / unit.maxHp >= 0.35):
+			candidates.erase(warning)
+			candidates.erase(heavy)
+		elif not unit.get("chargeReady", false):
+			if candidates.has(warning): return warning
+			return ENEMY_RECOVERY_SKILL
+		else:
+			candidates = [heavy] if candidates.has(heavy) else []
+	elif unit.get("aiPattern", "") == "boss" and unit.get("inPhase2", false):
+		var phase_skills: Array = candidates.filter(func(sid): return unit.get("phase2Skills", []).has(sid))
+		if not phase_skills.is_empty(): candidates = phase_skills
+	var area: Array = candidates.filter(func(sid): return _enemy_skill_is_aoe(str(sid)))
+	var ordinary: Array = candidates.filter(func(sid): return not _enemy_skill_is_aoe(str(sid)))
+	# Exactly one probability gate per actual selection; availability/UI never draws RNG.
+	var area_chance := clampf(float(pacing.get("aoeChance", 0.25)), 0.0, 1.0) if not area.is_empty() else 0.0
+	var idle_chance := clampf(float(pacing.get("idleChance", 0.0)), 0.0, 1.0 - area_chance)
+	var intent_roll := rng.randf() if area_chance + idle_chance > 0.0 else 1.0
+	if intent_roll < area_chance:
+		var chosen := str(area[0]) if area.size() == 1 else str(area[rng.randi_range(0, area.size() - 1)])
+		return chosen
+	if intent_roll < area_chance + idle_chance or ordinary.is_empty(): return ENEMY_RECOVERY_SKILL
+	if low_hp_charge: return str(ordinary[0])
+	return _legacy_enemy_choice(unit, ordinary)
 
 func _targets(kind: String, caster: Dictionary, selected: String, cache: Dictionary) -> Array:
 	var friends = _friends(caster)
@@ -998,9 +1079,18 @@ func _absorb(unit: Dictionary, amount: int) -> int:
 	return remaining
 
 func _status_damage(unit: Dictionary, amount: int, source: String, details: Dictionary = {}) -> void:
+	if int(unit.get("currentHp", 0)) <= 0 or amount <= 0: return
 	if has_status(unit, "invincible"):
 		_emit("miss", {}, unit, 0, unit.name + " 无敌", {"status": source})
 		return
+	if unit.get("isAlly", false):
+		# Player DOT uses the same effective defense and ordinary reduction ceiling
+		# as direct hits, then the shared skill/equipment shield ledger. Keep this
+		# source-independent: snapshots still tick after their caster disappears.
+		var mods := modifiers(unit)
+		var raw := float(amount) * (100.0 / (100.0 + maxf(0.0, float(unit.stats.def) * float(mods.defMult))))
+		amount = maxi(1, int(raw * maxf(0.1, _damage_taken_multiplier(unit) * maxf(0.0, 1.0 - float(mods.damageReduction)))))
+		amount = _absorb(unit, amount)
 	unit.currentHp = maxi(0, int(unit.currentHp) - amount)
 	var extra := details.duplicate(true)
 	extra.status = source

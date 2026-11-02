@@ -645,6 +645,8 @@ static func _shop(app,state: Dictionary) -> void:
 		var key:=str(entry[0])
 		app._tab_button(filters,str(entry[1]),func():app.set_meta("extraction_shop_filter",key);app._render_screen(),filter==key).name="ExtractionShopFilter_"+key
 	var list=_scroll(app,left)
+	list.get_parent().name="ExtractionSupplyScroll"
+	app._restore_shop_list(list.get_parent(),"extraction/shop/"+filter)
 	var cards=app._grid(list,2 if app.size.x<900 else 3);cards.add_theme_constant_override("h_separation",8);cards.add_theme_constant_override("v_separation",8)
 	for id in app.model.extraction.data.get("items",{}):
 		var d: Dictionary=app.model.extraction.item_def(str(id))
@@ -662,6 +664,7 @@ static func _shop(app,state: Dictionary) -> void:
 	var right=_section(app,row,"携带与储备",app.CYAN);right.get_parent().size_flags_stretch_ratio=1
 	var preparation=_scroll(app,right)
 	preparation.get_parent().name="ExtractionPreparationScroll"
+	app._restore_shop_list(preparation.get_parent(),"extraction/shop/preparation/"+filter)
 	_utility_slots(app,preparation)
 	_loadout(app,preparation,state)
 	_button(app,right,"打开仓库",func():_switch_panel(app,"stash"))
@@ -710,6 +713,8 @@ static func _keyring(app) -> void:
 				if app._check(app.model.extraction.buy_keys(id,1)):
 					app._ui_sound("coin");app._render_screen();_keyring(app)).name="ExtractionBuyKey_"+id
 	_button(app,app._modal_footer(box),"返回",func():app._clear_overlay()).name="ExtractionSupplyClose"
+	box.get_parent().name="ExtractionKeyringScroll"
+	app._restore_shop_list(box.get_parent(),"extraction/keyring")
 
 static func _quick_supplies(app) -> void:
 	var box=app._modal("随身补给",580,420)
@@ -737,6 +742,8 @@ static func _quick_supplies(app) -> void:
 		button.name="ExtractionQuickUse_"+uid;button.disabled=not app.model.extraction.can_use_consumable(str(item.itemId))
 	if count==0:app._label(list,"背包暂无消耗品",16,app.MUTED)
 	_button(app,app._modal_footer(box),"返回",func():app._clear_overlay()).name="ExtractionSupplyClose"
+	box.get_parent().name="ExtractionKeyringScroll"
+	app._restore_shop_list(box.get_parent(),"extraction/keyring")
 
 static func _supply_lock_style(app,button: Button,locked: bool) -> void:
 	button.set_meta("exchange_locked",locked)
