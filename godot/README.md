@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.7.6 · 战术装备与首领箱
+## 最新正式版：2.7.7 · 首领进攻节奏
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.7/universal.apk) · [更新说明](CHANGELOG_2.7.7.md) · [验证记录](validation/release-v277/RELEASE.md)
+
+赫铎与提灯监工每回合进攻，群攻后接单体攻击，保留进攻间隔但不再频繁无伤休息。玩家持续伤害防盾及其他敌人规则不变。
+
+## 历史版本：2.7.6 · 战术装备与首领箱
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.6/universal.apk) · [更新说明](CHANGELOG_2.7.6.md) · [验证记录](validation/release-v276/RELEASE.md)
 
