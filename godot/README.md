@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.7.2 · 界面与遭遇修复
+## 最新正式版：2.7.3 · 角色展示与抽卡优化
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.3/universal.apk) · [更新说明](CHANGELOG_2.7.3.md) · [验证记录](validation/release-v273/RELEASE.md)
+
+统一瑟琳半身比例与专属背景；抽卡结算显示实时钻石余额，养成与编队优先队伍成员和五星角色，强化品质边框与套装首推荐。
+
+## 历史版本：2.7.2 · 界面与遭遇修复
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.2/universal.apk) · [更新说明](CHANGELOG_2.7.2.md) · [验证记录](validation/release-v272/RELEASE.md)
 
