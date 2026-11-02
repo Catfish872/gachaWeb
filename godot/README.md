@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.7.5 · 补给操作与战斗节奏
+## 最新正式版：2.7.6 · 战术装备与首领箱
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.6/universal.apk) · [更新说明](CHANGELOG_2.7.6.md) · [验证记录](validation/release-v276/RELEASE.md)
+
+战术装备撤离后保留在独立装备槽，出售自动跳过穿戴物品；首领箱轻微提高高品质权重并修复装箱遗漏。
+
+## 历史版本：2.7.5 · 补给操作与战斗节奏
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.5/universal.apk) · [更新说明](CHANGELOG_2.7.5.md) · [验证记录](validation/release-v275/RELEASE.md)
 
