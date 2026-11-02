@@ -1,0 +1,31 @@
+{
+  "started_utc": "2026-11-02T06:26:15Z",
+  "completed_utc": "2026-11-02T06:33:42Z",
+  "elapsed_seconds": 447,
+  "production_sha256": "215b7082d5dae51013c84fa525b15c0931a63aedbae1c04418c34bebcb064fd7",
+  "production_file_count": 1003,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "checks": {
+    "summon_portrait_balance": 55,
+    "roster_sort": 18,
+    "character_context": 6
+  },
+  "scope": [
+    "960x540 actual desktop GL portrait framing vs legacy character, face/full source stable",
+    "committed draws 3700 to 3540 to 3380 to 1780 to 180 to 20, rapid skip, repeated purchase, insufficient funds disabled, close-return",
+    "saved formation/draft priority then rarity sorting, gold border and distinct selection, scroll preservation",
+    "first recommended ember_lantern and configured character environment with explicit override and legacy fallback"
+  ],
+  "incremental_evidence": "Initial55 retained; main roster change covered by18 only; character context additions covered by6 only. Parent visually reviewed all final images.",
+  "limits": [
+    "Desktop GL only",
+    "One context fixture bad explicit path corrected to existing snow_inn; no production fix",
+    "Context fixture exit Tween resource warning retained"
+  ],
+  "logs": [
+    "gl.log",
+    "roster-gl.log",
+    "character-context-gl.log"
+  ]
+}

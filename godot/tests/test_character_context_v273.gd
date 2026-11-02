@@ -1,0 +1,20 @@
+extends "res://tests/test_summon_polish_v273.gd"
+func run()->void:
+	if DisplayServer.get_name()=="headless":quit(2);return
+	app=load("res://main.tscn").instantiate();root.add_child(app);await frames(12);app.set_process(false);fresh();root.size=Vector2i(960,540);await frames(8)
+	app.model.state.ownedCharacters.selin=app.model.default_character();app.selected_character="selin";app.growth_panel="stats";app.navigate("growth");await frames(8)
+	var recommendation=app.find_child("CharacterRecommendedRelics",true,false)
+	ck(recommendation.get_meta("recommended_set_id","")=="ember_lantern","new set is first recommendation")
+	ck(recommendation.text.begins_with("首推套装 · 烬灯织誓"),"first set is explicit player text")
+	ck(app.find_child("PortraitEnvironment_selin",true,false).get_meta("portrait_background","")=="res://assets/content_v270/backgrounds/unlit_town.png","character configured environment rendered")
+	await capture("960-character-background-recommendation")
+	await tap(recommendation)
+	var cards=app.find_children("CharacterRecommendedSet_*","PanelContainer",true,false)
+	ck(cards.size()>0 and cards[0].name=="CharacterRecommendedSet_ember_lantern","recommendation modal begins with new set")
+	await capture("960-recommendation-first-set")
+	app._clear_overlay();var holder:=Control.new();app.add_child(holder)
+	var explicit=app._portrait_environment(holder,"selin",150,"res://assets/content_v270/backgrounds/snow_inn.png","bust")
+	ck(explicit.get_meta("portrait_background","")=="res://assets/content_v270/backgrounds/snow_inn.png","explicit caller background remains first priority")
+	var legacy=app._portrait_environment(holder,"kaldi",150,"","bust")
+	ck(legacy.get_meta("portrait_background","")=="res://assets/wilderness.png","existing character fallback preserved")
+	holder.queue_free();app.queue_free();await frames();print("CHARACTER CONTEXT V273: %d checks, %d failures"%[checks,failures]);quit(0 if failures==0 else 1)

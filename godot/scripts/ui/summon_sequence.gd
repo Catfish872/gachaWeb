@@ -42,6 +42,9 @@ var _next: Button
 var _details: Button
 var _accept: Button
 var _again: Button
+var _wallet: HBoxContainer
+var _balance: Label
+var _repeat_cost: Label
 var _cards: Array[Control] = []
 var _summary: Control
 var _preview: Control
@@ -60,7 +63,8 @@ func setup(owner_app, committed_results: Array, selected_pool: String, gentle: b
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_background = load("res://assets/content_v270/banner/selin_banner.png" if selected_pool == "limited_selin" else "res://assets/backgrounds/summon_sanctum.png")
 	for result in results:
-		_art.append(load(Avatars.source_path(str(result.charId))))
+		var bust: Texture2D = Avatars.get_texture(str(result.charId), "bust")
+		_art.append(bust if bust != null else load(Avatars.source_path(str(result.charId))))
 
 func _ready() -> void:
 	_build()
@@ -187,6 +191,7 @@ func show_summary() -> void:
 	_enter("summary")
 
 func _action(button: Button, action: String) -> void:
+	if button.disabled: return
 	if is_instance_valid(_preview) and action != "preview_close": return
 	var armed: Dictionary = button.get_meta("summon_gesture", {})
 	if armed.is_empty() or int(armed.epoch) != stage_epoch or int(armed.serial) <= _consumed_serial: return
@@ -204,6 +209,11 @@ func _action(button: Button, action: String) -> void:
 			app._clear_overlay()
 			app._render_screen()
 		"again":
+			# Recheck the current wallet before dismissing this committed result.
+			var pool: Dictionary = app.model.catalog.GachaPoolData.pools[pool_id]
+			if int(app.model.state.resources.get(pool.currency, 0)) < int(pool.costPerPull) * results.size():
+				_update_visuals()
+				return
 			var amount := results.size()
 			app._clear_overlay()
 			app._pull(amount)
@@ -243,6 +253,17 @@ func _build() -> void:
 	_details = _button(self, "旅者档案", "SummonDetails", "details", "book")
 	_accept = _button(self, "收下星辰的赠礼", "SummonAccept", "accept", "check", true)
 	_again = _button(self, "再祈愿 %d 次" % results.size(), "SummonAgain", "again", "star")
+	_wallet = app._hbox(self, 6)
+	_wallet.name = "SummonWallet"
+	app._rune_icon(_wallet, "gem", 22).name = "SummonBalanceIcon"
+	_balance = app._label(_wallet, "", 14, app.CYAN)
+	_balance.name = "SummonBalance"
+	_balance.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_balance.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	app._rune_icon(_wallet, "gem", 18).name = "SummonCostIcon"
+	_repeat_cost = app._label(_wallet, "", 14, app.MUTED)
+	_repeat_cost.name = "SummonRepeatCost"
+	app._ignore_children(_wallet)
 	_update_copy()
 	_update_visuals()
 
@@ -297,10 +318,14 @@ func _layout() -> void:
 	_accept.size = Vector2(220, 48)
 	_again.position = Vector2(left, bottom)
 	_again.size = Vector2(180, 48)
+	_wallet.position = Vector2(left, bottom - 34)
+	_wallet.size = Vector2(right-left, 26)
 	_hint.position = Vector2(left+190, bottom+12)
 	_hint.size = Vector2(maxf(0,right-left-420), 26)
 	_hint.visible = _safe.size.x >= 820
-	if is_instance_valid(_summary): _layout_summary(content)
+	if is_instance_valid(_summary):
+		content.size.y = maxf(0, _wallet.position.y - 10 - content.position.y)
+		_layout_summary(content)
 	if is_instance_valid(_preview): _layout_preview()
 	queue_redraw()
 
@@ -322,7 +347,16 @@ func _update_visuals() -> void:
 	_again.visible = is_summary
 	_accept.disabled = is_summary and stage_time < 0.35
 	var pool: Dictionary = app.model.catalog.GachaPoolData.pools[pool_id]
-	_again.disabled = stage_time < 0.35 or int(app.model.state.resources.get(pool.currency,0)) < int(pool.costPerPull) * results.size()
+	var balance := int(app.model.state.resources.get(pool.currency,0))
+	var cost := int(pool.costPerPull) * results.size()
+	_again.disabled = stage_time < 0.35 or balance < cost
+	_wallet.visible = is_summary
+	_balance.text = "剩余星尘晶 %d" % balance
+	_balance.set_meta("balance", balance)
+	_repeat_cost.text = "花费 %d" % cost
+	_repeat_cost.set_meta("cost", cost)
+	_repeat_cost.modulate = app.CYAN if balance >= cost else app.GOLD
+	_again.text = "再祈愿 %d 次" % results.size() if balance >= cost else "星尘晶不足"
 	_counter.visible = not is_summary
 	_title.text = "星辰之约 · 祈愿结果" if is_summary else "星辰之约"
 	_subtitle.text = "每一次相遇，都已铭刻于旅程" if is_summary else ("传说之光 · 命运交汇" if rarity() == 5 and stage in ["legendary","portrait","result"] else "群星循着你的呼唤，缓缓汇聚")

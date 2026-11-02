@@ -847,7 +847,7 @@ func _summon_character_preview(id:String,back:Callable=Callable()) -> void:
 	var data:Dictionary=model.catalog.CharacterData[id]
 	var box:=_modal("旅者档案",1040,500)
 	var row:=_responsive_box(box,compact,16)
-	_portrait_environment(row,id,270)
+	_portrait_environment(row,id,270,"","bust")
 	var copy:=_vbox(row,8);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	_label(copy,str(data.name),26,_rarity_color(int(data.rarity)),true)
 	_label(copy,"★".repeat(int(data.rarity)),16,GOLD)
@@ -865,6 +865,37 @@ func _summon_character_preview(id:String,back:Callable=Callable()) -> void:
 var character_filter := "全部"
 var character_list_positions: Dictionary = {}
 var salvage_options := {"all3Star": false, "all4Star": false, "allUnupgraded": false}
+
+func _sorted_character_ids(team: Array) -> Array:
+	# Sort a presentation-only copy; saved tactical seat order remains unchanged.
+	var ids: Array = model.catalog.CharacterData.keys()
+	var original_positions: Dictionary = {}
+	for index in range(ids.size()):
+		original_positions[ids[index]] = index
+	ids.sort_custom(func(a, b):
+		var seat_a: int = team.find(a)
+		var seat_b: int = team.find(b)
+		if seat_a >= 0 or seat_b >= 0:
+			if seat_a < 0: return false
+			if seat_b < 0: return true
+			return seat_a < seat_b
+		var rarity_a: int = int(model.catalog.CharacterData[a].get("rarity", 3))
+		var rarity_b: int = int(model.catalog.CharacterData[b].get("rarity", 3))
+		if rarity_a != rarity_b: return rarity_a > rarity_b
+		return int(original_positions[a]) < int(original_positions[b]))
+	return ids
+
+func _growth_roster_style(button: Button, rarity: int, selected: bool) -> void:
+	if rarity < 5 and not selected: return
+	for state_name in ["normal", "hover", "pressed", "disabled"]:
+		var background := Color("173039") if selected else Color("282319")
+		if state_name == "hover": background = background.lightened(0.08)
+		if state_name == "pressed": background = background.darkened(0.08)
+		var style := _box(background, CYAN if selected else GOLD, 8)
+		style.set_border_width_all(3 if selected else 2)
+		style.shadow_color = Color(0.49, 0.77, 0.77, 0.15) if selected else Color(0.87, 0.64, 0.30, 0.12)
+		style.shadow_size = 3
+		button.add_theme_stylebox_override(state_name, style)
 
 func _party() -> void:
 	set_page_fixed(not compact)
@@ -905,7 +936,7 @@ func _party() -> void:
 	_restore_character_list(listing.get_parent(), "party")
 	var grid:=_grid(listing,2 if compact else (3 if content_width()<1050 else 4))
 	if compact: listing.get_parent().custom_minimum_size.y=520
-	for id in model.catalog.CharacterData:
+	for id in _sorted_character_ids(draft_team):
 		var data:Dictionary=model.catalog.CharacterData[id]
 		if character_filter!="全部" and data.element!=character_filter:continue
 		var v:=_vbox(grid,5);v.size_flags_horizontal=Control.SIZE_EXPAND_FILL
@@ -945,12 +976,13 @@ func _growth() -> void:
 	var roster:=_scroll_column(roster_panel,6)
 	roster.get_parent().name="GrowthRosterScroll"
 	_restore_character_list(roster.get_parent(), "growth")
-	for id in model.catalog.CharacterData:
+	for id in _sorted_character_ids(model.state.get("team", [])):
 		var entry:Dictionary=model.catalog.CharacterData[id]
 		var obtained:bool=model.state.ownedCharacters.has(id)
 		var b:=_button(roster,"",func():selected_character=str(id);_render_screen(),selected_character==str(id))
 		b.name="GrowthSelect_"+str(id)
-		b.custom_minimum_size=Vector2(145,64)
+		b.custom_minimum_size=Vector2(145,76)
+		_growth_roster_style(b,int(entry.get("rarity",3)),selected_character==str(id))
 		b.tooltip_text=_char_name(str(id))+" · "+("已拥有" if obtained else "未获得")
 		var contents:=HBoxContainer.new()
 		contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -959,8 +991,10 @@ func _growth() -> void:
 		b.add_child(contents)
 		var avatar:=_portrait(contents,str(id),38);avatar.custom_minimum_size.x=32;avatar.size_flags_horizontal=Control.SIZE_FILL
 		var labels:=_vbox(contents,3);labels.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-		var title:=_label(labels,_char_name(str(id)),13,INK if selected_character==str(id) else (TEXT if obtained else MUTED))
+		var title:=_label(labels,_char_name(str(id)),13,TEXT if obtained or selected_character==str(id) else MUTED)
 		title.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+		var stars:=_label(labels,"★".repeat(int(entry.get("rarity",3))),10,_rarity_color(int(entry.get("rarity",3))))
+		stars.name="GrowthRarity_"+str(id)
 		_character_ownership_badge(labels,str(id),true)
 		_ignore_children(contents)
 	var data:Dictionary=model.catalog.CharacterData.get(selected_character,{})
@@ -970,7 +1004,7 @@ func _growth() -> void:
 	var profile:=_panel(row,_rarity_color(int(data.rarity)).darkened(0.5),12)
 	profile.size_flags_stretch_ratio=0.8
 	var pv:=_vbox(profile,6)
-	var art:=_portrait_environment(pv,selected_character,150)
+	var art:=_portrait_environment(pv,selected_character,150,"","bust")
 	art.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	_character_ownership_badge(pv,selected_character)
 	_center_label(pv,str(data.name),24,TEXT)
@@ -987,7 +1021,8 @@ func _growth() -> void:
 		var recommendations:Array=model.relic_set_recommendations(selected_character)
 		if not recommendations.is_empty():
 			var recommendation:Dictionary=recommendations[0]
-			var recommended:=_button(details,"推荐套装 · "+str(recommendation.name)+(" 等 %d 套"%recommendations.size() if recommendations.size()>1 else ""),func():load("res://scripts/ui/relic_recommendations_view.gd").show_for(self,selected_character))
+			var recommended:=_button(details,"首推套装 · "+str(recommendation.name)+(" · 另有备选" if recommendations.size()>1 else ""),func():load("res://scripts/ui/relic_recommendations_view.gd").show_for(self,selected_character))
+			recommended.set_meta("recommended_set_id",str(recommendation.get("setId","")))
 			recommended.name="CharacterRecommendedRelics";recommended.icon=_relic_texture("helmet",str(recommendation.get("setId",recommendation.get("id",""))));recommended.add_theme_constant_override("icon_max_width",32);recommended.expand_icon=true;recommended.clip_text=true
 	var panel:=_panel(details,LINE,12)
 	panel.size_flags_vertical=Control.SIZE_EXPAND_FILL
@@ -3212,7 +3247,11 @@ func _portrait_environment(parent:Node,id:String,height:float=240,background_pat
 	stage.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	parent.add_child(stage)
 	var path:=background_path
+	if path.is_empty():
+		var character_background:=str(model.catalog.CharacterData.get(id,{}).get("portraitBackground",""))
+		if not character_background.is_empty() and ResourceLoader.exists(character_background):path=character_background
 	if path.is_empty():path={"fire":"res://assets/wilderness.png","water":"res://assets/backgrounds/snowfield.png","wind":"res://assets/backgrounds/camp.png","thunder":"res://assets/backgrounds/abyss.png"}.get(element,"res://assets/backgrounds/abyss.png")
+	stage.set_meta("portrait_background",path)
 	var backdrop:=TextureRect.new();backdrop.texture=load(path)
 	backdrop.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;backdrop.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);backdrop.modulate=Color(.53,.58,.68)

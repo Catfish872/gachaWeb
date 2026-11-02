@@ -1150,6 +1150,7 @@
       "color": "#edaa60",
       "colorDark": "#592d32",
       "image": "assets/content_v270/characters/selin.png",
+      "portraitBackground": "res://assets/content_v270/backgrounds/unlit_town.png",
       "relicObjective": {
         "type": "damage",
         "label": "燃烧协同",
