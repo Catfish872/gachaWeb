@@ -1,0 +1,39 @@
+{
+  "version": "2.7.7",
+  "version_code": 20707,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "ui_evidence_reused": "Unchanged UI; prior 2.7.6 visual review retained. No new GL or device run.",
+  "test_elapsed_seconds": 45,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-02T09:16:30Z",
+      "completed_utc": "2026-11-02T09:17:15Z",
+      "production_sha256": "7dbf60ba790c5357c5678e428d029b8aa105cefb2fcee5760f0cf2e35850957a",
+      "scope": [
+        "Hedor and lamp overseer 50% area intent with damaging single recovery",
+        "phase/control/cooldown/dead source obligation preservation",
+        "actual auto action clears pending and event matches damaging skill",
+        "ordinary new enemies idle recovery retained; story and legacy opt-out"
+      ],
+      "elapsed_seconds": 45
+    }
+  ],
+  "production_sha256": "070c9d113e9d1484e9c5e37c9d1ccc78f796c1a6f6bf7b3b118615206a7267b9",
+  "production_file_count": 1004,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "Hedor and lamp overseer 50% area intent with damaging single recovery",
+    "phase/control/cooldown/dead source obligation preservation",
+    "actual auto action clears pending and event matches damaging skill",
+    "ordinary new enemies idle recovery retained; story and legacy opt-out"
+  ],
+  "limits": [
+    "67 focused mechanism checks; no full simulations or old suites.",
+    "No UI changes or new visual/device testing."
+  ]
+}

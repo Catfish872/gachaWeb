@@ -1,0 +1,27 @@
+{
+  "version": "2.7.7",
+  "started_utc": "2026-11-02T09:16:30Z",
+  "completed_utc": "2026-11-02T09:17:15Z",
+  "test_elapsed_seconds": 45,
+  "checks": 67,
+  "failures": 0,
+  "production_sha256": "7dbf60ba790c5357c5678e428d029b8aa105cefb2fcee5760f0cf2e35850957a",
+  "production_file_count": 1004,
+  "scope": [
+    "Hedor and lamp overseer 50% area intent with damaging single recovery",
+    "phase/control/cooldown/dead source obligation preservation",
+    "actual auto action clears pending and event matches damaging skill",
+    "ordinary new enemies idle recovery retained; story and legacy opt-out"
+  ],
+  "test_script": "tests/test_elite_boss_tempo_v276.gd",
+  "ui": "No UI changes; no new GL or device claim",
+  "baseline": "Previous 2.7.6 equipment/boss loot checks not rerun. Tested production retains 2.7.6 metadata; exact version-only normalization links it to release 2.7.7.",
+  "status": "passed",
+  "notes": "First pass. Four 24-choice fixed-seed helper sequences, not full battle simulation. No old suites.",
+  "static_dot_comparison": {
+    "baseline_runtime": "b9cdb9fe5e873c1afbe908bcd9b3f627b726fb18",
+    "function": "_status_damage",
+    "sha256": "3e45c096654a74942689cdee7a546ed4653cb69b0c7bf66054db3b92d06c233e",
+    "result": "identical source; not a new test"
+  }
+}

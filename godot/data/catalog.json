@@ -3498,9 +3498,8 @@
         "spd": 80
       },
       "expeditionAI": {
-        "aoeChance": 0.25,
-        "recoveryAfterDamage": true,
-        "idleChance": 0.25
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
       }
     },
     "boss_hedor": {
@@ -3542,8 +3541,8 @@
         "spd": 95
       },
       "expeditionAI": {
-        "aoeChance": 0.25,
-        "recoveryAfterDamage": true
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
       }
     },
     "furnace_lamp": {

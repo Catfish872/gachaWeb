@@ -588,11 +588,24 @@ func _record_enemy_pacing(unit: Dictionary, sid: String) -> void:
 	var requires_recovery := _enemy_skill_is_aoe(sid)
 	for effect in skill_data(sid, false).get("effects", []):
 		if effect.get("type", "") == "damage" and pacing.get("recoveryAfterDamage", false): requires_recovery = true
-	# Only an executed recovery action clears this; phase changes and control skips do not.
-	if requires_recovery: unit.pacingRecoveryPending = true
+	# Only an executed allowed recovery action clears this; phase/control skips retain it.
+	if requires_recovery:
+		unit.pacingRecoveryPending = true
+	elif pacing.get("recoveryPolicy", "idle") == "single" and _enemy_skill_has_single_damage(sid):
+		unit.pacingRecoveryPending = false
+
+func _enemy_skill_has_single_damage(sid: String) -> bool:
+	if _enemy_skill_is_aoe(sid): return false
+	for effect in skill_data(sid, false).get("effects", []):
+		if effect.get("type", "") == "damage": return true
+	return false
 
 func _paced_enemy_choice(unit: Dictionary, skills: Array, pacing: Dictionary) -> String:
-	if unit.get("pacingRecoveryPending", false): return ENEMY_RECOVERY_SKILL
+	if unit.get("pacingRecoveryPending", false):
+		if pacing.get("recoveryPolicy", "idle") == "single":
+			var single_skills: Array = skills.filter(func(sid): return _enemy_skill_has_single_damage(str(sid)))
+			if not single_skills.is_empty(): return _legacy_enemy_choice(unit, single_skills)
+		return ENEMY_RECOVERY_SKILL
 	var candidates: Array = skills.filter(func(sid): return sid != ENEMY_RECOVERY_SKILL)
 	# Preserve the puppet's one-time low-HP warning and charge state. A failed
 	# intent roll waits without reapplying the warning buff or consuming its charge.
