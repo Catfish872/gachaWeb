@@ -146,17 +146,17 @@ func battle_background_path() -> String:
 		if not backgrounds[depth].is_empty(): return str(backgrounds[depth][0])
 	return "res://assets/extraction/rooms/ruins_1.webp"
 
+func theme_music_track(theme: String, depth: int) -> String:
+	var depth_tracks: Array = data.get("environmentThemes",{}).get(theme,{}).get("depthMusic",[])
+	if not depth_tracks.is_empty(): return str(depth_tracks[clampi(depth,0,depth_tracks.size()-1)])
+	if theme == "lantern": return ["lantern_road","lantern_hall","lantern_core"][clampi(depth,0,2)]
+	return str(data.get("environmentThemes",{}).get(theme,{}).get("music","sunset_walk"))
+
 func environment_music_track() -> String:
 	var theme := environment_theme()
-	var depth_tracks: Array = data.get("environmentThemes",{}).get(theme,{}).get("depthMusic",[])
-	if not depth_tracks.is_empty():
-		var depth_id := str(run().get("room",{}).get("districtId","district_0"))
-		return str(depth_tracks[clampi(int(depth_id.trim_prefix("district_")),0,depth_tracks.size()-1)])
-	if theme == "lantern":
-		var district_id := str(run().get("room",{}).get("districtId","district_0"))
-		return {"district_0":"lantern_road","district_1":"lantern_hall","district_2":"lantern_core"}.get(district_id,"lantern_road")
 	if not theme.is_empty():
-		return str(data.get("environmentThemes",{}).get(theme,{}).get("music","sunset_walk"))
+		var depth_id := str(run().get("room",{}).get("districtId","district_0"))
+		return theme_music_track(theme, int(depth_id.trim_prefix("district_")))
 	return {1:"sunset_walk",2:"medieval_exploration",3:"dungeon_mystic"}.get(int(run().get("act",1)),"sunset_walk")
 
 func _environment_loot_id(base_id: String) -> String:
@@ -447,21 +447,20 @@ func _theme_encounter_budget(kind: String, enemies: Array, act: int, rank: int) 
 		actual[stat] = float(host.catalog.EnemyData[enemies[0]].baseStats[stat]) if kind == "boss" else float(actual[stat])/enemies.size()
 	return {"hpMod":expected.hp*float(budget.get("hpRatio",1.0))/maxf(1.0,actual.hp),"atkMod":expected.atk*float(budget.get("atkRatio",1.0))/maxf(1.0,actual.atk),"defMod":expected.def/maxf(1.0,actual.def),"spdMod":expected.spd/maxf(1.0,actual.spd)}
 
+func environment_enemy_pool(kind: String, theme: String, act: int) -> Array:
+	var themed: Array = data.get("environmentThemes",{}).get(theme,{}).get("enemies",{}).get(kind,[])
+	if not themed.is_empty(): return themed.duplicate()
+	if kind == "boss": return ["boss_flame_lord", "boss_storm_witch"]
+	if kind == "elite": return ["dark_knight", "stone_golem"]
+	return ["wolf", "goblin", "fire_imp"] if act == 1 else ["ice_wolf", "thunder_hawk", "fire_imp"]
+
 func _generate_encounter(kind: String) -> void:
 	var act := int(run().act)
-	var pool: Array = ["wolf", "goblin", "fire_imp"] if act == 1 else ["ice_wolf", "thunder_hawk", "fire_imp"]
+	var pool := environment_enemy_pool(kind, environment_theme(), act)
 	var count := 2 if act < 3 else 3
-	if kind == "elite":
-		pool = ["dark_knight", "stone_golem"]
-		count = 1 if act < 3 else 2
-	elif kind == "boss":
-		# Legacy themes retain their original boss budgets; themed bosses are
-		# selected below with their own encounter normalization.
-		pool = ["boss_flame_lord", "boss_storm_witch"]
-		count = 1
+	if kind == "elite": count = 1 if act < 3 else 2
+	elif kind == "boss": count = 1
 	var theme_config: Dictionary = data.get("environmentThemes",{}).get(environment_theme(),{})
-	var themed_pool: Array = theme_config.get("enemies",{}).get(kind,[])
-	if not themed_pool.is_empty(): pool = themed_pool
 	var enemies: Array = []
 	for i in range(count): enemies.append(pool[int(_rand() * pool.size()) % pool.size()])
 	var attachments: Array = theme_config.get("bossAttachments",["furnace_lamp","furnace_lamp"] if environment_theme() == "lantern" else [])

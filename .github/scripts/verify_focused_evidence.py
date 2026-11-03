@@ -24,8 +24,8 @@ def production_snapshot(root):
 
 def verify(root, record):
     version = json.loads((root / 'data/version.json').read_text())
-    if version['version_name'] != '2.8.3' or version['version_code'] != 20803:
-        raise ValueError('This evidence gate is scoped to release 2.8.3; prepare a new focused review for another version.')
+    if version['version_name'] != '2.8.4' or version['version_code'] != 20804:
+        raise ValueError('This evidence gate is scoped to release 2.8.4; prepare a new focused review for another version.')
     if record.get('version') != version['version_name'] or record.get('version_code') != version['version_code']:
         raise ValueError('Focused evidence belongs to a different release.')
     if record.get('targeted_checks') != 'passed' or record.get('ui_visual_review') != 'passed':
@@ -56,21 +56,21 @@ def verify(root, record):
     if total != duration or total > 600:
         raise ValueError('Total focused duration must equal the sum of actual segments within ten minutes.')
     if segments[-1]['production_sha256'] != record.get('production_sha256'):
-        # 2.8.3 was reviewed before its release metadata bump. Verify that this
+        # 2.8.4 was reviewed before its release metadata bump. Verify that this
         # exact two-file version replacement is the only post-review change.
         if record.get('post_review_version_only') is not True:
             raise ValueError('The final review must cover the release source.')
         normalized, _ = production_snapshot(root)
         for name, count in (('data/version.json', 1), ('export_presets.cfg', 2)):
             data = (root / name).read_bytes()
-            for new, old in ((b'2.8.3', b'2.8.2'), (b'20803', b'20802')):
+            for new, old in ((b'2.8.4', b'2.8.3'), (b'20804', b'20803')):
                 if data.count(new) != count:
                     raise ValueError('Unexpected post-review version replacement.')
                 data = data.replace(new, old)
             normalized[name] = hashlib.sha256(data).hexdigest()
         reviewed = hashlib.sha256(''.join(f'{p}\0{normalized[p]}\n' for p in sorted(normalized)).encode()).hexdigest()
-        if reviewed != segments[-1]['production_sha256'] or reviewed != 'bf5448f51a3610c1a53131c937b29cc7aa8657510a391018a633c1c2c3117e18':
-            raise ValueError('Post-review changes exceed the exact 2.8.3 version metadata bump.')
+        if reviewed != segments[-1]['production_sha256'] or reviewed != '76248ef3a0573a1163304f866a3d2f4e606221ecefaa6d1b06dbb04936f6efaa':
+            raise ValueError('Post-review changes exceed the exact 2.8.4 version metadata bump.')
     if not isinstance(record.get('scope'), list) or not record['scope']:
         raise ValueError('The affected test scope must be declared.')
     files, digest = production_snapshot(root)
@@ -81,12 +81,12 @@ def verify(root, record):
 
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2] / 'godot'
-    path = root / 'validation/v283-focused/release-evidence.json'
+    path = root / 'validation/v284-focused/release-evidence.json'
     if not path.is_file():
         raise SystemExit('Focused release evidence is missing; signing remains blocked.')
     try:
         count, digest = verify(root, json.loads(path.read_text()))
     except (ValueError, KeyError, OSError) as error:
         raise SystemExit(str(error)) from error
-    print(f'Focused 2.8.3 evidence verified: {count} files, SHA256 {digest}')
+    print(f'Focused 2.8.4 evidence verified: {count} files, SHA256 {digest}')
     print('Only declared affected checks apply; no broad suite is started.')

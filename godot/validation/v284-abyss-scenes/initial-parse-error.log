@@ -1,0 +1,36 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "expected_music" variable because the value doesn't have a set type.
+          at: GDScript::reload (res://scripts/game_model.gd:2416)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+          at: GDScript::reload (res://tests/test_lantern_journey_ui_v270.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+          at: GDScript::reload (res://tests/test_abyss_scenes_v284.gd:0)
+ERROR: Failed to load script "res://tests/test_abyss_scenes_v284.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+          at: fixture284 (res://tests/test_abyss_scenes_v284.gd:4)
+          GDScript backtrace (most recent call first):
+              [0] fixture284 (res://tests/test_abyss_scenes_v284.gd:4)
+              [1] scene_checks (res://tests/test_abyss_scenes_v284.gd:11)
+              [2] run (res://tests/test_abyss_scenes_v284.gd:78)
+SCRIPT ERROR: Invalid call. Nonexistent function 'abyss_scene_options' in base 'Nil'.
+          at: scene_checks (res://tests/test_abyss_scenes_v284.gd:11)
+          GDScript backtrace (most recent call first):
+              [0] scene_checks (res://tests/test_abyss_scenes_v284.gd:11)
+              [1] run (res://tests/test_abyss_scenes_v284.gd:78)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+          at: _ready (res://scripts/main.gd:148)
+          GDScript backtrace (most recent call first):
+              [0] _ready (res://scripts/main.gd:148)
+              [1] ui_checks (res://tests/test_abyss_scenes_v284.gd:57)
+              [2] run (res://tests/test_abyss_scenes_v284.gd:79)
+SCRIPT ERROR: Invalid call. Nonexistent function 'abyss_scene_options' in base 'Nil'.
+          at: ui_checks (res://tests/test_abyss_scenes_v284.gd:58)
+          GDScript backtrace (most recent call first):
+              [0] ui_checks (res://tests/test_abyss_scenes_v284.gd:58)
+              [1] frames (res://tests/test_lantern_journey_ui_v270.gd:13)
+ABYSS SCENES V284: 0 checks, 0 failures

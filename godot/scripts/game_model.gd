@@ -63,7 +63,7 @@ func default_character() -> Dictionary:
 	return {"level": 1, "exp": 0, "shards": 0, "constellation": 0, "awakening": 0, "breakthroughLevel": 0, "equippedRelics": {}}
 
 func default_rogue() -> Dictionary:
-	return {"runId": null, "selectedRewards": [], "pendingChoices": [], "nextStep": {"type": "none", "floor": 0}, "characterFocus": {}, "eligibleCharacters": [], "temporaryCurrency": 0, "eventHistory": [], "shopStock": [], "pendingNode": {}, "runTeam": [], "activeEncounter": {}, "metaEarned": 0, "floorsCleared": 0, "difficulty": 0, "targetRelicSetId": "", "relicRewardVersion": 0}
+	return {"runId": null, "selectedRewards": [], "pendingChoices": [], "nextStep": {"type": "none", "floor": 0}, "characterFocus": {}, "eligibleCharacters": [], "temporaryCurrency": 0, "eventHistory": [], "shopStock": [], "pendingNode": {}, "runTeam": [], "activeEncounter": {}, "metaEarned": 0, "floorsCleared": 0, "difficulty": 0, "targetRelicSetId": "", "relicRewardVersion": 0, "sceneBlocks": {}}
 
 func default_meta() -> Dictionary:
 	return {"currency": 0, "totalEarned": 0, "upgrades": {"vitality": 0, "offense": 0, "recovery": 0, "supply": 0}, "runsCompleted": 0, "runsLost": 0, "unlockedDifficulty": 0, "selectedDifficulty": 0, "selectedRelicSetId": "flame_oath"}
@@ -1448,13 +1448,80 @@ func _init_rogue_run() -> void:
 		rogue.characterFocus[id] = 1.0 / rogue.eligibleCharacters.size()
 	state.abyss.rogue = rogue
 
-func abyss_enemy_pool(floor_number: int) -> Array:
-	var tier := "boss" if floor_number % 10 == 0 else "elite" if floor_number % 5 == 0 else "normal"
+func _abyss_scene_start(floor_number: int) -> int:
+	return 1 + int((maxi(1, floor_number) - 1) / 10) * 10
+
+func abyss_scene_options() -> Array:
+	# Each district is one small map, regardless of its number of art variants.
+	var options: Array = []
+	for theme in extraction.data.get("environmentThemes", {}):
+		var backgrounds: Array = extraction.data.environmentThemes[theme].get("backgrounds", [])
+		for depth in range(backgrounds.size()):
+			if not backgrounds[depth].is_empty(): options.append({"theme": theme, "depth": depth})
+	return options
+
+func abyss_scene_from_roll(floor_number: int, roll: float, background_roll: float = 0.0) -> Dictionary:
+	var scene := {"startFloor": _abyss_scene_start(floor_number), "theme": "", "depth": -1, "background": "res://assets/backgrounds/abyss.png"}
+	if floor_number <= 10 or roll < 0.25: return scene
+	var options := abyss_scene_options()
+	if options.is_empty(): return scene
+	var index := mini(options.size() - 1, int(clampf((roll - 0.25) / 0.75, 0.0, 1.0) * options.size()))
+	scene.merge(options[index], true)
+	var backgrounds: Array = extraction.data.environmentThemes[scene.theme].backgrounds[int(scene.depth)]
+	scene.background = backgrounds[mini(backgrounds.size() - 1, int(clampf(background_roll, 0.0, 1.0) * backgrounds.size()))]
+	return scene
+
+func abyss_scene(floor_number: int = -1) -> Dictionary:
+	if floor_number < 0: floor_number = int(state.abyss.currentFloor)
+	return state.abyss.rogue.get("sceneBlocks", {}).get(str(_abyss_scene_start(floor_number)), abyss_scene_from_roll(floor_number, 0.0)).duplicate(true)
+
+func _ensure_abyss_scene(floor_number: int) -> Dictionary:
+	var rogue: Dictionary = state.abyss.rogue
+	if not rogue.has("sceneBlocks"): rogue.sceneBlocks = {}
+	var key := str(_abyss_scene_start(floor_number))
+	if not rogue.sceneBlocks.has(key):
+		var roll := random_value() if floor_number > 10 else 0.0
+		rogue.sceneBlocks[key] = abyss_scene_from_roll(floor_number, roll, random_value() if roll >= 0.25 else 0.0)
+	return rogue.sceneBlocks[key].duplicate(true)
+
+func abyss_background_path() -> String:
+	var encounter: Dictionary = state.abyss.rogue.get("activeEncounter", {})
+	if not encounter.is_empty() and encounter.has("background"): return str(encounter.background)
+	return str(abyss_scene().background)
+
+func abyss_music_track(scene: Dictionary = {}) -> String:
+	if scene.is_empty(): scene = abyss_scene()
+	var theme := str(scene.get("theme", ""))
+	if theme.is_empty(): return "dungeon_mystic" if int(scene.startFloor) > 10 else "sunset_walk"
+	return extraction.theme_music_track(theme, int(scene.depth))
+
+func abyss_boss_music_track(scene: Dictionary) -> String:
+	# Preserve the 2.8.3 expedition boss mapping, including the wind road score.
+	return {"lantern": "lantern_core", "windpass": "windpass_road"}.get(str(scene.get("theme", "")), "determined_pursuit")
+
+func abyss_scene_enemy_pool(floor_number: int, scene: Dictionary = {}) -> Array:
+	if scene.is_empty(): scene = abyss_scene(floor_number)
+	var kind := "boss" if floor_number % 10 == 0 else "elite" if floor_number % 5 == 0 else "battle"
+	var theme := str(scene.get("theme", ""))
+	# Older expedition themes share their existing act-based pools. Taking their
+	# union uses only enemies actually found there, without importing act scaling.
 	var candidates: Array = []
-	for id in catalog.AbyssData.pools.get(tier, []):
-		if catalog.EnemyData.has(id) and floor_number >= int(catalog.EnemyData[id].get("abyssMinFloor", 1)):
-			candidates.append(id)
+	for act in [1, 2, 3]:
+		for id in extraction.environment_enemy_pool(kind, theme, act):
+			if id not in candidates and catalog.EnemyData.has(id) and floor_number >= int(catalog.EnemyData[id].get("abyssMinFloor", 1)):
+				candidates.append(id)
 	return candidates
+
+func _valid_abyss_scene(scene: Variant, start_floor: int) -> bool:
+	if not scene is Dictionary or not _integer(scene.get("startFloor"), 1, 1000000000) or int(scene.startFloor) != start_floor: return false
+	if not scene.get("theme") is String or not _integer(scene.get("depth"), -1, 100) or not scene.get("background") is String: return false
+	if scene.theme.is_empty(): return int(scene.depth) == -1 and scene.background == "res://assets/backgrounds/abyss.png"
+	if start_floor <= 10: return false
+	var backgrounds: Array = extraction.data.get("environmentThemes", {}).get(scene.theme, {}).get("backgrounds", [])
+	return int(scene.depth) >= 0 and int(scene.depth) < backgrounds.size() and scene.background in backgrounds[int(scene.depth)]
+
+func abyss_enemy_pool(floor_number: int) -> Array:
+	return abyss_scene_enemy_pool(floor_number)
 
 func abyss_encounter_background(enemies: Array, encounter_seed: int) -> String:
 	# New encounters freeze their habitat when issued; this helper never rolls RNG.
@@ -1496,7 +1563,8 @@ func prepare_abyss() -> Dictionary:
 	var floor_number := int(state.abyss.currentFloor)
 	var boss: bool = floor_number % 10 == 0
 	var elite: bool = floor_number % 5 == 0 and not boss
-	var enemy_pool: Array = abyss_enemy_pool(floor_number)
+	var scene := _ensure_abyss_scene(floor_number)
+	var enemy_pool: Array = abyss_scene_enemy_pool(floor_number, scene)
 	var count := 2
 	if floor_number >= 7:count += int(random_value() * 2)
 	if boss:count = 1
@@ -1510,7 +1578,10 @@ func prepare_abyss() -> Dictionary:
 		"encounterTier": "boss" if boss else ("elite" if elite else "normal"), "endless":abyss_is_endless(), "runLength":abyss_floor_cap(), "difficulty": int(state.abyss.rogue.difficulty),
 		"rewards": {"gold": 0, "exp": mini(1000000,35 + floor_number * 5), "diamonds": 0},
 		"seed": int(rng.randi()), "token": _uid("battle"), "_team": state.team.duplicate()}
-	config.background = abyss_encounter_background(enemies, int(config.seed))
+	config.abyssScene = scene
+	config.background = scene.background
+	config.abyssMusic = abyss_music_track(scene)
+	config.abyssBossMusic = abyss_boss_music_track(scene)
 	if int(config.difficulty) == 3:config.abyssGrowthVersion = 3
 	if floor_number >= 6 and not boss and random_value() < 0.45:
 		config.encounterModifier = AbyssBalance.modifier(str(_pick(["bulwark", "frenzy", "swift"])))
@@ -1711,6 +1782,7 @@ func _process_abyss_victory(config: Dictionary, battle_state: Dictionary) -> Dic
 	if abyss_floor_cap() > 0 and cleared_floor >= abyss_floor_cap():
 		_end_abyss_run("victory")
 	else:
+		_ensure_abyss_scene(cleared_floor + 1)
 		_set_after_floor(cleared_floor)
 	return {"runCoins": coins, "meta": fragments}
 
@@ -2214,6 +2286,11 @@ func _valid_rogue_v2(value: Dictionary) -> bool:
 				if not _integer(cooldown, 0, 999):
 					return false
 	var rogue: Dictionary = abyss.get("rogue", {})
+	var scene_blocks = rogue.get("sceneBlocks", {})
+	if not scene_blocks is Dictionary: return false
+	for key in scene_blocks:
+		if not key is String or not key.is_valid_int() or str(int(key)) != key or int(key) < 1 or (int(key) - 1) % 10 != 0 or int(key) > int(abyss.get("currentFloor", 1)): return false
+		if not _valid_abyss_scene(scene_blocks[key], int(key)): return false
 	if not _integer(rogue.get("relicRewardVersion",0),0,1):return false
 	if rogue.has("targetRelicSetId") and (not rogue.targetRelicSetId is String or (not rogue.targetRelicSetId.is_empty() and not catalog.RelicSets.has(rogue.targetRelicSetId))):return false
 	if int(rogue.get("relicRewardVersion",0)) == 1 and not catalog.RelicSets.has(rogue.get("targetRelicSetId","")):return false
@@ -2326,11 +2403,20 @@ func _valid_abyss_encounter(config: Dictionary, value: Dictionary) -> bool:
 	elif config.has("targetRelicSetId") and config.targetRelicSetId != "":return false
 	if not bool(config.isAbyss) or not _integer(config.get("floor"), 1, 1000000000) or not _integer(config.get("seed"), 0, 4294967295):
 		return false
+	if config.has("abyssScene"):
+		var start_floor := _abyss_scene_start(int(config.floor))
+		if not _valid_abyss_scene(config.abyssScene, start_floor): return false
+		if config.abyssScene != value.get("abyss", {}).get("rogue", {}).get("sceneBlocks", {}).get(str(start_floor), {}): return false
+		if config.get("background") != config.abyssScene.background or not config.get("abyssMusic") is String or not config.get("abyssBossMusic") is String: return false
+		var expected_music: String = extraction.theme_music_track(str(config.abyssScene.theme), int(config.abyssScene.depth)) if not str(config.abyssScene.theme).is_empty() else "dungeon_mystic" if int(config.floor) > 10 else "sunset_walk"
+		if config.abyssMusic != expected_music or config.abyssBossMusic != abyss_boss_music_track(config.abyssScene): return false
+	elif config.has("abyssMusic") or config.has("abyssBossMusic"): return false
 	if not config.get("enemies") is Array or config.enemies.is_empty() or config.enemies.size() > 3:
 		return false
 	for enemy in config.enemies:
 		if not enemy is String or not catalog.EnemyData.has(enemy):
 			return false
+		if config.has("abyssScene") and enemy not in abyss_scene_enemy_pool(int(config.floor), config.abyssScene): return false
 	if not config.get("waves") is Array or config.waves.size() != 1 or not config.waves[0] is Dictionary or config.waves[0].get("enemies") != config.enemies:
 		return false
 	if not config.get("_team") is Array or config._team.size() > 3:

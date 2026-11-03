@@ -1,0 +1,46 @@
+{
+  "version": "2.8.4",
+  "version_code": 20804,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 136,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-03T15:19:11Z",
+      "completed_utc": "2026-11-03T15:21:27Z",
+      "elapsed_seconds": 136,
+      "production_sha256": "76248ef3a0573a1163304f866a3d2f4e606221ecefaa6d1b06dbb04936f6efaa",
+      "scope": [
+        "first ten fixed; 11/20/21 segment boundaries",
+        "25% default and fifteen equal 5% probability bins deterministic",
+        "all theme/depth enemy pools and boss music; unchanged combat stats",
+        "issued encounter and JSON save resume; RNG stable",
+        "actual victory10/20 locks11/21; failed save rollback; invalid scene rejection",
+        "actual app music routes and six 960x540/2048x945 scene screenshots"
+      ]
+    }
+  ],
+  "production_sha256": "d16371746fd72b059c4bc5a9cd92b513338b75a33bafc484817aaec48d3ebc02",
+  "production_file_count": 1262,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "first ten fixed; 11/20/21 segment boundaries",
+    "25% default and fifteen equal 5% probability bins deterministic",
+    "all theme/depth enemy pools and boss music; unchanged combat stats",
+    "issued encounter and JSON save resume; RNG stable",
+    "actual victory10/20 locks11/21; failed save rollback; invalid scene rejection",
+    "actual app music routes and six 960x540/2048x945 scene screenshots"
+  ],
+  "limits": [
+    "Android hardware",
+    "subjective audio listening",
+    "full campaign/full test suite"
+  ],
+  "late_static_only": [
+    "legacy abyss_enemy_pool alias to the already-tested production abyss_scene_enemy_pool; no production callers changed"
+  ]
+}

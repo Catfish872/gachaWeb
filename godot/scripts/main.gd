@@ -555,7 +555,8 @@ func _background_path() -> String:
 		return model.extraction.battle_background_path()
 	if current_screen == "story" and selected_chapter == 2:
 		return str(model.get_stage(selected_stage_id).get("background", "res://assets/content_v270/backgrounds/snow_inn.png"))
-	if current_screen in ["abyss", "extraction"] or (current_screen == "battle" and (battle_config.get("isAbyss", false) or battle_config.get("isExtraction", false))):
+	if current_screen == "abyss": return model.abyss_background_path()
+	if current_screen in ["extraction"] or (current_screen == "battle" and (battle_config.get("isAbyss", false) or battle_config.get("isExtraction", false))):
 		return "res://assets/backgrounds/abyss.png"
 	if current_screen in ["story", "battle"]:
 		return "res://assets/backgrounds/snowfield.png" if selected_chapter == 1 else "res://assets/wilderness.png"
@@ -3458,6 +3459,8 @@ func _music_track_for_context() -> String:
 		var boss:bool=battle_config.get("kind","")=="boss" or battle_config.get("isBoss",false)
 		for enemy_id in battle_config.get("enemies",[]):
 			if str(enemy_id).begins_with("boss_"):boss=true
+		if battle_config.get("isAbyss",false) and battle_config.has("abyssScene"):
+			return str(battle_config.abyssBossMusic if boss else battle_config.abyssMusic)
 		if boss:
 			# Expedition encounters retain their exploration score; wind bosses
 			# receive the scene track previously assigned to ordinary encounters.
@@ -3475,7 +3478,7 @@ func _music_track_for_context() -> String:
 		"extraction":
 			if not model.extraction.active():return "medieval_exploration"
 			return model.extraction.environment_music_track()
-		"abyss":return _exploration_music_track(int(model.state.abyss.get("currentFloor",1))>10)
+		"abyss":return model.abyss_music_track()
 		"lantern":return "lantern_road"
 		"story":return "medieval_exploration"
 	return "old_tower_inn"

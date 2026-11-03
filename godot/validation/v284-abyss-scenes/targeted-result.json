@@ -1,0 +1,35 @@
+{
+  "started_utc": "2026-11-03T15:19:11Z",
+  "completed_utc": "2026-11-03T15:21:27Z",
+  "elapsed_seconds": 136,
+  "checks_passed": 382,
+  "static_checks_passed": 4,
+  "failures_remaining": 0,
+  "production_sha256": "76248ef3a0573a1163304f866a3d2f4e606221ecefaa6d1b06dbb04936f6efaa",
+  "production_file_count": 1262,
+  "scope": [
+    "first ten fixed; 11/20/21 segment boundaries",
+    "25% default and fifteen equal 5% probability bins deterministic",
+    "all theme/depth enemy pools and boss music; unchanged combat stats",
+    "issued encounter and JSON save resume; RNG stable",
+    "actual victory10/20 locks11/21; failed save rollback; invalid scene rejection",
+    "actual app music routes and six 960x540/2048x945 scene screenshots"
+  ],
+  "fixes": [
+    "expected_music explicit String compile fix",
+    "test-only JSON numeric normalization comparator"
+  ],
+  "warnings": [
+    "Mesa VSync unsupported",
+    "ObjectDB and one resource still in use on UI fixture exit"
+  ],
+  "not_tested": [
+    "Android hardware",
+    "subjective audio listening",
+    "full campaign/full test suite"
+  ],
+  "late_static_only": [
+    "legacy abyss_enemy_pool alias to the already-tested production abyss_scene_enemy_pool; no production callers changed"
+  ],
+  "visual_review": "parent approved default and wind screenshots; six generated"
+}

@@ -1,0 +1,1815 @@
+{
+  "EnemyData": {
+    "wolf": {
+      "id": "wolf",
+      "name": "荒野狼",
+      "icon": "🐺",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 20,
+        "spd": 90
+      },
+      "skills": [
+        "wolf_bite",
+        "wolf_howl"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          15,
+          30
+        ],
+        "exp": 10
+      },
+      "color": "#94a3b8"
+    },
+    "goblin": {
+      "id": "goblin",
+      "name": "哥布林战士",
+      "icon": "👺",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 350,
+        "atk": 50,
+        "def": 25,
+        "spd": 85
+      },
+      "skills": [
+        "goblin_slash",
+        "goblin_throw"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          20,
+          35
+        ],
+        "exp": 12
+      },
+      "color": "#84cc16"
+    },
+    "fire_imp": {
+      "id": "fire_imp",
+      "name": "烈火精灵",
+      "icon": "😈",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 300,
+        "atk": 60,
+        "def": 15,
+        "spd": 100
+      },
+      "skills": [
+        "imp_fireball",
+        "imp_burn"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          25,
+          40
+        ],
+        "exp": 15
+      },
+      "color": "#ef4444"
+    },
+    "stone_golem": {
+      "id": "stone_golem",
+      "name": "岩石傀儡",
+      "icon": "🗿",
+      "type": "elite",
+      "element": "wind",
+      "baseStats": {
+        "hp": 800,
+        "atk": 65,
+        "def": 80,
+        "spd": 60
+      },
+      "skills": [
+        "golem_slam",
+        "golem_guard",
+        "golem_quake"
+      ],
+      "aiPattern": "defensive",
+      "drops": {
+        "gold": [
+          50,
+          80
+        ],
+        "exp": 40
+      },
+      "color": "#a8a29e",
+      "shield": 0
+    },
+    "boss_flame_lord": {
+      "id": "boss_flame_lord",
+      "name": "炎王·阿格尼斯",
+      "icon": "🔥",
+      "type": "boss",
+      "element": "fire",
+      "baseStats": {
+        "hp": 4000,
+        "atk": 120,
+        "def": 60,
+        "spd": 85
+      },
+      "skills": [
+        "boss_slash",
+        "boss_fireball",
+        "boss_meteor_rain",
+        "boss_enrage"
+      ],
+      "aiPattern": "boss",
+      "phaseThreshold": 0.5,
+      "phase2Skills": [
+        "boss_meteor_rain",
+        "boss_enrage"
+      ],
+      "drops": {
+        "gold": [
+          200,
+          300
+        ],
+        "exp": 200
+      },
+      "color": "#dc2626",
+      "isBoss": true
+    },
+    "ice_wolf": {
+      "id": "ice_wolf",
+      "name": "冰霜雪狼",
+      "icon": "🐺",
+      "type": "normal",
+      "element": "water",
+      "baseStats": {
+        "hp": 500,
+        "atk": 70,
+        "def": 35,
+        "spd": 95
+      },
+      "skills": [
+        "wolf_bite",
+        "ice_wolf_freeze"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          30,
+          50
+        ],
+        "exp": 25
+      },
+      "color": "#93c5fd",
+      "abyssMinFloor": 4
+    },
+    "thunder_hawk": {
+      "id": "thunder_hawk",
+      "name": "雷鹰",
+      "icon": "🦅",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 420,
+        "atk": 80,
+        "def": 25,
+        "spd": 115
+      },
+      "skills": [
+        "hawk_dive",
+        "hawk_thunder"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          30,
+          50
+        ],
+        "exp": 28
+      },
+      "color": "#fde047",
+      "abyssMinFloor": 4
+    },
+    "dark_knight": {
+      "id": "dark_knight",
+      "name": "黑暗骑士",
+      "icon": "⚔️",
+      "type": "elite",
+      "element": "wind",
+      "baseStats": {
+        "hp": 1200,
+        "atk": 90,
+        "def": 100,
+        "spd": 75
+      },
+      "skills": [
+        "dk_slash",
+        "dk_shield",
+        "dk_deathblow"
+      ],
+      "aiPattern": "defensive",
+      "drops": {
+        "gold": [
+          80,
+          130
+        ],
+        "exp": 80
+      },
+      "color": "#6366f1"
+    },
+    "boss_storm_witch": {
+      "id": "boss_storm_witch",
+      "name": "暴风女巫·薇薇安",
+      "icon": "🧙‍♀️",
+      "type": "boss",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 5500,
+        "atk": 140,
+        "def": 55,
+        "spd": 105
+      },
+      "skills": [
+        "witch_bolt",
+        "witch_aoe",
+        "witch_summon",
+        "witch_storm"
+      ],
+      "aiPattern": "boss",
+      "phaseThreshold": 0.4,
+      "phase2Skills": [
+        "witch_storm",
+        "witch_aoe"
+      ],
+      "drops": {
+        "gold": [
+          350,
+          500
+        ],
+        "exp": 350
+      },
+      "color": "#a855f7",
+      "isBoss": true
+    },
+    "ash_moth": {
+      "id": "ash_moth",
+      "name": "灰翅蛾群",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 1100,
+        "atk": 115,
+        "def": 35,
+        "spd": 108
+      },
+      "skills": [
+        "ash_moth_dust"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/ash_moth.png",
+      "abyssBaseStats": {
+        "hp": 360,
+        "atk": 60,
+        "def": 20,
+        "spd": 100
+      },
+      "expeditionAI": {
+        "aoeChance": 0.25,
+        "fallbackSkill": "ash_moth_dive_expedition"
+      }
+    },
+    "lamp_wraith": {
+      "id": "lamp_wraith",
+      "name": "夺灯游魂",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 1500,
+        "atk": 105,
+        "def": 50,
+        "spd": 100
+      },
+      "skills": [
+        "lamp_wraith_veil",
+        "lamp_wraith_touch"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/lamp_wraith.png",
+      "abyssBaseStats": {
+        "hp": 400,
+        "atk": 55,
+        "def": 30,
+        "spd": 90
+      },
+      "abyssMinFloor": 4
+    },
+    "furnace_guard": {
+      "id": "furnace_guard",
+      "name": "炉甲卫",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 2100,
+        "atk": 150,
+        "def": 105,
+        "spd": 76
+      },
+      "skills": [
+        "furnace_guard_warn",
+        "furnace_guard_heavy"
+      ],
+      "aiPattern": "telegraphed",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/furnace_guard.png",
+      "abyssBaseStats": {
+        "hp": 500,
+        "atk": 60,
+        "def": 60,
+        "spd": 75
+      },
+      "abyssMinFloor": 4
+    },
+    "furnace_cantor": {
+      "id": "furnace_cantor",
+      "name": "鸣炉侍",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 1500,
+        "atk": 115,
+        "def": 55,
+        "spd": 110
+      },
+      "skills": [
+        "furnace_cantor_hymn",
+        "furnace_cantor_strike"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/furnace_cantor.png",
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 50,
+        "def": 25,
+        "spd": 95
+      },
+      "abyssMinFloor": 4
+    },
+    "cracked_puppet": {
+      "id": "cracked_puppet",
+      "name": "裂炉傀儡",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 1700,
+        "atk": 140,
+        "def": 60,
+        "spd": 85
+      },
+      "skills": [
+        "cracked_puppet_warn",
+        "cracked_puppet_burst",
+        "cracked_puppet_hit"
+      ],
+      "aiPattern": "low_hp_charge",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/cracked_puppet.png",
+      "abyssBaseStats": {
+        "hp": 430,
+        "atk": 55,
+        "def": 35,
+        "spd": 85
+      },
+      "abyssMinFloor": 4,
+      "expeditionAI": {
+        "aoeChance": 0.25
+      }
+    },
+    "lamp_overseer": {
+      "id": "lamp_overseer",
+      "name": "缚灯监工",
+      "icon": "✦",
+      "type": "elite",
+      "element": "fire",
+      "baseStats": {
+        "hp": 6200,
+        "atk": 210,
+        "def": 105,
+        "spd": 102
+      },
+      "skills": [
+        "lamp_overseer_chain",
+        "lamp_overseer_sweep"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/lamp_overseer.png",
+      "abyssBaseStats": {
+        "hp": 1000,
+        "atk": 78,
+        "def": 90,
+        "spd": 80
+      },
+      "expeditionAI": {
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
+      }
+    },
+    "boss_hedor": {
+      "id": "boss_hedor",
+      "name": "失序司炉者·赫铎",
+      "icon": "✦",
+      "type": "boss",
+      "element": "fire",
+      "baseStats": {
+        "hp": 16000,
+        "atk": 235,
+        "def": 130,
+        "spd": 100
+      },
+      "skills": [
+        "hedor_hammer",
+        "hedor_embers"
+      ],
+      "aiPattern": "boss",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/boss_hedor.png",
+      "isBoss": true,
+      "phaseThreshold": 0.5,
+      "phase2Skills": [
+        "hedor_core",
+        "hedor_chain"
+      ],
+      "abyssBaseStats": {
+        "hp": 4500,
+        "atk": 125,
+        "def": 60,
+        "spd": 95
+      },
+      "expeditionAI": {
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
+      }
+    },
+    "furnace_lamp": {
+      "id": "furnace_lamp",
+      "name": "侧炉灯",
+      "icon": "✦",
+      "type": "normal",
+      "element": "fire",
+      "baseStats": {
+        "hp": 2800,
+        "atk": 30,
+        "def": 55,
+        "spd": 90
+      },
+      "skills": [
+        "furnace_lamp_feed"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          20,
+          40
+        ],
+        "exp": 25
+      },
+      "color": "#e9a066",
+      "portrait": "res://assets/content_v270/enemies/furnace_lamp.png",
+      "abyssBaseStats": {
+        "hp": 425,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      }
+    },
+    "wind_falcon": {
+      "id": "wind_falcon",
+      "name": "切风隼",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 1900,
+        "atk": 145,
+        "def": 60,
+        "spd": 125
+      },
+      "abyssBaseStats": {
+        "hp": 420,
+        "atk": 80,
+        "def": 25,
+        "spd": 115
+      },
+      "skills": [
+        "wind_falcon_dive",
+        "wind_falcon_peck"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/wind_falcon.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/wind_outpost.png",
+        "res://assets/content_v280/backgrounds/scattered_trail.png",
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "thunder_hawk",
+      "abyssMinFloor": 4
+    },
+    "leaf_spirit": {
+      "id": "leaf_spirit",
+      "name": "卷叶灵",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 2200,
+        "atk": 130,
+        "def": 70,
+        "spd": 95
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 50,
+        "def": 25,
+        "spd": 85
+      },
+      "skills": [
+        "leaf_spirit_flutter",
+        "leaf_spirit_twig"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/leaf_spirit.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/scattered_trail.png",
+        "res://assets/content_v280/backgrounds/flooded_gallery.png"
+      ],
+      "balanceReference": "goblin"
+    },
+    "moss_climber": {
+      "id": "moss_climber",
+      "name": "苔甲攀兽",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 3000,
+        "atk": 125,
+        "def": 115,
+        "spd": 68
+      },
+      "abyssBaseStats": {
+        "hp": 500,
+        "atk": 55,
+        "def": 60,
+        "spd": 60
+      },
+      "skills": [
+        "moss_climber_ram",
+        "moss_climber_brace"
+      ],
+      "aiPattern": "defensive",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/moss_climber.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/scattered_trail.png",
+        "res://assets/content_v280/backgrounds/sheltered_nursery.png",
+        "res://assets/content_v280/backgrounds/flooded_gallery.png"
+      ],
+      "balanceReference": "ice_wolf",
+      "abyssMinFloor": 4
+    },
+    "bridge_warden": {
+      "id": "bridge_warden",
+      "name": "失序桥卫",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 2800,
+        "atk": 155,
+        "def": 100,
+        "spd": 80
+      },
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 35,
+        "spd": 75
+      },
+      "skills": [
+        "bridge_warden_warning",
+        "bridge_warden_heavy",
+        "bridge_warden_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/bridge_warden.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/rope_bridge.png",
+        "res://assets/content_v280/backgrounds/wind_tower.png",
+        "res://assets/content_v280/backgrounds/flooded_gallery.png"
+      ],
+      "balanceReference": "goblin",
+      "actionCycle": [
+        "bridge_warden_warning",
+        "bridge_warden_heavy",
+        "bridge_warden_strike"
+      ]
+    },
+    "songwing_attendant": {
+      "id": "songwing_attendant",
+      "name": "鸣翼侍鸟",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 1900,
+        "atk": 125,
+        "def": 65,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 25,
+        "spd": 95
+      },
+      "skills": [
+        "songwing_hymn",
+        "songwing_peck"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/songwing_attendant.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/wind_tower.png",
+        "res://assets/content_v280/backgrounds/windwheel_platform.png",
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "furnace_cantor",
+      "abyssMinFloor": 4
+    },
+    "brokenbridge_hunter": {
+      "id": "brokenbridge_hunter",
+      "name": "断桥猎隼",
+      "icon": "✦",
+      "type": "elite",
+      "element": "wind",
+      "baseStats": {
+        "hp": 7600,
+        "atk": 230,
+        "def": 115,
+        "spd": 120
+      },
+      "abyssBaseStats": {
+        "hp": 1100,
+        "atk": 90,
+        "def": 85,
+        "spd": 105
+      },
+      "skills": [
+        "brokenbridge_warning",
+        "brokenbridge_pursuit",
+        "brokenbridge_cut"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/brokenbridge_hunter.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/sheltered_nursery.png",
+        "res://assets/content_v280/backgrounds/rope_bridge.png",
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "dark_knight",
+      "actionCycle": [
+        "brokenbridge_warning",
+        "brokenbridge_pursuit",
+        "brokenbridge_cut"
+      ]
+    },
+    "windwheel_sentinel": {
+      "id": "windwheel_sentinel",
+      "name": "旋臂护桥机",
+      "icon": "✦",
+      "type": "elite",
+      "element": "wind",
+      "baseStats": {
+        "hp": 8600,
+        "atk": 210,
+        "def": 145,
+        "spd": 75
+      },
+      "abyssBaseStats": {
+        "hp": 1200,
+        "atk": 80,
+        "def": 100,
+        "spd": 70
+      },
+      "skills": [
+        "windwheel_warning",
+        "windwheel_sweep",
+        "windwheel_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/windwheel_sentinel.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/windwheel_platform.png",
+        "res://assets/content_v280/backgrounds/rope_bridge.png"
+      ],
+      "balanceReference": "dark_knight",
+      "actionCycle": [
+        "windwheel_warning",
+        "windwheel_sweep",
+        "windwheel_strike"
+      ],
+      "expeditionAI": {
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
+      }
+    },
+    "boss_highland_roc": {
+      "id": "boss_highland_roc",
+      "name": "高岭风鹫",
+      "icon": "✦",
+      "type": "boss",
+      "element": "wind",
+      "baseStats": {
+        "hp": 22000,
+        "atk": 290,
+        "def": 145,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 5500,
+        "atk": 140,
+        "def": 55,
+        "spd": 100
+      },
+      "skills": [
+        "roc_warning",
+        "roc_gale",
+        "roc_talon"
+      ],
+      "aiPattern": "boss",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/boss_highland_roc.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "boss_storm_witch",
+      "isBoss": true,
+      "phaseThreshold": 0.5,
+      "phase2Skills": [
+        "roc_warning_high",
+        "roc_storm",
+        "roc_dive"
+      ],
+      "actionCycle": [
+        "roc_warning",
+        "roc_gale"
+      ],
+      "phase2ActionCycle": [
+        "roc_warning_high",
+        "roc_storm"
+      ],
+      "expeditionAI": {
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
+      },
+      "abyssAttachments": []
+    },
+    "windfield_updraft": {
+      "id": "windfield_updraft",
+      "name": "上升风场",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 2500,
+        "atk": 1,
+        "def": 75,
+        "spd": 90
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      },
+      "skills": [
+        "windfield_updraft_feed"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/windfield_updraft.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "furnace_lamp",
+      "encounterAttachment": true
+    },
+    "windfield_crosswind": {
+      "id": "windfield_crosswind",
+      "name": "横切风场",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 2500,
+        "atk": 1,
+        "def": 75,
+        "spd": 90
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      },
+      "skills": [
+        "windfield_crosswind_guard"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/windfield_crosswind.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "furnace_lamp",
+      "encounterAttachment": true
+    }
+  },
+  "AbyssData": {
+    "resetDiamondCost": 100,
+    "dailyFreeResets": 1,
+    "rewards": {
+      "gold": [
+        150,
+        300
+      ],
+      "exp": 200,
+      "relicRarity": [
+        4,
+        5
+      ]
+    },
+    "pools": {
+      "normal": [
+        "wolf",
+        "goblin",
+        "fire_imp",
+        "ice_wolf",
+        "thunder_hawk",
+        "ash_moth",
+        "lamp_wraith",
+        "furnace_guard",
+        "furnace_cantor",
+        "cracked_puppet",
+        "wind_falcon",
+        "leaf_spirit",
+        "moss_climber",
+        "bridge_warden",
+        "songwing_attendant"
+      ],
+      "elite": [
+        "dark_knight",
+        "stone_golem",
+        "lamp_overseer",
+        "brokenbridge_hunter",
+        "windwheel_sentinel"
+      ],
+      "boss": [
+        "boss_flame_lord",
+        "boss_storm_witch",
+        "boss_hedor",
+        "boss_highland_roc"
+      ]
+    },
+    "rogue": {
+      "rewardFloorsInCycle": [
+        3,
+        6,
+        9
+      ],
+      "focusMin": 0.15,
+      "focusMax": 0.45,
+      "focusGainOnPick": 0.1,
+      "rarityWeights": {
+        "white": 62,
+        "blue": 30,
+        "gold": 8
+      },
+      "rarityMeta": {
+        "white": {
+          "label": "白",
+          "color": "#e5e7eb",
+          "icon": "◇"
+        },
+        "blue": {
+          "label": "蓝",
+          "color": "#60a5fa",
+          "icon": "◆"
+        },
+        "gold": {
+          "label": "金",
+          "color": "#fbbf24",
+          "icon": "✦"
+        }
+      },
+      "rewards": [
+        {
+          "id": "common_atk_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "磨砺锋刃",
+          "icon": "⚔️",
+          "target": "全队",
+          "description": "本局深渊中，全队攻击力提高 8%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atkMult",
+              "value": 0.08
+            }
+          ]
+        },
+        {
+          "id": "common_hp_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "坚韧体魄",
+          "icon": "❤️",
+          "target": "全队",
+          "description": "本局深渊中，全队最大生命提高 10%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "maxHpMult",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "common_def_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "临战护甲",
+          "icon": "🛡️",
+          "target": "全队",
+          "description": "本局深渊中，全队防御力提高 10%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "defMult",
+              "value": 0.1
+            }
+          ]
+        },
+        {
+          "id": "common_energy_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "微光回路",
+          "icon": "🔋",
+          "target": "全队",
+          "description": "本局深渊中，非终结技获得的能量提高 15%。",
+          "effects": [
+            {
+              "type": "energyGainMult",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "id": "common_crit_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "精准校准",
+          "icon": "🎯",
+          "target": "全队",
+          "description": "本局深渊中，全队暴击率提高 8%，暴击伤害提高 15%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "criAdd",
+              "value": 0.08
+            },
+            {
+              "type": "stat",
+              "stat": "criDmgAdd",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "id": "common_open_shield_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "位面护膜",
+          "icon": "🛡️",
+          "target": "全队",
+          "description": "每场深渊战斗开始时，全队获得 2 回合护盾。",
+          "effects": [
+            {
+              "type": "battleStartStatus",
+              "statusId": "shield",
+              "duration": 2,
+              "value": 0.22
+            }
+          ]
+        },
+        {
+          "id": "common_victory_heal_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "战后整备",
+          "icon": "🏕️",
+          "target": "全队",
+          "description": "每次深渊胜利后，存活角色恢复 18% 最大生命。",
+          "effects": [
+            {
+              "type": "victoryHealPct",
+              "value": 0.18
+            }
+          ]
+        },
+        {
+          "id": "common_open_energy_gold",
+          "pool": "common",
+          "rarity": "gold",
+          "name": "星核预热",
+          "icon": "🌟",
+          "target": "全队",
+          "description": "每场深渊战斗开始时，全队获得 35 点能量。",
+          "effects": [
+            {
+              "type": "battleStartEnergy",
+              "value": 35
+            }
+          ]
+        },
+        {
+          "id": "common_guard_gold",
+          "pool": "common",
+          "rarity": "gold",
+          "name": "裂隙庇护",
+          "icon": "💠",
+          "target": "全队",
+          "description": "本局深渊中，全队受到的直接伤害降低 10%。",
+          "effects": [
+            {
+              "type": "damageTakenMult",
+              "value": -0.1
+            }
+          ]
+        },
+        {
+          "id": "common_overdrive_gold",
+          "pool": "common",
+          "rarity": "gold",
+          "name": "超频矩阵",
+          "icon": "⚡",
+          "target": "全队",
+          "description": "本局深渊中，全队攻击力提高 18%，速度提高 8%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atkMult",
+              "value": 0.18
+            },
+            {
+              "type": "stat",
+              "stat": "spdMult",
+              "value": 0.08
+            }
+          ]
+        },
+        {
+          "id": "kaldi_burn_amp_white",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "white",
+          "name": "余烬辨识",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队攻击燃烧目标时，造成的直接伤害提高 14%。",
+          "effects": [
+            {
+              "type": "damageVsStatus",
+              "statusId": "burn",
+              "value": 0.14
+            }
+          ],
+          "sharedPoolId": "fire_core",
+          "eligibleCharacters": [
+            "kaldi",
+            "selin"
+          ],
+          "iconPath": "res://assets/content_v270/blessings/fire_claw.png"
+        },
+        {
+          "id": "kaldi_burn_spread_blue",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "blue",
+          "name": "龙炎蔓延",
+          "icon": "💥",
+          "target": "燃烧构筑",
+          "description": "全队造成火属性伤害后，有 35% 概率使目标燃烧 2 回合。",
+          "effects": [
+            {
+              "type": "applyStatusAfterDamage",
+              "element": "fire",
+              "statusId": "burn",
+              "duration": 2,
+              "chance": 0.35
+            }
+          ],
+          "sharedPoolId": "fire_core",
+          "eligibleCharacters": [
+            "kaldi",
+            "selin"
+          ],
+          "iconPath": "res://assets/content_v270/blessings/linked_lanterns.png"
+        },
+        {
+          "id": "kaldi_ult_burn_blue",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "blue",
+          "name": "终焰回响",
+          "icon": "🐉",
+          "target": "终结技",
+          "description": "全队终结技伤害提高 18%；若目标燃烧，额外再提高 12%。",
+          "effects": [
+            {
+              "type": "skillTypeDamage",
+              "skillType": "ultimate",
+              "value": 0.18
+            },
+            {
+              "type": "skillTypeDamageVsStatus",
+              "skillType": "ultimate",
+              "statusId": "burn",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "id": "kaldi_burn_execute_gold",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "gold",
+          "name": "不灭炎心",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队命中燃烧目标后，追加一次攻击力 20% 的真实火属性伤害（无视防御）。每次技能每个目标触发一次。",
+          "effects": [
+            {
+              "type": "extraDamageVsStatus",
+              "statusId": "burn",
+              "multiplier": 0.2,
+              "element": "fire",
+              "trueDamage": true
+            }
+          ]
+        },
+        {
+          "id": "kaldi_start_burn_gold",
+          "pool": "character",
+          "characterId": "kaldi",
+          "rarity": "gold",
+          "name": "焚界开幕",
+          "icon": "🌋",
+          "target": "开场压制",
+          "description": "每场深渊战斗开始时，所有敌人燃烧 3 回合，每轮受到队伍最高攻击力 18% 的伤害。",
+          "effects": [
+            {
+              "type": "enemyBattleStartStatus",
+              "statusId": "burn",
+              "duration": 3
+            }
+          ],
+          "sharedPoolId": "fire_core",
+          "eligibleCharacters": [
+            "kaldi",
+            "selin"
+          ],
+          "iconPath": "res://assets/content_v270/blessings/ember_prism.png"
+        },
+        {
+          "id": "common_vampiric_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "汲取之刃",
+          "icon": "❤️",
+          "target": "生命汲取",
+          "description": "全队造成直接伤害时，恢复实际生命伤害的 6%，多份祝福的生命汲取比例累加。",
+          "effects": [
+            {
+              "type": "lifesteal",
+              "value": 0.06
+            }
+          ]
+        },
+        {
+          "id": "common_shield_edge_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "壁垒反击",
+          "icon": "🛡️",
+          "target": "护盾构筑",
+          "description": "全队在护盾存在时，造成的直接伤害提高 12%。",
+          "effects": [
+            {
+              "type": "damageWhileShielded",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "id": "common_kill_energy_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "追猎回路",
+          "icon": "🔋",
+          "target": "击破构筑",
+          "description": "全队以直接伤害击败敌人时，获得 15 点能量。",
+          "effects": [
+            {
+              "type": "energyOnKill",
+              "value": 15
+            }
+          ]
+        },
+        {
+          "id": "common_execute_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "终末猎手",
+          "icon": "🎯",
+          "target": "收割构筑",
+          "description": "全队攻击生命低于或等于 35% 的目标时，直接伤害提高 18%。",
+          "effects": [
+            {
+              "type": "damageVsLowHp",
+              "value": 0.18,
+              "threshold": 0.35
+            }
+          ]
+        },
+        {
+          "id": "common_venom_white",
+          "pool": "common",
+          "rarity": "white",
+          "name": "淬毒锋刃",
+          "icon": "🌿",
+          "target": "中毒构筑",
+          "description": "全队造成直接伤害后，有 20% 概率附加 1 层中毒，持续至战斗结束。每层每轮造成施加者攻击力 2% 的伤害；每多一层，中毒总伤害提高 10%。",
+          "effects": [
+            {
+              "type": "applyStatusAfterDamage",
+              "statusId": "poison",
+              "chance": 0.2,
+              "duration": 2
+            }
+          ]
+        },
+        {
+          "id": "common_static_blue",
+          "pool": "common",
+          "rarity": "blue",
+          "name": "静电传导",
+          "icon": "⚡",
+          "target": "感电构筑",
+          "description": "全队造成直接伤害后，有 25% 概率使目标感电 2 回合。",
+          "effects": [
+            {
+              "type": "applyStatusAfterDamage",
+              "statusId": "electrify",
+              "chance": 0.25,
+              "duration": 2
+            }
+          ]
+        },
+        {
+          "id": "kaldi_ult_amp_white",
+          "pool": "character",
+          "characterId": "kaldi",
+          "eligibleCharacters": [
+            "kaldi"
+          ],
+          "rarity": "white",
+          "name": "引焰长歌",
+          "icon": "🔥",
+          "target": "终结技",
+          "description": "全队终结技伤害提高10%。",
+          "effects": [
+            {
+              "type": "skillTypeDamage",
+              "skillType": "ultimate",
+              "value": 0.1
+            }
+          ],
+          "iconPath": "res://assets/content_v270/blessings/dragon_scale.png"
+        },
+        {
+          "id": "selin_burn_duration_white",
+          "pool": "character",
+          "characterId": "selin",
+          "eligibleCharacters": [
+            "selin"
+          ],
+          "rarity": "white",
+          "name": "灯芯长明",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队施加的燃烧延长1回合。",
+          "effects": [
+            {
+              "type": "burnDurationAdd",
+              "value": 1
+            }
+          ],
+          "iconPath": "res://assets/content_v270/blessings/flame_blossom.png"
+        },
+        {
+          "id": "selin_burn_energy_blue",
+          "pool": "character",
+          "characterId": "selin",
+          "eligibleCharacters": [
+            "selin"
+          ],
+          "rarity": "blue",
+          "name": "焰流回环",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队每次命中燃烧目标，获得6点能量。",
+          "effects": [
+            {
+              "type": "energyOnHitStatus",
+              "statusId": "burn",
+              "value": 6
+            }
+          ],
+          "iconPath": "res://assets/content_v270/blessings/sheltered_ember.png"
+        },
+        {
+          "id": "selin_burn_amp_gold",
+          "pool": "character",
+          "characterId": "selin",
+          "eligibleCharacters": [
+            "selin"
+          ],
+          "rarity": "gold",
+          "name": "万灯续明",
+          "icon": "🔥",
+          "target": "燃烧构筑",
+          "description": "全队燃烧伤害提高25%。",
+          "effects": [
+            {
+              "type": "burnDamageAmp",
+              "value": 0.25
+            }
+          ],
+          "iconPath": "res://assets/content_v270/blessings/furnace_heart.png"
+        },
+        {
+          "id": "ayla_heal_amp_white",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "white",
+          "name": "霜语祷文",
+          "icon": "✨",
+          "target": "治疗构筑",
+          "description": "全队造成的治疗量提高 16%。",
+          "effects": [
+            {
+              "type": "healMult",
+              "value": 0.16
+            }
+          ]
+        },
+        {
+          "id": "ayla_regen_guard_blue",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "blue",
+          "name": "极光余辉",
+          "icon": "💚",
+          "target": "再生构筑",
+          "description": "处于再生的我方单位受到的直接伤害降低 15%。",
+          "effects": [
+            {
+              "type": "damageTakenWhileStatus",
+              "statusId": "regen",
+              "value": -0.15
+            }
+          ]
+        },
+        {
+          "id": "ayla_freeze_break_blue",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "blue",
+          "name": "碎冰棱镜",
+          "icon": "❄️",
+          "target": "冻结构筑",
+          "description": "全队攻击冰冻目标时，直接伤害提高 22%。",
+          "effects": [
+            {
+              "type": "damageVsStatus",
+              "statusId": "freeze",
+              "value": 0.22
+            }
+          ]
+        },
+        {
+          "id": "ayla_heal_regen_gold",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "gold",
+          "name": "圣女回声",
+          "icon": "🌌",
+          "target": "治疗构筑",
+          "description": "全队每次治疗后，为治疗目标附加 2 回合再生。",
+          "effects": [
+            {
+              "type": "statusAfterHeal",
+              "statusId": "regen",
+              "duration": 2
+            }
+          ]
+        },
+        {
+          "id": "ayla_open_freeze_gold",
+          "pool": "character",
+          "characterId": "ayla",
+          "rarity": "gold",
+          "name": "永霜帷幕",
+          "icon": "🧊",
+          "target": "控场构筑",
+          "description": "每场深渊战斗开始时，随机 1 名敌人冰冻 1 回合，全队攻击冻结目标时额外获得 15 点能量。",
+          "effects": [
+            {
+              "type": "enemyBattleStartStatus",
+              "statusId": "freeze",
+              "duration": 1,
+              "count": 1
+            },
+            {
+              "type": "energyOnHitStatus",
+              "statusId": "freeze",
+              "value": 15
+            }
+          ]
+        },
+        {
+          "id": "wind_opening_white",
+          "name": "破阵辨隙",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "tiya",
+            "lumi"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "damageVsStatus",
+              "statusId": "wind_armor",
+              "value": 0.14
+            }
+          ],
+          "sharedPoolId": "wind_core",
+          "description": "全队对破甲目标的本体直伤提高14%。",
+          "icon": "🌪️",
+          "target": "破甲构筑",
+          "iconPath": "res://assets/content_v280/icons/blessings/wind_opening_white.png"
+        },
+        {
+          "id": "wind_linked_blue",
+          "name": "连刃合击",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "tiya",
+            "lumi"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "windNativeDamage",
+              "value": 0.18
+            }
+          ],
+          "sharedPoolId": "wind_core",
+          "description": "全队普攻、战技和终结技的本体直伤提高18%。",
+          "icon": "🌪️",
+          "target": "破甲构筑",
+          "iconPath": "res://assets/content_v280/icons/blessings/wind_linked_blue.png"
+        },
+        {
+          "id": "wind_pierce_gold",
+          "name": "穿云余势",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "tiya",
+            "lumi"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "windGoldPierce",
+              "multiplier": 0.36
+            }
+          ],
+          "sharedPoolId": "wind_core",
+          "description": "一次行动本体命中同一目标至少两次后，若目标处于破甲，每份祝福追加一次36%攻击力的风贯穿追击。",
+          "icon": "🌪️",
+          "target": "破甲构筑",
+          "iconPath": "res://assets/content_v280/icons/blessings/wind_pierce_gold.png"
+        },
+        {
+          "id": "tiya_follow_white",
+          "name": "巡刃余响",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "tiya"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "windPrimaryAmp",
+              "value": 0.06666666666666667
+            }
+          ],
+          "description": "缇娅原生贯穿追击倍率每份增加4%攻击力，六命时为4.4%。",
+          "icon": "🌪️",
+          "target": "缇娅追击",
+          "iconPath": "res://assets/content_v280/icons/blessings/tiya_follow_white.png"
+        },
+        {
+          "id": "tiya_rhythm_blue",
+          "name": "疾行节律",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "tiya"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "skillTypeDamage",
+              "skillType": "normal",
+              "value": 0.2
+            },
+            {
+              "type": "skillTypeDamage",
+              "skillType": "skill",
+              "value": 0.12
+            }
+          ],
+          "description": "普攻本体伤害提高20%，战技本体伤害提高12%。",
+          "icon": "🌪️",
+          "target": "缇娅追击",
+          "iconPath": "res://assets/content_v280/icons/blessings/tiya_rhythm_blue.png"
+        },
+        {
+          "id": "tiya_follow_gold",
+          "name": "长风归刃",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "tiya"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "windPrimaryAmp",
+              "value": 0.16666666666666666
+            }
+          ],
+          "description": "缇娅原生贯穿追击倍率每份增加10%攻击力，六命时为11%。",
+          "icon": "🌪️",
+          "target": "缇娅追击",
+          "iconPath": "res://assets/content_v280/icons/blessings/tiya_follow_gold.png"
+        },
+        {
+          "id": "lumi_duration_white",
+          "name": "弦印长留",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "lumi"
+          ],
+          "characterId": "lumi",
+          "effects": [
+            {
+              "type": "windArmorDuration",
+              "value": 1
+            }
+          ],
+          "description": "全队施加的破甲持续时间每份增加1回合。",
+          "icon": "🌪️",
+          "target": "露弥支援",
+          "iconPath": "res://assets/content_v280/icons/blessings/lumi_duration_white.png"
+        },
+        {
+          "id": "lumi_guard_blue",
+          "name": "风幕护行",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "lumi"
+          ],
+          "characterId": "lumi",
+          "effects": [
+            {
+              "type": "windArmoredGuard",
+              "value": 0.08
+            }
+          ],
+          "description": "破甲敌人造成的伤害额外降低8%。",
+          "icon": "🌪️",
+          "target": "露弥支援",
+          "iconPath": "res://assets/content_v280/icons/blessings/lumi_guard_blue.png"
+        },
+        {
+          "id": "lumi_open_gold",
+          "name": "百桥开阵",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "lumi"
+          ],
+          "characterId": "lumi",
+          "effects": [
+            {
+              "type": "enemyBattleStartStatus",
+              "statusId": "wind_armor",
+              "duration": 3,
+              "value": 0.35,
+              "sourcePolicy": "blessing"
+            },
+            {
+              "type": "battleStartStatus",
+              "statusId": "shield",
+              "duration": 2,
+              "value": 0.15
+            }
+          ],
+          "description": "开场对全体敌人施加35%破甲，持续3回合；全队获得15%最大生命护盾，持续2回合。",
+          "icon": "🌪️",
+          "target": "露弥支援",
+          "iconPath": "res://assets/content_v280/icons/blessings/lumi_open_gold.png"
+        }
+      ]
+    }
+  }
+}

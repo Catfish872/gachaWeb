@@ -93,7 +93,7 @@ static func _departure(app,parent:Node,floor_number:int,active:bool,abyss:Dictio
 	app._restore_character_list(content.get_parent(),"abyss_departure")
 	_difficulty(app,content,active)
 	_target_set(app,content,active)
-	var hero=app._scene_panel(content,"res://assets/backgrounds/abyss.png",95 if app.size.x>=850 else 140)
+	var hero=app._scene_panel(content,app.model.abyss_background_path(),95 if app.size.x>=850 else 140)
 	hero.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	var shade:=ColorRect.new();shade.color=Color(0.025,0.035,0.08,0.28);shade.mouse_filter=Control.MOUSE_FILTER_IGNORE;shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);hero.add_child(shade)
 	var inset:=MarginContainer.new();inset.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

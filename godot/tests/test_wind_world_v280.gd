@@ -142,7 +142,9 @@ func run_tests() -> void:
 	for floor_number in [1,4,5,10,20,100]:
 		var pool: Array = g.abyss_enemy_pool(floor_number)
 		ck(not pool.has("windfield_updraft") and not pool.has("windfield_crosswind"), "fields excluded from abyss pool " + str(floor_number))
-	ck(g.abyss_enemy_pool(4).has("wind_falcon") and g.abyss_enemy_pool(5).has("windwheel_sentinel") and g.abyss_enemy_pool(10).has("boss_highland_roc"), "new enemies reachable in abyss")
+	ck(not g.abyss_enemy_pool(4).has("wind_falcon") and not g.abyss_enemy_pool(10).has("boss_highland_roc"), "first ten layers retain default enemies")
+	g.state.abyss.rogue.sceneBlocks = {"11": {"startFloor":11,"theme":"windpass","depth":0,"background":ex.data.environmentThemes.windpass.backgrounds[0][0]}}
+	ck(g.abyss_enemy_pool(11).has("wind_falcon") and g.abyss_enemy_pool(15).has("windwheel_sentinel") and g.abyss_enemy_pool(20)==["boss_highland_roc"], "wind enemies belong to selected abyss block")
 	var rng_snapshot: int = g.rng.state
 	for id in ex.data.environmentThemes.windpass.enemies.battle + ex.data.environmentThemes.windpass.enemies.elite + ["boss_highland_roc"]:
 		var first: String = g.abyss_encounter_background([id],280)
