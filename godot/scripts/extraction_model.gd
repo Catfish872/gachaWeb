@@ -68,7 +68,7 @@ func start_run(difficulty: int = 0) -> Dictionary:
 	var previous: Dictionary = host.state.duplicate(true)
 	var generator := RandomNumberGenerator.new()
 	generator.seed = host.rng.randi()
-	state().run = {"id": host._uid("extraction"), "act": 1, "maxActs": MAX_ACTS, "node": 0, "phase": "route", "difficulty": difficulty, "bag": [], "equipped": [], "party": party.duplicate(true), "containers": [], "routes": [], "activeEncounter": {}, "rngState": str(generator.state), "serial": 0, "roomsCleared": 0, "bossesDefeated": 0, "collectedValue": 0, "room": {}, "blessings": [], "pendingChoices": [], "characterFocus": {}, "roomActions": [], "growthBattles": 0, "startedAt": host._now()}
+	state().run = {"id": host._uid("extraction"), "act": 1, "maxActs": MAX_ACTS, "node": 0, "phase": "route", "difficulty": difficulty, "bag": [], "equipped": [], "party": party.duplicate(true), "containers": [], "routes": [], "activeEncounter": {}, "rngState": str(generator.state), "serial": 0, "roomsCleared": 0, "bossesDefeated": 0, "collectedValue": 0, "room": {}, "blessings": [], "pendingChoices": [], "characterFocus": {}, "roomActions": [], "recentEventIds": [], "growthBattles": 0, "startedAt": host._now()}
 	# Cosmetic route order is fixed once and does not consume loot/battle RNG.
 	var environment_rng := RandomNumberGenerator.new()
 	environment_rng.seed = generator.seed ^ 0x260A57
@@ -602,8 +602,8 @@ func _container(title: String, count: int, quality: int, categories: Array = [],
 	var weights: Array = data.get("rarityWeightsByAct", [[32,20,32,13,2.8,0.2],[23,15,34,21,6.5,0.5],[15,10,34,28,12,1]])[int(run().act)-1].duplicate()
 	var economy: Dictionary = data.get("lootEconomy", {})
 	weights[3] = float(weights[3]) + quality * float(economy.get("qualityPurpleWeight", 3)) + float(economy.get("riskPurpleWeight", 2)) * int(run().difficulty)
-	weights[4] = float(weights[4]) + quality * float(economy.get("qualityGoldWeight", 2)) + float(economy.get("riskGoldWeight", 1)) * int(run().difficulty)
-	weights[5] = float(weights[5]) + quality * float(economy.get("qualityRedWeight", 0.7)) + float(economy.get("riskRedWeight", 0.05)) * int(run().difficulty)
+	weights[4] = float(weights[4]) + quality * float(economy.get("qualityGoldWeight", 2)) + float(economy.get("riskGoldWeight", 1.05)) * int(run().difficulty)
+	weights[5] = float(weights[5]) + quality * float(economy.get("qualityRedWeight", 0.7)) + float(economy.get("riskRedWeight", 0.065)) * int(run().difficulty)
 	if boss_reward:
 		weights[4] = float(weights[4]) + float(economy.get("bossGoldWeight", 1.0))
 		weights[5] = float(weights[5]) + float(economy.get("bossRedWeight", 0.15))
@@ -1099,6 +1099,10 @@ func valid(value: Variant) -> bool:
 	if r.is_empty(): return true
 	if not value.get("tactical", []).is_empty(): return false
 	if not host._integer(r.get("maxActs",3),3,MAX_ACTS): return false
+	if r.has("recentEventIds"):
+		if not r.recentEventIds is Array or r.recentEventIds.size() > 2: return false
+		for event_id in r.recentEventIds:
+			if not host._integer(event_id, 0, 2 + ExpeditionEvents.EVENTS.size()): return false
 	if r.has("environmentOrder"):
 		if not r.environmentOrder is Array or r.environmentOrder.size() != int(r.get("maxActs",3)): return false
 		var environments: Dictionary = {}
@@ -1600,13 +1604,45 @@ func _prepare_room_actions(kind: String, event_override: int = -1) -> void:
 	if kind == "key_vault":
 		choices = [{"id":"unlock", "label":"打开密室", "description":"使用本区域钥匙", "effect":{"unlock":true}}]
 	elif kind in ["rest", "hospital"]:
-		choices = [{"id":"recover", "label":"包扎休整", "description":"全队恢复35%，倒下角色复苏", "effect":{"heal":0.35,"revive":true}}, {"id":"meditate", "label":"冥想蓄能", "description":"恢复10%，获得40能量，清空冷却", "effect":{"heal":0.1,"energy":40,"cooldown":99}}, {"id":"scavenge", "label":"寻找补给", "description":"搜寻营地留下的物资", "effect":{"cache":true}}]
+		choices = [{"id":"recover", "label":"包扎休整", "description":"全队恢复35%，倒下角色复苏", "effect":{"heal":0.35,"revive":true}}]
+		var preparation: Array
+		var supplies: Array
+		if kind == "rest":
+			preparation = [
+				{"id":"meditate", "label":"冥想蓄能", "description":"恢复10%，获得40能量，清空冷却", "effect":{"heal":0.1,"energy":40,"cooldown":99}},
+				{"id":"mend", "label":"营火旁修甲", "description":"恢复装备护盾45%容量", "effect":{"repair":0.45}},
+				{"id":"prepare", "label":"整理行装", "description":"获得55能量，冷却减少2", "effect":{"energy":55,"cooldown":2}}
+			]
+			supplies = [
+				{"id":"scavenge", "label":"寻找补给", "description":"搜寻营地留下的物资", "effect":{"cache":true}},
+				{"id":"pack_rations", "label":"打包行军口粮", "description":"取得蜜果餐与灵能露剂，搜索后装包", "effect":{"items":["ration_1","energy_tonic"]}},
+				{"id":"pack_tools", "label":"收起备用工具", "description":"取得缝甲符片与醒神灵盐，搜索后装包", "effect":{"items":["repair_patch","cleanse_salt"]}}
+			]
+		else:
+			preparation = [
+				{"id":"treatment", "label":"专心疗伤", "description":"存活队员恢复55%生命", "effect":{"heal":0.55}},
+				{"id":"restorative", "label":"调配醒神药", "description":"恢复15%，获得25能量，清空冷却", "effect":{"heal":0.15,"energy":25,"cooldown":99}},
+				{"id":"resuscitate", "label":"使用复苏药剂", "description":"花费40金币，全队恢复50%，倒下角色复苏", "cost":40, "effect":{"heal":0.5,"revive":true}}
+			]
+			supplies = [
+				{"id":"pack_medicine", "label":"领取便携药品", "description":"取得净化药水与止血药带，搜索后装包", "effect":{"items":["saline","tourniquet"]}},
+				{"id":"pack_revival", "label":"保存复苏药材", "description":"取得复苏灵香，搜索后装包", "effect":{"items":["revival_incense"]}},
+				{"id":"pack_repairs", "label":"收集修复材料", "description":"取得两枚缝甲符片，搜索后装包", "effect":{"items":["repair_patch","repair_patch"]}}
+			]
+		choices.append(preparation[int(_rand() * preparation.size())])
+		choices.append(supplies[int(_rand() * supplies.size())])
 	elif kind == "shrine":
 		choices = [{"id":"insight", "label":"聆听神谕", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"sacrifice", "label":"献血祈愿", "description":"消耗20%生命，选择蓝色祝福", "effect":{"hpCost":0.2,"blessing":"blue"}}, {"id":"leave", "label":"收集余光", "description":"获得30能量", "effect":{"energy":30}}]
 	elif kind == "workshop":
 		choices = [{"id":"forge", "label":"刻印符文", "description":"选择蓝色祝福", "cost":90, "effect":{"blessing":"blue"}}, {"id":"overload", "label":"共鸣锻造", "description":"消耗20%生命，选择金色祝福", "cost":160, "effect":{"hpCost":0.2,"blessing":"gold"}}, {"id":"study", "label":"研读铭文", "description":"选择一项祝福", "effect":{"blessing":""}}]
 	else:
-		var event_index := event_override if event_override >= 0 else int(_rand() * 6)
+		var recent: Array = run().get("recentEventIds", []).duplicate()
+		var candidates: Array = []
+		for index in range(3 + ExpeditionEvents.EVENTS.size()):
+			if index not in recent: candidates.append(index)
+		var event_index: int = event_override if event_override >= 0 else int(candidates[int(_rand() * candidates.size())])
+		recent.append(event_index)
+		run().recentEventIds = recent.slice(maxi(0, recent.size()-2))
 		if event_index >= 3:
 			var event_data := ExpeditionEvents.event_data(event_index-3)
 			choices = event_data.choices
@@ -1614,11 +1650,25 @@ func _prepare_room_actions(kind: String, event_override: int = -1) -> void:
 			run().room.description = event_data.description
 			run().room.eventIcon = event_data.icon
 		elif event_index == 0:
-			choices = [{"id":"rescue", "label":"救助旅人", "description":"消耗15%生命，选择蓝色祝福", "effect":{"hpCost":0.15,"blessing":"blue"}}, {"id":"share", "label":"交换补给", "description":"恢复全队20%生命", "effect":{"heal":0.2}}, {"id":"search", "label":"调查车队", "description":"寻找遗落的货箱", "effect":{"cache":true}}]
+			choices = [{"id":"rescue", "label":"救助旅人", "description":"消耗15%生命，选择蓝色祝福", "effect":{"hpCost":0.15,"blessing":"blue"}}, {"id":"share", "label":"交换补给", "description":"恢复全队20%生命", "effect":{"heal":0.2}}, {"id":"search", "label":"调查车队", "description":"寻找遗落的货箱", "effect":{"cache":true}}, {"id":"pack", "label":"接受旅人口粮", "description":"取得蜜果餐，搜索后装包", "effect":{"items":["ration_1"]}}]
+			run().room.name = "受困车队"
+			run().room.description = "旅人正抢救倾倒的货物，邀请你留下帮忙。"
+			run().room.eventIcon = "chest"
 		elif event_index == 1:
-			choices = [{"id":"listen", "label":"倾听回声", "description":"获得35能量，冷却减少1", "effect":{"energy":35,"cooldown":1}}, {"id":"study", "label":"解读石碑", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"rest", "label":"泉边休息", "description":"全队恢复25%生命", "effect":{"heal":0.25}}]
+			choices = [{"id":"listen", "label":"倾听回声", "description":"获得35能量，冷却减少1", "effect":{"energy":35,"cooldown":1}}, {"id":"study", "label":"解读石碑", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"rest", "label":"泉边休息", "description":"全队恢复25%生命", "effect":{"heal":0.25}}, {"id":"bottle", "label":"封存泉水", "description":"取得澄心圣泉，搜索后装包", "effect":{"items":["cleanse_water"]}}]
+			run().room.name = "回声之泉"
+			run().room.description = "泉声沿石碑流转，残存的符文随之明灭。"
+			run().room.eventIcon = "star"
 		else:
-			choices = [{"id":"open", "label":"打开秘匣", "description":"消耗12%生命，找到精良物资", "effect":{"hpCost":0.12,"cache":true,"quality":1}}, {"id":"trace", "label":"追寻星光", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"shelter", "label":"借光疗愈", "description":"恢复20%，倒下角色复苏", "effect":{"heal":0.2,"revive":true}}]
+			choices = [{"id":"open", "label":"打开秘匣", "description":"消耗12%生命，找到精良物资", "effect":{"hpCost":0.12,"cache":true,"quality":1}}, {"id":"trace", "label":"追寻星光", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"shelter", "label":"借光疗愈", "description":"恢复20%，倒下角色复苏", "effect":{"heal":0.2,"revive":true}}, {"id":"gather", "label":"收集散落星尘", "description":"获得45能量，冷却减少1", "effect":{"energy":45,"cooldown":1}}]
+			run().room.name = "星光秘匣"
+			run().room.description = "秘匣的裂隙透出微光，地面还残留着散落的星尘。"
+			run().room.eventIcon = "star"
+		var sampled: Array = []
+		while sampled.size() < 3:
+			var pick := int(_rand() * choices.size())
+			sampled.append(choices.pop_at(pick))
+		choices = sampled
 	for choice in choices:
 		choice.cost = int(choice.get("cost", 0))
 		choice.used = false
@@ -1652,6 +1702,7 @@ func room_actions() -> Array:
 		if reason.is_empty() and effect.has("blessing") and _growth_pool(str(effect.blessing)).is_empty(): reason = "当前队伍暂无可用祝福"
 		choice.enabled = reason.is_empty()
 		choice.disabledReason = reason
+		choice.presentationEffect = effect.duplicate(true)
 		choice.erase("effect")
 	return result
 
@@ -1695,6 +1746,10 @@ func choose_room_action(action_id: String) -> Dictionary:
 		_populate_room("vault")
 	if effect.has("blessing"): _offer_growth(str(effect.blessing))
 	if effect.get("cache", false): _container("遗留物资", 3, int(effect.get("quality", 0)))
+	if effect.has("items"):
+		_container("封存补给", 0, 0)
+		for item_id in effect.items:
+			_place(run().containers.back().items, _make_item(str(item_id)), Vector2i(6, 8))
 	return _commit(previous, {"message": str(chosen.label), "choices": growth_choices(), "config":run().activeEncounter.duplicate(true)})
 
 func use_container_item(container_id: String, uid: String) -> Dictionary:
@@ -1834,6 +1889,10 @@ func _valid_room_actions(actions: Variant) -> bool:
 					if not host._number(v, 0, 1): return false
 				"energy", "cooldown":
 					if not host._integer(v, 0, 100): return false
+				"items":
+					if not v is Array or v.is_empty() or v.size() > 3: return false
+					for item_id in v:
+						if not item_id is String or item_def(item_id).is_empty(): return false
 				"quality":
 					if not host._integer(v, 0, 2): return false
 				"battle":

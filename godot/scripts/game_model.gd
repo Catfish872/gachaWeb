@@ -1677,10 +1677,53 @@ func _set_after_floor(floor_number: int) -> void:
 	rogue.pendingNode = {"id": "%s_%d" % [kind, floor_number], "type": kind}
 	if kind=="rest" and _is_abyss_reward_floor(floor_number) and _available_abyss_rewards().is_empty():rogue.pendingNode.poolUnavailable=true
 	if kind == "route":
-		rogue.pendingNode.eventId = str(_pick(rogue_data.events).id)
+		var recent_events: Array = []
+		for index in range(rogue.eventHistory.size() - 1, -1, -1):
+			var history: Dictionary = rogue.eventHistory[index]
+			if history.get("type", "") == "event" and history.has("eventId"):
+				recent_events.append(history.eventId)
+				if recent_events.size() == 2:
+					break
+		var events: Array = []
+		for event in rogue_data.events:
+			if event.id not in recent_events:
+				events.append(event)
+		var selected_event: Dictionary = _pick(events)
+		rogue.pendingNode.eventId = str(selected_event.id)
+		rogue.pendingNode.eventOptionIds = _sample_abyss_option_ids(selected_event.options)
 		rogue.pendingNode.routeOptions = ["event", "rest" if floor_number % 2 == 0 else "shop"]
+		if "rest" in rogue.pendingNode.routeOptions:
+			rogue.pendingNode.restOptionIds = _sample_abyss_option_ids(rogue_data.restOptions, "recover")
+	elif kind == "rest":
+		rogue.pendingNode.restOptionIds = _sample_abyss_option_ids(rogue_data.restOptions, "recover")
 	elif kind == "shop":
 		_generate_abyss_shop()
+
+func _sample_abyss_option_ids(options: Array, fixed_id: String = "") -> Array:
+	var pool: Array = []
+	var selected: Array = []
+	for option in options:
+		if option.id == fixed_id:
+			selected.append(option.id)
+		else:
+			pool.append(option.id)
+	while selected.size() < 3:
+		var option_id: String = str(_pick(pool))
+		selected.append(option_id)
+		pool.erase(option_id)
+	return selected
+
+func _abyss_node_option_pool(options: Array, key: String) -> Array:
+	var ids: Array = state.abyss.rogue.pendingNode.get(key, [])
+	# Keep the original three choices for nodes saved before option sampling.
+	if ids.is_empty():
+		return options.slice(0, 3).duplicate(true)
+	var selected: Array = []
+	for id in ids:
+		for option in options:
+			if option.id == id:
+				selected.append(option.duplicate(true))
+	return selected
 
 func _event_definition(event_id: String) -> Dictionary:
 	for event in rogue_data.events:
@@ -1722,16 +1765,16 @@ func node_options() -> Dictionary:
 		var event := _event_definition(str(node.get("eventId", "")))
 		for route in node.get("routeOptions", []):
 			var label := str(event.get("title", "未知事件")) if route == "event" else ("休整营地" if route == "rest" else "裂隙商店")
-			var description := str(event.get("description", "")) if route == "event" else ("选择恢复生命、积蓄能量或搜集货币。" if route == "rest" else "使用本局裂隙币购买有限库存的补给与祝福。")
+			var description := str(event.get("description", "")) if route == "event" else ("在营火旁包扎伤口，或利用现有物资整备队伍。" if route == "rest" else "使用本局裂隙币购买有限库存的补给与祝福。")
 			options.append({"id": route, "label": label, "description": description, "cost": 0, "currency": "runCoins", "risk": "进入后再选择具体代价" if route == "event" else "", "reward": "", "enabled": true})
 	elif kind == "event":
 		var event := _event_definition(str(node.get("eventId", "")))
 		node.title = event.get("title", "遗迹事件")
 		node.description = event.get("description", "")
-		options = event.get("options", []).duplicate(true)
+		options = _abyss_node_option_pool(event.get("options", []), "eventOptionIds")
 	elif kind == "rest":
 		node.title = "休整营地"
-		node.description = "营火只能停留片刻，请选择一项整备。"
+		node.description = "营火驱散了寒意，同行的旅人正在整理行装。"
 		options = _abyss_rest_options()
 		if node.get("poolUnavailable",false):node.title="临时补给";node.description="当前暂无可用祝福，带上补给继续深入。"
 	elif kind == "shop":
@@ -1745,13 +1788,14 @@ func node_options() -> Dictionary:
 			option.reward = "%d 永久记忆碎片" % actual_meta
 		option.disabledReason = _option_disabled_reason(option)
 		option.enabled = str(option.disabledReason).is_empty()
+		option.presentationEffect = option.get("effect", {}).duplicate(true)
 		option.erase("effect")
 	node.options = options
 	return node
 
 func _complete_abyss_node(message: String, details: Dictionary = {}) -> void:
 	var rogue: Dictionary = state.abyss.rogue
-	rogue.eventHistory.append({"floor": int(rogue.nextStep.floor), "type": str(rogue.nextStep.type), "nodeId": str(rogue.pendingNode.get("id", "")), "message": message, "details": details.duplicate(true)})
+	rogue.eventHistory.append({"floor": int(rogue.nextStep.floor), "type": str(rogue.nextStep.type), "nodeId": str(rogue.pendingNode.get("id", "")), "eventId": str(rogue.pendingNode.get("eventId", "")), "message": message, "details": details.duplicate(true)})
 	while rogue.eventHistory.size()>100:rogue.eventHistory.pop_front()
 	rogue.nextStep = {"type": "none", "floor": int(rogue.nextStep.floor)}
 	rogue.pendingNode = {}
@@ -1775,7 +1819,7 @@ func choose_abyss_node(option_id: String) -> Dictionary:
 		if option_id == "shop":
 			_generate_abyss_shop()
 		return _commit(previous, {"message": "已抵达" + str(node_options().get("title", "落脚点")), "nextStep": rogue.nextStep.duplicate(true)})
-	var choices: Array = _abyss_rest_options() if kind == "rest" else _event_definition(str(rogue.pendingNode.get("eventId", ""))).get("options", [])
+	var choices: Array = _abyss_rest_options() if kind == "rest" else _abyss_node_option_pool(_event_definition(str(rogue.pendingNode.get("eventId", ""))).get("options", []), "eventOptionIds")
 	var choice: Dictionary = {}
 	for option in choices:
 		if option.id == option_id:
@@ -2211,7 +2255,7 @@ func set_abyss_difficulty(rank: int) -> Dictionary:
 func _abyss_rest_options()->Array:
 	if state.abyss.rogue.pendingNode.get("poolUnavailable",false):
 		return [{"id":"echo_supply","label":"带上补给","description":"获得50裂隙币","effect":{"coins":50}},{"id":"echo_continue","label":"继续深入","description":"前往下一层","effect":{}}]
-	return rogue_data.restOptions.duplicate(true)
+	return _abyss_node_option_pool(rogue_data.restOptions, "restOptionIds")
 
 func _abyss_day_key()->int:
 	# UTC+8 06:00 is UTC 22:00. Never roll the persisted claim day backwards.

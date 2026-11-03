@@ -72,7 +72,7 @@
     {
       "id": "blood_altar",
       "title": "赤红祭坛",
-      "description": "祭坛会用生命换取力量。你能准确看见代价。",
+      "description": "祭坛上的符文泛着暗红微光，旁边摆着盛放供品的铜盘。",
       "options": [
         {
           "id": "sacrifice",
@@ -109,6 +109,18 @@
           "reward": "12 裂隙币",
           "effect": {
             "coins": 12
+          }
+        },
+        {
+          "id": "kindle",
+          "label": "引燃祭坛余火",
+          "description": "借余火唤醒力量，存活角色获得 30 点能量。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "30 能量",
+          "effect": {
+            "energy": 30
           }
         }
       ]
@@ -154,6 +166,19 @@
           "effect": {
             "heal": 0.15
           }
+        },
+        {
+          "id": "prepare",
+          "label": "协助商队整备",
+          "description": "与护卫交换行军经验，存活角色获得 15 点能量，技能冷却减少 2 回合。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "15 能量，冷却减少 2",
+          "effect": {
+            "energy": 15,
+            "cooldown": 2
+          }
         }
       ]
     },
@@ -197,6 +222,18 @@
           "reward": "3 永久记忆碎片",
           "effect": {
             "meta": 3
+          }
+        },
+        {
+          "id": "retrieve",
+          "label": "打捞井底遗物",
+          "description": "支付 55 裂隙币准备绳索，捞起承载随机蓝色祝福的遗物。",
+          "cost": 55,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "随机蓝色祝福",
+          "effect": {
+            "blessing": "blue"
           }
         }
       ]
@@ -242,6 +279,19 @@
           "effect": {
             "meta": 5
           }
+        },
+        {
+          "id": "charge",
+          "label": "启用备用电池",
+          "description": "取出箱底的备用电池，存活角色获得 35 点能量，技能冷却减少 2 回合。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "35 能量，冷却减少 2",
+          "effect": {
+            "energy": 35,
+            "cooldown": 2
+          }
         }
       ]
     },
@@ -286,6 +336,189 @@
           "effect": {
             "coins": 20
           }
+        },
+        {
+          "id": "tune",
+          "label": "校准战斗装备",
+          "description": "借炉台检修装备，存活角色获得 20 点能量并清空技能冷却。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "20 能量，清空冷却",
+          "effect": {
+            "energy": 20,
+            "cooldown": 99
+          }
+        }
+      ]
+    },
+    {
+      "id": "broken_waygate",
+      "title": "失灵的传送台",
+      "description": "传送台的核心仍在运转。你可以让残存的力量重新流动，也可以拆下有用的部件。",
+      "options": [
+        {
+          "id": "repair",
+          "label": "修复传送台回路",
+          "description": "支付 20 裂隙币更换导线，存活角色获得 50 点能量并清空技能冷却。",
+          "cost": 20,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "50 能量，清空冷却",
+          "effect": {
+            "energy": 50,
+            "cooldown": 99
+          }
+        },
+        {
+          "id": "attune",
+          "label": "以生命唤醒核心",
+          "description": "全队每人消耗 12% 最大生命，引出核心储能；存活角色获得 70 点能量。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "全队消耗 12% 最大生命",
+          "reward": "70 能量",
+          "effect": {
+            "hpCost": 0.12,
+            "energy": 70
+          }
+        },
+        {
+          "id": "dismantle",
+          "label": "拆取完好的部件",
+          "description": "收集还能使用的零件，获得 25 裂隙币。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "25 裂隙币",
+          "effect": {
+            "coins": 25
+          }
+        },
+        {
+          "id": "channel",
+          "label": "疏导残留的电流",
+          "description": "接通尚且完好的支线，存活角色获得 25 点能量。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "25 能量",
+          "effect": {
+            "energy": 25
+          }
+        }
+      ]
+    },
+    {
+      "id": "sealed_archive",
+      "title": "封存档案室",
+      "description": "档案室的封印正在消散。散落的战斗记录与深处的完整卷宗，只来得及整理一处。",
+      "options": [
+        {
+          "id": "catalog",
+          "label": "整理散落的档案",
+          "description": "按年代整理遗迹记录，获得 4 记忆碎片。碎片立即保留。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "4 永久记忆碎片",
+          "effect": {
+            "meta": 4
+          }
+        },
+        {
+          "id": "decode",
+          "label": "解读封存的卷宗",
+          "description": "支付 55 裂隙币修复解读装置，获得随机蓝色祝福。",
+          "cost": 55,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "随机蓝色祝福",
+          "effect": {
+            "blessing": "blue"
+          }
+        },
+        {
+          "id": "rehearse",
+          "label": "研习前人的战法",
+          "description": "循着战斗记录演练，存活角色获得 30 点能量。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "30 能量",
+          "effect": {
+            "energy": 30
+          }
+        },
+        {
+          "id": "rescue",
+          "label": "解开珍本的封印",
+          "description": "支付 45 裂隙币准备材料，全队每人消耗 25% 最大生命解开封印，获得随机金色祝福。",
+          "cost": 45,
+          "currency": "runCoins",
+          "risk": "全队消耗 25% 最大生命",
+          "reward": "随机金色祝福",
+          "effect": {
+            "hpCost": 0.25,
+            "blessing": "gold"
+          }
+        }
+      ]
+    },
+    {
+      "id": "crystal_fissure",
+      "title": "晶簇裂缝",
+      "description": "裂缝中长满发光的晶簇。轻触能感到力量流入，取走深处的晶核则需要付出代价。",
+      "options": [
+        {
+          "id": "channel",
+          "label": "引导晶簇的能量",
+          "description": "沿着晶簇纹路引导能量，存活角色获得 45 点能量。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "45 能量",
+          "effect": {
+            "energy": 45
+          }
+        },
+        {
+          "id": "stabilize",
+          "label": "深入晶簇取出晶核",
+          "description": "支付 45 裂隙币搭建支架，全队每人消耗 25% 最大生命取出晶核，获得随机金色祝福。",
+          "cost": 45,
+          "currency": "runCoins",
+          "risk": "全队消耗 25% 最大生命",
+          "reward": "随机金色祝福",
+          "effect": {
+            "hpCost": 0.25,
+            "blessing": "gold"
+          }
+        },
+        {
+          "id": "mine",
+          "label": "深入裂缝采集晶石",
+          "description": "全队每人消耗 10% 最大生命，带回价值 45 裂隙币的晶石。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "全队消耗 10% 最大生命",
+          "reward": "45 裂隙币",
+          "effect": {
+            "hpCost": 0.1,
+            "coins": 45
+          }
+        },
+        {
+          "id": "trace",
+          "label": "拓印晶簇的纹理",
+          "description": "留下晶簇生长的完整纹理，获得 3 记忆碎片。碎片立即保留。",
+          "cost": 0,
+          "currency": "runCoins",
+          "risk": "",
+          "reward": "3 永久记忆碎片",
+          "effect": {
+            "meta": 3
+          }
         }
       ]
     }
@@ -328,6 +561,30 @@
       "reward": "45 裂隙币",
       "effect": {
         "coins": 45
+      }
+    },
+    {
+      "id": "journal",
+      "label": "整理行军笔记",
+      "description": "借着营火整理沿途见闻，获得 3 记忆碎片。碎片立即保留。",
+      "cost": 0,
+      "currency": "runCoins",
+      "risk": "",
+      "reward": "3 永久记忆碎片",
+      "effect": {
+        "meta": 3
+      }
+    },
+    {
+      "id": "study",
+      "label": "研习随身的遗物",
+      "description": "支付 55 裂隙币添置材料，在营火旁解读遗物，获得随机蓝色祝福。",
+      "cost": 55,
+      "currency": "runCoins",
+      "risk": "",
+      "reward": "随机蓝色祝福",
+      "effect": {
+        "blessing": "blue"
       }
     }
   ],

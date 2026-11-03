@@ -1,4 +1,5 @@
 extends RefCounted
+const EventChoice=preload("res://scripts/ui/event_choice.gd")
 const Grid = preload("res://scripts/ui/inventory_grid.gd")
 const MapGraph = preload("res://scripts/ui/extraction_map.gd")
 const RoomScene = preload("res://scripts/ui/extraction_room.gd")
@@ -209,7 +210,10 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 		if phase=="battle":return
 		if service=="relay":_deposit_preview(app)
 		elif service=="unlock":_room_action(app,"unlock","key"))
-	scene.custom_minimum_size.y=150 if not room_actions.is_empty() or is_relay else 200;scene.size_flags_vertical=Control.SIZE_EXPAND_FILL;scene.size_flags_stretch_ratio=1.5;parent.add_child(scene)
+	var choosing:bool=not room_actions.is_empty() and not room_done
+	scene.custom_minimum_size.y=96 if choosing else 150 if is_relay else 200
+	scene.size_flags_vertical=Control.SIZE_FILL if choosing else Control.SIZE_EXPAND_FILL
+	scene.size_flags_stretch_ratio=1.5;parent.add_child(scene)
 	scene.container_selected.connect(func(id):
 		if run.get("phase","")=="battle":app._toast("击败守卫后搜寻",app.RED);return
 		if app._check(app.model.extraction.choose_container(id)):_open_container(app,id))
@@ -230,6 +234,7 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 		services=_scroll(app,parent)
 		services.get_parent().name="ExtractionServiceScroll"
 		services.get_parent().custom_minimum_size.y=88
+		services.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	if is_relay:
 		var panel=app._panel(services,app.GOLD.darkened(0.55),8)
 		var relay=app._hbox(panel,10)
@@ -250,32 +255,33 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 		app._label(result_row,str(chosen.get("label","休整完成")),16,app.CYAN)
 		app._label(result_row,str(chosen.get("description","继续探索，寻找下一处据点")),12,app.MUTED,true)
 	elif not room_actions.is_empty():
-		var choices=app._hbox(services,6)
+		var choices=app._grid(services,1 if app.size.x<900 else mini(3,room_actions.size()))
+		choices.add_theme_constant_override("h_separation",6)
+		choices.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		for action in room_actions:
 			var id:=str(action.get("id",action.get("actionId","")))
-			var card=app._panel(choices,app.CYAN.darkened(0.7),8)
+			var color:Color=EventChoice.color_for(action,app.CYAN)
+			var card=app._panel(choices,color.darkened(0.6),8)
+			card.name="ExtractionEventCard_"+id
+			card.size_flags_vertical=Control.SIZE_EXPAND_FILL
 			var choice=app._vbox(card,6)
-			var title=app._hbox(choice,6)
-			var option_icon:="shield" if id.contains("repair") else "energy" if id.contains("energy") or id in ["meditate","listen"] else "heart" if id.contains("heal") or id in ["recover","share","shelter","rest"] or id.contains("revive") else "bag" if id.contains("supply") or id.contains("deposit") or id in ["scavenge","search","open"] else "star"
-			var specific_icons:={"forge":"star","overload":"fire","study":"book","mend":"shield","inscribe":"star","salvage":"bag","transmute":"fire","attune":"energy","scrap":"bag","challenge":"sword","key":"gear","depart":"path"}
-			option_icon=str(specific_icons.get(id,option_icon))
-			if app.has_method("_rune_icon"):app._rune_icon(title,option_icon,20,app.CYAN)
-			app._label(title,str(action.get("label","互动")),16,app.CYAN,true)
+			EventChoice.heading(app,choice,action,"coin",color)
 			var preview: Dictionary=action.get("encounterPreview",{})
 			if not preview.is_empty():
 				var guards_row=app._hbox(choice,4);guards_row.name="ExtractionEncounterPreview_"+id
 				for enemy_id in preview.get("enemies",[]):_icon(guards_row,{"icon":str(app.model.catalog.get("EnemyData",{}).get(str(enemy_id),{}).get("portrait","res://assets/enemies/"+str(enemy_id)+".png"))},32)
 				app._label(guards_row,"精英战" if preview.get("isElite",false) or str(preview.get("kind",""))=="elite" else "交战",11,app.RED)
-			app._label(choice,str(action.get("description","")),12,app.TEXT,true)
-			var cost:=int(action.get("cost",0))
-			var caption:="已选择" if action.get("used",false) else "%d 金币" % cost if cost>0 else "选择"
+			var copy=EventChoice.body(app,choice)
+			EventChoice.benefits(app,copy,action,"coin",color)
+			EventChoice.costs(app,copy,action,"coin")
+			var caption:="已选择" if action.get("used",false) else "选择"
 			var b=_button(app,choice,caption,func():
 				if id in ["deposit","send","relay"] and app.model.extraction.has_method("preview_deposit"):_deposit_preview(app)
 				else:_room_action(app,id,"key" if id=="unlock" else "use"),true)
 			b.name="ExtractionRoomAction_"+id
 			b.disabled=not bool(action.get("enabled",true))
 			if b.disabled and not str(action.get("disabledReason","")).is_empty():
-				app._label(choice,str(action.disabledReason),11,app.MUTED,true)
+				b.text=EventChoice.disabled_caption(str(action.disabledReason));b.tooltip_text=str(action.disabledReason)
 
 static func _deposit_preview(app) -> void:
 	var plan: Dictionary=app.model.extraction.preview_deposit()

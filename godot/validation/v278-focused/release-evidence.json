@@ -1,0 +1,43 @@
+{
+  "version": "2.7.8",
+  "version_code": 20708,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 180,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-03T01:43:45Z",
+      "completed_utc": "2026-11-03T01:46:45Z",
+      "production_sha256": "f44e66993f3f18b2a4883ee28ac27822d4332d96ec5a80d7acc24d49b4d2e7d0",
+      "scope": [
+        "reconstructed 8 abyss and 9 extraction event menus, persisted options, recent-two exclusion",
+        "hidden IDs rejected, old pending menus compatible",
+        "actual paid blessing, camp recovery/revival, supply search and take, extraction and warehouse UID preservation",
+        "gold/red normalized monotonicity risks 0..5 and five supply sale values/buy-price spread",
+        "actual desktop OpenGL 2048x945 and 960x540 full choice cards and real mouse actions"
+      ],
+      "elapsed_seconds": 180
+    }
+  ],
+  "production_sha256": "1c4125b4009b04f2a7c1908887c0c1508fbf42a1f304c7ae4c3994a3ca7021ad",
+  "production_file_count": 1007,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "reconstructed 8 abyss and 9 extraction event menus, persisted options, recent-two exclusion",
+    "hidden IDs rejected, old pending menus compatible",
+    "actual paid blessing, camp recovery/revival, supply search and take, extraction and warehouse UID preservation",
+    "gold/red normalized monotonicity risks 0..5 and five supply sale values/buy-price spread",
+    "actual desktop OpenGL 2048x945 and 960x540 full choice cards and real mouse actions"
+  ],
+  "limits": [
+    "This is a new post-recovery review, not a reuse of yesterday's missing evidence",
+    "No full regression or other game modes tested",
+    "Desktop OpenGL at mobile resolutions; no Android hardware claim",
+    "One resource still-in-use/ObjectDB cleanup warning on fixture exit, after successful checks; not rerun solely for cleanup",
+    "No publishing performed"
+  ]
+}

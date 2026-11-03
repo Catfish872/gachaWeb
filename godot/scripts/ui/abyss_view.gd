@@ -2,6 +2,7 @@ extends RefCounted
 const RewardGain=preload("res://scripts/ui/rogue_reward_gain.gd")
 const RewardRarity = preload("res://scripts/ui/reward_rarity.gd")
 const RouteTrack=preload("res://scripts/ui/abyss_route_track.gd")
+const EventChoice=preload("res://scripts/ui/event_choice.gd")
 const RuneTheme=preload("res://scripts/ui/rune_theme.gd")
 const Sigil=preload("res://scripts/ui/abyss_sigil.gd")
 const VIOLET:=Color("c4a4e8")
@@ -224,29 +225,28 @@ static func _blessings(app,parent:Node,rogue:Dictionary)->void:
 
 static func _node(app,parent:Node,phase:String)->void:
 	var node:Dictionary=app.model.node_options()
-	app._label(parent,str(node.get("title","旅途抉择")),23,app.TEXT,true)
+	app._label(parent,str(node.get("title","旅途抉择")),19,app.TEXT,true)
 	if phase!="route":app._label(parent,str(node.get("description","")),14,app.MUTED,true)
 	var content=_scroll(app,parent)
+	content.get_parent().name="AbyssEventScroll"
+	content.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	var options:Array=node.get("options",[])
 	var grid=app._grid(content,1 if app.size.x<850 else mini(3,maxi(1,options.size())))
-	var color:Color=GREEN if phase=="rest" else VIOLET
+	grid.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	for option in options:
+		var color:Color=EventChoice.color_for(option,GREEN if phase=="rest" else VIOLET)
 		var panel=app._panel(grid,color.darkened(0.5),10)
+		panel.name="AbyssEventCard_"+str(option.id)
+		panel.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		var v=app._vbox(panel,6)
-		var heading=app._hbox(v,8);app._rune_icon(heading,RuneTheme.effect_key(option),32,color)
-		app._label(heading,str(option.get("label","继续探索")),17,color,true).size_flags_horizontal=Control.SIZE_EXPAND_FILL
-		if not str(option.get("reward","")).is_empty():app._label(v,str(option.reward),13,GREEN,true)
-		var risk:String=str(option.get("risk",""))
-		if not risk.is_empty() and risk!="进入后再选择具体代价":app._label(v,risk,12,app.RED,true)
-		if str(option.get("reward","")).is_empty() and str(option.get("risk","")).is_empty():app._label(v,str(option.get("description","")),13,app.TEXT,true)
-		var action_gap:=Control.new();action_gap.size_flags_vertical=Control.SIZE_EXPAND_FILL;v.add_child(action_gap)
-		var actions=app._hbox(v,6)
-		app._button(actions,"详情",func():_detail(app,str(option.get("label","旅途抉择")),str(option.get("description",""))))
-		var cost:=int(option.get("cost",0))
-		var b=app._button(actions,("选择 · %d 裂隙币"%cost) if cost>0 else "选择",func():_reward_operation(app,app.model.choose_abyss_node(str(option.id)),"",true),true)
-		app._button_icon(b,"rift_coin" if cost>0 else "check",true)
+		EventChoice.heading(app,v,option,"rift_coin",color,func():_detail(app,str(option.get("label","旅途抉择")),str(option.get("description",""))))
+		var copy=EventChoice.body(app,v)
+		EventChoice.benefits(app,copy,option,"rift_coin",color)
+		EventChoice.costs(app,copy,option,"rift_coin")
+		var b=app._button(v,"前往" if phase=="route" else "选择",func():_reward_operation(app,app.model.choose_abyss_node(str(option.id)),"",true),true)
+		app._button_icon(b,"path" if phase=="route" else "check",true)
 		b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.name="NodeChoice_"+str(option.id);b.disabled=not bool(option.get("enabled",true))
-		if b.disabled:app._label(v,str(option.get("disabledReason","暂不可用")),12,app.RED,true)
+		if b.disabled:b.text=EventChoice.disabled_caption(str(option.get("disabledReason","暂不可用")));b.tooltip_text=str(option.get("disabledReason","暂不可用"))
 
 static func _shop(app,parent:Node)->void:
 	var content=_scroll(app,parent)
