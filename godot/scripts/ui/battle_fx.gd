@@ -9,6 +9,23 @@ var flash_life := 0.0
 var flash_color := Color.WHITE
 var reduced_motion := false
 const ELEMENT_COLORS := {"fire":Color("ff9864"),"water":Color("75c8ef"),"wind":Color("80ddbd"),"thunder":Color("c5a0ff"),"lightning":Color("c5a0ff"),"ice":Color("b4e9ff"),"earth":Color("ddbc7d")}
+const SKILL_IMPACTS := {
+	"kaldi_normal":"flame_blade", "kaldi_skill":"dragon_flame", "kaldi_ult":"dragon_flame",
+	"selin_normal":"lantern_chain", "selin_skill":"lantern_flame", "selin_ult":"lantern_flame",
+	"tiya_normal":"wind_blades", "tiya_skill":"wind_sweep", "tiya_ult":"wind_blades",
+	"lumi_normal":"wind_strings", "lumi_skill":"wind_bridge", "lumi_ult":"wind_strings",
+	"wind_primary":"wind_pierce", "wind_gold":"wind_pierce"
+}
+const SIGNATURE_COLORS := {
+	"flame_blade":Color("ff9864"), "dragon_flame":Color("ff9864"),
+	"lantern_chain":Color("efc27d"), "lantern_flame":Color("efc27d"),
+	"wind_blades":Color("71e0d0"), "wind_sweep":Color("71e0d0"),
+	"wind_strings":Color("c5e6a4"), "wind_bridge":Color("c5e6a4"),
+	"wind_pierce":Color("a2ecd3"), "wind_armor":Color("a2ecd3")
+}
+
+func skill_impact_kind(skill_id: String) -> String:
+	return str(SKILL_IMPACTS.get(skill_id, ""))
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -118,6 +135,12 @@ func _draw_ultimate(u: Dictionary) -> void:
 	if str(u.actor) == "selin":
 		_draw_lantern_ultimate(u)
 		return
+	if str(u.actor) == "kaldi":
+		_draw_dragon_ultimate(u)
+		return
+	if str(u.actor) in ["tiya", "lumi"]:
+		_draw_wind_ultimate(u, str(u.actor) == "lumi")
+		return
 	var t:=1.0-float(u.life)/1.1
 	var alpha:=sin(t*PI)
 	var c: Color=u.color
@@ -166,8 +189,9 @@ func impact(kind: String, from: Vector2, to: Vector2, critical: bool = false) ->
 	if kind in ["shield", "def_up", "invincible"]:
 		shield_ring(to)
 		return
-	if not kind in ["slash", "blunt", "fire", "water", "ice", "thunder", "wind", "shield_break", "poison", "bleed", "vulnerable", "atk_up", "spd_down", "taunt", "stun", "ember_oath", "ember_lantern_burn", "ember_lantern_direct", "detonation"]: kind = "blunt"
+	if not SIGNATURE_COLORS.has(kind) and not kind in ["slash", "blunt", "fire", "water", "ice", "thunder", "wind", "shield_break", "poison", "bleed", "vulnerable", "atk_up", "spd_down", "taunt", "stun", "ember_oath", "ember_lantern_burn", "ember_lantern_direct", "detonation"]: kind = "blunt"
 	var color: Color = ELEMENT_COLORS.get(kind, Color("f4d8a0"))
+	if SIGNATURE_COLORS.has(kind): color = SIGNATURE_COLORS[kind]
 	if kind == "poison": color = Color("b6de84")
 	if kind in ["bleed", "vulnerable"]: color = Color("ff8b9b")
 	impacts.append({"kind":kind, "a":from, "b":to, "color":color, "critical":critical, "life":0.62})
@@ -182,6 +206,9 @@ func _draw_impact(effect: Dictionary) -> void:
 	var scale_factor := 1.3 if bool(effect.critical) else 1.0
 	var r := (16.0+t*30.0)*scale_factor
 	var c := Color(effect.color, alpha)
+	if SIGNATURE_COLORS.has(str(effect.kind)):
+		_draw_signature_impact(str(effect.kind), p, t, r, c)
+		return
 	match str(effect.kind):
 		"ember_oath", "ember_lantern_burn", "ember_lantern_direct", "detonation":
 			var gold := Color(1.0, 0.83, 0.49, alpha * 0.65)
@@ -255,6 +282,123 @@ func _draw_impact(effect: Dictionary) -> void:
 				var center := p+Vector2(cos(i*TAU/3+t)*r,sin(i*TAU/3+t)*r*0.4-20)
 				draw_line(center-Vector2(5,0),center+Vector2(5,0),c,2,true)
 				draw_line(center-Vector2(0,5),center+Vector2(0,5),c,2,true)
+
+func _draw_signature_impact(kind: String, p: Vector2, t: float, r: float, c: Color) -> void:
+	match kind:
+		"flame_blade", "dragon_flame":
+			var count := 2 if kind == "flame_blade" else 4
+			for i in range(count):
+				var angle := -PI * 0.7 + float(i) * 0.46
+				draw_arc(p + Vector2((i-1)*7, 0), r, angle, angle + PI * 0.85, 24, Color(c, c.a * 0.14), 10.0, true)
+				draw_arc(p + Vector2((i-1)*7, 0), r, angle, angle + PI * 0.85, 24, c, 2.6, true)
+				var tip := p + Vector2.from_angle(angle + PI * 0.85) * r
+				draw_colored_polygon(PackedVector2Array([tip+Vector2(-5,5),tip+Vector2(0,-14-t*12),tip+Vector2(5,5)]),Color("ffe6ad",c.a*.75))
+		"lantern_chain", "lantern_flame":
+			var offset := Vector2(-r * 0.65, -r * 0.35)
+			for i in range(6):
+				var angle := -PI * 0.7 + float(i) * 0.22
+				draw_arc(p + offset + Vector2.from_angle(angle)*r, 3.0, 0, TAU, 10, Color(c,c.a*.75), 1.2, true)
+			var at := p + Vector2(0, -t*12)
+			draw_circle(at, 21.0, Color(c, c.a * 0.08))
+			draw_polyline(PackedVector2Array([at+Vector2(-8,-10),at+Vector2(8,-10),at+Vector2(11,10),at+Vector2(-11,10),at+Vector2(-8,-10)]),c,1.8,true)
+			draw_arc(at+Vector2(0,-12),4.0,PI,TAU,12,c,1.4,true)
+			draw_colored_polygon(PackedVector2Array([at+Vector2(0,-7),at+Vector2(4,2),at+Vector2(0,7),at+Vector2(-4,2)]),Color("fff1ca",c.a))
+			if kind == "lantern_flame":
+				for i in range(3):
+					var spark := p + Vector2((i-1)*22, -18-t*32)
+					draw_line(spark,spark+Vector2(0,-9),Color(c,c.a*.7),2.0,true)
+		"wind_blades", "wind_sweep":
+			for blade in range(2):
+				var side := -1.0 if blade == 0 else 1.0
+				var center := p + Vector2(side*9,side*5)
+				var start := (-0.82 if blade == 0 else PI-0.82) + t*0.6
+				draw_arc(center,r+10,start,start+PI*.92,28,Color(c,c.a*.13),10.0,true)
+				draw_arc(center,r+10,start,start+PI*.92,28,c,2.4,true)
+				draw_arc(center,r+15,start+.12,start+PI*.65,20,Color("e9fff2",c.a*.75),1.0,true)
+			if kind == "wind_sweep":
+				draw_arc(p,r+23,-.3+t,PI*1.4+t,32,Color(c,c.a*.55),1.5,true)
+		"wind_strings", "wind_bridge":
+			for string_index in range(4):
+				var points := PackedVector2Array()
+				for i in range(17):
+					var f := float(i)/16.0
+					points.append(p+Vector2((f-.5)*(r*2.8),float(string_index-2)*10+sin(f*PI*2-t*TAU+string_index)*5*sin(f*PI)))
+				draw_polyline(points,Color(c,c.a*.1),6.0,true)
+				draw_polyline(points,c,1.3,true)
+			if kind == "wind_bridge":
+				draw_arc(p+Vector2(0,12),r+8,PI,TAU,28,Color(c,c.a*.8),2.0,true)
+			for side in [-1.0,1.0]:
+				var leaf := p+Vector2(side*r*.9,-16-t*8)
+				draw_colored_polygon(PackedVector2Array([leaf+Vector2(-7,0),leaf+Vector2(0,-4),leaf+Vector2(7,0),leaf+Vector2(0,4)]),Color(c,c.a*.65))
+		"wind_pierce":
+			draw_line(p-Vector2(r+12,0),p+Vector2(r+12,0),Color(c,c.a*.15),8.0,true)
+			draw_line(p-Vector2(r+12,0),p+Vector2(r+12,0),c,1.8,true)
+			for i in range(2):
+				var at := p+Vector2((t-.5)*30+i*16,0)
+				draw_polyline(PackedVector2Array([at+Vector2(-7,-6),at,at+Vector2(-7,6)]),c,1.8,true)
+		"wind_armor":
+			for side in [-1.0,1.0]:
+				var at := p+Vector2(side*(5+t*15),0)
+				draw_polyline(PackedVector2Array([at+Vector2(0,-19),at+Vector2(side*13,-11),at+Vector2(side*10,10),at+Vector2(0,21)]),c,2.0,true)
+			draw_polyline(PackedVector2Array([p+Vector2(3,-18),p+Vector2(-4,-4),p+Vector2(4,3),p+Vector2(-3,18)]),Color("efffe5",c.a),1.6,true)
+
+func _draw_dragon_ultimate(u: Dictionary) -> void:
+	var t := clampf(1.0-float(u.life)/1.1,0.0,1.0)
+	var alpha := sin(t*PI)
+	var path := PackedVector2Array()
+	var travel := minf(1.0,t*2.4)
+	for i in range(33):
+		var f := float(i)/32.0*travel
+		var point: Vector2 = u.a.lerp(u.b,f)
+		point.y += sin(f*PI*2-t*4)*25*sin(f*PI)
+		path.append(point)
+	draw_polyline(path,Color("ff7f43",alpha*.13),26.0,true)
+	draw_polyline(path,Color("ffb264",alpha*.8),4.0,true)
+	draw_polyline(path,Color("ffe8b2",alpha*.8),1.2,true)
+	var direction: Vector2 = (u.b-u.a).normalized()
+	if direction.is_zero_approx(): direction=Vector2.RIGHT
+	var normal := direction.orthogonal()
+	var wing: Vector2 = u.a.lerp(u.b,travel*.58)
+	for side in [-1.0,1.0]:
+		var points := PackedVector2Array([wing-direction*30,wing+normal*side*52-direction*5,wing+normal*side*20+direction*8,wing+direction*30])
+		draw_polyline(points,Color("ffb264",alpha*.65),2.0,true)
+	var head: Vector2 = path[path.size()-1]
+	var jaw := PackedVector2Array([head-direction*20-normal*12,head+direction*16-normal*7,head+direction*23,head+direction*10+normal*6,head-direction*18+normal*13])
+	draw_colored_polygon(jaw,Color("ff9d51",alpha*.12))
+	draw_polyline(jaw,Color("ffe0a0",alpha),2.0,true)
+	draw_line(head-direction*10-normal*10,head-direction*24-normal*28,Color("ffe0a0",alpha),2.0,true)
+	draw_circle(head+direction*3-normal*4,2.0,Color("fff6d3",alpha))
+
+func _draw_wind_ultimate(u: Dictionary, strings: bool) -> void:
+	var t := clampf(1.0-float(u.life)/1.1,0.0,1.0)
+	var alpha := sin(t*PI)
+	var color := Color("c5e6a4") if strings else Color("71e0d0")
+	var count := 5 if strings else 2
+	for band in range(count):
+		var points := PackedVector2Array()
+		for i in range(33):
+			var f := float(i)/32.0
+			var point: Vector2 = u.a.lerp(u.b,f)
+			if strings:
+				point.y -= sin(f*PI)*(30+band*13)
+				point.y += sin(f*PI*4-t*TAU+band)*4*sin(f*PI)
+			else:
+				point.y += (-1.0 if band == 0 else 1.0)*sin(f*PI)*(42+sin(t*PI)*24)
+			points.append(point)
+		draw_polyline(points,Color(color,alpha*.1),7.0 if strings else 13.0,true)
+		draw_polyline(points,Color(color,alpha*.8),1.3 if strings else 2.6,true)
+		var tip: Vector2 = points[clampi(int(t*48)+band*3,0,32)]
+		draw_circle(tip,2.2,Color("f0ffe7",alpha))
+	var center: Vector2 = u.b
+	if strings:
+		for leaf in range(5):
+			var angle := float(leaf)*TAU/5-t*.7
+			var at := center+Vector2.from_angle(angle)*(24+t*30)
+			draw_colored_polygon(PackedVector2Array([at+Vector2(-8,0),at+Vector2(0,-4),at+Vector2(8,0),at+Vector2(0,4)]),Color(color,alpha*.8))
+	else:
+		for side in [-1.0,1.0]:
+			draw_line(center+Vector2(-42,-side*38),center+Vector2(42,side*38),Color(color,alpha*.16),12.0,true)
+			draw_line(center+Vector2(-42,-side*38),center+Vector2(42,side*38),Color("e6fff4",alpha*.85),2.0,true)
 
 func _draw_lantern_ultimate(u: Dictionary) -> void:
 	# A narrow light-road, not a dragon silhouette or a full-screen opaque cut-in.

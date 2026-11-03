@@ -1,0 +1,46 @@
+{
+  "started_utc": "2026-11-03T14:11:40Z",
+  "completed_utc": "2026-11-03T14:20:08Z",
+  "status": "passed",
+  "prior_owner_checks_budget_seconds": 10,
+  "checks_passed_final_unique": 329,
+  "results": {
+    "mobile_layout_v283": 98,
+    "extraction_layout_reused_from_first_pass": 74,
+    "extraction_music_after_fix": 30,
+    "limited_fx_v283": 89,
+    "party_delta_after_spacing": 38
+  },
+  "production_file_count": 1262,
+  "production_sha256": "bf5448f51a3610c1a53131c937b29cc7aa8657510a391018a633c1c2c3117e18",
+  "failures_resolved": [
+    "Music initial104 checks had4 return-cursor failures. Music-only diagnostic30 had4 failures. Same player returned at0.095s instead of>8s. Production _sync_music changed both playing checks to has_stream_playback; final30/0 returns9.22s.",
+    "Parent visual review found partly clipped first-row party card buttons; owner reduced short-landscape card gaps7→4. New38 checks verify both resolutions first/last-row buttons and real ScreenTouch/ScreenDrag scrolling without party mutation."
+  ],
+  "scope": [
+    "960x540 and2048x945 story ch4_9_pre user-reported line5 and ch4_12_post narration; next/skip callbacks",
+    "Story progression focus ch4_10 after clearing throughch4_9 and wind chapter icon",
+    "Compact party header, presets and roster scroll",
+    "Hospital with2 containers, workshop3 effects, actual40gold option once, persistent actions inside viewport",
+    "Selected empty wind treasury circle behind sprite",
+    "Four limited character three-skill effect signatures, two real wind skill battle screenshots, effect bounds/reduced motion/cleanup",
+    "Extraction and abyss ordinary/boss/new-background music context, pause/resume, playback cursor preservation"
+  ],
+  "visual_review": "Parent reviewed story,event,container and final960party; all approved. Final2048party and effect atlas/two battle screenshots also available. Timing includes waiting for final parent review after all executions stopped14:18:05.",
+  "not_covered": [
+    "No full game suite, full campaign, economy simulation, Android hardware or APK installation",
+    "ch4_12_post is narration, not independent CG; independent interlude CG not tested",
+    "No subjective audio listening"
+  ],
+  "warnings": [
+    "UI fixture exit ObjectDB/resource-in-use warnings, unsupportedVSync under Mesa llvmpipe"
+  ],
+  "cleanup": "All owned Terminal windows closed; no game tests remain running",
+  "evidence_dirs": [
+    "validation/v283-ui",
+    "validation/v283-extraction",
+    "validation/v283-limited-fx"
+  ],
+  "elapsed_seconds": 508,
+  "total_budget_seconds": 518
+}

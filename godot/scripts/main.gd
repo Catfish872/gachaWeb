@@ -32,6 +32,7 @@ var selected_pool := "limited_selin"
 var selected_chapter := 0
 var selected_stage_id := ""
 var story_list_positions: Dictionary = {}
+var _story_focus_stage_id := ""
 var shop_list_positions: Dictionary = {}
 var _shop_page_key := ""
 var _shop_page_restore_pending := false
@@ -538,6 +539,8 @@ func navigate(screen: String, record_history: bool = true) -> void:
 		navigation_history.append(current_screen)
 		if navigation_history.size() > 30:
 			navigation_history.pop_front()
+	if screen == "story" and current_screen != "story":
+		_focus_story_progress()
 	current_screen = screen
 	if screen == "party":
 		selected_team_preset = maxi(0, int(model.state.get("activeTeamPreset", 0)))
@@ -667,23 +670,27 @@ func _story() -> void:
 	set_page_fixed(not compact)
 	_page_title("世界探索", "选择目的地，继续旅程")
 	var chapters: Array = model.catalog.StageData.chapters
-	var tabs := _hbox(main_body, 8)
+	var tabs: Container = _flow(main_body, 8) if compact else _hbox(main_body, 8)
 	for i in chapters.size():
 		var chapter_button:=_button(tabs,str(chapters[i].name),func():_select_story_chapter(i),selected_chapter==i)
 		chapter_button.name="StoryChapter_"+str(i)
 		var chapter_open:bool=bool(chapters[i].get("unlocked",false)) or bool(model.state.stageProgress.get(chapters[i].get("unlockCondition",""),{}).get("cleared",false))
-		_button_icon(chapter_button,("ice" if i==1 else "fire") if chapter_open else "lock",selected_chapter==i)
+		var chapter_icon: String = {"ch1":"fire", "ch2":"ice", "ch3":"fire", "ch4":"wind"}.get(str(chapters[i].id), "map")
+		_button_icon(chapter_button,chapter_icon if chapter_open else "lock",selected_chapter==i)
 	var row := _responsive_box(main_body,compact,16)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var stages_panel := _panel(row,LINE,10)
 	stages_panel.size_flags_stretch_ratio = 0.85
 	var stage_list := _scroll_column(stages_panel)
 	stage_list.get_parent().name="StoryStageScroll"
-	_restore_story_list(stage_list.get_parent(),selected_chapter)
+	if compact: stage_list.get_parent().custom_minimum_size.y = 320
 	var stage_map: Dictionary = {}
 	for stage in model.stage_list(): stage_map[stage.id]=stage
 	var chapter: Dictionary=chapters[selected_chapter]
-	if selected_stage_id.is_empty() or not stage_map.has(selected_stage_id): selected_stage_id=str(chapter.stages[0].id)
+	if not chapter.stages.any(func(stage): return str(stage.id) == selected_stage_id):
+		_focus_story_progress(selected_chapter)
+	_restore_story_list(stage_list.get_parent(),selected_chapter,_story_focus_stage_id)
+	_story_focus_stage_id = ""
 	for index in chapter.stages.size():
 		var data: Dictionary=stage_map.get(chapter.stages[index].id,chapter.stages[index])
 		var card := _panel(stage_list,GOLD if str(data.id)==selected_stage_id else LINE,10)
@@ -746,16 +753,35 @@ func _story() -> void:
 
 func _select_story_chapter(index:int) -> void:
 	if selected_chapter==index:return
-	selected_chapter=index
-	selected_stage_id=""
-	story_list_positions[index]=0
+	_focus_story_progress(index)
 	_render_screen()
 
-func _restore_story_list(scroll:ScrollContainer,chapter_index:int) -> void:
+func _focus_story_progress(chapter_index: int = -1) -> void:
+	var chapters: Array = model.catalog.StageData.chapters
+	var target: Dictionary = {}
+	for stage in model.stage_list():
+		if chapter_index >= 0 and str(stage.chapterId) != str(chapters[chapter_index].id): continue
+		if target.is_empty(): target = stage
+		if not stage.get("unlocked", false): continue
+		target = stage
+		if not stage.get("completed", false): break
+	if target.is_empty(): return
+	for index in chapters.size():
+		if str(chapters[index].id) == str(target.chapterId):
+			selected_chapter = index
+			break
+	selected_stage_id = str(target.id)
+	_story_focus_stage_id = selected_stage_id
+
+func _restore_story_list(scroll:ScrollContainer,chapter_index:int,focus_stage_id:String="") -> void:
 	var desired:int=int(story_list_positions.get(chapter_index,0))
 	await get_tree().process_frame
 	await get_tree().process_frame
 	if not is_instance_valid(scroll) or not scroll.is_inside_tree():return
+	if not focus_stage_id.is_empty():
+		var card := scroll.find_child("StageCard_" + focus_stage_id, true, false) as Control
+		if card != null:
+			desired = roundi(card.position.y - maxf(0.0, (scroll.size.y - card.size.y) * 0.35))
 	scroll.scroll_vertical=desired
 	story_list_positions[chapter_index]=scroll.scroll_vertical
 	scroll.get_v_scroll_bar().value_changed.connect(func(value:float):
@@ -939,8 +965,30 @@ func _growth_roster_style(button: Button, rarity: int, selected: bool) -> void:
 
 func _party() -> void:
 	set_page_fixed(not compact)
-	_page_title("冒险编队","保存五套阵容，点按预设快速切换")
 	var run_locked: bool = model.team_is_locked()
+	var title_row := _hbox(main_body, 10)
+	title_row.name = "PartyHeader"
+	_label(title_row, "冒险编队", 24, TEXT)
+	if not compact:
+		var hint := _label(title_row, "保存五套阵容，点按预设快速切换", 12, MUTED, true)
+		hint.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	else:
+		var spacer := Control.new()
+		spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		title_row.add_child(spacer)
+	var preset_info := _vbox(title_row, 0)
+	preset_info.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	preset_info.custom_minimum_size.x = 96
+	var preset_name := _label(preset_info, str(model.state.teamPresets[selected_team_preset].name), 16, GOLD)
+	preset_name.name = "TeamPresetName"
+	preset_name.clip_text = true
+	preset_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	preset_name.tooltip_text = preset_name.text
+	var active: bool = int(model.state.activeTeamPreset) == selected_team_preset
+	var dirty: bool = draft_team != model._team_members(model.state.team)
+	_label(preset_info, "编辑中" if dirty else "当前出战" if active else "待保存" if model._team_members(model.state.teamPresets[selected_team_preset].team).is_empty() else "已保存", 12, CYAN)
+	var rename := _button(title_row, "重命名", _rename_team_preset)
+	rename.name = "TeamPresetRename"
 	var preset_row := _hbox(main_body, 6)
 	preset_row.name = "TeamPresetTabs"
 	for index in range(model.TEAM_PRESET_COUNT):
@@ -954,16 +1002,8 @@ func _party() -> void:
 		tab.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		tab.tooltip_text = "%s · %s" % [preset.name, "选择后保存当前阵容" if empty else "按保存顺序切换出战队伍"]
 		tab.disabled = run_locked
-	var preset_header := _hbox(main_body, 8)
-	var preset_name := _label(preset_header, str(model.state.teamPresets[selected_team_preset].name), 17, GOLD, true)
-	preset_name.name = "TeamPresetName"
-	var rename := _button(preset_header, "重命名", _rename_team_preset)
-	rename.name = "TeamPresetRename"
-	var active: bool = int(model.state.activeTeamPreset) == selected_team_preset
-	var dirty: bool = draft_team != model._team_members(model.state.team)
-	_label(preset_header, "编辑中" if dirty else "当前出战" if active else "待保存" if model._team_members(model.state.teamPresets[selected_team_preset].team).is_empty() else "已保存", 12, CYAN)
-
 	var row:=_responsive_box(main_body,compact,14)
+	row.name = "PartyFormationRow"
 	row.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	var formation_panel:=_panel(row,GOLD.darkened(0.6),10)
 	formation_panel.size_flags_horizontal=Control.SIZE_FILL
@@ -1010,8 +1050,10 @@ func _party() -> void:
 		var owned:bool=model.state.ownedCharacters.has(id)
 		var actions:=_hbox(v,5)
 		var b:=_button(actions,"移出" if id in draft_team else ("加入" if owned else "未获得"),func():_toggle_team(id),id in draft_team)
+		b.name = "PartyToggle_" + str(id)
 		b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=not owned or run_locked
-		_button(actions,"详情",func():selected_character=id;navigate("growth"))
+		var details := _button(actions,"详情",func():selected_character=id;navigate("growth"))
+		details.name = "PartyDetails_" + str(id)
 
 func _save_team_preset() -> void:
 	var saved: Array = model._team_members(model.state.teamPresets[selected_team_preset].team)
@@ -1941,6 +1983,11 @@ func _battle_effect_kind(event: Dictionary) -> String:
 	if "slash" in animation or "blade" in animation:return "slash"
 	return _battle_event_element(event)
 
+func _battle_visual_kind(event: Dictionary) -> String:
+	# Keep character visuals separate from the existing element/audio selection.
+	var signature: String = fx.skill_impact_kind(str(event.get("skill_id", "")))
+	return signature if not signature.is_empty() else _battle_effect_kind(event)
+
 func _battle_sound_clip(events: Array) -> String:
 	var has_damage:=false
 	var has_heal:=false
@@ -2115,9 +2162,10 @@ func _show_combat_events(events: Array) -> void:
 			var destination_card = unit_cards.get(target_uid)
 			var origin: Vector2 = source_card.get_global_rect().get_center() if is_instance_valid(source_card) else size * Vector2(0.25,0.5)
 			var destination: Vector2 = destination_card.get_global_rect().get_center() if is_instance_valid(destination_card) else size * Vector2(0.75,0.5)
-			if source_unit.get("id", "") == "selin":
+			if source_unit.get("id", "") in ["kaldi", "selin", "tiya", "lumi"]:
 				origin = anchors.get(str(e.get("actor", "")), origin)
 				destination = anchors.get(target_uid, destination)
+			if source_unit.get("id", "") == "selin":
 				var linked: Array = []
 				for hit in events:
 					var hit_uid := str(hit.get("target", ""))
@@ -2148,7 +2196,7 @@ func _show_combat_events(events: Array) -> void:
 			else:_float_text(pos, text_value, color, 30 if e.get("isCrit", false) else 23)
 			if type=="damage":
 				var origin:Vector2=actor.global_position+actor.size*0.5 if is_instance_valid(actor) else pos+Vector2(-32,0)
-				fx.impact("detonation" if channel == "detonation" else str(e.get("status",_battle_effect_kind(e))),pos if channel in ["burn", "poison", "detonation"] else origin,pos,bool(e.get("isCrit",false)))
+				fx.impact("detonation" if channel == "detonation" else str(e.get("status",_battle_visual_kind(e))),pos if channel in ["burn", "poison", "detonation"] else origin,pos,bool(e.get("isCrit",false)))
 			elif type=="shield" and int(_battle_unit(str(e.get("target",""))).get("shield",0))<=0:fx.impact("shield_break",pos,pos)
 			else:fx.burst(pos,color,false)
 			if is_instance_valid(actor) and type == "damage" and not channel in ["burn", "poison", "detonation"]:
@@ -2381,9 +2429,6 @@ func _play_dialogue(key: String, done: Callable) -> void:
 	_render_dialogue()
 
 func _render_dialogue() -> void:
-	if compact:
-		_render_mobile_dialogue()
-		return
 	if dialogue_tween:dialogue_tween.kill()
 	_clear_overlay()
 	var bg := ColorRect.new()
@@ -2391,35 +2436,46 @@ func _render_dialogue() -> void:
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	overlay.add_child(bg)
 	var art := TextureRect.new()
+	art.name = "DialogueBackdrop"
 	art.texture = load(_dialogue_background_path())
 	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	art.modulate = Color(0.65, 0.65, 0.7)
+	art.modulate = Color(0.88, 0.88, 0.92)
 	art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay.add_child(art)
 	var scene_title := str(_dialogue_meta().get("title",""))
 	if not scene_title.is_empty():
-		var title := _label(overlay,scene_title,20,GOLD)
-		title.name="DialogueSceneTitle";title.position=Vector2(36,22)
-		title.size.x=maxf(120,size.x-230);title.clip_text=true
+		var title := _label(overlay,scene_title,18 if compact else 20,GOLD)
+		title.name="DialogueSceneTitle";title.position=Vector2(18 if compact else 36,22)
+		title.size.x=maxf(120,size.x-200 if compact else size.x-230);title.clip_text=true
 	var line: Dictionary = dialogue_lines[dialogue_index]
 	var speaker: String = line.get("speaker", "narrator")
+	var prose_size := 19 if compact else 20
+	var inset := 12 if compact else 36
+	var padding := 14 if compact else 18
+	var prose_width := size.x - 2.0 * (inset + padding)
+	var prose_height := theme.default_font.get_multiline_string_size(str(line.get("text", "")), HORIZONTAL_ALIGNMENT_LEFT, prose_width, prose_size).y
+	var panel_height := maxf(170.0, ceilf(prose_height) + 124.0)
 	var portrait_id = line.get("portrait")
 	if portrait_id is String and model.catalog.CharacterData.has(portrait_id) and not _dialogue_has_cg():
-		var portrait := _portrait(overlay, portrait_id, size.y * 0.62, true)
-		portrait.position = Vector2(size.x * 0.52, size.y * 0.06)
-		portrait.size.x = size.x * 0.44
+		var portrait_height := size.x * 1.8 if compact else size.y * 1.26
+		var portrait := _portrait(overlay, portrait_id, portrait_height, true)
+		portrait.name = "DialoguePortrait"
+		portrait.position = Vector2(-size.x * 0.1, maxf(68.0, size.y - panel_height - portrait_height + 50.0)) if compact else Vector2(size.x * 0.38, size.y * 0.018)
+		portrait.size.x = size.x * (1.2 if compact else 0.62)
 	var margin := MarginContainer.new()
+	margin.name = "DialogueTextFrame"
 	margin.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	margin.offset_top = -270
-	margin.offset_bottom = -20
-	margin.offset_left = 36
-	margin.offset_right = -36
+	margin.offset_top = -panel_height - 12
+	margin.offset_bottom = -12
+	margin.offset_left = inset
+	margin.offset_right = -inset
 	overlay.add_child(margin)
-	var p := _panel(margin, GOLD.darkened(0.35), 20)
-	p.add_theme_stylebox_override("panel", _box(Color(0.035, 0.06, 0.10, 0.96), GOLD.darkened(0.5), 20))
-	var v := _vbox(p, 10)
+	var p := _panel(margin, GOLD.darkened(0.35), padding)
+	p.name = "DialoguePanel"
+	p.add_theme_stylebox_override("panel", _box(Color(0.035, 0.06, 0.10, 0.80), GOLD.darkened(0.5), padding))
+	var v := _vbox(p, 8)
 	var speaker_name: String = line.get("speakerName", _char_name(speaker))
 	if speaker == "narrator": speaker_name = "旅者纪事"
 	if speaker == "traveler": speaker_name = "旅行者"
@@ -2427,7 +2483,10 @@ func _render_dialogue() -> void:
 	var speaker_color:Color=_element_color(line.get("element","fire")) if speaker!="narrator" else GOLD
 	_rune_icon(identity,"book" if speaker=="narrator" else {"fire":"fire","water":"ice","wind":"leaf","thunder":"energy"}.get(str(line.get("element","")),"star"),22,speaker_color)
 	_label(identity,speaker_name,20,speaker_color)
-	var prose := _label(v, line.get("text", ""), 20, TEXT, true)
+	var prose := _label(v, line.get("text", ""), prose_size, TEXT, true)
+	prose.add_theme_color_override("font_shadow_color", Color(0.01, 0.02, 0.03, 0.85))
+	prose.add_theme_constant_override("shadow_offset_x", 1)
+	prose.add_theme_constant_override("shadow_offset_y", 1)
 	prose.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	dialogue_prose = prose
 	prose.name="DialogueProse"
@@ -2442,7 +2501,7 @@ func _render_dialogue() -> void:
 	row.add_child(space)
 	var skip:=_button(overlay,"跳过剧情",_finish_dialogue)
 	skip.name="DialogueSkip"
-	skip.position=Vector2(size.x-160,18)
+	skip.position=Vector2(size.x-(142 if compact else 160),18)
 	skip.custom_minimum_size=Vector2(124,44)
 	_button_icon(skip,"skip")
 	var next:=_button(row,"继续" if dialogue_index < dialogue_lines.size()-1 else "踏上旅途",_next_dialogue,true)
@@ -2450,30 +2509,7 @@ func _render_dialogue() -> void:
 	_button_icon(next,"next",true)
 
 func _render_mobile_dialogue() -> void:
-	var line: Dictionary = dialogue_lines[dialogue_index]
-	var speaker := str(line.get("speaker", "narrator"))
-	var speaker_name := str(line.get("speakerName", _char_name(speaker)))
-	if speaker == "narrator": speaker_name = "旅者纪事"
-	if speaker == "traveler": speaker_name = "旅行者"
-	var scene_title := str(_dialogue_meta().get("title",""))
-	var v := _modal(scene_title if not scene_title.is_empty() else speaker_name, 700, size.y - 24)
-	if _dialogue_has_cg() or not _dialogue_meta().is_empty():_scene_panel(v,_dialogue_background_path(),160)
-	if not scene_title.is_empty():_label(v,speaker_name,17,GOLD)
-	var portrait_id = line.get("portrait")
-	if portrait_id is String and model.catalog.CharacterData.has(portrait_id) and not _dialogue_has_cg():
-		_portrait(v, portrait_id, 180)
-	dialogue_prose = _label(v, str(line.get("text", "")), 19, TEXT, true)
-	dialogue_prose.name="DialogueProse"
-	_bind_card_tap(dialogue_prose,_next_dialogue)
-	dialogue_prose.visible_characters = 0
-	if dialogue_tween: dialogue_tween.kill()
-	dialogue_tween = create_tween()
-	dialogue_tween.tween_property(dialogue_prose, "visible_characters", dialogue_prose.text.length(), minf(1.5, dialogue_prose.text.length() * 0.023))
-	var footer := _modal_footer(v)
-	_label(footer, "%d / %d" % [dialogue_index + 1, dialogue_lines.size()], 14, MUTED)
-	var actions := _flow(footer, 8)
-	_button(actions, "跳过剧情", _finish_dialogue).name="DialogueSkip"
-	_button(actions, "继续 →" if dialogue_index < dialogue_lines.size() - 1 else "踏上旅途 →", _next_dialogue, true).name="DialogueNext"
+	_render_dialogue()
 
 func _next_dialogue() -> void:
 	if dialogue_key == "": return
@@ -2739,7 +2775,7 @@ func _character_card(parent: Node, id: String, art_height: int, action: Callable
 	var owned: bool = model.state.ownedCharacters.has(id)
 	var p := _panel(parent, color.darkened(0.5), 10)
 	p.custom_minimum_size.x = 160
-	var v := _vbox(p, 7)
+	var v := _vbox(p, 4 if not compact and size.y < 650 else 7)
 	var portrait:=_portrait_environment(v, id, art_height,"","bust")
 	_character_ownership_badge(v,id)
 	if not owned:portrait.modulate=Color(0.64,0.68,0.76,0.8)
@@ -3227,7 +3263,8 @@ func _sync_music() -> void:
 		add_child(target);_music_pool[track]=target
 	if music_audio==target:
 		var was_paused:bool=target.stream_paused
-		if not target.playing:target.play()
+		# A paused player retains its stream playback and cursor.
+		if not target.has_stream_playback():target.play()
 		target.stream_paused=bool(get_meta("application_paused",false))
 		if was_paused and not target.stream_paused:_music_fade_to(target,_music_gain(target))
 		return
@@ -3240,7 +3277,7 @@ func _sync_music() -> void:
 			_music_cancel_tween(other,"music_fade");_music_cancel_tween(other,"duck_tween")
 			other.stream_paused=true
 	_music_cancel_tween(target,"music_fade")
-	if not target.playing:target.play()
+	if not target.has_stream_playback():target.play()
 	target.stream_paused=bool(get_meta("application_paused",false))
 	_music_fade_to(target,_music_gain(target))
 	if is_instance_valid(old):_music_fade_to(old,-60.0,true)
@@ -3414,12 +3451,17 @@ func _music_track_for_context() -> String:
 	elif current_screen=="battle":
 		_music_context_id="extraction" if battle_config.get("isExtraction",false) else "abyss" if battle_config.get("isAbyss",false) else "story"
 		if not battle_config.get("isExtraction",false) and (str(battle_config.get("id","")).begins_with("ch3_") or str(battle_config.get("id", "")) == "trial_selin"):_music_context_id="lantern"
-		if str(battle_config.get("background","")).contains("content_v280/backgrounds/") or battle_config.get("trialKind","")=="wind":
-			_music_context_id="windpass_gallery" if str(battle_config.get("background","")).contains("resonance_gallery") else "windpass_road"
+		var wind_scene:bool=str(battle_config.get("background","")).contains("content_v280/backgrounds/") or battle_config.get("trialKind","")=="wind"
+		var expedition:bool=battle_config.get("isExtraction",false) or battle_config.get("isAbyss",false)
+		var wind_track: String="windpass_gallery" if str(battle_config.get("background","")).contains("resonance_gallery") else "windpass_road"
+		if wind_scene and not expedition:_music_context_id=wind_track
 		var boss:bool=battle_config.get("kind","")=="boss" or battle_config.get("isBoss",false)
 		for enemy_id in battle_config.get("enemies",[]):
 			if str(enemy_id).begins_with("boss_"):boss=true
 		if boss:
+			# Expedition encounters retain their exploration score; wind bosses
+			# receive the scene track previously assigned to ordinary encounters.
+			if expedition and (wind_scene or battle_config.get("enemies",[]).has("boss_highland_roc")):return wind_track
 			if battle_config.get("enemies",[]).has("boss_highland_roc"):return "windpass_core"
 			if battle_config.get("enemies",[]).has("boss_hedor"):return "lantern_core"
 			return "determined_pursuit"

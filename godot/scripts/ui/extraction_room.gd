@@ -156,6 +156,8 @@ func _draw() -> void:
 			var glow:=0.12+0.04*sin(_pulse*2.5)
 			draw_circle(point+Vector2(0,6),43,Color(0.5,0.9,0.84,glow))
 			draw_arc(point+Vector2(0,8),40,-0.7,0.7,20,Color(color,0.65),2,true)
+		# Selection belongs to the ground layer, behind the container artwork.
+		if chosen: draw_arc(point+Vector2(0,10),41,0,TAU,40,Color(color,0.8),2,true)
 		var image = sprites.get(str(box.id))
 		if image is Texture2D:
 			draw_texture_rect(image,Rect2(point-Vector2(45,58),Vector2(90,90)),false,Color(0.65,0.65,0.65) if empty else Color.WHITE)
@@ -163,7 +165,6 @@ func _draw() -> void:
 			draw_rect(Rect2(point-Vector2(27,30),Vector2(54,48)),Color("746546"))
 			draw_rect(Rect2(point-Vector2(27,30),Vector2(54,48)),color,false,2)
 			draw_line(point-Vector2(27,10),point+Vector2(27,-10),color,2)
-		if chosen: draw_arc(point+Vector2(0,10),41,0,TAU,40,Color(color,0.8),2,true)
 		var title := str(box.get("name","容器"))
 		var state_text:="已取空" if empty else "已搜 · 剩 %d 件" % box.get("items",[]).size() if searched else "待搜索"
 		var badge:=Rect2(point+Vector2(-45,-76),Vector2(90,20))

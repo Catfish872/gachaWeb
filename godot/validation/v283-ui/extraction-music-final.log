@@ -1,0 +1,11 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+MUSIC283 before boss extraction false track=windpass_core cursor=8.09578227996826 playing=true paused=false
+MUSIC283 returned extraction false same=true track=windpass_core cursor=9.22195053100586 playing=true paused=false
+MUSIC283 before boss extraction true track=windpass_core cursor=8.09578227996826 playing=true paused=false
+MUSIC283 returned extraction true same=true track=windpass_core cursor=9.22195053100586 playing=true paused=false
+MUSIC283 before boss abyss false track=dungeon_mystic cursor=8.09578227996826 playing=true paused=false
+MUSIC283 returned abyss false same=true track=dungeon_mystic cursor=9.22195053100586 playing=true paused=false
+MUSIC283 before boss abyss true track=dungeon_mystic cursor=8.09578227996826 playing=true paused=false
+MUSIC283 returned abyss true same=true track=dungeon_mystic cursor=9.22195053100586 playing=true paused=false
+EXTRACTION PRESENTATION V283: 30 checks, 0 failures

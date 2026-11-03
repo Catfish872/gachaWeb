@@ -1,0 +1,47 @@
+{
+  "version": "2.8.3",
+  "version_code": 20803,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 508,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-03T14:11:40Z",
+      "completed_utc": "2026-11-03T14:20:08Z",
+      "elapsed_seconds": 508,
+      "production_sha256": "bf5448f51a3610c1a53131c937b29cc7aa8657510a391018a633c1c2c3117e18",
+      "scope": [
+        "960x540 and2048x945 story ch4_9_pre user-reported line5 and ch4_12_post narration; next/skip callbacks",
+        "Story progression focus ch4_10 after clearing throughch4_9 and wind chapter icon",
+        "Compact party header, presets and roster scroll",
+        "Hospital with2 containers, workshop3 effects, actual40gold option once, persistent actions inside viewport",
+        "Selected empty wind treasury circle behind sprite",
+        "Four limited character three-skill effect signatures, two real wind skill battle screenshots, effect bounds/reduced motion/cleanup",
+        "Extraction and abyss ordinary/boss/new-background music context, pause/resume, playback cursor preservation"
+      ]
+    }
+  ],
+  "total_budget_seconds": 518,
+  "prior_owner_checks_budget_seconds": 10,
+  "production_sha256": "5b61d47952bdb9d537d61a43e77e8eee82758d314ac57781fead89a8153c8db1",
+  "production_file_count": 1262,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "960x540 and2048x945 story ch4_9_pre user-reported line5 and ch4_12_post narration; next/skip callbacks",
+    "Story progression focus ch4_10 after clearing throughch4_9 and wind chapter icon",
+    "Compact party header, presets and roster scroll",
+    "Hospital with2 containers, workshop3 effects, actual40gold option once, persistent actions inside viewport",
+    "Selected empty wind treasury circle behind sprite",
+    "Four limited character three-skill effect signatures, two real wind skill battle screenshots, effect bounds/reduced motion/cleanup",
+    "Extraction and abyss ordinary/boss/new-background music context, pause/resume, playback cursor preservation"
+  ],
+  "limits": [
+    "No full game suite, full campaign, economy simulation, Android hardware or APK installation",
+    "ch4_12_post is narration, not independent CG; independent interlude CG not tested",
+    "No subjective audio listening"
+  ]
+}

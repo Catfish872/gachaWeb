@@ -8771,8 +8771,8 @@
           "scalingStat": "atk"
         }
       ],
-      "description": "对单体敌人造成两段各60%攻击力的风伤害。基础回能15。",
-      "animation": "slash",
+      "description": "对单体敌人造成两段各60%攻击力的风属性伤害。",
+      "animation": "wind_blades",
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/tiya_normal.png",
       "onHitPerActionTarget": true
@@ -8807,8 +8807,8 @@
           "value": 0.35
         }
       ],
-      "description": "对全体敌人造成两段各45%攻击力的风伤害，随后施加35%破甲，持续2回合。基础回能20，冷却3回合。",
-      "animation": "explosion",
+      "description": "对全体敌人造成两段各45%攻击力的风属性伤害，随后施加35%破甲，持续2回合。",
+      "animation": "wind_sweep",
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/tiya_skill.png",
       "onHitPerActionTarget": true
@@ -8843,8 +8843,8 @@
           "scalingStat": "atk"
         }
       ],
-      "description": "先对全体敌人施加35%破甲，持续3回合，再造成两段各140%攻击力的风伤害。消耗100能量。",
-      "animation": "mega_fire",
+      "description": "先对全体敌人施加35%破甲，持续3回合，再造成两段各140%攻击力的风属性伤害。",
+      "animation": "wind_crossing",
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/tiya_ult.png",
       "onHitPerActionTarget": true
@@ -8879,8 +8879,8 @@
           "scalingStat": "atk"
         }
       ],
-      "description": "造成55%攻击力的单体风伤害，施加35%破甲持续2回合，再造成55%攻击力的单体风伤害。基础回能15。",
-      "animation": "slash",
+      "description": "对单体敌人造成55%攻击力的风属性伤害，施加35%破甲，持续2回合，再造成55%攻击力的风属性伤害。",
+      "animation": "wind_strings",
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/lumi_normal.png",
       "onHitPerActionTarget": true
@@ -8923,8 +8923,8 @@
           "value": 0.15
         }
       ],
-      "description": "先对全体敌人施加35%破甲持续3回合，再造成两段各40%攻击力的风伤害。为生命比例最低的队友提供其最大生命15%的护盾，持续2回合。基础回能20，冷却3回合。",
-      "animation": "explosion",
+      "description": "先对全体敌人施加35%破甲，持续3回合，再造成两段各40%攻击力的风属性伤害。为生命比例最低的队友提供其最大生命15%的护盾，持续2回合。",
+      "animation": "wind_bridge",
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/lumi_skill.png",
       "onHitPerActionTarget": true
@@ -8959,8 +8959,8 @@
           "scalingStat": "atk"
         }
       ],
-      "description": "先对全体敌人施加35%破甲持续4回合，再造成两段各90%攻击力的风伤害。消耗100能量。",
-      "animation": "mega_fire",
+      "description": "先对全体敌人施加35%破甲，持续4回合，再造成两段各90%攻击力的风属性伤害。",
+      "animation": "wind_resonance",
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/lumi_ult.png",
       "onHitPerActionTarget": true

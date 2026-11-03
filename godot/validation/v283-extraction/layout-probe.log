@@ -1,0 +1,19 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+VIEW (2048, 945) APP (1170.0, 539.0) shell (1170.0, 539.0)
+ExtractionWorkspace pos (12.0, 120.0) size (1146.0, 411.0) min (637.0, 411.0)
+ExtractionRoomScene pos (12.0, 170.0) size (706.0, 142.0) min (0.0, 142.0)
+ExtractionServiceScroll pos (12.0, 368.0) size (706.0, 163.0) min (297.0, 163.0)
+ExtractionPersistentActions pos (730.0, 487.0) size (428.0, 44.0) min (328.0, 44.0)
+ExtractionRoomAction_recover pos (20.0, 446.0) size (216.0, 44.0)
+ExtractionRoomAction_resuscitate pos (258.0, 479.0) size (215.0, 44.0)
+ExtractionRoomAction_pack_revival pos (495.0, 446.0) size (215.0, 44.0)
+VIEW (960, 540) APP (960.0, 540.0) shell (960.0, 540.0)
+ExtractionWorkspace pos (12.0, 120.0) size (936.0, 412.0) min (637.0, 412.0)
+ExtractionRoomScene pos (12.0, 170.0) size (575.0, 143.0) min (0.0, 143.0)
+ExtractionServiceScroll pos (12.0, 369.0) size (575.0, 163.0) min (297.0, 163.0)
+ExtractionPersistentActions pos (599.0, 488.0) size (349.0, 44.0) min (328.0, 44.0)
+ExtractionRoomAction_recover pos (20.0, 447.0) size (172.0, 44.0)
+ExtractionRoomAction_resuscitate pos (214.0, 480.0) size (172.0, 44.0)
+ExtractionRoomAction_pack_revival pos (408.0, 447.0) size (171.0, 44.0)
+EXTRACTION LAYOUT PROBE: 28 checks, 0 failures

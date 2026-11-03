@@ -234,7 +234,7 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 		if app.size.x<900:
 			services=app._vbox(parent,8)
 		else:
-			services=_scroll(app,parent,150)
+			services=_scroll(app,parent,100)
 			services.get_parent().name="ExtractionServiceScroll"
 			services.get_parent().size_flags_vertical=Control.SIZE_FILL
 		services.size_flags_vertical=Control.SIZE_FILL
@@ -259,6 +259,7 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 		app._label(result_row,str(chosen.get("description","继续探索，寻找下一处据点")),12,app.MUTED,true)
 	elif not room_actions.is_empty():
 		var choices=app._grid(services,1 if app.size.x<900 else mini(3,room_actions.size()))
+		choices.name="ExtractionEventChoices"
 		choices.add_theme_constant_override("h_separation",6)
 		choices.size_flags_vertical=Control.SIZE_FILL
 		for action in room_actions:
@@ -274,7 +275,7 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 				var guards_row=app._hbox(choice,4);guards_row.name="ExtractionEncounterPreview_"+id
 				for enemy_id in preview.get("enemies",[]):_icon(guards_row,{"icon":str(app.model.catalog.get("EnemyData",{}).get(str(enemy_id),{}).get("portrait","res://assets/enemies/"+str(enemy_id)+".png"))},32)
 				app._label(guards_row,"精英战" if preview.get("isElite",false) or str(preview.get("kind",""))=="elite" else "交战",11,app.RED)
-			var copy=EventChoice.body(app,choice,false)
+			var copy=EventChoice.body(app,choice,app.size.x>=900)
 			EventChoice.benefits(app,copy,action,"coin",color)
 			EventChoice.costs(app,copy,action,"coin")
 			var caption:="已选择" if action.get("used",false) else "选择"
@@ -285,6 +286,47 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 			b.disabled=not bool(action.get("enabled",true))
 			if b.disabled and not str(action.get("disabledReason","")).is_empty():
 				b.text=EventChoice.disabled_caption(str(action.disabledReason));b.tooltip_text=str(action.disabledReason)
+		if app.size.x>=900:
+			# Measure rendered rows, including wrapped text and costs, after layout.
+			var fit:Callable=func():_fit_event_choices(app,parent,scene,services)
+			services.minimum_size_changed.connect(fit)
+			for body in services.find_children("EventChoiceBody","ScrollContainer",true,false):
+				body.get_child(0).minimum_size_changed.connect(fit)
+			parent.resized.connect(fit)
+			fit.call_deferred()
+
+static func _fit_event_choices(app,parent:Control,scene:Control,services:Control) -> void:
+	if not is_instance_valid(services) or not services.is_inside_tree():return
+	var scroll:ScrollContainer=services.get_parent()
+	var available:float=app._usable_rect().end.y-8-parent.global_position.y
+	var fixed:float=0
+	var visible_count:=0
+	for child in parent.get_children():
+		if not child is Control or not child.visible:continue
+		visible_count+=1
+		if child!=scene and child!=scroll:fixed+=child.get_combined_minimum_size().y
+	fixed+=maxi(0,visible_count-1)*parent.get_theme_constant("separation")
+	var choices:GridContainer=services.find_child("ExtractionEventChoices",true,false)
+	if choices==null:return
+	var overhead:float=services.get_combined_minimum_size().y-choices.get_combined_minimum_size().y
+	var desired:float=0
+	var bodies:Array=[]
+	for card in choices.get_children():
+		var body:ScrollContainer=card.find_child("EventChoiceBody",true,false)
+		if body==null:continue
+		var content:Control=body.get_child(0)
+		var card_fixed:float=card.get_combined_minimum_size().y-body.get_combined_minimum_size().y
+		desired=maxf(desired,card_fixed+content.get_combined_minimum_size().y)
+		bodies.append({"body":body,"content":content,"fixed":card_fixed})
+	desired=ceilf(desired+overhead)
+	# Keep a complete container sprite and labels while growing effects to fit.
+	var scenery:float=clampf(available-fixed-desired,138,180)
+	var choice_height:float=maxf(80,minf(desired,available-fixed-scenery))
+	# Long effects scroll inside the card; its decision button stays visible.
+	for entry in bodies:
+		entry.body.custom_minimum_size.y=maxf(25,minf(entry.content.get_combined_minimum_size().y,choice_height-overhead-entry.fixed))
+	scene.custom_minimum_size.y=scenery
+	scroll.custom_minimum_size.y=choice_height
 
 static func _deposit_preview(app) -> void:
 	var plan: Dictionary=app.model.extraction.preview_deposit()
