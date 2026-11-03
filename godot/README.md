@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.8.4 · 深渊场景轮换
+## 最新正式版：2.8.5 · 主线展示与双风套装
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.8.5/universal.apk) · [更新说明](CHANGELOG_2.8.5.md) · [验证记录](validation/release-v285/RELEASE.md)
+
+修复主线背景与操作按钮，两套双风专属四件各增加12%攻击；露弥加深调整为15%，原防护不变。
+
+## 历史版本：2.8.4 · 深渊场景轮换
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.8.4/universal.apk) · [更新说明](CHANGELOG_2.8.4.md) · [验证记录](validation/release-v284/RELEASE.md)
 
