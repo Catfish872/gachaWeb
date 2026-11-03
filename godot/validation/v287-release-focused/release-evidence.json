@@ -1,0 +1,36 @@
+{
+  "version": "2.8.7",
+  "version_code": 20807,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 361,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-03T18:04:35Z",
+      "completed_utc": "2026-11-03T18:10:36Z",
+      "elapsed_seconds": 361,
+      "production_sha256": "ea8eef6ac90e314b184f06058b87d1982b71ddc25547179bf6087c71fa2ad84a",
+      "scope": [
+        "Endless floors51+ grant only five-star relics, unchanged drop counts and floors1-50",
+        "Issued encounter and save compatibility; selected sets, settlement uniqueness and rollback",
+        "Concise rarity explanation and modal viewport layout"
+      ]
+    }
+  ],
+  "production_sha256": "673d4bbcf34f972845d8f806b346b657c95025b0034a99cd78f52e5cc11f823c",
+  "production_file_count": 1263,
+  "post_review_version_only": true,
+  "scope": [
+    "Endless floors51+ grant only five-star relics, unchanged drop counts and floors1-50",
+    "Issued encounter and save compatibility; selected sets, settlement uniqueness and rollback",
+    "Concise rarity explanation and modal viewport layout"
+  ],
+  "effective_passed_checks": 287,
+  "limits": [
+    "Targeted checks only; no full suite, Android hardware, or route simulation."
+  ],
+  "corrections": [
+    "Fixture JSON numeric comparison corrected; original failure retained locally.",
+    "Initial probability-panel visibility corrected and targeted modal check passed."
+  ]
+}

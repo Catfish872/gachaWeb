@@ -133,7 +133,8 @@ static func _target_set(app,parent:Node,active:bool)->void:
 	var copy=app._vbox(row,3);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	var title:String=str(definition.get("name","散件"))
 	app._label(copy,title+(" · 本轮已锁定" if active else " · 目标套装"),16,color,true).name="AbyssTargetSetName"
-	app._label(copy,"普通层 %.0f%% · 每 50 层预计 %.0f 件"%[float(info.get("normalChance",0))*100.0,float(info.get("expectedPer50",10))],12,app.MUTED,true).name="AbyssRelicDropRate"
+	var late_rule:String=" · %d层起仅五星"%int(info.fiveStarFromFloor) if int(info.difficulty)==3 else "（四、五星）"
+	app._label(copy,"普通层 %.0f%% · 每50层约%.0f件"%[float(info.get("normalChance",0))*100.0,float(info.get("expectedPer50",10))]+late_rule,12,app.MUTED,true).name="AbyssRelicDropRate"
 	var choose=app._button(row,"详情" if active else "选择套装",func():_target_set_picker(app));choose.name="AbyssChooseRelicSet"
 	choose.tooltip_text="本轮获得的套装遗物来自所选目标；部位与属性随机"
 
@@ -145,9 +146,10 @@ static func _target_set_picker(app)->void:
 	box.add_theme_constant_override("separation",12)
 	app._label(box,"本轮已锁定，远征结束后可重新选择。" if locked else "本轮套装遗物均来自目标套装，部位与属性随机。",14,app.MUTED,true)
 	var rates=app._vbox(app._panel(box,VIOLET.darkened(.6),9),4)
-	app._label(rates,"每 %d 层四星保底 · 每 %d 层五星保底"%[int(info.get("milestoneEvery",5)),int(info.get("fiveStarEvery",10))],14,app.TEXT,true)
-	app._label(rates,"普通层额外掉落 %.0f%% · 额外品质：四星 %.0f%% / 五星 %.0f%%"%[float(info.get("normalChance",0))*100.0,float(info.get("extraRarity4Chance",.8))*100.0,float(info.get("extraRarity5Chance",.2))*100.0],12,app.MUTED,true)
-	app._label(rates,"每 50 层预计 %.0f 件"%float(info.get("expectedPer50",10)),12,app.MUTED,true)
+	var endless:bool=int(info.difficulty)==3
+	app._label(rates,("前50层：" if endless else "")+"每%d层四星 · 每%d层五星保底"%[int(info.get("milestoneEvery",5)),int(info.get("fiveStarEvery",10))],14,app.TEXT,true)
+	app._label(rates,("前50层" if endless else "")+"普通层掉落 %.0f%% · 四星 %.0f%% / 五星 %.0f%%"%[float(info.get("normalChance",0))*100.0,float(info.get("extraRarity4Chance",.8))*100.0,float(info.get("extraRarity5Chance",.2))*100.0],12,app.MUTED,true)
+	app._label(rates,"每50层约%.0f件"%float(info.get("expectedPer50",10))+(" · %d层起仅五星"%int(info.fiveStarFromFloor) if endless else "（四、五星）"),12,app.MUTED,true)
 	var grid=app._grid(box,1 if app.size.x<760 else 2)
 	for option in app.model.relic_set_options():
 		var set_id:String=str(option.id)
@@ -165,7 +167,6 @@ static func _target_set_picker(app)->void:
 		app._relic_set_details(card,set_id)
 		var choice=app._button(card,"本轮目标" if locked and selected else ("已选择" if selected else "选择此套装"),func():_choose_target_set(app,set_id),selected)
 		choice.name="AbyssRelicSet_"+set_id;choice.disabled=locked or selected
-	box.move_child(rates.get_parent(),box.get_child_count()-1)
 	var footer=app._hbox(app._modal_footer(box),8)
 	app._restore_character_list(box.get_parent(),"abyss_set_picker")
 	app._label(footer,"本轮已锁定" if locked else "出发时锁定本轮目标",12,app.MUTED,true).size_flags_horizontal=Control.SIZE_EXPAND_FILL

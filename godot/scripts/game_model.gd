@@ -12,6 +12,7 @@ const RECOVERY_MS := 360000
 const TRAIN_COST := 500
 const TRAIN_EXP := 100
 const ABYSS_UNLOCK_FLOOR := 20
+const ABYSS_FIVE_STAR_FLOOR := 51
 const TEAM_PRESET_COUNT := 5
 const TEAM_PRESET_NAME_LIMIT := 16
 
@@ -1591,7 +1592,7 @@ func prepare_abyss() -> Dictionary:
 		var drop := _abyss_relic_drop(floor_number, int(config.difficulty), config.targetRelicSetId, int(config.seed), str(config.token))
 		if not drop.is_empty():config.rewards.relicDrop = drop
 	elif elite or boss:
-		config.rewards.relicDrop = {"slotId": slot.id, "rarity": 5 if boss else 4}
+		config.rewards.relicDrop = {"slotId": slot.id, "rarity": 5 if boss or floor_number >= ABYSS_FIVE_STAR_FLOOR else 4}
 	config.partySnapshot = JSON.parse_string(JSON.stringify(battle_party(true)))
 	state.abyss.rogue.activeEncounter = config.duplicate(true)
 	var result := _commit(previous, {"config": config.duplicate(true)})
@@ -2566,7 +2567,7 @@ func abyss_relic_drop_info(rank: int = -1) -> Dictionary:
 	var four_chance := float(rule.extraRarity4Chance)
 	var legacy: bool = abyss_run_active() and int(state.abyss.rogue.get("relicRewardVersion",0)) == 0
 	if legacy:chance = 0.0
-	return {"difficulty":rank,"normalChance":chance,"extraRarity4Chance":four_chance,"extraRarity5Chance":1.0-four_chance,"expectedPer50":10.0+40.0*chance,"expectedFourStarPer50":5.0+40.0*chance*four_chance,"expectedFiveStarPer50":5.0+40.0*chance*(1.0-four_chance),"expectedSellGoldPer50":3000.0+40.0*chance*(120.0*four_chance+480.0*(1.0-four_chance)),"targetSetId":str(state.abyss.rogue.get("targetRelicSetId","")) if abyss_run_active() else str(state.abyss.meta.selectedRelicSetId),"locked":abyss_run_active(),"legacy":legacy,"milestoneEvery":int(rule.milestoneEvery),"fiveStarEvery":int(rule.fiveStarEvery)}
+	return {"difficulty":rank,"normalChance":chance,"extraRarity4Chance":four_chance,"extraRarity5Chance":1.0-four_chance,"expectedPer50":10.0+40.0*chance,"expectedFourStarPer50":5.0+40.0*chance*four_chance,"expectedFiveStarPer50":5.0+40.0*chance*(1.0-four_chance),"expectedSellGoldPer50":3000.0+40.0*chance*(120.0*four_chance+480.0*(1.0-four_chance)),"targetSetId":str(state.abyss.rogue.get("targetRelicSetId","")) if abyss_run_active() else str(state.abyss.meta.selectedRelicSetId),"locked":abyss_run_active(),"legacy":legacy,"milestoneEvery":int(rule.milestoneEvery),"fiveStarEvery":int(rule.fiveStarEvery),"fiveStarFromFloor":ABYSS_FIVE_STAR_FLOOR}
 
 func _abyss_relic_drop(floor_number: int, rank: int, target_set: String, seed_value: int, token: String) -> Dictionary:
 	# Independent persisted reward stream: equipment rolls do not perturb enemies,
@@ -2582,6 +2583,7 @@ func _abyss_relic_drop(floor_number: int, rank: int, target_set: String, seed_va
 	elif reward_rng.randf() < float(rule.normalChanceByDifficulty[clampi(rank,0,3)]):
 		rarity = 4 if reward_rng.randf() < float(rule.extraRarity4Chance) else 5
 	if rarity == 0:return {}
+	if floor_number >= ABYSS_FIVE_STAR_FLOOR:rarity = 5
 	var slot: String = str(catalog.RelicSlots[mini(catalog.RelicSlots.size()-1,int(reward_rng.randf()*catalog.RelicSlots.size()))].id)
 	var item := _generate_relic_with_source(rarity,slot,target_set,reward_rng.randf,"abyss_relic_"+token)
 	return {"slotId":slot,"rarity":rarity,"setId":target_set,"item":item}
