@@ -34,19 +34,17 @@ static func heading(app,parent:Node,option:Dictionary,currency:String,color:Colo
 	var row=app._hbox(parent,5)
 	var icon=app._rune_icon(row,icon_key(option,currency),28,color)
 	var data:=effect(option)
-	if data.has("items") and not data.items.is_empty():
-		var item:Dictionary=app.model.extraction.item_def(str(data.items[0]))
-		var path:=str(item.get("icon",""))
-		if ResourceLoader.exists(path):icon.texture=load(path);icon.modulate=Color.WHITE
 	var label=app._label(row,str(option.get("label","继续探索")),16,color,true)
 	label.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-	label.tooltip_text=str(option.get("description",""))
+	label.tooltip_text=item_summary(app,data) if data.has("items") else str(option.get("description",""))
 	if details.is_valid():
 		var info=app._tool_button(row,"book","查看详情",details)
 		info.custom_minimum_size=Vector2(30,30)
 		info.size_flags_vertical=Control.SIZE_SHRINK_CENTER
 
-static func body(app,parent:Node)->VBoxContainer:
+static func body(app,parent:Node,scrollable:bool=true)->VBoxContainer:
+	if not scrollable:
+		return app._vbox(parent,4)
 	var scroll:=ScrollContainer.new()
 	scroll.name="EventChoiceBody"
 	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
@@ -76,9 +74,19 @@ static func costs(app,parent:Node,option:Dictionary,currency:String)->void:
 		if data.has("hpCost"):strip(app,parent,"heart","最大生命 −%d%%"%roundi(float(data.hpCost)*100),app.RED)
 		if data.has("shieldCost"):strip(app,parent,"shield","装备护盾 −%d%%"%roundi(float(data.shieldCost)*100),app.RED)
 
+static func item_summary(app,data:Dictionary)->String:
+	var categories: Dictionary = {}
+	for item_id in data.get("items",[]):
+		var item: Dictionary = app.model.extraction.item_def(str(item_id))
+		var category: String = str(item.get("category", "物资"))
+		categories[category] = int(categories.get(category,0)) + 1
+	var parts: Array[String] = []
+	for category in categories: parts.append("%s ×%d" % [category,categories[category]])
+	return "、".join(parts) + " · 搜索后收取" if not parts.is_empty() else "搜寻物资"
+
 static func benefits(app,parent:Node,option:Dictionary,currency:String,color:Color)->void:
 	var data:=effect(option)
-	var reward:=str(option.get("reward",""))
+	var reward:=item_summary(app,data) if data.has("items") else str(option.get("reward",""))
 	if not reward.is_empty():
 		strip(app,parent,icon_key(option,currency),reward,color)
 		return
@@ -97,12 +105,7 @@ static func benefits(app,parent:Node,option:Dictionary,currency:String,color:Col
 		var rarity:=str(data.blessing)
 		strip(app,parent,"star","选择%s祝福"%({"blue":"蓝色","gold":"金色"}.get(rarity,"一项")),color)
 	if data.has("cache"):strip(app,parent,"bag","搜寻精良物资" if int(data.get("quality",0))>0 else "搜寻遗留物资",GREEN)
-	if data.has("items"):
-		var names:Array[String]=[]
-		for item_id in data.items:
-			var item:Dictionary=app.model.extraction.item_def(str(item_id))
-			names.append(str(item.get("name",item_id)))
-		strip(app,parent,"bag","、".join(names)+"\n搜索后装包",GREEN)
+	if data.has("items"):strip(app,parent,"bag",item_summary(app,data),GREEN)
 	if data.has("battle"):strip(app,parent,"sword",str(option.get("description","挑战守卫")),app.TEXT)
 	if data.has("key"):strip(app,parent,"gear","本区域密室钥匙 ×1",app.GOLD)
 	if data.has("unlock"):strip(app,parent,"gear","使用本区域钥匙",app.GOLD)

@@ -148,6 +148,10 @@ func battle_background_path() -> String:
 
 func environment_music_track() -> String:
 	var theme := environment_theme()
+	var depth_tracks: Array = data.get("environmentThemes",{}).get(theme,{}).get("depthMusic",[])
+	if not depth_tracks.is_empty():
+		var depth_id := str(run().get("room",{}).get("districtId","district_0"))
+		return str(depth_tracks[clampi(int(depth_id.trim_prefix("district_")),0,depth_tracks.size()-1)])
 	if theme == "lantern":
 		var district_id := str(run().get("room",{}).get("districtId","district_0"))
 		return {"district_0":"lantern_road","district_1":"lantern_hall","district_2":"lantern_core"}.get(district_id,"lantern_road")
@@ -435,7 +439,7 @@ func _theme_encounter_budget(kind: String, enemies: Array, act: int, rank: int) 
 			expected.hp += float(escort_base.hp)
 			# Preserve encounter durability while converting single-target escort
 			# offense into the boss's stronger party-wide skill budget.
-			expected.atk += float(escort_base.atk) * 0.25
+			expected.atk += float(escort_base.atk) * float(budget.get("escortAttackRatio",0.25))
 	for enemy_id in enemies:
 		var base: Dictionary = host.catalog.EnemyData[enemy_id].baseStats
 		for stat in actual: actual[stat] += float(base[stat])
@@ -455,13 +459,15 @@ func _generate_encounter(kind: String) -> void:
 		# selected below with their own encounter normalization.
 		pool = ["boss_flame_lord", "boss_storm_witch"]
 		count = 1
-	var themed_pool: Array = data.get("environmentThemes",{}).get(environment_theme(),{}).get("enemies",{}).get(kind,[])
+	var theme_config: Dictionary = data.get("environmentThemes",{}).get(environment_theme(),{})
+	var themed_pool: Array = theme_config.get("enemies",{}).get(kind,[])
 	if not themed_pool.is_empty(): pool = themed_pool
 	var enemies: Array = []
 	for i in range(count): enemies.append(pool[int(_rand() * pool.size()) % pool.size()])
-	if kind == "boss" and environment_theme() == "lantern": enemies.append_array(["furnace_lamp","furnace_lamp"])
+	var attachments: Array = theme_config.get("bossAttachments",["furnace_lamp","furnace_lamp"] if environment_theme() == "lantern" else [])
+	if kind == "boss": enemies.append_array(attachments)
 	var rank := int(run().difficulty)
-	if kind == "boss" and rank >= 4 and environment_theme() != "lantern":
+	if kind == "boss" and rank >= 4 and attachments.is_empty():
 		enemies.append("dark_knight")
 		if rank >= 5: enemies.append("thunder_hawk")
 	var budgets: Dictionary = data.get("balance", {})
@@ -487,6 +493,14 @@ func _generate_encounter(kind: String) -> void:
 	config.depthTier = depth_tier
 	config.depthStatMultiplier = depth_factor
 	config.finalBossStatMultiplier = final_boss_factor
+	# Attached targets carry their own single-target attack share. Keep that
+	# share on the target instead of converting escort offense into boss AoE.
+	var attachment_budgets: Array = theme_config.get("attachmentAttackByRank",[])
+	if kind == "boss" and rank < attachment_budgets.size():
+		config.enemyAttackOverrides = {}
+		var attack_shares: Array = attachment_budgets[rank]
+		for index in range(mini(attachments.size(),attack_shares.size())):
+			config.enemyAttackOverrides[attachments[index]] = maxi(1,int(float(attack_shares[index])*atk))
 	run().activeEncounter = config
 	run().phase = "battle"
 	_engine = null
@@ -1615,8 +1629,8 @@ func _prepare_room_actions(kind: String, event_override: int = -1) -> void:
 			]
 			supplies = [
 				{"id":"scavenge", "label":"寻找补给", "description":"搜寻营地留下的物资", "effect":{"cache":true}},
-				{"id":"pack_rations", "label":"打包行军口粮", "description":"取得蜜果餐与灵能露剂，搜索后装包", "effect":{"items":["ration_1","energy_tonic"]}},
-				{"id":"pack_tools", "label":"收起备用工具", "description":"取得缝甲符片与醒神灵盐，搜索后装包", "effect":{"items":["repair_patch","cleanse_salt"]}}
+				{"id":"pack_rations", "label":"打包行军口粮", "description":"取得2份便携补给，搜索后装包", "effect":{"items":["ration_1","energy_tonic"]}},
+				{"id":"pack_tools", "label":"收起备用工具", "description":"取得2份便携补给，搜索后装包", "effect":{"items":["repair_patch","cleanse_salt"]}}
 			]
 		else:
 			preparation = [
@@ -1625,9 +1639,9 @@ func _prepare_room_actions(kind: String, event_override: int = -1) -> void:
 				{"id":"resuscitate", "label":"使用复苏药剂", "description":"花费40金币，全队恢复50%，倒下角色复苏", "cost":40, "effect":{"heal":0.5,"revive":true}}
 			]
 			supplies = [
-				{"id":"pack_medicine", "label":"领取便携药品", "description":"取得净化药水与止血药带，搜索后装包", "effect":{"items":["saline","tourniquet"]}},
-				{"id":"pack_revival", "label":"保存复苏药材", "description":"取得复苏灵香，搜索后装包", "effect":{"items":["revival_incense"]}},
-				{"id":"pack_repairs", "label":"收集修复材料", "description":"取得两枚缝甲符片，搜索后装包", "effect":{"items":["repair_patch","repair_patch"]}}
+				{"id":"pack_medicine", "label":"领取便携药品", "description":"取得2份医疗补给，搜索后装包", "effect":{"items":["saline","tourniquet"]}},
+				{"id":"pack_revival", "label":"保存复苏药材", "description":"取得1份医疗补给，搜索后装包", "effect":{"items":["revival_incense"]}},
+				{"id":"pack_repairs", "label":"收集修复材料", "description":"取得2份修理物资，搜索后装包", "effect":{"items":["repair_patch","repair_patch"]}}
 			]
 		choices.append(preparation[int(_rand() * preparation.size())])
 		choices.append(supplies[int(_rand() * supplies.size())])
@@ -1638,7 +1652,9 @@ func _prepare_room_actions(kind: String, event_override: int = -1) -> void:
 	else:
 		var recent: Array = run().get("recentEventIds", []).duplicate()
 		var candidates: Array = []
-		for index in range(3 + ExpeditionEvents.EVENTS.size()):
+		var event_ids: Array = data.get("environmentThemes",{}).get(environment_theme(),{}).get("eventIds",[])
+		if event_ids.is_empty(): event_ids = ExpeditionEvents.event_ids(environment_theme())
+		for index in event_ids:
 			if index not in recent: candidates.append(index)
 		var event_index: int = event_override if event_override >= 0 else int(candidates[int(_rand() * candidates.size())])
 		recent.append(event_index)
@@ -1650,12 +1666,12 @@ func _prepare_room_actions(kind: String, event_override: int = -1) -> void:
 			run().room.description = event_data.description
 			run().room.eventIcon = event_data.icon
 		elif event_index == 0:
-			choices = [{"id":"rescue", "label":"救助旅人", "description":"消耗15%生命，选择蓝色祝福", "effect":{"hpCost":0.15,"blessing":"blue"}}, {"id":"share", "label":"交换补给", "description":"恢复全队20%生命", "effect":{"heal":0.2}}, {"id":"search", "label":"调查车队", "description":"寻找遗落的货箱", "effect":{"cache":true}}, {"id":"pack", "label":"接受旅人口粮", "description":"取得蜜果餐，搜索后装包", "effect":{"items":["ration_1"]}}]
+			choices = [{"id":"rescue", "label":"救助旅人", "description":"消耗15%生命，选择蓝色祝福", "effect":{"hpCost":0.15,"blessing":"blue"}}, {"id":"share", "label":"交换补给", "description":"恢复全队20%生命", "effect":{"heal":0.2}}, {"id":"search", "label":"调查车队", "description":"寻找遗落的货箱", "effect":{"cache":true}}, {"id":"pack", "label":"接受旅人口粮", "description":"取得1份便携口粮，搜索后装包", "effect":{"items":["ration_1"]}}]
 			run().room.name = "受困车队"
 			run().room.description = "旅人正抢救倾倒的货物，邀请你留下帮忙。"
 			run().room.eventIcon = "chest"
 		elif event_index == 1:
-			choices = [{"id":"listen", "label":"倾听回声", "description":"获得35能量，冷却减少1", "effect":{"energy":35,"cooldown":1}}, {"id":"study", "label":"解读石碑", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"rest", "label":"泉边休息", "description":"全队恢复25%生命", "effect":{"heal":0.25}}, {"id":"bottle", "label":"封存泉水", "description":"取得澄心圣泉，搜索后装包", "effect":{"items":["cleanse_water"]}}]
+			choices = [{"id":"listen", "label":"倾听回声", "description":"获得35能量，冷却减少1", "effect":{"energy":35,"cooldown":1}}, {"id":"study", "label":"解读石碑", "description":"选择一项祝福", "effect":{"blessing":""}}, {"id":"rest", "label":"泉边休息", "description":"全队恢复25%生命", "effect":{"heal":0.25}}, {"id":"bottle", "label":"封存泉水", "description":"取得1份医疗补给，搜索后装包", "effect":{"items":["cleanse_water"]}}]
 			run().room.name = "回声之泉"
 			run().room.description = "泉声沿石碑流转，残存的符文随之明灭。"
 			run().room.eventIcon = "star"
@@ -2477,7 +2493,7 @@ func _move_owned_keys(items:Array,ring:Array)->void:
 
 func keyring()->Array:
 	var result:Array=[]
-	for id in ["key_ruins","key_forest","key_sanctum","key_lantern"]:
+	for id in ["key_ruins","key_forest","key_sanctum","key_lantern","key_windpass"]:
 		var d:=item_def(id)
 		var count:=0;var value:=0
 		for item in state().get("keyring",[]):

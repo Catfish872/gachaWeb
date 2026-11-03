@@ -1,0 +1,51 @@
+{
+  "version": "2.8.0",
+  "version_code": 20800,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 525,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-03T09:59:35Z",
+      "completed_utc": "2026-11-03T10:08:20Z",
+      "production_sha256": "bb6081c61faa6cb64663deb8e737fd3b6487e957dfe772b90068cbd76c9f5c33",
+      "scope": [
+        "wind duo combat and optimizer integration",
+        "three-region new expedition theme, loot, keys, persisted issued encounters and events",
+        "new enemy actions and final two-beat boss cycle with per-enemy attack overrides",
+        "solo and duo trials plus first-clear/return flow",
+        "team presets invalid-input handling, save/switch/rename and active-run locks",
+        "battle auto/speed/difficulty preferences and hidden event supplies",
+        "audio loading/routing only",
+        "actual desktop GL mobile-layout screenshots and entry callbacks",
+        "affected old Selin and relic optimizer battle regressions"
+      ],
+      "elapsed_seconds": 525
+    }
+  ],
+  "production_sha256": "84bae37b51ba09991e143e4a3b024f52ad61c096cfce1aac87175538849b36c2",
+  "production_file_count": 1245,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "wind duo combat and optimizer integration",
+    "three-region new expedition theme, loot, keys, persisted issued encounters and events",
+    "new enemy actions and final two-beat boss cycle with per-enemy attack overrides",
+    "solo and duo trials plus first-clear/return flow",
+    "team presets invalid-input handling, save/switch/rename and active-run locks",
+    "battle auto/speed/difficulty preferences and hidden event supplies",
+    "audio loading/routing only",
+    "actual desktop GL mobile-layout screenshots and entry callbacks",
+    "affected old Selin and relic optimizer battle regressions"
+  ],
+  "limits": [
+    "No full suite or full chapter/endless/extraction campaign journey",
+    "No Android hardware or APK installation test",
+    "No subjective music/audio listening",
+    "Not every new dialogue node/CG/loot icon manually visually reviewed; selected actual scenes and model resource checks only"
+  ],
+  "final_delta": "World 468 and enemies 120 rerun after 10:07:37 final catalog two-beat cycle and per-enemy attack override changes; unaffected earlier checks retained."
+}

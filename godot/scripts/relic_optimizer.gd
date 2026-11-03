@@ -89,6 +89,7 @@ var _linear_floor_safe := false
 var _normalizer_safe := false
 var _raw_slot_max: Array = []
 var _domain_set_stats: Dictionary = {}
+var _wind_team_specs: Array = []
 var _selin_upper := false
 var _selin_rewards: Array = []
 var _selin_burn_attack := 0.0
@@ -123,7 +124,7 @@ static func context_for_character(game, char_id: String, input: Dictionary = {})
 		for sid in character.get("skills",[]):
 			for effect in game.catalog.get("SkillData",{}).get(sid,{}).get("effects",[]):
 				var status := str(effect.get("statusId",""))
-				if status in ["burn","electrify"] and not statuses.has(status): statuses.append(status)
+				if status in ["burn","electrify","wind_armor"] and not statuses.has(status): statuses.append(status)
 		if character.get("passiveId","")=="ember_passive" and not statuses.has("burn"): statuses.append("burn")
 		if character.get("passiveId","")=="bolt_passive" and not statuses.has("electrify"): statuses.append("electrify")
 		result.targetStatuses = statuses
@@ -154,7 +155,7 @@ static func _relic_fingerprint_bytes(relic: Variant) -> PackedByteArray:
 	return var_to_bytes([relic.get("uid"),relic.get("slotId"),relic.get("setId",""),relic.get("rarity"),relic.get("level"),relic.get("equippedBy"),_canonical_variant(main),subs,_canonical_variant(extras)])
 
 static func _fingerprint_header(game, char_id: String, context: Dictionary) -> String:
-	return var_to_bytes(_canonical_variant({"version":"relic-reference-v3-highest-rarity","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size(),"team":game.state.team,"ownedCharacters":game.state.ownedCharacters})).hex_encode() + "\n"
+	return var_to_bytes(_canonical_variant({"version":"relic-reference-v4-wind-team-highest-rarity","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size(),"team":game.state.team,"ownedCharacters":game.state.ownedCharacters})).hex_encode() + "\n"
 
 static func plan_fingerprint(game, char_id: String, context: Dictionary = {}) -> String:
 	var digest := HashingContext.new()
@@ -230,7 +231,7 @@ func _numeric_domain_safe() -> bool:
 	return is_finite(combat_upper) and combat_upper<SAFE_INTEGER
 
 func _has_linear_floor_safety() -> bool:
-	if _char_id == "selin": return false # Team contributions are affine, not source-homogeneous.
+	if _char_id in ["selin", "tiya", "lumi"]: return false # Team contributions and non-critical piercing are not source-homogeneous.
 	# Positive permanent attributes only increase the no-relic source. Prove all
 	# scored hits/heals are above their max(1, amount) floor before normalizing.
 	if _profile.type=="survival": return false
@@ -716,6 +717,20 @@ func _reference(stats: Dictionary,effects: Array) -> Dictionary:
 	var others: Array = []
 	for index in range(int(_context.enemyCount)): others.append(target.duplicate(true))
 	_battle.state = {"allies":[actor],"enemies":others,"turn":1,"config":{}}
+	if _char_id in ["tiya", "lumi"]:
+		# Teammate equipment is fixed throughout this optimizer instance.
+		if _wind_team_specs.is_empty():
+			for id in _game.state.team:
+				if id == null or id == _char_id or not _game.state.ownedCharacters.has(id): continue
+				_wind_team_specs.append({"id":id,"stats":_game.computed_stats(id),"constellation":int(_game.state.ownedCharacters[id].constellation),"ownerEffects":Sets.evaluate(_catalog,_game.equipped_relics(id)).ownerEffects})
+		for spec in _wind_team_specs: _battle.state.allies.append(_battle._make_ally(spec.duplicate(true),_battle.state.allies.size()))
+		if _battle.has_status(target,"wind_armor"):
+			var armor := 0.35
+			for ally in _battle.state.allies:
+				if ally.passiveId == "lumi_passive" and int(ally.constellation)>=6: armor=0.45
+			for status in target.statuses:
+				if status.id=="wind_armor": status.value=armor
+			_wind_reference_buffs(_battle.state.allies)
 	return {"actor":actor,"target":target}
 
 func _fast_upper(stats: Dictionary,effects: Array,joint_factor: float = INF,profile_key: String = "") -> float:
@@ -777,7 +792,7 @@ func _objective_key(stats: Dictionary,effects: Array,upper: bool) -> String:
 		if _profile.type=="damage": values.append(stats.criDmg)
 		for sid in _catalog.CharacterData[_char_id].skills:
 			values.append(int(floor(float(_catalog.SkillData[sid].get("energyGain",15))*maxf(0.0,1.0+float(stats.energyRate)))))
-	var kinds: Array = ["damageTakenMult","skillShieldMult"] if _profile.type=="survival" else (["activeSkillHealMult","energyOnCrit","energyOnActiveHeal"] if _profile.type=="healing" else ["damageVsStatus","damageWhenFasterThanTarget","energyOnCrit","energyOnActiveHeal","onBurnDetonation"])
+	var kinds: Array = ["damageTakenMult","skillShieldMult"] if _profile.type=="survival" else (["activeSkillHealMult","energyOnCrit","energyOnActiveHeal"] if _profile.type=="healing" else ["damageVsStatus","damageWhenFasterThanTarget","energyOnCrit","energyOnActiveHeal","onBurnDetonation","windPierceOwner","onStatusAppliedPartyFollowUpAmp"])
 	var relevant: Array = []
 	var speed_relevant: bool = _catalog.CharacterData[_char_id].get("passiveId","")=="zeph_passive"
 	for effect in effects:
@@ -813,6 +828,8 @@ func _evaluate(stats: Dictionary,effects: Array,upper: bool = false) -> float:
 		result = (float(actor.maxHp)+own_shield)*float(_context.incomingRawHit)/maxf(1.0,incoming)
 	elif _char_id == "selin":
 		result = _evaluate_selin(actor, target, upper)
+	elif _char_id in ["tiya", "lumi"]:
+		result = _evaluate_wind(actor, target, upper)
 	else:
 		_prepare_skills(actor,target)
 		_policy_optimal = upper or _context.policy=="optimal"
@@ -919,9 +936,10 @@ func preview() -> Dictionary:
 	var useful:bool=not _before.is_empty() and _best.get("relicUids",{}) != _before.get("relicUids",{})
 	var proven := not _cancelled and _phase=="done" and upper<=_score
 	var objective := str(_profile.get("type","damage"))
-	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"highestRarities":_highest_rarity.duplicate(),"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":("队伍贡献" if _char_id=="selin" else {"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective)),"objectiveLabel":("六次行动协同收益" if _char_id=="selin" else {"damage":"参考场景六次行动期望伤害","healing":"参考场景六次行动潜在治疗","survival":"施放自身护盾后的有效承伤"}.get(objective,objective)),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
+	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"highestRarities":_highest_rarity.duplicate(),"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":("队伍贡献" if _char_id in ["selin","lumi"] else {"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective)),"objectiveLabel":("六次行动协同收益" if _char_id in ["selin","lumi"] else {"damage":"参考场景六次行动期望伤害","healing":"参考场景六次行动潜在治疗","survival":"施放自身护盾后的有效承伤"}.get(objective,objective)),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
 
 func _assumptions() -> Array:
+	if _char_id in ["tiya", "lumi"]: return ["%d 次自身行动，按自动优先级与实际充能、冷却计算；目标为 %d 个中性敌人，防御 %.0f。" % [int(_context.actions),int(_context.enemyCount),float(_context.enemyDefense)], "按当前编队、破甲和可触发套装持续覆盖，计入缇娅非暴击贯穿；露弥另计队友每行动的平均技能增益。", "这是固定编队的输出与协同参考；护盾、减伤、生存、行动顺序及状态起手另在实战发挥作用。"]
 	if _char_id == "selin": return ["按当前编队统计自身输出、引爆和队友燃烧增益；目标维持6回合燃烧。", "六次行动内计入充能、终结技覆盖与套装首次引爆后的生效时机。"]
 	if _profile.get("type","")=="survival": return ["满血施放一次自身战技护盾，以中性基础伤害 %d 的直接攻击计算等效生命。"%int(_context.incomingRawHit),"采用真实防御、减伤及满血格挡期望；一次性无敌、队友护盾、持续回复和实战战术另行发挥作用。","同收益先补齐空槽，再保留已有装备；仅使用未装备和当前角色遗物，等级与金币保持原样。"]
 	var result: Array = ["%d 次自身行动，起始能量 %d；按自动战斗优先级（终结技→战技→普攻），速度仅参与条件判定。"%[int(_context.actions),int(_context.initialEnergy)],"%d 个持续存活的中性敌人，防御 %.0f、其他单位速度 %.0f；自身可施加状态的条件潜能：%s（本基准按全程覆盖计算）。"%[int(_context.enemyCount),float(_context.enemyDefense),float(_context.otherSpeed),("、".join(_context.targetStatuses) if not _context.targetStatuses.is_empty() else "无")],"真实技能缩放、暴击封顶、整套阈值、命座及能量触发；固定参考场景的最优性与具体战斗结果分别展示。"]
@@ -1008,3 +1026,79 @@ func _selin_value(turns: int, energy: int, cooldown: int, aura: int, lit: bool) 
 		if not _policy_optimal: break
 	_memo[key] = best
 	return best
+
+# These scores use maintained armor/party buffs, not a hidden battle simulation.
+# Teammate actions are averaged equally; the optimized unit retains its legal DP.
+func _wind_can_apply_armor(unit: Dictionary) -> bool:
+	for sid in unit.skills:
+		for effect in _catalog.SkillData[sid].get("effects",[]):
+			if effect.get("statusId","")=="wind_armor": return true
+	return false
+
+func _wind_reference_buffs(allies: Array) -> void:
+	for source in allies:
+		if not _wind_can_apply_armor(source): continue
+		for effect in source.get("ownerEffects",[]):
+			if effect.get("type","")!="onStatusAppliedPartyFollowUpAmp" or effect.get("statusId","")!="wind_armor": continue
+			for friend in allies:
+				var found := false
+				for status in friend.statuses:
+					if status.id==effect.get("buffId","wind_oath"):
+						status.value=maxf(float(status.value),float(effect.value)); found=true
+				if not found: friend.statuses.append({"id":effect.get("buffId","wind_oath"),"duration":99,"value":effect.value,"followUpTag":effect.get("followUpTag","innate_piercing")})
+
+func _wind_skill_targets(skill: Dictionary) -> int:
+	var count := 0
+	for effect in skill.get("effects",[]):
+		if effect.get("type","")=="damage": count=maxi(count,int(_context.enemyCount) if effect.get("target","") in ["all","all_enemies","chain3"] else 1)
+	return count
+
+func _wind_innate_reference(unit: Dictionary,target: Dictionary,skill: Dictionary) -> float:
+	if unit.passiveId!="tiya_passive" or not _battle.has_status(target,"wind_armor"): return 0.0
+	var coefficient: float = (0.66 if int(unit.constellation)>=6 else 0.60)*(1.0+float(_battle._timed_follow_up_amp(unit,"innate_piercing")))
+	return _wind_skill_targets(skill)*_battle.predict_effect_damage(unit,target,{"type":"follow_up","element":"wind"},{"multiplier":coefficient,"defPierce":1.0,"rawAtk":true},false,true)
+
+func _wind_average_damage(unit: Dictionary,target: Dictionary) -> float:
+	var result := 0.0
+	for sid in unit.skills:
+		var skill: Dictionary=_catalog.SkillData[sid]
+		for effect in skill.get("effects",[]):
+			if effect.get("type","")!="damage": continue
+			var count := int(_context.enemyCount) if effect.get("target","") in ["all","all_enemies","chain3"] else 1
+			var chain := 1.0
+			for hit in range(count):
+				result+=_battle.expected_effect_damage(unit,target,skill,effect,chain)
+				chain=maxf(0.3,chain-float(effect.get("chainDecay",0.0)))
+		result+=_wind_innate_reference(unit,target,skill)
+	return result/maxf(1.0,float(unit.skills.size()))
+
+func _evaluate_wind(actor: Dictionary,target: Dictionary,upper: bool) -> float:
+	_prepare_skills(actor,target)
+	for index in range(actor.skills.size()): _rewards[index]+=_wind_innate_reference(actor,target,_catalog.SkillData[actor.skills[index]])
+	_policy_optimal=upper or _context.policy=="optimal"
+	_memo.clear()
+	var result := _value(int(_context.actions),int(_context.initialEnergy),0)
+	if actor.passiveId!="lumi_passive" or not _battle.has_status(target,"wind_armor"): return result
+	var full_allies: Array=_battle.state.allies
+	var full := 0.0
+	for friend in full_allies:
+		if friend.uid!=actor.uid: full+=_wind_average_damage(friend,target)
+	var base_allies: Array=[]
+	var other_armor := false
+	for friend in full_allies:
+		if friend.uid==actor.uid: continue
+		var copy: Dictionary=friend.duplicate(true)
+		copy.statuses=[]
+		base_allies.append(copy)
+		other_armor=other_armor or _wind_can_apply_armor(copy)
+	var base_target: Dictionary=target.duplicate(true)
+	for index in range(base_target.statuses.size()-1,-1,-1):
+		if base_target.statuses[index].id=="wind_armor":
+			if other_armor: base_target.statuses[index].value=0.35
+			else: base_target.statuses.remove_at(index)
+	_battle.state.allies=base_allies
+	if other_armor: _wind_reference_buffs(base_allies)
+	var base := 0.0
+	for friend in base_allies: base+=_wind_average_damage(friend,base_target)
+	_battle.state.allies=full_allies
+	return result+int(_context.actions)*maxf(0.0,full-base)

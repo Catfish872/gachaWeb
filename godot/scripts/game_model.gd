@@ -12,6 +12,8 @@ const RECOVERY_MS := 360000
 const TRAIN_COST := 500
 const TRAIN_EXP := 100
 const ABYSS_UNLOCK_FLOOR := 20
+const TEAM_PRESET_COUNT := 5
+const TEAM_PRESET_NAME_LIMIT := 16
 
 var extraction
 var rogue_data: Dictionary = {}
@@ -66,6 +68,12 @@ func default_rogue() -> Dictionary:
 func default_meta() -> Dictionary:
 	return {"currency": 0, "totalEarned": 0, "upgrades": {"vitality": 0, "offense": 0, "recovery": 0, "supply": 0}, "runsCompleted": 0, "runsLost": 0, "unlockedDifficulty": 0, "selectedDifficulty": 0, "selectedRelicSetId": "flame_oath"}
 
+func default_team_presets(team: Array) -> Array:
+	var presets: Array = []
+	for index in range(TEAM_PRESET_COUNT):
+		presets.append({"name": "队伍 %d" % (index + 1), "team": team.duplicate() if index == 0 else []})
+	return presets
+
 func default_state() -> Dictionary:
 	var ember := default_character()
 	ember.shards = 3
@@ -74,6 +82,7 @@ func default_state() -> Dictionary:
 	return {"extraction": ExtractionModel.defaults(), "version": 9, "createdAt": _now(), "lastSaved": _now(),
 		"resources": {"diamonds": 1600, "gold": 50000, "stamina": 100, "staminaLastUpdate": _now()},
 		"ownedCharacters": {"ember": ember, "zeph": zeph}, "relics": [], "team": ["ember", "zeph", null], "stageProgress": {},
+		"teamPresets": default_team_presets(["ember", "zeph", null]), "activeTeamPreset": 0,
 		"pityCounters": {"standard": {"count": 0, "count4": 0, "guaranteedFeatured": false}, "limited_kaldi": {"count": 0, "count4": 0, "guaranteedFeatured": false}},
 		"dailyMissions": {"lastReset": 0, "completed": []}, "stats": {"totalPulls": 0, "totalBattles": 0, "totalVictories": 0, "totalGoldSpent": 0},
 		"dialogueSeen": {}, "chapterGiftClaimed": {},
@@ -343,13 +352,33 @@ func valid_save(value: Variant) -> bool:
 		return false
 	var unique: Array = []
 	for id in team:
-		if id == null or id == "":
-			continue
-		if not id is String or not value.ownedCharacters.has(id) or id in unique:
+		if id == null: continue
+		if not id is String: return false
+		if id.is_empty(): continue
+		if not value.ownedCharacters.has(id) or id in unique:
 			return false
 		unique.append(id)
 	if unique.is_empty():
 		return false
+	if value.has("teamPresets"):
+		var presets = value.teamPresets
+		if not presets is Array or presets.size() != TEAM_PRESET_COUNT:
+			return false
+		for preset in presets:
+			if not preset is Dictionary or not preset.get("name") is String or not preset.get("team") is Array:
+				return false
+			if preset.name != _clean_team_preset_name(preset.name) or preset.name.is_empty() or preset.team.size() > 3:
+				return false
+			var preset_ids: Array = []
+			for id in preset.team:
+				if id == null: continue
+				if not id is String: return false
+				if id.is_empty(): continue
+				if not value.ownedCharacters.has(id) or id in preset_ids: return false
+				preset_ids.append(id)
+	if value.has("activeTeamPreset"):
+		if not _number(value.activeTeamPreset, -1, TEAM_PRESET_COUNT - 1) or float(value.activeTeamPreset) != int(value.activeTeamPreset):
+			return false
 	for progress in value.get("stageProgress", {}).values():
 		if not progress is Dictionary or not progress.get("cleared", false) is bool:
 			return false
@@ -458,6 +487,11 @@ func _merge_defaults(base: Dictionary, src: Dictionary) -> Dictionary:
 func _normalize(src: Dictionary) -> Dictionary:
 	var result := _merge_defaults(default_state(), src.duplicate(true))
 	result.version = 9
+	# Legacy saves preserve the live formation and seed only the first preset.
+	result.teamPresets = src.teamPresets.duplicate(true) if src.has("teamPresets") else default_team_presets(result.team)
+	result.activeTeamPreset = int(src.get("activeTeamPreset", 0)) if src.has("teamPresets") else 0
+	if result.activeTeamPreset >= 0 and _team_members(result.team) != _team_members(result.teamPresets[result.activeTeamPreset].team):
+		result.activeTeamPreset = -1
 	extraction.migrate_state(result, int(src.get("version", 3)))
 	# Owned collections replace defaults; preserved extension fields remain round-trippable.
 	result.ownedCharacters = src.ownedCharacters.duplicate(true)
@@ -581,27 +615,78 @@ func train_character(char_id: String) -> Dictionary:
 	result.cost = TRAIN_COST
 	return _commit(previous, result)
 
-func set_team(ids: Array) -> Dictionary:
-	if abyss_run_active() or extraction.active():
-		return _fail("远征途中队伍已锁定，结束远征后可以重新编队")
+func team_is_locked() -> bool:
+	return abyss_run_active() or extraction.active() or not _issued_config.is_empty()
+
+func _team_members(ids: Array) -> Array:
+	return ids.filter(func(id): return id is String and not id.is_empty())
+
+func _clean_team_preset_name(value: String) -> String:
+	return value.replace("\n", " ").replace("\r", " ").replace("\t", " ").strip_edges().left(TEAM_PRESET_NAME_LIMIT)
+
+func _validate_team(ids: Array) -> Dictionary:
 	if ids.size() > 3:
 		return _fail("队伍最多容纳三名角色")
 	var filtered: Array = []
 	for id in ids:
-		if id == null or id == "":
-			continue
-		if not id is String or not state.ownedCharacters.has(id):
+		if id == null: continue
+		if not id is String: return _fail("队伍包含无效的角色标识")
+		if id.is_empty(): continue
+		if not state.ownedCharacters.has(id):
 			return _fail("队伍包含未拥有的角色")
 		if id in filtered:
 			return _fail("同一角色只能上阵一次")
 		filtered.append(id)
 	if filtered.is_empty():
 		return _fail("请至少上阵一名角色")
-	var previous := state.duplicate(true)
 	while filtered.size() < 3:
 		filtered.append(null)
-	state.team = filtered
+	return {"success": true, "team": filtered}
+
+func set_team(ids: Array) -> Dictionary:
+	if team_is_locked():
+		return _fail("当前战斗或远征的队伍已锁定，结束后可以重新编队")
+	var checked := _validate_team(ids)
+	if not checked.success: return checked
+	var previous := state.duplicate(true)
+	state.team = checked.team
+	state.activeTeamPreset = -1
+	for index in range(TEAM_PRESET_COUNT):
+		if _team_members(state.teamPresets[index].team) == _team_members(state.team):
+			state.activeTeamPreset = index
+			break
 	return _commit(previous)
+
+func save_team_preset(index: int, ids: Array) -> Dictionary:
+	if team_is_locked():
+		return _fail("当前战斗或远征的队伍已锁定，结束后可以保存阵容")
+	if index < 0 or index >= TEAM_PRESET_COUNT: return _fail("请选择有效队伍预设")
+	var checked := _validate_team(ids)
+	if not checked.success: return checked
+	var previous := state.duplicate(true)
+	state.teamPresets[index].team = checked.team.duplicate()
+	state.team = checked.team.duplicate()
+	state.activeTeamPreset = index
+	return _commit(previous, {"preset": index})
+
+func switch_team_preset(index: int) -> Dictionary:
+	if team_is_locked():
+		return _fail("当前战斗或远征的队伍已锁定，结束后可以切换阵容")
+	if index < 0 or index >= TEAM_PRESET_COUNT: return _fail("请选择有效队伍预设")
+	var checked := _validate_team(state.teamPresets[index].team)
+	if not checked.success: return checked
+	var previous := state.duplicate(true)
+	state.team = checked.team.duplicate()
+	state.activeTeamPreset = index
+	return _commit(previous, {"preset": index})
+
+func rename_team_preset(index: int, value: String) -> Dictionary:
+	if index < 0 or index >= TEAM_PRESET_COUNT: return _fail("请选择有效队伍预设")
+	var preset_name := _clean_team_preset_name(value)
+	if preset_name.is_empty(): return _fail("请输入队伍名称")
+	var previous := state.duplicate(true)
+	state.teamPresets[index].name = preset_name
+	return _commit(previous, {"preset": index})
 
 func constellation_info(char_id: String) -> Array:
 	if not catalog.CharacterData.has(char_id):
@@ -1171,6 +1256,56 @@ func prepare_selin_trial() -> Dictionary:
 	_issued_config = config
 	return {"success":true,"config":config.duplicate(true)}
 
+func wind_trial_info(kind: String) -> Dictionary:
+	var entries := {
+		"tiya": {"title":"巡路试锋 · 缇娅试用", "party":["tiya", "zeph", "ayla"], "background":"wind_outpost", "guide":"缇娅的战技在两段攻击后施加破甲，终结技先施加破甲再攻击。行动结束时，她会对本次受到自身技能伤害的破甲目标追加贯穿追击。轮到缇娅时，尝试终结技，观察技能伤害与贯穿伤害。"},
+		"lumi": {"title":"弦响护行 · 露弥试用", "party":["lumi", "zeph", "ayla"], "background":"rope_bridge", "guide":"露弥先施加破甲，再进行两段攻击。她存活时，全队攻击破甲目标获得伤害加深，破甲敌人造成的伤害降低；战技还会为生命比例最低的队友施加护盾。轮到露弥时，用战技铺开破甲，再由泽菲接续攻击。"},
+		"duo": {"title":"双风同行 · 联合演示", "party":["lumi", "tiya", "ayla"], "background":"wind_outpost", "guide":"先让露弥施加群体破甲，再由缇娅接续多段攻击与贯穿追击。两人的专属遗物随试用队伍提供，艾拉负责治疗。可手动比较破甲、支援和追击的协同效果。"}}
+	if not entries.has(kind): return {}
+	var info: Dictionary = entries[kind].duplicate(true)
+	info.id = "trial_wind_duo" if kind == "duo" else "trial_" + kind
+	info.reward = 0 if kind == "duo" else 160
+	return info
+
+func prepare_wind_trial(kind: String) -> Dictionary:
+	if team_is_locked(): return _fail("请先结束当前战斗或远征")
+	var info := wind_trial_info(kind)
+	if info.is_empty(): return _fail("请选择有效角色试用")
+	var party: Array = []
+	var zero_cst := {"hpPercent":0.0,"atkPercent":0.0,"defPercent":0.0,"normalDmgBonus":0.0,"skillDmgBonus":0.0,"ultDmgBonus":0.0,"skillCdReduce":0,"custom":{}}
+	for id in info.party:
+		if not catalog.CharacterData.has(id): return _fail("角色试用资料尚未就绪")
+		var data: Dictionary = catalog.CharacterData[id]
+		var set_id: String = {"tiya":"wind_blades", "lumi":"wind_strings", "zeph":"wind_voyager", "ayla":"aurora_prayer"}[id]
+		if not catalog.RelicSets.has(set_id): return _fail("角色试用装备尚未就绪")
+		var gear: Array = []
+		for slot in catalog.RelicSlots:
+			var relic := _generate_relic_with_source(5, str(slot.id), set_id, func(): return 0.35, "trial_" + id + "_" + str(slot.id))
+			relic.level = 8
+			gear.append(relic)
+		var evaluated := RelicSets.evaluate(catalog, gear)
+		var stats := computed_stats(id, 5, {"constellation":zero_cst,"awakening":0,"relics":RelicSets.attribute_bonuses(catalog, gear),"relicSetBonuses":evaluated.statBonuses})
+		party.append({"id":id,"name":data.name,"element":data.element,"stats":stats,"skills":data.skills.duplicate(),"passiveId":data.get("passiveId",""),"ownerEffects":evaluated.ownerEffects,"level":5,"constellation":0,"saveData":default_character(),"maxHp":stats.maxHp,"currentHp":stats.maxHp,"energy":100,"cooldowns":{},"trialRelics":gear})
+	var background: String = "res://assets/content_v280/backgrounds/%s.png" % info.background
+	if not ResourceLoader.exists(background): background = "res://assets/backgrounds/camp.png"
+	var waves := [{"enemies":["thunder_hawk", "stone_golem"]}, {"enemies":["dark_knight", "thunder_hawk"]}]
+	var config := {"id":info.id,"name":info.title,"isTrial":true,"trialKind":"wind","trialCharacter":kind,"trialGuide":info.guide,"isAbyss":false,"isBoss":false,"background":background,"waves":waves,"enemies":waves[0].enemies.duplicate(),"scaleMult":{"hpMod":4.5,"atkMod":1.15,"defMod":1.0,"spdMod":0.8},"rewards":{"gold":[0,0],"exp":0,"diamonds":0},"firstClearRewards":{"diamonds":info.reward},"token":_uid("trial"),"seed":28001,"_team":[],"partySnapshot":party}
+	_issued_config = config
+	return {"success":true,"config":config.duplicate(true)}
+
+func _finish_wind_trial(issued: Dictionary, battle_state: Dictionary) -> Dictionary:
+	var victory: bool = battle_state.phase == "victory"
+	var first_clear: bool = victory and issued.get("trialCharacter", "") != "duo" and not bool(state.stageProgress.get(issued.id, {}).get("cleared", false))
+	var award := 160 if first_clear else 0
+	var result := {"success":true,"victory":victory,"rewards":{"gold":0,"exp":0,"diamonds":award},"gift":{},"relic":{},"progression":[],"firstClear":first_clear,"ended":false}
+	if first_clear:
+		var previous := state.duplicate(true)
+		state.resources.diamonds += award
+		state.stageProgress[issued.id] = {"cleared":true,"stars":1,"bestTurns":maxi(1, int(battle_state.get("turn", 1)))}
+		result = _commit(previous, result)
+	if result.success: _issued_config.clear()
+	return result
+
 func _stage_rewards(config: Dictionary, first_clear: bool) -> Dictionary:
 	var source: Dictionary = config.get("rewards", {})
 	if bool(config.get("isAbyss", false)):
@@ -1221,6 +1356,8 @@ func finish_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 		return _fail("战斗尚未结束")
 	# Settlement uses the issued config, never caller-modified reward/cost fields.
 	var issued := _issued_config.duplicate(true)
+	if issued.get("isTrial", false) and issued.get("trialKind", "") == "wind":
+		return _finish_wind_trial(issued, battle_state)
 	var previous := state.duplicate(true)
 	var abyss := bool(issued.get("isAbyss", false))
 	if abyss and abyss_floor_cap(int(issued.get("difficulty",0))) > 0 and int(issued.floor) > abyss_floor_cap(int(issued.get("difficulty",0))):
@@ -1320,11 +1457,19 @@ func abyss_enemy_pool(floor_number: int) -> Array:
 	return candidates
 
 func abyss_encounter_background(enemies: Array, encounter_seed: int) -> String:
+	# New encounters freeze their habitat when issued; this helper never rolls RNG.
+	if enemies.has("boss_highland_roc"):
+		return "res://assets/content_v280/backgrounds/cloud_nest.png"
+	var habitats: Array = []
+	for id in enemies:
+		for path in catalog.EnemyData.get(id, {}).get("abyssBackgrounds", []):
+			if path not in habitats: habitats.append(path)
+	if not habitats.is_empty(): return str(habitats[posmod(encounter_seed, habitats.size())])
 	if enemies.has("boss_hedor"):
 		return "res://assets/content_v270/backgrounds/furnace_core.png"
 	var has_lantern := false
 	for id in enemies:
-		if catalog.EnemyData.get(id, {}).has("abyssBaseStats"):has_lantern = true
+		if id in ["ash_moth","lamp_wraith","furnace_guard","furnace_cantor","cracked_puppet","lamp_overseer","furnace_lamp"]:has_lantern = true
 	if not has_lantern:return "res://assets/backgrounds/abyss.png"
 	var scenes := ["snow_inn", "ash_bridge", "unlit_town", "copper_gallery", "inverted_well", "furnace_core"]
 	return "res://assets/content_v270/backgrounds/%s.png" % scenes[posmod(encounter_seed, scenes.size())]

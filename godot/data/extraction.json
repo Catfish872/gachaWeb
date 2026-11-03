@@ -3351,6 +3351,432 @@
       "dropWeight": 0.08,
       "variantOf": "key_ruins",
       "environmentTheme": "lantern"
+    },
+    "windpass_rope": {
+      "name": "麻绳卷",
+      "rarity": 0,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 5,
+      "icon": "res://assets/content_v280/loot/windpass_rope.png",
+      "effects": [],
+      "description": "巡路者随身携带的麻绳，磨损处重新打过绳结。",
+      "category": "遗迹珍藏",
+      "legacyValue": 70,
+      "v6Value": 5,
+      "v7Value": 5,
+      "variantOf": "wire",
+      "environmentTheme": "windpass"
+    },
+    "windpass_canvas": {
+      "name": "旧帆布",
+      "rarity": 0,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "category": "纺织品",
+      "value": 20,
+      "icon": "res://assets/content_v280/loot/windpass_canvas.png",
+      "effects": [],
+      "description": "导风帆换下的帆布，边缘仍留着整齐的针脚。",
+      "legacyValue": 210,
+      "v6Value": 20,
+      "v7Value": 20,
+      "variantOf": "cloth",
+      "environmentTheme": "windpass"
+    },
+    "windpass_pins": {
+      "name": "木销盒",
+      "rarity": 0,
+      "width": 2,
+      "height": 1,
+      "kind": "loot",
+      "value": 10,
+      "icon": "res://assets/content_v280/loot/windpass_pins.png",
+      "effects": [],
+      "description": "桥匠按长短分格收好的木销。",
+      "category": "遗迹珍藏",
+      "legacyValue": 150,
+      "v6Value": 10,
+      "v7Value": 10,
+      "variantOf": "bolts",
+      "environmentTheme": "windpass"
+    },
+    "windpass_clapper": {
+      "name": "磨损铃舌",
+      "rarity": 0,
+      "width": 1,
+      "height": 2,
+      "kind": "loot",
+      "category": "工具",
+      "value": 15,
+      "icon": "res://assets/content_v280/loot/windpass_clapper.png",
+      "effects": [],
+      "description": "被山风磨圆的铃舌，还能辨出旧驿的刻字。",
+      "legacyValue": 180,
+      "v6Value": 15,
+      "v7Value": 15,
+      "variantOf": "tape",
+      "environmentTheme": "windpass"
+    },
+    "windpass_wax": {
+      "name": "封蜡匣",
+      "rarity": 1,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 10,
+      "icon": "res://assets/content_v280/loot/windpass_wax.png",
+      "effects": [],
+      "description": "封信蜡块收在小匣中，印面是驿站的叶纹。",
+      "category": "遗迹珍藏",
+      "legacyValue": 130,
+      "v6Value": 10,
+      "v7Value": 10,
+      "variantOf": "lens",
+      "environmentTheme": "windpass"
+    },
+    "windpass_herbs": {
+      "name": "干燥草药包",
+      "rarity": 1,
+      "width": 2,
+      "height": 1,
+      "kind": "loot",
+      "value": 20,
+      "icon": "res://assets/content_v280/loot/windpass_herbs.png",
+      "effects": [],
+      "description": "细绳扎紧的干草药包，附着采药人的标签。",
+      "category": "遗迹珍藏",
+      "legacyValue": 240,
+      "v6Value": 20,
+      "v7Value": 20,
+      "variantOf": "circuit",
+      "environmentTheme": "windpass"
+    },
+    "windpass_bushing": {
+      "name": "铜轴套",
+      "rarity": 1,
+      "width": 1,
+      "height": 2,
+      "kind": "loot",
+      "category": "工具",
+      "value": 20,
+      "icon": "res://assets/content_v280/loot/windpass_bushing.png",
+      "effects": [],
+      "description": "转轴外换下的铜套，内壁被细砂打磨得发亮。",
+      "legacyValue": 250,
+      "v6Value": 20,
+      "v7Value": 20,
+      "variantOf": "pliers",
+      "environmentTheme": "windpass"
+    },
+    "windpass_feather": {
+      "name": "风向羽",
+      "rarity": 1,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "category": "零件",
+      "value": 65,
+      "icon": "res://assets/content_v280/loot/windpass_feather.png",
+      "effects": [],
+      "description": "测风架上取下的整组羽片，仍随微风转动。",
+      "legacyValue": 760,
+      "v6Value": 65,
+      "v7Value": 65,
+      "variantOf": "motor",
+      "environmentTheme": "windpass"
+    },
+    "windpass_lens": {
+      "name": "透镜匣",
+      "rarity": 2,
+      "width": 1,
+      "height": 2,
+      "kind": "loot",
+      "value": 30,
+      "icon": "res://assets/content_v280/loot/windpass_lens.png",
+      "effects": [],
+      "description": "测风塔用来读远处灯号的透镜，包在软布中。",
+      "category": "遗迹珍藏",
+      "legacyValue": 370,
+      "v6Value": 30,
+      "v7Value": 30,
+      "variantOf": "battery",
+      "environmentTheme": "windpass"
+    },
+    "windpass_anemometer": {
+      "name": "测风盘",
+      "rarity": 2,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 70,
+      "icon": "res://assets/content_v280/loot/windpass_anemometer.png",
+      "effects": [],
+      "description": "盘面的刻线记录着山口的风向。",
+      "category": "遗迹珍藏",
+      "legacyValue": 840,
+      "v6Value": 70,
+      "v7Value": 70,
+      "variantOf": "sensor",
+      "environmentTheme": "windpass"
+    },
+    "windpass_badge": {
+      "name": "巡路徽章",
+      "rarity": 2,
+      "width": 3,
+      "height": 2,
+      "kind": "loot",
+      "category": "零件",
+      "value": 140,
+      "icon": "res://assets/content_v280/loot/windpass_badge.png",
+      "effects": [],
+      "description": "旧巡路队保存下来的整套徽章，背面刻有路段。",
+      "legacyValue": 1650,
+      "v6Value": 140,
+      "v7Value": 140,
+      "variantOf": "drone_rotor",
+      "environmentTheme": "windpass"
+    },
+    "windpass_star_rule": {
+      "name": "折叠星尺",
+      "rarity": 2,
+      "width": 2,
+      "height": 3,
+      "kind": "loot",
+      "category": "疗愈用品",
+      "value": 90,
+      "icon": "res://assets/content_v280/loot/windpass_star_rule.png",
+      "effects": [],
+      "description": "桥匠丈量索距的折叠尺，带着完整的护套。",
+      "legacyValue": 1060,
+      "v6Value": 90,
+      "v7Value": 90,
+      "variantOf": "insulin_case",
+      "environmentTheme": "windpass"
+    },
+    "windpass_flute": {
+      "name": "银叶风笛",
+      "rarity": 3,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 45,
+      "icon": "res://assets/content_v280/loot/windpass_flute.png",
+      "effects": [],
+      "description": "银叶装饰的小风笛，笛孔被细心擦净。",
+      "category": "遗迹珍藏",
+      "legacyValue": 550,
+      "v6Value": 45,
+      "v7Value": 45,
+      "variantOf": "processor",
+      "environmentTheme": "windpass"
+    },
+    "windpass_bridge_chart": {
+      "name": "古桥图卷",
+      "rarity": 3,
+      "width": 1,
+      "height": 3,
+      "kind": "loot",
+      "category": "古物",
+      "value": 180,
+      "icon": "res://assets/content_v280/loot/windpass_bridge_chart.png",
+      "effects": [],
+      "description": "记着旧悬桥结构与修理批注的长卷。",
+      "legacyValue": 2140,
+      "v6Value": 180,
+      "v7Value": 180,
+      "variantOf": "silk_scroll",
+      "environmentTheme": "windpass"
+    },
+    "windpass_compass": {
+      "name": "嵌晶罗盘",
+      "rarity": 3,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 205,
+      "icon": "res://assets/content_v280/loot/windpass_compass.png",
+      "effects": [],
+      "description": "晶石嵌在盘心，指针在气流里缓缓回正。",
+      "category": "遗迹珍藏",
+      "legacyValue": 2470,
+      "v6Value": 205,
+      "v7Value": 205,
+      "variantOf": "crystal",
+      "environmentTheme": "windpass"
+    },
+    "windpass_charm": {
+      "name": "羽纹护符",
+      "rarity": 3,
+      "width": 2,
+      "height": 3,
+      "kind": "loot",
+      "category": "材料",
+      "value": 405,
+      "icon": "res://assets/content_v280/loot/windpass_charm.png",
+      "effects": [],
+      "description": "山谷守路人交班时传下的羽纹护符。",
+      "legacyValue": 4880,
+      "v6Value": 405,
+      "v7Value": 405,
+      "variantOf": "rare_ore",
+      "environmentTheme": "windpass"
+    },
+    "windpass_wheel": {
+      "name": "鎏金风轮",
+      "rarity": 4,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 130,
+      "icon": "res://assets/content_v280/loot/windpass_wheel.png",
+      "effects": [],
+      "description": "精巧风轮的金色叶片保存着古匠的刻痕。",
+      "category": "遗迹珍藏",
+      "legacyValue": 1530,
+      "v6Value": 130,
+      "v7Value": 130,
+      "variantOf": "gold_watch",
+      "environmentTheme": "windpass"
+    },
+    "windpass_amber": {
+      "name": "琥珀巢石",
+      "rarity": 4,
+      "width": 2,
+      "height": 3,
+      "kind": "loot",
+      "value": 855,
+      "icon": "res://assets/content_v280/loot/windpass_amber.png",
+      "effects": [],
+      "description": "透明琥珀包裹着远古巢材，石座稳固完整。",
+      "category": "遗迹珍藏",
+      "legacyValue": 10260,
+      "v6Value": 855,
+      "v7Value": 855,
+      "variantOf": "idol",
+      "environmentTheme": "windpass"
+    },
+    "windpass_royal_chart": {
+      "name": "王庭航图",
+      "rarity": 4,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 690,
+      "icon": "res://assets/content_v280/loot/windpass_royal_chart.png",
+      "effects": [],
+      "description": "王庭旧航路的立体图匣，山口坐标仍然清晰。",
+      "category": "遗迹珍藏",
+      "legacyValue": 8280,
+      "v6Value": 690,
+      "v7Value": 690,
+      "variantOf": "crown",
+      "environmentTheme": "windpass"
+    },
+    "windpass_string_frame": {
+      "name": "银枝弦架",
+      "rarity": 4,
+      "width": 3,
+      "height": 3,
+      "kind": "loot",
+      "category": "遗迹装置",
+      "value": 1550,
+      "icon": "res://assets/content_v280/loot/windpass_string_frame.png",
+      "effects": [],
+      "description": "由银枝与铜轴组成的完整导风弦架。",
+      "legacyValue": 18630,
+      "v6Value": 1550,
+      "v7Value": 1550,
+      "variantOf": "quantum_server",
+      "environmentTheme": "windpass"
+    },
+    "windpass_sky_eye": {
+      "name": "天穹风眼",
+      "rarity": 5,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 1415,
+      "icon": "res://assets/content_v280/loot/windpass_sky_eye.png",
+      "effects": [],
+      "description": "古代测风装置的核心，内层晶纹像一道盘旋的云。",
+      "category": "遗迹珍藏",
+      "legacyValue": 17000,
+      "v6Value": 1415,
+      "v7Value": 1415,
+      "variantOf": "red_core",
+      "environmentTheme": "windpass"
+    },
+    "windpass_first_instrument": {
+      "name": "初代导风仪",
+      "rarity": 5,
+      "width": 2,
+      "height": 1,
+      "kind": "loot",
+      "value": 790,
+      "icon": "res://assets/content_v280/loot/windpass_first_instrument.png",
+      "effects": [],
+      "description": "初代风庭留下的小型导风仪，保留着原始刻度。",
+      "category": "遗迹珍藏",
+      "legacyValue": 9500,
+      "v6Value": 790,
+      "v7Value": 790,
+      "variantOf": "archive",
+      "environmentTheme": "windpass"
+    },
+    "windpass_feather_crown": {
+      "name": "翠羽冠",
+      "rarity": 5,
+      "width": 3,
+      "height": 3,
+      "kind": "loot",
+      "value": 4310,
+      "icon": "res://assets/content_v280/loot/windpass_feather_crown.png",
+      "effects": [],
+      "description": "翠羽与细金丝组成的冠饰，封存在宽大的匣中。",
+      "category": "遗迹珍藏",
+      "legacyValue": 51750,
+      "v6Value": 4310,
+      "v7Value": 4310,
+      "variantOf": "dragon_egg",
+      "environmentTheme": "windpass"
+    },
+    "windpass_heartwood": {
+      "name": "古树心晶",
+      "rarity": 5,
+      "width": 1,
+      "height": 3,
+      "kind": "loot",
+      "category": "奇珍",
+      "value": 1000,
+      "icon": "res://assets/content_v280/loot/windpass_heartwood.png",
+      "effects": [],
+      "description": "古树年轮深处形成的心晶，透出柔和的青光。",
+      "legacyValue": 12000,
+      "v6Value": 1000,
+      "v7Value": 1000,
+      "variantOf": "phoenix_feather",
+      "environmentTheme": "windpass"
+    },
+    "key_windpass": {
+      "name": "风庭图室钥匙",
+      "rarity": 2,
+      "width": 1,
+      "height": 1,
+      "kind": "key",
+      "value": 40,
+      "icon": "res://assets/content_v280/loot/key_windpass.png",
+      "effects": [],
+      "category": "补给",
+      "buyPrice": 500,
+      "description": "开启长风栈道的封存图室。",
+      "keyTheme": "windpass",
+      "v7Value": 40,
+      "dropWeight": 0.08,
+      "variantOf": "key_ruins",
+      "environmentTheme": "windpass"
     }
   },
   "rarityWeightsByAct": [
@@ -3676,6 +4102,131 @@
           "boss_storm_witch"
         ]
       }
+    },
+    "windpass": {
+      "name": "长风栈道",
+      "music": "windpass_road",
+      "depthMusic": [
+        "windpass_road",
+        "windpass_gallery",
+        "windpass_core"
+      ],
+      "depthNames": [
+        "谷口外驿",
+        "悬枝风廊",
+        "云巢风庭"
+      ],
+      "backgrounds": [
+        [
+          "res://assets/content_v280/backgrounds/wind_outpost.png",
+          "res://assets/content_v280/backgrounds/scattered_trail.png",
+          "res://assets/content_v280/backgrounds/sheltered_nursery.png"
+        ],
+        [
+          "res://assets/content_v280/backgrounds/rope_bridge.png",
+          "res://assets/content_v280/backgrounds/wind_tower.png",
+          "res://assets/content_v280/backgrounds/flooded_gallery.png"
+        ],
+        [
+          "res://assets/content_v280/backgrounds/cloud_nest.png",
+          "res://assets/content_v280/backgrounds/windwheel_platform.png"
+        ]
+      ],
+      "roomNames": {
+        "entry": "谷口驿门",
+        "battle": "巡路栈道",
+        "cache": "邮驿货棚",
+        "rest": "山谷避风营",
+        "event": "巡路交接处",
+        "elite": "护桥关隘",
+        "vault": "风庭宝库",
+        "hospital": "驿路草药棚",
+        "workshop": "桥索工作台",
+        "shrine": "风铃供台",
+        "boss": "云巢风庭",
+        "key_vault": "封存图室",
+        "relay": "林间中继站"
+      },
+      "containers": [
+        "windpass_mailbox",
+        "windpass_herb_basket",
+        "windpass_tool_cabinet",
+        "windpass_chime_altar",
+        "windpass_chart_case",
+        "windpass_treasury"
+      ],
+      "enemies": {
+        "battle": [
+          "wind_falcon",
+          "leaf_spirit",
+          "moss_climber",
+          "bridge_warden",
+          "songwing_attendant"
+        ],
+        "elite": [
+          "brokenbridge_hunter",
+          "windwheel_sentinel"
+        ],
+        "boss": [
+          "boss_highland_roc"
+        ]
+      },
+      "bossAttachments": [
+        "windfield_updraft",
+        "windfield_crosswind"
+      ],
+      "encounterBudget": {
+        "hpRatio": 1.0,
+        "atkRatio": 1.0,
+        "normalEarly": [
+          "wolf",
+          "goblin",
+          "fire_imp"
+        ],
+        "normalLate": [
+          "ice_wolf",
+          "thunder_hawk",
+          "fire_imp"
+        ],
+        "elite": [
+          "dark_knight"
+        ],
+        "boss": [
+          "boss_storm_witch"
+        ],
+        "escortAttackRatio": 0.0
+      },
+      "eventIds": [
+        9,
+        10,
+        11
+      ],
+      "attachmentAttackByRank": [
+        [
+          15,
+          15
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          90,
+          15
+        ],
+        [
+          90,
+          80
+        ]
+      ]
     }
   },
   "environmentContainers": {
@@ -3726,6 +4277,30 @@
     "lantern_core_vault": {
       "name": "封存炉心柜",
       "sprite": "res://assets/content_v270/containers/lantern_core_vault.png"
+    },
+    "windpass_mailbox": {
+      "name": "巡路信箱",
+      "sprite": "res://assets/content_v280/containers/windpass_mailbox.png"
+    },
+    "windpass_herb_basket": {
+      "name": "草药背篓",
+      "sprite": "res://assets/content_v280/containers/windpass_herb_basket.png"
+    },
+    "windpass_tool_cabinet": {
+      "name": "桥匠工具柜",
+      "sprite": "res://assets/content_v280/containers/windpass_tool_cabinet.png"
+    },
+    "windpass_chime_altar": {
+      "name": "风铃供台",
+      "sprite": "res://assets/content_v280/containers/windpass_chime_altar.png"
+    },
+    "windpass_chart_case": {
+      "name": "封存图箱",
+      "sprite": "res://assets/content_v280/containers/windpass_chart_case.png"
+    },
+    "windpass_treasury": {
+      "name": "风庭宝匣",
+      "sprite": "res://assets/content_v280/containers/windpass_treasury.png"
     }
   },
   "containerLootCategories": {
@@ -3742,6 +4317,16 @@
       "疗愈用品"
     ],
     "lantern_tool_cabinet": [
+      "工具",
+      "零件",
+      "整备",
+      "装备"
+    ],
+    "windpass_herb_basket": [
+      "补给",
+      "疗愈用品"
+    ],
+    "windpass_tool_cabinet": [
       "工具",
       "零件",
       "整备",

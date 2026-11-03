@@ -7,6 +7,8 @@ const COMPACT_CELL_WIDTH := 44.0
 const COMPACT_THRESHOLD := 220.0
 const MAX_VISIBLE := 5
 const DEFINITIONS := {
+ "wind_armor":["破甲","防御力降低35%"],
+ "wind_oath":["风誓","角色固有贯穿追击倍率提高40%"],
  "ember_oath":["烬灯誓约","对燃烧目标伤害加深80%"],
  "ember_lantern_burn":["织焰","燃烧伤害提高40%"],
  "ember_lantern_direct":["引火","对燃烧目标的直伤与追击提高25%"],
@@ -41,6 +43,8 @@ func _ready() -> void:
 static func status_description(state: Dictionary, data: Dictionary) -> String:
  var id := str(state.get("id", state.get("statusId", state.get("status", state.get("type", "unknown")))))
  if id == "shock": id = "electrify"
+ if id == "wind_armor": return "防御力降低%d%%" % roundi(float(state.get("value",0.35))*100.0)
+ if id == "wind_oath": return "角色固有贯穿追击倍率提高%d%%" % roundi(float(state.get("value",0.40))*100.0)
  if id == "electrify":
   var chance: float = Battle.electrify_chance_for_status(data, state)
   return "每次行动时有 %s%% 概率跳过本次行动" % ("%.1f" % (chance * 100.0)).trim_suffix(".0")
@@ -79,7 +83,8 @@ func configure(statuses: Array, motion_reduced: bool = false, data: Dictionary =
   descriptions.append(detail)
   if not _textures.has(id):
    var asset := id if DEFINITIONS.has(id) else "unknown"
-   _textures[id] = load("res://assets/ui/status/%s.svg" % asset)
+   var path := "res://assets/content_v280/icons/status/%s.png" % asset if id in ["wind_armor", "wind_oath"] else "res://assets/ui/status/%s.svg" % asset
+   _textures[id] = load(path) if ResourceLoader.exists(path) else load("res://assets/ui/status/unknown.svg")
  tooltip_text = "\n".join(descriptions)
  _refresh_capacity()
 

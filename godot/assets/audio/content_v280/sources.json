@@ -1,0 +1,14 @@
+{
+  "created_utc": "2026-11-03",
+  "source_kind": "original score and procedural synthesis",
+  "external_recordings": [],
+  "external_sample_libraries": [],
+  "generator_path": "godot/tools/audio/build_windpass_audio.py",
+  "generator_sha256": "502bf48c7cd39766e7093e14da12ad9ce25cfe0d00402b846ad7ed9302abeb61",
+  "original_audio_preserved": true,
+  "mix_reference": "Existing project background music targets -22 LUFS; no existing audio was used as generation input.",
+  "asset_count": 19,
+  "asset_bytes": 4917428,
+  "subjective_listening_verified": false,
+  "playback_review_blocker": "Audio input unsupported in current executor conversation; prepared local preview files for actual listening."
+}

@@ -125,7 +125,7 @@ static func _departure(app,state: Dictionary) -> void:
 	var risk=app._hbox(left,6)
 	for level in range(app.model.extraction.max_difficulty()+1):
 		var d:=level
-		var b=_button(app,risk,"危险 %d" % level,func():app.extraction_difficulty=d;app._render_screen(),app.extraction_difficulty==level)
+		var b=_button(app,risk,"危险 %d" % level,func():app._set_extraction_difficulty(d),app.extraction_difficulty==level)
 		b.disabled=level>int(state.get("unlockedDifficulty",0))
 	var team=app._hbox(left,8)
 	for unit in app.model.extraction.departure_party():
@@ -211,8 +211,8 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 		if service=="relay":_deposit_preview(app)
 		elif service=="unlock":_room_action(app,"unlock","key"))
 	var choosing:bool=not room_actions.is_empty() and not room_done
-	scene.custom_minimum_size.y=96 if choosing else 150 if is_relay else 200
-	scene.size_flags_vertical=Control.SIZE_FILL if choosing else Control.SIZE_EXPAND_FILL
+	scene.custom_minimum_size.y=(260 if app.size.x<900 else 180) if choosing else 150 if is_relay else 200
+	scene.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	scene.size_flags_stretch_ratio=1.5;parent.add_child(scene)
 	scene.container_selected.connect(func(id):
 		if run.get("phase","")=="battle":app._toast("击败守卫后搜寻",app.RED);return
@@ -231,10 +231,13 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 			button.icon=load(str(box.sprite));button.expand_icon=true;button.add_theme_constant_override("icon_max_width",24)
 	var services:Node=parent
 	if not room_actions.is_empty() and not room_done:
-		services=_scroll(app,parent)
-		services.get_parent().name="ExtractionServiceScroll"
-		services.get_parent().custom_minimum_size.y=88
-		services.size_flags_vertical=Control.SIZE_EXPAND_FILL
+		if app.size.x<900:
+			services=app._vbox(parent,8)
+		else:
+			services=_scroll(app,parent,150)
+			services.get_parent().name="ExtractionServiceScroll"
+			services.get_parent().size_flags_vertical=Control.SIZE_FILL
+		services.size_flags_vertical=Control.SIZE_FILL
 	if is_relay:
 		var panel=app._panel(services,app.GOLD.darkened(0.55),8)
 		var relay=app._hbox(panel,10)
@@ -257,13 +260,13 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 	elif not room_actions.is_empty():
 		var choices=app._grid(services,1 if app.size.x<900 else mini(3,room_actions.size()))
 		choices.add_theme_constant_override("h_separation",6)
-		choices.size_flags_vertical=Control.SIZE_EXPAND_FILL
+		choices.size_flags_vertical=Control.SIZE_FILL
 		for action in room_actions:
 			var id:=str(action.get("id",action.get("actionId","")))
 			var color:Color=EventChoice.color_for(action,app.CYAN)
 			var card=app._panel(choices,color.darkened(0.6),8)
 			card.name="ExtractionEventCard_"+id
-			card.size_flags_vertical=Control.SIZE_EXPAND_FILL
+			card.size_flags_vertical=Control.SIZE_FILL
 			var choice=app._vbox(card,6)
 			EventChoice.heading(app,choice,action,"coin",color)
 			var preview: Dictionary=action.get("encounterPreview",{})
@@ -271,7 +274,7 @@ static func _scene(app,parent: Node,run: Dictionary) -> void:
 				var guards_row=app._hbox(choice,4);guards_row.name="ExtractionEncounterPreview_"+id
 				for enemy_id in preview.get("enemies",[]):_icon(guards_row,{"icon":str(app.model.catalog.get("EnemyData",{}).get(str(enemy_id),{}).get("portrait","res://assets/enemies/"+str(enemy_id)+".png"))},32)
 				app._label(guards_row,"精英战" if preview.get("isElite",false) or str(preview.get("kind",""))=="elite" else "交战",11,app.RED)
-			var copy=EventChoice.body(app,choice)
+			var copy=EventChoice.body(app,choice,false)
 			EventChoice.benefits(app,copy,action,"coin",color)
 			EventChoice.costs(app,copy,action,"coin")
 			var caption:="已选择" if action.get("used",false) else "选择"

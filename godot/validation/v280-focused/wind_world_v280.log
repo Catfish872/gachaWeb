@@ -1,0 +1,23 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ERROR: reload preserves old map encounter and RNG
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] ck (res://tests/test_wind_world_v280.gd:8)
+       [1] run_tests (res://tests/test_wind_world_v280.gd:97)
+ERROR: themed event read/reload is stable 9
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] ck (res://tests/test_wind_world_v280.gd:8)
+       [1] run_tests (res://tests/test_wind_world_v280.gd:112)
+ERROR: themed event read/reload is stable 10
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] ck (res://tests/test_wind_world_v280.gd:8)
+       [1] run_tests (res://tests/test_wind_world_v280.gd:112)
+ERROR: themed event read/reload is stable 11
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] ck (res://tests/test_wind_world_v280.gd:8)
+       [1] run_tests (res://tests/test_wind_world_v280.gd:112)
+WIND WORLD V280: 428 checks, 4 failures

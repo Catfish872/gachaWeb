@@ -1,0 +1,118 @@
+{
+  "candidate": "v280 content; metadata remains 2.7.8 until publisher updates",
+  "started_utc": "2026-11-03T09:59:35Z",
+  "completed_utc": "2026-11-03T10:08:20Z",
+  "test_elapsed_seconds": 525,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "production_sha256": "bb6081c61faa6cb64663deb8e737fd3b6487e957dfe772b90068cbd76c9f5c33",
+  "production_file_count": 1245,
+  "checks": [
+    {
+      "log": "wind_duo_v279-recheck.log",
+      "passed": 41,
+      "failed": 0
+    },
+    {
+      "log": "wind_world_v280-final.log",
+      "passed": 468,
+      "failed": 0
+    },
+    {
+      "log": "wind_enemies_v280-final.log",
+      "passed": 120,
+      "failed": 0
+    },
+    {
+      "log": "wind_trials_v280.log",
+      "passed": 93,
+      "failed": 0
+    },
+    {
+      "log": "team_presets_v280-final.log",
+      "passed": 91,
+      "failed": 0
+    },
+    {
+      "log": "windpass_audio_v280-recheck.log",
+      "passed": 79,
+      "failed": 0
+    },
+    {
+      "log": "team_presets_ui_v280.log",
+      "passed": 83,
+      "failed": 0
+    },
+    {
+      "log": "wind_trials_ui_v280.log",
+      "passed": 66,
+      "failed": 0
+    },
+    {
+      "log": "event_preferences_v280.log",
+      "passed": 54,
+      "failed": 0
+    },
+    {
+      "log": "wind_visual_smoke_v280.log",
+      "passed": 4,
+      "failed": 0
+    },
+    {
+      "log": "wind_banner_delta_v280.log",
+      "passed": 12,
+      "failed": 0
+    },
+    {
+      "log": "selin_v270.log",
+      "passed": 92,
+      "failed": 0
+    },
+    {
+      "log": "relic_optimizer_battle_v250.log",
+      "passed": 37,
+      "failed": 0
+    }
+  ],
+  "total_final_checks": 1240,
+  "scope": [
+    "wind duo combat and optimizer integration",
+    "three-region new expedition theme, loot, keys, persisted issued encounters and events",
+    "new enemy actions and final two-beat boss cycle with per-enemy attack overrides",
+    "solo and duo trials plus first-clear/return flow",
+    "team presets invalid-input handling, save/switch/rename and active-run locks",
+    "battle auto/speed/difficulty preferences and hidden event supplies",
+    "audio loading/routing only",
+    "actual desktop GL mobile-layout screenshots and entry callbacks",
+    "affected old Selin and relic optimizer battle regressions"
+  ],
+  "visual_review": [
+    "summon-tiya-960-final.png",
+    "summon-lumi-960-final.png",
+    "duo-trial-960.png",
+    "team-presets-390.png",
+    "windpass-map-2048.png",
+    "windpass-boss-960.png",
+    "../v280-event-preferences/960-event-layout.png"
+  ],
+  "repairs": [
+    "relic optimizer coefficient explicit float type corrected production parse failure",
+    "team validation rejects nonstring IDs before empty-string comparison",
+    "world save fixture compares normalized JSON payload; int/float encoding boundary, production save logic unchanged",
+    "event fixture body given explicit VBoxContainer type",
+    "event action moved into separate bottom row to prevent narrow title and button overflow",
+    "new banner hides extra foreground portrait; delta fixture corrected SummonStage node name"
+  ],
+  "final_delta": "World 468 and enemies 120 rerun after 10:07:37 final catalog two-beat cycle and per-enemy attack override changes; unaffected earlier checks retained.",
+  "warnings": [
+    "UI fixture exits reported ObjectDB instances/one resource still in use after checks; no runtime interaction failure, not rerun solely for teardown",
+    "Initial failure logs and revised final logs retained where separate paths; initial event and banner logs were overwritten by targeted retries, failure history documented here"
+  ],
+  "not_tested": [
+    "No full suite or full chapter/endless/extraction campaign journey",
+    "No Android hardware or APK installation test",
+    "No subjective music/audio listening",
+    "Not every new dialogue node/CG/loot icon manually visually reviewed; selected actual scenes and model resource checks only"
+  ],
+  "release": "not published by QA"
+}

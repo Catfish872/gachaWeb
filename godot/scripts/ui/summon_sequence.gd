@@ -62,7 +62,10 @@ func setup(owner_app, committed_results: Array, selected_pool: String, gentle: b
 	name = "SummonSequence"
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_background = load("res://assets/content_v270/banner/selin_banner.png" if selected_pool == "limited_selin" else "res://assets/backgrounds/summon_sanctum.png")
+	var fallback := "res://assets/content_v270/banner/selin_banner.png" if selected_pool == "limited_selin" else "res://assets/backgrounds/summon_sanctum.png"
+	var selected: Dictionary = app.model.catalog.GachaPoolData.pools.get(selected_pool, {})
+	var background_path: String = str(selected.get("bannerPath", fallback))
+	_background = load(background_path if ResourceLoader.exists(background_path) else fallback)
 	for result in results:
 		var bust: Texture2D = Avatars.get_texture(str(result.charId), "bust")
 		_art.append(bust if bust != null else load(Avatars.source_path(str(result.charId))))

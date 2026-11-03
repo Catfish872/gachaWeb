@@ -4,6 +4,7 @@ const CharacterAvatars = preload("res://scripts/ui/character_avatar.gd")
 const CharacterBust = preload("res://scripts/ui/character_bust.gd")
 const RuneTheme = preload("res://scripts/ui/rune_theme.gd")
 const SummonSequence = preload("res://scripts/ui/summon_sequence.gd")
+const WindpassAudio = preload("res://scripts/windpass_audio.gd")
 
 const INK := Color("080e19")
 const PANEL := Color("111b2b")
@@ -20,7 +21,7 @@ const BattleFX = preload("res://scripts/ui/battle_fx.gd")
 const AbyssView = preload("res://scripts/ui/abyss_view.gd")
 const ExtractionView = preload("res://scripts/ui/extraction_view.gd")
 const UpdateChecker = preload("res://scripts/update_checker.gd")
-const STATUS_NAMES := {"ember_oath":"烬灯誓约", "ember_lantern_burn":"织焰", "ember_lantern_direct":"引火", "burn": "燃烧", "freeze": "冰冻", "shock": "感电", "electrify": "感电", "poison": "中毒", "regen": "再生", "def_up": "防御提升", "atk_up": "攻击提升", "spd_up": "速度提升", "def_down": "防御降低", "atk_down": "攻击降低", "spd_down": "减速", "taunt": "嘲讽", "shield": "护盾", "bleed": "流血", "stun": "眩晕", "vulnerable": "易伤", "invincible": "无敌"}
+const STATUS_NAMES := {"wind_armor":"破甲", "wind_oath":"风誓", "ember_oath":"烬灯誓约", "ember_lantern_burn":"织焰", "ember_lantern_direct":"引火", "burn": "燃烧", "freeze": "冰冻", "shock": "感电", "electrify": "感电", "poison": "中毒", "regen": "再生", "def_up": "防御提升", "atk_up": "攻击提升", "spd_up": "速度提升", "def_down": "防御降低", "atk_down": "攻击降低", "spd_down": "减速", "taunt": "嘲讽", "shield": "护盾", "bleed": "流血", "stun": "眩晕", "vulnerable": "易伤", "invincible": "无敌"}
 const TABS := [["home", "旅者营地", "01"], ["story", "世界探索", "02"], ["summon", "星辰祈愿", "03"], ["party", "冒险编队", "04"], ["growth", "角色养成", "05"], ["relics", "遗物工坊", "06"], ["abyss", "深渊远征", "07"], ["extraction", "遗境搜打撤", "08"], ["shop", "补给商店", "09"], ["save", "旅程档案", "10"]]
 
 var model
@@ -39,6 +40,7 @@ var growth_panel := "stats"
 var selected_relic := ""
 var relic_filter := "全部"
 var draft_team: Array = []
+var selected_team_preset := 0
 var page_scroll: ScrollContainer
 var main_body: VBoxContainer
 var shell: Control
@@ -53,6 +55,7 @@ var selected_skill := ""
 var selected_target := ""
 var battle_config: Dictionary = {}
 var battle_auto := false
+var preferred_battle_auto := false
 var battle_speed := 1.0
 var battle_clock := 0.0
 var battle_settled := false
@@ -516,13 +519,15 @@ func navigate(screen: String, record_history: bool = true) -> void:
 		_toast("请先重试保存本场战斗结果", RED)
 		return
 	if current_screen == "battle" and not battle_settled and screen != "battle":
-		_confirm("离开战斗？", ("未寄存的物资与战术装备会遗失。护盾装备、背包扩容保留。" if battle_config.get("isExtraction", false) else "撤退将结束当前战斗，已消耗的体力保留。深渊撤退会结束本轮构筑。"), func():
+		_confirm("离开试用？" if battle_config.get("isTrial", false) else "离开战斗？", ("试用队伍将离场，原有阵容与资源保持原样。" if battle_config.get("isTrial", false) else "未寄存的物资与战术装备会遗失。护盾装备、背包扩容保留。" if battle_config.get("isExtraction", false) else "撤退将结束当前战斗，已消耗的体力保留。深渊撤退会结束本轮构筑。"), func():
 			if not _check(model.abandon_battle(battle_config, battle.state)):
 				return
 			abyss_auto_continue = false
 			battle_settled = true
 			navigate(screen))
 		return
+	if current_screen == "battle" and battle_settled and battle_config.get("isTrial",false):
+		battle_auto = preferred_battle_auto
 	if screen != "extraction":
 		extraction_search_generation += 1
 		extraction_searching = false
@@ -534,6 +539,7 @@ func navigate(screen: String, record_history: bool = true) -> void:
 			navigation_history.pop_front()
 	current_screen = screen
 	if screen == "party":
+		selected_team_preset = maxi(0, int(model.state.get("activeTeamPreset", 0)))
 		draft_team = model.state.get("team", []).filter(func(id): return id is String and not id.is_empty()).duplicate()
 	_render_screen()
 	main_body.get_parent().set_deferred("scroll_vertical", 0)
@@ -733,7 +739,7 @@ func _story() -> void:
 	enter.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	enter.disabled=not unlocked
 	if done:
-		var replay:=_button(actions,"回顾剧情",func():_play_dialogue(str(selected.id)+"_pre",func():_play_dialogue(str(selected.id)+"_post",func():pass)))
+		var replay:=_button(actions,"回顾剧情",func():_play_dialogue(str(selected.id)+"_pre",func():_play_dialogue_sequence(_stage_post_dialogue_keys(selected),func():pass)))
 		replay.name="StoryReplay"
 		_button_icon(replay,"book")
 
@@ -778,9 +784,12 @@ func _summon() -> void:
 	var featured:String=str(pool.featured5[0]) if pool.type=="limited" else "ayla"
 	var row:=_responsive_box(main_body,compact,16)
 	row.size_flags_vertical=Control.SIZE_EXPAND_FILL
-	var background:="res://assets/content_v270/banner/selin_banner.png" if featured=="selin" else "res://assets/backgrounds/summon_sanctum.png"
-	if not ResourceLoader.exists(background):background=""
-	var stage:=_portrait_environment(row,featured,260 if compact else 0,background)
+	var fallback := "res://assets/content_v270/banner/selin_banner.png" if featured == "selin" else "res://assets/backgrounds/summon_sanctum.png"
+	var background: String = str(pool.get("bannerPath", fallback))
+	if not ResourceLoader.exists(background): background = fallback
+	var embedded_character: bool = featured in ["tiya","lumi"] and background != fallback
+	var stage:=_portrait_environment(row,featured,260 if compact else 0,background,"",not embedded_character)
+	stage.set_meta("embedded_banner_character",embedded_character)
 	stage.size_flags_stretch_ratio=1.6
 	stage.name="SummonStage"
 	var banner:=_vbox(stage,8);banner.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
@@ -816,6 +825,15 @@ func _summon() -> void:
 		trial.name = "SelinTrial"
 		_button_icon(trial,"sword")
 		_label(side,"首通 160 星尘晶" if not model.state.stageProgress.get("trial_selin",{}).get("cleared",false) else "已领取首通奖励 · 可再次体验",13,CYAN,true).name="SelinTrialReward"
+	if featured in ["tiya", "lumi"]:
+		var trial_actions := _hbox(side, 8)
+		var solo_trial := _button(trial_actions, "缇娅试用" if featured == "tiya" else "露弥试用", func(): _show_wind_trial(featured))
+		solo_trial.name = "WindTrial_" + featured
+		solo_trial.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var duo_trial := _button(trial_actions, "双风联合演示", func(): _show_wind_trial("duo"))
+		duo_trial.name = "WindTrial_duo"
+		duo_trial.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_label(side, "已领取角色首通奖励 · 可再次体验" if model.state.stageProgress.get("trial_" + featured, {}).get("cleared", false) else "角色试用首通 160 星尘晶 · 联合演示自由体验", 13, CYAN, true).name = "WindTrialReward"
 	var current:=_hbox(side,6);_rune_icon(current,"gem",21)
 	_label(current,"持有 %d" % int(model.state.resources.get(pool.currency,0)),14,CYAN)
 	var actions:=_responsive_box(side,compact,10)
@@ -825,6 +843,22 @@ func _summon() -> void:
 		var action:=_summon_cta(actions,amount,cost,func():_pull(amount))
 		action.disabled=balance<cost
 		if action.disabled:action.modulate=Color(.6,.65,.7)
+
+func _show_wind_trial(kind: String) -> void:
+	var info: Dictionary = model.wind_trial_info(kind)
+	if info.is_empty(): return
+	var box := _modal(str(info.title), 660, 440)
+	_label(box, str(info.guide), 18, TEXT, true)
+	_label(box, "提供等级 5、零命座、五星 +8 遗物与满能量的固定队伍。你的原有阵容与养成保持原样。", 15, MUTED, true)
+	_label(box, "联合演示供自由体验" if kind == "duo" else ("本角色首通奖励已领取" if model.state.stageProgress.get(info.id, {}).get("cleared", false) else "首次胜利获得 160 星尘晶"), 16, CYAN, true)
+	var actions := _hbox(_modal_footer(box), 10)
+	_button(actions, "返回", _clear_overlay)
+	var start := _button(actions, "开始演示" if kind == "duo" else "开始试用", func():
+		var result: Dictionary = model.prepare_wind_trial(kind)
+		if _check(result):
+			battle_auto = false
+			_start_battle(result.config), true)
+	start.name = "WindTrialStart"
 
 func _pool_details() -> void:
 	var pool: Dictionary = model.catalog.GachaPoolData.pools[selected_pool]
@@ -914,7 +948,30 @@ func _growth_roster_style(button: Button, rarity: int, selected: bool) -> void:
 
 func _party() -> void:
 	set_page_fixed(not compact)
-	_page_title("冒险编队","点击旅者加入或移出队伍")
+	_page_title("冒险编队","保存五套阵容，点按预设快速切换")
+	var run_locked: bool = model.team_is_locked()
+	var preset_row := _hbox(main_body, 6)
+	preset_row.name = "TeamPresetTabs"
+	for index in range(model.TEAM_PRESET_COUNT):
+		var preset: Dictionary = model.state.teamPresets[index]
+		var empty: bool = model._team_members(preset.team).is_empty()
+		var tab := _button(preset_row, "%d · %s" % [index + 1, "空位" if empty else preset.name], func(): _select_team_preset(index), selected_team_preset == index)
+		tab.name = "TeamPreset_%d" % index
+		tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		tab.custom_minimum_size.x = 44
+		tab.clip_text = true
+		tab.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		tab.tooltip_text = "%s · %s" % [preset.name, "选择后保存当前阵容" if empty else "按保存顺序切换出战队伍"]
+		tab.disabled = run_locked
+	var preset_header := _hbox(main_body, 8)
+	var preset_name := _label(preset_header, str(model.state.teamPresets[selected_team_preset].name), 17, GOLD, true)
+	preset_name.name = "TeamPresetName"
+	var rename := _button(preset_header, "重命名", _rename_team_preset)
+	rename.name = "TeamPresetRename"
+	var active: bool = int(model.state.activeTeamPreset) == selected_team_preset
+	var dirty: bool = draft_team != model._team_members(model.state.team)
+	_label(preset_header, "编辑中" if dirty else "当前出战" if active else "待保存" if model._team_members(model.state.teamPresets[selected_team_preset].team).is_empty() else "已保存", 12, CYAN)
+
 	var row:=_responsive_box(main_body,compact,14)
 	row.size_flags_vertical=Control.SIZE_EXPAND_FILL
 	var formation_panel:=_panel(row,GOLD.darkened(0.6),10)
@@ -923,6 +980,7 @@ func _party() -> void:
 	var formation:=_vbox(formation_panel,8)
 	_label(formation,"当前阵容 · %d / 3" % draft_team.size(),19,GOLD)
 	var seats:=_scroll_column(formation,8)
+	if compact: seats.get_parent().custom_minimum_size.y = 290
 	for i in range(3):
 		var cell:=_panel(seats,LINE,7)
 		var cv:=_hbox(cell,10)
@@ -936,11 +994,11 @@ func _party() -> void:
 		else:
 			cell.custom_minimum_size.y=80
 			_center_label(cv,"待命席位 %d" % (i+1),16,MUTED)
-	var run_locked:bool=model.abyss_run_active()
-	var save_team:=_button(formation,"保存出战队伍",func():
-		if _check(model.set_team(draft_team)):_toast("出战队伍已保存",CYAN);_render_screen(),true)
-	save_team.disabled=run_locked
-	if run_locked:_label(formation,"远征结束后可调整阵容",12,CYAN,true)
+	var save_team:=_button(formation,"保存出战队伍",_save_team_preset,true)
+	save_team.name = "TeamPresetSave"
+	save_team.disabled = run_locked or draft_team.is_empty()
+	if run_locked: _label(formation,"当前战斗或远征结束后可调整阵容",12,CYAN,true)
+	else: _label(formation,"按加入顺序出战；保存后更新所选预设。",12,MUTED,true)
 	var roster:=_vbox(row,8);roster.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	var filters:=_flow(roster,8)
 	for el in ["全部","fire","water","wind","thunder"]:
@@ -964,9 +1022,60 @@ func _party() -> void:
 		b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=not owned or run_locked
 		_button(actions,"详情",func():selected_character=id;navigate("growth"))
 
+func _save_team_preset() -> void:
+	var saved: Array = model._team_members(model.state.teamPresets[selected_team_preset].team)
+	var accept := func():
+		if _check(model.save_team_preset(selected_team_preset, draft_team)):
+			_toast("%s已保存并出战" % model.state.teamPresets[selected_team_preset].name, CYAN)
+			_render_screen()
+	if not saved.is_empty() and saved != draft_team:
+		_confirm("更新队伍预设？", "当前编辑的阵容将保存到「%s」，并用于后续出战。" % model.state.teamPresets[selected_team_preset].name, accept)
+	else: accept.call()
+
+func _select_team_preset(index: int) -> void:
+	if model.team_is_locked():
+		_toast("当前战斗或远征结束后可切换阵容", CYAN)
+		return
+	if model._team_members(model.state.teamPresets[index].team).is_empty():
+		selected_team_preset = index
+		_render_screen()
+		return
+	var accept := func():
+		if _check(model.switch_team_preset(index)):
+			selected_team_preset = index
+			draft_team = model._team_members(model.state.team).duplicate()
+			_render_screen()
+	if draft_team != model._team_members(model.state.team):
+		_confirm("切换队伍？", "当前阵容有待保存的调整。确认后将切换为「%s」的已保存阵容。" % model.state.teamPresets[index].name, accept)
+	else: accept.call()
+
+func _rename_team_preset() -> void:
+	var index := selected_team_preset
+	var box := _modal("队伍重命名", 560, 300)
+	_label(box, "输入最多 %d 个字的队伍名称" % model.TEAM_PRESET_NAME_LIMIT, 15, MUTED, true)
+	var entry := LineEdit.new()
+	entry.name = "TeamPresetNameInput"
+	entry.text = str(model.state.teamPresets[index].name)
+	entry.max_length = model.TEAM_PRESET_NAME_LIMIT
+	entry.custom_minimum_size.y = 48
+	entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	entry.add_theme_font_size_override("font_size", 20)
+	box.add_child(entry)
+	var accept := func():
+		if _check(model.rename_team_preset(index, entry.text)):
+			_clear_overlay()
+			_render_screen()
+	entry.text_submitted.connect(func(_text): accept.call())
+	var actions := _hbox(box, 10)
+	_button(actions, "返回", _clear_overlay)
+	var save := _button(actions, "保存名称", accept, true)
+	save.name = "TeamPresetRenameSave"
+	entry.grab_focus()
+	entry.select_all()
+
 func _toggle_team(id: String) -> void:
-	if model.abyss_run_active() and model.state.ownedCharacters.has(id):
-		_toast("本轮深渊阵容已锁定，结束远征后可以调整", CYAN)
+	if model.team_is_locked() and model.state.ownedCharacters.has(id):
+		_toast("当前战斗或远征的阵容已锁定，结束后可以调整", CYAN)
 		return
 	if not model.state.ownedCharacters.has(id):
 		selected_character = id
@@ -1616,6 +1725,11 @@ func _start_battle(config: Dictionary) -> void:
 		battle.start(config, model.battle_party(is_abyss), model.rogue_effects() if is_abyss else [])
 	current_screen = "battle"
 	_render_screen()
+	for unit in battle.state.get("enemies",[]):
+		var entry: Dictionary = WindpassAudio.field_entry(str(unit.get("dataId",unit.get("id",""))))
+		if not entry.is_empty():
+			_play_battle_clip(entry)
+			break
 	_show_combat_events(battle.state.get("events", []))
 
 func _render_battle() -> void:
@@ -1631,8 +1745,8 @@ func _render_battle() -> void:
 	var caption := "第 %d 回合 · 第 %d 波" % [state.get("turn",1), state.get("wave",1)]
 	if battle_config.get("isExtraction", false): caption += " · 封锁剩余 %d 回合" % maxi(0, 41-int(state.get("turn",1)))
 	_label(names, caption, 11, GOLD)
-	_tab_button(head, "自动" if battle_auto else "手动", func(): battle_auto = not battle_auto; abyss_auto_continue = abyss_auto_continue and battle_auto; _render_battle(), battle_auto)
-	_tab_button(head, "%d 倍速" % battle_speed, func(): battle_speed = 2.0 if battle_speed == 1.0 else (4.0 if battle_speed == 2.0 else 1.0); _render_battle())
+	_tab_button(head, "自动" if battle_auto else "手动", func(): _set_battle_auto(not battle_auto), battle_auto)
+	_tab_button(head, "%d 倍速" % battle_speed, _cycle_battle_speed)
 	_tool_button(head,"book","战斗记录",_show_battle_log)
 	if battle_config.get("isAbyss", false): _tool_button(head,"star","本轮回响",_show_battle_echoes)
 	_tab_button(head, "撤退", func(): navigate(_battle_return_screen()))
@@ -1860,24 +1974,35 @@ func _battle_sound_clip(events: Array) -> String:
 
 func _play_battle_sound(events: Array) -> void:
 	if not sound_enabled or bool(get_meta("application_paused",false)):return
+	var wind: Dictionary = WindpassAudio.battle_sound(events,battle.state.get("allies",[])+battle.state.get("enemies",[]))
+	if not wind.is_empty():
+		_play_battle_clip(wind)
+		return
 	var clip:=_battle_sound_clip(events)
 	var lantern_clip := ""
 	for event in events:
 		if event.get("type","")=="skill" and str(event.get("skill_id","")).begins_with("selin_"):
 			lantern_clip={"selin_normal":"selin_basic","selin_skill":"selin_skill","selin_ult":"selin_ultimate"}.get(str(event.get("skill_id","")),"chain_swing")
-	if clip.is_empty() or Time.get_ticks_msec()-_last_battle_sound_msec<90:return
+	if not lantern_clip.is_empty(): clip=lantern_clip
+	if clip.is_empty():return
 	var path:="res://assets/audio/battle/"+clip+".ogg"
 	if not lantern_clip.is_empty() and ResourceLoader.exists("res://assets/audio/content_v270/"+lantern_clip+".ogg"):
-		path="res://assets/audio/content_v270/"+lantern_clip+".ogg";clip=lantern_clip
-	if not ResourceLoader.exists(path):return
+		path="res://assets/audio/content_v270/"+lantern_clip+".ogg"
+	_play_battle_clip({"clip":clip,"path":path,"gain_db":-9.0,"max_voices":2})
+
+func _play_battle_clip(selection: Dictionary) -> void:
+	if not sound_enabled or bool(get_meta("application_paused",false)):return
+	var path: String = str(selection.get("path",""))
+	if path.is_empty() or not ResourceLoader.exists(path) or Time.get_ticks_msec()-_last_battle_sound_msec<90:return
 	_last_battle_sound_msec=Time.get_ticks_msec()
 	var voices:Array=get_tree().get_nodes_in_group("battle_audio")
-	while voices.size()>=2:
+	while voices.size()>=clampi(int(selection.get("max_voices",2)),1,2):
 		var old:AudioStreamPlayer=voices.pop_front()
 		old.stop();old.stream=null;old.remove_from_group("battle_audio");old.remove_from_group("transient_audio");old.queue_free()
 	var voice:=AudioStreamPlayer.new();voice.stream=load(path)
-	voice.volume_db=effects_volume_db-9
+	voice.volume_db=effects_volume_db+float(selection.get("gain_db",-9.0))
 	voice.add_to_group("battle_audio");voice.add_to_group("transient_audio");voice.set_meta("priority",1)
+	var clip: String = str(selection.get("clip",""))
 	voice.set_meta("battle_clip",clip)
 	add_child(voice);voice.finished.connect(voice.queue_free);voice.play()
 	_battle_audio_history.append(clip)
@@ -2135,7 +2260,7 @@ func _render_battle_settlement(result:Dictionary,victory:bool,run_ended:bool) ->
 	var color:=GOLD if victory else MUTED
 	var heading:=_hbox(left,10)
 	_rune_icon(heading,"crown" if victory else "shield",28,color)
-	_label(heading,"远征通关" if run_ended and victory else ("远征胜利" if victory else "整装再出发"),28,color)
+	_label(heading, ("演示完成" if battle_config.get("trialCharacter", "") == "duo" else "试用完成") if victory and battle_config.get("trialKind", "") == "wind" else "远征通关" if run_ended and victory else ("远征胜利" if victory else "整装再出发"),28,color)
 	var allies:Array=battle.state.get("allies",[])
 	var featured:String=str(allies[0].get("id","ember")) if not allies.is_empty() else "ember"
 	_portrait_environment(left,featured,210)
@@ -2204,9 +2329,8 @@ func _render_battle_settlement(result:Dictionary,victory:bool,run_ended:bool) ->
 	var proceed:=_button(_modal_footer(box), "返回营地 · 继续旅程   →" if run_ended else "继续旅程   →", func():
 		_clear_overlay()
 		var next_screen := "summon" if battle_config.get("isTrial",false) else "abyss" if battle_config.get("isAbyss", false) else "story"
-		var key: String = str(battle_config.get("id", "")) + "_post"
-		if victory and not battle_config.get("isAbyss", false) and not model.state.get("dialogueSeen", {}).get(key, false):
-			_play_dialogue(key, func(): navigate(next_screen))
+		if victory and not battle_config.get("isAbyss", false) and not battle_config.get("isTrial", false):
+			_play_dialogue_sequence(_stage_post_dialogue_keys(battle_config), func(): navigate(next_screen), true)
 		else:
 			navigate(next_screen), true)
 	proceed.name="BattleSettlementContinue"
@@ -2238,6 +2362,20 @@ func _battle_unit(uid: String) -> Dictionary:
 				return unit
 	return {}
 
+func _stage_post_dialogue_keys(stage: Dictionary) -> Array:
+	var keys = stage.get("postDialogueKeys", [str(stage.get("id", "")) + "_post"])
+	return keys.duplicate() if keys is Array else [str(stage.get("id", "")) + "_post"]
+
+func _play_dialogue_sequence(keys: Array, done: Callable, unseen_only: bool = false) -> void:
+	var remaining := keys.duplicate()
+	while not remaining.is_empty():
+		var key := str(remaining.pop_front())
+		if key.is_empty() or (unseen_only and model.state.dialogueSeen.get(key, false)): continue
+		if model.catalog.DialogueData.get(key, []).is_empty(): continue
+		_play_dialogue(key, func(): _play_dialogue_sequence(remaining, done, unseen_only))
+		return
+	if done.is_valid(): done.call()
+
 func _play_dialogue(key: String, done: Callable) -> void:
 	dialogue_lines = model.catalog.DialogueData.get(key, [])
 	if dialogue_lines.is_empty():
@@ -2266,6 +2404,11 @@ func _render_dialogue() -> void:
 	art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overlay.add_child(art)
+	var scene_title := str(_dialogue_meta().get("title",""))
+	if not scene_title.is_empty():
+		var title := _label(overlay,scene_title,20,GOLD)
+		title.name="DialogueSceneTitle";title.position=Vector2(36,22)
+		title.size.x=maxf(120,size.x-230);title.clip_text=true
 	var line: Dictionary = dialogue_lines[dialogue_index]
 	var speaker: String = line.get("speaker", "narrator")
 	var portrait_id = line.get("portrait")
@@ -2318,8 +2461,10 @@ func _render_mobile_dialogue() -> void:
 	var speaker_name := str(line.get("speakerName", _char_name(speaker)))
 	if speaker == "narrator": speaker_name = "旅者纪事"
 	if speaker == "traveler": speaker_name = "旅行者"
-	var v := _modal(speaker_name, 700, size.y - 24)
-	if _dialogue_has_cg():_scene_panel(v,_dialogue_background_path(),160)
+	var scene_title := str(_dialogue_meta().get("title",""))
+	var v := _modal(scene_title if not scene_title.is_empty() else speaker_name, 700, size.y - 24)
+	if _dialogue_has_cg() or not _dialogue_meta().is_empty():_scene_panel(v,_dialogue_background_path(),160)
+	if not scene_title.is_empty():_label(v,speaker_name,17,GOLD)
 	var portrait_id = line.get("portrait")
 	if portrait_id is String and model.catalog.CharacterData.has(portrait_id) and not _dialogue_has_cg():
 		_portrait(v, portrait_id, 180)
@@ -2896,10 +3041,27 @@ func _show_battle_echoes() -> void:
 		_label(box, "继续挑战，收集新的回响。", 17, MUTED, true)
 	_button_icon(_button(_modal_footer(box), "回到战斗", _clear_overlay, true),"back",true)
 
-func _load_preferences() -> void:
-	if test_session: return
+func _set_extraction_difficulty(value: int) -> void:
+	extraction_difficulty = clampi(value, 0, mini(model.extraction.max_difficulty(), int(model.state.extraction.get("unlockedDifficulty",0))))
+	_save_preferences()
+	_render_screen()
+
+func _set_battle_auto(enabled: bool) -> void:
+	battle_auto = enabled
+	preferred_battle_auto = enabled
+	abyss_auto_continue = abyss_auto_continue and enabled
+	_save_preferences()
+	_render_battle()
+
+func _cycle_battle_speed() -> void:
+	battle_speed = 2.0 if battle_speed == 1.0 else 4.0 if battle_speed == 2.0 else 1.0
+	_save_preferences()
+	_render_battle()
+
+func _load_preferences(path: String = "user://ui-settings.cfg") -> void:
+	if test_session and path == "user://ui-settings.cfg": return
 	var config := ConfigFile.new()
-	if config.load("user://ui-settings.cfg") != OK: return
+	if config.load(path) != OK: return
 	updater.auto_check_enabled = bool(config.get_value("updates", "auto_check", true))
 	updater.auto_download_enabled = bool(config.get_value("updates", "auto_download", true))
 	relic_filter = str(config.get_value("relics", "rarity_filter", "全部"))
@@ -2912,11 +3074,16 @@ func _load_preferences() -> void:
 	extraction_sound = bool(config.get_value("extraction", "sound", true))
 	extraction_reduced_motion = bool(config.get_value("extraction", "reduced_motion", false))
 	extraction_auto_pick = bool(config.get_value("extraction", "auto_pick", true))
+	extraction_difficulty = clampi(int(config.get_value("extraction", "difficulty", 0)), 0, model.extraction.max_difficulty())
+	preferred_battle_auto = bool(config.get_value("battle", "auto", false))
+	battle_auto = preferred_battle_auto
+	var speed := float(config.get_value("battle", "speed", 1.0))
+	battle_speed = speed if speed in [1.0,2.0,4.0] else 1.0
 	for key in salvage_options:
 		salvage_options[key] = bool(config.get_value("salvage", key, false))
 
-func _save_preferences() -> void:
-	if test_session: return
+func _save_preferences(path: String = "user://ui-settings.cfg") -> void:
+	if test_session and path == "user://ui-settings.cfg": return
 	var config := ConfigFile.new()
 	config.set_value("updates", "auto_check", updater.auto_check_enabled)
 	config.set_value("updates", "auto_download", updater.auto_download_enabled)
@@ -2930,9 +3097,12 @@ func _save_preferences() -> void:
 	config.set_value("extraction", "sound", extraction_sound)
 	config.set_value("extraction", "reduced_motion", extraction_reduced_motion)
 	config.set_value("extraction", "auto_pick", extraction_auto_pick)
+	config.set_value("extraction", "difficulty", extraction_difficulty)
+	config.set_value("battle", "auto", preferred_battle_auto)
+	config.set_value("battle", "speed", battle_speed)
 	for key in salvage_options:
 		config.set_value("salvage", key, salvage_options[key])
-	config.save("user://ui-settings.cfg")
+	config.save(path)
 
 func _show_abyss_rules() -> void:
 	var box := _modal("深渊战斗规则", 680, 460)
@@ -2959,6 +3129,7 @@ func _localized_combat_text(text_value: String) -> String:
 	return text_value
 
 func _battle_return_screen() -> String:
+	if battle_config.get("isTrial", false): return "summon"
 	if battle_config.get("isExtraction", false): return "extraction"
 	return "abyss" if battle_config.get("isAbyss", false) else "story"
 
@@ -3025,7 +3196,8 @@ func set_page_fixed(fixed: bool) -> void:
 	if fixed: page_scroll.scroll_vertical = 0
 
 func _music_gain(player: AudioStreamPlayer) -> float:
-	return music_volume_db-2.0 if str(player.get_meta("track",""))=="determined_pursuit" else music_volume_db
+	var track := str(player.get_meta("track",""))
+	return music_volume_db + WindpassAudio.music_gain_db(track) - (2.0 if track == "determined_pursuit" else 0.0)
 
 func _music_cancel_tween(player: AudioStreamPlayer, key: String) -> void:
 	var tween=player.get_meta(key) if player.has_meta(key) else null
@@ -3049,7 +3221,8 @@ func _sync_music() -> void:
 				_music_cancel_tween(player,"music_fade");_music_cancel_tween(player,"duck_tween")
 				player.stream_paused=true
 		return
-	var path:="res://assets/audio/content_v270/"+track+".ogg" if track in ["lantern_road","lantern_hall","lantern_core"] else "res://assets/audio/music/licensed/"+track+".ogg"
+	var path := WindpassAudio.music_path(track)
+	if path.is_empty(): path="res://assets/audio/content_v270/"+track+".ogg" if track in ["lantern_road","lantern_hall","lantern_core"] else "res://assets/audio/music/licensed/"+track+".ogg"
 	if not ResourceLoader.exists(path):return
 	var target:AudioStreamPlayer=_music_pool.get(track)
 	if not is_instance_valid(target):
@@ -3227,19 +3400,27 @@ func _music_track_for_context() -> String:
 	# Functional pages inherit the scene they were opened from. Inventory,
 	# upgrades, shops, menus and previews never choose a new score themselves.
 	if current_screen=="home":_music_context_id="hub"
-	elif current_screen=="story":_music_context_id="lantern" if selected_chapter==2 else "story"
+	elif current_screen=="story":
+		_music_context_id="lantern" if selected_chapter==2 else "windpass_road" if selected_chapter==3 else "story"
+		if selected_chapter==3 and str(model.get_stage(selected_stage_id).get("background","")).contains("resonance_gallery"):_music_context_id="windpass_gallery"
+	elif current_screen=="summon" and selected_pool in ["limited_tiya","limited_lumi"]:
+		return "tiya_reveal" if selected_pool=="limited_tiya" else "lumi_reveal"
 	elif current_screen=="extraction":_music_context_id="extraction" if model.extraction.active() else "story"
 	elif current_screen=="abyss":_music_context_id="abyss"
 	elif current_screen=="battle":
 		_music_context_id="extraction" if battle_config.get("isExtraction",false) else "abyss" if battle_config.get("isAbyss",false) else "story"
-		if not battle_config.get("isExtraction",false) and (str(battle_config.get("id","")).begins_with("ch3_") or battle_config.get("isTrial",false)):_music_context_id="lantern"
+		if not battle_config.get("isExtraction",false) and (str(battle_config.get("id","")).begins_with("ch3_") or str(battle_config.get("id", "")) == "trial_selin"):_music_context_id="lantern"
+		if str(battle_config.get("background","")).contains("content_v280/backgrounds/") or battle_config.get("trialKind","")=="wind":
+			_music_context_id="windpass_gallery" if str(battle_config.get("background","")).contains("resonance_gallery") else "windpass_road"
 		var boss:bool=battle_config.get("kind","")=="boss" or battle_config.get("isBoss",false)
 		for enemy_id in battle_config.get("enemies",[]):
 			if str(enemy_id).begins_with("boss_"):boss=true
 		if boss:
+			if battle_config.get("enemies",[]).has("boss_highland_roc"):return "windpass_core"
 			if battle_config.get("enemies",[]).has("boss_hedor"):return "lantern_core"
 			return "determined_pursuit"
 	match _music_context_id:
+		"windpass_road","windpass_gallery":return _music_context_id
 		"extraction":
 			if not model.extraction.active():return "medieval_exploration"
 			return model.extraction.environment_music_track()
@@ -3277,7 +3458,7 @@ func _tool_button(parent:Node,key:String,tooltip:String,action:Callable)->Button
 		b.add_theme_stylebox_override(state,style)
 	return b
 
-func _portrait_environment(parent:Node,id:String,height:float=240,background_path:String="",avatar_style:String="")->Control:
+func _portrait_environment(parent:Node,id:String,height:float=240,background_path:String="",avatar_style:String="",show_portrait:bool=true)->Control:
 	var element:=str(model.catalog.CharacterData.get(id,{}).get("element","water"))
 	var tint:=_element_color(element)
 	var stage:=Control.new()
@@ -3296,11 +3477,12 @@ func _portrait_environment(parent:Node,id:String,height:float=240,background_pat
 	stage.set_meta("portrait_background",path)
 	var backdrop:=TextureRect.new();backdrop.texture=load(path)
 	backdrop.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;backdrop.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);backdrop.modulate=Color(.53,.58,.68)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);backdrop.modulate=Color(.53,.58,.68) if show_portrait else Color.WHITE
 	backdrop.mouse_filter=Control.MOUSE_FILTER_IGNORE;stage.add_child(backdrop)
 	var gradient:=Gradient.new();gradient.set_color(0,Color(tint,.22));gradient.set_color(1,Color(.025,.04,.09,.1))
 	var glow:=GradientTexture2D.new();glow.gradient=gradient;glow.fill=GradientTexture2D.FILL_RADIAL;glow.fill_from=Vector2(.5,.45);glow.fill_to=Vector2(1,.9)
 	var light:=TextureRect.new();light.texture=glow;light.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);light.mouse_filter=Control.MOUSE_FILTER_IGNORE;stage.add_child(light)
+	if not show_portrait:return stage
 	var aura=load("res://scripts/ui/character_aura.gd").new();aura.tint=tint.lightened(.25);aura.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);stage.add_child(aura)
 	var portrait:=_portrait(stage,id,0,false,false,avatar_style)
 	portrait.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -3329,7 +3511,12 @@ func _skill_art_icon(parent: Node, skill: Dictionary, edge: int) -> TextureRect:
 	if ResourceLoader.exists(path):icon.texture=load(path);icon.modulate=Color.WHITE
 	return icon
 
+func _dialogue_meta() -> Dictionary:
+	return model.catalog.get("DialogueMeta",{}).get(dialogue_key,{})
+
 func _dialogue_cg_path() -> String:
+	var illustration := str(_dialogue_meta().get("illustration", _dialogue_meta().get("cg","")))
+	if not illustration.is_empty():return illustration
 	return {"ch3_4_post":"res://assets/content_v270/cg/borrowed_flame.png","ch3_8_post":"res://assets/content_v270/cg/lantern_homecoming.png"}.get(dialogue_key, "")
 
 func _dialogue_has_cg() -> bool:
@@ -3337,7 +3524,9 @@ func _dialogue_has_cg() -> bool:
 	return not path.is_empty() and ResourceLoader.exists(path)
 
 func _dialogue_background_path() -> String:
-	return _dialogue_cg_path() if _dialogue_has_cg() else _background_path()
+	if _dialogue_has_cg():return _dialogue_cg_path()
+	var background := str(_dialogue_meta().get("background",""))
+	return background if not background.is_empty() and ResourceLoader.exists(background) else _background_path()
 
 func _reward_art_icon(parent: Node, reward: Dictionary, edge: int) -> TextureRect:
 	return _skill_art_icon(parent, _present_abyss_reward(reward), edge)

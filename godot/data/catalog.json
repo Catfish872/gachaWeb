@@ -30,17 +30,25 @@
         "lamp_wraith",
         "furnace_guard",
         "furnace_cantor",
-        "cracked_puppet"
+        "cracked_puppet",
+        "wind_falcon",
+        "leaf_spirit",
+        "moss_climber",
+        "bridge_warden",
+        "songwing_attendant"
       ],
       "elite": [
         "dark_knight",
         "stone_golem",
-        "lamp_overseer"
+        "lamp_overseer",
+        "brokenbridge_hunter",
+        "windwheel_sentinel"
       ],
       "boss": [
         "boss_flame_lord",
         "boss_storm_witch",
-        "boss_hedor"
+        "boss_hedor",
+        "boss_highland_roc"
       ]
     },
     "rogue": {
@@ -423,12 +431,12 @@
           "name": "淬毒锋刃",
           "icon": "🌿",
           "target": "中毒构筑",
-          "description": "全队造成直接伤害后，有 25% 概率附加 1 层中毒，持续至战斗结束。每层每轮造成施加者攻击力 2% 的伤害；每多一层，中毒总伤害提高 10%。",
+          "description": "全队造成直接伤害后，有 20% 概率附加 1 层中毒，持续至战斗结束。每层每轮造成施加者攻击力 2% 的伤害；每多一层，中毒总伤害提高 10%。",
           "effects": [
             {
               "type": "applyStatusAfterDamage",
               "statusId": "poison",
-              "chance": 0.25,
+              "chance": 0.2,
               "duration": 2
             }
           ]
@@ -621,6 +629,208 @@
               "value": 15
             }
           ]
+        },
+        {
+          "id": "wind_opening_white",
+          "name": "破阵辨隙",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "tiya",
+            "lumi"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "damageVsStatus",
+              "statusId": "wind_armor",
+              "value": 0.14
+            }
+          ],
+          "sharedPoolId": "wind_core",
+          "description": "全队对破甲目标的本体直伤提高14%。",
+          "icon": "🌪️",
+          "target": "破甲构筑",
+          "iconPath": "res://assets/content_v280/icons/blessings/wind_opening_white.png"
+        },
+        {
+          "id": "wind_linked_blue",
+          "name": "连刃合击",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "tiya",
+            "lumi"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "windNativeDamage",
+              "value": 0.18
+            }
+          ],
+          "sharedPoolId": "wind_core",
+          "description": "全队普攻、战技和终结技的本体直伤提高18%。",
+          "icon": "🌪️",
+          "target": "破甲构筑",
+          "iconPath": "res://assets/content_v280/icons/blessings/wind_linked_blue.png"
+        },
+        {
+          "id": "wind_pierce_gold",
+          "name": "穿云余势",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "tiya",
+            "lumi"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "windGoldPierce",
+              "multiplier": 0.36
+            }
+          ],
+          "sharedPoolId": "wind_core",
+          "description": "一次行动本体命中同一目标至少两次后，若目标处于破甲，每份祝福追加一次36%攻击力的风贯穿追击。",
+          "icon": "🌪️",
+          "target": "破甲构筑",
+          "iconPath": "res://assets/content_v280/icons/blessings/wind_pierce_gold.png"
+        },
+        {
+          "id": "tiya_follow_white",
+          "name": "巡刃余响",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "tiya"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "windPrimaryAmp",
+              "value": 0.06666666666666667
+            }
+          ],
+          "description": "缇娅原生贯穿追击倍率每份增加4%攻击力，六命时为4.4%。",
+          "icon": "🌪️",
+          "target": "缇娅追击",
+          "iconPath": "res://assets/content_v280/icons/blessings/tiya_follow_white.png"
+        },
+        {
+          "id": "tiya_rhythm_blue",
+          "name": "疾行节律",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "tiya"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "skillTypeDamage",
+              "skillType": "normal",
+              "value": 0.2
+            },
+            {
+              "type": "skillTypeDamage",
+              "skillType": "skill",
+              "value": 0.12
+            }
+          ],
+          "description": "普攻本体伤害提高20%，战技本体伤害提高12%。",
+          "icon": "🌪️",
+          "target": "缇娅追击",
+          "iconPath": "res://assets/content_v280/icons/blessings/tiya_rhythm_blue.png"
+        },
+        {
+          "id": "tiya_follow_gold",
+          "name": "长风归刃",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "tiya"
+          ],
+          "characterId": "tiya",
+          "effects": [
+            {
+              "type": "windPrimaryAmp",
+              "value": 0.16666666666666666
+            }
+          ],
+          "description": "缇娅原生贯穿追击倍率每份增加10%攻击力，六命时为11%。",
+          "icon": "🌪️",
+          "target": "缇娅追击",
+          "iconPath": "res://assets/content_v280/icons/blessings/tiya_follow_gold.png"
+        },
+        {
+          "id": "lumi_duration_white",
+          "name": "弦印长留",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "lumi"
+          ],
+          "characterId": "lumi",
+          "effects": [
+            {
+              "type": "windArmorDuration",
+              "value": 1
+            }
+          ],
+          "description": "全队施加的破甲持续时间每份增加1回合。",
+          "icon": "🌪️",
+          "target": "露弥支援",
+          "iconPath": "res://assets/content_v280/icons/blessings/lumi_duration_white.png"
+        },
+        {
+          "id": "lumi_guard_blue",
+          "name": "风幕护行",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "lumi"
+          ],
+          "characterId": "lumi",
+          "effects": [
+            {
+              "type": "windArmoredGuard",
+              "value": 0.08
+            }
+          ],
+          "description": "破甲敌人造成的伤害额外降低8%。",
+          "icon": "🌪️",
+          "target": "露弥支援",
+          "iconPath": "res://assets/content_v280/icons/blessings/lumi_guard_blue.png"
+        },
+        {
+          "id": "lumi_open_gold",
+          "name": "百桥开阵",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "lumi"
+          ],
+          "characterId": "lumi",
+          "effects": [
+            {
+              "type": "enemyBattleStartStatus",
+              "statusId": "wind_armor",
+              "duration": 3,
+              "value": 0.35,
+              "sourcePolicy": "blessing"
+            },
+            {
+              "type": "battleStartStatus",
+              "statusId": "shield",
+              "duration": 2,
+              "value": 0.15
+            }
+          ],
+          "description": "开场对全体敌人施加35%破甲，持续3回合；全队获得15%最大生命护盾，持续2回合。",
+          "icon": "🌪️",
+          "target": "露弥支援",
+          "iconPath": "res://assets/content_v280/icons/blessings/lumi_open_gold.png"
         }
       ]
     }
@@ -1170,6 +1380,112 @@
         ]
       },
       "portrait": "assets/content_v270/portraits/selin_face.png"
+    },
+    "tiya": {
+      "id": "tiya",
+      "name": "巡岚·缇娅",
+      "title": "巡路信使",
+      "rarity": 5,
+      "element": "wind",
+      "role": "dps",
+      "baseStats": {
+        "hp": 1200,
+        "atk": 185,
+        "def": 75,
+        "spd": 112,
+        "cri": 0.18,
+        "criDmg": 1.65
+      },
+      "growthRate": {
+        "hp": 120,
+        "atk": 9,
+        "def": 4,
+        "spd": 0
+      },
+      "skills": [
+        "tiya_normal",
+        "tiya_skill",
+        "tiya_ult"
+      ],
+      "passiveId": "tiya_passive",
+      "passiveDesc": "行动结束时，对本次受到自身技能伤害的破甲目标追加攻击力60%的风属性贯穿追击。每个目标触发一次，追击无视防御且无法暴击。",
+      "color": "#6dd5c3",
+      "colorDark": "#153e40",
+      "synergyIds": [
+        "wind_duo"
+      ],
+      "description": "长风谷的巡路信使，常年沿着山间栈道递送家书、药物与求援消息。她熟悉沿途每一处避风的屋檐，也总记得问一声收信的人是否平安。",
+      "flavorText": "「山口的风已经转向了。我陪你走这一段，到了桥那头再歇一会儿。」",
+      "image": "assets/content_v280/characters/tiya.png",
+      "portrait": "assets/content_v280/portraits/tiya.png",
+      "portraitBackground": "res://assets/content_v280/backgrounds/wind_outpost.png",
+      "passiveIconPath": "res://assets/content_v280/icons/skills/tiya_passive.png",
+      "relicObjective": {
+        "type": "damage",
+        "label": "破甲追击",
+        "referenceStatuses": [
+          "wind_armor"
+        ],
+        "recommendedSets": [
+          {
+            "setId": "wind_blades",
+            "reason": "攻击加成与追击增伤配合缇娅的贯穿追击，强化对破甲目标的持续输出。"
+          }
+        ]
+      }
+    },
+    "lumi": {
+      "id": "lumi",
+      "name": "弦枝·露弥",
+      "title": "修桥师",
+      "rarity": 5,
+      "element": "wind",
+      "role": "support",
+      "baseStats": {
+        "hp": 1000,
+        "atk": 70,
+        "spd": 116,
+        "cri": 0.12,
+        "criDmg": 1.5,
+        "def": 80
+      },
+      "growthRate": {
+        "hp": 100,
+        "atk": 4,
+        "spd": 0,
+        "def": 4
+      },
+      "skills": [
+        "lumi_normal",
+        "lumi_skill",
+        "lumi_ult"
+      ],
+      "passiveId": "lumi_passive",
+      "passiveDesc": "自身存活时，全队对破甲目标伤害加深20%，破甲敌人对全队造成的伤害降低20%。",
+      "color": "#b9dda0",
+      "colorDark": "#203d35",
+      "synergyIds": [
+        "wind_duo"
+      ],
+      "description": "长风谷的修桥师，凭绳索与木架的振动寻找损坏的位置。她习惯在修好桥后亲自走过一遍，确认背着行李的旅人也能平稳通过。",
+      "flavorText": "「把手放在这根绳上，感觉到了吗？等它轻轻松下来，我们就一起过去。」",
+      "image": "assets/content_v280/characters/lumi.png",
+      "portrait": "assets/content_v280/portraits/lumi.png",
+      "portraitBackground": "res://assets/content_v280/backgrounds/rope_bridge.png",
+      "passiveIconPath": "res://assets/content_v280/icons/skills/lumi_passive.png",
+      "relicObjective": {
+        "type": "damage",
+        "label": "贯穿协同",
+        "referenceStatuses": [
+          "wind_armor"
+        ],
+        "recommendedSets": [
+          {
+            "setId": "wind_strings",
+            "reason": "露弥主动施加破甲时提高全队固有贯穿追击倍率，适合与缇娅组成协同队伍。"
+          }
+        ]
+      }
     }
   },
   "ElementNames": {
@@ -1363,6 +1679,20 @@
       "buff": {
         "c6_type": "selin_lantern",
         "c6_bonus": 0.6
+      }
+    },
+    "tiya": {
+      "label": "巡岚终式",
+      "desc": "原生贯穿追击倍率提高10%，基础倍率由60%提升至66%。",
+      "buff": {
+        "c6_type": "wind_primary_up"
+      }
+    },
+    "lumi": {
+      "label": "百桥同调",
+      "desc": "本人主动施加的破甲由35%提高至45%。",
+      "buff": {
+        "c6_type": "wind_armor_up"
       }
     }
   },
@@ -3031,6 +3361,1779 @@
         "text": "瑟琳提起铜灯，与三人一同走下山坡。街边飘来热汤的香气，等候的住户已经迎到了路口。",
         "portrait": null
       }
+    ],
+    "ch4_1_pre": [
+      {
+        "speaker": "narrator",
+        "text": "炉房恢复供火后，众人在灯镇多留了两日，陪瑟琳安顿住户，也一起回去看望了赫铎。清晨，小店门前已经摆好了出行的包裹。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "灯渠交给镇上的人照看了。赫铎昨天还记得我们，也听见了大家带去的问候。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "那就安心出发吧。你的行李放在这里，我们替你留了早饭。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "还有半篮热饼！昨晚那碗汤实在够分量，今天我得多走几段山路。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "瑟琳笑着坐下。店主正在门外清点空粮袋，听说他们要去山外，又向谷口张望了一会儿。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "运粮队原本前天就该回来，镇上一直在等消息。我们经过长风谷时，也替大家打听一下吧。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "镇口忽然传来急促的呼喊。一名扎着深棕发辫的女子扶着受伤车夫走上石阶，腰侧的信筒不断撞着栏杆。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "有人能帮忙吗？他的腿受伤了，需要找个地方坐下来！",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我来看看伤势。把他的手臂搭在我肩上，慢慢往屋檐下移动。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "narrator",
+        "text": "车夫背上的布包滑落在地，肉干散了一路。几只切风隼随即掠过低墙，锋利的翅缘直逼弯腰扶人的女子。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "姑娘，小心身后！旅行者，我们把这些家伙引到空地上，给他们让出进屋的路！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch4_1_post": [
+      {
+        "speaker": "narrator",
+        "text": "切风隼退向山林，店主扶着车夫在屋内坐下。艾拉清理他的伤口，瑟琳端来温水，缇娅这才把背上的行囊放下。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "谢谢你们。我叫缇娅，是长风谷的巡路信使。今天清早，我在断桥外侧找到他，其他人还留在谷里。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "wind_carter",
+        "text": "我们从高处运粮回来，半路遇上大风……车轮卡在栈道边，我摔到了下面的平台，缇娅绕下来才看见我。",
+        "portrait": null,
+        "speakerName": "车夫"
+      },
+      {
+        "speaker": "traveler",
+        "text": "同行的人有多少？你最后看见他们时，他们往哪边去了？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "wind_carter",
+        "text": "我们一共七个人。领队带着其他人往旧种圃避风，那里有木棚……驮兽也受了伤，走得很慢。",
+        "portrait": null,
+        "speakerName": "车夫"
+      },
+      {
+        "speaker": "tiya",
+        "text": "我原想用联络铃叫来修桥的人，可铃架被落石砸坏了。先把他送到这里，我才能放心回去找大家。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她拿出凹陷的铜铃，铃舌已经歪到一边。艾拉留意到她站起时微微侧身，鞋口的绷带透出一点血迹。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "你的脚踝也受伤了。我先替你包扎，进山时尽量走平稳的地方，我们会陪着你。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "selin",
+        "text": "我去拿包扎用品和饮水。店主愿意照顾这位车夫，也会请镇上的人准备接应。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "需要搬运的东西交给我！那几袋粮食能等，谷里的人可还饿着肚子呢。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "等用品备齐就出发。缇娅，你告诉我们沿路的情况，遇到难走的地方，大家一起想办法。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "tiya",
+        "text": "好。沿谷口向里走，第一段栈道还算完整。到了分岔处，我再找找他们留下的记号。",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_2_pre": [
+      {
+        "speaker": "narrator",
+        "text": "山路渐渐收窄，路边的积雪已经化成细小水流。车辙旁散着几只粮袋，半截车轴陷在湿泥里。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "就是这辆车。车夫常把信件绑在篷下，我过去找找，或许还有他们换路的消息。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "先看看前面的树根。那里有东西在动，旁边的落叶也聚到一起了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "苔甲攀兽从倾倒的树干后爬出，背甲几乎占满路口。卷叶灵盘旋着卷起粮袋，湿叶不断扑向众人的脸。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "车上的篷布缠在树根上，他们搬东西时会经过这里。我们得先清出一条能通行的路。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "这些树根干湿混在一起，火焰容易顺着篷布蔓延。旅行者，陪我从石坡那边绕过去！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "tiya",
+        "text": "我从另一边吸引攀兽。它转身很慢，等它离开路口，你们就能靠近那些卷叶灵。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "石坡上还有青苔，大家留意脚下。缇娅，靠近栏杆走，我会照应你。",
+        "portrait": "ayla",
+        "element": "water"
+      }
+    ],
+    "ch4_2_post": [
+      {
+        "speaker": "narrator",
+        "text": "落叶渐渐散开，众人将粮袋拖到路边。旅行者从车篷底下找出一只信筒，筒口还系着褪色的红绳。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "找到了！车夫替我带着这些信，外面的油布还裹得很紧。我把信筒收好，粮袋也能带走两只。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "这边的泥地有拖行痕迹，一直伸到旧桥那条路。他们应该把剩下的货物搬过去了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅蹲到路牌旁，拨开覆盖绳结的湿叶。她伸手扶住栏杆站起，受伤的脚踝却让她停了片刻。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "这个绳结是车队领队留下的，长绳朝着旧桥。他每次换路，都会给后面的人留下记号。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "先坐在这块石头上吧。刚才绕过石坡时，绷带又松了，我替你重新固定一下。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "tiya",
+        "text": "让大家跟着我停下来，真有些过意不去。平时走到这里，我已经能听见旧桥的铃声了。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "现在多了两袋粮食，总得给我找个结实的背法！你坐稳些，我们正好一起收拾。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "信筒我来带，放在灯罩旁边还能避些潮气。等遇见收信的人，再交还给你。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅望了望众人分开的行囊，轻轻应了一声。艾拉替她系好绷带，旅行者将较短的行杖递到她手边。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "谢谢。接下来沿着栏杆走，我记得桥头有一座避风棚，露弥修桥时常在那里歇脚。",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_3_pre": [
+      {
+        "speaker": "narrator",
+        "text": "旧桥横在两面山壁之间，一侧桥索垂入谷中。细长的弦声穿过风声，桥头的木架随着节拍缓缓停止摇晃。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "露弥！我们带了人手和绳索，你那边怎么样？",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "银灰短发的女子站在弦架旁，双手按住绷紧的弦线。两名行脚人正在临时铺好的窄板上挪动，脸色苍白。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "最后这段木板已经固定好了。两位看着脚下，沿着扶绳慢慢过来，我会一直守在这里。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "桥头还有守卫。它的铜眼一直对着他们，手臂上的红灯也亮起来了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "它还把断桥当作完整的通路，刚才一直在报超载。请先让行脚人走进石台，那里有厚墙遮挡。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "最后一名行脚人踏上石阶，瑟琳扶着他走到墙后。露弥扣紧铜钩，将临时桥索固定在石柱上。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "桥索稳住了，我能腾出手来。它举起重臂时会往前迈一步，大家留意桥头的空地。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "好，我们就在石台外面应付它！刚修好的桥，可得让它好好留下来。",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch4_3_post": [
+      {
+        "speaker": "narrator",
+        "text": "桥卫垂下重臂，桥头渐渐安静。露弥收拢弦架，先扶着两名行脚人走进避风棚，又查看了每一处临时绳结。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "棚里有干净的毯子，你们先坐下暖和一会儿。我叫露弥，是这段山路的修桥师，谢谢大家赶来帮忙。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "他们也在找运粮队。你在桥上守了这么久，有没有听见谷底的人呼喊？",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "听见了，声音从旧种圃那边传来。那两位行脚人也看见车队往下走，棚后的石阶还能过去。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们沿石阶下去。等找到车队，再一起从这边回来？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "这段临时窄桥能让人缓慢通过，可伤者和驮兽需要更宽的路。旁边那座升降桥一直悬在下面，得先查明风轮为什么停转。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "原来还有一座桥！我从高处跃过去倒容易，带着伤者回来，就得靠你的手艺了。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "lumi",
+        "text": "古人借谷里的上升气流转动风轮，再用绳轮牵动桥面。把风廊修好，车队和往后的旅人都能走这条路。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她抬手指向山壁上的转运平台，指间沾着磨出的血丝。缇娅接过她肩上的工具袋，放到棚门旁。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "一起去吧。你的手也该包扎了，我们把带来的东西分一分，再下石阶找人。",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_interlude_1": [
+      {
+        "speaker": "narrator",
+        "text": "避风棚里，旅行者把湿行囊排在长凳下。瑟琳将铜灯放到桌边，艾拉展开干净的布带，示意露弥把手伸过来。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "只是桥索磨破了一点皮，刚才一直顾着木架。缇娅，你的信筒扣带也快松开了，给我看看吧。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "你先让艾拉包扎。我现在连站起来，都会有人替我把凳子搬回来。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "等伤口稳妥了，大家走路才踏实。你的脚踝先垫高一些，吃完东西，我们再一起出发。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你们以前就认识？刚才听见弦声，缇娅一下就知道是谁。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "她每次经过都会带来消息。有时是山下的信，有时是前面哪座桥的木板松了，让我记得过去看看。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "还有热饼。只记得我催你修桥，也太委屈那些饼了。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "露弥笑着把包扎好的手翻过来，试了试手指，随后替信筒穿紧扣带。缇娅打开纸包，将几块有些变形的饼分给众人。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "轮到我干活了！石围炉里还有干柴，等火烧起来，湿衣服很快就能暖和。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "炉边留一点地方吧，这几根绳索也湿透了。慢慢烘干，回去还要用。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "交给我！这回连绳子上的小结都给你留得好好的。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "火焰落进炉中，比他掌心的光温和了许多。旅行者将信件按收信地点分装，露弥在灯下展开通往种圃的旧图。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "那两位行脚人吃过东西，就能从外侧石路回镇上报信。等我们找到车队，大家也能少担心一会儿。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "我给他们写张便条，镇上就知道我们走到哪里了。缇娅，你手里那块饼还热着，先吃吧。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "棚外的风继续穿过桥索，炉边的绳结渐渐干燥。缇娅坐稳了些，把吃剩的小半块饼仔细包好，收进容易够到的口袋。",
+        "portrait": null
+      }
+    ],
+    "ch4_4_pre": [
+      {
+        "speaker": "narrator",
+        "text": "石阶尽头是一片荒废的种圃，低矮木棚挨着背风的山壁。棚外传来驮兽不安的叫声，有人正用空木箱挡住破损的围栏。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "我回来了！跟我同行的车夫已经在镇上休息，大家先在棚里待着，我们带了吃的和药！",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "wind_caravan_leader",
+        "text": "你平安回来就好！这头驮兽腿上受了伤，我们刚想替它卸货，那些猎隼又飞下来了。",
+        "portrait": null,
+        "speakerName": "车队领队"
+      },
+      {
+        "speaker": "narrator",
+        "text": "一只断桥猎隼落在高架上，张开的翅膀遮住半面棚顶。它低下头盯住围栏，几只切风隼随之沿木棚盘旋。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "棚柱已经被撞歪了。我把侧面的支撑固定好，大家就能从背后的石墙边转移。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "受伤的人先沿墙退到里面。我会过去照看你们，驮兽身上的绳套也要松开一些。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "traveler",
+        "text": "猎隼抬起翅膀了，它在看围栏后的空隙。卡尔迪，我们过去把它引离木棚！",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "来这边！空地够宽，正好让你看看谁更有力气！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "tiya",
+        "text": "我会掩护侧面。露弥，等支撑固定好，就带大家往石墙边靠近！",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_4_post": [
+      {
+        "speaker": "narrator",
+        "text": "猎隼飞离种圃，木棚里的车队终于走到日光下。缇娅对照名册一个个询问，听见最后一声回应，才把攥紧的纸张展开。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "这里六个人，镇上还有一位，大家都找到了。木工师傅，你的手怎么也裹着布？",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "wind_woodworker",
+        "text": "搬车架时擦破了皮，已经包好了。你带来的那袋粮食正好，我们还想着把最后半袋留给伤者。",
+        "portrait": null,
+        "speakerName": "木工"
+      },
+      {
+        "speaker": "narrator",
+        "text": "艾拉在伤者身旁蹲下，替他换好沾湿的布带，又查看驮兽的腿。旅行者把补给递给领队，瑟琳陪着疲惫的车夫喝下温水。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "大家需要休息和进食，驮兽也要卸下重物。等回程的路修好，我们扶着伤者慢慢过去。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "wind_caravan_leader",
+        "text": "出事前，上方忽然吹下来一阵大风，把篷布全掀翻了。我每天经过都记风轮的位置，这几张纸或许有用。",
+        "portrait": null,
+        "speakerName": "车队领队"
+      },
+      {
+        "speaker": "lumi",
+        "text": "最后这张画的是向西偏转，可测风塔的旧图一直朝东。你当时是在桥面上，还是已经到了种圃？",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "wind_caravan_leader",
+        "text": "还在上面的货台。先是风铃响得乱了，接着绳轮开始打滑，我们才赶紧换路。",
+        "portrait": null,
+        "speakerName": "车队领队"
+      },
+      {
+        "speaker": "narrator",
+        "text": "露弥把记录按日期排好，伸手压平卷起的纸角。她望向种圃上方，半藏在树冠里的测风塔仍在断续鸣响。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "我想去塔里比一比值守记录，查清风轮转向的时间。这里的木棚已经加固好，我们会留下食物和饮水。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "通往塔里的小径就在后面。大家吃完先休息，我会把能回去的路找出来，再回来带你们。",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_5_pre": [
+      {
+        "speaker": "narrator",
+        "text": "测风塔的木门半掩着，细铃从塔顶垂到楼梯旁。众人沿石阶上行，鸣翼侍鸟的叫声在狭长的塔身里反复回荡。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "窗沿上那些鸟，每叫一声，外面的鸟群就聚过来一些。它们像是在等风铃回应。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "以前有人用侍鸟的鸣声判断风向，塔里的小铃会跟着转动。现在铃架卡住了，声音一直从同一侧传出来。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "失序桥卫转过铜铸的头颅，横臂挡住楼梯。它身后的记录板随着重臂震动，几张纸片滑到了水洼里。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "值守的人走前把记录挂在这里了。我从靠窗的地方过去，把纸收起来。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "窗下的木板已经泡湿。缇娅，沿着石阶靠近吧，我们替你挡住守卫。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "这一层都是旧木架，还是在门口对付它！旅行者，帮我看住那些绕过来的侍鸟。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "lumi",
+        "text": "我会让铃架安静下来。等它们分开，大家就容易看清守卫的动作了。",
+        "portrait": "lumi",
+        "element": "wind"
+      }
+    ],
+    "ch4_5_post": [
+      {
+        "speaker": "narrator",
+        "text": "铜铃渐渐停止晃动。露弥铺开随身旧图，旅行者把拾回的记录晾在石台上，按纸角的日期逐张摆好。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这里写着，融雪后下层水位连涨了几次。到这一天，上层风铃开始朝相反的方向转动。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "和领队记录的日期相同。你们看墙上的水痕，最新一道比原来的刻线高出了这么多。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "水退下去以后，泥还留在这里。下层的风门，会被冲来的东西卡住吗？",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "lumi",
+        "text": "有这个可能。旧图上，排水沟和通风口挨得很近，我们得下去看看现在的样子。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她将旧图边缘翻开，露出一处补画的石阶。旅行者从窗缝里取下一团湿木屑，木屑间缠着柔软的草茎。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这些细草一层层编在一起，像是巢里掉下来的。塔顶也有同样的东西。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "tiya",
+        "text": "我巡路时见过鸟群衔着草飞过这里，可这次连粗树枝也落进塔里了。上面也许又有变化。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "先把下层的情况查明，再去高处确认。我会把今天看到的水痕和杂物都标在图上。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "这里的值守记录帮上忙了。回去时也把新的情况告诉他们，下一次巡查就能早点留意。",
+        "portrait": "ayla",
+        "element": "water"
+      }
+    ],
+    "ch4_6_pre": [
+      {
+        "speaker": "narrator",
+        "text": "测风塔下方，导风廊的石栏有半截浸在水里。细碎的叶屑贴着水面漂动，到了廊尾，又被一股急风卷上穹顶。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "灯光只能照到前面几级台阶。旅行者，我把灯举高些，你留意脚边的石缝。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "这里还有检修用的扶绳。沿着绳子过去，应该能到前面的干平台。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "几只苔甲攀兽挤在平台中央，卷叶灵围着它们聚成漩涡。更深处的桥卫抬起重臂，脚下水花四溅。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "这些攀兽平时待在下层石缝里，现在都往高处聚集。我们得先清出落脚的地方，才能靠近风门。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "那就在干平台上应付它们。艾拉，石阶边的水流很急，大家先跟着绳索移动！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我会看着后面。瑟琳，把灯交给我一会儿，你先握稳扶绳。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "tiya",
+        "text": "前面有一段宽台，我过去吸引攀兽。旅行者，等它们转向时，我们一起把路口让出来。",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_6_post": [
+      {
+        "speaker": "narrator",
+        "text": "平台上的积水渐渐平静，露弥沿铜轨摸索到风门下方。一截连着根须的倒木横在门缝中，后面的排水沟堆满碎石。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "找到了。倒木卡住了风门，水从排水沟溢出来，连检修台都淹过了。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "叶屑全被卷进上面的窄道。这里堵住以后，气流也绕到高处去了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "tiya",
+        "text": "那就先移开这截木头吧。车队还在等，风轮转起来，升降桥就能重新升上去。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "露弥把一条薄纱系在测风杆上。她轻轻推开旁边的小叶板，薄纱猛地绷直，廊顶随即传来沉闷的震响。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "先等等，上面有东西挡着出口。下层风门一开，积在这里的风会一起涌上去，我们得先看看风庭的情况。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "谷底的木棚还住着伤者。如果上面的强风再次压下来，他们很难及时转移。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "tiya",
+        "text": "我刚才只想着让桥快些升起来……好，我们先去高处确认。我沿途记下能让车队歇脚的地方。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "谢谢。这里的卡木位置已经记清了，等回来的时候，我会带齐需要的工具。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "众人顺着检修台退回石阶，将风门的位置和水深标在旧图旁。瑟琳在入口留下灯号，提醒后来的人从高处绕行。",
+        "portrait": null
+      }
+    ],
+    "ch4_interlude_2": [
+      {
+        "speaker": "narrator",
+        "text": "回到测风塔下的干燥石廊，瑟琳取出一路护在灯旁的信筒。缇娅逐封检查外面的油布，在一只受潮的信封前停了下来。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "封口还好，只是外面湿了。这封寄给风谷的木工师傅，我换块干布，再放进筒里。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "是刚才在种圃帮忙修棚子的那位？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "tiya",
+        "text": "嗯，他女儿住在山外。这些年，我替他们送过不少信，每次路过木工棚，他都会出来问问。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她从衣袋里取出叠好的干布，垫在信封下面，把翘起的油布重新包紧。露弥将铜灯挪近些，让她看清封口。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "去年山路封过一阵，有位收信的人天天等在屋檐下。后来我送到平安信，他当着我的面就哭了。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "从那以后，只要信筒里还有东西，我就想再走一段。也许早点送到，那个人今晚就能睡个好觉。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "木工师傅刚才还问起你。他说你脚上有伤，等你回来，他想替你的行杖换个合适的把手。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "他还惦记着这个啊……那这封信，我得亲手交给他，顺便问问他女儿最近过得怎么样。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "等会儿我回种圃照看伤者，也会替你告诉他，你一路都把信保管得很好。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "traveler",
+        "text": "下一次送信时，也给自己留一点歇脚的时间吧。收信的人见到你平安，才好坐下来慢慢说。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅将包好的信放回筒内，扣紧露弥修过的扣带。她拿出先前留下的小半块饼，朝同伴笑了笑，坐到避风的石阶上。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "那就再坐一会儿。等大家吃好，我们一起去看看上面的路。",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_7_pre": [
+      {
+        "speaker": "narrator",
+        "text": "石阶绕过树冠，云影从众人脚下缓缓移过。瑟琳停在栏杆旁，看见山外的河流与村落，握着铜灯的手稍稍放松。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "原来在这里，能看见那么远的地方。以前听旅人提起长风谷，我总想着，有机会一定亲自过来。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "tiya",
+        "text": "天气好的时候，还能看见最远那座村子的白屋顶。等山路修好了，我带你从外侧的平台看看。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "前方忽然响起尖锐的鸟鸣。几只切风隼挤在狭窄崖台上，鸣翼侍鸟来回盘旋，连落脚的枯枝都在争抢。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "它们挤得太近了。右边明明还有山壁，为什么都朝这处平台飞过来？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "那边的草全被压在石缝上，风比这里强得多。先让大家站到宽一些的地方，我再看看气流往哪里去。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "我们已经站得够稳了！缇娅，照看好栏杆这边，我和旅行者把鸟群引向外面的空地。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "ayla",
+        "text": "幼鸟的叫声好像就在附近……大家留意巢的位置，我会看着后面。",
+        "portrait": "ayla",
+        "element": "water"
+      }
+    ],
+    "ch4_7_post": [
+      {
+        "speaker": "narrator",
+        "text": "鸟群退开后，石栏下露出一片浅灰羽毛。缇娅捡起其中一根，羽轴还很柔软，末端留着细小的绒毛。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "这是高岭风鹫的幼羽。它们平时住在更高处，前几次经过，我还能看见它们顺着谷风练习飞行。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "山台深处，一只幼鸟扑腾着翅膀跃过石缝，钻进新堆起的巢材。高处传来一声长鸣，幼鸟随即安静下来。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "它们把巢搬到风庭边上了。这些树枝也很新，折断的地方还带着青色。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "下层堵塞后，气流绕过窄道，直接冲向原来的巢地。它们可能就是那时迁过来的，风门和风轮都得一起调整。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "那声长鸣是成鸟在回应。我们靠近巢时，它一定会过来保护幼鸟，得给它们留下能离开的通路。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "幼鸟已经能在石台间短距离飞行。等高处的风平稳些，它们应该就能跟着成鸟回去了。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "selin",
+        "text": "我们可以沿外侧石阶上去，和巢隔开一些。铜灯也放低些，让它们慢慢适应有人经过。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅将羽毛放回巢边，往后退开几步。露弥把原巢的位置记在图上，众人沿着远离鸟巢的石阶走向风轮高台。",
+        "portrait": null
+      }
+    ],
+    "ch4_8_pre": [
+      {
+        "speaker": "narrator",
+        "text": "高台中央，巨大的风轮倾斜着转过半圈，又在刺耳的摩擦声中停住。旋臂护桥机拖着绷紧的铜链，反复牵动同一根横轴。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "它还在执行升桥的指令，绳轮却卡住了。这样继续拉紧，连旁边完好的桥索也会磨断。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "它每次转动旋臂，外壳上就亮起一层光。那层光也在保护风轮的连接处。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "tiya",
+        "text": "右边有维护台，我能从那里靠近它。露弥，你把工具准备好，等它停下来就能查看横轴。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "维护台的木板翘起来了，从石栏内侧过去更稳妥。我会用弦架牵住松脱的铜链，给你留出落脚的地方。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "护桥机的旋臂缓缓扬起，铜链在高台上拖出一道弧线。众人退到石柱外侧，避开横轴扫过的方向。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "这家伙连桥索都拽紧了！旅行者，等旋臂落下来，我们就一起应付它。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "tiya",
+        "text": "我看清它的落点了。大家照应着露弥，工具台就在我们身后！",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_8_post": [
+      {
+        "speaker": "narrator",
+        "text": "旋臂停在石台旁，铜链终于松弛。露弥拆开绳轮外面的铜盖，从齿轮之间取出一大团缠紧的根须。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "就是它们把绳轮卡住了。这些细根和下层倒木上的一样，外面还裹着风廊里的泥砂。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "融雪把倒木和碎石带进下层，这些细根应该是被改道的气流卷上来的。风门堵住，风轮这边也跟着卡住了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "嗯，现在两处的痕迹能对上了。横轴还完好，清掉根须后，可以由我们慢慢调整。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "从这里能看见种圃。我去最高处引开风鹫，你们把桥升起来，车队就能趁这个时候通过。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "缇娅，先来看看这面导风帆。现在的角度会把风压向谷底，我们得等车队离开下面的平台，再逐步调整。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅握着栏杆望向木棚，脸上的急切慢慢收敛。旅行者在工具台上展开实测图，将沿路见过的石阶位置一一指给她看。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "从种圃到这里，还有几处完整的平台。把他们转移到稳固的地方，再一起动手，我们现在就来安排。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "好。我也需要有人在下层调节风门，和高处的导风帆互相配合。大家把手里的情况都说一说吧。",
+        "portrait": "lumi",
+        "element": "wind"
+      }
+    ],
+    "ch4_interlude_3": [
+      {
+        "speaker": "narrator",
+        "text": "众人围到工具台旁，缇娅用行杖指向种圃上方的宽台。露弥沿着实测图补画绳轮与风门，瑟琳将铜灯移到两人之间。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "我担心天色晚了，伤者会更难走。刚才从这里看见木棚，我就想尽快把风鹫引开。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "我也想让他们早点回去。以前有一次，我照着旧图带人走捷径，到了河边才发现桥墩被新涨的水淹了。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "那时候同行的人已经很累，我们又沿原路走了很久。这次我想把大家现在能走的路看清楚，再决定怎么过去。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "今天我们走过的这条石阶还完整。先把车队带到岩壁下的宽台，那里能避开谷底的风。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我回种圃照看伤者，陪他们一起上去。木工师傅和两位车夫还能帮忙，驮兽身上的东西也可以分开搬运。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "tiya",
+        "text": "我跟你们回去，把每一个人都带到宽台上。等人数清点好，我再来高处看守导风帆。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "好。下层的风门由我来调，旅行者和卡尔迪帮忙移开卡木。我们先让积水流出去，再一点点恢复气流。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "selin",
+        "text": "我沿石阶放好灯号，再陪车队走到宽台。确认大家到齐后，我会连着遮亮三次铜灯，让你们从下层也能看见。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "traveler",
+        "text": "收到灯号以后，我们才开始调整风门。缇娅在高处留意风向，发现变化就让中间平台的人传话。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "说好了！那些倒木我来搬，大家离开谷底以后，我们把这条路慢慢修好。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "露弥从工具袋里取出两套木楔，交给缇娅一套，又在图上圈出每次调整后应当停住的位置。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "这些木楔能暂时固定导风帆。每调好一处，就等下层回应，我们一起确认桥索的松紧。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "记住了。等大家都到了桥的另一头，我也要跟着他们坐下来，好好歇一会儿。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "到时候我会记得提醒你。现在先回种圃吧，他们看见我们一起回来，一定会安心些。",
+        "portrait": "ayla",
+        "element": "water"
+      }
+    ],
+    "ch4_9_pre": [
+      {
+        "speaker": "narrator",
+        "text": "车队开始沿石阶转移。先前回镇报信的行脚人带来了两名检修工，他们背着绳索赶到汇合处，跟着露弥和旅行者重新走进下层风廊。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "你们沿扶绳把工具送到检修台，就在石门后等候。前面的水还很深，我们先过去查看。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "瑟琳的灯号还在石阶上移动。先把闸口周围清理好，等大家到了宽台，再调整风门。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "侧渠里涌出一阵急风，苔甲攀兽沿墙根爬向检修台。几团卷叶灵从水面升起，裹着碎枝堵住石门前的空隙。",
+        "portrait": null
+      },
+      {
+        "speaker": "wind_repair_worker",
+        "text": "它们又挤过来了！刚才我们抬工具的时候，侧面的石缝还露在外面。",
+        "portrait": null,
+        "speakerName": "检修工"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "你们先退到门后，站稳脚步！旅行者，陪我把它们引到宽台外侧，给搬工具的人留下地方。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "lumi",
+        "text": "我把弦架固定在铜轨上，能替大家分开迎面的气流。靠近闸口时，留意脚边的碎石。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那就从石门这边开始。露弥，我们会照看好检修台，你安心准备工具。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch4_9_post": [
+      {
+        "speaker": "narrator",
+        "text": "检修台清理出来后，露弥带着检修工移开排水沟里的碎石。积水顺着重新露出的沟槽流向下游，倒木的根部渐渐显出来。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "绳索已经系在石柱上了。大家沿着这边一起拉紧，倒木就能慢慢离开铜轨。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "还有几根枯根缠着旧木桩。我把周围杂物移开，卡尔迪，你能让火焰只沿着这几处过去吗？",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "看我的！旁边还有这么多绳子，我可记得清楚。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "他蹲在清出的空地旁，将掌心的火焰收拢成细细一束。枯根逐段断开，旅行者和检修工拉动绳索，把倒木挪到石墙边。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "高处的灯光连续明灭了三次。片刻后，平台上传来传话声，车队六人和驮兽都已抵达宽台，艾拉正在照看伤者。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "大家已经到齐了。现在把风门开到第一道刻线，等高处回应，我们再继续调整。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "门轴动起来了……风正沿着正面的通道往上走。下面的叶屑也开始散开了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅的回应经平台一层层传下，导风帆已经稳住。露弥让两名检修工守着木楔，亲自沿铜轨查看每一处接缝。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "这里能维持住了。两位照着刻线慢慢调节，升桥完成前守在这里，我们去上面查看绳轮。",
+        "portrait": "lumi",
+        "element": "wind"
+      }
+    ],
+    "ch4_10_pre": [
+      {
+        "speaker": "narrator",
+        "text": "上升气流重新推起风轮，沉在谷中的吊桥缓缓升到转运平台。缇娅沿侧梯下来，与宽台上的艾拉和瑟琳会合，朝赶来的同伴挥了挥手。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "大家都在这里，伤者也休息过了。我先陪露弥过去检查桥面，等绳索稳住，再请他们过来。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我会在石墙旁陪着大家。旅行者，刚才在下面搬东西，你的手也擦伤了，等会儿让我看看。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "traveler",
+        "text": "好。桥边又有守卫醒过来了，先请大家留在平台上。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "两具失序桥卫从桥楼中转身，铜眼亮起红光。桥面还空着，它们却反复发出超载的警鸣，重臂正对着升起的通道。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "旧指令还留在里面。我们先让它们停止行动，才能重新校准桥面的承重装置。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "好不容易把桥升起来了，这次可得让大家顺顺当当地走过去！旅行者，我们从桥楼前面靠近。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "我把铜灯挂在平台内侧，车队的人沿着灯光等候。你们留意桥索，刚才那一段还在晃动。",
+        "portrait": "selin",
+        "element": "fire"
+      }
+    ],
+    "ch4_10_post": [
+      {
+        "speaker": "narrator",
+        "text": "桥卫安静下来，露弥打开桥楼侧面的检修盖，将承重指针拨回空载的位置。她背起工具，沿着桥面完整走过一遍，又在中央停下来检查木板。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "可以通行了。大家把手放在扶绳上，前后留一点距离，我会在这一头照应。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "山口的风已经转向了。我陪你走这一段，到了桥那头再歇一会儿。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她扶住受伤车夫的手臂，配合着他的步子向前移动。艾拉陪在另一侧，旅行者和瑟琳跟着剩下的车队，把驮兽慢慢带过吊桥。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "六个人都过来了，驮兽也到了。领队，大家的行李还要再核对一遍吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "wind_caravan_leader",
+        "text": "随身的东西都在。种圃里还有些货物，等大家养好精神，再回来搬运就行。",
+        "portrait": null,
+        "speakerName": "车队领队"
+      },
+      {
+        "speaker": "narrator",
+        "text": "露弥确认风轮运转平稳，朝下层传去固定风门的消息。两名检修工装好锁销，沿侧阶回到桥头，与众人一起走向谷口。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "镇上的接应队就在外驿。我已经把伤者的情况告诉他们，房间和热水都准备好了。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "外驿屋檐下，最先获救的车夫拄着行杖迎出几步。看见同伴，他高高举起手，车队领队也笑着喊出了他的名字。",
+        "portrait": null
+      },
+      {
+        "speaker": "wind_carter",
+        "text": "我听见桥铃响了，就请人扶我到这里等着。你们总算回来了，屋里给大家留着热饭！",
+        "portrait": null,
+        "speakerName": "车夫"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅把伤者交给接应的人，终于在门边的长凳上坐下。艾拉替旅行者处理手上的擦伤，露弥则摊开图纸，圈出风庭尚待检修的部分。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "升降桥已经能缓慢通行。要恢复日常运货，还得清理高处的导风栅，让风轮在大风里也能保持平稳。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "tiya",
+        "text": "等大家吃好，我和你一起过去。这回车队有人照顾，我们可以把剩下的地方仔细查看一遍。",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_11_pre": [
+      {
+        "speaker": "narrator",
+        "text": "外驿的伤者安顿好后，艾拉收起药袋，重新跟上同伴。两名检修工带着备用导风帆，一行人沿外侧石阶走回高处风庭。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "接应的人已经安排车队回镇。伤者也吃过东西了，接下来，我陪你们把这里照看好。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "traveler",
+        "text": "前面的导风栅堆着很多树枝。风从中间挤出来，连扶栏都在发抖。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "几只鸣翼侍鸟停在栅顶，叫声引来盘旋的断桥猎隼。检修工刚把导风帆靠近石墙，猎隼就沿外廊俯冲下来。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "两位把工具放到石柱后面，从这里能退回桥头。我们会把猎隼引离外廊，再请你们过来安装。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "幼鸟的巢在里面，我们从外侧清理散落的枝条。先让这几只盘旋的鸟退开，木架才能平稳放下。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "这回头顶也有木架！我就在石柱旁等它过来，大家看着它收拢翅膀的方向。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "selin",
+        "text": "我陪检修工往后退一些。旅行者，靠近栅口时小心，那里的风一直往侧面冲。",
+        "portrait": "selin",
+        "element": "fire"
+      }
+    ],
+    "ch4_11_post": [
+      {
+        "speaker": "narrator",
+        "text": "外廊重新安静下来，检修工将备用导风帆搬到铜架旁。露弥逐处检查转轴，缇娅则沿侧面的短阶走上一处开阔山台。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "露弥，这边可以看见原来的巢地！山台和风庭之间很宽，鸟群能从这里飞出去。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "我试过转轴了，三片导风帆都能分开调整。等乱流散开，就可以逐扇放开，让气流朝原来的高处延伸。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那就把外侧通路留给鸟群。维修的人在石廊内侧等候，我们从中央靠近风鹫。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "风庭深处传来沉重的振翅声，幼鸟沿巢边扑腾了一小段。缇娅蹲下查看台面的落脚处，用红绳在栏柱上系了一个醒目的结。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "我会在这里给你示意。看见我举起短刃，就说明外侧的路已经让开，你可以调整第一片导风帆。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "好。等弦架连续响两声，气流就稳定了，你再往前移动。我会一直看着你的落点。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我和瑟琳在桥头接应。大家先歇一会儿，把手上的伤口和绳扣重新检查好。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "那我先把备用绳索搬到石廊里。等回来时，咱们就沿着刚修好的桥下山！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch4_interlude_4": [
+      {
+        "speaker": "narrator",
+        "text": "风庭下方的桥口，瑟琳挑出一盏铜灯，挂在刚修好的栏柱上。灯罩被阵风吹得轻响，里面的火苗贴着玻璃摇晃。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "回来的时候天色会暗，我想在这里留一盏灯。可山口的风比灯镇大得多，火苗一直往旁边倒。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "lumi",
+        "text": "让我看看灯架。这里加一片弯着的罩板，风就会从旁边绕过去，灯也能挂得更稳些。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她从工具袋里取出薄铜片，顺着灯架弯出一道弧面。缇娅递来备用红绳，将绳尾系在铜灯下方。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "这样远远就能认出来了。天亮时看红绳，天黑时看铜灯，后来的人也好找到桥口。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你们都习惯给路过的人留记号。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "selin",
+        "text": "以前老师会在桥头等我，现在我们走得远了，沿路也总有人替大家修好木板、留下扶绳。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "艾拉走到露弥身旁，替她换下手指上沾灰的布带，又弯腰检查缇娅的脚踝。缇娅扶着栏杆，很配合地抬起一只脚。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "这回我坐得住，也走得慢了些。过桥时那位车夫还问，平时是不是也有人催我歇脚。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "看来大家想到一处去了。伤口已经好多了，最后这一段，我们仍旧一起慢慢过去。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "露弥，木架都在石廊那边吧？我活动一下火焰，等会儿站到风庭中央去。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "lumi",
+        "text": "嗯，备用帆也收妥了。你站的那块石台很宽，我会把侧面的风引开，大家都能看清前面的动静。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "卡尔迪掌中的火焰轻轻升起，桥口的铜灯也渐渐稳定。瑟琳试了试新装的灯罩，随后转过身，与等候的同伴一起走向风庭。",
+        "portrait": null
+      }
+    ],
+    "ch4_12_pre": [
+      {
+        "speaker": "narrator",
+        "text": "云巢风庭中央，高岭风鹫缓缓展开双翼，庞大的身影遮住后方的幼鸟。它朝踏入石台的众人发出长鸣，爪尖紧紧扣住铜架。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "它在守着身后的巢。我们站在中央，给外侧山台留出空地，等气流稳定了，它们就能朝高处离开。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "风鹫猛地振翅，左右两处气流随之聚拢。一处托起碎石不断上升，另一处贴着石台横向旋转，把导风帆压在铜架上。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "两边的风场把导风帆挡住了。我们得分别让它们散开，露弥才能调整后面的铜架。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "lumi",
+        "text": "我准备好了。每次有一处风场散开，我就把对应的导风帆固定住，让平稳的气流慢慢通过。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "ayla",
+        "text": "它的翅膀又抬高了，石台上的碎叶正在往中间聚集。大范围的强风快要压下来，大家留意前面的变化。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "看见了！旅行者，我来吸引正面的注意，你照应两边的同伴。等它俯冲过来，我们再一起应付！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅抽出一长一短的弧刃，沿石台站到露弥看得见的位置。露弥按住弦架，侧面的薄纱缓缓指向空旷的山台。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "这段路我看清楚了。露弥，我会等你的弦声，大家一起让风庭重新通畅！",
+        "portrait": "tiya",
+        "element": "wind"
+      }
+    ],
+    "ch4_12_post": [
+      {
+        "speaker": "narrator",
+        "text": "最后一处乱流渐渐散开，高岭风鹫收住俯冲的势头，沿着外侧山台展开双翼。缇娅抬起短刃，露弥随即调整最后一片导风帆。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "气流已经平稳了。大家往石廊这边靠近，把外侧通路留给它们。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "弦架响起两声清亮的回音，风庭里的碎叶沿同一方向缓缓升起。风鹫绕过山台盘旋一圈，低头朝巢中的幼鸟鸣叫。",
+        "portrait": null
+      },
+      {
+        "speaker": "ayla",
+        "text": "它在等幼鸟跟上。那只小的还站在巢边，我们再往后退一些。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "narrator",
+        "text": "幼鸟接连跃出巢沿，顺着重新恢复的上升气流拍动翅膀。最小的一只在半空晃了晃，成鸟放缓速度，陪着它飞向高处。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "它们回到原来的山壁上了……那边还有完整的巢架，能好好歇息一阵。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "风轮也转稳了。等工人清理好散落的巢材，这条路就能恢复往常的样子。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "露弥带着检修工检查铜架，给每一处调整好的刻线留下标记。众人沿桥下山，经过桥口时，铜灯和红绳都还稳稳留在原处。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "回去以后，我想把今天的事告诉赫铎。灯镇外面还有这样的山谷，也有许多人每天照看着经过这里的旅人。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "也告诉他，咱们今天修好了一座大桥！连绳子上的小结都还好好的，露弥可以作证。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "次日清晨，露弥背着工具陪检修工试走全线，又看着一辆载粮车缓缓经过升降桥。风轮平稳转动，旧种圃里的货物也陆续运回灯镇。",
+        "portrait": null
+      },
+      {
+        "speaker": "lumi",
+        "text": "这份是修好的图纸，风门的刻线和排水沟都标清楚了。往后融雪时多查看这几处，有变化就记在值守册上。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅在外驿向同僚交清巡路记录，随后走到木工身旁，将那封重新包好的家书递给他。木工看清信封上的字，先笑了，又认真向她道谢。",
+        "portrait": null
+      },
+      {
+        "speaker": "wind_woodworker",
+        "text": "我女儿的信到了。等我读完，也给她回一封，告诉她粮食运回来了，我也平平安安地回家了。",
+        "portrait": null,
+        "speakerName": "木工"
+      },
+      {
+        "speaker": "tiya",
+        "text": "好，回信交给接班的信使就行。我把你的地址核对过了，他会在老地方等你。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "narrator",
+        "text": "傍晚，七名同行者都已回到镇上，伤者也住进安静的房间。外驿摆开长桌，店主端来热饭，木工将换好把手的行杖放到缇娅身旁。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "巡路已经交接好了。我想陪你们再往山外走走，看看那些写在信封上的地方，也多认识几条能平安回来的路。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "lumi",
+        "text": "我也愿意同行。图纸交给了检修的人，沿路还有别的桥，或许也有等着修理的地方。",
+        "portrait": "lumi",
+        "element": "wind"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那就一起出发吧。今晚先把饭吃好，明天我们再商量往哪里走。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "瑟琳把铜灯放在长桌中央，艾拉替刚坐下的同伴添好热汤。最先获救的车夫说起清早听见桥铃的那一刻，身旁的人纷纷接上话来。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "这回可得慢慢讲！从桥底到风庭，大家都有一段好故事。来，先给缇娅和露弥腾两个位置！",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅将行杖靠在桌边，露弥放下工具袋，在同伴身旁坐好。窗外的风穿过屋檐，长桌上的饭菜还冒着热气，平安回来的旅人终于有时间说完自己的经过。",
+        "portrait": null
+      }
     ]
   },
   "EnemyData": {
@@ -3576,6 +5679,444 @@
         "def": 25,
         "spd": 80
       }
+    },
+    "wind_falcon": {
+      "id": "wind_falcon",
+      "name": "切风隼",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 1900,
+        "atk": 145,
+        "def": 60,
+        "spd": 125
+      },
+      "abyssBaseStats": {
+        "hp": 420,
+        "atk": 80,
+        "def": 25,
+        "spd": 115
+      },
+      "skills": [
+        "wind_falcon_dive",
+        "wind_falcon_peck"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/wind_falcon.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/wind_outpost.png",
+        "res://assets/content_v280/backgrounds/scattered_trail.png",
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "thunder_hawk",
+      "abyssMinFloor": 4
+    },
+    "leaf_spirit": {
+      "id": "leaf_spirit",
+      "name": "卷叶灵",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 2200,
+        "atk": 130,
+        "def": 70,
+        "spd": 95
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 50,
+        "def": 25,
+        "spd": 85
+      },
+      "skills": [
+        "leaf_spirit_flutter",
+        "leaf_spirit_twig"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/leaf_spirit.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/scattered_trail.png",
+        "res://assets/content_v280/backgrounds/flooded_gallery.png"
+      ],
+      "balanceReference": "goblin"
+    },
+    "moss_climber": {
+      "id": "moss_climber",
+      "name": "苔甲攀兽",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 3000,
+        "atk": 125,
+        "def": 115,
+        "spd": 68
+      },
+      "abyssBaseStats": {
+        "hp": 500,
+        "atk": 55,
+        "def": 60,
+        "spd": 60
+      },
+      "skills": [
+        "moss_climber_ram",
+        "moss_climber_brace"
+      ],
+      "aiPattern": "defensive",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/moss_climber.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/scattered_trail.png",
+        "res://assets/content_v280/backgrounds/sheltered_nursery.png",
+        "res://assets/content_v280/backgrounds/flooded_gallery.png"
+      ],
+      "balanceReference": "ice_wolf",
+      "abyssMinFloor": 4
+    },
+    "bridge_warden": {
+      "id": "bridge_warden",
+      "name": "失序桥卫",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 2800,
+        "atk": 155,
+        "def": 100,
+        "spd": 80
+      },
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 35,
+        "spd": 75
+      },
+      "skills": [
+        "bridge_warden_warning",
+        "bridge_warden_heavy",
+        "bridge_warden_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/bridge_warden.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/rope_bridge.png",
+        "res://assets/content_v280/backgrounds/wind_tower.png",
+        "res://assets/content_v280/backgrounds/flooded_gallery.png"
+      ],
+      "balanceReference": "goblin",
+      "actionCycle": [
+        "bridge_warden_warning",
+        "bridge_warden_heavy",
+        "bridge_warden_strike"
+      ]
+    },
+    "songwing_attendant": {
+      "id": "songwing_attendant",
+      "name": "鸣翼侍鸟",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 1900,
+        "atk": 125,
+        "def": 65,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 25,
+        "spd": 95
+      },
+      "skills": [
+        "songwing_hymn",
+        "songwing_peck"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/songwing_attendant.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/wind_tower.png",
+        "res://assets/content_v280/backgrounds/windwheel_platform.png",
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "furnace_cantor",
+      "abyssMinFloor": 4
+    },
+    "brokenbridge_hunter": {
+      "id": "brokenbridge_hunter",
+      "name": "断桥猎隼",
+      "icon": "✦",
+      "type": "elite",
+      "element": "wind",
+      "baseStats": {
+        "hp": 7600,
+        "atk": 230,
+        "def": 115,
+        "spd": 120
+      },
+      "abyssBaseStats": {
+        "hp": 1100,
+        "atk": 90,
+        "def": 85,
+        "spd": 105
+      },
+      "skills": [
+        "brokenbridge_warning",
+        "brokenbridge_pursuit",
+        "brokenbridge_cut"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/brokenbridge_hunter.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/sheltered_nursery.png",
+        "res://assets/content_v280/backgrounds/rope_bridge.png",
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "dark_knight",
+      "actionCycle": [
+        "brokenbridge_warning",
+        "brokenbridge_pursuit",
+        "brokenbridge_cut"
+      ]
+    },
+    "windwheel_sentinel": {
+      "id": "windwheel_sentinel",
+      "name": "旋臂护桥机",
+      "icon": "✦",
+      "type": "elite",
+      "element": "wind",
+      "baseStats": {
+        "hp": 8600,
+        "atk": 210,
+        "def": 145,
+        "spd": 75
+      },
+      "abyssBaseStats": {
+        "hp": 1200,
+        "atk": 80,
+        "def": 100,
+        "spd": 70
+      },
+      "skills": [
+        "windwheel_warning",
+        "windwheel_sweep",
+        "windwheel_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/windwheel_sentinel.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/windwheel_platform.png",
+        "res://assets/content_v280/backgrounds/rope_bridge.png"
+      ],
+      "balanceReference": "dark_knight",
+      "actionCycle": [
+        "windwheel_warning",
+        "windwheel_sweep",
+        "windwheel_strike"
+      ],
+      "expeditionAI": {
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
+      }
+    },
+    "boss_highland_roc": {
+      "id": "boss_highland_roc",
+      "name": "高岭风鹫",
+      "icon": "✦",
+      "type": "boss",
+      "element": "wind",
+      "baseStats": {
+        "hp": 22000,
+        "atk": 290,
+        "def": 145,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 5500,
+        "atk": 140,
+        "def": 55,
+        "spd": 100
+      },
+      "skills": [
+        "roc_warning",
+        "roc_gale",
+        "roc_talon"
+      ],
+      "aiPattern": "boss",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/boss_highland_roc.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "boss_storm_witch",
+      "isBoss": true,
+      "phaseThreshold": 0.5,
+      "phase2Skills": [
+        "roc_warning_high",
+        "roc_storm",
+        "roc_dive"
+      ],
+      "actionCycle": [
+        "roc_warning",
+        "roc_gale"
+      ],
+      "phase2ActionCycle": [
+        "roc_warning_high",
+        "roc_storm"
+      ],
+      "expeditionAI": {
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
+      },
+      "abyssAttachments": []
+    },
+    "windfield_updraft": {
+      "id": "windfield_updraft",
+      "name": "上升风场",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 2500,
+        "atk": 1,
+        "def": 75,
+        "spd": 90
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      },
+      "skills": [
+        "windfield_updraft_feed"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/windfield_updraft.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "furnace_lamp",
+      "encounterAttachment": true
+    },
+    "windfield_crosswind": {
+      "id": "windfield_crosswind",
+      "name": "横切风场",
+      "icon": "✦",
+      "type": "normal",
+      "element": "wind",
+      "baseStats": {
+        "hp": 2500,
+        "atk": 1,
+        "def": 75,
+        "spd": 90
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      },
+      "skills": [
+        "windfield_crosswind_guard"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#9bd8bd",
+      "portrait": "res://assets/content_v280/enemies/windfield_crosswind.png",
+      "environmentTheme": "windpass",
+      "abyssBackgrounds": [
+        "res://assets/content_v280/backgrounds/cloud_nest.png"
+      ],
+      "balanceReference": "furnace_lamp",
+      "encounterAttachment": true
     }
   },
   "EnemySkillData": {
@@ -4095,13 +6636,383 @@
       ],
       "cooldown": 0,
       "animation": "fireball"
+    },
+    "wind_falcon_dive": {
+      "name": "切风俯冲",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.1,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "wind_falcon_peck": {
+      "name": "掠羽啄击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.9,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 1,
+      "animation": "wind"
+    },
+    "leaf_spirit_flutter": {
+      "name": "卷叶扰流",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.9,
+          "element": "wind"
+        },
+        {
+          "type": "status",
+          "target": "single",
+          "statusId": "spd_down",
+          "value": 0.12,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 2,
+      "animation": "wind"
+    },
+    "leaf_spirit_twig": {
+      "name": "叶梢轻击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "moss_climber_ram": {
+      "name": "苔甲冲撞",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.1,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "moss_climber_brace": {
+      "name": "伏甲守势",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "def_up",
+          "value": 0.25,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 3,
+      "animation": "wind"
+    },
+    "bridge_warden_warning": {
+      "name": "桥锤回摆·蓄势",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.7,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind",
+      "telegraphNext": true
+    },
+    "bridge_warden_heavy": {
+      "name": "桥头重锤",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.6,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "bridge_warden_strike": {
+      "name": "护桥推击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "songwing_hymn": {
+      "name": "鸣翼应和",
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "atk_up",
+          "value": 0.08,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 3,
+      "animation": "wind"
+    },
+    "songwing_peck": {
+      "name": "短翼啄击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "brokenbridge_warning": {
+      "name": "掠桥回旋·蓄势",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.8,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind",
+      "telegraphNext": true
+    },
+    "brokenbridge_pursuit": {
+      "name": "断桥追击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.7,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "brokenbridge_cut": {
+      "name": "收翼切击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "windwheel_warning": {
+      "name": "旋臂转向·蓄势",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.6,
+          "element": "wind"
+        },
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "shield",
+          "value": 0.04,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind",
+      "telegraphNext": true
+    },
+    "windwheel_sweep": {
+      "name": "横扫风轮",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 0.75,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "windwheel_strike": {
+      "name": "收臂压击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "roc_warning": {
+      "name": "振翼聚风·下次行动全体",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.3,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind",
+      "telegraphNext": true
+    },
+    "roc_gale": {
+      "name": "风庭长啸",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.0,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "roc_talon": {
+      "name": "巡巢探爪",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.3,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "roc_warning_high": {
+      "name": "高空盘旋·下次行动全体",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind",
+      "telegraphNext": true
+    },
+    "roc_storm": {
+      "name": "高岭风暴",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.4,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "roc_dive": {
+      "name": "归巢俯冲",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "windfield_updraft_feed": {
+      "name": "上升气流",
+      "effects": [
+        {
+          "type": "status",
+          "target": "boss_ally",
+          "statusId": "atk_up",
+          "value": 0.08,
+          "duration": 2,
+          "refreshDuration": true
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
+    },
+    "windfield_crosswind_guard": {
+      "name": "横切风幕",
+      "effects": [
+        {
+          "type": "status",
+          "target": "boss_ally",
+          "statusId": "shield",
+          "value": 0.08,
+          "duration": 2,
+          "refreshDuration": true,
+          "scalingStat": "maxHp",
+          "multiplier": 0.08
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "wind"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "wind"
     }
   },
   "GachaPoolData": {
     "activePools": [
       "standard",
       "limited_kaldi",
-      "limited_selin"
+      "limited_selin",
+      "limited_tiya",
+      "limited_lumi"
     ],
     "pools": {
       "standard": {
@@ -4257,6 +7168,112 @@
         "gradientFrom": "#211825",
         "gradientTo": "#6b322b",
         "excludeFeaturedFromOffBanner": true
+      },
+      "limited_tiya": {
+        "id": "limited_tiya",
+        "name": "巡岚之约",
+        "subtitle": "限定祈愿 · 巡岚·缇娅",
+        "type": "limited",
+        "banner": "✦",
+        "costPerPull": 160,
+        "currency": "diamonds",
+        "description": "巡岚·缇娅概率提升，五星75%为当期角色；偏离后下次五星保证获得当期角色。",
+        "endTime": null,
+        "rates": {
+          "3": 0.834,
+          "4": 0.15,
+          "5": 0.016
+        },
+        "pity": {
+          "soft": 73,
+          "hard": 90,
+          "softIncrease": 0.06
+        },
+        "guaranteedFeatured": true,
+        "featuredRate5": 0.75,
+        "featuredRate4": 0.5,
+        "featured5": [
+          "tiya"
+        ],
+        "pool5": [
+          "tiya",
+          "kaldi",
+          "ayla"
+        ],
+        "featured4": [
+          "gus",
+          "shana"
+        ],
+        "pool4": [
+          "gus",
+          "shana",
+          "lorin"
+        ],
+        "pool3": [
+          "ember",
+          "zeph",
+          "bolt",
+          "tide",
+          "cinder"
+        ],
+        "color": "#6dd5c3",
+        "gradientFrom": "#153e40",
+        "gradientTo": "#29675c",
+        "excludeFeaturedFromOffBanner": true,
+        "bannerPath": "res://assets/content_v280/banner/tiya_banner.png"
+      },
+      "limited_lumi": {
+        "id": "limited_lumi",
+        "name": "百桥弦歌",
+        "subtitle": "限定祈愿 · 弦枝·露弥",
+        "type": "limited",
+        "banner": "✦",
+        "costPerPull": 160,
+        "currency": "diamonds",
+        "description": "弦枝·露弥概率提升，五星75%为当期角色；偏离后下次五星保证获得当期角色。",
+        "endTime": null,
+        "rates": {
+          "3": 0.834,
+          "4": 0.15,
+          "5": 0.016
+        },
+        "pity": {
+          "soft": 73,
+          "hard": 90,
+          "softIncrease": 0.06
+        },
+        "guaranteedFeatured": true,
+        "featuredRate5": 0.75,
+        "featuredRate4": 0.5,
+        "featured5": [
+          "lumi"
+        ],
+        "pool5": [
+          "lumi",
+          "kaldi",
+          "ayla"
+        ],
+        "featured4": [
+          "gus",
+          "shana"
+        ],
+        "pool4": [
+          "gus",
+          "shana",
+          "lorin"
+        ],
+        "pool3": [
+          "ember",
+          "zeph",
+          "bolt",
+          "tide",
+          "cinder"
+        ],
+        "color": "#b9dda0",
+        "gradientFrom": "#203d35",
+        "gradientTo": "#4c7057",
+        "excludeFeaturedFromOffBanner": true,
+        "bannerPath": "res://assets/content_v280/banner/lumi_banner.png"
       }
     }
   },
@@ -4712,6 +7729,82 @@
           ]
         }
       ]
+    },
+    "wind_blades": {
+      "id": "wind_blades",
+      "name": "巡岚双刃",
+      "bonuses": [
+        {
+          "pieces": 2,
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            }
+          ],
+          "description": "攻击力提高12%。"
+        },
+        {
+          "pieces": 4,
+          "effects": [
+            {
+              "type": "windPierceOwner",
+              "value": 0.2
+            }
+          ],
+          "description": "佩戴者对破甲目标造成的追击伤害提高20%。"
+        }
+      ],
+      "theme": "巡岚",
+      "color": "#6dd5c3",
+      "slotIcons": {
+        "helmet": "res://assets/content_v280/icons/relics/wind_blades_helmet.png",
+        "chest": "res://assets/content_v280/icons/relics/wind_blades_chest.png",
+        "belt": "res://assets/content_v280/icons/relics/wind_blades_belt.png",
+        "boots": "res://assets/content_v280/icons/relics/wind_blades_boots.png",
+        "necklace": "res://assets/content_v280/icons/relics/wind_blades_necklace.png"
+      }
+    },
+    "wind_strings": {
+      "id": "wind_strings",
+      "name": "百桥弦约",
+      "bonuses": [
+        {
+          "pieces": 2,
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            }
+          ],
+          "description": "攻击力提高12%。"
+        },
+        {
+          "pieces": 4,
+          "description": "佩戴者主动施加破甲后，全队角色固有贯穿追击的基础倍率提高40%，持续2回合。",
+          "effects": [
+            {
+              "type": "onStatusAppliedPartyFollowUpAmp",
+              "statusId": "wind_armor",
+              "buffId": "wind_oath",
+              "followUpTag": "innate_piercing",
+              "value": 0.4,
+              "duration": 2
+            }
+          ]
+        }
+      ],
+      "theme": "弦桥",
+      "color": "#b9dda0",
+      "slotIcons": {
+        "helmet": "res://assets/content_v280/icons/relics/wind_strings_helmet.png",
+        "chest": "res://assets/content_v280/icons/relics/wind_strings_chest.png",
+        "belt": "res://assets/content_v280/icons/relics/wind_strings_belt.png",
+        "boots": "res://assets/content_v280/icons/relics/wind_strings_boots.png",
+        "necklace": "res://assets/content_v280/icons/relics/wind_strings_necklace.png"
+      }
     }
   },
   "ShopData": {
@@ -5655,6 +8748,222 @@
         }
       ],
       "energyCost": 100
+    },
+    "tiya_normal": {
+      "id": "tiya_normal",
+      "name": "巡路双刃",
+      "type": "normal",
+      "element": "wind",
+      "energyGain": 15,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.6,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.6,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对单体敌人造成两段各60%攻击力的风伤害。基础回能15。",
+      "animation": "slash",
+      "icon": "🌪️",
+      "iconPath": "res://assets/content_v280/icons/skills/tiya_normal.png",
+      "onHitPerActionTarget": true
+    },
+    "tiya_skill": {
+      "id": "tiya_skill",
+      "name": "穿岚开径",
+      "type": "skill",
+      "element": "wind",
+      "energyGain": 20,
+      "energyCost": 0,
+      "cooldown": 3,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 0.45,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 0.45,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "statusId": "wind_armor",
+          "target": "all_enemies",
+          "duration": 2,
+          "chance": 1,
+          "value": 0.35
+        }
+      ],
+      "description": "对全体敌人造成两段各45%攻击力的风伤害，随后施加35%破甲，持续2回合。基础回能20，冷却3回合。",
+      "animation": "explosion",
+      "icon": "🌪️",
+      "iconPath": "res://assets/content_v280/icons/skills/tiya_skill.png",
+      "onHitPerActionTarget": true
+    },
+    "tiya_ult": {
+      "id": "tiya_ult",
+      "name": "万里回风",
+      "type": "ultimate",
+      "element": "wind",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "status",
+          "statusId": "wind_armor",
+          "target": "all_enemies",
+          "duration": 3,
+          "chance": 1,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 1.4,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 1.4,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "先对全体敌人施加35%破甲，持续3回合，再造成两段各140%攻击力的风伤害。消耗100能量。",
+      "animation": "mega_fire",
+      "icon": "🌪️",
+      "iconPath": "res://assets/content_v280/icons/skills/tiya_ult.png",
+      "onHitPerActionTarget": true
+    },
+    "lumi_normal": {
+      "id": "lumi_normal",
+      "name": "试弦引风",
+      "type": "normal",
+      "element": "wind",
+      "energyGain": 15,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.55,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "statusId": "wind_armor",
+          "target": "single",
+          "duration": 2,
+          "chance": 1,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.55,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "造成55%攻击力的单体风伤害，施加35%破甲持续2回合，再造成55%攻击力的单体风伤害。基础回能15。",
+      "animation": "slash",
+      "icon": "🌪️",
+      "iconPath": "res://assets/content_v280/icons/skills/lumi_normal.png",
+      "onHitPerActionTarget": true
+    },
+    "lumi_skill": {
+      "id": "lumi_skill",
+      "name": "搭桥成径",
+      "type": "skill",
+      "element": "wind",
+      "energyGain": 20,
+      "energyCost": 0,
+      "cooldown": 3,
+      "effects": [
+        {
+          "type": "status",
+          "statusId": "wind_armor",
+          "target": "all_enemies",
+          "duration": 3,
+          "chance": 1,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 0.4,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 0.4,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "target": "lowest_hp_ally",
+          "statusId": "shield",
+          "duration": 2,
+          "chance": 1,
+          "value": 0.15
+        }
+      ],
+      "description": "先对全体敌人施加35%破甲持续3回合，再造成两段各40%攻击力的风伤害。为生命比例最低的队友提供其最大生命15%的护盾，持续2回合。基础回能20，冷却3回合。",
+      "animation": "explosion",
+      "icon": "🌪️",
+      "iconPath": "res://assets/content_v280/icons/skills/lumi_skill.png",
+      "onHitPerActionTarget": true
+    },
+    "lumi_ult": {
+      "id": "lumi_ult",
+      "name": "百桥同调",
+      "type": "ultimate",
+      "element": "wind",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "status",
+          "statusId": "wind_armor",
+          "target": "all_enemies",
+          "duration": 4,
+          "chance": 1,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 0.9,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 0.9,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "先对全体敌人施加35%破甲持续4回合，再造成两段各90%攻击力的风伤害。消耗100能量。",
+      "animation": "mega_fire",
+      "icon": "🌪️",
+      "iconPath": "res://assets/content_v280/icons/skills/lumi_ult.png",
+      "onHitPerActionTarget": true
     }
   },
   "StageData": {
@@ -6137,11 +9446,518 @@
             }
           }
         ]
+      },
+      {
+        "id": "ch4",
+        "name": "第四章：长风归途",
+        "description": "运粮队困在失修的山路中，与巡路信使缇娅、修桥师露弥一起走进长风谷，接应旅人，修复归途。",
+        "unlocked": false,
+        "unlockCondition": "ch3_8",
+        "stages": [
+          {
+            "id": "ch4_1",
+            "name": "4-1 镇外来信",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "wind_falcon",
+                  "wind_falcon"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/wind_outpost.png",
+            "rewards": {
+              "gold": [
+                162,
+                202
+              ],
+              "exp": 270
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch4_2",
+            "name": "4-2 散落的行囊",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "leaf_spirit",
+                  "moss_climber"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/scattered_trail.png",
+            "rewards": {
+              "gold": [
+                170,
+                210
+              ],
+              "exp": 290
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch4_3",
+            "name": "4-3 悬桥上的弦声",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "bridge_warden"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/rope_bridge.png",
+            "rewards": {
+              "gold": [
+                178,
+                218
+              ],
+              "exp": 310
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            },
+            "postDialogueKeys": [
+              "ch4_3_post",
+              "ch4_interlude_1"
+            ],
+            "firstClearRewardLabel": "幕间 · 把行囊放下来"
+          },
+          {
+            "id": "ch4_4",
+            "name": "4-4 风停的种圃",
+            "staminaCost": 12,
+            "waves": [
+              {
+                "enemies": [
+                  "brokenbridge_hunter",
+                  "wind_falcon"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/sheltered_nursery.png",
+            "rewards": {
+              "gold": [
+                186,
+                226
+              ],
+              "exp": 330
+            },
+            "firstClearRewards": {
+              "diamonds": 160
+            },
+            "isElite": true,
+            "firstClearRelic": {
+              "rarity": 5,
+              "slotId": "helmet",
+              "setId": "wind_strings"
+            }
+          },
+          {
+            "id": "ch4_5",
+            "name": "4-5 旧图与新水痕",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "songwing_attendant",
+                  "bridge_warden"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/wind_tower.png",
+            "rewards": {
+              "gold": [
+                194,
+                234
+              ],
+              "exp": 350
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch4_6",
+            "name": "4-6 积水的风廊",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "leaf_spirit",
+                  "moss_climber",
+                  "bridge_warden"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/flooded_gallery.png",
+            "rewards": {
+              "gold": [
+                202,
+                242
+              ],
+              "exp": 370
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            },
+            "postDialogueKeys": [
+              "ch4_6_post",
+              "ch4_interlude_2"
+            ],
+            "firstClearRewardLabel": "幕间 · 封口还在的信"
+          },
+          {
+            "id": "ch4_7",
+            "name": "4-7 云巢下的羽毛",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "wind_falcon",
+                  "songwing_attendant",
+                  "wind_falcon"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
+            "rewards": {
+              "gold": [
+                210,
+                250
+              ],
+              "exp": 390
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch4_8",
+            "name": "4-8 偏转的风轮",
+            "staminaCost": 12,
+            "waves": [
+              {
+                "enemies": [
+                  "windwheel_sentinel"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/windwheel_platform.png",
+            "rewards": {
+              "gold": [
+                218,
+                258
+              ],
+              "exp": 410
+            },
+            "firstClearRewards": {
+              "diamonds": 160
+            },
+            "isElite": true,
+            "postDialogueKeys": [
+              "ch4_8_post",
+              "ch4_interlude_3"
+            ],
+            "firstClearRewardLabel": "幕间 · 桥的另一头"
+          },
+          {
+            "id": "ch4_9",
+            "name": "4-9 疏开的下游",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "moss_climber",
+                  "leaf_spirit",
+                  "moss_climber"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/flooded_gallery.png",
+            "rewards": {
+              "gold": [
+                226,
+                266
+              ],
+              "exp": 430
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch4_10",
+            "name": "4-10 重新升起的桥",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "bridge_warden",
+                  "bridge_warden"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/rope_bridge.png",
+            "rewards": {
+              "gold": [
+                234,
+                274
+              ],
+              "exp": 450
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch4_11",
+            "name": "4-11 风庭外廊",
+            "staminaCost": 10,
+            "waves": [
+              {
+                "enemies": [
+                  "brokenbridge_hunter",
+                  "songwing_attendant"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
+            "rewards": {
+              "gold": [
+                242,
+                282
+              ],
+              "exp": 470
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            },
+            "postDialogueKeys": [
+              "ch4_11_post",
+              "ch4_interlude_4"
+            ],
+            "firstClearRewardLabel": "幕间 · 给归途留一盏灯"
+          },
+          {
+            "id": "ch4_12",
+            "name": "4-12 长风归途",
+            "staminaCost": 12,
+            "waves": [
+              {
+                "enemies": [
+                  "boss_highland_roc",
+                  "windfield_updraft",
+                  "windfield_crosswind"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
+            "rewards": {
+              "gold": [
+                250,
+                290
+              ],
+              "exp": 490
+            },
+            "firstClearRewards": {
+              "diamonds": 250
+            },
+            "isBoss": true,
+            "firstClearRelic": {
+              "rarity": 5,
+              "slotId": "necklace",
+              "setId": "wind_blades"
+            },
+            "firstClearRewardLabel": "长风归途 · 完章"
+          }
+        ]
       }
     ],
     "dungeonTower": {
       "enabled": false,
       "floors": []
+    }
+  },
+  "DialogueMeta": {
+    "ch4_1_pre": {
+      "title": "镇外来信 · 战前",
+      "scene": "风谷外驿",
+      "background": "res://assets/content_v280/backgrounds/wind_outpost.png",
+      "kind": "pre"
+    },
+    "ch4_1_post": {
+      "title": "镇外来信 · 战后",
+      "scene": "风谷外驿",
+      "background": "res://assets/content_v280/backgrounds/wind_outpost.png",
+      "kind": "post"
+    },
+    "ch4_2_pre": {
+      "title": "散落的行囊 · 战前",
+      "scene": "散包山径",
+      "background": "res://assets/content_v280/backgrounds/scattered_trail.png",
+      "kind": "pre"
+    },
+    "ch4_2_post": {
+      "title": "散落的行囊 · 战后",
+      "scene": "散包山径",
+      "background": "res://assets/content_v280/backgrounds/scattered_trail.png",
+      "kind": "post"
+    },
+    "ch4_3_pre": {
+      "title": "悬桥上的弦声 · 战前",
+      "scene": "悬索旧桥",
+      "background": "res://assets/content_v280/backgrounds/rope_bridge.png",
+      "kind": "pre"
+    },
+    "ch4_3_post": {
+      "title": "悬桥上的弦声 · 战后",
+      "scene": "悬索旧桥",
+      "background": "res://assets/content_v280/backgrounds/rope_bridge.png",
+      "kind": "post"
+    },
+    "ch4_interlude_1": {
+      "title": "幕间 · 把行囊放下来",
+      "scene": "避风棚",
+      "background": "res://assets/content_v280/backgrounds/rope_bridge.png",
+      "kind": "interlude",
+      "illustration": "res://assets/content_v280/cg/letter_satchel.png"
+    },
+    "ch4_4_pre": {
+      "title": "风停的种圃 · 战前",
+      "scene": "避风种圃",
+      "background": "res://assets/content_v280/backgrounds/sheltered_nursery.png",
+      "kind": "pre"
+    },
+    "ch4_4_post": {
+      "title": "风停的种圃 · 战后",
+      "scene": "避风种圃",
+      "background": "res://assets/content_v280/backgrounds/sheltered_nursery.png",
+      "kind": "post"
+    },
+    "ch4_5_pre": {
+      "title": "旧图与新水痕 · 战前",
+      "scene": "测风塔",
+      "background": "res://assets/content_v280/backgrounds/wind_tower.png",
+      "kind": "pre"
+    },
+    "ch4_5_post": {
+      "title": "旧图与新水痕 · 战后",
+      "scene": "测风塔",
+      "background": "res://assets/content_v280/backgrounds/wind_tower.png",
+      "kind": "post"
+    },
+    "ch4_6_pre": {
+      "title": "积水的风廊 · 战前",
+      "scene": "积水风廊",
+      "background": "res://assets/content_v280/backgrounds/flooded_gallery.png",
+      "kind": "pre"
+    },
+    "ch4_6_post": {
+      "title": "积水的风廊 · 战后",
+      "scene": "积水风廊",
+      "background": "res://assets/content_v280/backgrounds/flooded_gallery.png",
+      "kind": "post"
+    },
+    "ch4_interlude_2": {
+      "title": "幕间 · 封口还在的信",
+      "scene": "测风塔",
+      "background": "res://assets/content_v280/backgrounds/wind_tower.png",
+      "kind": "interlude",
+      "illustration": "res://assets/content_v280/cg/sealed_letter.png"
+    },
+    "ch4_7_pre": {
+      "title": "云巢下的羽毛 · 战前",
+      "scene": "云巢风庭",
+      "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
+      "kind": "pre"
+    },
+    "ch4_7_post": {
+      "title": "云巢下的羽毛 · 战后",
+      "scene": "云巢风庭",
+      "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
+      "kind": "post"
+    },
+    "ch4_8_pre": {
+      "title": "偏转的风轮 · 战前",
+      "scene": "风轮高台",
+      "background": "res://assets/content_v280/backgrounds/windwheel_platform.png",
+      "kind": "pre"
+    },
+    "ch4_8_post": {
+      "title": "偏转的风轮 · 战后",
+      "scene": "风轮高台",
+      "background": "res://assets/content_v280/backgrounds/windwheel_platform.png",
+      "kind": "post"
+    },
+    "ch4_interlude_3": {
+      "title": "幕间 · 桥的另一头",
+      "scene": "风轮高台",
+      "background": "res://assets/content_v280/backgrounds/windwheel_platform.png",
+      "kind": "interlude",
+      "illustration": "res://assets/content_v280/cg/wind_gallery_plan.png"
+    },
+    "ch4_9_pre": {
+      "title": "疏开的下游 · 战前",
+      "scene": "积水风廊",
+      "background": "res://assets/content_v280/backgrounds/flooded_gallery.png",
+      "kind": "pre"
+    },
+    "ch4_9_post": {
+      "title": "疏开的下游 · 战后",
+      "scene": "积水风廊",
+      "background": "res://assets/content_v280/backgrounds/flooded_gallery.png",
+      "kind": "post"
+    },
+    "ch4_10_pre": {
+      "title": "重新升起的桥 · 战前",
+      "scene": "悬索旧桥",
+      "background": "res://assets/content_v280/backgrounds/rope_bridge.png",
+      "kind": "pre"
+    },
+    "ch4_10_post": {
+      "title": "重新升起的桥 · 战后",
+      "scene": "悬索旧桥",
+      "background": "res://assets/content_v280/backgrounds/rope_bridge.png",
+      "kind": "post"
+    },
+    "ch4_11_pre": {
+      "title": "风庭外廊 · 战前",
+      "scene": "云巢风庭",
+      "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
+      "kind": "pre"
+    },
+    "ch4_11_post": {
+      "title": "风庭外廊 · 战后",
+      "scene": "云巢风庭",
+      "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
+      "kind": "post"
+    },
+    "ch4_interlude_4": {
+      "title": "幕间 · 给归途留一盏灯",
+      "scene": "悬索旧桥",
+      "background": "res://assets/content_v280/backgrounds/rope_bridge.png",
+      "kind": "interlude",
+      "illustration": "res://assets/content_v280/cg/bridge_lantern.png"
+    },
+    "ch4_12_pre": {
+      "title": "长风归途 · 战前",
+      "scene": "云巢风庭",
+      "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
+      "kind": "pre"
+    },
+    "ch4_12_post": {
+      "title": "长风归途 · 战后",
+      "scene": "云巢风庭",
+      "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
+      "kind": "post"
     }
   }
 }
