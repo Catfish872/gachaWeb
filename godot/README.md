@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.8.3 · 横屏交互与角色特效
+## 最新正式版：2.8.4 · 深渊场景轮换
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.8.4/universal.apk) · [更新说明](CHANGELOG_2.8.4.md) · [验证记录](validation/release-v284/RELEASE.md)
+
+深渊从第11层起，每十层同步轮换地图、敌人和音乐，保存续局保持场景一致；原成长与奖励不变。
+
+## 历史版本：2.8.3 · 横屏交互与角色特效
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.8.3/universal.apk) · [更新说明](CHANGELOG_2.8.3.md) · [验证记录](validation/release-v283/RELEASE.md)
 
