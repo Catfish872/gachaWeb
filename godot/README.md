@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.8.1 · 角色展示与音乐优化
+## 最新正式版：2.8.2 · 分层卡池与开放音乐
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.8.2/universal.apk) · [更新说明](CHANGELOG_2.8.2.md) · [验证记录](validation/release-v282/RELEASE.md)
+
+恢复双风卡池环境与人物分层，接入四首选定开放音乐、循环设置和完整许可署名；保留首领原曲。
+
+## 历史版本：2.8.1 · 角色展示与音乐优化
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.8.1/universal.apk) · [更新说明](CHANGELOG_2.8.1.md) · [验证记录](validation/release-v281/RELEASE.md)
 
