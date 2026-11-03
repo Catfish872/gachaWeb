@@ -1,0 +1,37 @@
+{
+  "started_utc": "2026-11-03T12:30:00Z",
+  "completed_utc": "2026-11-03T12:31:20Z",
+  "elapsed_seconds": 80,
+  "prior_background_seconds": 114,
+  "combined_test_seconds": 194,
+  "checks_passed": 281,
+  "prior_background_checks_reused": 424,
+  "combined_checks": 705,
+  "failures": 0,
+  "results": {
+    "summon_music_v280": 97,
+    "music_context": 43,
+    "windpass_audio_v280": 79,
+    "licensed_music_v281": 62
+  },
+  "production_file_count": 1262,
+  "production_sha256": "78bfe4bb1689240a125e6dc657590cc45e49ae20ce5f9213348e9fa294baa24c",
+  "scope": [
+    "Import four new licensed audio streams",
+    "Exact SHA256 and duration matched supplied manifest",
+    "Actual stream.loop enabled and loop_offset25.6 only for Lumi; others zero",
+    "Actual character pool and wind road/gallery contexts choose new routes",
+    "Credits modal creates title,author,license,source,license URL,modification text plus recorder sample attribution",
+    "Boss original track, old theme routing and old credits preserved"
+  ],
+  "limits": [
+    "No subjective listening verification or new music selection",
+    "Credits text checked in real instantiated headless UI tree, not newly screenshot-reviewed",
+    "No full suite, combat simulations, Android hardware or full-song listening",
+    "Earlier background GL evidence reused; not re-run"
+  ],
+  "warnings": [
+    "Summon music fixture emitted ObjectDB and five resource-in-use warnings at exit after97 checks passed. Other final checks clean."
+  ],
+  "prior_evidence": "validation/v281-background/targeted-result.json"
+}

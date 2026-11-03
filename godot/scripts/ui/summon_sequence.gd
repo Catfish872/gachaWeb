@@ -65,9 +65,6 @@ func setup(owner_app, committed_results: Array, selected_pool: String, gentle: b
 	var fallback := "res://assets/content_v270/banner/selin_banner.png" if selected_pool == "limited_selin" else "res://assets/backgrounds/summon_sanctum.png"
 	var selected: Dictionary = app.model.catalog.GachaPoolData.pools.get(selected_pool, {})
 	var background_path: String = str(selected.get("bannerPath", fallback))
-	if selected_pool in ["limited_tiya", "limited_lumi"]:
-		var featured: String = str(selected.get("featured5", [""])[0])
-		background_path = str(app.model.catalog.CharacterData.get(featured, {}).get("portraitBackground", fallback))
 	_background = load(background_path if ResourceLoader.exists(background_path) else fallback)
 	for result in results:
 		var bust: Texture2D = Avatars.get_texture(str(result.charId), "bust")

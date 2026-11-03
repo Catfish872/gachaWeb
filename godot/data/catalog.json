@@ -7220,7 +7220,7 @@
         "gradientFrom": "#153e40",
         "gradientTo": "#29675c",
         "excludeFeaturedFromOffBanner": true,
-        "bannerPath": "res://assets/content_v280/banner/tiya_banner.png"
+        "bannerPath": "res://assets/content_v280/banner/tiya_layered_banner.png"
       },
       "limited_lumi": {
         "id": "limited_lumi",
@@ -7273,7 +7273,7 @@
         "gradientFrom": "#203d35",
         "gradientTo": "#4c7057",
         "excludeFeaturedFromOffBanner": true,
-        "bannerPath": "res://assets/content_v280/banner/lumi_banner.png"
+        "bannerPath": "res://assets/content_v280/banner/lumi_layered_banner.png"
       }
     }
   },

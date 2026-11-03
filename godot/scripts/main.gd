@@ -788,14 +788,10 @@ func _summon() -> void:
 	var fallback := "res://assets/content_v270/banner/selin_banner.png" if featured == "selin" else "res://assets/backgrounds/summon_sanctum.png"
 	var background: String = str(pool.get("bannerPath", fallback))
 	if not ResourceLoader.exists(background): background = fallback
-	var wind_featured: bool = featured in ["tiya", "lumi"]
-	if wind_featured:
-		# Use the same full-body fit as the existing pools. This scene has no
-		# baked-in figure, so the featured person is neither doubled nor cropped.
-		background = str(model.catalog.CharacterData.get(featured, {}).get("portraitBackground", fallback))
-		if not ResourceLoader.exists(background):background = fallback
+	# Pool art supplies the large background portrait and environment;
+	# the shared portrait stage keeps the foreground full-body illustration.
 	var stage:=_portrait_environment(row,featured,260 if compact else 0,background)
-	stage.set_meta("embedded_banner_character",false)
+	stage.set_meta("embedded_banner_character",featured in ["selin", "tiya", "lumi"])
 	stage.size_flags_stretch_ratio=1.6
 	stage.name="SummonStage"
 	var banner:=_vbox(stage,8);banner.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
@@ -3226,6 +3222,7 @@ func _sync_music() -> void:
 	if not is_instance_valid(target):
 		target=AudioStreamPlayer.new();target.set_meta("track",track)
 		var stream:AudioStreamOggVorbis=load(path).duplicate();stream.loop=true
+		if not WindpassAudio.music_path(track).is_empty():stream.loop_offset=WindpassAudio.music_loop_offset(track)
 		target.stream=stream;target.volume_db=-60
 		add_child(target);_music_pool[track]=target
 	if music_audio==target:
@@ -3357,6 +3354,14 @@ func _show_music_credits() -> void:
 	var lantern:=_vbox(_panel(box,LINE,12),4)
 	_label(lantern,"余烬灯途 · 灯渠夜行 · 炉心归火",18,GOLD)
 	_label(lantern,"游戏原创配乐",14,MUTED)
+	for entry in WindpassAudio.music_credits():
+		var card:=_vbox(_panel(box,LINE,12),4)
+		_label(card,str(entry.title),18,GOLD,true)
+		_label(card,str(entry.creator)+" · "+str(entry.license),14,MUTED,true)
+		_label(card,str(entry.source_url),12,MUTED,true)
+		_label(card,str(entry.license_url),12,MUTED,true)
+		_label(card,str(entry.changes),13,MUTED,true)
+		if entry.has("extra"):_label(card,str(entry.extra),12,MUTED,true)
 	_button(_modal_footer(box),"返回",_show_audio_settings)
 
 func _stop_reveal_voices() -> void:

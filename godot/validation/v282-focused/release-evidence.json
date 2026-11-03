@@ -1,0 +1,61 @@
+{
+  "version": "2.8.2",
+  "version_code": 20802,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 194,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-03T11:20:15Z",
+      "completed_utc": "2026-11-03T11:22:09Z",
+      "elapsed_seconds": 114,
+      "production_sha256": "e1c5b7fb3b0c47e4f540ded164f2dc1a0054c2ce75655eea862192b00de332b5",
+      "scope": [
+        "New layered Tiya/Lumi banner imports and pool configuration binding",
+        "960x540 and2048x945 pools compared to Selin",
+        "Prepared single-pull reveal animation and ten-pull result background reuse",
+        "Shared avatar/bust/full-source paths and preview unchanged"
+      ]
+    },
+    {
+      "started_utc": "2026-11-03T12:30:00Z",
+      "completed_utc": "2026-11-03T12:31:20Z",
+      "elapsed_seconds": 80,
+      "production_sha256": "78bfe4bb1689240a125e6dc657590cc45e49ae20ce5f9213348e9fa294baa24c",
+      "scope": [
+        "Import four new licensed audio streams",
+        "Exact SHA256 and duration matched supplied manifest",
+        "Actual stream.loop enabled and loop_offset25.6 only for Lumi; others zero",
+        "Actual character pool and wind road/gallery contexts choose new routes",
+        "Credits modal creates title,author,license,source,license URL,modification text plus recorder sample attribution",
+        "Boss original track, old theme routing and old credits preserved"
+      ]
+    }
+  ],
+  "production_sha256": "2687bd429727c21c59044b1dca6882587c8f560ac8a4a305f90ab809c7fce58c",
+  "production_file_count": 1262,
+  "post_review_version_only": true,
+  "post_review_changed_paths": [
+    "data/version.json",
+    "export_presets.cfg"
+  ],
+  "scope": [
+    "New layered Tiya/Lumi banner imports and pool configuration binding",
+    "960x540 and2048x945 pools compared to Selin",
+    "Prepared single-pull reveal animation and ten-pull result background reuse",
+    "Shared avatar/bust/full-source paths and preview unchanged",
+    "Import four new licensed audio streams",
+    "Exact SHA256 and duration matched supplied manifest",
+    "Actual stream.loop enabled and loop_offset25.6 only for Lumi; others zero",
+    "Actual character pool and wind road/gallery contexts choose new routes",
+    "Credits modal creates title,author,license,source,license URL,modification text plus recorder sample attribution",
+    "Boss original track, old theme routing and old credits preserved"
+  ],
+  "limits": [
+    "No subjective listening verification or new music selection",
+    "Credits text checked in real instantiated headless UI tree, not newly screenshot-reviewed",
+    "No full suite, combat simulations, Android hardware or full-song listening",
+    "Earlier background GL evidence reused; not re-run"
+  ],
+  "incremental_evidence": "424 background GL checks retained; 281 audio/import/context/credits checks cover later audio changes."
+}

@@ -79,7 +79,10 @@ func character_screens(label: String) -> void:
 		await capture(label + "-growth-" + id)
 		app.selected_pool = "limited_" + id;app.navigate("summon");await frames(8)
 		stage = app.find_child("SummonStage", true, false)
-		ck(stage.get_meta("portrait_background", "") == app.model.catalog.CharacterData[id].portraitBackground, "pool uses a scene without an embedded figure " + id)
+		var expected_banner: String = "res://assets/content_v280/banner/%s_layered_banner.png" % id
+		ck(app.model.catalog.GachaPoolData.pools["limited_" + id].bannerPath == expected_banner, "pool config selects the new large-portrait background " + id)
+		ck(stage.get_meta("portrait_background", "") == expected_banner and ResourceLoader.exists(expected_banner), "pool uses the large background portrait and environment " + id)
+		ck(stage.get_meta("embedded_banner_character", false), "pool combines a background portrait with the separate full-body foreground " + id)
 		var pool_portrait = stage.find_child("CharacterPortraitTexture", true, false)
 		ck(pool_portrait is TextureRect and pool_portrait.stretch_mode == TextureRect.STRETCH_KEEP_ASPECT_CENTERED, "pool retains the legacy full-body fit " + id)
 		ck(pool_portrait.texture.resource_path == Avatars.source_path(id), "pool uses the original transparent full-body illustration " + id)
@@ -103,7 +106,7 @@ func prepared_reveals(label: String, animate: bool) -> void:
 		app.summon_results = [{"charId":id,"rarity":5,"isNew":true,"shards":0}]
 		app._reveal_summon();await frames(6)
 		var sequence = app.summon_sequence
-		ck(sequence._background.resource_path == app.model.catalog.CharacterData[id].portraitBackground, "reveal background contains no duplicate figure " + id)
+		ck(sequence._background.resource_path == "res://assets/content_v280/banner/%s_layered_banner.png" % id, "reveal keeps the same large-portrait environment as the pool " + id)
 		ck(sequence._art[0] != null and sequence._art[0].resource_path == Avatars.source_path(id), "real reveal loads the new source " + id)
 		if animate:
 			var deadline := Time.get_ticks_msec() + 7000

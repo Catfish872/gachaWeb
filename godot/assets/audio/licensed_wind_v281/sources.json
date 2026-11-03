@@ -1,0 +1,62 @@
+[
+  {
+    "file": "happy_moments_1_3.ogg",
+    "url": "https://opengameart.org/sites/default/files/piano1.3.ogg",
+    "final_url": "https://opengameart.org/sites/default/files/piano1.3.ogg",
+    "status": 200,
+    "content_type": "audio/ogg",
+    "bytes": 2915423,
+    "sha256": "427a4a557b29695263da90c42e6f41a43e9078b7eafa9926163f5e2515547fcf",
+    "prefix_hex": "4f6767530002000000000000"
+  },
+  {
+    "file": "happy_moments_1_4.ogg",
+    "url": "https://opengameart.org/sites/default/files/piano1.4.ogg",
+    "final_url": "https://opengameart.org/sites/default/files/piano1.4.ogg",
+    "status": 200,
+    "content_type": "audio/ogg",
+    "bytes": 4367077,
+    "sha256": "c8a94e9bc928e6701784c6533a467392f7fee7490c53c65766401a71e5d5b496",
+    "prefix_hex": "4f6767530002000000000000"
+  },
+  {
+    "file": "bright_wish.mp3",
+    "url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Bright%20Wish.mp3",
+    "final_url": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Bright%20Wish.mp3",
+    "status": 200,
+    "content_type": "application/octet-stream",
+    "bytes": 1720624,
+    "sha256": "1b0fa563ffad8f1d83bc4b308fe118096a4e25a5c818f67a167e933005216dd3",
+    "prefix_hex": "49443302000000051a645453"
+  },
+  {
+    "file": "happy_flutes_author.mp3",
+    "url": "https://magory.net/assets/MagoryNET-HappyFlutes.mp3",
+    "final_url": "https://magory.net/assets/MagoryNET-HappyFlutes.mp3",
+    "status": 200,
+    "content_type": "audio/mpeg",
+    "bytes": 889801,
+    "sha256": "40cb712d9b0c1b6ba8c02338f845790252ea19214c3d0777e221a0024b116b7d",
+    "prefix_hex": "4944330400400000006f0000"
+  },
+  {
+    "file": "happy_flutes_oga.mp3",
+    "url": "https://opengameart.org/sites/default/files/tkucza-happyflutes.mp3",
+    "final_url": "https://opengameart.org/sites/default/files/tkucza-happyflutes.mp3",
+    "status": 200,
+    "content_type": "audio/mpeg",
+    "bytes": 889801,
+    "sha256": "40cb712d9b0c1b6ba8c02338f845790252ea19214c3d0777e221a0024b116b7d",
+    "prefix_hex": "4944330400400000006f0000"
+  },
+  {
+    "file": "world_at_your_door_original.zip",
+    "url": "https://opengameart.org/sites/default/files/The%20World%20At%20Your%20Door%20MP3.zip",
+    "final_url": "https://opengameart.org/sites/default/files/The%20World%20At%20Your%20Door%20MP3.zip",
+    "status": 200,
+    "content_type": "application/zip",
+    "bytes": 3399353,
+    "sha256": "8d31cb763e8b70fcbc5a77e94a5a8ed8f2edd24b2559935d79346a0a51d86d06",
+    "prefix_hex": "504b030414000000080069b0"
+  }
+]

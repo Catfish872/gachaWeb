@@ -4,6 +4,47 @@ extends RefCounted
 
 const ROOT := "res://assets/audio/content_v280/"
 const MUSIC := ["windpass_road", "windpass_gallery", "windpass_core", "tiya_reveal", "lumi_reveal"]
+const LICENSED_ROOT := "res://assets/audio/licensed_wind_v281/"
+const LICENSED_MUSIC := ["tiya_reveal", "lumi_reveal", "windpass_road", "windpass_gallery"]
+const LICENSED_CREDITS := [
+	{
+		"id": "tiya_reveal",
+		"title": "Bright Wish · 缇娅卡池",
+		"creator": "Kevin MacLeod (incompetech.com)",
+		"license": "CC BY 4.0",
+		"source_url": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100377",
+		"license_url": "https://creativecommons.org/licenses/by/4.0/",
+		"changes": "改动：响度对齐、末尾 5 毫秒柔化、Ogg 转码；保留整曲自然落音。"
+	},
+	{
+		"id": "lumi_reveal",
+		"title": "Happy moments 1.4 · 露弥卡池",
+		"creator": "Centurion_of_war",
+		"license": "CC0 1.0",
+		"source_url": "https://opengameart.org/content/happy-moments",
+		"license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+		"changes": "改动：响度对齐、保留引子并从 25.6 秒循环、末尾 20 毫秒接缝修整、Ogg 转码。"
+	},
+	{
+		"id": "windpass_road",
+		"title": "Happy Flutes · 风谷",
+		"creator": "Tomasz Kucza / magory.games",
+		"license": "CC BY 3.0（OpenGameArt 文件许可）",
+		"source_url": "https://opengameart.org/content/happy-flutes-for-fantasy-setting",
+		"license_url": "https://creativecommons.org/licenses/by/3.0/",
+		"changes": "改动：响度对齐、末尾 5 毫秒柔化、Ogg 转码；保留整曲。",
+		"extra": "采样：Improvisation with Sopranino recorder，piermic，CC0 1.0\nhttps://freesound.org/people/piermic/sounds/324085/\nhttps://creativecommons.org/publicdomain/zero/1.0/"
+	},
+	{
+		"id": "windpass_gallery",
+		"title": "The World At Your Door · 风廊",
+		"creator": "Composed by Jonathan Shaw (www.jshaw.co.uk)",
+		"license": "CC BY 3.0",
+		"source_url": "https://opengameart.org/content/the-world-at-your-door-rpg-orchestral-essentials-overworld-music",
+		"license_url": "https://creativecommons.org/licenses/by/3.0/",
+		"changes": "改动：截取原曲第二个完整循环、末尾 20 毫秒接缝修整、响度对齐及 Ogg 转码。"
+	}
+]
 const SKILL_CLIPS := {
 	"tiya_normal": "tiya_basic", "tiya_skill": "tiya_skill", "tiya_ult": "tiya_ultimate",
 	"lumi_normal": "lumi_basic", "lumi_skill": "lumi_skill", "lumi_ult": "lumi_ultimate",
@@ -14,7 +55,16 @@ const SKILL_CLIPS := {
 }
 
 static func music_path(track: String) -> String:
+	if track in LICENSED_MUSIC:
+		return LICENSED_ROOT + track + ".ogg"
 	return ROOT + track + ".ogg" if track in MUSIC else ""
+
+static func music_loop_offset(track: String) -> float:
+	# Keep Happy moments 1.4's introduction on first playback only.
+	return 25.6 if track == "lumi_reveal" else 0.0
+
+static func music_credits() -> Array:
+	return LICENSED_CREDITS
 
 static func music_gain_db(_track: String) -> float:
 	# Assets share a measured -22 LUFS target. Existing master gain stays effective.

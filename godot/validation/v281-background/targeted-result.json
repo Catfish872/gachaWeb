@@ -1,0 +1,29 @@
+{
+  "started_utc": "2026-11-03T11:20:15Z",
+  "completed_utc": "2026-11-03T11:22:09Z",
+  "elapsed_seconds": 114,
+  "checks_passed": 424,
+  "failures": 0,
+  "results": {
+    "wind_portraits_v281": 410,
+    "wind_banner_delta_v280": 14
+  },
+  "production_file_count": 1249,
+  "production_sha256": "e1c5b7fb3b0c47e4f540ded164f2dc1a0054c2ce75655eea862192b00de332b5",
+  "scope": [
+    "New layered Tiya/Lumi banner imports and pool configuration binding",
+    "960x540 and2048x945 pools compared to Selin",
+    "Prepared single-pull reveal animation and ten-pull result background reuse",
+    "Shared avatar/bust/full-source paths and preview unchanged"
+  ],
+  "visual_review": "Parent reviewed960x540 and2048x945 new pools; QA additionally reviewed960 reveal and ten-pull screenshots. All18 current screenshots in screens/.",
+  "warnings": [
+    "Banner fixture reports ObjectDB and one resource still in use at exit; no runtime failure. Mesa V-sync unsupported warning."
+  ],
+  "not_tested": [
+    "No music changes or listening tests",
+    "No full regression, campaign, economy or combat simulation",
+    "Desktop OpenGL Mesa llvmpipe only, not Android hardware"
+  ],
+  "cleanup": "Owned Terminal closed and absence verified"
+}

@@ -4,7 +4,9 @@ func run()->void:
 	for id in ["tiya","lumi"]:
 		app.selected_pool="limited_"+id;app.navigate("summon");await frames(12)
 		var stage=app.find_child("SummonStage",true,false)
-		ck(stage!=null and not stage.get_meta("embedded_banner_character",true),"scene does not embed a duplicate character")
+		ck(stage!=null and stage.get_meta("embedded_banner_character",false),"scene embeds a large background portrait behind the full-body foreground")
+		var expected_banner: String = "res://assets/content_v280/banner/%s_layered_banner.png" % id
+		ck(stage!=null and stage.get_meta("portrait_background","")==expected_banner and ResourceLoader.exists(expected_banner),"scene uses the dedicated layered banner")
 		var portrait=stage.find_child("CharacterPortraitTexture",true,false) if stage!=null else null
 		ck(portrait!=null and portrait is TextureRect and portrait.stretch_mode==TextureRect.STRETCH_KEEP_ASPECT_CENTERED,"dedicated foreground uses the legacy full-body fit")
 		fits(app.find_child("WindTrial_"+id,true,false),"solo trial visible");fits(app.find_child("WindTrial_duo",true,false),"duo trial visible")

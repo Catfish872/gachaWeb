@@ -1,0 +1,17 @@
+[
+  "scripts/main.gd",
+  "scripts/windpass_audio.gd",
+  "assets/audio/licensed_wind_v281/credits.json",
+  "assets/audio/licensed_wind_v281/windpass_road.ogg",
+  "assets/audio/licensed_wind_v281/manifest.json",
+  "assets/audio/licensed_wind_v281/sources.json",
+  "assets/audio/licensed_wind_v281/tiya_reveal.ogg",
+  "assets/audio/licensed_wind_v281/windpass_gallery.ogg.import",
+  "assets/audio/licensed_wind_v281/lumi_reveal.ogg",
+  "assets/audio/licensed_wind_v281/tiya_reveal.ogg.import",
+  "assets/audio/licensed_wind_v281/README.md",
+  "assets/audio/licensed_wind_v281/windpass_road.ogg.import",
+  "assets/audio/licensed_wind_v281/windpass_gallery.ogg",
+  "assets/audio/licensed_wind_v281/LICENSES.txt",
+  "assets/audio/licensed_wind_v281/lumi_reveal.ogg.import"
+]
