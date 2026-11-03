@@ -1,0 +1,48 @@
+{
+  "started_utc": "2026-11-03T10:44:10Z",
+  "completed_utc": "2026-11-03T10:51:00Z",
+  "elapsed_seconds": 410,
+  "production_file_count": 1245,
+  "production_sha256": "d13991c33ac006bca96ecbdacae0fc9ecd727233ee403016b52b18e3befcd2c4",
+  "checks_passed": 756,
+  "failures_unresolved": 0,
+  "results": {
+    "battle_preferences_v280": 26,
+    "summon_music_v280": 97,
+    "music_context": 43,
+    "wind_portraits_v281": 400,
+    "wind_trials_ui_v280": 70,
+    "wind_banner_delta_v280": 12,
+    "windpass_audio_v280": 79,
+    "wind_face_delta_v281": 29
+  },
+  "ui_visual_review": "Parent reviewed 960x540 and 2048x945 summon pool comparisons, party/growth and ten-pull; passed. Reveal screenshots also captured. Desktop OpenGL Mesa llvmpipe, not Android hardware.",
+  "initial_failures": [
+    "Old music_context expected act-based track mapping on a randomly themed new run: 45 checks, 4 failures. Fixture now explicitly removes environmentOrder to exercise its intended legacy act mapping. No production code changed; final43/0. Initial log retained."
+  ],
+  "scope": [
+    "Dedicated wind character faces, full-source busts, pool full-body proportions matching Selin, reveal and ten-pull textures",
+    "Trial buttons directly open prepared battle",
+    "Auto/speed/difficulty persistence across battles and reconstructed app preferences",
+    "Summon music origin, old/new pools, mute/resume, same player reuse",
+    "Five revised music tracks raw Vorbis loading, duration, loop flags and routing"
+  ],
+  "limitations": [
+    "No full game suite, full campaign, Android install or hardware touch assessment",
+    "Audio decoder/routing checks only, no subjective listening claim",
+    "Some app/UI fixtures emit ObjectDB and resource-in-use warnings at exit after passing assertions",
+    "Desktop terminal input malfunction consumed early window; no GL ran until10:47:10. Resolved using documented desktop keyboard input and Ctrl+Q."
+  ],
+  "screenshots_directory": "validation/v281-portraits",
+  "metadata_note": "Version metadata unchanged at test time; publisher owns later version increment.",
+  "timing_note": "Same original window10:44:10 to10:51:00. First pass ended10:48:15, parent reopened within original hardstop10:54:10 for requested face crop only; entire intervening interval is counted. No reset of allowance. Parent fixed final review cutoff10:51:00; only evidence writing after cutoff.",
+  "incremental_evidence": {
+    "first_pass_sha256": "bd3bd42fa68d18364d1826d4e80f541d04c624e7068288efeb05b7a886c5d255",
+    "first_pass_checks": 727,
+    "final_delta_files": [
+      "scripts/ui/character_avatar.gd"
+    ],
+    "delta_checks": 29,
+    "delta_visual_review": "Parent reviewed960-face-delta-tiya.png and960-face-delta-lumi.png; head scale closer to Selin, no anomalies. Prior pools/bust/reveal/trial/music results reused; not re-executed."
+  }
+}

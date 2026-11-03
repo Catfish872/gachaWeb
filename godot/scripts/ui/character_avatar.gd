@@ -3,6 +3,10 @@ extends RefCounted
 ## Faces are inspected individually; this is not a shared top-center guess.
 
 const FACE_REGIONS := {
+	# These two regions use their dedicated 512px portrait assets, framing
+	# the head rather than shrinking their extra shoulders into small avatars.
+	"tiya": Rect2(70, 0, 360, 360),
+	"lumi": Rect2(55, 0, 390, 390),
 	"shana": Rect2(350, 35, 390, 390),
 	"tide": Rect2(340, 85, 370, 370),
 	"bolt": Rect2(310, 35, 380, 380),
@@ -18,6 +22,8 @@ const BUST_REGIONS := {
 	# Match the legacy upper-body framing: crown through waist, centered on the face.
 	# Keep the dedicated face asset and battle/full-body source independent.
 	"selin": Rect2(175, 0, 650, 650),
+	"tiya": Rect2(250, 25, 650, 650),
+	"lumi": Rect2(145, 25, 650, 650),
 	"shana": Rect2(235, 25, 600, 650),
 	"tide": Rect2(215, 65, 600, 650),
 	"bolt": Rect2(200, 20, 600, 650),
@@ -33,6 +39,7 @@ static var _cache: Dictionary = {}
 
 static func source_path(id: String) -> String:
 	if id == "selin":return "res://assets/content_v270/characters/selin.png"
+	if id in ["tiya", "lumi"]:return "res://assets/content_v280/characters/%s.png" % id
 	return "res://assets/characters/%s.png" % ("kaldi-battle" if id == "kaldi" else id)
 
 static func region_for(id: String, mode: String = "face") -> Rect2:
@@ -48,6 +55,7 @@ static func get_texture(id: String, mode: String = "face") -> Texture2D:
 	var key := id + ":" + ("bust" if mode == "bust" else "face")
 	if _cache.has(key): return _cache[key]
 	var path := source_path(id)
+	if id in ["tiya", "lumi"] and mode == "face":path = "res://assets/content_v280/portraits/%s.png" % id
 	if not ResourceLoader.exists(path): return null
 	var source: Texture2D = load(path)
 	if source == null: return null

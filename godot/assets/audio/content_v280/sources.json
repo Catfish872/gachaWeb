@@ -4,11 +4,13 @@
   "external_recordings": [],
   "external_sample_libraries": [],
   "generator_path": "godot/tools/audio/build_windpass_audio.py",
-  "generator_sha256": "502bf48c7cd39766e7093e14da12ad9ce25cfe0d00402b846ad7ed9302abeb61",
+  "generator_sha256": "f945bba004f7d97831c66942800392e72dbced989024f0bcb6db2ed7283c51aa",
   "original_audio_preserved": true,
   "mix_reference": "Existing project background music targets -22 LUFS; no existing audio was used as generation input.",
   "asset_count": 19,
-  "asset_bytes": 4917428,
+  "asset_bytes": 4547539,
   "subjective_listening_verified": false,
-  "playback_review_blocker": "Audio input unsupported in current executor conversation; prepared local preview files for actual listening."
+  "playback_review_blocker": "Audio input unsupported in current executor conversation; prepared local preview files for actual listening.",
+  "music_mix_revision": "soft-keys-v1",
+  "revision_scope": "Four synthetic woodwind leads and gallery flute replies replaced with softened keyboard timbre; all score pitches, octave changes, timing and existing accompaniment retained; all 14 effect files byte-identical."
 }

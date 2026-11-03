@@ -4,6 +4,7 @@ All notes and timbres are defined here. No prior audio, recordings, soundfonts o
 external sample libraries are used. Dependency: numpy, scipy, ffmpeg/libvorbis.
 """
 from functools import lru_cache
+import argparse
 import hashlib
 import json
 import math
@@ -39,6 +40,18 @@ def note(midi, duration, kind):
     elif kind == 'reed':
         y = sum(np.sin(phase * k + .08 * k) * math.exp(-k * .26) / k ** .55 for k in range(1, 10))
         y *= shape(t, duration, .035, .15) * (1 - .1 * np.exp(-t * 9))
+    elif kind == 'soft_keys':
+        # Keep the existing keyboard-like accompaniment unchanged. The lead
+        # uses its struck-string model with a gentler attack, no breath/vibrato,
+        # and fewer high partials. MIDI pitches and timing stay exactly intact.
+        y = np.zeros_like(t)
+        for k in range(1, 11):
+            partial = frequency * k
+            if partial >= SR * .45:
+                continue
+            colour = math.exp(-((partial / 3800) ** 2))
+            y += np.sin(2 * np.pi * partial * t + .2 * k) * np.exp(-t * (1.9 + k * .65)) * colour / k ** 1.5
+        y *= shape(t, duration, .012, .16)
     elif kind == 'harp':
         y = sum(np.sin(2 * np.pi * frequency * k * t + .2 * k) * np.exp(-t * (1.9 + k * .6)) / k ** 1.25 for k in range(1, 11))
         y *= shape(t, duration, .003, .12)
@@ -118,11 +131,11 @@ HARMONY = {
  'lumi': [(47,54,62,66),(50,57,62,66),(55,59,62,66),(52,59,62,67),(47,54,61,66),(45,57,61,64),(55,59,62,66),(50,57,62,66)]}
 
 SCORES = [
- ('windpass_road','风过千层谷','road',80,32,3,'6/8',ROAD,'flute','E Dorian'),
+ ('windpass_road','风过千层谷','road',80,32,3,'6/8',ROAD,'soft_keys','E Dorian'),
  ('windpass_gallery','回廊中的风信','gallery',84,32,3,'6/8',GALLERY,'mallet','D major / E Dorian'),
- ('windpass_core','逆风之翼','core',112,32,4,'4/4',CORE,'reed','E minor / Dorian'),
- ('tiya_reveal','缇雅 · 越过山脊','tiya',78,32,3,'6/8',TIYA,'flute','G major / E Dorian'),
- ('lumi_reveal','露弥 · 风把话带回来','lumi',104,32,4,'4/4',LUMI,'flute','B minor / D major')]
+ ('windpass_core','逆风之翼','core',112,32,4,'4/4',CORE,'soft_keys','E minor / Dorian'),
+ ('tiya_reveal','缇雅 · 越过山脊','tiya',78,32,3,'6/8',TIYA,'soft_keys','G major / E Dorian'),
+ ('lumi_reveal','露弥 · 风把话带回来','lumi',104,32,4,'4/4',LUMI,'soft_keys','B minor / D major')]
 
 def score(bpm, bars, quarter_beats, melody, lead, mode):
     beat = 60 / bpm
@@ -143,11 +156,12 @@ def score(bpm, bars, quarter_beats, melody, lead, mode):
             if section == 0 and mode == 'road' and bar % 4 == 3: continue
             register = -12 if section == 2 and mode in ('gallery','lumi') else 0
             if section == 2 and mode == 'core' and bar % 2 == 0: register = 12
-            add(b, note(pitch + register, round(length * beat, 4), lead), at + offset * beat, .235 * density, -.12)
+            lead_gain = .185 if lead == 'soft_keys' else .235
+            add(b, note(pitch + register, round(length * beat, 4), lead), at + offset * beat, lead_gain * density, -.12)
         if section in (1,2) and bar % 2 == 1:
             # Companion replies after the lead; separate contour and lower register.
             for offset,pitch in [(quarter_beats - 1.2,chord[2]),(quarter_beats - .5,chord[1])]:
-                add(b, note(pitch + 12, round(.75 * beat,4), 'mallet' if mode != 'gallery' else 'flute'), at + offset * beat, .10,.45)
+                add(b, note(pitch + 12, round(.75 * beat,4), 'mallet' if mode != 'gallery' else 'soft_keys'), at + offset * beat, .10,.45)
         if mode in ('core','tiya','gallery') or (mode == 'road' and section == 2):
             offsets = [0,1.5] if quarter_beats == 3 else [0,1.5,2,3.5]
             for off in offsets:
@@ -230,14 +244,21 @@ def encode(name,data,metadata):
     return metadata
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--music-only', action='store_true', help='Regenerate the five scores and preserve all existing effect bytes and metadata.')
+    args = parser.parse_args()
+    previous = json.loads((OUT / 'manifest.json').read_text()) if args.music_only else []
     OUT.mkdir(parents=True,exist_ok=True); manifest=[]
     for name,title,mode,bpm,bars,beats,meter,melody,lead,key in SCORES:
-        manifest.append(encode(name,score(bpm,bars,beats,melody,lead,mode),dict(title=title,tempo_quarter_bpm=bpm,meter=meter,bars=bars,key=key,loop=True)))
+        manifest.append(encode(name,score(bpm,bars,beats,melody,lead,mode),dict(title=title,tempo_quarter_bpm=bpm,meter=meter,bars=bars,key=key,loop=True,lead_instrument=lead,music_mix_revision='soft-keys-v1',melody_revision='unchanged-v280')))
         print('Rendered',name,flush=True)
         note.cache_clear()
-    for name,duration in SFX_DURATIONS.items():
-        gain=-15 if name in ('wind_field_pulse','wind_pierce') else -9
-        manifest.append(encode(name,effect(name,duration),dict(title=name,loop=False,recommended_gain_db=gain,max_voices=1 if name in ('wind_field_pulse','wind_pierce') else 2)))
+    if args.music_only:
+        manifest.extend(item for item in previous if not item['loop'])
+    else:
+        for name,duration in SFX_DURATIONS.items():
+            gain=-15 if name in ('wind_field_pulse','wind_pierce') else -9
+            manifest.append(encode(name,effect(name,duration),dict(title=name,loop=False,recommended_gain_db=gain,max_voices=1 if name in ('wind_field_pulse','wind_pierce') else 2)))
     (OUT/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
     print(f'Completed {len(manifest)} original assets.',flush=True)
 if __name__=='__main__':main()

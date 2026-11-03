@@ -1,0 +1,23 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+ERROR: MUSIC: first expedition act shares abyss entry score
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] ck (res://tests/test_music_context.gd:7)
+       [1] run (res://tests/test_music_context.gd:27)
+ERROR: MUSIC: third expedition act keeps its distinct dungeon score
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] ck (res://tests/test_music_context.gd:7)
+       [1] run (res://tests/test_music_context.gd:44)
+ERROR: MUSIC: third-act and deeper abyss shared track reuses existing player
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] ck (res://tests/test_music_context.gd:7)
+       [1] run (res://tests/test_music_context.gd:48)
+ERROR: MUSIC: scene switching has bounded stream players
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] ck (res://tests/test_music_context.gd:7)
+       [1] run (res://tests/test_music_context.gd:64)
+MUSIC CONTEXT: 45 checks, 4 failures

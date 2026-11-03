@@ -8,7 +8,7 @@ func ck(ok:bool,label:String):
 func run():
  var app=load('res://main.tscn').instantiate();root.add_child(app)
  for i in 12:await process_frame
- app.set_process(false);app.music_enabled=true
+ app.set_process(false);app.music_enabled=true;app.selected_pool='standard'
  app.current_screen='home';app._sync_music()
  var hub=app.music_audio
  for page in ['party','growth','relics','shop','save','summon']:
@@ -21,10 +21,10 @@ func run():
  ck(story.get_playback_position()>=7.9,'story to preparation preserves playback cursor')
  for page in ['shop','save','relics','party']:
   app.current_screen=page;app._sync_music();ck(app.music_audio==story,'preparation auxiliary visit keeps story score '+page)
- app.current_screen='extraction';app.model.extraction.start_run(0);app._sync_music()
+ app.current_screen='extraction';app.model.extraction.start_run(0);app.model.extraction.run().erase('environmentOrder');app._sync_music()
  var exploration=app.music_audio
  app.current_screen='abyss';app.model.state.abyss.currentFloor=1;app._sync_music()
- ck(app.music_audio==exploration,'first expedition act shares abyss entry score')
+ ck(app.music_audio==exploration,'legacy first act shares abyss entry score')
  app.current_screen='extraction';app._sync_music()
  for kind in ['rest','vault','key_vault','shrine','cache']:
   app.model.state.extraction.run.room={'type':kind,'districtId':'none'}

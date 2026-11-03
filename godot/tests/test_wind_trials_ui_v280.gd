@@ -3,6 +3,14 @@ func capture(label:String)->void:
 	await RenderingServer.frame_post_draw
 	root.get_texture().get_image().save_png("res://validation/v280-focused/"+label+".png")
 func named(node_name: String) -> Node: return app.find_child(node_name, true, false)
+func leave_trial() -> void:
+	app.navigate("summon")
+	ck(app.current_screen == "battle" and app.overlay.get_child_count() > 0, "trial retreat retains confirmation")
+	for button in app.overlay.find_children("*", "Button", true, false):
+		if button.text == "确认":
+			button.pressed.emit()
+			break
+	ck(app.current_screen == "summon" and app.overlay.get_child_count() == 0, "confirmed trial retreat returns to banner")
 func run() -> void:
 	app = load("res://main.tscn").instantiate()
 	root.add_child(app)
@@ -22,23 +30,24 @@ func run() -> void:
 			if not app.compact:
 				fits(named("WindTrial_" + kind), "%s solo trial entry" % viewport)
 				fits(named("WindTrial_duo"), "%s joint trial entry" % viewport)
-			app._show_wind_trial(kind)
+			named("WindTrial_" + kind).pressed.emit()
 			await frames(4)
-			fits(named("WindTrialStart"), "%s trial start" % viewport)
-			app._clear_overlay()
-			ck(app.current_screen == "summon", "cancel returns to originating banner")
+			ck(app.current_screen == "battle" and app.battle_config.trialCharacter == kind and app.overlay.get_child_count() == 0, "%s trial opens directly from banner" % viewport)
+			leave_trial()
 	root.size = Vector2i(960,540)
 	await frames(8)
 	for kind in ["tiya", "lumi", "duo"]:
 		fresh()
 		app.selected_pool = "limited_lumi" if kind == "lumi" else "limited_tiya"
 		app.navigate("summon")
-		app._show_wind_trial(kind)
-		await frames(4)
-		named("WindTrialStart").pressed.emit()
+		app.preferred_battle_auto = kind != "lumi"
+		named("WindTrial_" + kind).pressed.emit()
 		await frames(8)
 		ck(app.current_screen == "battle" and app.battle_config.trialCharacter == kind, kind + " starts via actual UI entry")
-		ck(not app.battle_auto and app.battle.state.allies[0].id == ("lumi" if kind == "duo" else kind), kind + " opens in manual mode with intended party")
+		ck(app.battle_auto == app.preferred_battle_auto and app.battle.state.allies[0].id == ("lumi" if kind == "duo" else kind), kind + " follows saved auto preference with intended party")
+		var token: String = app.battle_config.token
+		app._show_wind_trial(kind)
+		ck(app.battle_config.token == token and app.overlay.get_child_count() == 0, kind + " repeated direct start preserves active battle")
 		if kind=="duo":await capture("duo-trial-960")
 		ck(app._battle_return_screen() == "summon", kind + " retreat destination is summon")
 		app.battle.state.phase = "victory"
@@ -49,6 +58,12 @@ func run() -> void:
 		named("BattleSettlementContinue").pressed.emit()
 		await frames(8)
 		ck(app.current_screen == "summon" and app.overlay.get_child_count() == 0, kind + " settlement returns cleanly to summon")
+	fresh()
+	app.model.extraction.start_run()
+	app.selected_pool = "limited_tiya"
+	app.navigate("summon")
+	named("WindTrial_tiya").pressed.emit()
+	ck(app.current_screen == "summon" and app.model.extraction.active() and app.battle_config.is_empty(), "direct trial preserves active expedition lock")
 	# Consecutive post-battle dialogue keys use the same scene and preserve order.
 	fresh()
 	app.model.catalog.DialogueData.wind_test_post = [{"speaker":"narrator","text":"桥边风声渐缓。"}]

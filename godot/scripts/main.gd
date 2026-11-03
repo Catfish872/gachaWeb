@@ -54,8 +54,8 @@ var unit_cards: Dictionary = {}
 var selected_skill := ""
 var selected_target := ""
 var battle_config: Dictionary = {}
-var battle_auto := false
-var preferred_battle_auto := false
+var battle_auto := true
+var preferred_battle_auto := true
 var battle_speed := 1.0
 var battle_clock := 0.0
 var battle_settled := false
@@ -79,6 +79,7 @@ var extraction_search_audio: AudioStreamPlayer
 var music_audio: AudioStreamPlayer
 var _music_pool: Dictionary = {}
 var _music_context_id := "hub"
+var _summon_music_origin := "hub"
 var ui_audio: AudioStreamPlayer
 var music_enabled := true
 var sound_enabled := true
@@ -787,9 +788,14 @@ func _summon() -> void:
 	var fallback := "res://assets/content_v270/banner/selin_banner.png" if featured == "selin" else "res://assets/backgrounds/summon_sanctum.png"
 	var background: String = str(pool.get("bannerPath", fallback))
 	if not ResourceLoader.exists(background): background = fallback
-	var embedded_character: bool = featured in ["tiya","lumi"] and background != fallback
-	var stage:=_portrait_environment(row,featured,260 if compact else 0,background,"",not embedded_character)
-	stage.set_meta("embedded_banner_character",embedded_character)
+	var wind_featured: bool = featured in ["tiya", "lumi"]
+	if wind_featured:
+		# Use the same full-body fit as the existing pools. This scene has no
+		# baked-in figure, so the featured person is neither doubled nor cropped.
+		background = str(model.catalog.CharacterData.get(featured, {}).get("portraitBackground", fallback))
+		if not ResourceLoader.exists(background):background = fallback
+	var stage:=_portrait_environment(row,featured,260 if compact else 0,background)
+	stage.set_meta("embedded_banner_character",false)
 	stage.size_flags_stretch_ratio=1.6
 	stage.name="SummonStage"
 	var banner:=_vbox(stage,8);banner.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
@@ -845,20 +851,9 @@ func _summon() -> void:
 		if action.disabled:action.modulate=Color(.6,.65,.7)
 
 func _show_wind_trial(kind: String) -> void:
-	var info: Dictionary = model.wind_trial_info(kind)
-	if info.is_empty(): return
-	var box := _modal(str(info.title), 660, 440)
-	_label(box, str(info.guide), 18, TEXT, true)
-	_label(box, "提供等级 5、零命座、五星 +8 遗物与满能量的固定队伍。你的原有阵容与养成保持原样。", 15, MUTED, true)
-	_label(box, "联合演示供自由体验" if kind == "duo" else ("本角色首通奖励已领取" if model.state.stageProgress.get(info.id, {}).get("cleared", false) else "首次胜利获得 160 星尘晶"), 16, CYAN, true)
-	var actions := _hbox(_modal_footer(box), 10)
-	_button(actions, "返回", _clear_overlay)
-	var start := _button(actions, "开始演示" if kind == "duo" else "开始试用", func():
-		var result: Dictionary = model.prepare_wind_trial(kind)
-		if _check(result):
-			battle_auto = false
-			_start_battle(result.config), true)
-	start.name = "WindTrialStart"
+	var result: Dictionary = model.prepare_wind_trial(kind)
+	if _check(result):
+		_start_battle(result.config)
 
 func _pool_details() -> void:
 	var pool: Dictionary = model.catalog.GachaPoolData.pools[selected_pool]
@@ -1723,6 +1718,9 @@ func _start_battle(config: Dictionary) -> void:
 			return
 	else:
 		battle.start(config, model.battle_party(is_abyss), model.rogue_effects() if is_abyss else [])
+	# A temporary action failure must not become the next encounter's preference.
+	# Continuous abyss challenge still explicitly requests automatic combat.
+	battle_auto = preferred_battle_auto or (is_abyss and abyss_auto_continue)
 	current_screen = "battle"
 	_render_screen()
 	for unit in battle.state.get("enemies",[]):
@@ -1745,8 +1743,8 @@ func _render_battle() -> void:
 	var caption := "第 %d 回合 · 第 %d 波" % [state.get("turn",1), state.get("wave",1)]
 	if battle_config.get("isExtraction", false): caption += " · 封锁剩余 %d 回合" % maxi(0, 41-int(state.get("turn",1)))
 	_label(names, caption, 11, GOLD)
-	_tab_button(head, "自动" if battle_auto else "手动", func(): _set_battle_auto(not battle_auto), battle_auto)
-	_tab_button(head, "%d 倍速" % battle_speed, _cycle_battle_speed)
+	_tab_button(head, "自动" if battle_auto else "手动", func(): _set_battle_auto(not battle_auto), battle_auto).name = "BattleAutoToggle"
+	_tab_button(head, "%d 倍速" % battle_speed, _cycle_battle_speed).name = "BattleSpeedToggle"
 	_tool_button(head,"book","战斗记录",_show_battle_log)
 	if battle_config.get("isAbyss", false): _tool_button(head,"star","本轮回响",_show_battle_echoes)
 	_tab_button(head, "撤退", func(): navigate(_battle_return_screen()))
@@ -3075,7 +3073,7 @@ func _load_preferences(path: String = "user://ui-settings.cfg") -> void:
 	extraction_reduced_motion = bool(config.get_value("extraction", "reduced_motion", false))
 	extraction_auto_pick = bool(config.get_value("extraction", "auto_pick", true))
 	extraction_difficulty = clampi(int(config.get_value("extraction", "difficulty", 0)), 0, model.extraction.max_difficulty())
-	preferred_battle_auto = bool(config.get_value("battle", "auto", false))
+	preferred_battle_auto = bool(config.get_value("battle", "auto", true))
 	battle_auto = preferred_battle_auto
 	var speed := float(config.get_value("battle", "speed", 1.0))
 	battle_speed = speed if speed in [1.0,2.0,4.0] else 1.0
@@ -3403,8 +3401,9 @@ func _music_track_for_context() -> String:
 	elif current_screen=="story":
 		_music_context_id="lantern" if selected_chapter==2 else "windpass_road" if selected_chapter==3 else "story"
 		if selected_chapter==3 and str(model.get_stage(selected_stage_id).get("background","")).contains("resonance_gallery"):_music_context_id="windpass_gallery"
-	elif current_screen=="summon" and selected_pool in ["limited_tiya","limited_lumi"]:
-		return "tiya_reveal" if selected_pool=="limited_tiya" else "lumi_reveal"
+	elif current_screen=="summon":
+		if _music_context_id != "summon": _summon_music_origin = _music_context_id
+		_music_context_id = "summon"
 	elif current_screen=="extraction":_music_context_id="extraction" if model.extraction.active() else "story"
 	elif current_screen=="abyss":_music_context_id="abyss"
 	elif current_screen=="battle":
@@ -3419,8 +3418,13 @@ func _music_track_for_context() -> String:
 			if battle_config.get("enemies",[]).has("boss_highland_roc"):return "windpass_core"
 			if battle_config.get("enemies",[]).has("boss_hedor"):return "lantern_core"
 			return "determined_pursuit"
-	match _music_context_id:
-		"windpass_road","windpass_gallery":return _music_context_id
+	var context := _music_context_id
+	if context == "summon":
+		var pool_track: String = {"limited_selin":"lantern_road", "limited_tiya":"tiya_reveal", "limited_lumi":"lumi_reveal"}.get(selected_pool, "")
+		if not pool_track.is_empty(): return pool_track
+		context = _summon_music_origin
+	match context:
+		"windpass_road","windpass_gallery":return context
 		"extraction":
 			if not model.extraction.active():return "medieval_exploration"
 			return model.extraction.environment_music_track()
