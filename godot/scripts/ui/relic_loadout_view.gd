@@ -92,12 +92,17 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	app._clear(ui.comparison)
 	var metric=app._hbox(app._panel(ui.comparison,app.CYAN.darkened(.65),10),8)
 	var metric_copy=app._vbox(metric,3);metric_copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-	app._label(metric_copy,str(plan.get("objectiveShortLabel","角色收益")),13,app.MUTED,true)
+	app._label(metric_copy,("长期每行动 · " if plan.get("evaluationMode","")=="steady" and plan.get("objectiveShortLabel","")!="承伤能力" else "")+str(plan.get("objectiveShortLabel","角色收益")),13,app.MUTED,true)
 	app._label(metric_copy,"%.1f  →  %.1f"%[float(before.get("objective",0)),float(after.get("objective",0))],24,app.TEXT)
 	var start:float=float(before.get("objective",0))
 	var gain:float=float(after.get("objective",0))-start
 	var change_text:String=("+" if gain>=0 else "")+("%.1f%%"%(100.0*gain/maxf(.00001,absf(start))) if start>0 else "%.1f"%gain)
 	app._label(metric,change_text,25,app.CYAN if gain>=0 else app.GOLD)
+	var reference_names: Array[String] = []
+	for id in plan.get("referenceTeam",[]): reference_names.append(app._char_name(str(id)))
+	if not reference_names.is_empty():
+		var reference=app._label(ui.comparison,"参考队伍："+"、".join(reference_names),12,app.MUTED,true)
+		reference.name="RelicLoadoutReferenceTeam"
 	var attributes=app._grid(ui.comparison,3)
 	for stat in [["hp","生命"],["atk","攻击"],["def","防御"],["spd","速度"],["cri","暴击率"],["criDmg","暴击伤害"],["energyRate","能量恢复"]]:
 		var old:float=float(before.get("stats",{}).get(stat[0],0))

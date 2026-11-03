@@ -3,6 +3,7 @@ extends RefCounted
 ## No inventory truncation, saves, upgrades, or calls to a live combat RNG.
 const Sets = preload("res://scripts/relic_sets.gd")
 const Battle = preload("res://scripts/battle_model.gd")
+const Cycle = preload("res://scripts/relic_cycle.gd")
 const ATTRS = ["hp_flat","atk_flat","def_flat","hp_pct","atk_pct","def_pct","spd","spd_pct","cri_rate","cri_dmg","energy_rate"]
 const SLOTS = ["helmet","chest","belt","boots","necklace"]
 const EPS = 0.00000001
@@ -90,6 +91,7 @@ var _normalizer_safe := false
 var _raw_slot_max: Array = []
 var _domain_set_stats: Dictionary = {}
 var _wind_team_specs: Array = []
+var _reference_team: Array = []
 var _selin_upper := false
 var _selin_rewards: Array = []
 var _selin_burn_attack := 0.0
@@ -102,8 +104,12 @@ var _branch_work: Dictionary = {}
 var _active_upper := -INF
 
 static func normalized_context(input: Dictionary = {}) -> Dictionary:
-	var result := {"policy":"auto","actions":6,"enemyCount":3,"enemyDefense":100.0,"otherSpeed":100.0,"targetStatuses":[],"incomingRawHit":1000,"initialEnergy":0,"allowUnproven":false,"includeEquippedByOthers":false}
+	var result := {"policy":"auto","evaluation":"steady","actions":6,"enemyCount":3,"enemyDefense":100.0,"otherSpeed":100.0,"targetStatuses":[],"incomingRawHit":1000,"initialEnergy":0,"allowUnproven":false,"includeEquippedByOthers":false}
 	for key in input: result[key] = input[key]
+	# An explicit action count remains an opening-window diagnostic. The UI
+	# passes no window and therefore optimizes long-run reward per action.
+	if not input.has("evaluation") and (input.has("actions") or input.get("policy","auto")=="optimal"): result.evaluation="opening"
+	result.evaluation="opening" if result.evaluation=="opening" else "steady"
 	result.actions = clampi(int(result.actions), 1, 8)
 	result.enemyCount = clampi(int(result.enemyCount), 1, 3)
 	result.enemyDefense = maxf(0.0,float(result.enemyDefense))
@@ -130,6 +136,44 @@ static func context_for_character(game, char_id: String, input: Dictionary = {})
 		result.targetStatuses = statuses
 	return result
 
+static func reference_team_ids(game, char_id: String) -> Array:
+	# Keep an active party intact. An off-party preview occupies one of the
+	# three real slots; only existing party members can fill the other two.
+	var current: Array = []
+	for id in game.state.team:
+		if id is String and game.state.ownedCharacters.has(id) and not current.has(id): current.append(id)
+	if current.has(char_id): return current.slice(0,3)
+	var result: Array = [char_id]
+	for id in current:
+		if _reference_pair(game.catalog,char_id,id) and result.size()<3: result.append(id)
+	for id in current:
+		if not result.has(id) and result.size()<3: result.append(id)
+	return result
+
+static func _applies_wind_armor(catalog: Dictionary, character: Dictionary) -> bool:
+	for sid in character.get("skills",[]):
+		for effect in catalog.get("SkillData",{}).get(sid,{}).get("effects",[]):
+			if effect.get("statusId","")=="wind_armor": return true
+	return false
+
+static func _reference_pair(catalog: Dictionary, left: String, right: String) -> bool:
+	var source: Dictionary = catalog.CharacterData.get(left,{})
+	var friend: Dictionary = catalog.CharacterData.get(right,{})
+	if source.get("passiveId","")=="selin_passive":
+		if friend.get("passiveId","")=="ember_passive": return true
+		for sid in friend.get("skills",[]):
+			for effect in catalog.get("SkillData",{}).get(sid,{}).get("effects",[]):
+				if effect.get("statusId","")=="burn": return true
+		return false
+	return _wind_reference_pair(catalog,left,right)
+
+static func _wind_reference_pair(catalog: Dictionary, left: String, right: String) -> bool:
+	# Select by a real status/innate interaction, not shared element, rarity,
+	# collection recommendation or broad lore synergyIds (Zeph shares one).
+	var a: Dictionary = catalog.CharacterData.get(left,{})
+	var b: Dictionary = catalog.CharacterData.get(right,{})
+	return (a.get("passiveId","")=="tiya_passive" and _applies_wind_armor(catalog,b)) or (b.get("passiveId","")=="tiya_passive" and _applies_wind_armor(catalog,a))
+
 static func _canonical_variant(value: Variant) -> Variant:
 	if value is Dictionary:
 		var keys: Array=value.keys(); keys.sort()
@@ -155,7 +199,7 @@ static func _relic_fingerprint_bytes(relic: Variant) -> PackedByteArray:
 	return var_to_bytes([relic.get("uid"),relic.get("slotId"),relic.get("setId",""),relic.get("rarity"),relic.get("level"),relic.get("equippedBy"),_canonical_variant(main),subs,_canonical_variant(extras)])
 
 static func _fingerprint_header(game, char_id: String, context: Dictionary) -> String:
-	return var_to_bytes(_canonical_variant({"version":"relic-reference-v4-wind-team-highest-rarity","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size(),"team":game.state.team,"ownedCharacters":game.state.ownedCharacters})).hex_encode() + "\n"
+	return var_to_bytes(_canonical_variant({"version":"relic-reference-v6-steady-cycle-highest-rarity","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size(),"team":game.state.team,"ownedCharacters":game.state.ownedCharacters})).hex_encode() + "\n"
 
 static func plan_fingerprint(game, char_id: String, context: Dictionary = {}) -> String:
 	var digest := HashingContext.new()
@@ -172,8 +216,11 @@ func _init(game, char_id: String, context: Dictionary = {}) -> void:
 	_total = game.state.relics.size()
 	if not game.state.ownedCharacters.has(char_id) or not _catalog.CharacterData.has(char_id):
 		_error = "角色资料不可用"; _phase = "error"; return
+	if _context.evaluation=="steady" and _context.policy!="auto":
+		_error = "长期循环评价采用自动技能优先级，请为手动策略指定行动次数"; _phase = "error"; return
 	if _context.includeEquippedByOthers:
 		_error = "请先解除其他角色装备后重新计算"; _phase = "error"; return
+	_reference_team = reference_team_ids(game,char_id) if char_id in ["tiya","lumi","selin"] else []
 	_saved = game.state.ownedCharacters[char_id].duplicate(true)
 	_cst = game.constellation_bonuses(char_id).duplicate(true)
 	_profile = _catalog.CharacterData[char_id].get("relicObjective",{"type":"damage","label":"输出"}).duplicate(true)
@@ -309,6 +356,9 @@ func _tie_item(a: Dictionary,b: Dictionary) -> bool:
 func _dominates(a: Dictionary,b: Dictionary) -> bool:
 	# Keeping the better tie identity is essential at crit caps and integer floors.
 	if not _tie_item(a,b): return false
+	# Selin's strongest burn source can switch owner at an ATK threshold,
+	# losing the teammate-only aura. More ATK is not a safe dominance proof.
+	if _char_id=="selin" and (a.v[1]!=b.v[1] or a.v[4]!=b.v[4]): return false
 	if _profile.type!="survival" and _context.policy!="optimal":
 		# Auto ultimate timing is discontinuous: preserve different energy schedules.
 		if a.v[10]!=b.v[10]: return false
@@ -319,6 +369,7 @@ func _dominates(a: Dictionary,b: Dictionary) -> bool:
 	return true
 
 func advance(budget_usec: int = 4000) -> Dictionary:
+	if not _error.is_empty(): _phase="error"
 	if _phase in ["done","error","cancelled"]: return preview()
 	var until := Time.get_ticks_usec() + clampi(budget_usec,100,10000)
 	while Time.get_ticks_usec() < until and not _phase in ["done","error","cancelled"]:
@@ -327,6 +378,7 @@ func advance(budget_usec: int = 4000) -> Dictionary:
 			"prepare": _prepare_step()
 			"seed": _seed_step()
 			"search": _search_step()
+		if not _error.is_empty(): _phase="error"; break
 	return preview()
 
 func _scan_step() -> void:
@@ -720,8 +772,8 @@ func _reference(stats: Dictionary,effects: Array) -> Dictionary:
 	if _char_id in ["tiya", "lumi"]:
 		# Teammate equipment is fixed throughout this optimizer instance.
 		if _wind_team_specs.is_empty():
-			for id in _game.state.team:
-				if id == null or id == _char_id or not _game.state.ownedCharacters.has(id): continue
+			for id in _reference_team:
+				if id == _char_id: continue
 				_wind_team_specs.append({"id":id,"stats":_game.computed_stats(id),"constellation":int(_game.state.ownedCharacters[id].constellation),"ownerEffects":Sets.evaluate(_catalog,_game.equipped_relics(id)).ownerEffects})
 		for spec in _wind_team_specs: _battle.state.allies.append(_battle._make_ally(spec.duplicate(true),_battle.state.allies.size()))
 		if _battle.has_status(target,"wind_armor"):
@@ -773,7 +825,7 @@ func _fast_upper(stats: Dictionary,effects: Array,joint_factor: float = INF,prof
 		_bound_coefficients[coefficient_key]=coefficient
 	_fast_bounds+=1
 	var critical:=1.0+clampf(float(stats.cri),0.0,1.0)*(maxf(1.0,float(stats.criDmg))-1.0) if _profile.type=="damage" else 1.0
-	var rounding:=int(_context.actions)*(value/NORMALIZER)*(critical*float(profile.damageRound)+float(profile.healRound)+1.0)+0.000001
+	var rounding:=_action_scale()*(value/NORMALIZER)*(critical*float(profile.damageRound)+float(profile.healRound)+1.0)+0.000001
 	return coefficient*minf(value*critical,joint_factor)+rounding
 
 func _objective_key(stats: Dictionary,effects: Array,upper: bool) -> String:
@@ -834,8 +886,8 @@ func _evaluate(stats: Dictionary,effects: Array,upper: bool = false) -> float:
 		_prepare_skills(actor,target)
 		_policy_optimal = upper or _context.policy=="optimal"
 		_memo.clear()
-		result = _value(int(_context.actions),int(_context.initialEnergy),0)
-		if _profile.type == "healing" and actor.passiveId == "ayla_passive": result += int(_context.actions)*maxi(1,int(actor.stats.atk*0.4))
+		result = _steady_upper(_rewards) if upper and _context.evaluation=="steady" else (_steady_reward(_rewards) if _context.evaluation=="steady" else _value(int(_context.actions),int(_context.initialEnergy),0))
+		if _profile.type == "healing" and actor.passiveId == "ayla_passive": result += _action_scale()*maxi(1,int(actor.stats.atk*0.4))
 	if _evaluation_cache.size() >= 2048:
 		_evaluation_cache.erase(_cache_keys.pop_front())
 	_evaluation_cache[key] = result; _cache_keys.append(key)
@@ -903,6 +955,73 @@ func _prepare_skills(actor: Dictionary,target: Dictionary) -> void:
 	for index in range(_skills.size()):
 		if not _skills[index].type in ["skill","ultimate"]: _auto_skill_order.append(index)
 
+func _action_scale() -> float:
+	return 1.0 if _context.evaluation=="steady" else float(_context.actions)
+
+func _current_cycle() -> Dictionary:
+	var result: Dictionary=Cycle.weights(_skills,_transitions,_auto_skill_order,int(_context.initialEnergy))
+	if not bool(result.get("success",false)):
+		_error="长期循环暂无法计算："+str(result.get("error","循环状态不可用")); _phase="error"
+	return result
+
+func cycle_summary(stats: Dictionary,effects: Array) -> Dictionary:
+	var reference: Dictionary=_reference(stats,effects)
+	_prepare_skills(reference.actor,reference.target)
+	return _current_cycle().duplicate(true)
+
+func _weighted_reward(rewards: Array,weights: Array) -> float:
+	var result := 0.0
+	for index in range(mini(rewards.size(),weights.size())): result+=float(rewards[index])*float(weights[index])
+	return result
+
+func _steady_reward(rewards: Array) -> float:
+	return _weighted_reward(rewards,_current_cycle().get("skillWeights",[]))
+
+func _unit_skill_weights(unit: Dictionary,target: Dictionary) -> Array:
+	if _context.evaluation!="steady":
+		var uniform: Array=[]
+		for sid in unit.skills: uniform.append(1.0/maxf(1.0,float(unit.skills.size())))
+		return uniform
+	_prepare_skills(unit,target)
+	return _current_cycle().get("skillWeights",[])
+
+func _steady_upper(rewards: Array) -> float:
+	# Relax long-run action frequencies to a two-variable linear program.
+	# Mean incoming energy must cover ultimate cost. Ignoring overflow only
+	# enlarges the feasible set; event gains include ultimate post-action gains.
+	# One skill per character gives f_skill <= 1 / cooldown. This is an upper
+	# bound for every legal auto or manual policy, not a guessed opening window.
+	var normal := -1; var skill := -1; var ultimate := -1
+	for index in range(_skills.size()):
+		match str(_skills[index].type):
+			"normal": normal=index
+			"skill": skill=index
+			"ultimate": ultimate=index
+	var fallback := 0.0
+	for reward in rewards: fallback=maxf(fallback,float(reward))
+	if _skills.size()!=3 or normal<0 or skill<0 or ultimate<0: return fallback+1e-8*maxf(1.0,fallback)
+	var drift: Array=[]
+	for index in range(_skills.size()):
+		var amount: float=-float(_skills[index].cost) if index==ultimate else minf(100.0,float(_skills[index].gain))
+		for branch in _transitions[index]: amount+=float(branch.p)*minf(100.0,float(branch.energy))
+		drift.append(amount)
+	# Each row is a*x+b*y<=c, x=f_skill, y=f_ultimate, f_normal=1-x-y.
+	var constraints: Array=[[-1.0,0.0,0.0],[0.0,-1.0,0.0],[1.0,1.0,1.0],[1.0,0.0,1.0/maxf(1.0,float(_skills[skill].cooldown))],[float(drift[normal])-float(drift[skill]),float(drift[normal])-float(drift[ultimate]),float(drift[normal])]]
+	var best := -INF
+	for i in range(constraints.size()):
+		for j in range(i+1,constraints.size()):
+			var a: Array=constraints[i];var b: Array=constraints[j]
+			var determinant: float=float(a[0])*float(b[1])-float(a[1])*float(b[0])
+			if absf(determinant)<1e-12: continue
+			var x: float=(float(a[2])*float(b[1])-float(a[1])*float(b[2]))/determinant
+			var y: float=(float(a[0])*float(b[2])-float(a[2])*float(b[0]))/determinant
+			var feasible := true
+			for row in constraints:
+				if float(row[0])*x+float(row[1])*y>float(row[2])+1e-10: feasible=false;break
+			if feasible: best=maxf(best,(1.0-x-y)*float(rewards[normal])+x*float(rewards[skill])+y*float(rewards[ultimate]))
+	if not is_finite(best): best=fallback
+	return best+1e-8*maxf(1.0,absf(best))
+
 func _value(turns: int,energy: int,cooldown: int) -> float:
 	if turns<=0: return 0.0
 	var key := turns*10000+energy*20+cooldown
@@ -934,13 +1053,25 @@ func preview() -> Dictionary:
 	var improvement := _score-float(_before.get("objective",0.0))
 	var filled:=_filled_empty(_best) if not _before.is_empty() else 0
 	var useful:bool=not _before.is_empty() and _best.get("relicUids",{}) != _before.get("relicUids",{})
-	var proven := not _cancelled and _phase=="done" and upper<=_score
+	var proven := _error.is_empty() and not _cancelled and _phase=="done" and upper<=_score
 	var objective := str(_profile.get("type","damage"))
-	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"highestRarities":_highest_rarity.duplicate(),"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":("队伍贡献" if _char_id in ["selin","lumi"] else {"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective)),"objectiveLabel":("六次行动协同收益" if _char_id in ["selin","lumi"] else {"damage":"参考场景六次行动期望伤害","healing":"参考场景六次行动潜在治疗","survival":"施放自身护盾后的有效承伤"}.get(objective,objective)),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
+	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"evaluationMode":str(_context.evaluation),"referenceTeam":_reference_team.duplicate(),"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"highestRarities":_highest_rarity.duplicate(),"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":("队伍贡献" if _char_id in ["selin","lumi"] else {"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective)),"objectiveLabel":_objective_label(),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
+
+func _objective_label() -> String:
+	if _profile.get("type","")=="survival": return "施放自身护盾后的有效承伤"
+	if _context.evaluation=="steady": return "长期循环 · 每行动"+("协同收益" if _char_id in ["selin","lumi"] else ("潜在治疗" if _profile.get("type","")=="healing" else "期望伤害"))
+	return "%d 次开局行动 · "%int(_context.actions)+("协同收益" if _char_id in ["selin","lumi"] else ("潜在治疗" if _profile.get("type","")=="healing" else "期望伤害"))
 
 func _assumptions() -> Array:
-	if _char_id in ["tiya", "lumi"]: return ["%d 次自身行动，按自动优先级与实际充能、冷却计算；目标为 %d 个中性敌人，防御 %.0f。" % [int(_context.actions),int(_context.enemyCount),float(_context.enemyDefense)], "按当前编队、破甲和可触发套装持续覆盖，计入缇娅非暴击贯穿；露弥另计队友每行动的平均技能增益。", "这是固定编队的输出与协同参考；护盾、减伤、生存、行动顺序及状态起手另在实战发挥作用。"]
-	if _char_id == "selin": return ["按当前编队统计自身输出、引爆和队友燃烧增益；目标维持6回合燃烧。", "六次行动内计入充能、终结技覆盖与套装首次引爆后的生效时机。"]
+	if _context.evaluation=="steady" and _profile.get("type","")!="survival":
+		var notes: Array=["按自动优先级、实际充能、冷却及暴击回能求长期循环，每行动收益不受开局第几次开大影响。","%d 个中性敌人，防御 %.0f；参考状态持续覆盖。能量每次上限100，终结技清空能量后再结算事件回能。"%[int(_context.enemyCount),float(_context.enemyDefense)]]
+		if _char_id in ["tiya","lumi"]: notes.append("参考队伍中计入缇娅非暴击贯穿；露弥队友收益按各自长期技能频率计算。破甲和可触发套装按持续覆盖，行动顺序与起手状态另在实战变化。")
+		elif _char_id=="selin": notes.append("参考队友按各自长期技能频率平均，终结技增益计入自身循环覆盖；燃烧及套装按持续覆盖，双方行动顺序与周期相位另在实战变化。")
+		elif _profile.get("type","")=="healing": notes.append("主动治疗与直接治疗被动按长期行动频率计算；友方持续缺失足够生命，护盾与生存另行发挥作用。")
+		else: notes.append("统计自身直接伤害与直接追击；目标持续状态为统一参考条件，不等同完整战斗模拟。")
+		return notes
+	if _char_id in ["tiya", "lumi"]: return ["%d 次自身行动，按自动优先级与实际充能、冷却计算；目标为 %d 个中性敌人，防御 %.0f。" % [int(_context.actions),int(_context.enemyCount),float(_context.enemyDefense)], "按参考队伍、破甲和可触发套装持续覆盖，计入缇娅非暴击贯穿；露弥另计队友每行动的平均技能增益。", "这是固定参考队伍的输出与协同参考；护盾、减伤、生存、行动顺序及状态起手另在实战发挥作用。"]
+	if _char_id == "selin": return ["按参考队伍统计自身输出、引爆和队友燃烧增益；目标维持6回合燃烧。", "%d 次行动内计入充能、终结技覆盖与套装首次引爆后的生效时机。"%int(_context.actions)]
 	if _profile.get("type","")=="survival": return ["满血施放一次自身战技护盾，以中性基础伤害 %d 的直接攻击计算等效生命。"%int(_context.incomingRawHit),"采用真实防御、减伤及满血格挡期望；一次性无敌、队友护盾、持续回复和实战战术另行发挥作用。","同收益先补齐空槽，再保留已有装备；仅使用未装备和当前角色遗物，等级与金币保持原样。"]
 	var result: Array = ["%d 次自身行动，起始能量 %d；按自动战斗优先级（终结技→战技→普攻），速度仅参与条件判定。"%[int(_context.actions),int(_context.initialEnergy)],"%d 个持续存活的中性敌人，防御 %.0f、其他单位速度 %.0f；自身可施加状态的条件潜能：%s（本基准按全程覆盖计算）。"%[int(_context.enemyCount),float(_context.enemyDefense),float(_context.otherSpeed),("、".join(_context.targetStatuses) if not _context.targetStatuses.is_empty() else "无")],"真实技能缩放、暴击封顶、整套阈值、命座及能量触发；固定参考场景的最优性与具体战斗结果分别展示。"]
 	if _context.policy=="optimal": result[0] = "%d 次自身行动；显式选择最优合法手动技能策略，速度仅参与条件判定。"%int(_context.actions)
@@ -954,24 +1085,28 @@ func _evaluate_selin(actor: Dictionary, target: Dictionary, upper: bool) -> floa
 	_policy_optimal = upper or _context.policy == "optimal"
 	_selin_team_damage = 0.0
 	_selin_team_burn_attack = 0.0
-	for id in _game.state.team:
-		if id == null or id == _char_id or not _game.state.ownedCharacters.has(id): continue
+	for id in _reference_team:
+		if id == _char_id: continue
 		var friend: Dictionary = _battle._make_ally({"id":id,"stats":_game.computed_stats(id),"constellation":int(_game.state.ownedCharacters[id].constellation),"ownerEffects":Sets.evaluate(_catalog,_game.equipped_relics(id)).ownerEffects},1)
 		var average := 0.0
-		for sid in friend.skills:
+		var frequencies: Array = _unit_skill_weights(friend,target)
+		if frequencies.size()!=friend.skills.size(): return 0.0
+		for skill_index in range(friend.skills.size()):
+			var sid: String = friend.skills[skill_index]
 			var skill: Dictionary = _catalog.SkillData[sid]
 			for effect in skill.get("effects", []):
 				if effect.get("type", "") != "damage": continue
 				var targets := int(_context.enemyCount) if effect.get("target", "") in ["all","all_enemies","chain3"] else 1
 				# Divide out the existing rare bucket before adding 80 percentage points.
 				var innate := 0.2 if friend.passiveId == "kaldi_passive" else (0.7 if int(friend.constellation)>=6 else 0.4) if friend.passiveId == "cinder_passive" and skill.type in ["skill","ultimate"] else 0.0
-				average += targets * _battle.expected_effect_damage(friend,target,skill,effect) / (1.0 + innate)
-		_selin_team_damage += average / maxf(1.0,float(friend.skills.size()))
+				average += float(frequencies[skill_index]) * targets * _battle.expected_effect_damage(friend,target,skill,effect) / (1.0 + innate)
+		_selin_team_damage += average
 		var can_burn: bool = friend.get("passiveId", "") == "ember_passive"
 		for sid in friend.skills:
 			for effect in _catalog.SkillData[sid].get("effects", []):
 				if effect.get("statusId", "") == "burn": can_burn = true
 		if can_burn: _selin_team_burn_attack = maxf(_selin_team_burn_attack,float(friend.stats.atk))
+	_prepare_skills(actor,target) # Teammate cadence preparation must not replace the optimized actor kernel.
 	_selin_burn_attack = float(actor.stats.atk)
 	_selin_set_amp = 0.0
 	var direct_amp := 0.0
@@ -997,6 +1132,17 @@ func _evaluate_selin(actor: Dictionary, target: Dictionary, upper: bool) -> floa
 			rewards.append(reward)
 		_selin_rewards.append(rewards)
 	_memo.clear()
+	if _context.evaluation=="steady":
+		var burn_scale: float=int(_context.enemyCount)*0.18*(1.0+_selin_set_amp)
+		if upper:
+			# Fully active aura and strongest amplified burn source are safe
+			# relaxations, including when the source owner changes with ATK.
+			return _steady_upper(_selin_rewards[1])+0.8*_selin_team_damage+burn_scale*maxf(_selin_burn_attack,1.8*_selin_team_burn_attack)
+		var cycle: Dictionary=_current_cycle()
+		var value: float=_weighted_reward(_selin_rewards[1],cycle.get("skillWeights",[]))
+		var uptime: float=float(cycle.get("auraUptime",0.0))
+		var burn_source: float=maxf(_selin_burn_attack,_selin_team_burn_attack)
+		return value+0.8*_selin_team_damage*uptime+burn_scale*burn_source*(1.0+(0.8*uptime if _selin_team_burn_attack>_selin_burn_attack else 0.0))
 	return _selin_value(int(_context.actions),int(_context.initialEnergy),0,0,false)
 
 func _selin_value(turns: int, energy: int, cooldown: int, aura: int, lit: bool) -> float:
@@ -1028,7 +1174,7 @@ func _selin_value(turns: int, energy: int, cooldown: int, aura: int, lit: bool) 
 	return best
 
 # These scores use maintained armor/party buffs, not a hidden battle simulation.
-# Teammate actions are averaged equally; the optimized unit retains its legal DP.
+# Steady mode weights teammates by their own cycle; opening diagnostics retain the old equal-skill reference.
 func _wind_can_apply_armor(unit: Dictionary) -> bool:
 	for sid in unit.skills:
 		for effect in _catalog.SkillData[sid].get("effects",[]):
@@ -1060,24 +1206,29 @@ func _wind_innate_reference(unit: Dictionary,target: Dictionary,skill: Dictionar
 
 func _wind_average_damage(unit: Dictionary,target: Dictionary) -> float:
 	var result := 0.0
-	for sid in unit.skills:
+	var frequencies: Array=_unit_skill_weights(unit,target)
+	if frequencies.size()!=unit.skills.size(): return 0.0
+	for skill_index in range(unit.skills.size()):
+		var sid: String=unit.skills[skill_index]
 		var skill: Dictionary=_catalog.SkillData[sid]
+		var reward := 0.0
 		for effect in skill.get("effects",[]):
 			if effect.get("type","")!="damage": continue
 			var count := int(_context.enemyCount) if effect.get("target","") in ["all","all_enemies","chain3"] else 1
 			var chain := 1.0
 			for hit in range(count):
-				result+=_battle.expected_effect_damage(unit,target,skill,effect,chain)
+				reward+=_battle.expected_effect_damage(unit,target,skill,effect,chain)
 				chain=maxf(0.3,chain-float(effect.get("chainDecay",0.0)))
-		result+=_wind_innate_reference(unit,target,skill)
-	return result/maxf(1.0,float(unit.skills.size()))
+		reward+=_wind_innate_reference(unit,target,skill)
+		result+=float(frequencies[skill_index])*reward
+	return result
 
 func _evaluate_wind(actor: Dictionary,target: Dictionary,upper: bool) -> float:
 	_prepare_skills(actor,target)
 	for index in range(actor.skills.size()): _rewards[index]+=_wind_innate_reference(actor,target,_catalog.SkillData[actor.skills[index]])
 	_policy_optimal=upper or _context.policy=="optimal"
 	_memo.clear()
-	var result := _value(int(_context.actions),int(_context.initialEnergy),0)
+	var result: float=_steady_upper(_rewards) if upper and _context.evaluation=="steady" else (_steady_reward(_rewards) if _context.evaluation=="steady" else _value(int(_context.actions),int(_context.initialEnergy),0))
 	if actor.passiveId!="lumi_passive" or not _battle.has_status(target,"wind_armor"): return result
 	var full_allies: Array=_battle.state.allies
 	var full := 0.0
@@ -1101,4 +1252,4 @@ func _evaluate_wind(actor: Dictionary,target: Dictionary,upper: bool) -> float:
 	var base := 0.0
 	for friend in base_allies: base+=_wind_average_damage(friend,base_target)
 	_battle.state.allies=full_allies
-	return result+int(_context.actions)*maxf(0.0,full-base)
+	return result+_action_scale()*maxf(0.0,full-base)

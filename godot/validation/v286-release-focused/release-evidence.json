@@ -1,0 +1,58 @@
+{
+  "version": "2.8.6",
+  "version_code": 20806,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 368,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-03T17:36:30Z",
+      "completed_utc": "2026-11-03T17:42:38Z",
+      "elapsed_seconds": 368,
+      "production_sha256": "ed5a258472ce6f0098aff2bb6eab4dc2c09a340bf1fc1eafbf457533cf190595",
+      "scope": [
+        "Default steady-state per-action versus explicitly requested opening finite window",
+        "13 characters C0/C6, deterministic cycles and stochastic closed classes, energy clamp and cooldown/event energy",
+        "Small-inventory exhaustive oracle, leaf and box upper bounds and actual recommended apply",
+        "Cycle failure returns error and cannot apply/prove optimal",
+        "Screenshot rounded attributes long-vs-short reference; not full user inventory",
+        "32 read-only set sensitivity design scenarios, no production stat calibration in this window"
+      ]
+    }
+  ],
+  "production_sha256": "139140542d53df2e47c8cafa67f693dbdfbb6048eebaa0f9fbfe2e0f20044fa7",
+  "production_file_count": 1263,
+  "post_review_version_only": true,
+  "scope": [
+    "Default steady-state per-action versus explicitly requested opening finite window",
+    "13 characters C0/C6, deterministic cycles and stochastic closed classes, energy clamp and cooldown/event energy",
+    "Small-inventory exhaustive oracle, leaf and box upper bounds and actual recommended apply",
+    "Cycle failure returns error and cannot apply/prove optimal",
+    "Screenshot rounded attributes long-vs-short reference; not full user inventory",
+    "32 read-only set sensitivity design scenarios, no production stat calibration in this window"
+  ],
+  "limits": [
+    "Desktop Mesa GL and desktop CPU, not Android hardware.",
+    "Long-run action cadence under declared maintained-status reference is not a full dynamic team combat simulation.",
+    "Small reference inventory timings do not establish worst-case inventory or phone latency.",
+    "Set sensitivity checks are internal assertions across32 design scenarios, not22894 independent combats.",
+    "No full regression suite, route simulation, or new set balance implementation tested."
+  ],
+  "corrections": [
+    {
+      "log": "ui-fixture-failure.log",
+      "reason": "Test incorrectly assumed metadata ancestor; fixture changed to discover real metadata owner, no production change"
+    },
+    {
+      "log": "../v289-set-value/run-invalid-duplicate-teammates.log",
+      "reason": "Test appended teammates to already populated scorer, creating duplicate party; corrected clear plus exactly3/uniqueID/component-sum assertions and only this test rerun"
+    }
+  ],
+  "original_failure_retained": {
+    "log": "model.log",
+    "checks": 634,
+    "failures": 1,
+    "disposition": "633 retained; one incorrect Tiya signature-set assumption superseded by two-context delta, original failure retained"
+  },
+  "effective_passed_checks": 23834
+}
