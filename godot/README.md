@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.8.0 · 双风新章
+## 最新正式版：2.8.1 · 角色展示与音乐优化
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.8.1/universal.apk) · [更新说明](CHANGELOG_2.8.1.md) · [验证记录](validation/release-v281/RELEASE.md)
+
+调整双风角色各界面比例，修复试用入口、战斗偏好记忆与卡池音乐上下文，并柔化五首音乐音色。
+
+## 历史版本：2.8.0 · 双风新章
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.8.0/universal.apk) · [更新说明](CHANGELOG_2.8.0.md) · [验证记录](validation/release-v280/RELEASE.md)
 
