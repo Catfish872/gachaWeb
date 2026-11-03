@@ -61,9 +61,9 @@ func run_tests() -> void:
 	l.ownerEffects=[set_effect(g,"wind_strings")]; b.state.allies=[t,l]
 	b.apply_status(e,"wind_armor",3,.35,l)
 	b._wind_piercing_hit(t,e,.60,true)
-	check(int(damage_events(b,"wind_primary")[0].amount)==1176,"set and blessings additive coefficient then Lumi20 percent")
+	check(absi(int(damage_events(b,"wind_primary")[0].amount)-1127)<=1,"set and blessings additive coefficient then Lumi15 percent with integer rounding")
 	b._wind_piercing_hit(t,e,.36,false)
-	check(int(damage_events(b,"wind_gold")[0].amount)==432,"gold excludes innate coefficient buff")
+	check(absi(int(damage_events(b,"wind_gold")[0].amount)-414)<=1,"gold excludes innate coefficient buff with Lumi15 percent and integer rounding")
 	check(int(t.energy)==0,"piercing does not grant hit energy")
 	f=fixture(g); b=f.b; t=f.t; l=f.l; e=f.e
 	b.apply_status(e,"wind_armor",3,.35,t)

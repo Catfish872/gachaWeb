@@ -1298,7 +1298,7 @@ func _timed_status_value(unit: Dictionary, id: String) -> float:
 func _external_deepening(caster: Dictionary, target: Dictionary) -> float:
 	if caster.is_empty() or not caster.get("isAlly", false): return 0.0
 	var value := _timed_status_value(caster, "ember_oath") if has_status(target, "burn") else 0.0
-	if has_status(target, "wind_armor") and _lumi_alive(): value += 0.20
+	if has_status(target, "wind_armor") and _lumi_alive(): value += float(catalog.get("CharacterData", {}).get("lumi", {}).get("windArmorDamageDeepening", 0.20))
 	return value
 
 func _lumi_alive() -> bool:

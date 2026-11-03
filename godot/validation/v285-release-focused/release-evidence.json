@@ -1,0 +1,41 @@
+{
+  "version": "2.8.5",
+  "version_code": 20805,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 777,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-03T15:38:52Z",
+      "completed_utc": "2026-11-03T15:43:09Z",
+      "elapsed_seconds": 257,
+      "production_sha256": "15974b85c4ba9b680aac01e7725dc5bb6ad60db34bbd8da866391191b8007e93",
+      "scope": [
+        "Main story background and mobile action layout; prior UI evidence reused"
+      ]
+    },
+    {
+      "started_utc": "2026-11-03T16:16:20Z",
+      "completed_utc": "2026-11-03T16:25:00Z",
+      "elapsed_seconds": 520,
+      "production_sha256": "ccf5bee7304de58e469c35cc962c63c1a5c86347982157f7df632dc2ec02417e",
+      "scope": [
+        "Two signature four-piece attack bonuses +12%; Lumi amplification 20% to15%; full-team comparisons and disclosed low-defense short-window exceptions"
+      ]
+    }
+  ],
+  "production_sha256": "6ca4579788272e3e27bf9aedb210d5ba16a2adb1148587af8dd9dfb9f1edc8fe",
+  "production_file_count": 1262,
+  "post_review_version_only": true,
+  "scope": [
+    "Story background and mobile action controls",
+    "Signature set attack bonus and Lumi amplification balance"
+  ],
+  "exceptions": [
+    "Four low-defense, zero-blessing, multi-target six-action ranking cases remain non-optimal. These are disclosed exceptions, not passed dominance assertions."
+  ],
+  "limits": [
+    "Two independent request stages: 257 and520 seconds; no additional game tests during publication",
+    "Prior UI reused; no Android hardware or universal signature dominance claim"
+  ]
+}

@@ -1,0 +1,1568 @@
+{
+  "cases": [
+    {
+      "config": {
+        "c": 0,
+        "duo": false,
+        "gear": 0,
+        "level": 1,
+        "name": "level1_c0_plus0_solo"
+      },
+      "gear": [
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 500.0,
+            "name": "HP",
+            "perLevel": 80.0,
+            "stat": "hp_flat"
+          },
+          "rarity": 5,
+          "slotId": "helmet",
+          "subStats": [
+            {
+              "name": "DEF",
+              "stat": "def_flat",
+              "value": 25.0
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 27.0
+            },
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.045
+            },
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.07
+            }
+          ],
+          "uid": "relic_1793720345968_11_1116038549"
+        },
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 50.0,
+            "name": "ATK",
+            "perLevel": 8.0,
+            "stat": "atk_flat"
+          },
+          "rarity": 5,
+          "slotId": "chest",
+          "subStats": [
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.047
+            },
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.039
+            },
+            {
+              "name": "暴击率",
+              "stat": "cri_rate",
+              "value": 0.028
+            },
+            {
+              "name": "SPD",
+              "stat": "spd",
+              "value": 2.0
+            }
+          ],
+          "uid": "relic_1793720345974_17_139953868"
+        },
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 0.06,
+            "name": "ATK%",
+            "perLevel": 0.008,
+            "stat": "atk_pct"
+          },
+          "rarity": 5,
+          "slotId": "belt",
+          "subStats": [
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.071
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 29.0
+            },
+            {
+              "name": "HP%",
+              "stat": "hp_pct",
+              "value": 0.047
+            },
+            {
+              "name": "DEF",
+              "stat": "def_flat",
+              "value": 13.0
+            }
+          ],
+          "uid": "relic_1793720345988_35_1778806057"
+        },
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 0.06,
+            "name": "HP%",
+            "perLevel": 0.008,
+            "stat": "hp_pct"
+          },
+          "rarity": 5,
+          "slotId": "boots",
+          "subStats": [
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.05
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 32.0
+            },
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.042
+            },
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.078
+            }
+          ],
+          "uid": "relic_1793720345995_42_769787069"
+        },
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 0.06,
+            "name": "HP%",
+            "perLevel": 0.008,
+            "stat": "hp_pct"
+          },
+          "rarity": 5,
+          "slotId": "necklace",
+          "subStats": [
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.063
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 34.0
+            },
+            {
+              "name": "DEF",
+              "stat": "def_flat",
+              "value": 21.0
+            },
+            {
+              "name": "DEF%",
+              "stat": "def_pct",
+              "value": 0.042
+            }
+          ],
+          "uid": "relic_1793720346003_52_2596499939"
+        }
+      ],
+      "live": {
+        "atk22": {
+          "balanced100": {
+            "followUpMean": 59367.0,
+            "mean": 134130.125,
+            "values": [
+              127698.0,
+              135107.0,
+              140761.0,
+              139006.0,
+              132927.0,
+              140336.0,
+              129028.0,
+              128178.0
+            ]
+          },
+          "none": {
+            "followUpMean": 3366.0,
+            "mean": 9187.625,
+            "values": [
+              9340.0,
+              8985.0,
+              8942.0,
+              9476.0,
+              9277.0,
+              8594.0,
+              9863.0,
+              9024.0
+            ]
+          },
+          "pierce3": {
+            "followUpMean": 6171.0,
+            "mean": 11786.5,
+            "values": [
+              11734.0,
+              11425.0,
+              11773.0,
+              12231.0,
+              12052.0,
+              11680.0,
+              11773.0,
+              11624.0
+            ]
+          }
+        },
+        "wind_blades": {
+          "balanced100": {
+            "followUpMean": 65483.0,
+            "mean": 134102.375,
+            "values": [
+              128196.0,
+              134999.0,
+              140189.0,
+              138576.0,
+              132997.0,
+              139800.0,
+              129420.0,
+              128642.0
+            ]
+          },
+          "none": {
+            "followUpMean": 3707.0,
+            "mean": 9052.375,
+            "values": [
+              9191.0,
+              8866.0,
+              8827.0,
+              9317.0,
+              9134.0,
+              8507.0,
+              9674.0,
+              8903.0
+            ]
+          },
+          "pierce3": {
+            "followUpMean": 6798.0,
+            "mean": 11954.0,
+            "values": [
+              11905.0,
+              11622.0,
+              11942.0,
+              12362.0,
+              12197.0,
+              11857.0,
+              11942.0,
+              11805.0
+            ]
+          }
+        }
+      },
+      "scores": {
+        "atk2": 9125.424,
+        "atk22": 9947.808,
+        "thunder_hunt": 8901.936,
+        "wind_blades": 9797.424,
+        "wind_strings": 10469.424,
+        "wind_voyager": 9947.808
+      },
+      "search": {
+        "counts": {
+          "ember_lantern": 2,
+          "wind_blades": 2
+        },
+        "proven": true,
+        "score": 9947.808
+      },
+      "stats": {
+        "atk2": {
+          "atk": 469,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "atk22": {
+          "atk": 511,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "thunder_hunt": {
+          "atk": 426,
+          "cri": 0.288,
+          "criDmg": 2.052,
+          "critDmg": 2.052,
+          "critRate": 0.288,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "wind_blades": {
+          "atk": 469,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "wind_strings": {
+          "atk": 469,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "wind_voyager": {
+          "atk": 426,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 127.68,
+          "ultDmgBonus": 0.0
+        }
+      }
+    },
+    {
+      "config": {
+        "c": 0,
+        "duo": true,
+        "gear": 0,
+        "level": 1,
+        "name": "level1_c0_plus0_duo"
+      },
+      "gear": [
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 500.0,
+            "name": "HP",
+            "perLevel": 80.0,
+            "stat": "hp_flat"
+          },
+          "rarity": 5,
+          "slotId": "helmet",
+          "subStats": [
+            {
+              "name": "DEF",
+              "stat": "def_flat",
+              "value": 25.0
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 27.0
+            },
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.045
+            },
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.07
+            }
+          ],
+          "uid": "relic_1793720346398_11_1116038549"
+        },
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 50.0,
+            "name": "ATK",
+            "perLevel": 8.0,
+            "stat": "atk_flat"
+          },
+          "rarity": 5,
+          "slotId": "chest",
+          "subStats": [
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.047
+            },
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.039
+            },
+            {
+              "name": "暴击率",
+              "stat": "cri_rate",
+              "value": 0.028
+            },
+            {
+              "name": "SPD",
+              "stat": "spd",
+              "value": 2.0
+            }
+          ],
+          "uid": "relic_1793720346404_17_139953868"
+        },
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 0.06,
+            "name": "ATK%",
+            "perLevel": 0.008,
+            "stat": "atk_pct"
+          },
+          "rarity": 5,
+          "slotId": "belt",
+          "subStats": [
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.071
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 29.0
+            },
+            {
+              "name": "HP%",
+              "stat": "hp_pct",
+              "value": 0.047
+            },
+            {
+              "name": "DEF",
+              "stat": "def_flat",
+              "value": 13.0
+            }
+          ],
+          "uid": "relic_1793720346421_35_1778806057"
+        },
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 0.06,
+            "name": "HP%",
+            "perLevel": 0.008,
+            "stat": "hp_pct"
+          },
+          "rarity": 5,
+          "slotId": "boots",
+          "subStats": [
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.05
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 32.0
+            },
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.042
+            },
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.078
+            }
+          ],
+          "uid": "relic_1793720346427_42_769787069"
+        },
+        {
+          "equippedBy": null,
+          "level": 0,
+          "mainStat": {
+            "base": 0.06,
+            "name": "HP%",
+            "perLevel": 0.008,
+            "stat": "hp_pct"
+          },
+          "rarity": 5,
+          "slotId": "necklace",
+          "subStats": [
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.063
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 34.0
+            },
+            {
+              "name": "DEF",
+              "stat": "def_flat",
+              "value": 21.0
+            },
+            {
+              "name": "DEF%",
+              "stat": "def_pct",
+              "value": 0.042
+            }
+          ],
+          "uid": "relic_1793720346436_52_2596499939"
+        }
+      ],
+      "live": {
+        "atk22": {
+          "balanced100": {
+            "followUpMean": 79584.0,
+            "mean": 210969.75,
+            "values": [
+              225948.0,
+              210840.0,
+              210058.0,
+              221520.0,
+              199638.0,
+              197294.0,
+              210058.0,
+              212402.0
+            ]
+          },
+          "none": {
+            "followUpMean": 6180.0,
+            "mean": 13647.125,
+            "values": [
+              13321.0,
+              13366.0,
+              13545.0,
+              13470.0,
+              13470.0,
+              13366.0,
+              14692.0,
+              13947.0
+            ]
+          },
+          "pierce3": {
+            "followUpMean": 9840.0,
+            "mean": 17132.125,
+            "values": [
+              17398.0,
+              17294.0,
+              17339.0,
+              16743.0,
+              17205.0,
+              16966.0,
+              17235.0,
+              16877.0
+            ]
+          }
+        },
+        "wind_blades": {
+          "balanced100": {
+            "followUpMean": 87816.0,
+            "mean": 208408.75,
+            "values": [
+              222155.0,
+              208290.0,
+              207572.0,
+              218091.0,
+              198009.0,
+              195858.0,
+              207572.0,
+              209723.0
+            ]
+          },
+          "none": {
+            "followUpMean": 6804.0,
+            "mean": 13654.125,
+            "values": [
+              13355.0,
+              13396.0,
+              13560.0,
+              13492.0,
+              13492.0,
+              13396.0,
+              14613.0,
+              13929.0
+            ]
+          },
+          "pierce3": {
+            "followUpMean": 10848.0,
+            "mean": 17537.25,
+            "values": [
+              17782.0,
+              17686.0,
+              17727.0,
+              17180.0,
+              17604.0,
+              17385.0,
+              17631.0,
+              17303.0
+            ]
+          }
+        }
+      },
+      "scores": {
+        "atk2": 12575.664,
+        "atk22": 13714.272,
+        "thunder_hunt": 12160.416,
+        "wind_blades": 13715.664,
+        "wind_strings": 12575.664,
+        "wind_voyager": 13719.024
+      },
+      "search": {
+        "counts": {
+          "wind_blades": 4
+        },
+        "proven": true,
+        "score": 13715.664
+      },
+      "stats": {
+        "atk2": {
+          "atk": 469,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "atk22": {
+          "atk": 511,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "thunder_hunt": {
+          "atk": 426,
+          "cri": 0.288,
+          "criDmg": 2.052,
+          "critDmg": 2.052,
+          "critRate": 0.288,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "wind_blades": {
+          "atk": 469,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "wind_strings": {
+          "atk": 469,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 114.0,
+          "ultDmgBonus": 0.0
+        },
+        "wind_voyager": {
+          "atk": 426,
+          "cri": 0.208,
+          "criDmg": 1.802,
+          "critDmg": 1.802,
+          "critRate": 0.208,
+          "def": 139,
+          "energyRate": 0.219,
+          "hp": 1983,
+          "maxHp": 1983,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 127.68,
+          "ultDmgBonus": 0.0
+        }
+      }
+    },
+    {
+      "config": {
+        "c": 0,
+        "duo": true,
+        "gear": 25,
+        "level": 10,
+        "name": "level10_c0_plus25_duo"
+      },
+      "gear": [
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 500.0,
+            "name": "HP",
+            "perLevel": 80.0,
+            "stat": "hp_flat"
+          },
+          "rarity": 5,
+          "slotId": "helmet",
+          "subStats": [
+            {
+              "name": "DEF%",
+              "stat": "def_pct",
+              "value": 0.088
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 59.0
+            },
+            {
+              "name": "暴击率",
+              "stat": "cri_rate",
+              "value": 0.042
+            },
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.197
+            }
+          ],
+          "uid": "relic_1793720347178_6_1159974432"
+        },
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 50.0,
+            "name": "ATK",
+            "perLevel": 8.0,
+            "stat": "atk_flat"
+          },
+          "rarity": 5,
+          "slotId": "chest",
+          "subStats": [
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.053
+            },
+            {
+              "name": "DEF",
+              "stat": "def_flat",
+              "value": 73.0
+            },
+            {
+              "name": "HP%",
+              "stat": "hp_pct",
+              "value": 0.082
+            },
+            {
+              "name": "暴击率",
+              "stat": "cri_rate",
+              "value": 0.084
+            }
+          ],
+          "uid": "relic_1793720347185_14_2561001076"
+        },
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 0.06,
+            "name": "ATK%",
+            "perLevel": 0.008,
+            "stat": "atk_pct"
+          },
+          "rarity": 5,
+          "slotId": "belt",
+          "subStats": [
+            {
+              "name": "SPD",
+              "stat": "spd",
+              "value": 8.0
+            },
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.209
+            },
+            {
+              "name": "暴击率",
+              "stat": "cri_rate",
+              "value": 0.061
+            },
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.091
+            }
+          ],
+          "uid": "relic_1793720347203_31_2303085430"
+        },
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 6.0,
+            "name": "SPD",
+            "perLevel": 0.8,
+            "stat": "spd"
+          },
+          "rarity": 5,
+          "slotId": "boots",
+          "subStats": [
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.085
+            },
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.132
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 69.0
+            },
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.065
+            }
+          ],
+          "uid": "relic_1793720347212_41_2675442068"
+        },
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 0.05,
+            "name": "暴击率",
+            "perLevel": 0.006,
+            "stat": "cri_rate"
+          },
+          "rarity": 5,
+          "slotId": "necklace",
+          "subStats": [
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.078
+            },
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.064
+            },
+            {
+              "name": "DEF%",
+              "stat": "def_pct",
+              "value": 0.113
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 84.0
+            }
+          ],
+          "uid": "relic_1793720347220_50_841743317"
+        }
+      ],
+      "live": {
+        "atk22": {
+          "balanced100": {
+            "followUpMean": 299544.0,
+            "mean": 1844295.625,
+            "values": [
+              1986359.0,
+              1653524.0,
+              1815883.0,
+              2063480.0,
+              1901121.0,
+              2087832.0,
+              1503343.0,
+              1742823.0
+            ]
+          },
+          "none": {
+            "followUpMean": 23208.0,
+            "mean": 111998.875,
+            "values": [
+              94846.0,
+              114814.0,
+              128280.0,
+              98100.0,
+              102740.0,
+              121316.0,
+              116903.0,
+              118992.0
+            ]
+          },
+          "pierce3": {
+            "followUpMean": 37020.0,
+            "mean": 128742.25,
+            "values": [
+              120035.0,
+              140003.0,
+              130018.0,
+              133039.0,
+              119338.0,
+              130715.0,
+              132342.0,
+              124448.0
+            ]
+          }
+        },
+        "wind_blades": {
+          "balanced100": {
+            "followUpMean": 335004.0,
+            "mean": 1775106.0,
+            "values": [
+              1907546.0,
+              1597258.0,
+              1748618.0,
+              1979442.0,
+              1828082.0,
+              2002146.0,
+              1457250.0,
+              1680506.0
+            ]
+          },
+          "none": {
+            "followUpMean": 25956.0,
+            "mean": 108732.125,
+            "values": [
+              92741.0,
+              111357.0,
+              123912.0,
+              95771.0,
+              100100.0,
+              117418.0,
+              113305.0,
+              115253.0
+            ]
+          },
+          "pierce3": {
+            "followUpMean": 41412.0,
+            "mean": 126921.125,
+            "values": [
+              118804.0,
+              137420.0,
+              128111.0,
+              130926.0,
+              118154.0,
+              128761.0,
+              130276.0,
+              122917.0
+            ]
+          }
+        }
+      },
+      "scores": {
+        "atk2": 105387.065921345,
+        "atk22": 113044.345495567,
+        "thunder_hunt": 107927.431080057,
+        "wind_blades": 109707.065921345,
+        "wind_strings": 105387.065921345,
+        "wind_voyager": 117205.162914681
+      },
+      "search": {
+        "counts": {
+          "ember_lantern": 2,
+          "wind_blades": 2
+        },
+        "proven": true,
+        "score": 113044.345495567
+      },
+      "stats": {
+        "atk2": {
+          "atk": 1789,
+          "cri": 0.81143058438,
+          "criDmg": 4.32761369015,
+          "critDmg": 4.32761369015,
+          "critRate": 0.81143058438,
+          "def": 401,
+          "energyRate": 0.274,
+          "hp": 8521,
+          "maxHp": 8521,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 298.0,
+          "ultDmgBonus": 0.0
+        },
+        "atk22": {
+          "atk": 1919,
+          "cri": 0.81143058438,
+          "criDmg": 4.32761369015,
+          "critDmg": 4.32761369015,
+          "critRate": 0.81143058438,
+          "def": 401,
+          "energyRate": 0.274,
+          "hp": 8521,
+          "maxHp": 8521,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 298.0,
+          "ultDmgBonus": 0.0
+        },
+        "thunder_hunt": {
+          "atk": 1658,
+          "cri": 0.89143058438,
+          "criDmg": 4.57761369015,
+          "critDmg": 4.57761369015,
+          "critRate": 0.89143058438,
+          "def": 401,
+          "energyRate": 0.274,
+          "hp": 8521,
+          "maxHp": 8521,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 298.0,
+          "ultDmgBonus": 0.0
+        },
+        "wind_blades": {
+          "atk": 1789,
+          "cri": 0.81143058438,
+          "criDmg": 4.32761369015,
+          "critDmg": 4.32761369015,
+          "critRate": 0.81143058438,
+          "def": 401,
+          "energyRate": 0.274,
+          "hp": 8521,
+          "maxHp": 8521,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 298.0,
+          "ultDmgBonus": 0.0
+        },
+        "wind_strings": {
+          "atk": 1789,
+          "cri": 0.81143058438,
+          "criDmg": 4.32761369015,
+          "critDmg": 4.32761369015,
+          "critRate": 0.81143058438,
+          "def": 401,
+          "energyRate": 0.274,
+          "hp": 8521,
+          "maxHp": 8521,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 298.0,
+          "ultDmgBonus": 0.0
+        },
+        "wind_voyager": {
+          "atk": 1658,
+          "cri": 0.81143058438,
+          "criDmg": 4.32761369015,
+          "critDmg": 4.32761369015,
+          "critRate": 0.81143058438,
+          "def": 401,
+          "energyRate": 0.274,
+          "hp": 8521,
+          "maxHp": 8521,
+          "normalDmgBonus": 0.0,
+          "skillCdReduce": 0,
+          "skillDmgBonus": 0.0,
+          "spd": 333.76,
+          "ultDmgBonus": 0.0
+        }
+      }
+    },
+    {
+      "config": {
+        "c": 6,
+        "duo": true,
+        "gear": 25,
+        "level": 10,
+        "name": "level10_c6_plus25_duo"
+      },
+      "gear": [
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 500.0,
+            "name": "HP",
+            "perLevel": 80.0,
+            "stat": "hp_flat"
+          },
+          "rarity": 5,
+          "slotId": "helmet",
+          "subStats": [
+            {
+              "name": "暴击率",
+              "stat": "cri_rate",
+              "value": 0.083
+            },
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.109
+            },
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 17.0
+            },
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.191
+            }
+          ],
+          "uid": "relic_1793720347979_3_239330060"
+        },
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 50.0,
+            "name": "ATK",
+            "perLevel": 8.0,
+            "stat": "atk_flat"
+          },
+          "rarity": 5,
+          "slotId": "chest",
+          "subStats": [
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.178
+            },
+            {
+              "name": "DEF",
+              "stat": "def_flat",
+              "value": 55.0
+            },
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.085
+            },
+            {
+              "name": "HP%",
+              "stat": "hp_pct",
+              "value": 0.099
+            }
+          ],
+          "uid": "relic_1793720347991_18_456494434"
+        },
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 0.06,
+            "name": "ATK%",
+            "perLevel": 0.008,
+            "stat": "atk_pct"
+          },
+          "rarity": 5,
+          "slotId": "belt",
+          "subStats": [
+            {
+              "name": "SPD",
+              "stat": "spd",
+              "value": 8.0
+            },
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.209
+            },
+            {
+              "name": "暴击率",
+              "stat": "cri_rate",
+              "value": 0.061
+            },
+            {
+              "name": "爆伤",
+              "stat": "cri_dmg",
+              "value": 0.091
+            }
+          ],
+          "uid": "relic_1793720348003_31_2303085430"
+        },
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 0.06,
+            "name": "HP%",
+            "perLevel": 0.008,
+            "stat": "hp_pct"
+          },
+          "rarity": 5,
+          "slotId": "boots",
+          "subStats": [
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.152
+            },
+            {
+              "name": "DEF",
+              "stat": "def_flat",
+              "value": 17.0
+            },
+            {
+              "name": "ATK%",
+              "stat": "atk_pct",
+              "value": 0.138
+            },
+            {
+              "name": "暴击率",
+              "stat": "cri_rate",
+              "value": 0.056
+            }
+          ],
+          "uid": "relic_1793720348018_48_3818546020"
+        },
+        {
+          "equippedBy": null,
+          "level": 25,
+          "mainStat": {
+            "base": 0.05,
+            "name": "暴击率",
+            "perLevel": 0.006,
+            "stat": "cri_rate"
+          },
+          "rarity": 5,
+          "slotId": "necklace",
+          "subStats": [
+            {
+              "name": "ATK",
+              "stat": "atk_flat",
+              "value": 87.0
+            },
+            {
+              "name": "能量恢复",
+              "stat": "energy_rate",
+              "value": 0.16
+            },
+            {
+              "name": "HP%",
+              "stat": "hp_pct",
+              "value": 0.098
+            },
+            {
+              "name": "DEF%",
+              "stat": "def_pct",
+              "value": 0.06
+            }
+          ],
+          "uid": "relic_1793720348023_54_3091892078"
+        }
+      ],
+      "live": {
+        "atk22": {
+          "balanced100": {
+            "followUpMean": 318080.0,
+            "mean": 2271867.25,
+            "values": [
+              2305796.0,
+              2138982.0,
+              2430906.0,
+              2177151.0,
+              2392737.0,
+              2211785.0,
+              2382134.0,
+              2135447.0
+            ]
+          },
+          "none": {
+            "followUpMean": 26222.0,
+            "mean": 139444.75,
+            "values": [
+              143686.0,
+              129574.0,
+              144292.0,
+              139924.0,
+              121810.0,
+              147082.0,
+              142108.0,
+              147082.0
+            ]
+          },
+          "pierce3": {
+            "followUpMean": 40824.0,
+            "mean": 154622.75,
+            "values": [
+              153920.0,
+              154325.0,
+              158894.0,
+              147167.0,
+              154325.0,
+              154325.0,
+              156710.0,
+              157316.0
+            ]
+          }
+        },
+        "wind_blades": {
+          "balanced100": {
+            "followUpMean": 354802.0,
+            "mean": 2172178.25,
+            "values": [
+              2203737.0,
+              2048569.0,
+              2320114.0,
+              2084074.0,
+              2284609.0,
+              2116293.0,
+              2274747.0,
+              2045283.0
+            ]
+          },
+          "none": {
+            "followUpMean": 29274.0,
+            "mean": 134590.875,
+            "values": [
+              138535.0,
+              125408.0,
+              139100.0,
+              135038.0,
+              118185.0,
+              141696.0,
+              137069.0,
+              141696.0
+            ]
+          },
+          "pierce3": {
+            "followUpMean": 45556.0,
+            "mean": 151409.25,
+            "values": [
+              150755.0,
+              151132.0,
+              155382.0,
+              144474.0,
+              151132.0,
+              151132.0,
+              153351.0,
+              153916.0
+            ]
+          }
+        }
+      },
+      "scores": {
+        "atk2": 125432.731175959,
+        "atk22": 134836.568477542,
+        "thunder_hunt": 128477.700286609,
+        "wind_blades": 130304.731175959,
+        "wind_strings": 125432.731175959,
+        "wind_voyager": 139204.379482238
+      },
+      "search": {
+        "counts": {
+          "ember_lantern": 2,
+          "wind_blades": 2
+        },
+        "proven": true,
+        "score": 134836.568477542
+      },
+      "stats": {
+        "atk2": {
+          "atk": 1572,
+          "cri": 0.82443058438,
+          "criDmg": 4.09061369015,
+          "critDmg": 4.09061369015,
+          "critRate": 0.82443058438,
+          "def": 380,
+          "energyRate": 0.89,
+          "hp": 12650,
+          "maxHp": 12650,
+          "normalDmgBonus": 0.15,
+          "skillCdReduce": 1.0,
+          "skillDmgBonus": 0.2,
+          "spd": 272.0,
+          "ultDmgBonus": 0.3
+        },
+        "atk22": {
+          "atk": 1690,
+          "cri": 0.82443058438,
+          "criDmg": 4.09061369015,
+          "critDmg": 4.09061369015,
+          "critRate": 0.82443058438,
+          "def": 380,
+          "energyRate": 0.89,
+          "hp": 12650,
+          "maxHp": 12650,
+          "normalDmgBonus": 0.15,
+          "skillCdReduce": 1.0,
+          "skillDmgBonus": 0.2,
+          "spd": 272.0,
+          "ultDmgBonus": 0.3
+        },
+        "thunder_hunt": {
+          "atk": 1454,
+          "cri": 0.90443058438,
+          "criDmg": 4.34061369015,
+          "critDmg": 4.34061369015,
+          "critRate": 0.90443058438,
+          "def": 380,
+          "energyRate": 0.89,
+          "hp": 12650,
+          "maxHp": 12650,
+          "normalDmgBonus": 0.15,
+          "skillCdReduce": 1.0,
+          "skillDmgBonus": 0.2,
+          "spd": 272.0,
+          "ultDmgBonus": 0.3
+        },
+        "wind_blades": {
+          "atk": 1572,
+          "cri": 0.82443058438,
+          "criDmg": 4.09061369015,
+          "critDmg": 4.09061369015,
+          "critRate": 0.82443058438,
+          "def": 380,
+          "energyRate": 0.89,
+          "hp": 12650,
+          "maxHp": 12650,
+          "normalDmgBonus": 0.15,
+          "skillCdReduce": 1.0,
+          "skillDmgBonus": 0.2,
+          "spd": 272.0,
+          "ultDmgBonus": 0.3
+        },
+        "wind_strings": {
+          "atk": 1572,
+          "cri": 0.82443058438,
+          "criDmg": 4.09061369015,
+          "critDmg": 4.09061369015,
+          "critRate": 0.82443058438,
+          "def": 380,
+          "energyRate": 0.89,
+          "hp": 12650,
+          "maxHp": 12650,
+          "normalDmgBonus": 0.15,
+          "skillCdReduce": 1.0,
+          "skillDmgBonus": 0.2,
+          "spd": 272.0,
+          "ultDmgBonus": 0.3
+        },
+        "wind_voyager": {
+          "atk": 1454,
+          "cri": 0.82443058438,
+          "criDmg": 4.09061369015,
+          "critDmg": 4.09061369015,
+          "critRate": 0.82443058438,
+          "def": 380,
+          "energyRate": 0.89,
+          "hp": 12650,
+          "maxHp": 12650,
+          "normalDmgBonus": 0.15,
+          "skillCdReduce": 1.0,
+          "skillDmgBonus": 0.2,
+          "spd": 304.64,
+          "ultDmgBonus": 0.3
+        }
+      }
+    }
+  ],
+  "checks": 50,
+  "failures": [],
+  "runtimeCommit": "9aeb948ad5851cfb283056e57bebc424a77d9776",
+  "samples": 8,
+  "scope": "Matched legal five-star pieces; 6 native battle rounds; three neutral immortal targets, DEF100/SPD100; no incoming attacks; Lumi acts before Tiya; cold start, natural status expiry. Actual Tiya damage only. Fixed 100-blessing composition is a sensitivity case, not a random acquisition simulation."
+}

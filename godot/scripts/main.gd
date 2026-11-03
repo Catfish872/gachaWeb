@@ -553,8 +553,9 @@ func _background_path() -> String:
 		return str(battle_config.background)
 	if current_screen == "battle" and battle_config.get("isExtraction", false):
 		return model.extraction.battle_background_path()
-	if current_screen == "story" and selected_chapter == 2:
-		return str(model.get_stage(selected_stage_id).get("background", "res://assets/content_v270/backgrounds/snow_inn.png"))
+	if current_screen == "story":
+		var fallback := "res://assets/content_v270/backgrounds/snow_inn.png" if selected_chapter == 2 else "res://assets/backgrounds/snowfield.png" if selected_chapter == 1 else "res://assets/wilderness.png"
+		return str(model.get_stage(selected_stage_id).get("background", fallback))
 	if current_screen == "abyss": return model.abyss_background_path()
 	if current_screen in ["extraction"] or (current_screen == "battle" and (battle_config.get("isAbyss", false) or battle_config.get("isExtraction", false))):
 		return "res://assets/backgrounds/abyss.png"
@@ -714,7 +715,10 @@ func _story() -> void:
 		_ignore_children(line)
 	var preview := _panel(row,GOLD.darkened(0.65),12)
 	preview.size_flags_stretch_ratio=1.15
-	var pv:=_vbox(preview,8)
+	var preview_body:=_vbox(preview,8)
+	var short_landscape:=not compact and size.y<650
+	var pv:=_scroll_column(preview_body,8) if short_landscape else preview_body
+	if short_landscape:pv.get_parent().name="StoryDetailScroll"
 	var selected:Dictionary=stage_map.get(selected_stage_id,chapter.stages[0])
 	var banner:=_scene_panel(pv,str(selected.get("background", _background_path())),110)
 	banner.size_flags_vertical=Control.SIZE_EXPAND_FILL
@@ -740,7 +744,7 @@ func _story() -> void:
 	_story_chip(info,"energy","体力",str(int(selected.get("staminaCost",6))),CYAN)
 	_story_chip(info,"sword","敌群","%d 波" % selected.get("waves",[]).size(),MUTED)
 	_story_chip(info,"gem","首通",str(int(selected.get("firstClearRewards",{}).get("diamonds",0))),GOLD)
-	var actions:=_hbox(pv,8)
+	var actions:=_hbox(preview_body,8)
 	var unlocked:bool=selected.get("unlocked",false)
 	var done:bool=selected.get("completed",selected.get("cleared",false))
 	var enter:=_button(actions,"再次挑战" if done else "开始探索",func():_begin_stage(str(selected.id)),true)

@@ -1,0 +1,5696 @@
+{
+  "checks": 8644,
+  "elapsedMs": 918,
+  "failures": [],
+  "rows": [
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286031,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 12539.5217713443,
+          "expectedDamage": 75237.130628066,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 4.0,
+            "skill": 2.0,
+            "ultimate": 0.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 2019,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 320,
+            "energyRate": 0.06,
+            "hp": 10506,
+            "maxHp": 10506,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 287.0,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17186.3546274516,
+          "expectedDamage": 412472.511058839,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 14.0,
+            "skill": 7.0,
+            "ultimate": 3.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 2019,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 320,
+            "energyRate": 0.06,
+            "hp": 10506,
+            "maxHp": 10506,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 287.0,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17186.3546274516,
+          "expectedDamage": 824945.022117678,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 28.0,
+            "skill": 14.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 2019,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 320,
+            "energyRate": 0.06,
+            "hp": 10506,
+            "maxHp": 10506,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 287.0,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286031,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 18003.7949064271,
+          "expectedDamage": 108022.769438563,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 3.00312634078842,
+            "skill": 2.0,
+            "ultimate": 0.996873659211582
+          },
+          "stateCount": 3,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.81943058438,
+            "criDmg": 4.78261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 320,
+            "energyRate": 0.06,
+            "hp": 10506,
+            "maxHp": 10506,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 287.0,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 18019.1354680433,
+          "expectedDamage": 432459.25123304,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 12.0032309612539,
+            "skill": 7.99999999999618,
+            "ultimate": 3.99676903874991
+          },
+          "stateCount": 19,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.81943058438,
+            "criDmg": 4.78261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 320,
+            "energyRate": 0.06,
+            "hp": 10506,
+            "maxHp": 10506,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 287.0,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 18021.6922424268,
+          "expectedDamage": 865041.227636486,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 24.0033704381778,
+            "skill": 15.9999999999418,
+            "ultimate": 7.99662956188047
+          },
+          "stateCount": 26,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.81943058438,
+            "criDmg": 4.78261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 320,
+            "energyRate": 0.06,
+            "hp": 10506,
+            "maxHp": 10506,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 287.0,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286031,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 12465.0075517193,
+          "expectedDamage": 74790.0453103159,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 4.0,
+            "skill": 2.0,
+            "ultimate": 0.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 320,
+            "energyRate": 0.06,
+            "hp": 10506,
+            "maxHp": 10506,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 321.44,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17268.85033842,
+          "expectedDamage": 414452.408122081,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 14.0,
+            "skill": 7.0,
+            "ultimate": 3.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 320,
+            "energyRate": 0.06,
+            "hp": 10506,
+            "maxHp": 10506,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 321.44,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17268.85033842,
+          "expectedDamage": 828904.816244162,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 28.0,
+            "skill": 14.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 320,
+            "energyRate": 0.06,
+            "hp": 10506,
+            "maxHp": 10506,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 321.44,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286031,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 23298.3333333333,
+          "expectedDamage": 139790.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 3.0,
+            "skill": 2.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 23298.3333333333,
+          "expectedDamage": 559160.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 8.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 23298.3333333333,
+          "expectedDamage": 1118320.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 16.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286031,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17128.3333333333,
+          "expectedDamage": 102770.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17065.8333333333,
+          "expectedDamage": 409580.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 11.0,
+            "skill": 8.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17055.4166666667,
+          "expectedDamage": 818660.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 23.0,
+            "skill": 16.0,
+            "ultimate": 9.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286031,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 20438.3333333333,
+          "expectedDamage": 122630.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 3.0,
+            "skill": 2.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 20438.3333333333,
+          "expectedDamage": 490520.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 8.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 20438.3333333333,
+          "expectedDamage": 981040.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 16.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286031,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 23389.3333333333,
+          "expectedDamage": 140336.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 23325.4166666667,
+          "expectedDamage": 559810.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 7.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 23323.25,
+          "expectedDamage": 1119516.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 23.0,
+            "skill": 15.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286031,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17128.3333333333,
+          "expectedDamage": 102770.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17069.75,
+          "expectedDamage": 409674.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 7.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17067.7916666667,
+          "expectedDamage": 819254.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 23.0,
+            "skill": 15.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286031,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 20533.6666666667,
+          "expectedDamage": 123202.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 20466.6666666667,
+          "expectedDamage": 491200.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 7.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 20464.4166666667,
+          "expectedDamage": 982292.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 23.0,
+            "skill": 15.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286031,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 23389.3333333333,
+          "expectedDamage": 140336.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 23352.5,
+          "expectedDamage": 560460.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 6.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 23352.5,
+          "expectedDamage": 1120920.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 12.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286031,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17128.3333333333,
+          "expectedDamage": 102770.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17094.5,
+          "expectedDamage": 410268.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 6.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17094.5,
+          "expectedDamage": 820536.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 12.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 355.88,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286031,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 20533.6666666667,
+          "expectedDamage": 123202.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 20495.0,
+          "expectedDamage": 491880.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 6.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 20495.0,
+          "expectedDamage": 983760.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 12.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 544,
+            "energyRate": 0.06,
+            "hp": 13657,
+            "maxHp": 13657,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286031,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17644.5388940455,
+          "expectedDamage": 105867.233364273,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 3.0,
+            "skill": 3.0,
+            "ultimate": 0.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 2019,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 346,
+            "energyRate": 0.06,
+            "hp": 11582,
+            "maxHp": 11582,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 287.0,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 24106.6975328669,
+          "expectedDamage": 578560.740788806,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 10.0,
+            "skill": 11.0,
+            "ultimate": 3.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 2019,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 346,
+            "energyRate": 0.06,
+            "hp": 11582,
+            "maxHp": 11582,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 287.0,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 23789.8135009127,
+          "expectedDamage": 1141911.04804381,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 21.0,
+            "skill": 21.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 2019,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 346,
+            "energyRate": 0.06,
+            "hp": 11582,
+            "maxHp": 11582,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 287.0,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286031,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 25296.5981074812,
+          "expectedDamage": 151779.588644887,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 2.00000000000383,
+            "skill": 3.0,
+            "ultimate": 0.999999999996166
+          },
+          "stateCount": 3,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.81943058438,
+            "criDmg": 4.78261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 346,
+            "energyRate": 0.06,
+            "hp": 11582,
+            "maxHp": 11582,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 287.0,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 25296.5981075076,
+          "expectedDamage": 607118.354580182,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 8.00000000000384,
+            "skill": 12.0,
+            "ultimate": 3.99999999999617
+          },
+          "stateCount": 17,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.81943058438,
+            "criDmg": 4.78261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 346,
+            "energyRate": 0.06,
+            "hp": 11582,
+            "maxHp": 11582,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 287.0,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 25296.598107512,
+          "expectedDamage": 1214236.70916058,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 16.0000000000039,
+            "skill": 24.0,
+            "ultimate": 7.99999999999618
+          },
+          "stateCount": 24,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.81943058438,
+            "criDmg": 4.78261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 346,
+            "energyRate": 0.06,
+            "hp": 11582,
+            "maxHp": 11582,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 287.0,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286031,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17601.5423694141,
+          "expectedDamage": 105609.254216485,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 3.0,
+            "skill": 3.0,
+            "ultimate": 0.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 346,
+            "energyRate": 0.06,
+            "hp": 11582,
+            "maxHp": 11582,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 321.44,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 24301.308440076,
+          "expectedDamage": 583231.402561824,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 10.0,
+            "skill": 11.0,
+            "ultimate": 3.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 346,
+            "energyRate": 0.06,
+            "hp": 11582,
+            "maxHp": 11582,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 321.44,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 23987.747531101,
+          "expectedDamage": 1151411.88149285,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 21.0,
+            "skill": 21.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1764,
+            "cri": 0.73943058438,
+            "criDmg": 4.53261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 346,
+            "energyRate": 0.06,
+            "hp": 11582,
+            "maxHp": 11582,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 321.44,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286031,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 24233.0,
+          "expectedDamage": 145398.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 3.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 24233.0,
+          "expectedDamage": 581592.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 8.0,
+            "skill": 12.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 24233.0,
+          "expectedDamage": 1163184.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 16.0,
+            "skill": 24.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286031,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17918.0,
+          "expectedDamage": 107508.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17804.3333333333,
+          "expectedDamage": 427304.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 9.0,
+            "skill": 10.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17806.625,
+          "expectedDamage": 854718.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 19.0,
+            "skill": 19.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286031,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 21285.6666666667,
+          "expectedDamage": 127714.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 3.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 21285.6666666667,
+          "expectedDamage": 510856.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 8.0,
+            "skill": 12.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 21285.6666666667,
+          "expectedDamage": 1021712.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 16.0,
+            "skill": 24.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286031,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 24405.3333333333,
+          "expectedDamage": 146432.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 24281.1666666667,
+          "expectedDamage": 582748.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 9.0,
+            "skill": 10.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 24283.7083333333,
+          "expectedDamage": 1165618.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 19.0,
+            "skill": 19.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286031,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17899.6666666667,
+          "expectedDamage": 107398.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 1.0,
+            "skill": 3.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17830.0,
+          "expectedDamage": 427920.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 6.0,
+            "skill": 12.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17830.0,
+          "expectedDamage": 855840.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 24.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286031,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 21466.3333333333,
+          "expectedDamage": 128798.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 21336.0833333333,
+          "expectedDamage": 512066.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 9.0,
+            "skill": 10.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 21338.7083333333,
+          "expectedDamage": 1024258.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 19.0,
+            "skill": 19.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286031,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 24385.0,
+          "expectedDamage": 146310.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 1.0,
+            "skill": 3.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 24309.0,
+          "expectedDamage": 583416.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 6.0,
+            "skill": 12.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 24309.0,
+          "expectedDamage": 1166832.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 24.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4401,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286031,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17899.6666666667,
+          "expectedDamage": 107398.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 1.0,
+            "skill": 3.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17830.0,
+          "expectedDamage": 427920.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 6.0,
+            "skill": 12.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17830.0,
+          "expectedDamage": 855840.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 24.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.53261369015,
+            "critDmg": 4.78261369015,
+            "critRate": 0.81943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 355.88,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286031,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 21445.3333333333,
+          "expectedDamage": 128672.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 1.0,
+            "skill": 3.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 21365.5,
+          "expectedDamage": 512772.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 6.0,
+            "skill": 12.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 21365.5,
+          "expectedDamage": 1025544.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 24.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3845,
+            "cri": 1.0,
+            "criDmg": 5.28261369015,
+            "critDmg": 4.53261369015,
+            "critRate": 0.73943058438,
+            "def": 588,
+            "energyRate": 0.06,
+            "hp": 15056,
+            "maxHp": 15056,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 398.5856,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286032,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 12612.1212254132,
+          "expectedDamage": 75672.7273524789,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 4.0,
+            "skill": 2.0,
+            "ultimate": 0.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1972,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 295,
+            "energyRate": 0.176,
+            "hp": 12050,
+            "maxHp": 12050,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 276.0,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17330.3953062064,
+          "expectedDamage": 415929.487348953,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 14.0,
+            "skill": 7.0,
+            "ultimate": 3.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1972,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 295,
+            "energyRate": 0.176,
+            "hp": 12050,
+            "maxHp": 12050,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 276.0,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17330.3953062064,
+          "expectedDamage": 831858.974697907,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 28.0,
+            "skill": 14.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1972,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 295,
+            "energyRate": 0.176,
+            "hp": 12050,
+            "maxHp": 12050,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 276.0,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286032,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 18205.9018750393,
+          "expectedDamage": 109235.411250236,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 3.0,
+            "skill": 2.0,
+            "ultimate": 0.999999999999997
+          },
+          "stateCount": 3,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.84443058438,
+            "criDmg": 4.87161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 295,
+            "energyRate": 0.176,
+            "hp": 12050,
+            "maxHp": 12050,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 276.0,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 18205.9018750393,
+          "expectedDamage": 436941.645000944,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 7.99999999999999,
+            "ultimate": 4.0
+          },
+          "stateCount": 22,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.84443058438,
+            "criDmg": 4.87161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 295,
+            "energyRate": 0.176,
+            "hp": 12050,
+            "maxHp": 12050,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 276.0,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 18205.9018750393,
+          "expectedDamage": 873883.290001887,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 16.0,
+            "ultimate": 7.99999999999999
+          },
+          "stateCount": 44,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.84443058438,
+            "criDmg": 4.87161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 295,
+            "energyRate": 0.176,
+            "hp": 12050,
+            "maxHp": 12050,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 276.0,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286032,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 12565.4384410694,
+          "expectedDamage": 75392.6306464163,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 4.0,
+            "skill": 2.0,
+            "ultimate": 0.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 295,
+            "energyRate": 0.176,
+            "hp": 12050,
+            "maxHp": 12050,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 309.12,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17449.0726377374,
+          "expectedDamage": 418777.743305696,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 14.0,
+            "skill": 7.0,
+            "ultimate": 3.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 295,
+            "energyRate": 0.176,
+            "hp": 12050,
+            "maxHp": 12050,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 309.12,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17449.0726377374,
+          "expectedDamage": 837555.486611393,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 28.0,
+            "skill": 14.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 295,
+            "energyRate": 0.176,
+            "hp": 12050,
+            "maxHp": 12050,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 309.12,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286032,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 22761.6666666667,
+          "expectedDamage": 136570.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 3.0,
+            "skill": 2.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 22761.6666666667,
+          "expectedDamage": 546280.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 8.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 22761.6666666667,
+          "expectedDamage": 1092560.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 16.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286032,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 16749.0,
+          "expectedDamage": 100494.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 16690.9166666667,
+          "expectedDamage": 400582.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 7.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 16688.9583333333,
+          "expectedDamage": 801070.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 23.0,
+            "skill": 15.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286032,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 19977.6666666667,
+          "expectedDamage": 119866.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 3.0,
+            "skill": 2.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 19977.6666666667,
+          "expectedDamage": 479464.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 8.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 19977.6666666667,
+          "expectedDamage": 958928.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 16.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286032,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 22852.3333333333,
+          "expectedDamage": 137114.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 22788.5833333333,
+          "expectedDamage": 546926.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 7.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 22786.4583333333,
+          "expectedDamage": 1093750.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 23.0,
+            "skill": 15.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286032,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 16749.0,
+          "expectedDamage": 100494.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 16715.5,
+          "expectedDamage": 401172.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 6.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 16715.5,
+          "expectedDamage": 802344.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 12.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286032,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 20072.6666666667,
+          "expectedDamage": 120436.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 20005.8333333333,
+          "expectedDamage": 480140.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 7.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 20003.625,
+          "expectedDamage": 960174.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 23.0,
+            "skill": 15.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286032,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 22852.3333333333,
+          "expectedDamage": 137114.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 22815.5,
+          "expectedDamage": 547572.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 6.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 22815.5,
+          "expectedDamage": 1095144.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 12.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286032,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 16749.0,
+          "expectedDamage": 100494.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 16715.5,
+          "expectedDamage": 401172.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 6.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 16715.5,
+          "expectedDamage": 802344.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 12.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 342.24,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 0,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286032,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 20072.6666666667,
+          "expectedDamage": 120436.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 20034.0,
+          "expectedDamage": 480816.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 6.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.0
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 20034.0,
+          "expectedDamage": 961632.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 24.0,
+            "skill": 12.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 501,
+            "energyRate": 0.176,
+            "hp": 15665,
+            "maxHp": 15665,
+            "normalDmgBonus": 0.0,
+            "skillCdReduce": 0,
+            "skillDmgBonus": 0.0,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286032,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 27367.1150724898,
+          "expectedDamage": 164202.690434939,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 3.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1972,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 324,
+            "energyRate": 0.176,
+            "hp": 13284,
+            "maxHp": 13284,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 276.0,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 27367.1150724898,
+          "expectedDamage": 656810.761739755,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 8.0,
+            "skill": 12.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1972,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 324,
+            "energyRate": 0.176,
+            "hp": 13284,
+            "maxHp": 13284,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 276.0,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 27367.1150724898,
+          "expectedDamage": 1313621.52347951,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 16.0,
+            "skill": 24.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1972,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 324,
+            "energyRate": 0.176,
+            "hp": 13284,
+            "maxHp": 13284,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 276.0,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286032,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 25565.8212094643,
+          "expectedDamage": 153394.927256786,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 3.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 2,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.84443058438,
+            "criDmg": 4.87161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 324,
+            "energyRate": 0.176,
+            "hp": 13284,
+            "maxHp": 13284,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 276.0,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 24994.0167888404,
+          "expectedDamage": 599856.40293217,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 8.99334793927203,
+            "skill": 11.006652060728,
+            "ultimate": 4.0
+          },
+          "stateCount": 14,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.84443058438,
+            "criDmg": 4.87161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 324,
+            "energyRate": 0.176,
+            "hp": 13284,
+            "maxHp": 13284,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 276.0,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 25665.0793635228,
+          "expectedDamage": 1231923.8094491,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 18.6753160154938,
+            "skill": 20.329801895279,
+            "ultimate": 8.99488208922709
+          },
+          "stateCount": 21,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.84443058438,
+            "criDmg": 4.87161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 324,
+            "energyRate": 0.176,
+            "hp": 13284,
+            "maxHp": 13284,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 276.0,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 3,
+        "enemyDefense": 100.0,
+        "otherSpeed": 100.0
+      },
+      "profile": "low_def_zero_blessings",
+      "seed": 286032,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 27684.2669258303,
+          "expectedDamage": 166105.601554982,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 3.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 324,
+            "energyRate": 0.176,
+            "hp": 13284,
+            "maxHp": 13284,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 309.12,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 27684.2669258303,
+          "expectedDamage": 664422.406219927,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 8.0,
+            "skill": 12.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 324,
+            "energyRate": 0.176,
+            "hp": 13284,
+            "maxHp": 13284,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 309.12,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 27684.2669258303,
+          "expectedDamage": 1328844.81243985,
+          "initialEnergy": 0,
+          "skillCounts": {
+            "normal": 16.0,
+            "skill": 24.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 1724,
+            "cri": 0.76443058438,
+            "criDmg": 4.62161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 324,
+            "energyRate": 0.176,
+            "hp": 13284,
+            "maxHp": 13284,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 309.12,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286032,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 23678.0,
+          "expectedDamage": 142068.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 3.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 23678.0,
+          "expectedDamage": 568272.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 8.0,
+            "skill": 12.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 23678.0,
+          "expectedDamage": 1136544.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 16.0,
+            "skill": 24.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286032,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17524.3333333333,
+          "expectedDamage": 105146.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17411.6666666667,
+          "expectedDamage": 417880.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 9.0,
+            "skill": 10.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17413.9583333333,
+          "expectedDamage": 835870.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 19.0,
+            "skill": 19.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 1,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy1",
+      "seed": 286032,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 20810.3333333333,
+          "expectedDamage": 124862.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 3.0,
+            "ultimate": 1.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 20810.3333333333,
+          "expectedDamage": 499448.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 8.0,
+            "skill": 12.0,
+            "ultimate": 4.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 20810.3333333333,
+          "expectedDamage": 998896.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 16.0,
+            "skill": 24.0,
+            "ultimate": 8.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286032,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 23849.0,
+          "expectedDamage": 143094.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 23725.75,
+          "expectedDamage": 569418.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 9.0,
+            "skill": 10.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 23728.25,
+          "expectedDamage": 1138956.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 19.0,
+            "skill": 19.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286032,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17506.0,
+          "expectedDamage": 105036.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 1.0,
+            "skill": 3.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17437.0,
+          "expectedDamage": 418488.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 6.0,
+            "skill": 12.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17437.0,
+          "expectedDamage": 836976.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 24.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 4,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy4",
+      "seed": 286032,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 20989.6666666667,
+          "expectedDamage": 125938.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 2.0,
+            "skill": 2.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 20860.4166666667,
+          "expectedDamage": 500650.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 9.0,
+            "skill": 10.0,
+            "ultimate": 5.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 20863.0416666667,
+          "expectedDamage": 1001426.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 19.0,
+            "skill": 19.0,
+            "ultimate": 10.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286032,
+      "set": "wind_blades",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 23829.0,
+          "expectedDamage": 142974.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 1.0,
+            "skill": 3.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 23753.5,
+          "expectedDamage": 570084.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 6.0,
+            "skill": 12.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 23753.5,
+          "expectedDamage": 1140168.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 24.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 4298,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286032,
+      "set": "thunder_hunt",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 17506.0,
+          "expectedDamage": 105036.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 1.0,
+            "skill": 3.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 17437.0,
+          "expectedDamage": 418488.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 6.0,
+            "skill": 12.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 17437.0,
+          "expectedDamage": 836976.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 24.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.62161369015,
+            "critDmg": 4.87161369015,
+            "critRate": 0.84443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 342.24,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "blessingCounts": {
+        "ayla_freeze_break_blue": 2.0,
+        "ayla_heal_regen_gold": 2.0,
+        "common_atk_white": 8.0,
+        "common_crit_blue": 5.0,
+        "common_def_white": 7.0,
+        "common_energy_white": 8,
+        "common_execute_blue": 2.0,
+        "common_guard_gold": 4.0,
+        "common_hp_white": 3.0,
+        "common_kill_energy_blue": 2.0,
+        "common_open_energy_gold": 3.0,
+        "common_open_shield_blue": 3.0,
+        "common_overdrive_gold": 3.0,
+        "common_shield_edge_white": 3.0,
+        "common_static_blue": 3.0,
+        "common_vampiric_blue": 5.0,
+        "common_venom_white": 2.0,
+        "common_victory_heal_blue": 5.0,
+        "lumi_duration_white": 2.0,
+        "lumi_guard_blue": 2.0,
+        "lumi_open_gold": 1.0,
+        "tiya_follow_gold": 4.0,
+        "wind_linked_blue": 4.0,
+        "wind_opening_white": 5.0,
+        "wind_pierce_gold": 7.0
+      },
+      "constellation": 6,
+      "context": {
+        "enemyCount": 1,
+        "enemyDefense": 35032.0,
+        "otherSpeed": 379.0
+      },
+      "profile": "high_def_natural_energy8",
+      "seed": 286032,
+      "set": "wind_voyager",
+      "windows": [
+        {
+          "actions": 6,
+          "damagePerAction": 20968.6666666667,
+          "expectedDamage": 125812.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 1.0,
+            "skill": 3.0,
+            "ultimate": 2.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 24,
+          "damagePerAction": 20889.5,
+          "expectedDamage": 501348.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 6.0,
+            "skill": 12.0,
+            "ultimate": 6.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.3
+          }
+        },
+        {
+          "actions": 48,
+          "damagePerAction": 20889.5,
+          "expectedDamage": 1002696.0,
+          "initialEnergy": 100,
+          "skillCounts": {
+            "normal": 12.0,
+            "skill": 24.0,
+            "ultimate": 12.0
+          },
+          "stateCount": 1,
+          "stats": {
+            "atk": 3758,
+            "cri": 1.0,
+            "criDmg": 5.37161369015,
+            "critDmg": 4.62161369015,
+            "critRate": 0.76443058438,
+            "def": 550,
+            "energyRate": 0.176,
+            "hp": 17269,
+            "maxHp": 17269,
+            "normalDmgBonus": 0.15,
+            "skillCdReduce": 1.0,
+            "skillDmgBonus": 0.2,
+            "spd": 383.3088,
+            "ultDmgBonus": 0.3
+          }
+        }
+      ]
+    }
+  ],
+  "scope": "Tiya-only deterministic expected output and energy cycle, not total-team or natural-route simulation. Uses production expected hit damage and exact crit-trigger energy branches/auto priority/cooldown/100-energy cap; forward distribution independently equals production recurrence at6/24/48 actions. Lumi15 deepening and signature40 innate amp maintained throughout; teammates supply only these fixed buffs, no actions or damage. Low-defense3-target case has zero blessings and zero starting energy. High-defense1-target case reuses actual88-blessing floor100 natural wind snapshot with100 opening energy; energy1 is observed, energy4/8 are equal-cost sensitivity profiles shared across compared sets, not observed acquisition. Invincible neutral targets, no incoming damage, all statuses maintained; no claim about all content or exact long-run win rate.",
+  "sourceHashesAfter": {
+    "data/catalog.json": "9049a8d5f863d360573ab994f4ea514b0bb79a6cd66b0c174d77bda57acc5463",
+    "scripts/abyss_balance.gd": "9706e5f2971d6bb4788b29703047c06fda95c6682e3df1595c3a262267eca3a8",
+    "scripts/battle_model.gd": "361b5b839b4623b8a9123f3e1029e5b286cb3788115a7f07aa8e194125f37637",
+    "scripts/game_model.gd": "6718b0fc174644b18bb1dec3d273b161d02b46f0eedd489d5432a0bd57d91b14",
+    "scripts/relic_sets.gd": "b703dac64ba194b159fbab2293d49577203e44ab47b976239c48aa50827124cc",
+    "tests/test_wind_long_cycle_v287.gd": "be3f0b38763c18ad87979ceb519eb4d36578a1f634a2881ef12b11d48d8b57af",
+    "tests/test_wind_team_balance_v286.gd": "285edf4e6e681ec9535bac3edd68d4d05923da6177a73954dd31b9a13d87d0d3",
+    "tests/test_wind_team_recalibration_v287.gd": "089cd9d4904f0be8f9124518a13e97301835ba43b5d382d8ca42f4ee72fee033",
+    "validation/v285-balance/data_catalog.json.before": "453449a16e1fbb71cd796669c44496a8a6aa9ecbc1ce03ff989961c98882733a",
+    "validation/v286-team-balance/natural-report.json": "e2f8dd2c42eb5e34070389446a64206977abe6fcb78b6e606cb263268248e3a9"
+  },
+  "sourceHashesBefore": {
+    "data/catalog.json": "9049a8d5f863d360573ab994f4ea514b0bb79a6cd66b0c174d77bda57acc5463",
+    "scripts/abyss_balance.gd": "9706e5f2971d6bb4788b29703047c06fda95c6682e3df1595c3a262267eca3a8",
+    "scripts/battle_model.gd": "361b5b839b4623b8a9123f3e1029e5b286cb3788115a7f07aa8e194125f37637",
+    "scripts/game_model.gd": "6718b0fc174644b18bb1dec3d273b161d02b46f0eedd489d5432a0bd57d91b14",
+    "scripts/relic_sets.gd": "b703dac64ba194b159fbab2293d49577203e44ab47b976239c48aa50827124cc",
+    "tests/test_wind_long_cycle_v287.gd": "be3f0b38763c18ad87979ceb519eb4d36578a1f634a2881ef12b11d48d8b57af",
+    "tests/test_wind_team_balance_v286.gd": "285edf4e6e681ec9535bac3edd68d4d05923da6177a73954dd31b9a13d87d0d3",
+    "tests/test_wind_team_recalibration_v287.gd": "089cd9d4904f0be8f9124518a13e97301835ba43b5d382d8ca42f4ee72fee033",
+    "validation/v285-balance/data_catalog.json.before": "453449a16e1fbb71cd796669c44496a8a6aa9ecbc1ce03ff989961c98882733a",
+    "validation/v286-team-balance/natural-report.json": "e2f8dd2c42eb5e34070389446a64206977abe6fcb78b6e606cb263268248e3a9"
+  }
+}

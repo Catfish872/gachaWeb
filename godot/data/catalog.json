@@ -1461,7 +1461,8 @@
         "lumi_ult"
       ],
       "passiveId": "lumi_passive",
-      "passiveDesc": "自身存活时，全队对破甲目标伤害加深20%，破甲敌人对全队造成的伤害降低20%。",
+      "windArmorDamageDeepening": 0.15,
+      "passiveDesc": "自身存活时，全队对破甲目标伤害加深15%，破甲敌人对全队造成的伤害降低20%。",
       "color": "#b9dda0",
       "colorDark": "#203d35",
       "synergyIds": [
@@ -7751,9 +7752,14 @@
             {
               "type": "windPierceOwner",
               "value": 0.2
+            },
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
             }
           ],
-          "description": "佩戴者对破甲目标造成的追击伤害提高20%。"
+          "description": "攻击力额外提高12%；佩戴者对破甲目标造成的追击伤害提高20%。"
         }
       ],
       "theme": "巡岚",
@@ -7783,7 +7789,7 @@
         },
         {
           "pieces": 4,
-          "description": "佩戴者主动施加破甲后，全队角色固有贯穿追击的基础倍率提高40%，持续2回合。",
+          "description": "攻击力额外提高12%。佩戴者主动施加破甲后，全队角色固有贯穿追击的基础倍率提高40%，持续2回合。",
           "effects": [
             {
               "type": "onStatusAppliedPartyFollowUpAmp",
@@ -7792,6 +7798,11 @@
               "followUpTag": "innate_piercing",
               "value": 0.4,
               "duration": 2
+            },
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
             }
           ]
         }

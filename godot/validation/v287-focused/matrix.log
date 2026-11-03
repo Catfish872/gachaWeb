@@ -1,0 +1,59 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+RECALIBRATION_CONTEXT 286031 C0 fire elapsed_ms=507
+ERROR: signature expected best tiya C0 seed286031 def100.0 best=thunder_hunt
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_wind_team_balance_v286.gd:17)
+       [1] expected_sets (res://tests/test_wind_team_recalibration_v287.gd:53)
+       [2] run (res://tests/test_wind_team_recalibration_v287.gd:65)
+RECALIBRATION_CONTEXT 286031 C0 wind_current elapsed_ms=1163
+RECALIBRATION_CONTEXT 286031 C0 wind_legacy elapsed_ms=1735
+RECALIBRATION_CONTEXT 286031 C0 wind_lumi_atk22 elapsed_ms=2265
+RECALIBRATION_CONTEXT 286031 C0 wind_tiya_atk22 elapsed_ms=2800
+RECALIBRATION_CONTEXT 286031 C0 wind_tiya_voyager elapsed_ms=3285
+RECALIBRATION_CONTEXT 286031 C0 wind_transition_current elapsed_ms=3849
+RECALIBRATION_CONTEXT 286031 C0 wind_transition_legacy elapsed_ms=4414
+RECALIBRATION_CONTEXT 286031 C6 fire elapsed_ms=4866
+ERROR: signature expected best tiya C6 seed286031 def100.0 best=thunder_hunt
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_wind_team_balance_v286.gd:17)
+       [1] expected_sets (res://tests/test_wind_team_recalibration_v287.gd:53)
+       [2] run (res://tests/test_wind_team_recalibration_v287.gd:65)
+RECALIBRATION_CONTEXT 286031 C6 wind_current elapsed_ms=5602
+RECALIBRATION_CONTEXT 286031 C6 wind_legacy elapsed_ms=6213
+RECALIBRATION_CONTEXT 286031 C6 wind_lumi_atk22 elapsed_ms=6775
+RECALIBRATION_CONTEXT 286031 C6 wind_tiya_atk22 elapsed_ms=7302
+RECALIBRATION_CONTEXT 286031 C6 wind_tiya_voyager elapsed_ms=7787
+RECALIBRATION_CONTEXT 286031 C6 wind_transition_current elapsed_ms=8274
+RECALIBRATION_CONTEXT 286031 C6 wind_transition_legacy elapsed_ms=8791
+RECALIBRATION_CONTEXT 286032 C0 fire elapsed_ms=9179
+ERROR: signature expected best tiya C0 seed286032 def100.0 best=thunder_hunt
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_wind_team_balance_v286.gd:17)
+       [1] expected_sets (res://tests/test_wind_team_recalibration_v287.gd:53)
+       [2] run (res://tests/test_wind_team_recalibration_v287.gd:65)
+RECALIBRATION_CONTEXT 286032 C0 wind_current elapsed_ms=9638
+RECALIBRATION_CONTEXT 286032 C0 wind_legacy elapsed_ms=9988
+RECALIBRATION_CONTEXT 286032 C0 wind_lumi_atk22 elapsed_ms=10342
+RECALIBRATION_CONTEXT 286032 C0 wind_tiya_atk22 elapsed_ms=10751
+RECALIBRATION_CONTEXT 286032 C0 wind_tiya_voyager elapsed_ms=11138
+RECALIBRATION_CONTEXT 286032 C0 wind_transition_current elapsed_ms=11504
+RECALIBRATION_CONTEXT 286032 C0 wind_transition_legacy elapsed_ms=11833
+RECALIBRATION_CONTEXT 286032 C6 fire elapsed_ms=12229
+ERROR: signature expected best tiya C6 seed286032 def100.0 best=wind_voyager
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_wind_team_balance_v286.gd:17)
+       [1] expected_sets (res://tests/test_wind_team_recalibration_v287.gd:53)
+       [2] run (res://tests/test_wind_team_recalibration_v287.gd:65)
+RECALIBRATION_CONTEXT 286032 C6 wind_current elapsed_ms=12810
+RECALIBRATION_CONTEXT 286032 C6 wind_legacy elapsed_ms=13302
+RECALIBRATION_CONTEXT 286032 C6 wind_lumi_atk22 elapsed_ms=13810
+RECALIBRATION_CONTEXT 286032 C6 wind_tiya_atk22 elapsed_ms=14298
+RECALIBRATION_CONTEXT 286032 C6 wind_tiya_voyager elapsed_ms=14904
+RECALIBRATION_CONTEXT 286032 C6 wind_transition_current elapsed_ms=15573
+RECALIBRATION_CONTEXT 286032 C6 wind_transition_legacy elapsed_ms=16188
+WIND_TEAM_RECALIBRATION_V287 50343 checks / 4 failures; 192 contexts, 8 early, elapsed_ms=16395

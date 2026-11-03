@@ -1,0 +1,7 @@
+{
+  "data/catalog.json": "453449a16e1fbb71cd796669c44496a8a6aa9ecbc1ce03ff989961c98882733a",
+  "scripts/relic_sets.gd": "b703dac64ba194b159fbab2293d49577203e44ab47b976239c48aa50827124cc",
+  "scripts/relic_optimizer.gd": "bad48fb661597cca1711dead73968e80418d76323f4f03e54750595c86999121",
+  "scripts/battle_model.gd": "a71fb3418267629407edf5e0328067ae200aac08726f7cad7d44a2c659d5e704",
+  "scripts/abyss_balance.gd": "9706e5f2971d6bb4788b29703047c06fda95c6682e3df1595c3a262267eca3a8"
+}

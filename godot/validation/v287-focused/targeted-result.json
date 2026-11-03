@@ -1,0 +1,57 @@
+{
+  "started_utc": "2026-11-03T16:16:20Z",
+  "completed_utc": "2026-11-03T16:25:00Z",
+  "elapsed_seconds": 520,
+  "candidate": "wind_blades original20% followup +12% attack; wind_strings original40% team innate followup +12% attack; Lumi wind armor deepening15%, original20% damage reduction unchanged",
+  "production_sha256": "ccf5bee7304de58e469c35cc962c63c1a5c86347982157f7df632dc2ec02417e",
+  "production_file_count": 1262,
+  "checks": {
+    "wind_duo": {
+      "passed": 41,
+      "failed": 0
+    },
+    "lumi_delta": {
+      "passed": 16,
+      "failed": 0
+    },
+    "tiya_delta": {
+      "passed": 18,
+      "failed": 0
+    },
+    "matrix": {
+      "checks": 50343,
+      "failed": 4,
+      "contexts": 192,
+      "early_contexts": 8
+    },
+    "natural": {
+      "passed": 1333,
+      "failed": 0
+    },
+    "long_cycle": {
+      "passed": 8644,
+      "failed": 0
+    }
+  },
+  "exceptions": [
+    "Four zero-blessing DEF100 three-target six-action Tiya cases do not rank signature highest; thunder_hunt or wind_voyager wins. Failures retained, not relabeled passed. User does not require signature dominance in extreme cases."
+  ],
+  "full_team_result": "All24 matched complete-wind output pairs are +1.4295% to +2.7766% versus immutable original2.8.4 catalog; target +/-3% passes.",
+  "natural_result": "C6 single-seed actual route: fire clears89, current and original wind clear99 then defeat. Not universal climb caps.",
+  "long_cycle_result": "Low-DEF zero-blessing thunder_hunt versus wind_blades advantage up to44.35% at6 actions contracts to -8.67%..+6.33% over24/48 actions. High-DEF actual100floor blessing snapshot has thunder_hunt26-27% below signature across tested windows; hypothetical microglow4/8 copies do not reverse.",
+  "limitations": [
+    "Long-cycle is Tiya-only exact expected energy/action distribution with fixed Lumi/buff coverage, not whole-team dynamic combat",
+    "Matrix fixed pressure snapshots are not naturally climbed routes; capped results remain censored",
+    "Natural one seed with declared selection heuristic, not population win rates",
+    "No old UI rerun, Android hardware or broad test suite"
+  ],
+  "baseline": "legacy comparisons load immutable validation/v285-balance/data_catalog.json.before including original Lumi20 and both original four-set effects",
+  "logs": [
+    "wind_duo_v279.log",
+    "wind_set_delta_v286.log",
+    "tiya_set_delta_v286.log",
+    "matrix.log",
+    "natural.log",
+    "long-cycle.log"
+  ]
+}

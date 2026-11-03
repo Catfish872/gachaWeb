@@ -1,0 +1,44 @@
+{
+  "started_utc": "2026-11-03T15:38:52Z",
+  "completed_utc": "2026-11-03T15:43:09Z",
+  "elapsed_seconds": 257,
+  "passed_assertions": 201,
+  "unresolved_failures": 0,
+  "evidence": [
+    {
+      "file": "story-background-initial.log",
+      "checks": 124,
+      "passed": 123,
+      "failed": 1,
+      "note": "Existing 960px StoryEnter clipped. Fixed in same window; unaffected background mapping/tabs/scroll checks reused."
+    },
+    {
+      "file": "story-delta-initial.log",
+      "checks": 26,
+      "failed": 2,
+      "note": "Fixture emitted chapter signal immediately after touch drag; anti-clickthrough correctly suppressed it. Layout probe changed to direct already-tested chapter selector."
+    },
+    {
+      "file": "story-delta.log",
+      "checks": 28,
+      "failed": 0,
+      "note": "960/2048 fixed action bounds,44px touch area,actual detail touch scroll,unchanged stage selection and action position,cleared stage enter/replay."
+    },
+    {
+      "file": "relic-audit.log",
+      "checks": 50,
+      "failed": 0,
+      "note": "8 paired seeds,4 configurations,2 sets,3 fixed blessing profiles; exact stats and 16-combination optimizer enumeration. No production scoring changes."
+    }
+  ],
+  "visual_review": "Parent approved final960 screenshot; both960/2048 chapter3/chapter4 final screenshots generated.",
+  "limitations": [
+    "Desktop GL only, no Android hardware",
+    "No full suite or campaign",
+    "Relic inventory unknown; sample gear and 8 seeds are explanatory not universal ordering",
+    "No enemy turns; six native battle rounds, fixed three targets and blessing composition",
+    "UI exits retain ObjectDB/1resource cleanup warnings"
+  ],
+  "production_sha256": "15974b85c4ba9b680aac01e7725dc5bb6ad60db34bbd8da866391191b8007e93",
+  "production_file_count": 1262
+}

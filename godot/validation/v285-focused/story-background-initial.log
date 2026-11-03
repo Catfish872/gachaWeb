@@ -1,0 +1,18 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+ERROR: story action in mobile viewport
+   at: push_error (core/variant/variant_utility.cpp:1024)
+   GDScript backtrace (most recent call first):
+       [0] ck (res://tests/test_lantern_journey_ui_v270.gd:11)
+       [1] fits (res://tests/test_lantern_journey_ui_v270.gd:32)
+       [2] run (res://tests/test_story_background_v284.gd:52)
+       [3] fixture_story (res://tests/test_story_background_v284.gd:29)
+       [4] frames (res://tests/test_lantern_journey_ui_v270.gd:13)
+STORY BACKGROUND V284: 124 checks, 1 failures
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2663)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:810)
