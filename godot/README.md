@@ -1,6 +1,12 @@
 # 虚空裂变 · Godot Android
 
-## 最新正式版：2.7.7 · 首领进攻节奏
+## 最新正式版：2.7.8 · 事件扩充
+
+[下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.8/universal.apk) · [更新说明](CHANGELOG_2.7.8.md) · [验证记录](validation/release-v278/RELEASE.md)
+
+扩充深渊与搜打撤事件和选项界面，轻微提高金红掉落权重，调整五种金红消耗品回收价。
+
+## 历史版本：2.7.7 · 首领进攻节奏
 
 [下载 APK](https://github.com/Catfish872/gachaWeb/releases/download/android-v2.7.7/universal.apk) · [更新说明](CHANGELOG_2.7.7.md) · [验证记录](validation/release-v277/RELEASE.md)
 
