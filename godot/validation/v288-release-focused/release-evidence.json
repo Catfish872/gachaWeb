@@ -1,0 +1,55 @@
+{
+  "version": "2.8.8",
+  "version_code": 20808,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 585,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-04T04:09:30Z",
+      "completed_utc": "2026-11-04T04:15:40Z",
+      "elapsed_seconds": 370,
+      "production_sha256": "d05c9d144357ffdace3da753cf1726adc20c50b657813d9a45e3664587c4b07e",
+      "scope": [
+        "Wind blessing copy and enemy facing",
+        "Multi-hit visual timing, cancellation and Tiya ultimate audio routing"
+      ]
+    },
+    {
+      "started_utc": "2026-11-04T05:10:02Z",
+      "completed_utc": "2026-11-04T05:11:55Z",
+      "elapsed_seconds": 113,
+      "production_sha256": "5ac6b41713f5e4de1b89623d3d4ef0392f20b2c9265d4b4f1e2afed8c0baed74",
+      "scope": [
+        "Bounded long-run relic search, legal reference party and inventory validation",
+        "Small exact comparisons and desktop large-inventory preview/apply"
+      ]
+    },
+    {
+      "started_utc": "2026-11-04T05:19:03Z",
+      "completed_utc": "2026-11-04T05:20:45Z",
+      "elapsed_seconds": 102,
+      "production_sha256": "c30ce0115bf8ce2b2d5abc5a3e46b18a69929e25962538247509fe27957a1faf",
+      "scope": [
+        "Mandatory set seed and local quality floor; final small-inventory and10000-item desktop preview/apply validation"
+      ]
+    }
+  ],
+  "production_sha256": "c30ce0115bf8ce2b2d5abc5a3e46b18a69929e25962538247509fe27957a1faf",
+  "production_file_count": 1266,
+  "post_review_version_only": false,
+  "scope": [
+    "Wind blessing copy and enemy facing",
+    "Multi-hit visual timing, cancellation and Tiya ultimate audio routing",
+    "Bounded long-run relic search, legal reference party and inventory validation",
+    "Small exact comparisons and desktop large-inventory preview/apply"
+  ],
+  "effective_passed_checks": 12428,
+  "limits": [
+    "Final bounded results are not global-optimality proofs.",
+    "Final10000-item desktop test:136 seed steps and80 local attempts; search4.970s/final draw5.351s. Three-second work budget is soft.",
+    "Prior15-case performance matrix belongs to pre-quality-floor source, not final-code performance across all characters.",
+    "Desktop CPU/Mesa only, no Android hardware or subjective audio listening.",
+    "No additional game tests during publication; detailed datasets and screenshots excluded."
+  ]
+}

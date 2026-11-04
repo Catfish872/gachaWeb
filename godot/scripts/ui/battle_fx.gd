@@ -8,6 +8,7 @@ var impacts: Array = []
 var flash_life := 0.0
 var flash_color := Color.WHITE
 var reduced_motion := false
+var playback_speed := 1.0
 const ELEMENT_COLORS := {"fire":Color("ff9864"),"water":Color("75c8ef"),"wind":Color("80ddbd"),"thunder":Color("c5a0ff"),"lightning":Color("c5a0ff"),"ice":Color("b4e9ff"),"earth":Color("ddbc7d")}
 const SKILL_IMPACTS := {
 	"kaldi_normal":"flame_blade", "kaldi_skill":"dragon_flame", "kaldi_ult":"dragon_flame",
@@ -75,11 +76,13 @@ func ultimate(actor_id: String,element: String,from: Vector2,to: Vector2) -> voi
 	set_process(true)
 
 func clear_effects() -> void:
+	playback_speed = 1.0
 	bursts.clear();streaks.clear();rings.clear();ultimates.clear();impacts.clear();flash_life=0
 	set_process(false)
 	queue_redraw()
 
 func _process(delta: float) -> void:
+	delta *= maxf(1.0, playback_speed)
 	flash_life=maxf(0.0,flash_life-delta)
 	for b in bursts:
 		b.life-=delta

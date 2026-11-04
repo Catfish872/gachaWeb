@@ -32,7 +32,7 @@ static func show_for(app, char_id:String="", restored_scroll:int=0, show_details
 	apply.pressed.connect(func():_apply(app,ui))
 	if not app.model.has_method("begin_best_relic_loadout"):
 		progress.text="搭配功能准备中";return
-	var optimizer=app.model.begin_best_relic_loadout(char_id,{})
+	var optimizer=app.model.begin_best_relic_loadout(char_id,{"searchMode":"bounded","quickBudgetMs":3000})
 	if optimizer==null:
 		progress.text="搭配暂时无法启动，请返回后重试";return
 	ui.optimizer=optimizer
@@ -57,6 +57,14 @@ static func _search(app,ui:Dictionary,optimizer)->void:
 	optimizer.cancel()
 
 static func _update(app,ui:Dictionary,plan:Dictionary)->void:
+	# Keep work-in-progress lightweight. Render the complete recommendation once,
+	# and never make a not-yet-displayed plan applicable between UI frames.
+	var quick: bool=plan.get("context",{}).get("searchMode","")=="bounded"
+	if quick and not bool(plan.get("done",false)):
+		ui.role.text=str(plan.get("roleLabel","当前角色"))
+		ui.progress.text="整理遗物 %d / %d"%[int(plan.get("scanned",0)),int(plan.get("total",0))] if str(plan.get("phase",""))=="scan" else "正在搭配…"
+		ui.apply.disabled=true
+		return
 	# The apply action always owns exactly the snapshot shown on screen. Search
 	# steps between presentation frames cannot silently replace the clicked plan.
 	ui.plan=plan.duplicate(true)
@@ -67,7 +75,7 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	var phase:String=str(plan.get("phase","scan"))
 	if not bool(plan.get("success",true)) or phase=="error":
 		ui.progress.text=str(plan.get("error","暂时无法完成搭配"))
-	elif proven:
+	elif proven or (quick and done and phase=="ready"):
 		ui.progress.text="高星优先 · 搭配完成"
 	elif phase=="scan":
 		ui.progress.text="整理遗物 %d / %d"%[int(plan.get("scanned",0)),int(plan.get("total",0))]
@@ -75,10 +83,10 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	else:
 		ui.progress.text="继续比较中"
 	var gap:float=float(plan.get("gap",INF))
-	ui.progress.tooltip_text="参考条件下的收益差距上界：%.2f%%"%(gap*100.0) if is_finite(gap) else "正在核对完整候选范围"
+	ui.progress.tooltip_text="" if quick else ("参考条件下的收益差距上界：%.2f%%"%(gap*100.0) if is_finite(gap) else "正在核对完整候选范围")
 	if is_instance_valid(ui.get("bounds")):ui.bounds.text=_bound_description(plan)
 	ui.apply.disabled=not _valid_display_plan(app,plan) or ui.applying
-	ui.apply.text=("应用搭配" if proven else "采用当前推荐") if not ui.apply.disabled else ("当前搭配已合适" if proven else ("搭配已取消" if phase=="cancelled" else "正在搭配…"))
+	ui.apply.text=("应用搭配" if proven or quick else "采用当前推荐") if not ui.apply.disabled else ("当前搭配已合适" if proven or (quick and done and phase=="ready") else ("搭配已取消" if phase=="cancelled" else "正在搭配…"))
 	if done and phase=="error":ui.apply.text="暂时无法应用"
 	var before:Dictionary=plan.get("before",{})
 	var after:Dictionary=plan.get("after",before)
@@ -112,7 +120,7 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 		app._label(attributes,str(stat[1])+"　"+text,12,app.CYAN if value>old else app.MUTED,true)
 	var labels=app._grid(ui.comparison,2)
 	app._label(labels,"当前装备",13,app.MUTED).size_flags_horizontal=Control.SIZE_EXPAND_FILL
-	app._label(labels,"推荐搭配" if proven else "当前最佳",13,app.CYAN).size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	app._label(labels,"推荐搭配" if proven or quick else "当前最佳",13,app.CYAN).size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	for slot in app.model.catalog.RelicSlots:
 		var pair=app._grid(ui.comparison,2)
 		pair.name="RelicLoadoutSlot_"+str(slot.id)
@@ -128,9 +136,9 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	var notes=app._vbox(app._panel(ui.comparison,app.LINE,9),4)
 	var details=app._vbox(notes,5);details.visible=bool(ui.detailsOpen)
 	app._label(details,str(plan.get("objectiveLabel","角色收益")),12,app.GOLD,true)
-	ui.bounds=app._label(details,_bound_description(plan),12,app.CYAN,true)
+	if not quick:ui.bounds=app._label(details,_bound_description(plan),12,app.CYAN,true)
 	for note in plan.get("assumptions",[]):app._label(details,app._localized_combat_text(str(note)),12,app.MUTED,true)
-	var toggle=app._button(notes,"评价条件与差距",func():ui.detailsOpen=not bool(ui.detailsOpen);details.visible=bool(ui.detailsOpen))
+	var toggle=app._button(notes,"评价条件" if quick else "评价条件与差距",func():ui.detailsOpen=not bool(ui.detailsOpen);details.visible=bool(ui.detailsOpen))
 	toggle.name="RelicLoadoutDetails";app._button_icon(toggle,"book");notes.move_child(toggle,0)
 	_restore_scroll(app,scroll,offset)
 

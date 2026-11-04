@@ -853,7 +853,8 @@ static func _build(app,run: Dictionary) -> void:
 		var blessings: Array=app.model.extraction.growth_summary()
 		if blessings.is_empty():app._label(col,"探索据点、击败敌人，获得本局祝福",15,app.MUTED,true)
 		var cards=app._grid(col,3 if app.size.x>=900 else 2)
-		for blessing in blessings:
+		for raw_blessing in blessings:
+			var blessing:Dictionary=app._present_abyss_reward(raw_blessing)
 			var card=_section(app,cards,str(blessing.get("name","祝福")),app.GOLD)
 			RewardRarity.decorate(app,card.get_parent(),card,str(blessing.get("rarity","white")))
 			if app.has_method("_rune_icon"):app._reward_art_icon(card,blessing,30)

@@ -71,6 +71,8 @@ static func music_gain_db(_track: String) -> float:
 	return 0.0
 
 static func effect(clip: String) -> Dictionary:
+	if clip == "tiya_ultimate":
+		return {"clip":clip,"path":ROOT+clip+".ogg","gain_db":-16.0,"max_voices":1,"max_duration":0.56,"fade_out":0.12}
 	var quiet := clip in ["wind_field_pulse", "wind_pierce"]
 	return {"clip": clip, "path": ROOT + clip + ".ogg", "gain_db": -15.0 if quiet else -9.0, "max_voices": 1 if quiet else 2}
 

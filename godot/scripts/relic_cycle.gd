@@ -14,14 +14,16 @@ static var _cache_order: Array = []
 ## Each reachable recurrent class is normalized by its own expected cycle length
 ## before mixing by entrance probability; mixing lengths first would be biased.
 static func weights(skills: Array, transitions: Array, order: Array = [], initial_energy: int = 0) -> Dictionary:
-	var model := _model(skills, transitions, order)
-	if not model.get("error", "").is_empty(): return _failure(model.error)
-	var initial := _state(clampi(initial_energy, 0, 100), 0, 0, model.stride)
-	var signature := var_to_bytes([model.skills, model.transitions, model.order, initial]).hex_encode()
+	# Exact raw inputs are sufficient to identify the result. Check them before
+	# rebuilding and sorting the normalized model on every warm cache hit.
+	var signature := var_to_bytes([skills, transitions, order, clampi(initial_energy,0,100)]).hex_encode()
 	if _cache.has(signature):
 		var cached: Dictionary = _cache[signature].duplicate(true)
 		cached.cacheHit = true
 		return cached
+	var model := _model(skills, transitions, order)
+	if not model.get("error", "").is_empty(): return _failure(model.error)
+	var initial := _state(clampi(initial_energy, 0, 100), 0, 0, model.stride)
 	var result := _deterministic(model, initial) if model.deterministic else _regenerative(model, initial)
 	result.cacheHit = false
 	if result.get("success", false):

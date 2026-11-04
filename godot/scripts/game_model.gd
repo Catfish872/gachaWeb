@@ -2617,7 +2617,8 @@ func valid_relic_growth_snapshot(snapshot: Dictionary) -> bool:
 	return true
 
 func begin_best_relic_loadout(char_id: String, context: Dictionary = {}):
-	var optimizer_script = load("res://scripts/relic_optimizer.gd")
+	var script_path: String="res://scripts/relic_quick_optimizer.gd" if context.get("searchMode","")=="bounded" else "res://scripts/relic_optimizer.gd"
+	var optimizer_script = load(script_path)
 	return optimizer_script.new(self,char_id,context)
 
 func preview_best_relic_loadout(char_id: String, context: Dictionary = {}) -> Dictionary:

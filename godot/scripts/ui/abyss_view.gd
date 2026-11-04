@@ -259,8 +259,8 @@ static func _shop(app,parent:Node)->void:
 		var rarity:String=str(item.get("rarity","white"))
 		var tier:Dictionary=RewardRarity.tier(rarity)
 		var color:Color=tier.color if blessing else GREEN
-		var definition:Dictionary=app._abyss_reward(str(item.get("rewardId",""))) if blessing else item
-		var v=_card(app,grid,str(item.get("name","旅行补给")),str(item.get("description","")),color,str(item.id).hash(),RuneTheme.effect_key(definition),definition)
+		var definition:Dictionary=app._present_abyss_reward(str(item.get("rewardId",""))) if blessing else item
+		var v=_card(app,grid,str(item.get("name","旅行补给")),str(definition.get("description","")),color,str(item.id).hash(),RuneTheme.effect_key(definition),definition)
 		v.get_parent().name="RunShopCard_"+str(item.id)
 		if blessing:
 			RewardRarity.decorate(app,v.get_parent(),v,rarity)

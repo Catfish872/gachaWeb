@@ -61,6 +61,7 @@ var battle_speed := 1.0
 var battle_clock := 0.0
 var battle_settled := false
 var battle_generation := 0
+var combat_feedback_generation := 0
 var settlement_error := false
 var abyss_auto_continue := false
 var abyss_panel := "expedition"
@@ -579,6 +580,7 @@ func _render_screen() -> void:
 	shell_header.visible=current_screen!="battle"
 	fx.reduced_motion = extraction_reduced_motion
 	if current_screen != "battle":
+		combat_feedback_generation += 1
 		unit_cards.clear()
 		fx.clear_effects()
 		_clear(fx)
@@ -1737,6 +1739,23 @@ func _present_abyss_reward(raw: Variant) -> Dictionary:
 	if id=="common_static_blue":
 		reward.description=str(reward.get("description","")).split("感电期间")[0].strip_edges()
 	var definition:Dictionary=_abyss_reward(id)
+	if id.begins_with("wind_") or id.begins_with("tiya_") or id.begins_with("lumi_"):
+		if definition.has("description"): reward.description = definition.description
+		if id in ["tiya_follow_white", "tiya_follow_gold"]:
+			var constellation := int(model.state.ownedCharacters.get("tiya", {}).get("constellation", 0))
+			var extracting := current_screen == "extraction" or (current_screen == "battle" and bool(battle_config.get("isExtraction", false)))
+			var party: Array = model.extraction.run().get("party", []) if extracting else model.battle_party(true)
+			for unit in party:
+				if str(unit.get("id", "")) == "tiya": constellation = int(unit.get("constellation", constellation)); break
+			var amp := 0.0
+			var active_effects: Array = definition.get("effects", []) if extracting else reward.get("effects", definition.get("effects", []))
+			for effect in active_effects:
+				if effect.get("type", "") == "windPrimaryAmp": amp += float(effect.get("value", 0.0))
+			var increase := (66.0 if constellation >= 6 else 60.0) * amp
+			var percentage := ("%.2f" % increase).trim_suffix("0").trim_suffix("0").trim_suffix(".")
+			reward.description = "缇娅的贯穿追击伤害增加，增加量为攻击力的 %s%%。" % percentage
+		if current_screen == "extraction" or (current_screen == "battle" and bool(battle_config.get("isExtraction", false))):
+			reward.description = str(reward.get("description", "")).replace("深渊", "探索")
 	if str(reward.get("icon",""))=="✦" and not definition.is_empty():reward.icon=definition.get("icon","✦")
 	if definition.has("iconPath"):reward.iconPath=definition.iconPath
 	return reward
@@ -2051,41 +2070,66 @@ func _play_battle_clip(selection: Dictionary) -> void:
 	var clip: String = str(selection.get("clip",""))
 	voice.set_meta("battle_clip",clip)
 	add_child(voice);voice.finished.connect(voice.queue_free);voice.play()
+	if selection.has("max_duration"):
+		var duration := float(selection.max_duration) / sqrt(maxf(1.0,battle_speed))
+		var release := minf(float(selection.get("fade_out",0.10)), duration*0.4)
+		voice.set_meta("max_duration",duration)
+		var envelope := voice.create_tween()
+		envelope.tween_interval(maxf(0.0,duration-release))
+		envelope.tween_property(voice,"volume_db",-60.0,release)
+		envelope.tween_callback(func():
+			voice.stop();voice.remove_from_group("battle_audio");voice.remove_from_group("transient_audio");voice.queue_free())
 	_battle_audio_history.append(clip)
 	if _battle_audio_history.size()>32:_battle_audio_history.pop_front()
 
 func _combat_display_events(events: Array) -> Array:
-	# Present repeated procs once; retain their full summed damage.
+	# Native hits stay distinct. Dense passive and periodic procs retain one summed badge.
 	var result: Array = []
 	var grouped: Dictionary = {}
 	var statuses: Dictionary = {}
+	var last_step := 0
 	for original in events:
 		var event: Dictionary = original.duplicate(true)
 		var type := str(event.get("type", ""))
+		last_step = maxi(last_step, int(event.get("presentationStep", 0)))
 		if type == "damage":
 			var source := str(event.get("status", ""))
 			var channel := "detonation" if bool(event.get("detonation", false)) else source if source in ["burn", "poison"] else ("follow_up" if bool(event.get("follow_up", false)) else "direct")
 			var key := str(event.get("target", ""))+":"+channel
-			if channel == "direct": key += ":"+str(event.get("actor", ""))
-			if grouped.has(key):
-				var prior: Dictionary = result[int(grouped[key])]
-				prior.amount = int(prior.get("amount", 0))+int(event.get("amount", 0))
-				prior.isCrit = bool(prior.get("isCrit", false)) or bool(event.get("isCrit", false))
-				continue
-			grouped[key] = result.size()
+			if channel != "direct":
+				if grouped.has(key):
+					var prior: Dictionary = result[int(grouped[key])]
+					prior.amount = int(prior.get("amount", 0))+int(event.get("amount", 0))
+					prior.isCrit = bool(prior.get("isCrit", false)) or bool(event.get("isCrit", false))
+					continue
+				grouped[key] = result.size()
 			event.feedbackChannel = channel
 		elif type == "status":
-			var key := str(event.get("target", ""))+":"+str(event.get("statusId", event.get("status", "")))
+			var key := "%s:%s:%d" % [str(event.get("target", "")), str(event.get("statusId", event.get("status", ""))), int(event.get("presentationStep", 0))]
 			if statuses.has(key): continue
 			statuses[key] = true
+		event.feedbackOrder = result.size()
 		result.append(event)
-	# Round-end effects follow the attack instead of sharing its visual instant.
-	var direct: Array = []
-	var periodic: Array = []
 	for event in result:
-		if event.get("feedbackChannel", "") in ["burn", "poison", "detonation"]: periodic.append(event)
-		else: direct.append(event)
-	return direct + periodic
+		var channel := str(event.get("feedbackChannel", ""))
+		if channel == "follow_up": event.presentationStep = last_step + 1
+		elif channel in ["burn", "poison", "detonation"]: event.presentationStep = last_step + 2
+	result.sort_custom(func(a, b):
+		var left := int(a.get("presentationStep", 0)); var right := int(b.get("presentationStep", 0))
+		return left < right if left != right else int(a.feedbackOrder) < int(b.feedbackOrder))
+	return result
+
+func _combat_feedback_plan(events: Array) -> Array:
+	var plan: Array = []
+	for event in _combat_display_events(events):
+		var step := int(event.get("presentationStep", 0))
+		if plan.is_empty() or int(plan.back().step) != step:
+			plan.append({"step":step, "delay":0.0, "events":[]})
+		plan.back().events.append(event)
+	# Every action fits inside the existing 0.85 / speed auto-turn interval.
+	var interval := minf(0.16, 0.48 / maxi(1, plan.size()-1)) / maxf(1.0, battle_speed)
+	for index in range(1, plan.size()): plan[index].delay = interval
+	return plan
 
 func _combat_damage_caption(event: Dictionary) -> String:
 	var amount := str(int(event.get("amount", 0)))
@@ -2099,12 +2143,17 @@ func _combat_damage_caption(event: Dictionary) -> String:
 func _float_damage_feedback(at: Vector2, event: Dictionary, color: Color) -> void:
 	var channel := str(event.get("feedbackChannel", "direct"))
 	if channel == "direct":
-		var number := _label(fx, _combat_damage_caption(event), 30 if event.get("isCrit", false) else 23, color)
+		var multi := int(event.get("hitCount", 1)) > 1
+		var number := _label(fx, _combat_damage_caption(event), (22 if event.get("isCrit", false) else 18) if multi else (30 if event.get("isCrit", false) else 23), color)
 		number.name = "CombatDamage_direct"
+		number.set_meta("hitIndex", int(event.get("hitIndex", 1)))
+		number.set_meta("hitCount", int(event.get("hitCount", 1)))
 		number.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		number.add_theme_constant_override("outline_size", 5)
 		number.add_theme_color_override("font_outline_color", INK)
-		number.position = at-Vector2(number.get_combined_minimum_size().x*0.5,0)
+		var extent := number.get_combined_minimum_size()
+		var hit_offset := -40.0 * (int(event.get("hitIndex", 1))-1) if multi else 0.0
+		number.position = Vector2(clampf(at.x-extent.x*0.5,8,size.x-extent.x-8), maxf(8,at.y+hit_offset))
 		var lifetime := 0.8/sqrt(maxf(1,battle_speed))
 		var motion := number.create_tween().set_parallel()
 		if not extraction_reduced_motion:motion.tween_property(number,"position:y",number.position.y-25,lifetime)
@@ -2140,92 +2189,116 @@ func _float_damage_feedback(at: Vector2, event: Dictionary, color: Color) -> voi
 	tween.chain().tween_callback(panel.queue_free)
 
 func _show_combat_events(events: Array) -> void:
+	combat_feedback_generation += 1
+	var feedback_generation := combat_feedback_generation
 	var generation := battle_generation
+	var presentation_start := Time.get_ticks_msec()
 	await get_tree().process_frame
-	if current_screen != "battle" or generation != battle_generation: return
+	if current_screen != "battle" or generation != battle_generation or feedback_generation != combat_feedback_generation: return
 	_play_battle_sound(events)
-	var periodic_started := false
+	var native_hit_count := 1
+	for event in events: native_hit_count = maxi(native_hit_count, int(event.get("hitCount", 1)))
+	var extra_rows := 40.0 * (native_hit_count - 1)
 	var anchors: Dictionary = {}
 	for uid in unit_cards:
 		var card = unit_cards[uid]
 		if is_instance_valid(card):anchors[uid]=card.global_position+card.size*Vector2(0.5,0.42)
-	for e in _combat_display_events(events):
-		var channel := str(e.get("feedbackChannel", ""))
-		if channel in ["burn", "poison", "detonation"] and not periodic_started:
-			periodic_started = true
-			await get_tree().create_timer(0.16/maxf(1,battle_speed)).timeout
-			if current_screen != "battle" or generation != battle_generation:return
-		if e.get("type", "") == "skill" and model.catalog.SkillData.get(e.get("skill_id", ""), {}).get("type", "") == "ultimate":
-			fx.flash(_element_color(_battle_event_element(e)))
-			var source_unit := _battle_unit(str(e.get("actor", "")))
-			var source_card = unit_cards.get(str(e.get("actor", "")))
-			var target_uid:=str(e.get("target",""))
-			if target_uid.is_empty():
-				for follow in events:
-					if follow.get("actor","")==e.get("actor","") and not str(follow.get("target","")).is_empty() and follow.get("type","") in ["damage","heal","status"]:
-						target_uid=str(follow.target);break
-			var destination_card = unit_cards.get(target_uid)
-			var origin: Vector2 = source_card.get_global_rect().get_center() if is_instance_valid(source_card) else size * Vector2(0.25,0.5)
-			var destination: Vector2 = destination_card.get_global_rect().get_center() if is_instance_valid(destination_card) else size * Vector2(0.75,0.5)
-			if source_unit.get("id", "") in ["kaldi", "selin", "tiya", "lumi"]:
-				origin = anchors.get(str(e.get("actor", "")), origin)
-				destination = anchors.get(target_uid, destination)
-			if source_unit.get("id", "") == "selin":
-				var linked: Array = []
-				for hit in events:
-					var hit_uid := str(hit.get("target", ""))
-					if hit.get("type", "") == "damage" and hit.get("actor", "") == e.get("actor", "") and hit_uid not in linked and anchors.has(hit_uid):
-						linked.append(hit_uid)
-						fx.streak(origin, anchors[hit_uid], Color("f2cf8d"))
-			fx.ultimate(str(source_unit.get("id","")),_battle_event_element(e),origin,destination)
-		var target = unit_cards.get(str(e.get("target", "")))
-		var actor = unit_cards.get(str(e.get("actor", "")))
-		if not is_instance_valid(target):
-			continue
-		var pos: Vector2 = anchors.get(str(e.get("target", "")),target.global_position + target.size * Vector2(0.5, 0.42))
-		var type: String = e.get("type", "")
-		var color := CYAN if type == "heal" else (GOLD if e.get("isCrit", false) else RED)
-		if channel == "burn":color=Color("ffb16d");pos.y-=44
-		elif channel == "poison":color=Color("b8e786");pos.y-=88
-		elif channel == "detonation":color=Color("ffe0a1");pos.y-=132
-		elif channel == "follow_up":color=Color("d9b9ff");pos.y+=44
-		if type == "heal": fx.heal_ring(pos)
-		if type == "shield": fx.shield_ring(pos)
-		if type in ["damage", "heal", "shield", "miss", "block"]:
-			var text_value := ("+" if type == "heal" else "−") + str(int(e.get("amount", 0)))
-			if type == "miss": text_value = "闪避"
-			if type == "block": text_value = "格挡"
-			if type == "shield": text_value = "护盾 −%d" % e.get("amount", 0)
-			if e.get("isCrit", false): text_value += "!"
-			if type == "damage":_float_damage_feedback(pos,e,color)
-			else:_float_text(pos, text_value, color, 30 if e.get("isCrit", false) else 23)
-			if type=="damage":
-				var origin:Vector2=actor.global_position+actor.size*0.5 if is_instance_valid(actor) else pos+Vector2(-32,0)
-				fx.impact("detonation" if channel == "detonation" else str(e.get("status",_battle_visual_kind(e))),pos if channel in ["burn", "poison", "detonation"] else origin,pos,bool(e.get("isCrit",false)))
-			elif type=="shield" and int(_battle_unit(str(e.get("target",""))).get("shield",0))<=0:fx.impact("shield_break",pos,pos)
-			else:fx.burst(pos,color,false)
-			if is_instance_valid(actor) and type == "damage" and not channel in ["burn", "poison", "detonation"]:
-				fx.streak(actor.global_position + actor.size * 0.5, pos, _element_color(str(e.get("element", "fire"))))
-				if not extraction_reduced_motion and not actor.has_meta("lunging"):
-					actor.set_meta("lunging",true)
-					var home:Vector2=actor.position
-					var lunge:Tween=actor.create_tween()
-					lunge.tween_property(actor,"position",home+Vector2(14 if pos.x>actor.global_position.x else -14,0),0.07)
-					lunge.tween_property(actor,"position",home,0.17).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-					lunge.tween_callback(func():if is_instance_valid(actor):actor.remove_meta("lunging"))
-			var original: Color = target.modulate
-			if type == "damage" and not extraction_reduced_motion:
-				target.pivot_offset = target.size * 0.5
-				target.rotation = -0.025
-				var impact: Tween = target.create_tween()
-				impact.tween_property(target, "rotation", 0.0, 0.22).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
-			target.modulate = Color(1.8, 0.6, 0.5) if type == "damage" else Color(0.5, 1.4, 1.1)
-			create_tween().tween_property(target, "modulate", original, 0.35)
-		elif type in ["status", "enrage", "resist"]:
-			var status_id:=str(e.get("statusId",e.get("status","")))
-			if status_id=="shield":fx.shield_ring(pos)
-			elif not status_id.is_empty():fx.impact(status_id,pos,pos)
-			_float_text(pos + Vector2(0, -24), _localized_combat_text(str(e.get("text", "状态变化"))), GOLD, 14)
+	var scheduled_time := 0.0
+	for beat in _combat_feedback_plan(events):
+		scheduled_time += float(beat.delay)
+		# Absolute offsets absorb frame rounding instead of extending fast auto turns.
+		var remaining := scheduled_time - float(Time.get_ticks_msec()-presentation_start)/1000.0
+		if remaining > 0.0:
+			await get_tree().create_timer(remaining).timeout
+		if current_screen != "battle" or generation != battle_generation or feedback_generation != combat_feedback_generation: return
+		fx.playback_speed = maxf(1.0, battle_speed)
+		var animated_actors: Dictionary = {}
+		for e in beat.events:
+			var channel := str(e.get("feedbackChannel", ""))
+			if e.get("type", "") == "skill" and model.catalog.SkillData.get(e.get("skill_id", ""), {}).get("type", "") == "ultimate":
+				fx.flash(_element_color(_battle_event_element(e)))
+				var source_unit := _battle_unit(str(e.get("actor", "")))
+				var source_card = unit_cards.get(str(e.get("actor", "")))
+				var target_uid:=str(e.get("target",""))
+				if target_uid.is_empty():
+					for follow in events:
+						if follow.get("actor","")==e.get("actor","") and not str(follow.get("target","")).is_empty() and follow.get("type","") in ["damage","heal","status"]:
+							target_uid=str(follow.target);break
+				var destination_card = unit_cards.get(target_uid)
+				var origin: Vector2 = source_card.get_global_rect().get_center() if is_instance_valid(source_card) else size * Vector2(0.25,0.5)
+				var destination: Vector2 = destination_card.get_global_rect().get_center() if is_instance_valid(destination_card) else size * Vector2(0.75,0.5)
+				if source_unit.get("id", "") in ["kaldi", "selin", "tiya", "lumi"]:
+					origin = anchors.get(str(e.get("actor", "")), origin)
+					destination = anchors.get(target_uid, destination)
+				if source_unit.get("id", "") == "selin":
+					var linked: Array = []
+					for hit in events:
+						var hit_uid := str(hit.get("target", ""))
+						if hit.get("type", "") == "damage" and hit.get("actor", "") == e.get("actor", "") and hit_uid not in linked and anchors.has(hit_uid):
+							linked.append(hit_uid)
+							fx.streak(origin, anchors[hit_uid], Color("f2cf8d"))
+				fx.ultimate(str(source_unit.get("id","")),_battle_event_element(e),origin,destination)
+			var target = unit_cards.get(str(e.get("target", "")))
+			var actor = unit_cards.get(str(e.get("actor", "")))
+			if not is_instance_valid(target):
+				continue
+			var pos: Vector2 = anchors.get(str(e.get("target", "")),target.global_position + target.size * Vector2(0.5, 0.42))
+			var type: String = e.get("type", "")
+			var color := CYAN if type == "heal" else (GOLD if e.get("isCrit", false) else RED)
+			if channel == "burn":color=Color("ffb16d");pos.y-=44+extra_rows
+			elif channel == "poison":color=Color("b8e786");pos.y-=88+extra_rows
+			elif channel == "detonation":color=Color("ffe0a1");pos.y-=132+extra_rows
+			elif channel == "follow_up":color=Color("d9b9ff");pos.y+=44
+			if type == "heal": fx.heal_ring(pos)
+			if type == "shield": fx.shield_ring(pos)
+			if type in ["damage", "heal", "shield", "miss", "block"]:
+				var text_value := ("+" if type == "heal" else "−") + str(int(e.get("amount", 0)))
+				if type == "miss": text_value = "闪避"
+				if type == "block": text_value = "格挡"
+				if type == "shield": text_value = "护盾 −%d" % e.get("amount", 0)
+				if e.get("isCrit", false): text_value += "!"
+				if type == "damage":_float_damage_feedback(pos,e,color)
+				else:_float_text(pos, text_value, color, 30 if e.get("isCrit", false) else 23)
+				if type=="damage":
+					var origin:Vector2=actor.global_position+actor.size*0.5 if is_instance_valid(actor) else pos+Vector2(-32,0)
+					fx.impact("detonation" if channel == "detonation" else str(e.get("status",_battle_visual_kind(e))),pos if channel in ["burn", "poison", "detonation"] else origin,pos,bool(e.get("isCrit",false)))
+				elif type=="shield" and int(_battle_unit(str(e.get("target",""))).get("shield",0))<=0:fx.impact("shield_break",pos,pos)
+				else:fx.burst(pos,color,false)
+				if is_instance_valid(actor) and type == "damage" and not channel in ["burn", "poison", "detonation"]:
+					fx.streak(actor.global_position + actor.size * 0.5, pos, _element_color(str(e.get("element", "fire"))))
+					if not extraction_reduced_motion and not animated_actors.has(str(e.get("actor", ""))):
+						animated_actors[str(e.get("actor", ""))] = true
+						_combat_lunge(actor, pos)
+				var original: Color = target.get_meta("combat_base_tint", target.modulate)
+				target.set_meta("combat_base_tint", original)
+				var previous_tint: Tween = target.get_meta("combat_tint_tween") if target.has_meta("combat_tint_tween") else null
+				if previous_tint != null and previous_tint.is_valid(): previous_tint.kill()
+				if type == "damage" and not extraction_reduced_motion:
+					target.pivot_offset = target.size * 0.5
+					target.rotation = -0.025
+					var impact: Tween = target.create_tween()
+					impact.tween_property(target, "rotation", 0.0, 0.12/maxf(1,battle_speed)).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+				target.modulate = Color(1.8, 0.6, 0.5) if type == "damage" else Color(0.5, 1.4, 1.1)
+				var tint: Tween = target.create_tween()
+				target.set_meta("combat_tint_tween", tint)
+				tint.tween_property(target, "modulate", original, 0.12/maxf(1,battle_speed))
+			elif type in ["status", "enrage", "resist"]:
+				var status_id:=str(e.get("statusId",e.get("status","")))
+				if status_id=="shield":fx.shield_ring(pos)
+				elif not status_id.is_empty():fx.impact(status_id,pos,pos)
+				_float_text(pos + Vector2(0, -88 if native_hit_count > 1 else -24), _localized_combat_text(str(e.get("text", "状态变化"))), GOLD, 14)
+
+func _combat_lunge(actor: Control, target: Vector2) -> void:
+	var previous: Tween = actor.get_meta("combat_lunge_tween") if actor.has_meta("combat_lunge_tween") else null
+	if previous != null and previous.is_valid(): previous.kill()
+	var home: Vector2 = actor.get_meta("combat_lunge_home", actor.position)
+	actor.set_meta("combat_lunge_home", home)
+	actor.position = home
+	var motion := actor.create_tween()
+	actor.set_meta("combat_lunge_tween", motion)
+	var pace := maxf(1.0, battle_speed)
+	motion.tween_property(actor,"position",home+Vector2(14 if target.x>actor.global_position.x else -14,0),0.055/pace)
+	motion.tween_property(actor,"position",home,0.08/pace).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 func _finish_battle() -> void:
 	if battle_settled:
@@ -2753,6 +2826,7 @@ func _portrait(parent: Node, id: String, height: float, _wide: bool = false, ene
 		var t := TextureRect.new()
 		var avatar:Texture2D=CharacterAvatars.get_texture(id,style) if not enemy and not style.is_empty() else null
 		t.texture = avatar if avatar!=null else load(path)
+		t.flip_h = enemy and bool(defined.get("portraitFlipH", false))
 		c.set_meta("portrait_mode",style if avatar!=null else "full")
 		c.set_meta("portrait_id",id)
 		t.name="CharacterPortraitTexture"

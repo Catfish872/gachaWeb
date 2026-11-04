@@ -730,14 +730,20 @@ func _execute_skill(caster: Dictionary, sid: String, selected: String = "") -> v
 		caster.cooldowns[sid] = maxi(1, int(skill.cooldown) - (int(caster.stats.get("skillCdReduce", 0)) if caster.isAlly and kind == "skill" else 0))
 	var cache: Dictionary = {}
 	var had_heal = false
+	var presentation_step := 0
+	var presentation_hit := 0
+	var native_hits: int = skill.get("effects", []).filter(func(effect): return effect.get("type", "") == "damage").size()
 	for effect in skill.get("effects", []):
 		var target_type = str(effect.get("target", "single"))
 		# Correct the original wolf howl data's reversed viewpoint.
 		if sid == "wolf_howl" and effect.type == "status": target_type = "all_allies"
 		var targets = _targets(target_type, caster, selected, cache)
 		var chain = 1.0
+		if effect.type == "damage": presentation_hit += 1
+		var chain_hit := 0
 		for target in targets:
 			if target.currentHp <= 0: continue
+			var first_event := _events.size()
 			match effect.type:
 				"damage":
 					_damage(caster, target, skill, sid, effect, float(effect.get("multiplier", 1.0)) * chain)
@@ -750,6 +756,17 @@ func _execute_skill(caster: Dictionary, sid: String, selected: String = "") -> v
 					if rng.randf() < float(effect.get("chance", 1.0)):
 						var shield_amount := skill_effect_amount(caster, effect, target) if effect.get("statusId", "") == "shield" else -1
 						apply_status(target, str(effect.statusId), int(effect.get("duration", 1)), effect.get("value"), caster, shield_amount, {"refreshDuration":bool(effect.get("refreshDuration",false))})
+			# Presentation metadata only: all calculations, RNG calls and event order stay intact.
+			for event_index in range(first_event, _events.size()):
+				var event: Dictionary = _events[event_index]
+				event.presentationStep = presentation_step
+				if event.get("type", "") in ["damage", "miss"] and not event.get("follow_up", false) and event.get("skill_id", "") == sid:
+					event.hitIndex = chain_hit + 1 if target_type == "chain3" else presentation_hit
+					event.hitCount = targets.size() if target_type == "chain3" else native_hits
+			if target_type == "chain3":
+				chain_hit += 1
+				presentation_step += 1
+		if target_type != "chain3": presentation_step += 1
 	if had_heal: _gain_owner_action_energy(caster, "energyOnActiveHeal")
 	if caster.id == "ayla" and _c6(caster) and had_heal:
 		for friend in _friends(caster): apply_status(friend, "regen", 1, null, caster)

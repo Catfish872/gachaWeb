@@ -648,7 +648,7 @@
             }
           ],
           "sharedPoolId": "wind_core",
-          "description": "全队对破甲目标的本体直伤提高14%。",
+          "description": "全队攻击破甲目标时，造成的直接伤害提高 14%。",
           "icon": "🌪️",
           "target": "破甲构筑",
           "iconPath": "res://assets/content_v280/icons/blessings/wind_opening_white.png"
@@ -670,7 +670,7 @@
             }
           ],
           "sharedPoolId": "wind_core",
-          "description": "全队普攻、战技和终结技的本体直伤提高18%。",
+          "description": "全队普攻、战技和终结技伤害提高 18%。",
           "icon": "🌪️",
           "target": "破甲构筑",
           "iconPath": "res://assets/content_v280/icons/blessings/wind_linked_blue.png"
@@ -692,7 +692,7 @@
             }
           ],
           "sharedPoolId": "wind_core",
-          "description": "一次行动本体命中同一目标至少两次后，若目标处于破甲，每份祝福追加一次36%攻击力的风贯穿追击。",
+          "description": "全队每次行动对同一目标造成至少两段技能伤害后，若目标处于破甲，追加一次攻击力 36% 的风属性贯穿追击。",
           "icon": "🌪️",
           "target": "破甲构筑",
           "iconPath": "res://assets/content_v280/icons/blessings/wind_pierce_gold.png"
@@ -712,7 +712,7 @@
               "value": 0.06666666666666667
             }
           ],
-          "description": "缇娅原生贯穿追击倍率每份增加4%攻击力，六命时为4.4%。",
+          "description": "缇娅的贯穿追击伤害增加，增加量为攻击力的 4%。",
           "icon": "🌪️",
           "target": "缇娅追击",
           "iconPath": "res://assets/content_v280/icons/blessings/tiya_follow_white.png"
@@ -738,7 +738,7 @@
               "value": 0.12
             }
           ],
-          "description": "普攻本体伤害提高20%，战技本体伤害提高12%。",
+          "description": "全队普攻伤害提高 20%，战技伤害提高 12%。",
           "icon": "🌪️",
           "target": "缇娅追击",
           "iconPath": "res://assets/content_v280/icons/blessings/tiya_rhythm_blue.png"
@@ -758,7 +758,7 @@
               "value": 0.16666666666666666
             }
           ],
-          "description": "缇娅原生贯穿追击倍率每份增加10%攻击力，六命时为11%。",
+          "description": "缇娅的贯穿追击伤害增加，增加量为攻击力的 10%。",
           "icon": "🌪️",
           "target": "缇娅追击",
           "iconPath": "res://assets/content_v280/icons/blessings/tiya_follow_gold.png"
@@ -778,7 +778,7 @@
               "value": 1
             }
           ],
-          "description": "全队施加的破甲持续时间每份增加1回合。",
+          "description": "全队施加的破甲延长 1 回合。",
           "icon": "🌪️",
           "target": "露弥支援",
           "iconPath": "res://assets/content_v280/icons/blessings/lumi_duration_white.png"
@@ -798,7 +798,7 @@
               "value": 0.08
             }
           ],
-          "description": "破甲敌人造成的伤害额外降低8%。",
+          "description": "破甲敌人对全队造成的伤害降低 8%。",
           "icon": "🌪️",
           "target": "露弥支援",
           "iconPath": "res://assets/content_v280/icons/blessings/lumi_guard_blue.png"
@@ -827,7 +827,7 @@
               "value": 0.15
             }
           ],
-          "description": "开场对全体敌人施加35%破甲，持续3回合；全队获得15%最大生命护盾，持续2回合。",
+          "description": "每场深渊战斗开始时，全体敌人破甲 35%，持续 3 回合；全队获得自身最大生命 15% 的护盾，持续 2 回合。",
           "icon": "🌪️",
           "target": "露弥支援",
           "iconPath": "res://assets/content_v280/icons/blessings/lumi_open_gold.png"
@@ -1483,7 +1483,7 @@
         "recommendedSets": [
           {
             "setId": "wind_strings",
-            "reason": "露弥主动施加破甲时提高全队固有贯穿追击倍率，适合与缇娅组成协同队伍。"
+            "reason": "露弥通过技能施加破甲时提高全队角色被动的贯穿追击倍率，适合与缇娅组成协同队伍。"
           }
         ]
       }
@@ -1684,7 +1684,7 @@
     },
     "tiya": {
       "label": "巡岚终式",
-      "desc": "原生贯穿追击倍率提高10%，基础倍率由60%提升至66%。",
+      "desc": "贯穿追击倍率提高 10%，由攻击力的 60% 提升至 66%。",
       "buff": {
         "c6_type": "wind_primary_up"
       }
@@ -5880,6 +5880,7 @@
       },
       "color": "#9bd8bd",
       "portrait": "res://assets/content_v280/enemies/songwing_attendant.png",
+      "portraitFlipH": true,
       "environmentTheme": "windpass",
       "abyssBackgrounds": [
         "res://assets/content_v280/backgrounds/wind_tower.png",
@@ -6017,6 +6018,7 @@
       },
       "color": "#9bd8bd",
       "portrait": "res://assets/content_v280/enemies/boss_highland_roc.png",
+      "portraitFlipH": true,
       "environmentTheme": "windpass",
       "abyssBackgrounds": [
         "res://assets/content_v280/backgrounds/cloud_nest.png"
@@ -7789,7 +7791,7 @@
         },
         {
           "pieces": 4,
-          "description": "攻击力额外提高12%。佩戴者主动施加破甲后，全队角色固有贯穿追击的基础倍率提高40%，持续2回合。",
+          "description": "攻击力额外提高 12%。佩戴者通过技能施加破甲后，全队角色被动的贯穿追击倍率提高 40%，持续 2 回合。",
           "effects": [
             {
               "type": "onStatusAppliedPartyFollowUpAmp",
