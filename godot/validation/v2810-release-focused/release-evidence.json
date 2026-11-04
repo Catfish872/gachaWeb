@@ -1,0 +1,35 @@
+{
+  "version": "2.8.10",
+  "version_code": 20810,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 166,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-04T15:10:52Z",
+      "completed_utc": "2026-11-04T15:13:38Z",
+      "elapsed_seconds": 166,
+      "production_sha256": "87a446ad27bd7dde6324b27cea3aa96e7d6ea0d57e383dfb3152e6f530ae0b35",
+      "scope": [
+        "Wind skill/constellation/set balance157 checks; optimizer bounds1071 checks",
+        "Existing wind mechanics41 checks and damage-reduction preview27 checks",
+        "Actual scene UI207 checks plus rendered960x540 abyss/extraction60 checks"
+      ]
+    }
+  ],
+  "production_sha256": "1126a1347dcbc2862a885156dc4d5a8d9cbe2d5cf813efa993fed64f820dab53",
+  "production_file_count": 1268,
+  "post_review_version_only": true,
+  "scope": [
+    "Wind skill/constellation/set balance157 checks; optimizer bounds1071 checks",
+    "Existing wind mechanics41 checks and damage-reduction preview27 checks",
+    "Actual scene UI207 checks plus rendered960x540 abyss/extraction60 checks"
+  ],
+  "checks": 1563,
+  "limits": [
+    "Desktop Godot rendering, not Android hardware.",
+    "Only targeted checks; no full regression or new tests during publication.",
+    "Separate mixed-team investigation is not counted as this focused verification; representative results are not universal dominance claims.",
+    "No private diagnostics, screenshots or detailed test materials included."
+  ]
+}

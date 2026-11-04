@@ -4,6 +4,7 @@ extends RefCounted
 
 const AbyssBalance = preload("res://scripts/abyss_balance.gd")
 
+const MIN_ORDINARY_DAMAGE_TAKEN := 0.1
 const ENEMY_RECOVERY_SKILL := "enemy_recover"
 const CONTROL_STATUSES = ["freeze", "stun", "electrify"]
 const STATUS_IDS = ["wind_armor", "wind_oath", "burn", "freeze", "stun", "poison", "electrify", "regen", "atk_up", "def_up", "spd_down", "shield", "invincible", "taunt", "ember_oath", "ember_lantern_burn", "ember_lantern_direct"]
@@ -859,12 +860,11 @@ func predict_effect_damage(caster: Dictionary, target: Dictionary, skill: Dictio
 	var taken := _damage_taken_multiplier(target, caster)
 	var preliminary := maxi(1, int(raw * taken))
 	if target.get("id", "") == "lorin" and _c6(target) and not target.get("c6Used", false) and target.get("shield", 0) > 0 and preliminary > target.maxHp * 0.3: return 0
-	if blocked and target.get("passiveId", "") == "lorin_passive" and target.currentHp > target.maxHp * 0.5: taken *= 0.5
-	return maxi(1, int(raw * maxf(0.1, taken * maxf(0.0, 1.0 - float(modifiers(target).damageReduction)))))
+	return maxi(1, int(raw * ordinary_damage_taken_multiplier(target, caster, blocked)))
 
 func expected_effect_damage(caster: Dictionary, target: Dictionary, skill: Dictionary, effect: Dictionary, chain: float = 1.0) -> float:
 	var chance := clampf(float(caster.stats.cri), 0.0, 1.0)
-	var block_chance := 0.3 if target.get("passiveId", "") == "lorin_passive" and target.currentHp > target.maxHp * 0.5 else 0.0
+	var block_chance := 0.3 if _can_block(target) else 0.0
 	var result := 0.0
 	for critical in [false, true]:
 		var critical_weight := chance if critical else 1.0 - chance
@@ -886,7 +886,6 @@ func _damage(caster: Dictionary, target: Dictionary, skill: Dictionary, sid: Str
 	else:
 		mult *= _owner_follow_up_multiplier(caster, target)
 	var element = str(skill.get("element", effect.get("element", caster.element)))
-	var mods = modifiers(target)
 	var crit_chance = float(caster.stats.cri) if not follow_up else 0.0
 	var crit = rng.randf() < crit_chance
 	var element_bonus = element_mult(element, target.element)
@@ -898,11 +897,11 @@ func _damage(caster: Dictionary, target: Dictionary, skill: Dictionary, sid: Str
 		apply_status(target, "invincible", 1, null, target)
 		_emit("miss", caster, target, 0, "绝对防壁阻挡了致命攻击", {"skill_id": sid})
 		return 0
-	if target.passiveId == "lorin_passive" and target.currentHp > target.maxHp * 0.5 and rng.randf() < 0.3:
-		taken_mult *= 0.5
+	var blocked := _can_block(target) and rng.randf() < 0.3
+	if blocked:
 		_emit("block", target, target, 0, "格挡 · 伤害降低 50%")
 	# Ordinary reductions share one 90% ceiling; shields absorb afterwards.
-	damage = maxi(1, int(raw * maxf(0.1, taken_mult * maxf(0.0, 1.0 - mods.damageReduction))))
+	damage = maxi(1, int(raw * ordinary_damage_taken_multiplier(target, caster, blocked)))
 	damage = _absorb(target, damage)
 	var hp_before := int(target.currentHp)
 	target.currentHp = maxi(0, int(target.currentHp) - damage)
@@ -984,7 +983,72 @@ func _damage_taken_multiplier(target: Dictionary, source: Dictionary = {}) -> fl
 	var source_factor := 1.0
 	if not source.is_empty() and has_status(source, "wind_armor"):
 		source_factor = maxf(0.0, 1.0 - (0.20 if _lumi_alive() else 0.0) - _effect_sum("windArmoredGuard"))
-	return maxf(0.1, maxf(0.0, 1.0 + taken) * maxf(0.0, 1.0 + taken_status) * source_factor)
+	return maxf(MIN_ORDINARY_DAMAGE_TAKEN, maxf(0.0, 1.0 + taken) * maxf(0.0, 1.0 + taken_status) * source_factor)
+
+func _can_block(target: Dictionary) -> bool:
+	return target.get("passiveId", "") == "lorin_passive" and target.currentHp > target.maxHp * 0.5
+
+func ordinary_damage_taken_multiplier(target: Dictionary, source: Dictionary = {}, blocked: bool = false) -> float:
+	# Shared by actual hits, hit prediction and the build preview. Defense, shields
+	# and immunity are resolved outside this ordinary-reduction multiplier.
+	var taken := _damage_taken_multiplier(target, source)
+	if blocked and _can_block(target): taken *= 0.5
+	return maxf(MIN_ORDINARY_DAMAGE_TAKEN, taken * maxf(0.0, 1.0 - float(modifiers(target).damageReduction)))
+
+func maximum_damage_reduction(party: Array, effects: Array) -> Array:
+	# Inspect an isolated snapshot: no battle start, RNG draws, save writes or
+	# candidate reward effects. Each wearer's own set and block stay on that unit.
+	var preview = get_script().new(catalog)
+	preview._effects = effects.duplicate(true)
+	preview.state = {"allies":[]}
+	for index in range(party.size()):
+		var unit: Dictionary = preview._make_ally(party[index], index)
+		if not unit.is_empty() and int(unit.currentHp) > 0:
+			unit.currentHp = unit.maxHp
+			preview.state.allies.append(unit)
+	var source := {"statuses":[]}
+	if preview._preview_status_available("wind_armor", {}, true):
+		source.statuses.append({"id":"wind_armor", "duration":1})
+	var result: Array = []
+	for unit in preview.state.allies:
+		for effect in preview._effects + unit.get("ownerEffects", []):
+			if effect.get("type", "") != "damageTakenWhileStatus": continue
+			var id := str(effect.get("statusId", ""))
+			if id != "invincible" and not preview.has_status(unit, id) and preview._preview_status_available(id, unit):
+				unit.statuses.append({"id":id, "duration":1})
+		var reduction: float = 1.0 - preview.ordinary_damage_taken_multiplier(unit, source, true)
+		result.append({"id":unit.id, "name":unit.name, "reduction":reduction})
+	return result
+
+func _preview_status_available(id: String, target: Dictionary, on_enemy: bool = false) -> bool:
+	for effect in _effects:
+		if effect.get("statusId", "") != id or int(effect.get("duration", 1)) <= 0 or float(effect.get("chance", 1.0)) <= 0.0: continue
+		var kind := str(effect.get("type", ""))
+		if not on_enemy and kind == "battleStartStatus": return true
+		if not on_enemy and kind == "statusAfterHeal" and _preview_heal_available(target): return true
+		if on_enemy and kind == "enemyBattleStartStatus" and int(effect.get("count", 1)) > 0: return true
+		if on_enemy and kind == "applyStatusAfterDamage":
+			for ally in state.allies:
+				if not effect.has("element") or effect.element == ally.element: return true
+	for ally in state.allies:
+		for sid in ally.skills:
+			for effect in skill_data(str(sid)).get("effects", []):
+				if effect.get("type", "") != "status" or effect.get("statusId", "") != id or int(effect.get("duration", 1)) <= 0 or float(effect.get("chance", 1.0)) <= 0.0: continue
+				var aim := str(effect.get("target", "single"))
+				if on_enemy and aim in ["single", "single_enemy", "random", "random_enemy", "all", "all_enemies", "chain3"]: return true
+				if not on_enemy and (aim in ["all_allies", "lowest_hp_ally"] or (aim == "self" and ally.uid == target.get("uid", ""))): return true
+	return false
+
+func _preview_heal_available(target: Dictionary) -> bool:
+	for ally in state.allies:
+		if ally.passiveId == "ayla_passive": return true
+		if ally.passiveId == "tide_passive" and ally.uid == target.get("uid", ""): return true
+		for sid in ally.skills:
+			for effect in skill_data(str(sid)).get("effects", []):
+				if effect.get("type", "") != "heal" or float(effect.get("multiplier", 1.0)) <= 0.0: continue
+				var aim := str(effect.get("target", "single"))
+				if aim in ["all_allies", "lowest_hp_ally"] or (aim == "self" and ally.uid == target.get("uid", "")): return true
+	return false
 
 func _after_rogue_damage(caster: Dictionary, target: Dictionary, skill: Dictionary, sid: String, element: String) -> void:
 	if not caster.isAlly: return
@@ -1217,7 +1281,7 @@ func _status_damage(unit: Dictionary, amount: int, source: String, details: Dict
 		# A still-present armored source also grants the wind team its source reduction.
 		var mods := modifiers(unit)
 		var raw := float(amount) * (100.0 / (100.0 + maxf(0.0, float(unit.stats.def) * float(mods.defMult))))
-		amount = maxi(1, int(raw * maxf(0.1, _status_taken_multiplier(unit, details) * maxf(0.0, 1.0 - float(mods.damageReduction)))))
+		amount = maxi(1, int(raw * maxf(MIN_ORDINARY_DAMAGE_TAKEN, _status_taken_multiplier(unit, details) * maxf(0.0, 1.0 - float(mods.damageReduction)))))
 		amount = _absorb(unit, amount)
 	var hp_before := int(unit.currentHp)
 	unit.currentHp = maxi(0, int(unit.currentHp) - amount)

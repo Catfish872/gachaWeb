@@ -3688,3 +3688,35 @@ func _reward_choice_header(parent: Node, reward: Dictionary, owned: int) -> void
 	var label := _label(badge, "已持有 %d 层" % owned if owned > 0 else "未持有", 12, CYAN if owned > 0 else MUTED)
 	label.name = "RewardOwnedCount"
 	label.set_meta("owned_count", owned)
+	_reward_damage_reduction(parent, reward)
+
+
+func _reward_damage_reduction(parent: Node, reward: Dictionary) -> void:
+	var relevant := false
+	for effect in reward.get("effects", []):
+		if (effect.get("type", "") in ["damageTakenMult", "damageTakenWhileStatus"] and float(effect.get("value", 0.0)) < 0.0) or (effect.get("type", "") == "windArmoredGuard" and float(effect.get("value", 0.0)) > 0.0):
+			relevant = true
+	if not relevant: return
+	var extraction_mode := current_screen == "extraction"
+	var party: Array = model.extraction.battle_party() if extraction_mode else model.battle_party(true)
+	var effects: Array = model.extraction.effects() if extraction_mode else model.rogue_effects()
+	var values: Array = battle.maximum_damage_reduction(party, effects)
+	if values.is_empty(): return
+	var section := _vbox(parent, 4)
+	section.name = "RewardDamageReduction"
+	_label(section, "当前最大减伤", 12, MUTED)
+	var members := _flow(section, 8)
+	for value in values:
+		var chip := _hbox(members, 4)
+		chip.name = "RewardReduction_" + str(value.id)
+		chip.set_meta("damage_reduction", value.reduction)
+		var avatar := _portrait(chip, str(value.id), 22)
+		avatar.custom_minimum_size.x = 22
+		avatar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		var percent := snappedf(float(value.reduction) * 100.0, 0.1)
+		var text := ("%.0f%%" if is_equal_approx(percent, roundf(percent)) else "%.1f%%") % percent
+		# A rounded 89.99% must not look capped and discourage another blessing.
+		if percent >= 90.0 and float(value.reduction) < 0.9:
+			text = "%.2f%%" % (floorf(float(value.reduction) * 10000.0 + 0.000001) / 100.0)
+		_label(chip, text, 13, CYAN)
+		chip.tooltip_text = str(value.name) + " · " + text

@@ -7761,9 +7761,13 @@
               "type": "stat",
               "stat": "atk_pct",
               "value": 0.12
+            },
+            {
+              "type": "windNativeDamage",
+              "value": 0.1
             }
           ],
-          "description": "攻击力额外提高12%；佩戴者对破甲目标造成的追击伤害提高20%。"
+          "description": "攻击力额外提高12%；普攻、战技和终结技伤害提高10%；佩戴者对破甲目标造成的追击伤害提高20%。"
         }
       ],
       "theme": "巡岚",
@@ -7793,7 +7797,7 @@
         },
         {
           "pieces": 4,
-          "description": "攻击力额外提高 12%。佩戴者通过技能施加破甲后，全队角色被动的贯穿追击倍率提高 40%，持续 2 回合。",
+          "description": "攻击力额外提高12%；普攻、战技和终结技伤害提高5%；佩戴者对破甲目标造成的追击伤害提高12%。通过技能施加破甲后，全队角色被动的贯穿追击倍率提高40%，持续2回合。",
           "effects": [
             {
               "type": "onStatusAppliedPartyFollowUpAmp",
@@ -7806,6 +7810,14 @@
             {
               "type": "stat",
               "stat": "atk_pct",
+              "value": 0.12
+            },
+            {
+              "type": "windNativeDamage",
+              "value": 0.05
+            },
+            {
+              "type": "windPierceOwner",
               "value": 0.12
             }
           ]
@@ -8876,7 +8888,7 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 0.55,
+          "multiplier": 0.99,
           "scalingStat": "atk"
         },
         {
@@ -8890,11 +8902,11 @@
         {
           "type": "damage",
           "target": "single",
-          "multiplier": 0.55,
+          "multiplier": 0.99,
           "scalingStat": "atk"
         }
       ],
-      "description": "对单体敌人造成55%攻击力的风属性伤害，施加35%破甲，持续2回合，再造成55%攻击力的风属性伤害。",
+      "description": "对单体敌人造成99%攻击力的风属性伤害，施加35%破甲，持续2回合，再造成99%攻击力的风属性伤害。",
       "animation": "wind_strings",
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/lumi_normal.png",
@@ -8920,13 +8932,13 @@
         {
           "type": "damage",
           "target": "all_enemies",
-          "multiplier": 0.4,
+          "multiplier": 0.72,
           "scalingStat": "atk"
         },
         {
           "type": "damage",
           "target": "all_enemies",
-          "multiplier": 0.4,
+          "multiplier": 0.72,
           "scalingStat": "atk"
         },
         {
@@ -8938,7 +8950,7 @@
           "value": 0.15
         }
       ],
-      "description": "先对全体敌人施加35%破甲，持续3回合，再造成两段各40%攻击力的风属性伤害。为生命比例最低的队友提供其最大生命15%的护盾，持续2回合。",
+      "description": "先对全体敌人施加35%破甲，持续3回合，再造成两段各72%攻击力的风属性伤害。为生命比例最低的队友提供其最大生命15%的护盾，持续2回合。",
       "animation": "wind_bridge",
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/lumi_skill.png",
@@ -8964,17 +8976,17 @@
         {
           "type": "damage",
           "target": "all_enemies",
-          "multiplier": 0.9,
+          "multiplier": 1.62,
           "scalingStat": "atk"
         },
         {
           "type": "damage",
           "target": "all_enemies",
-          "multiplier": 0.9,
+          "multiplier": 1.62,
           "scalingStat": "atk"
         }
       ],
-      "description": "先对全体敌人施加35%破甲，持续4回合，再造成两段各90%攻击力的风属性伤害。",
+      "description": "先对全体敌人施加35%破甲，持续4回合，再造成两段各162%攻击力的风属性伤害。",
       "animation": "wind_resonance",
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/lumi_ult.png",

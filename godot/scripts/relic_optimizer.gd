@@ -258,7 +258,7 @@ func _init(game, char_id: String, context: Dictionary = {}) -> void:
 		for bonus in _catalog.RelicSets[set_id].bonuses:
 			for effect in bonus.effects:
 				if effect.type=="stat": _domain_set_stats[effect.stat]+=maxf(0.0,float(effect.value))
-				elif effect.type in ["damageVsStatus","damageWhenFasterThanTarget","activeSkillHealMult","skillShieldMult"]: _domain_effect_factor*=1.0+maxf(0.0,float(effect.get("value",0)))
+				elif effect.type in ["damageVsStatus","damageWhenFasterThanTarget","windNativeDamage","activeSkillHealMult","skillShieldMult"]: _domain_effect_factor*=1.0+maxf(0.0,float(effect.get("value",0)))
 	for sid in _catalog.CharacterData[_char_id].skills:
 		for effect in _catalog.SkillData[sid].get("effects",[]): _domain_skill_factor=maxf(_domain_skill_factor,absf(float(effect.get("multiplier",effect.get("value",1.0)) if effect.get("value")!=null else effect.get("multiplier",1.0))))
 	_normalizer_safe=1000000000.0*1.15*1.7*(1.0+maxf(float(_cst.normalDmgBonus),maxf(float(_cst.skillDmgBonus),float(_cst.ultDmgBonus))))*_domain_effect_factor*_domain_skill_factor<9000000000000000000.0
@@ -942,7 +942,7 @@ func _fast_upper(stats: Dictionary,effects: Array,joint_factor: float = INF,prof
 		var outgoing:=1.7*(1.0+maxf(float(stats.normalDmgBonus),maxf(float(stats.skillDmgBonus),float(stats.ultDmgBonus))))
 		var healing:=1.0; var crit_energy: bool=_catalog.CharacterData[_char_id].get("passiveId","")=="gus_passive"
 		for effect in effects:
-			if effect.get("type","") in ["damageVsStatus","damageWhenFasterThanTarget"]: outgoing*=1.0+absf(float(effect.get("value",0)))
+			if effect.get("type","") in ["damageVsStatus","damageWhenFasterThanTarget","windNativeDamage"]: outgoing*=1.0+absf(float(effect.get("value",0)))
 			if effect.get("type","")=="activeSkillHealMult": healing+=maxf(0.0,float(effect.get("value",0)))
 			if effect.get("type","")=="energyOnCrit" and float(effect.get("value",0))>0.0: crit_energy=true
 		var damage_round:=0.0; var heal_round:=0.0
@@ -1064,7 +1064,7 @@ func _objective_key(stats: Dictionary,effects: Array,upper: bool) -> String:
 		if _profile.type=="damage": values.append(stats.criDmg)
 		for sid in _catalog.CharacterData[_char_id].skills:
 			values.append(int(floor(float(_catalog.SkillData[sid].get("energyGain",15))*maxf(0.0,1.0+float(stats.energyRate)))))
-	var kinds: Array = ["damageTakenMult","skillShieldMult"] if _profile.type=="survival" else (["activeSkillHealMult","energyOnCrit","energyOnActiveHeal"] if _profile.type=="healing" else ["damageVsStatus","damageWhenFasterThanTarget","energyOnCrit","energyOnActiveHeal","onBurnDetonation","windPierceOwner","onStatusAppliedPartyFollowUpAmp"])
+	var kinds: Array = ["damageTakenMult","skillShieldMult"] if _profile.type=="survival" else (["activeSkillHealMult","energyOnCrit","energyOnActiveHeal"] if _profile.type=="healing" else ["damageVsStatus","damageWhenFasterThanTarget","windNativeDamage","energyOnCrit","energyOnActiveHeal","onBurnDetonation","windPierceOwner","onStatusAppliedPartyFollowUpAmp"])
 	var relevant: Array = []
 	var speed_relevant: bool = _reference_has_zeph or _catalog.CharacterData[_char_id].get("passiveId","")=="zeph_passive"
 	for effect in effects:
