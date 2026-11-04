@@ -7,14 +7,15 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 5,
+      "value": 10,
       "icon": "res://assets/items/extraction/wire.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 70,
       "v6Value": 5,
-      "v7Value": 5
+      "v7Value": 5,
+      "previousValue": 5
     },
     "bolts": {
       "name": "矮人工坊铆钉",
@@ -22,14 +23,15 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/items/extraction/bolts.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 150,
       "v6Value": 10,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "bandage": {
       "name": "草药绷带",
@@ -46,7 +48,8 @@
       "category": "补给",
       "legacyValue": 80,
       "v6Value": 5,
-      "v7Value": 5
+      "v7Value": 5,
+      "previousValue": 5
     },
     "ration": {
       "name": "旅人干粮",
@@ -63,7 +66,8 @@
       "category": "补给",
       "legacyValue": 180,
       "v6Value": 15,
-      "v7Value": 15
+      "v7Value": 15,
+      "previousValue": 15
     },
     "circuit": {
       "name": "导魔符板",
@@ -71,14 +75,15 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/items/extraction/circuit.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 240,
       "v6Value": 20,
-      "v7Value": 20
+      "v7Value": 20,
+      "previousValue": 20
     },
     "lens": {
       "name": "窥星透镜",
@@ -86,14 +91,15 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/items/extraction/lens.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 130,
       "v6Value": 10,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "vest": {
       "name": "符纹轻甲",
@@ -115,7 +121,8 @@
       "category": "装备",
       "legacyValue": 880,
       "v6Value": 75,
-      "v7Value": 75
+      "v7Value": 75,
+      "previousValue": 75
     },
     "medkit": {
       "name": "炼金药囊",
@@ -132,7 +139,8 @@
       "category": "补给",
       "legacyValue": 640,
       "v6Value": 55,
-      "v7Value": 55
+      "v7Value": 55,
+      "previousValue": 55
     },
     "battery": {
       "name": "充能晶匣",
@@ -140,14 +148,15 @@
       "width": 1,
       "height": 2,
       "kind": "loot",
-      "value": 30,
+      "value": 60,
       "icon": "res://assets/items/extraction/battery.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 370,
       "v6Value": 30,
-      "v7Value": 30
+      "v7Value": 30,
+      "previousValue": 30
     },
     "sensor": {
       "name": "元素探针",
@@ -155,14 +164,15 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 70,
+      "value": 140,
       "icon": "res://assets/items/extraction/sensor.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 840,
       "v6Value": 70,
-      "v7Value": 70
+      "v7Value": 70,
+      "previousValue": 70
     },
     "blade": {
       "name": "鸣雷短刃",
@@ -184,7 +194,8 @@
       "category": "装备",
       "legacyValue": 690,
       "v6Value": 60,
-      "v7Value": 60
+      "v7Value": 60,
+      "previousValue": 60
     },
     "shield": {
       "name": "守誓灵盾",
@@ -207,7 +218,8 @@
       "buyMinRisk": 1,
       "legacyValue": 1010,
       "v6Value": 85,
-      "v7Value": 85
+      "v7Value": 85,
+      "previousValue": 85
     },
     "processor": {
       "name": "星纹符片",
@@ -215,14 +227,15 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 45,
+      "value": 90,
       "icon": "res://assets/items/extraction/processor.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 550,
       "v6Value": 45,
-      "v7Value": 45
+      "v7Value": 45,
+      "previousValue": 45
     },
     "crystal": {
       "name": "紫晶标本",
@@ -230,14 +243,15 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 205,
+      "value": 410,
       "icon": "res://assets/items/extraction/crystal.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 2470,
       "v6Value": 205,
-      "v7Value": 205
+      "v7Value": 205,
+      "previousValue": 205
     },
     "scope": {
       "name": "鹰眼护符",
@@ -260,7 +274,8 @@
       "buyMinRisk": 2,
       "legacyValue": 1360,
       "v6Value": 115,
-      "v7Value": 115
+      "v7Value": 115,
+      "previousValue": 115
     },
     "injector": {
       "name": "生命露剂",
@@ -276,7 +291,8 @@
       "category": "补给",
       "legacyValue": 750,
       "v6Value": 60,
-      "v7Value": 60
+      "v7Value": 60,
+      "previousValue": 60
     },
     "gold_watch": {
       "name": "古代金怀表",
@@ -284,14 +300,15 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 130,
+      "value": 520,
       "icon": "res://assets/items/extraction/gold_watch.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 1530,
       "v6Value": 130,
-      "v7Value": 130
+      "v7Value": 130,
+      "previousValue": 130
     },
     "idol": {
       "name": "黄金神像",
@@ -299,14 +316,15 @@
       "width": 2,
       "height": 3,
       "kind": "loot",
-      "value": 855,
+      "value": 3420,
       "icon": "res://assets/items/extraction/idol.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 10260,
       "v6Value": 855,
-      "v7Value": 855
+      "v7Value": 855,
+      "previousValue": 855
     },
     "reactor": {
       "name": "微型星核",
@@ -314,7 +332,7 @@
       "width": 2,
       "height": 2,
       "kind": "equipment",
-      "value": 630,
+      "value": 1200,
       "icon": "res://assets/items/extraction/reactor.png",
       "effects": [
         {
@@ -328,7 +346,8 @@
       "buyMinRisk": 3,
       "legacyValue": 7560,
       "v6Value": 630,
-      "v7Value": 630
+      "v7Value": 630,
+      "previousValue": 630
     },
     "crown": {
       "name": "失落王冠",
@@ -336,14 +355,15 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 690,
+      "value": 2760,
       "icon": "res://assets/items/extraction/crown.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 8280,
       "v6Value": 690,
-      "v7Value": 690
+      "v7Value": 690,
+      "previousValue": 690
     },
     "red_core": {
       "name": "赤焰灵核",
@@ -351,14 +371,15 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 1415,
+      "value": 7641,
       "icon": "res://assets/items/extraction/red_core.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 17000,
       "v6Value": 1415,
-      "v7Value": 1415
+      "v7Value": 1415,
+      "previousValue": 1415
     },
     "archive": {
       "name": "封印秘卷",
@@ -366,14 +387,15 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 790,
+      "value": 4266,
       "icon": "res://assets/items/extraction/archive.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 9500,
       "v6Value": 790,
-      "v7Value": 790
+      "v7Value": 790,
+      "previousValue": 790
     },
     "prism": {
       "name": "虹光棱镜",
@@ -381,7 +403,7 @@
       "width": 2,
       "height": 2,
       "kind": "equipment",
-      "value": 1750,
+      "value": 3600,
       "icon": "res://assets/items/extraction/prism.png",
       "effects": [
         {
@@ -399,7 +421,8 @@
       "category": "装备",
       "legacyValue": 21000,
       "v6Value": 1750,
-      "v7Value": 1750
+      "v7Value": 1750,
+      "previousValue": 1750
     },
     "dragon_egg": {
       "name": "龙纹化石",
@@ -407,14 +430,15 @@
       "width": 3,
       "height": 3,
       "kind": "loot",
-      "value": 4310,
+      "value": 23274,
       "icon": "res://assets/items/extraction/dragon_egg.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "category": "遗迹珍藏",
       "legacyValue": 51750,
       "v6Value": 4310,
-      "v7Value": 4310
+      "v7Value": 4310,
+      "previousValue": 4310
     },
     "cloth": {
       "name": "旅织布卷",
@@ -423,13 +447,14 @@
       "height": 2,
       "kind": "loot",
       "category": "纺织品",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/items/extraction/cloth.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 210,
       "v6Value": 20,
-      "v7Value": 20
+      "v7Value": 20,
+      "previousValue": 20
     },
     "ceramic": {
       "name": "古陶碎片",
@@ -438,13 +463,14 @@
       "height": 1,
       "kind": "loot",
       "category": "材料",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/items/extraction/ceramic.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 100,
       "v6Value": 10,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "fuse": {
       "name": "导魔石芯",
@@ -453,13 +479,14 @@
       "height": 1,
       "kind": "loot",
       "category": "符文构件",
-      "value": 5,
+      "value": 10,
       "icon": "res://assets/items/extraction/fuse.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 70,
       "v6Value": 5,
-      "v7Value": 5
+      "v7Value": 5,
+      "previousValue": 5
     },
     "tape": {
       "name": "树脂封带",
@@ -468,13 +495,14 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 15,
+      "value": 30,
       "icon": "res://assets/items/extraction/tape.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 180,
       "v6Value": 15,
-      "v7Value": 15
+      "v7Value": 15,
+      "previousValue": 15
     },
     "scrap_plate": {
       "name": "旧铁甲片",
@@ -483,13 +511,14 @@
       "height": 3,
       "kind": "loot",
       "category": "材料",
-      "value": 30,
+      "value": 60,
       "icon": "res://assets/items/extraction/scrap_plate.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 360,
       "v6Value": 30,
-      "v7Value": 30
+      "v7Value": 30,
+      "previousValue": 30
     },
     "tin_cup": {
       "name": "锡制旅杯",
@@ -498,13 +527,14 @@
       "height": 2,
       "kind": "loot",
       "category": "日用品",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/items/extraction/tin_cup.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 220,
       "v6Value": 20,
-      "v7Value": 20
+      "v7Value": 20,
+      "previousValue": 20
     },
     "water_flask": {
       "name": "净泉水壶",
@@ -521,7 +551,8 @@
       "buyPrice": 25,
       "legacyValue": 130,
       "v6Value": 10,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "dried_fruit": {
       "name": "林地干果",
@@ -537,7 +568,8 @@
       "heal": 0.12,
       "legacyValue": 90,
       "v6Value": 10,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "spark_plug": {
       "name": "引火燧石",
@@ -546,13 +578,14 @@
       "height": 1,
       "kind": "loot",
       "category": "零件",
-      "value": 5,
+      "value": 10,
       "icon": "res://assets/items/extraction/spark_plug.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 80,
       "v6Value": 5,
-      "v7Value": 5
+      "v7Value": 5,
+      "previousValue": 5
     },
     "rope": {
       "name": "冒险者绳索",
@@ -561,13 +594,14 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 25,
+      "value": 50,
       "icon": "res://assets/items/extraction/rope.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 300,
       "v6Value": 25,
-      "v7Value": 25
+      "v7Value": 25,
+      "previousValue": 25
     },
     "gas_filter": {
       "name": "净瘴香囊",
@@ -576,13 +610,14 @@
       "height": 1,
       "kind": "loot",
       "category": "防护用品",
-      "value": 15,
+      "value": 30,
       "icon": "res://assets/items/extraction/gas_filter.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 190,
       "v6Value": 15,
-      "v7Value": 15
+      "v7Value": 15,
+      "previousValue": 15
     },
     "pocket_book": {
       "name": "野外手册",
@@ -591,13 +626,14 @@
       "height": 2,
       "kind": "loot",
       "category": "文献",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/items/extraction/pocket_book.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 110,
       "v6Value": 10,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "radio": {
       "name": "传声符石",
@@ -606,13 +642,14 @@
       "height": 2,
       "kind": "loot",
       "category": "传讯法器",
-      "value": 30,
+      "value": 60,
       "icon": "res://assets/items/extraction/radio.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 360,
       "v6Value": 30,
-      "v7Value": 30
+      "v7Value": 30,
+      "previousValue": 30
     },
     "compass": {
       "name": "寻路罗盘",
@@ -621,13 +658,14 @@
       "height": 1,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 15,
+      "value": 30,
       "icon": "res://assets/items/extraction/compass.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 180,
       "v6Value": 15,
-      "v7Value": 15
+      "v7Value": 15,
+      "previousValue": 15
     },
     "pliers": {
       "name": "矮人工匠钳",
@@ -636,13 +674,14 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/items/extraction/pliers.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 250,
       "v6Value": 20,
-      "v7Value": 20
+      "v7Value": 20,
+      "previousValue": 20
     },
     "thermometer": {
       "name": "测温晶棒",
@@ -651,13 +690,14 @@
       "height": 2,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 25,
+      "value": 50,
       "icon": "res://assets/items/extraction/thermometer.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 310,
       "v6Value": 25,
-      "v7Value": 25
+      "v7Value": 25,
+      "previousValue": 25
     },
     "memory_card": {
       "name": "记忆符片",
@@ -666,13 +706,14 @@
       "height": 1,
       "kind": "loot",
       "category": "符文构件",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/items/extraction/memory_card.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 100,
       "v6Value": 10,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "motor": {
       "name": "魔偶齿轮",
@@ -681,13 +722,14 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 65,
+      "value": 130,
       "icon": "res://assets/items/extraction/motor.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 760,
       "v6Value": 65,
-      "v7Value": 65
+      "v7Value": 65,
+      "previousValue": 65
     },
     "lubricant": {
       "name": "工坊机油",
@@ -696,13 +738,14 @@
       "height": 2,
       "kind": "loot",
       "category": "炼金材料",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/items/extraction/lubricant.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 220,
       "v6Value": 20,
-      "v7Value": 20
+      "v7Value": 20,
+      "previousValue": 20
     },
     "saline": {
       "name": "净化药水",
@@ -718,7 +761,8 @@
       "heal": 0.28,
       "legacyValue": 320,
       "v6Value": 25,
-      "v7Value": 25
+      "v7Value": 25,
+      "previousValue": 25
     },
     "tourniquet": {
       "name": "止血药带",
@@ -735,7 +779,8 @@
       "buyPrice": 25,
       "legacyValue": 140,
       "v6Value": 10,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "kevlar": {
       "name": "秘银织线",
@@ -744,13 +789,14 @@
       "height": 3,
       "kind": "loot",
       "category": "材料",
-      "value": 65,
+      "value": 130,
       "icon": "res://assets/items/extraction/kevlar.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 800,
       "v6Value": 65,
-      "v7Value": 65
+      "v7Value": 65,
+      "previousValue": 65
     },
     "boots": {
       "name": "轻羽旅靴",
@@ -772,7 +818,8 @@
       "buyPrice": 110,
       "legacyValue": 670,
       "v6Value": 55,
-      "v7Value": 55
+      "v7Value": 55,
+      "previousValue": 55
     },
     "lucky_coin": {
       "name": "旧王朝铜币",
@@ -781,13 +828,14 @@
       "height": 1,
       "kind": "loot",
       "category": "古物",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/items/extraction/lucky_coin.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 100,
       "v6Value": 10,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "hard_drive": {
       "name": "封印记忆匣",
@@ -796,13 +844,14 @@
       "height": 1,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 25,
+      "value": 50,
       "icon": "res://assets/items/extraction/hard_drive.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 290,
       "v6Value": 25,
-      "v7Value": 25
+      "v7Value": 25,
+      "previousValue": 25
     },
     "drone_rotor": {
       "name": "魔偶翼片",
@@ -811,13 +860,14 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 140,
+      "value": 280,
       "icon": "res://assets/items/extraction/drone_rotor.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 1650,
       "v6Value": 140,
-      "v7Value": 140
+      "v7Value": 140,
+      "previousValue": 140
     },
     "capacitor": {
       "name": "储能晶柱",
@@ -826,13 +876,14 @@
       "height": 2,
       "kind": "loot",
       "category": "符文构件",
-      "value": 35,
+      "value": 70,
       "icon": "res://assets/items/extraction/capacitor.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 400,
       "v6Value": 35,
-      "v7Value": 35
+      "v7Value": 35,
+      "previousValue": 35
     },
     "camera": {
       "name": "留影晶镜",
@@ -841,13 +892,14 @@
       "height": 2,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 80,
+      "value": 160,
       "icon": "res://assets/items/extraction/camera.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 970,
       "v6Value": 80,
-      "v7Value": 80
+      "v7Value": 80,
+      "previousValue": 80
     },
     "silver_chain": {
       "name": "银月项链",
@@ -856,13 +908,14 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 15,
+      "value": 30,
       "icon": "res://assets/items/extraction/silver_chain.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 160,
       "v6Value": 15,
-      "v7Value": 15
+      "v7Value": 15,
+      "previousValue": 15
     },
     "toolbox": {
       "name": "匠师工具箱",
@@ -871,13 +924,14 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 150,
+      "value": 300,
       "icon": "res://assets/items/extraction/toolbox.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 1780,
       "v6Value": 150,
-      "v7Value": 150
+      "v7Value": 150,
+      "previousValue": 150
     },
     "insulin_case": {
       "name": "寒霜药匣",
@@ -886,13 +940,14 @@
       "height": 3,
       "kind": "loot",
       "category": "疗愈用品",
-      "value": 90,
+      "value": 180,
       "icon": "res://assets/items/extraction/insulin_case.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 1060,
       "v6Value": 90,
-      "v7Value": 90
+      "v7Value": 90,
+      "previousValue": 90
     },
     "antibiotic": {
       "name": "净毒药剂",
@@ -908,7 +963,8 @@
       "heal": 0.35,
       "legacyValue": 250,
       "v6Value": 20,
-      "v7Value": 20
+      "v7Value": 20,
+      "previousValue": 20
     },
     "field_syringe": {
       "name": "复苏滴剂",
@@ -924,7 +980,8 @@
       "heal": 0.4,
       "legacyValue": 440,
       "v6Value": 35,
-      "v7Value": 35
+      "v7Value": 35,
+      "previousValue": 35
     },
     "energy_cell": {
       "name": "军团魔晶匣",
@@ -933,13 +990,14 @@
       "height": 2,
       "kind": "loot",
       "category": "能源",
-      "value": 70,
+      "value": 140,
       "icon": "res://assets/items/extraction/energy_cell.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 840,
       "v6Value": 70,
-      "v7Value": 70
+      "v7Value": 70,
+      "previousValue": 70
     },
     "barrier_module": {
       "name": "结界符盘",
@@ -963,7 +1021,8 @@
       "buyMinRisk": 1,
       "legacyValue": 1060,
       "v6Value": 90,
-      "v7Value": 90
+      "v7Value": 90,
+      "previousValue": 90
     },
     "combat_manual": {
       "name": "剑术手札",
@@ -989,7 +1048,8 @@
       "description": "全队攻击提高12%、暴击率提高4个百分点。",
       "legacyValue": 310,
       "v6Value": 25,
-      "v7Value": 25
+      "v7Value": 25,
+      "previousValue": 25
     },
     "signal_decoder": {
       "name": "解咒星盘",
@@ -998,13 +1058,14 @@
       "height": 2,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 140,
+      "value": 280,
       "icon": "res://assets/items/extraction/signal_decoder.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 1690,
       "v6Value": 140,
-      "v7Value": 140
+      "v7Value": 140,
+      "previousValue": 140
     },
     "rare_ore": {
       "name": "星陨矿样",
@@ -1013,13 +1074,14 @@
       "height": 3,
       "kind": "loot",
       "category": "材料",
-      "value": 405,
+      "value": 810,
       "icon": "res://assets/items/extraction/rare_ore.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 4880,
       "v6Value": 405,
-      "v7Value": 405
+      "v7Value": 405,
+      "previousValue": 405
     },
     "jade_pendant": {
       "name": "翡翠挂坠",
@@ -1028,13 +1090,14 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 50,
+      "value": 100,
       "icon": "res://assets/items/extraction/jade_pendant.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 580,
       "v6Value": 50,
-      "v7Value": 50
+      "v7Value": 50,
+      "previousValue": 50
     },
     "silk_scroll": {
       "name": "古代丝绢",
@@ -1043,13 +1106,14 @@
       "height": 3,
       "kind": "loot",
       "category": "古物",
-      "value": 180,
+      "value": 360,
       "icon": "res://assets/items/extraction/silk_scroll.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 2140,
       "v6Value": 180,
-      "v7Value": 180
+      "v7Value": 180,
+      "previousValue": 180
     },
     "hologram": {
       "name": "幻光晶灯",
@@ -1058,13 +1122,14 @@
       "height": 2,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 160,
+      "value": 320,
       "icon": "res://assets/items/extraction/hologram.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 1950,
       "v6Value": 160,
-      "v7Value": 160
+      "v7Value": 160,
+      "previousValue": 160
     },
     "thermal_chip": {
       "name": "焰息符片",
@@ -1073,13 +1138,14 @@
       "height": 1,
       "kind": "loot",
       "category": "符文构件",
-      "value": 75,
+      "value": 150,
       "icon": "res://assets/items/extraction/thermal_chip.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 880,
       "v6Value": 75,
-      "v7Value": 75
+      "v7Value": 75,
+      "previousValue": 75
     },
     "servo_arm": {
       "name": "古代魔偶臂",
@@ -1088,13 +1154,14 @@
       "height": 4,
       "kind": "loot",
       "category": "零件",
-      "value": 345,
+      "value": 690,
       "icon": "res://assets/items/extraction/servo_arm.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 4160,
       "v6Value": 345,
-      "v7Value": 345
+      "v7Value": 345,
+      "previousValue": 345
     },
     "research_notes": {
       "name": "贤者手札",
@@ -1103,13 +1170,14 @@
       "height": 2,
       "kind": "loot",
       "category": "文献",
-      "value": 250,
+      "value": 500,
       "icon": "res://assets/items/extraction/research_notes.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 2990,
       "v6Value": 250,
-      "v7Value": 250
+      "v7Value": 250,
+      "previousValue": 250
     },
     "emergency_pack": {
       "name": "行军药箱",
@@ -1125,7 +1193,8 @@
       "heal": 0.5,
       "legacyValue": 2600,
       "v6Value": 215,
-      "v7Value": 215
+      "v7Value": 215,
+      "previousValue": 215
     },
     "venom_vial": {
       "name": "淬毒符匣",
@@ -1147,7 +1216,8 @@
       "description": "造成伤害后有30%概率使目标中毒，持续2回合。",
       "legacyValue": 1240,
       "v6Value": 105,
-      "v7Value": 105
+      "v7Value": 105,
+      "previousValue": 105
     },
     "arc_coil": {
       "name": "雷纹环",
@@ -1171,7 +1241,8 @@
       "buyMinRisk": 2,
       "legacyValue": 3120,
       "v6Value": 260,
-      "v7Value": 260
+      "v7Value": 260,
+      "previousValue": 260
     },
     "healer_charm": {
       "name": "疗愈护符",
@@ -1191,7 +1262,8 @@
       "description": "全队技能治疗量提高25%。",
       "legacyValue": 450,
       "v6Value": 40,
-      "v7Value": 40
+      "v7Value": 40,
+      "previousValue": 40
     },
     "platinum_bar": {
       "name": "白金锭",
@@ -1200,13 +1272,14 @@
       "height": 2,
       "kind": "loot",
       "category": "贵金属",
-      "value": 195,
+      "value": 780,
       "icon": "res://assets/items/extraction/platinum_bar.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 2340,
       "v6Value": 195,
-      "v7Value": 195
+      "v7Value": 195,
+      "previousValue": 195
     },
     "diamond_ring": {
       "name": "星钻戒指",
@@ -1215,13 +1288,14 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 190,
+      "value": 760,
       "icon": "res://assets/items/extraction/diamond_ring.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 2250,
       "v6Value": 190,
-      "v7Value": 190
+      "v7Value": 190,
+      "previousValue": 190
     },
     "antique_camera": {
       "name": "古代留影镜",
@@ -1230,13 +1304,14 @@
       "height": 2,
       "kind": "loot",
       "category": "古物",
-      "value": 540,
+      "value": 2160,
       "icon": "res://assets/items/extraction/antique_camera.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 6480,
       "v6Value": 540,
-      "v7Value": 540
+      "v7Value": 540,
+      "previousValue": 540
     },
     "star_map": {
       "name": "古星图",
@@ -1245,13 +1320,14 @@
       "height": 3,
       "kind": "loot",
       "category": "文献",
-      "value": 990,
+      "value": 3960,
       "icon": "res://assets/items/extraction/star_map.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 11880,
       "v6Value": 990,
-      "v7Value": 990
+      "v7Value": 990,
+      "previousValue": 990
     },
     "fusion_battery": {
       "name": "聚星晶匣",
@@ -1260,13 +1336,14 @@
       "height": 3,
       "kind": "loot",
       "category": "能源",
-      "value": 675,
+      "value": 2700,
       "icon": "res://assets/items/extraction/fusion_battery.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 8100,
       "v6Value": 675,
-      "v7Value": 675
+      "v7Value": 675,
+      "previousValue": 675
     },
     "ivory_statue": {
       "name": "白瓷仕女像",
@@ -1275,13 +1352,14 @@
       "height": 3,
       "kind": "loot",
       "category": "艺术品",
-      "value": 610,
+      "value": 2440,
       "icon": "res://assets/items/extraction/ivory_statue.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 7290,
       "v6Value": 610,
-      "v7Value": 610
+      "v7Value": 610,
+      "previousValue": 610
     },
     "ruby_necklace": {
       "name": "红宝石项链",
@@ -1290,13 +1368,14 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 240,
+      "value": 960,
       "icon": "res://assets/items/extraction/ruby_necklace.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 2880,
       "v6Value": 240,
-      "v7Value": 240
+      "v7Value": 240,
+      "previousValue": 240
     },
     "quantum_server": {
       "name": "远古演算匣",
@@ -1305,13 +1384,14 @@
       "height": 3,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 1550,
+      "value": 6200,
       "icon": "res://assets/items/extraction/quantum_server.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 18630,
       "v6Value": 1550,
-      "v7Value": 1550
+      "v7Value": 1550,
+      "previousValue": 1550
     },
     "vintage_vase": {
       "name": "窑变花瓶",
@@ -1320,13 +1400,14 @@
       "height": 3,
       "kind": "loot",
       "category": "艺术品",
-      "value": 900,
+      "value": 3600,
       "icon": "res://assets/items/extraction/vintage_vase.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 10800,
       "v6Value": 900,
-      "v7Value": 900
+      "v7Value": 900,
+      "previousValue": 900
     },
     "phoenix_tonic": {
       "name": "凤凰秘药",
@@ -1335,14 +1416,15 @@
       "height": 2,
       "kind": "consumable",
       "category": "补给",
-      "value": 285,
+      "value": 600,
       "icon": "res://assets/items/extraction/phoenix_tonic.png",
       "effects": [],
       "description": "战斗外使用，恢复存活队员85%最大生命。消耗一件物品。",
       "heal": 0.85,
       "legacyValue": 3420,
       "v6Value": 285,
-      "v7Value": 285
+      "v7Value": 285,
+      "previousValue": 285
     },
     "blood_emblem": {
       "name": "血色徽章",
@@ -1351,7 +1433,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 720,
+      "value": 1200,
       "icon": "res://assets/items/extraction/blood_emblem.png",
       "effects": [
         {
@@ -1364,7 +1446,8 @@
       "buyMinRisk": 3,
       "legacyValue": 8640,
       "v6Value": 720,
-      "v7Value": 720
+      "v7Value": 720,
+      "previousValue": 720
     },
     "guardian_seal": {
       "name": "守护者印章",
@@ -1373,7 +1456,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 210,
+      "value": 600,
       "icon": "res://assets/items/extraction/guardian_seal.png",
       "effects": [
         {
@@ -1386,7 +1469,8 @@
       "buyMinRisk": 3,
       "legacyValue": 2520,
       "v6Value": 210,
-      "v7Value": 210
+      "v7Value": 210,
+      "previousValue": 210
     },
     "astral_clock": {
       "name": "星轨时计",
@@ -1395,13 +1479,14 @@
       "height": 2,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 1085,
+      "value": 5859,
       "icon": "res://assets/items/extraction/astral_clock.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 13000,
       "v6Value": 1085,
-      "v7Value": 1085
+      "v7Value": 1085,
+      "previousValue": 1085
     },
     "genesis_disk": {
       "name": "创世铭盘",
@@ -1410,13 +1495,14 @@
       "height": 2,
       "kind": "loot",
       "category": "秘传典籍",
-      "value": 2085,
+      "value": 11259,
       "icon": "res://assets/items/extraction/genesis_disk.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 25000,
       "v6Value": 2085,
-      "v7Value": 2085
+      "v7Value": 2085,
+      "previousValue": 2085
     },
     "meteor_heart": {
       "name": "陨星之心",
@@ -1425,13 +1511,14 @@
       "height": 3,
       "kind": "loot",
       "category": "奇珍",
-      "value": 2250,
+      "value": 12150,
       "icon": "res://assets/items/extraction/meteor_heart.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 27000,
       "v6Value": 2250,
-      "v7Value": 2250
+      "v7Value": 2250,
+      "previousValue": 2250
     },
     "royal_scepter": {
       "name": "古王权杖",
@@ -1440,13 +1527,14 @@
       "height": 4,
       "kind": "loot",
       "category": "王室遗物",
-      "value": 1835,
+      "value": 9909,
       "icon": "res://assets/items/extraction/royal_scepter.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 22000,
       "v6Value": 1835,
-      "v7Value": 1835
+      "v7Value": 1835,
+      "previousValue": 1835
     },
     "sunken_crown": {
       "name": "沉海冠冕",
@@ -1455,13 +1543,14 @@
       "height": 2,
       "kind": "loot",
       "category": "王室遗物",
-      "value": 1250,
+      "value": 6750,
       "icon": "res://assets/items/extraction/sunken_crown.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 15000,
       "v6Value": 1250,
-      "v7Value": 1250
+      "v7Value": 1250,
+      "previousValue": 1250
     },
     "void_fossil": {
       "name": "虚空生物化石",
@@ -1470,13 +1559,14 @@
       "height": 3,
       "kind": "loot",
       "category": "标本",
-      "value": 5060,
+      "value": 27324,
       "icon": "res://assets/items/extraction/void_fossil.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 60750,
       "v6Value": 5060,
-      "v7Value": 5060
+      "v7Value": 5060,
+      "previousValue": 5060
     },
     "phoenix_feather": {
       "name": "不灭羽翎",
@@ -1485,13 +1575,14 @@
       "height": 3,
       "kind": "loot",
       "category": "奇珍",
-      "value": 1000,
+      "value": 5400,
       "icon": "res://assets/items/extraction/phoenix_feather.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 12000,
       "v6Value": 1000,
-      "v7Value": 1000
+      "v7Value": 1000,
+      "previousValue": 1000
     },
     "world_seed": {
       "name": "世界树种",
@@ -1500,13 +1591,14 @@
       "height": 1,
       "kind": "loot",
       "category": "奇珍",
-      "value": 480,
+      "value": 2592,
       "icon": "res://assets/items/extraction/world_seed.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 5750,
       "v6Value": 480,
-      "v7Value": 480
+      "v7Value": 480,
+      "previousValue": 480
     },
     "eternal_flame": {
       "name": "永燃火种",
@@ -1515,13 +1607,14 @@
       "height": 2,
       "kind": "loot",
       "category": "能源",
-      "value": 1665,
+      "value": 8991,
       "icon": "res://assets/items/extraction/eternal_flame.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 20000,
       "v6Value": 1665,
-      "v7Value": 1665
+      "v7Value": 1665,
+      "previousValue": 1665
     },
     "oracle_tablet": {
       "name": "神谕石板",
@@ -1530,13 +1623,14 @@
       "height": 3,
       "kind": "loot",
       "category": "文献",
-      "value": 2375,
+      "value": 12825,
       "icon": "res://assets/items/extraction/oracle_tablet.png",
       "effects": [],
       "description": "在遗迹、荒原与旧王朝遗存中找到的物品，可带回仓库收藏或出售。",
       "legacyValue": 28500,
       "v6Value": 2375,
-      "v7Value": 2375
+      "v7Value": 2375,
+      "previousValue": 2375
     },
     "eclipse_relic": {
       "name": "蚀日圣器",
@@ -1545,7 +1639,7 @@
       "height": 3,
       "kind": "equipment",
       "category": "装备",
-      "value": 3000,
+      "value": 5400,
       "icon": "res://assets/items/extraction/eclipse_relic.png",
       "effects": [
         {
@@ -1561,7 +1655,8 @@
       "description": "全队攻击提高28%，每场战斗开始获得20点能量。",
       "legacyValue": 36000,
       "v6Value": 3000,
-      "v7Value": 3000
+      "v7Value": 3000,
+      "previousValue": 3000
     },
     "storm_heart": {
       "name": "风暴之核",
@@ -1570,7 +1665,7 @@
       "height": 2,
       "kind": "equipment",
       "category": "装备",
-      "value": 1165,
+      "value": 3600,
       "icon": "res://assets/items/extraction/storm_heart.png",
       "effects": [
         {
@@ -1587,7 +1682,8 @@
       "description": "全队速度提高15%、暴击率提高15个百分点。",
       "legacyValue": 14000,
       "v6Value": 1165,
-      "v7Value": 1165
+      "v7Value": 1165,
+      "previousValue": 1165
     },
     "armor_0": {
       "name": "旅人布甲",
@@ -1604,7 +1700,8 @@
       "slot": "armor",
       "armorPct": 0.4,
       "repairPrice": 35,
-      "v7Value": 50
+      "v7Value": 50,
+      "previousValue": 50
     },
     "armor_1": {
       "name": "藤纹轻甲",
@@ -1621,7 +1718,8 @@
       "slot": "armor",
       "armorPct": 0.6,
       "repairPrice": 55,
-      "v7Value": 110
+      "v7Value": 110,
+      "previousValue": 110
     },
     "armor_2": {
       "name": "银纹护甲",
@@ -1638,7 +1736,8 @@
       "slot": "armor",
       "armorPct": 0.85,
       "repairPrice": 80,
-      "v7Value": 220
+      "v7Value": 220,
+      "previousValue": 220
     },
     "armor_3": {
       "name": "星纹战甲",
@@ -1655,7 +1754,8 @@
       "slot": "armor",
       "armorPct": 1.15,
       "repairPrice": 110,
-      "v7Value": 440
+      "v7Value": 440,
+      "previousValue": 440
     },
     "armor_4": {
       "name": "王庭圣甲",
@@ -1663,7 +1763,7 @@
       "width": 2,
       "height": 2,
       "kind": "utility",
-      "value": 880,
+      "value": 1200,
       "icon": "res://assets/items/expedition_v230/armor_4.png",
       "effects": [],
       "category": "整备",
@@ -1672,7 +1772,8 @@
       "slot": "armor",
       "armorPct": 1.5,
       "repairPrice": 150,
-      "v7Value": 880
+      "v7Value": 880,
+      "previousValue": 880
     },
     "armor_5": {
       "name": "赤曜神甲",
@@ -1680,7 +1781,7 @@
       "width": 2,
       "height": 2,
       "kind": "utility",
-      "value": 1600,
+      "value": 3600,
       "icon": "res://assets/items/expedition_v230/armor_5.png",
       "effects": [],
       "category": "整备",
@@ -1689,7 +1790,8 @@
       "slot": "armor",
       "armorPct": 2.0,
       "repairPrice": 190,
-      "v7Value": 1600
+      "v7Value": 1600,
+      "previousValue": 1600
     },
     "pack_1": {
       "name": "藤编行囊",
@@ -1705,7 +1807,8 @@
       "description": "背包扩展至36格。装备后随远征者保留。",
       "slot": "backpack",
       "bagHeight": 6,
-      "v7Value": 160
+      "v7Value": 160,
+      "previousValue": 160
     },
     "pack_2": {
       "name": "游侠背囊",
@@ -1721,7 +1824,8 @@
       "description": "背包扩展至42格。装备后随远征者保留。",
       "slot": "backpack",
       "bagHeight": 7,
-      "v7Value": 360
+      "v7Value": 360,
+      "previousValue": 360
     },
     "pack_3": {
       "name": "符文行囊",
@@ -1737,7 +1841,8 @@
       "description": "背包扩展至48格。装备后随远征者保留。",
       "slot": "backpack",
       "bagHeight": 8,
-      "v7Value": 720
+      "v7Value": 720,
+      "previousValue": 720
     },
     "pack_4": {
       "name": "星纹背囊",
@@ -1753,7 +1858,8 @@
       "description": "背包扩展至54格。装备后随远征者保留。",
       "slot": "backpack",
       "bagHeight": 9,
-      "v7Value": 1300
+      "v7Value": 1300,
+      "previousValue": 1300
     },
     "pack_5": {
       "name": "王庭远征包",
@@ -1761,7 +1867,7 @@
       "width": 2,
       "height": 2,
       "kind": "utility",
-      "value": 2200,
+      "value": 3600,
       "icon": "res://assets/items/expedition_v230/pack_5.png",
       "effects": [],
       "category": "整备",
@@ -1769,7 +1875,8 @@
       "description": "背包扩展至60格。装备后随远征者保留。",
       "slot": "backpack",
       "bagHeight": 10,
-      "v7Value": 2200
+      "v7Value": 2200,
+      "previousValue": 2200
     },
     "key_ruins": {
       "name": "旧城铜钥",
@@ -1785,7 +1892,8 @@
       "description": "存入独立钥匙串，开启对应区域密室时消耗一把。",
       "keyTheme": "ruins",
       "v7Value": 40,
-      "dropWeight": 0.08
+      "dropWeight": 0.08,
+      "previousValue": 40
     },
     "key_forest": {
       "name": "幽林藤钥",
@@ -1801,7 +1909,8 @@
       "description": "存入独立钥匙串，开启对应区域密室时消耗一把。",
       "keyTheme": "forest",
       "v7Value": 40,
-      "dropWeight": 0.08
+      "dropWeight": 0.08,
+      "previousValue": 40
     },
     "key_sanctum": {
       "name": "圣所晶钥",
@@ -1817,7 +1926,8 @@
       "description": "存入独立钥匙串，开启对应区域密室时消耗一把。",
       "keyTheme": "sanctum",
       "v7Value": 40,
-      "dropWeight": 0.08
+      "dropWeight": 0.08,
+      "previousValue": 40
     },
     "repair_patch": {
       "name": "缝甲符片",
@@ -1836,7 +1946,8 @@
       "lootCategories": [
         "补给",
         "疗愈用品"
-      ]
+      ],
+      "previousValue": 14
     },
     "repair_kit": {
       "name": "修甲工具组",
@@ -1855,7 +1966,8 @@
       "lootCategories": [
         "补给",
         "疗愈用品"
-      ]
+      ],
+      "previousValue": 26
     },
     "repair_core": {
       "name": "复原星核",
@@ -1863,18 +1975,19 @@
       "width": 1,
       "height": 1,
       "kind": "consumable",
-      "value": 80,
+      "value": 300,
       "icon": "res://assets/items/expedition_v230/repair_core.png",
       "effects": [],
       "category": "补给",
-      "buyPrice": 240,
+      "buyPrice": 345,
       "description": "修复护甲100%容量。战斗外使用。",
       "repair": 1.0,
       "v7Value": 48,
       "lootCategories": [
         "补给",
         "疗愈用品"
-      ]
+      ],
+      "previousValue": 80
     },
     "energy_tonic": {
       "name": "灵能露剂",
@@ -1889,7 +2002,8 @@
       "buyPrice": 45,
       "description": "存活队员获得20能量。战斗外使用。",
       "energy": 20,
-      "v7Value": 9
+      "v7Value": 9,
+      "previousValue": 9
     },
     "energy_flask": {
       "name": "充能晶瓶",
@@ -1904,7 +2018,8 @@
       "buyPrice": 85,
       "description": "存活队员获得40能量。战斗外使用。",
       "energy": 40,
-      "v7Value": 17
+      "v7Value": 17,
+      "previousValue": 17
     },
     "energy_crystal": {
       "name": "源能结晶",
@@ -1912,14 +2027,15 @@
       "width": 1,
       "height": 1,
       "kind": "consumable",
-      "value": 60,
+      "value": 300,
       "icon": "res://assets/items/expedition_v230/energy_crystal.png",
       "effects": [],
       "category": "补给",
-      "buyPrice": 150,
+      "buyPrice": 345,
       "description": "存活队员获得70能量。战斗外使用。",
       "energy": 70,
-      "v7Value": 30
+      "v7Value": 30,
+      "previousValue": 60
     },
     "revival_incense": {
       "name": "复苏灵香",
@@ -1934,7 +2050,8 @@
       "buyPrice": 100,
       "description": "复苏倒下队员并恢复15%生命。战斗外使用。",
       "revive": 0.15,
-      "v7Value": 20
+      "v7Value": 20,
+      "previousValue": 20
     },
     "revival_bloom": {
       "name": "返魂灵花",
@@ -1949,7 +2066,8 @@
       "buyPrice": 180,
       "description": "复苏倒下队员并恢复35%生命。战斗外使用。",
       "revive": 0.35,
-      "v7Value": 36
+      "v7Value": 36,
+      "previousValue": 36
     },
     "revival_phoenix": {
       "name": "凤凰灵羽",
@@ -1957,14 +2075,15 @@
       "width": 1,
       "height": 1,
       "kind": "consumable",
-      "value": 100,
+      "value": 300,
       "icon": "res://assets/items/expedition_v230/revival_phoenix.png",
       "effects": [],
       "category": "补给",
-      "buyPrice": 300,
+      "buyPrice": 345,
       "description": "复苏倒下队员并恢复60%生命。战斗外使用。",
       "revive": 0.6,
-      "v7Value": 60
+      "v7Value": 60,
+      "previousValue": 100
     },
     "cleanse_salt": {
       "name": "醒神灵盐",
@@ -1980,7 +2099,8 @@
       "description": "清空存活队员技能冷却。",
       "cooldown": 99,
       "energy": 0,
-      "v7Value": 10
+      "v7Value": 10,
+      "previousValue": 10
     },
     "cleanse_water": {
       "name": "澄心圣泉",
@@ -1996,7 +2116,8 @@
       "description": "清空存活队员技能冷却，获得15能量。",
       "cooldown": 99,
       "energy": 15,
-      "v7Value": 17
+      "v7Value": 17,
+      "previousValue": 17
     },
     "cleanse_censer": {
       "name": "凝神香炉",
@@ -2012,7 +2133,8 @@
       "description": "清空存活队员技能冷却，获得30能量。",
       "cooldown": 99,
       "energy": 30,
-      "v7Value": 27
+      "v7Value": 27,
+      "previousValue": 27
     },
     "ration_0": {
       "name": "干果饼",
@@ -2028,7 +2150,8 @@
       "description": "存活队员恢复10%生命，获得10能量。",
       "heal": 0.1,
       "energy": 10,
-      "v7Value": 7
+      "v7Value": 7,
+      "previousValue": 7
     },
     "ration_1": {
       "name": "蜜果餐",
@@ -2044,7 +2167,8 @@
       "description": "存活队员恢复20%生命，获得15能量。",
       "heal": 0.2,
       "energy": 15,
-      "v7Value": 13
+      "v7Value": 13,
+      "previousValue": 13
     },
     "ration_2": {
       "name": "药草炖食",
@@ -2060,7 +2184,8 @@
       "description": "存活队员恢复30%生命，获得20能量。",
       "heal": 0.3,
       "energy": 20,
-      "v7Value": 21
+      "v7Value": 21,
+      "previousValue": 21
     },
     "ration_3": {
       "name": "星露餐盒",
@@ -2076,7 +2201,8 @@
       "description": "存活队员恢复40%生命，获得30能量。",
       "heal": 0.4,
       "energy": 30,
-      "v7Value": 33
+      "v7Value": 33,
+      "previousValue": 33
     },
     "ration_4": {
       "name": "王庭盛宴",
@@ -2084,15 +2210,16 @@
       "width": 1,
       "height": 2,
       "kind": "consumable",
-      "value": 90,
+      "value": 600,
       "icon": "res://assets/items/expedition_v230/ration_4.png",
       "effects": [],
       "category": "补给",
-      "buyPrice": 240,
+      "buyPrice": 690,
       "description": "存活队员恢复55%生命，获得40能量。",
       "heal": 0.55,
       "energy": 40,
-      "v7Value": 48
+      "v7Value": 48,
+      "previousValue": 90
     },
     "ration_5": {
       "name": "圣树甘露",
@@ -2100,15 +2227,16 @@
       "width": 1,
       "height": 2,
       "kind": "consumable",
-      "value": 150,
+      "value": 1800,
       "icon": "res://assets/items/expedition_v230/ration_5.png",
       "effects": [],
       "category": "补给",
-      "buyPrice": 340,
+      "buyPrice": 2070,
       "description": "存活队员恢复70%生命，获得55能量。",
       "heal": 0.7,
       "energy": 55,
-      "v7Value": 68
+      "v7Value": 68,
+      "previousValue": 150
     },
     "ruins_cinder_medal": {
       "name": "炉灰勋章",
@@ -2117,7 +2245,7 @@
       "height": 1,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 15,
+      "value": 30,
       "icon": "res://assets/extraction/v260/items/ruins_cinder_medal.tres",
       "effects": [],
       "description": "留着旧军团印记的铜质勋章。",
@@ -2125,7 +2253,8 @@
       "v6Value": 15,
       "v7Value": 15,
       "variantOf": "compass",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 15
     },
     "ruins_molten_seal": {
       "name": "熔金玺印",
@@ -2133,7 +2262,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 205,
+      "value": 410,
       "icon": "res://assets/extraction/v260/items/ruins_molten_seal.tres",
       "effects": [],
       "description": "熔金纹路封存着王庭旧誓。",
@@ -2142,7 +2271,8 @@
       "v6Value": 205,
       "v7Value": 205,
       "variantOf": "crystal",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 205
     },
     "ruins_obsidian_chalice": {
       "name": "黑曜礼盏",
@@ -2150,7 +2280,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 690,
+      "value": 2760,
       "icon": "res://assets/extraction/v260/items/ruins_obsidian_chalice.tres",
       "effects": [],
       "description": "黑曜石雕成的王室礼盏。",
@@ -2159,7 +2289,8 @@
       "v6Value": 690,
       "v7Value": 690,
       "variantOf": "crown",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 690
     },
     "ruins_sun_crown": {
       "name": "曜日残冠",
@@ -2167,7 +2298,7 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 790,
+      "value": 4266,
       "icon": "res://assets/extraction/v260/items/ruins_sun_crown.tres",
       "effects": [],
       "description": "失落王朝最后一顶日轮冠。",
@@ -2176,7 +2307,8 @@
       "v6Value": 790,
       "v7Value": 790,
       "variantOf": "archive",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 790
     },
     "forest_amber_acorn": {
       "name": "琥珀灵实",
@@ -2184,7 +2316,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/extraction/v260/items/forest_amber_acorn.tres",
       "effects": [],
       "description": "古树枝头凝成的琥珀灵实。",
@@ -2193,7 +2325,8 @@
       "v6Value": 10,
       "v7Value": 10,
       "variantOf": "lens",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 10
     },
     "forest_moon_dew": {
       "name": "月华露珠",
@@ -2201,7 +2334,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 205,
+      "value": 410,
       "icon": "res://assets/extraction/v260/items/forest_moon_dew.tres",
       "effects": [],
       "description": "盛着林间月光的晶莹露珠。",
@@ -2210,7 +2343,8 @@
       "v6Value": 205,
       "v7Value": 205,
       "variantOf": "crystal",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 205
     },
     "forest_verdant_tablet": {
       "name": "翠纹石契",
@@ -2219,7 +2353,7 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 190,
+      "value": 760,
       "icon": "res://assets/extraction/v260/items/forest_verdant_tablet.tres",
       "effects": [],
       "description": "翠色纹路铭刻着守林古约。",
@@ -2227,7 +2361,8 @@
       "v6Value": 190,
       "v7Value": 190,
       "variantOf": "diamond_ring",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 190
     },
     "forest_heart_bloom": {
       "name": "古树心蕾",
@@ -2235,7 +2370,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 1415,
+      "value": 7641,
       "icon": "res://assets/extraction/v260/items/forest_heart_bloom.tres",
       "effects": [],
       "description": "根脉深处绽放的古树心蕾。",
@@ -2244,7 +2379,8 @@
       "v6Value": 1415,
       "v7Value": 1415,
       "variantOf": "red_core",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 1415
     },
     "sanctum_star_compass": {
       "name": "星盘罗针",
@@ -2253,7 +2389,7 @@
       "height": 1,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 15,
+      "value": 30,
       "icon": "res://assets/extraction/v260/items/sanctum_star_compass.tres",
       "effects": [],
       "description": "随星光缓缓转动的精密罗针。",
@@ -2261,7 +2397,8 @@
       "v6Value": 15,
       "v7Value": 15,
       "variantOf": "compass",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 15
     },
     "sanctum_meteor_shard": {
       "name": "陨星棱晶",
@@ -2269,7 +2406,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 45,
+      "value": 90,
       "icon": "res://assets/extraction/v260/items/sanctum_meteor_shard.tres",
       "effects": [],
       "description": "陨星留下的多面晶体。",
@@ -2278,7 +2415,8 @@
       "v6Value": 45,
       "v7Value": 45,
       "variantOf": "processor",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 45
     },
     "sanctum_orbit_lens": {
       "name": "星环透镜",
@@ -2286,7 +2424,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 690,
+      "value": 2760,
       "icon": "res://assets/extraction/v260/items/sanctum_orbit_lens.tres",
       "effects": [],
       "description": "映出微缩星轨的古代透镜。",
@@ -2295,7 +2433,8 @@
       "v6Value": 690,
       "v7Value": 690,
       "variantOf": "crown",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 690
     },
     "sanctum_celestial_clock": {
       "name": "天穹时仪",
@@ -2304,7 +2443,7 @@
       "height": 2,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 1085,
+      "value": 5859,
       "icon": "res://assets/extraction/v260/items/sanctum_celestial_clock.tres",
       "effects": [],
       "description": "记录天穹运转的失落时仪。",
@@ -2312,7 +2451,8 @@
       "v6Value": 1085,
       "v7Value": 1085,
       "variantOf": "astral_clock",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 1085
     },
     "ruins_frayed_linen": {
       "name": "旧城麻布",
@@ -2321,7 +2461,7 @@
       "height": 2,
       "kind": "loot",
       "category": "纺织品",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_frayed_linen.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2329,7 +2469,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "cloth",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 20
     },
     "ruins_rust_hinge": {
       "name": "锈蚀门铰",
@@ -2337,7 +2478,7 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_rust_hinge.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2346,7 +2487,8 @@
       "v6Value": 10,
       "v7Value": 10,
       "variantOf": "bolts",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 10
     },
     "ruins_smith_pincers": {
       "name": "铁匠钳",
@@ -2355,7 +2497,7 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_smith_pincers.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2363,7 +2505,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "pliers",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 20
     },
     "ruins_copper_lamp": {
       "name": "旧铜油灯",
@@ -2372,7 +2515,7 @@
       "height": 2,
       "kind": "loot",
       "category": "传讯法器",
-      "value": 30,
+      "value": 60,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_copper_lamp.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2380,7 +2523,8 @@
       "v6Value": 30,
       "v7Value": 30,
       "variantOf": "radio",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 30
     },
     "ruins_carpenter_chest": {
       "name": "工匠木箱",
@@ -2389,7 +2533,7 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 150,
+      "value": 300,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_carpenter_chest.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2397,7 +2541,8 @@
       "v6Value": 150,
       "v7Value": 150,
       "variantOf": "toolbox",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 150
     },
     "ruins_ceremony_cloth": {
       "name": "绯纹祭布",
@@ -2406,7 +2551,7 @@
       "height": 3,
       "kind": "loot",
       "category": "疗愈用品",
-      "value": 90,
+      "value": 180,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_ceremony_cloth.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2414,7 +2559,8 @@
       "v6Value": 90,
       "v7Value": 90,
       "variantOf": "insulin_case",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 90
     },
     "ruins_ember_ore": {
       "name": "余烬矿簇",
@@ -2423,7 +2569,7 @@
       "height": 3,
       "kind": "loot",
       "category": "材料",
-      "value": 405,
+      "value": 810,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_ember_ore.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2431,7 +2577,8 @@
       "v6Value": 405,
       "v7Value": 405,
       "variantOf": "rare_ore",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 405
     },
     "ruins_knight_vambrace": {
       "name": "王骑臂甲残件",
@@ -2440,7 +2587,7 @@
       "height": 4,
       "kind": "loot",
       "category": "零件",
-      "value": 345,
+      "value": 690,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_knight_vambrace.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2448,7 +2595,8 @@
       "v6Value": 345,
       "v7Value": 345,
       "variantOf": "servo_arm",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 345
     },
     "ruins_ruby_brooch": {
       "name": "王庭红玉胸针",
@@ -2457,7 +2605,7 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 240,
+      "value": 960,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_ruby_brooch.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2465,7 +2613,8 @@
       "v6Value": 240,
       "v7Value": 240,
       "variantOf": "ruby_necklace",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 240
     },
     "ruins_lion_sculpture": {
       "name": "白石狮座",
@@ -2474,7 +2623,7 @@
       "height": 3,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 1550,
+      "value": 6200,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_lion_sculpture.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2482,7 +2631,8 @@
       "v6Value": 1550,
       "v7Value": 1550,
       "variantOf": "quantum_server",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 1550
     },
     "ruins_crimson_feather": {
       "name": "赤焰凤翎",
@@ -2491,7 +2641,7 @@
       "height": 3,
       "kind": "loot",
       "category": "奇珍",
-      "value": 1000,
+      "value": 5400,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_crimson_feather.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2499,7 +2649,8 @@
       "v6Value": 1000,
       "v7Value": 1000,
       "variantOf": "phoenix_feather",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 1000
     },
     "ruins_dragon_reliquary": {
       "name": "玄金龙卵匣",
@@ -2507,7 +2658,7 @@
       "width": 3,
       "height": 3,
       "kind": "loot",
-      "value": 4310,
+      "value": 23274,
       "icon": "res://assets/extraction/v260/loot_expansion/ruins_dragon_reliquary.tres",
       "effects": [],
       "description": "灰烬王城遗留的旧物。",
@@ -2516,7 +2667,8 @@
       "v6Value": 4310,
       "v7Value": 4310,
       "variantOf": "dragon_egg",
-      "environmentTheme": "ruins"
+      "environmentTheme": "ruins",
+      "previousValue": 4310
     },
     "forest_dried_herbs": {
       "name": "枯叶草束",
@@ -2524,7 +2676,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 5,
+      "value": 10,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_dried_herbs.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2533,7 +2685,8 @@
       "v6Value": 5,
       "v7Value": 5,
       "variantOf": "wire",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 5
     },
     "forest_seed_pot": {
       "name": "裂纹种罐",
@@ -2542,7 +2695,7 @@
       "height": 1,
       "kind": "loot",
       "category": "材料",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_seed_pot.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2550,7 +2703,8 @@
       "v6Value": 10,
       "v7Value": 10,
       "variantOf": "ceramic",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 10
     },
     "forest_hemp_coil": {
       "name": "古林麻绳",
@@ -2559,7 +2713,7 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 65,
+      "value": 130,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_hemp_coil.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2567,7 +2721,8 @@
       "v6Value": 65,
       "v7Value": 65,
       "variantOf": "motor",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 65
     },
     "forest_seed_basket": {
       "name": "林间种篮",
@@ -2575,7 +2730,7 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_seed_basket.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2584,7 +2739,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "circuit",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 20
     },
     "forest_specimen_box": {
       "name": "木纹标本匣",
@@ -2593,7 +2749,7 @@
       "height": 1,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 25,
+      "value": 50,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_specimen_box.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2601,7 +2757,8 @@
       "v6Value": 25,
       "v7Value": 25,
       "variantOf": "hard_drive",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 25
     },
     "forest_moss_mortar": {
       "name": "苔石药臼",
@@ -2609,7 +2766,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 70,
+      "value": 140,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_moss_mortar.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2618,7 +2775,8 @@
       "v6Value": 70,
       "v7Value": 70,
       "variantOf": "sensor",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 70
     },
     "forest_jade_leaf": {
       "name": "翠叶玉坠",
@@ -2627,7 +2785,7 @@
       "height": 1,
       "kind": "loot",
       "category": "珠宝",
-      "value": 50,
+      "value": 100,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_jade_leaf.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2635,7 +2793,8 @@
       "v6Value": 50,
       "v7Value": 50,
       "variantOf": "jade_pendant",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 50
     },
     "forest_herbarium_scroll": {
       "name": "百草绢卷",
@@ -2644,7 +2803,7 @@
       "height": 3,
       "kind": "loot",
       "category": "古物",
-      "value": 180,
+      "value": 360,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_herbarium_scroll.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2652,7 +2811,8 @@
       "v6Value": 180,
       "v7Value": 180,
       "variantOf": "silk_scroll",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 180
     },
     "forest_ivory_stag": {
       "name": "月鹿牙雕",
@@ -2661,7 +2821,7 @@
       "height": 3,
       "kind": "loot",
       "category": "艺术品",
-      "value": 610,
+      "value": 2440,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_ivory_stag.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2669,7 +2829,8 @@
       "v6Value": 610,
       "v7Value": 610,
       "variantOf": "ivory_statue",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 610
     },
     "forest_amber_amphora": {
       "name": "金珀蜜壶",
@@ -2678,7 +2839,7 @@
       "height": 3,
       "kind": "loot",
       "category": "艺术品",
-      "value": 900,
+      "value": 3600,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_amber_amphora.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2686,7 +2847,8 @@
       "v6Value": 900,
       "v7Value": 900,
       "variantOf": "vintage_vase",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 900
     },
     "forest_radiant_seed": {
       "name": "翡翠源种",
@@ -2695,7 +2857,7 @@
       "height": 1,
       "kind": "loot",
       "category": "奇珍",
-      "value": 480,
+      "value": 2592,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_radiant_seed.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2703,7 +2865,8 @@
       "v6Value": 480,
       "v7Value": 480,
       "variantOf": "world_seed",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 480
     },
     "forest_root_monolith": {
       "name": "根脉晶碑",
@@ -2712,7 +2875,7 @@
       "height": 3,
       "kind": "loot",
       "category": "文献",
-      "value": 2375,
+      "value": 12825,
       "icon": "res://assets/extraction/v260/loot_expansion/forest_root_monolith.tres",
       "effects": [],
       "description": "苍翠秘林深处的发现。",
@@ -2720,7 +2883,8 @@
       "v6Value": 2375,
       "v7Value": 2375,
       "variantOf": "oracle_tablet",
-      "environmentTheme": "forest"
+      "environmentTheme": "forest",
+      "previousValue": 2375
     },
     "sanctum_faded_chart": {
       "name": "褪色星图",
@@ -2729,7 +2893,7 @@
       "height": 2,
       "kind": "loot",
       "category": "文献",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_faded_chart.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2737,7 +2901,8 @@
       "v6Value": 10,
       "v7Value": 10,
       "variantOf": "pocket_book",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 10
     },
     "sanctum_iron_bell": {
       "name": "旧铁祷铃",
@@ -2746,7 +2911,7 @@
       "height": 2,
       "kind": "loot",
       "category": "日用品",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_iron_bell.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2754,7 +2919,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "tin_cup",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 20
     },
     "sanctum_silver_dividers": {
       "name": "银制量星规",
@@ -2763,7 +2929,7 @@
       "height": 2,
       "kind": "loot",
       "category": "秘仪器具",
-      "value": 25,
+      "value": 50,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_silver_dividers.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2771,7 +2937,8 @@
       "v6Value": 25,
       "v7Value": 25,
       "variantOf": "thermometer",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 25
     },
     "sanctum_ink_bottle": {
       "name": "星蓝墨瓶",
@@ -2780,7 +2947,7 @@
       "height": 2,
       "kind": "loot",
       "category": "炼金材料",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_ink_bottle.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2788,7 +2955,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "lubricant",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 20
     },
     "sanctum_brass_astrolabe": {
       "name": "黄铜测星仪",
@@ -2796,7 +2964,7 @@
       "width": 1,
       "height": 2,
       "kind": "loot",
-      "value": 30,
+      "value": 60,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_brass_astrolabe.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2805,7 +2973,8 @@
       "v6Value": 30,
       "v7Value": 30,
       "variantOf": "battery",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 30
     },
     "sanctum_constellation_slate": {
       "name": "星纹石板",
@@ -2814,7 +2983,7 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 140,
+      "value": 280,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_constellation_slate.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2822,7 +2991,8 @@
       "v6Value": 140,
       "v7Value": 140,
       "variantOf": "drone_rotor",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 140
     },
     "sanctum_memory_crystal": {
       "name": "幽紫记忆晶",
@@ -2831,7 +3001,7 @@
       "height": 1,
       "kind": "loot",
       "category": "符文构件",
-      "value": 75,
+      "value": 150,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_memory_crystal.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2839,7 +3009,8 @@
       "v6Value": 75,
       "v7Value": 75,
       "variantOf": "thermal_chip",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 75
     },
     "sanctum_prayer_manuscript": {
       "name": "星辉祷典",
@@ -2848,7 +3019,7 @@
       "height": 2,
       "kind": "loot",
       "category": "文献",
-      "value": 250,
+      "value": 500,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_prayer_manuscript.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2856,7 +3027,8 @@
       "v6Value": 250,
       "v7Value": 250,
       "variantOf": "research_notes",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 250
     },
     "sanctum_votive_holder": {
       "name": "铂银烛台",
@@ -2865,7 +3037,7 @@
       "height": 2,
       "kind": "loot",
       "category": "贵金属",
-      "value": 195,
+      "value": 780,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_votive_holder.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2873,7 +3045,8 @@
       "v6Value": 195,
       "v7Value": 195,
       "variantOf": "platinum_bar",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 195
     },
     "sanctum_orbital_sphere": {
       "name": "宝星浑天仪",
@@ -2882,7 +3055,7 @@
       "height": 3,
       "kind": "loot",
       "category": "文献",
-      "value": 990,
+      "value": 3960,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_orbital_sphere.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2890,7 +3063,8 @@
       "v6Value": 990,
       "v7Value": 990,
       "variantOf": "star_map",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 990
     },
     "sanctum_sapphire_scepter": {
       "name": "苍穹蓝晶权杖",
@@ -2899,7 +3073,7 @@
       "height": 4,
       "kind": "loot",
       "category": "王室遗物",
-      "value": 1835,
+      "value": 9909,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_sapphire_scepter.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2907,7 +3081,8 @@
       "v6Value": 1835,
       "v7Value": 1835,
       "variantOf": "royal_scepter",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 1835
     },
     "sanctum_eclipse_fossil": {
       "name": "蚀日玄岩遗骸",
@@ -2916,7 +3091,7 @@
       "height": 3,
       "kind": "loot",
       "category": "标本",
-      "value": 5060,
+      "value": 27324,
       "icon": "res://assets/extraction/v260/loot_expansion/sanctum_eclipse_fossil.tres",
       "effects": [],
       "description": "星辉圣域散落的珍藏。",
@@ -2924,7 +3099,8 @@
       "v6Value": 5060,
       "v7Value": 5060,
       "variantOf": "void_fossil",
-      "environmentTheme": "sanctum"
+      "environmentTheme": "sanctum",
+      "previousValue": 5060
     },
     "lantern_wick": {
       "name": "旧驿灯芯",
@@ -2932,7 +3108,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 5,
+      "value": 10,
       "icon": "res://assets/content_v270/loot/lantern_wick.png",
       "effects": [],
       "description": "浸过松脂的旧灯芯，还留着一点暖意。",
@@ -2941,7 +3117,8 @@
       "v6Value": 5,
       "v7Value": 5,
       "variantOf": "wire",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 5
     },
     "lantern_chain": {
       "name": "断裂铜链",
@@ -2949,7 +3126,7 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/content_v270/loot/lantern_chain.png",
       "effects": [],
       "description": "铜链上的磨痕，记着守灯人的脚步。",
@@ -2958,7 +3135,8 @@
       "v6Value": 10,
       "v7Value": 10,
       "variantOf": "bolts",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 10
     },
     "lantern_mantle": {
       "name": "灰灯罩布",
@@ -2967,7 +3145,7 @@
       "height": 2,
       "kind": "loot",
       "category": "纺织品",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/content_v270/loot/lantern_mantle.png",
       "effects": [],
       "description": "一块熏灰的灯罩布，边角绣着驿名。",
@@ -2975,7 +3153,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "cloth",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 20
     },
     "lantern_pitch_tube": {
       "name": "松脂封管",
@@ -2984,7 +3163,7 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 15,
+      "value": 30,
       "icon": "res://assets/content_v270/loot/lantern_pitch_tube.png",
       "effects": [],
       "description": "封存松脂的细管，炉边常见的引火料。",
@@ -2992,7 +3171,8 @@
       "v6Value": 15,
       "v7Value": 15,
       "variantOf": "tape",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 15
     },
     "lantern_lens": {
       "name": "琥珀灯镜",
@@ -3000,7 +3180,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/content_v270/loot/lantern_lens.png",
       "effects": [],
       "description": "琥珀色灯镜，将微弱火光聚成一束。",
@@ -3009,7 +3189,8 @@
       "v6Value": 10,
       "v7Value": 10,
       "variantOf": "lens",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 10
     },
     "lantern_regulator": {
       "name": "灯流调节板",
@@ -3017,7 +3198,7 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/content_v270/loot/lantern_regulator.png",
       "effects": [],
       "description": "调节引火渠流量的旧铜板。",
@@ -3026,7 +3207,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "circuit",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 20
     },
     "lantern_tongs": {
       "name": "守灯铜钳",
@@ -3035,7 +3217,7 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/content_v270/loot/lantern_tongs.png",
       "effects": [],
       "description": "长柄铜钳，夹过无数滚烫灯芯。",
@@ -3043,7 +3225,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "pliers",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 20
     },
     "lantern_bellows": {
       "name": "手摇炉风箱",
@@ -3052,7 +3235,7 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 65,
+      "value": 130,
       "icon": "res://assets/content_v270/loot/lantern_bellows.png",
       "effects": [],
       "description": "转动摇柄，炉火便重新呼吸。",
@@ -3060,7 +3243,8 @@
       "v6Value": 65,
       "v7Value": 65,
       "variantOf": "motor",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 65
     },
     "lantern_cell": {
       "name": "长明蓄火筒",
@@ -3068,7 +3252,7 @@
       "width": 1,
       "height": 2,
       "kind": "loot",
-      "value": 30,
+      "value": 60,
       "icon": "res://assets/content_v270/loot/lantern_cell.png",
       "effects": [],
       "description": "巡灯人长途携带的蓄火筒。",
@@ -3077,7 +3261,8 @@
       "v6Value": 30,
       "v7Value": 30,
       "variantOf": "battery",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 30
     },
     "lantern_prism": {
       "name": "回廊聚光棱",
@@ -3085,7 +3270,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 70,
+      "value": 140,
       "icon": "res://assets/content_v270/loot/lantern_prism.png",
       "effects": [],
       "description": "将一道火光分向数座灯塔的棱镜。",
@@ -3094,7 +3279,8 @@
       "v6Value": 70,
       "v7Value": 70,
       "variantOf": "sensor",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 70
     },
     "lantern_rotor": {
       "name": "铜羽送风轮",
@@ -3103,7 +3289,7 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 140,
+      "value": 280,
       "icon": "res://assets/content_v270/loot/lantern_rotor.png",
       "effects": [],
       "description": "送风轮的铜羽依旧转动轻盈。",
@@ -3111,7 +3297,8 @@
       "v6Value": 140,
       "v7Value": 140,
       "variantOf": "drone_rotor",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 140
     },
     "lantern_toolcase": {
       "name": "巡灯修缮箱",
@@ -3120,7 +3307,7 @@
       "height": 3,
       "kind": "loot",
       "category": "疗愈用品",
-      "value": 90,
+      "value": 180,
       "icon": "res://assets/content_v270/loot/lantern_toolcase.png",
       "effects": [],
       "description": "沉甸甸的巡灯工具箱，内壁刻着交班名册。",
@@ -3128,7 +3315,8 @@
       "v6Value": 90,
       "v7Value": 90,
       "variantOf": "insulin_case",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 90
     },
     "lantern_seal": {
       "name": "司炉刻印",
@@ -3136,7 +3324,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 45,
+      "value": 90,
       "icon": "res://assets/content_v270/loot/lantern_seal.png",
       "effects": [],
       "description": "司炉者验证火种的刻印。",
@@ -3145,7 +3333,8 @@
       "v6Value": 45,
       "v7Value": 45,
       "variantOf": "processor",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 45
     },
     "lantern_glass": {
       "name": "凝火琉璃",
@@ -3153,7 +3342,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 205,
+      "value": 410,
       "icon": "res://assets/content_v270/loot/lantern_glass.png",
       "effects": [],
       "description": "炉火凝结成温润的琉璃。",
@@ -3162,7 +3351,8 @@
       "v6Value": 205,
       "v7Value": 205,
       "variantOf": "crystal",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 205
     },
     "lantern_verse": {
       "name": "不熄灯谣卷",
@@ -3171,7 +3361,7 @@
       "height": 3,
       "kind": "loot",
       "category": "古物",
-      "value": 180,
+      "value": 360,
       "icon": "res://assets/content_v270/loot/lantern_verse.png",
       "effects": [],
       "description": "灯谣写在绢上，火色仍未褪去。",
@@ -3179,7 +3369,8 @@
       "v6Value": 180,
       "v7Value": 180,
       "variantOf": "silk_scroll",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 180
     },
     "lantern_ore": {
       "name": "赤髓炉矿",
@@ -3188,7 +3379,7 @@
       "height": 3,
       "kind": "loot",
       "category": "材料",
-      "value": 405,
+      "value": 810,
       "icon": "res://assets/content_v270/loot/lantern_ore.png",
       "effects": [],
       "description": "矿石深处，一线赤光缓缓流转。",
@@ -3196,7 +3387,8 @@
       "v6Value": 405,
       "v7Value": 405,
       "variantOf": "rare_ore",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 405
     },
     "lantern_signet": {
       "name": "守灯人金徽",
@@ -3204,7 +3396,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 130,
+      "value": 520,
       "icon": "res://assets/content_v270/loot/lantern_signet.png",
       "effects": [],
       "description": "守灯人交班时传下的金徽。",
@@ -3213,7 +3405,8 @@
       "v6Value": 130,
       "v7Value": 130,
       "variantOf": "gold_watch",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 130
     },
     "lantern_statue": {
       "name": "借火者铜像",
@@ -3221,7 +3414,7 @@
       "width": 2,
       "height": 3,
       "kind": "loot",
-      "value": 855,
+      "value": 3420,
       "icon": "res://assets/content_v270/loot/lantern_statue.png",
       "effects": [],
       "description": "铜像捧着一团小火，仿佛正在递给你。",
@@ -3230,7 +3423,8 @@
       "v6Value": 855,
       "v7Value": 855,
       "variantOf": "idol",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 855
     },
     "lantern_reliquary": {
       "name": "千灯纪念龛",
@@ -3238,7 +3432,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 690,
+      "value": 2760,
       "icon": "res://assets/content_v270/loot/lantern_reliquary.png",
       "effects": [],
       "description": "小龛里，每盏微灯都刻着一个名字。",
@@ -3247,7 +3441,8 @@
       "v6Value": 690,
       "v7Value": 690,
       "variantOf": "crown",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 690
     },
     "lantern_orrery": {
       "name": "九曜引火仪",
@@ -3256,7 +3451,7 @@
       "height": 3,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 1550,
+      "value": 6200,
       "icon": "res://assets/content_v270/loot/lantern_orrery.png",
       "effects": [],
       "description": "九道铜环，曾将城中灯火引向同一处。",
@@ -3264,7 +3459,8 @@
       "v6Value": 1550,
       "v7Value": 1550,
       "variantOf": "quantum_server",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 1550
     },
     "lantern_heart": {
       "name": "初燃炉心",
@@ -3272,7 +3468,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 1415,
+      "value": 7641,
       "icon": "res://assets/content_v270/loot/lantern_heart.png",
       "effects": [],
       "description": "封存最初火种的炉心。",
@@ -3281,7 +3477,8 @@
       "v6Value": 1415,
       "v7Value": 1415,
       "variantOf": "red_core",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 1415
     },
     "lantern_archive": {
       "name": "万家灯籍",
@@ -3289,7 +3486,7 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 790,
+      "value": 4266,
       "icon": "res://assets/content_v270/loot/lantern_archive.png",
       "effects": [],
       "description": "记下万家灯火的薄薄名册。",
@@ -3298,7 +3495,8 @@
       "v6Value": 790,
       "v7Value": 790,
       "variantOf": "archive",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 790
     },
     "lantern_sun": {
       "name": "昼夜不灭灯",
@@ -3306,7 +3504,7 @@
       "width": 3,
       "height": 3,
       "kind": "loot",
-      "value": 4310,
+      "value": 23274,
       "icon": "res://assets/content_v270/loot/lantern_sun.png",
       "effects": [],
       "description": "不分昼夜，灯心始终亮着。",
@@ -3315,7 +3513,8 @@
       "v6Value": 4310,
       "v7Value": 4310,
       "variantOf": "dragon_egg",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 4310
     },
     "lantern_feather": {
       "name": "归火金羽",
@@ -3324,7 +3523,7 @@
       "height": 3,
       "kind": "loot",
       "category": "奇珍",
-      "value": 1000,
+      "value": 5400,
       "icon": "res://assets/content_v270/loot/lantern_feather.png",
       "effects": [],
       "description": "传说归火之鸟只会留下一片金羽。",
@@ -3332,7 +3531,8 @@
       "v6Value": 1000,
       "v7Value": 1000,
       "variantOf": "phoenix_feather",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 1000
     },
     "key_lantern": {
       "name": "长明密藏钥匙",
@@ -3350,7 +3550,8 @@
       "v7Value": 40,
       "dropWeight": 0.08,
       "variantOf": "key_ruins",
-      "environmentTheme": "lantern"
+      "environmentTheme": "lantern",
+      "previousValue": 40
     },
     "windpass_rope": {
       "name": "麻绳卷",
@@ -3358,7 +3559,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 5,
+      "value": 10,
       "icon": "res://assets/content_v280/loot/windpass_rope.png",
       "effects": [],
       "description": "巡路者随身携带的麻绳，磨损处重新打过绳结。",
@@ -3367,7 +3568,8 @@
       "v6Value": 5,
       "v7Value": 5,
       "variantOf": "wire",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 5
     },
     "windpass_canvas": {
       "name": "旧帆布",
@@ -3376,7 +3578,7 @@
       "height": 2,
       "kind": "loot",
       "category": "纺织品",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/content_v280/loot/windpass_canvas.png",
       "effects": [],
       "description": "导风帆换下的帆布，边缘仍留着整齐的针脚。",
@@ -3384,7 +3586,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "cloth",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 20
     },
     "windpass_pins": {
       "name": "木销盒",
@@ -3392,7 +3595,7 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/content_v280/loot/windpass_pins.png",
       "effects": [],
       "description": "桥匠按长短分格收好的木销。",
@@ -3401,7 +3604,8 @@
       "v6Value": 10,
       "v7Value": 10,
       "variantOf": "bolts",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 10
     },
     "windpass_clapper": {
       "name": "磨损铃舌",
@@ -3410,7 +3614,7 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 15,
+      "value": 30,
       "icon": "res://assets/content_v280/loot/windpass_clapper.png",
       "effects": [],
       "description": "被山风磨圆的铃舌，还能辨出旧驿的刻字。",
@@ -3418,7 +3622,8 @@
       "v6Value": 15,
       "v7Value": 15,
       "variantOf": "tape",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 15
     },
     "windpass_wax": {
       "name": "封蜡匣",
@@ -3426,7 +3631,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 10,
+      "value": 20,
       "icon": "res://assets/content_v280/loot/windpass_wax.png",
       "effects": [],
       "description": "封信蜡块收在小匣中，印面是驿站的叶纹。",
@@ -3435,7 +3640,8 @@
       "v6Value": 10,
       "v7Value": 10,
       "variantOf": "lens",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 10
     },
     "windpass_herbs": {
       "name": "干燥草药包",
@@ -3443,7 +3649,7 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/content_v280/loot/windpass_herbs.png",
       "effects": [],
       "description": "细绳扎紧的干草药包，附着采药人的标签。",
@@ -3452,7 +3658,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "circuit",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 20
     },
     "windpass_bushing": {
       "name": "铜轴套",
@@ -3461,7 +3668,7 @@
       "height": 2,
       "kind": "loot",
       "category": "工具",
-      "value": 20,
+      "value": 40,
       "icon": "res://assets/content_v280/loot/windpass_bushing.png",
       "effects": [],
       "description": "转轴外换下的铜套，内壁被细砂打磨得发亮。",
@@ -3469,7 +3676,8 @@
       "v6Value": 20,
       "v7Value": 20,
       "variantOf": "pliers",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 20
     },
     "windpass_feather": {
       "name": "风向羽",
@@ -3478,7 +3686,7 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 65,
+      "value": 130,
       "icon": "res://assets/content_v280/loot/windpass_feather.png",
       "effects": [],
       "description": "测风架上取下的整组羽片，仍随微风转动。",
@@ -3486,7 +3694,8 @@
       "v6Value": 65,
       "v7Value": 65,
       "variantOf": "motor",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 65
     },
     "windpass_lens": {
       "name": "透镜匣",
@@ -3494,7 +3703,7 @@
       "width": 1,
       "height": 2,
       "kind": "loot",
-      "value": 30,
+      "value": 60,
       "icon": "res://assets/content_v280/loot/windpass_lens.png",
       "effects": [],
       "description": "测风塔用来读远处灯号的透镜，包在软布中。",
@@ -3503,7 +3712,8 @@
       "v6Value": 30,
       "v7Value": 30,
       "variantOf": "battery",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 30
     },
     "windpass_anemometer": {
       "name": "测风盘",
@@ -3511,7 +3721,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 70,
+      "value": 140,
       "icon": "res://assets/content_v280/loot/windpass_anemometer.png",
       "effects": [],
       "description": "盘面的刻线记录着山口的风向。",
@@ -3520,7 +3730,8 @@
       "v6Value": 70,
       "v7Value": 70,
       "variantOf": "sensor",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 70
     },
     "windpass_badge": {
       "name": "巡路徽章",
@@ -3529,7 +3740,7 @@
       "height": 2,
       "kind": "loot",
       "category": "零件",
-      "value": 140,
+      "value": 280,
       "icon": "res://assets/content_v280/loot/windpass_badge.png",
       "effects": [],
       "description": "旧巡路队保存下来的整套徽章，背面刻有路段。",
@@ -3537,7 +3748,8 @@
       "v6Value": 140,
       "v7Value": 140,
       "variantOf": "drone_rotor",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 140
     },
     "windpass_star_rule": {
       "name": "折叠星尺",
@@ -3546,7 +3758,7 @@
       "height": 3,
       "kind": "loot",
       "category": "疗愈用品",
-      "value": 90,
+      "value": 180,
       "icon": "res://assets/content_v280/loot/windpass_star_rule.png",
       "effects": [],
       "description": "桥匠丈量索距的折叠尺，带着完整的护套。",
@@ -3554,7 +3766,8 @@
       "v6Value": 90,
       "v7Value": 90,
       "variantOf": "insulin_case",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 90
     },
     "windpass_flute": {
       "name": "银叶风笛",
@@ -3562,7 +3775,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 45,
+      "value": 90,
       "icon": "res://assets/content_v280/loot/windpass_flute.png",
       "effects": [],
       "description": "银叶装饰的小风笛，笛孔被细心擦净。",
@@ -3571,7 +3784,8 @@
       "v6Value": 45,
       "v7Value": 45,
       "variantOf": "processor",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 45
     },
     "windpass_bridge_chart": {
       "name": "古桥图卷",
@@ -3580,7 +3794,7 @@
       "height": 3,
       "kind": "loot",
       "category": "古物",
-      "value": 180,
+      "value": 360,
       "icon": "res://assets/content_v280/loot/windpass_bridge_chart.png",
       "effects": [],
       "description": "记着旧悬桥结构与修理批注的长卷。",
@@ -3588,7 +3802,8 @@
       "v6Value": 180,
       "v7Value": 180,
       "variantOf": "silk_scroll",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 180
     },
     "windpass_compass": {
       "name": "嵌晶罗盘",
@@ -3596,7 +3811,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 205,
+      "value": 410,
       "icon": "res://assets/content_v280/loot/windpass_compass.png",
       "effects": [],
       "description": "晶石嵌在盘心，指针在气流里缓缓回正。",
@@ -3605,7 +3820,8 @@
       "v6Value": 205,
       "v7Value": 205,
       "variantOf": "crystal",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 205
     },
     "windpass_charm": {
       "name": "羽纹护符",
@@ -3614,7 +3830,7 @@
       "height": 3,
       "kind": "loot",
       "category": "材料",
-      "value": 405,
+      "value": 810,
       "icon": "res://assets/content_v280/loot/windpass_charm.png",
       "effects": [],
       "description": "山谷守路人交班时传下的羽纹护符。",
@@ -3622,7 +3838,8 @@
       "v6Value": 405,
       "v7Value": 405,
       "variantOf": "rare_ore",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 405
     },
     "windpass_wheel": {
       "name": "鎏金风轮",
@@ -3630,7 +3847,7 @@
       "width": 1,
       "height": 1,
       "kind": "loot",
-      "value": 130,
+      "value": 520,
       "icon": "res://assets/content_v280/loot/windpass_wheel.png",
       "effects": [],
       "description": "精巧风轮的金色叶片保存着古匠的刻痕。",
@@ -3639,7 +3856,8 @@
       "v6Value": 130,
       "v7Value": 130,
       "variantOf": "gold_watch",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 130
     },
     "windpass_amber": {
       "name": "琥珀巢石",
@@ -3647,7 +3865,7 @@
       "width": 2,
       "height": 3,
       "kind": "loot",
-      "value": 855,
+      "value": 3420,
       "icon": "res://assets/content_v280/loot/windpass_amber.png",
       "effects": [],
       "description": "透明琥珀包裹着远古巢材，石座稳固完整。",
@@ -3656,7 +3874,8 @@
       "v6Value": 855,
       "v7Value": 855,
       "variantOf": "idol",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 855
     },
     "windpass_royal_chart": {
       "name": "王庭航图",
@@ -3664,7 +3883,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 690,
+      "value": 2760,
       "icon": "res://assets/content_v280/loot/windpass_royal_chart.png",
       "effects": [],
       "description": "王庭旧航路的立体图匣，山口坐标仍然清晰。",
@@ -3673,7 +3892,8 @@
       "v6Value": 690,
       "v7Value": 690,
       "variantOf": "crown",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 690
     },
     "windpass_string_frame": {
       "name": "银枝弦架",
@@ -3682,7 +3902,7 @@
       "height": 3,
       "kind": "loot",
       "category": "遗迹装置",
-      "value": 1550,
+      "value": 6200,
       "icon": "res://assets/content_v280/loot/windpass_string_frame.png",
       "effects": [],
       "description": "由银枝与铜轴组成的完整导风弦架。",
@@ -3690,7 +3910,8 @@
       "v6Value": 1550,
       "v7Value": 1550,
       "variantOf": "quantum_server",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 1550
     },
     "windpass_sky_eye": {
       "name": "天穹风眼",
@@ -3698,7 +3919,7 @@
       "width": 2,
       "height": 2,
       "kind": "loot",
-      "value": 1415,
+      "value": 7641,
       "icon": "res://assets/content_v280/loot/windpass_sky_eye.png",
       "effects": [],
       "description": "古代测风装置的核心，内层晶纹像一道盘旋的云。",
@@ -3707,7 +3928,8 @@
       "v6Value": 1415,
       "v7Value": 1415,
       "variantOf": "red_core",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 1415
     },
     "windpass_first_instrument": {
       "name": "初代导风仪",
@@ -3715,7 +3937,7 @@
       "width": 2,
       "height": 1,
       "kind": "loot",
-      "value": 790,
+      "value": 4266,
       "icon": "res://assets/content_v280/loot/windpass_first_instrument.png",
       "effects": [],
       "description": "初代风庭留下的小型导风仪，保留着原始刻度。",
@@ -3724,7 +3946,8 @@
       "v6Value": 790,
       "v7Value": 790,
       "variantOf": "archive",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 790
     },
     "windpass_feather_crown": {
       "name": "翠羽冠",
@@ -3732,7 +3955,7 @@
       "width": 3,
       "height": 3,
       "kind": "loot",
-      "value": 4310,
+      "value": 23274,
       "icon": "res://assets/content_v280/loot/windpass_feather_crown.png",
       "effects": [],
       "description": "翠羽与细金丝组成的冠饰，封存在宽大的匣中。",
@@ -3741,7 +3964,8 @@
       "v6Value": 4310,
       "v7Value": 4310,
       "variantOf": "dragon_egg",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 4310
     },
     "windpass_heartwood": {
       "name": "古树心晶",
@@ -3750,7 +3974,7 @@
       "height": 3,
       "kind": "loot",
       "category": "奇珍",
-      "value": 1000,
+      "value": 5400,
       "icon": "res://assets/content_v280/loot/windpass_heartwood.png",
       "effects": [],
       "description": "古树年轮深处形成的心晶，透出柔和的青光。",
@@ -3758,7 +3982,8 @@
       "v6Value": 1000,
       "v7Value": 1000,
       "variantOf": "phoenix_feather",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 1000
     },
     "key_windpass": {
       "name": "风庭图室钥匙",
@@ -3776,7 +4001,8 @@
       "v7Value": 40,
       "dropWeight": 0.08,
       "variantOf": "key_ruins",
-      "environmentTheme": "windpass"
+      "environmentTheme": "windpass",
+      "previousValue": 40
     }
   },
   "rarityWeightsByAct": [
@@ -3867,22 +4093,58 @@
     "qualityRedWeight": 0.7,
     "bossGoldWeight": 1.0,
     "bossRedWeight": 0.15,
-    "riskAppraisalMultiplier": [
-      1,
-      1.15,
-      1.3,
-      1.5,
-      1.7,
-      1.9
-    ],
-    "saleMultiplier": 1.75,
-    "actAppraisalMultiplier": [
-      1,
-      1.25,
-      1.6
+    "difficultyRarityMultipliers": [
+      [
+        1,
+        1,
+        1,
+        1,
+        0.75,
+        0.75
+      ],
+      [
+        1,
+        1,
+        1,
+        1.15,
+        1.0625,
+        1.02
+      ],
+      [
+        1,
+        1,
+        1,
+        1.3,
+        1.52,
+        1.425
+      ],
+      [
+        1,
+        1,
+        1,
+        1.5,
+        2.1,
+        2
+      ],
+      [
+        1,
+        1,
+        1,
+        1.8,
+        2.8,
+        2.8
+      ],
+      [
+        1,
+        1,
+        1,
+        2.1,
+        3.8,
+        4
+      ]
     ]
   },
-  "economyVersion": 4,
+  "economyVersion": 5,
   "utilityEconomy": {
     "relayFee": 50
   },
@@ -4332,5 +4594,22 @@
       "整备",
       "装备"
     ]
-  }
+  },
+  "legacyAppraisal": {
+    "riskAppraisalMultiplier": [
+      1,
+      1.15,
+      1.3,
+      1.5,
+      1.7,
+      1.9
+    ],
+    "saleMultiplier": 1.75,
+    "actAppraisalMultiplier": [
+      1,
+      1.25,
+      1.6
+    ]
+  },
+  "fixedPriceVersion": 1
 }

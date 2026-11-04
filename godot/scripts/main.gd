@@ -1753,7 +1753,7 @@ func _present_abyss_reward(raw: Variant) -> Dictionary:
 				if effect.get("type", "") == "windPrimaryAmp": amp += float(effect.get("value", 0.0))
 			var increase := (66.0 if constellation >= 6 else 60.0) * amp
 			var percentage := ("%.2f" % increase).trim_suffix("0").trim_suffix("0").trim_suffix(".")
-			reward.description = "缇娅的贯穿追击伤害增加，增加量为攻击力的 %s%%。" % percentage
+			reward.description = "缇娅被动的贯穿追击伤害增加，增加量为攻击力的 %s%%。" % percentage
 		if current_screen == "extraction" or (current_screen == "battle" and bool(battle_config.get("isExtraction", false))):
 			reward.description = str(reward.get("description", "")).replace("深渊", "探索")
 	if str(reward.get("icon",""))=="✦" and not definition.is_empty():reward.icon=definition.get("icon","✦")

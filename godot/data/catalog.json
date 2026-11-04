@@ -712,7 +712,7 @@
               "value": 0.06666666666666667
             }
           ],
-          "description": "缇娅的贯穿追击伤害增加，增加量为攻击力的 4%。",
+          "description": "缇娅被动的贯穿追击伤害增加，增加量为攻击力的 4%。",
           "icon": "🌪️",
           "target": "缇娅追击",
           "iconPath": "res://assets/content_v280/icons/blessings/tiya_follow_white.png"
@@ -758,7 +758,7 @@
               "value": 0.16666666666666666
             }
           ],
-          "description": "缇娅的贯穿追击伤害增加，增加量为攻击力的 10%。",
+          "description": "缇娅被动的贯穿追击伤害增加，增加量为攻击力的 10%。",
           "icon": "🌪️",
           "target": "缇娅追击",
           "iconPath": "res://assets/content_v280/icons/blessings/tiya_follow_gold.png"
@@ -1371,7 +1371,7 @@
         "recommendedSets": [
           {
             "setId": "ember_lantern",
-            "reason": "每次引爆都能维持全队燃烧增伤，同时提高自身直伤与追击。"
+            "reason": "每次引爆都能维持全队燃烧增伤，同时提高自身攻击和追击造成的伤害。"
           },
           {
             "setId": "flame_oath",
@@ -1684,7 +1684,7 @@
     },
     "tiya": {
       "label": "巡岚终式",
-      "desc": "贯穿追击倍率提高 10%，由攻击力的 60% 提升至 66%。",
+      "desc": "被动的贯穿追击倍率提高 10%，由攻击力的 60% 提升至 66%。",
       "buff": {
         "c6_type": "wind_primary_up"
       }
@@ -5754,6 +5754,7 @@
       },
       "color": "#9bd8bd",
       "portrait": "res://assets/content_v280/enemies/leaf_spirit.png",
+      "portraitFlipH": true,
       "environmentTheme": "windpass",
       "abyssBackgrounds": [
         "res://assets/content_v280/backgrounds/scattered_trail.png",
@@ -5969,6 +5970,7 @@
       },
       "color": "#9bd8bd",
       "portrait": "res://assets/content_v280/enemies/windwheel_sentinel.png",
+      "portraitFlipH": true,
       "environmentTheme": "windpass",
       "abyssBackgrounds": [
         "res://assets/content_v280/backgrounds/windwheel_platform.png",
@@ -7722,7 +7724,7 @@
         },
         {
           "pieces": 4,
-          "description": "主动引爆燃烧后，全队燃烧伤害提高40%；佩戴者对燃烧目标的直伤与追击提高25%，持续2回合。",
+          "description": "主动引爆燃烧后，全队燃烧伤害提高40%；佩戴者对燃烧目标的攻击和追击造成的伤害提高25%，持续2回合。",
           "effects": [
             {
               "type": "onBurnDetonation",

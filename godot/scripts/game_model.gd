@@ -493,6 +493,8 @@ func _normalize(src: Dictionary) -> Dictionary:
 	result.activeTeamPreset = int(src.get("activeTeamPreset", 0)) if src.has("teamPresets") else 0
 	if result.activeTeamPreset >= 0 and _team_members(result.team) != _team_members(result.teamPresets[result.activeTeamPreset].team):
 		result.activeTeamPreset = -1
+	# The default marks fresh games current; a merged legacy save must still migrate.
+	result.extraction.fixedPriceVersion = int(src.get("extraction", {}).get("fixedPriceVersion", 0))
 	extraction.migrate_state(result, int(src.get("version", 3)))
 	# Owned collections replace defaults; preserved extension fields remain round-trippable.
 	result.ownedCharacters = src.ownedCharacters.duplicate(true)

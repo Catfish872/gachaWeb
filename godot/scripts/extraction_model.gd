@@ -23,7 +23,7 @@ func _init(owner) -> void:
 	if parsed is Dictionary: data = parsed
 
 static func defaults() -> Dictionary:
-	return {"credits": 0, "stash": [], "tactical": [], "equipmentRules": 1, "loadout": [], "mailbox": [], "collection": [], "unlockedDifficulty": 0, "run": {}, "lastRun": {}, "runs": 0, "utility": {"armor": {}, "backpack": {}}, "keyring": []}
+	return {"credits": 0, "stash": [], "tactical": [], "equipmentRules": 1, "loadout": [], "mailbox": [], "collection": [], "unlockedDifficulty": 0, "run": {}, "lastRun": {}, "runs": 0, "utility": {"armor": {}, "backpack": {}}, "keyring": [], "fixedPriceVersion": 1}
 
 func state() -> Dictionary:
 	return host.state.extraction
@@ -390,7 +390,8 @@ func _populate_room(kind: String) -> void:
 		var labels := {"wooden_chest":"封存木箱", "old_urn":"古陶瓮", "herb_basket":"采药篮", "alchemy_cabinet":"炼金药柜", "iron_reliquary":"圣物匣", "bookcase":"遗迹书柜", "crystal_cache":"晶石储匣", "weapon_rack":"古代兵器架", "golem_case":"魔偶机匣", "offering_altar":"供奉祭台"}
 		var item_count := int(economy.get("vaultItems", 3)) if kind == "vault" else int(item_counts[0]) + int(_rand() * (int(item_counts[1]) - int(item_counts[0]) + 1))
 		var themed_container: Dictionary = data.get("environmentContainers",{}).get(object_kind,{})
-		_container(str(themed_container.get("name",labels.get(object_kind,"遗留物资"))), item_count, quality, _container_categories(kind, object_kind, room_pools))
+		var key_vault_floor := 3 if kind == "vault" and run().room.get("type", "") == "key_vault" else 0
+		_container(str(themed_container.get("name",labels.get(object_kind,"遗留物资"))), item_count, quality, _container_categories(kind, object_kind, room_pools), false, key_vault_floor)
 		var container: Dictionary = run().containers.back()
 		container.kind = object_kind
 		container.sprite = str(themed_container.get("sprite","res://assets/extraction/containers/%s.png" % object_kind))
@@ -610,13 +611,21 @@ func settle_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 	if result.success: _engine = null
 	return result
 
-func _container(title: String, count: int, quality: int, categories: Array = [], boss_reward: bool = false) -> void:
+func _container(title: String, count: int, quality: int, categories: Array = [], boss_reward: bool = false, last_item_min_rarity: int = 0) -> void:
 	var container := {"id": _uid("container"), "name": title, "kind": "safe" if quality == 2 else "supply", "width": 6, "height": 8, "revealed": 0, "items": [], "quality": quality, "sprite": "res://assets/extraction/containers/rune_vault.png" if quality == 2 else "res://assets/extraction/containers/wooden_chest.png", "sceneX": 0.2 + _rand() * 0.6, "sceneY": 0.55 + _rand() * 0.22}
 	var weights: Array = data.get("rarityWeightsByAct", [[32,20,32,13,2.8,0.2],[23,15,34,21,6.5,0.5],[15,10,34,28,12,1]])[int(run().act)-1].duplicate()
 	var economy: Dictionary = data.get("lootEconomy", {})
-	weights[3] = float(weights[3]) + quality * float(economy.get("qualityPurpleWeight", 3)) + float(economy.get("riskPurpleWeight", 2)) * int(run().difficulty)
-	weights[4] = float(weights[4]) + quality * float(economy.get("qualityGoldWeight", 2)) + float(economy.get("riskGoldWeight", 1.05)) * int(run().difficulty)
-	weights[5] = float(weights[5]) + quality * float(economy.get("qualityRedWeight", 0.7)) + float(economy.get("riskRedWeight", 0.065)) * int(run().difficulty)
+	var risk := clampi(int(run().difficulty), 0, 5)
+	var difficulty_rows: Array = economy.get("difficultyRarityMultipliers", [])
+	if risk < difficulty_rows.size() and difficulty_rows[risk] is Array and difficulty_rows[risk].size() == 6:
+		for rarity_index in range(6): weights[rarity_index] = float(weights[rarity_index]) * float(difficulty_rows[risk][rarity_index])
+	else:
+		weights[3] = float(weights[3]) + float(economy.get("riskPurpleWeight", 2)) * risk
+		weights[4] = float(weights[4]) + float(economy.get("riskGoldWeight", 1.05)) * risk
+		weights[5] = float(weights[5]) + float(economy.get("riskRedWeight", 0.065)) * risk
+	weights[3] = float(weights[3]) + quality * float(economy.get("qualityPurpleWeight", 3))
+	weights[4] = float(weights[4]) + quality * float(economy.get("qualityGoldWeight", 2))
+	weights[5] = float(weights[5]) + quality * float(economy.get("qualityRedWeight", 0.7))
 	if boss_reward:
 		weights[4] = float(weights[4]) + float(economy.get("bossGoldWeight", 1.0))
 		weights[5] = float(weights[5]) + float(economy.get("bossRedWeight", 0.15))
@@ -629,6 +638,7 @@ func _container(title: String, count: int, quality: int, categories: Array = [],
 			target -= float(weights[ri])
 			if target <= 0: rarity = ri; break
 		if quality == 2 and i == count - 1: rarity = maxi(rarity, 4 if int(run().act) >= 3 else 3)
+		if i == count - 1: rarity = maxi(rarity, clampi(last_item_min_rarity, 0, 5))
 		var pool: Array = []
 		for key in data.items:
 			if int(data.items[key].rarity) == rarity and not data.items[key].has("variantOf"): pool.append(key)
@@ -1013,10 +1023,12 @@ static func secured_summary_value(summary: Dictionary) -> int:
 	return maxi(0, carried) + maxi(0, int(summary.get("securedValue", 0)))
 
 func _end(outcome: String) -> void:
+	var price_adjustment := _finish_price_adjustment(outcome)
 	var value := 0
 	for item in run().bag + run().equipped: value += item_value(item)
 	state().lastRun = {"outcome": outcome, "act": int(run().act), "difficulty": int(run().difficulty), "roomsCleared": int(run().roomsCleared), "bossesDefeated": int(run().bossesDefeated), "value": value, "items": run().bag.size() + run().equipped.size(), "durationSeconds": maxi(0, int((host._now() - int(run().startedAt)) / 1000)), "securedValue":int(run().get("securedValue",0)), "securedItems":int(run().get("securedItems",0)), "salvageGold":int(run().get("salvageGold",0)), "expEarned":int(run().get("expEarned",0))}
 	state().runs += 1
+	if price_adjustment > 0: state().lastRun.priceAdjustmentGold = price_adjustment
 	state().run = {}
 
 func extract() -> Dictionary:
@@ -1083,6 +1095,8 @@ func claim_mail() -> Dictionary:
 
 func valid(value: Variant) -> bool:
 	if not value is Dictionary: return false
+	if not host._integer(value.get("fixedPriceVersion", 0), 0, 1): return false
+	if not host._integer(value.get("fixedPriceCompensationGold", 0), 0, 100000000000000): return false
 	for key in ["credits", "unlockedDifficulty", "runs"]:
 		if not host._integer(value.get(key, 0), 0, max_difficulty() if key == "unlockedDifficulty" else 1000000000): return false
 	for key in ["stash", "loadout", "mailbox", "collection"]:
@@ -1110,6 +1124,10 @@ func valid(value: Variant) -> bool:
 	var r = value.get("run", {})
 	if not r is Dictionary: return false
 	if r.is_empty(): return true
+	if not r.get("fixedPricePending", {}) is Dictionary or r.get("fixedPricePending", {}).size() > 10000: return false
+	for pending_uid in r.get("fixedPricePending", {}):
+		if not pending_uid is String or pending_uid.is_empty() or not host._integer(r.fixedPricePending[pending_uid], -1000000000, 1000000000): return false
+	if not host._integer(r.get("fixedPriceSecuredDelta", 0), -10000000000000, 10000000000000): return false
 	if not value.get("tactical", []).is_empty(): return false
 	if not host._integer(r.get("maxActs",3),3,MAX_ACTS): return false
 	if r.has("recentEventIds"):
@@ -1467,6 +1485,79 @@ func migrate_state(value: Dictionary, source_version: int) -> void:
 			for unit in ex.run.party:
 				if int(host.catalog.CharacterData[unit.id].rarity) == 5: ex.run.characterFocus[unit.id] = 1.0
 		if not ex.run.has("growthBattles"): ex.run.growthBattles = 0
+	_migrate_fixed_prices(value)
+
+func _previous_item_value(item: Dictionary) -> int:
+	if item.has("legacyValue"): return int(item.legacyValue)
+	var definition := item_def(str(item.get("itemId", "")))
+	var base := int(definition.get("previousValue", definition.get("value", 0)))
+	var rules: Dictionary = data.get("legacyAppraisal", {})
+	var risk := clampi(int(item.get("appraisalRisk", 0)), 0, 5)
+	var multiplier := float(rules.get("riskAppraisalMultiplier", [1.0,1.15,1.3,1.5,1.7,1.9])[risk])
+	if definition.get("kind", "") == "loot":
+		multiplier *= float(rules.get("saleMultiplier", 1.75))
+		multiplier *= float(rules.get("actAppraisalMultiplier", [1.0,1.25,1.6])[clampi(int(item.get("originAct", 1)), 1, MAX_ACTS)-1])
+	return int(round(base * multiplier))
+
+func _migrate_fixed_prices(value: Dictionary) -> void:
+	var ex: Dictionary = value.extraction
+	if int(ex.get("fixedPriceVersion", 0)) >= 1: return
+	var seen := {}
+	var safe_delta := 0
+	var safe_items: Array = []
+	for scope in ["stash", "mailbox", "loadout", "tactical", "keyring"]:
+		safe_items.append_array(ex.get(scope, []))
+	for slot in ["armor", "backpack"]:
+		var entry: Dictionary = ex.get("utility", {}).get(slot, {})
+		if not entry.is_empty(): safe_items.append(entry)
+	for item in safe_items:
+		var uid := str(item.get("uid", ""))
+		if uid.is_empty() or seen.has(uid): continue
+		seen[uid] = true
+		safe_delta += _previous_item_value(item) - item_value(item)
+	var compensation := maxi(0, safe_delta)
+	value.resources.gold = int(value.resources.gold) + compensation
+	ex.fixedPriceCompensationGold = int(ex.get("fixedPriceCompensationGold", 0)) + compensation
+	# Unsecured loot is compensated only if the same UID is actually secured.
+	# Containers and map mirrors never create a claim; consumed/lost items expire.
+	var pending := {}
+	var old_run: Dictionary = ex.get("run", {})
+	if not old_run.is_empty():
+		for scope in ["bag", "equipped"]:
+			for item in old_run.get(scope, []):
+				var uid := str(item.get("uid", ""))
+				if uid.is_empty() or seen.has(uid): continue
+				seen[uid] = true
+				pending[uid] = _previous_item_value(item) - item_value(item)
+		old_run.fixedPricePending = pending
+		old_run.fixedPriceSecuredDelta = 0
+	ex.fixedPriceVersion = 1
+
+func _secure_price_adjustments(items: Array) -> void:
+	if not active() or not run().has("fixedPricePending"): return
+	var pending: Dictionary = run().fixedPricePending
+	for item in items:
+		var uid := str(item.get("uid", ""))
+		if not pending.has(uid): continue
+		run().fixedPriceSecuredDelta = int(run().get("fixedPriceSecuredDelta", 0)) + int(pending[uid])
+		pending.erase(uid)
+
+func _finish_price_adjustment(outcome: String) -> int:
+	if not active() or not run().has("fixedPricePending"): return 0
+	# Utility slots and the keyring survive a failed run; inspect their final owners.
+	for slot in ["armor", "backpack"]:
+		var entry: Dictionary = state().utility.get(slot, {})
+		if not entry.is_empty(): _secure_price_adjustments([entry])
+	_secure_price_adjustments(state().get("keyring", []))
+	if outcome == "extracted":
+		_secure_price_adjustments(run().bag)
+		_secure_price_adjustments(run().equipped)
+	var compensation := maxi(0, int(run().get("fixedPriceSecuredDelta", 0)))
+	host.state.resources.gold += compensation
+	state().fixedPriceCompensationGold = int(state().get("fixedPriceCompensationGold", 0)) + compensation
+	run().erase("fixedPricePending")
+	run().erase("fixedPriceSecuredDelta")
+	return compensation
 
 func _valid_equipment_set(items: Array) -> bool:
 	var seen: Array = []
@@ -1520,14 +1611,8 @@ func _preserve_legacy_values(items: Array) -> void:
 	for item in items: item.legacyValue = int(item_def(item.itemId).get("legacyValue", item_def(item.itemId).value))
 
 func item_value(item: Dictionary) -> int:
-	if item.has("legacyValue"): return int(item.legacyValue)
-	var base := int(item_def(str(item.get("itemId", ""))).get("value", 0))
-	var risk := clampi(int(item.get("appraisalRisk", 0)), 0, 5)
-	var multiplier := float(data.get("lootEconomy", {}).get("riskAppraisalMultiplier", [1.0, 1.25, 1.6, 2.1, 2.9, 4.0])[risk])
-	if item_def(str(item.get("itemId",""))).get("kind")=="loot":
-		multiplier*=float(data.get("lootEconomy",{}).get("saleMultiplier",1.0))
-		multiplier*=float(data.get("lootEconomy",{}).get("actAppraisalMultiplier",[1.0,1.0,1.0])[clampi(int(item.get("originAct",1)),1,MAX_ACTS)-1])
-	return int(round(base*multiplier))
+	# One catalog price for every copy, independent of origin, difficulty or legacy appraisal.
+	return int(item_def(str(item.get("itemId", ""))).get("value", 0))
 
 func _growth_definition(id: String) -> Dictionary:
 	for reward in host.catalog.AbyssData.rogue.rewards:
@@ -2369,6 +2454,7 @@ func deposit_items(plan_hash: String, selected_uids: Array = []) -> Dictionary:
 	state().stash = storage.stash
 	state().mailbox = storage.mailbox
 	host.state.resources.gold -= int(plan.fee)
+	_secure_price_adjustments(plan.items)
 	run().room.depositUsed = true
 	run().securedValue = int(run().get("securedValue",0))+int(plan.value)
 	run().securedItems = int(run().get("securedItems",0))+plan.uids.size()
