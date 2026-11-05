@@ -1,0 +1,39 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: camp equips independent UID
+PASS: equipped leaves stash
+PASS: same ID rejected with empty slots
+PASS: three distinct tactical effects coexist
+PASS: single sell protects worn UID
+PASS: batch sell skips all worn UIDs
+PASS: bulk sale preserves all three slots
+PASS: bulk pays only idle item
+PASS: camp save validates unique UID ownership
+PASS: reload preserves worn identity
+PASS: start with persistent gear
+PASS: departure transfers gear to equipped, not bag
+PASS: departure save validates
+PASS: automatic packing keeps worn inventory separate
+PASS: container direct equip enforces same-family rule
+PASS: container replacement preserves displaced item
+PASS: container receives exact replaced UID
+PASS: container swap roundtrip restores UID
+PASS: extract with gear
+PASS: extraction preserves equipment separate from loot
+PASS: explicit unequip allows sale
+PASS: missing equip fails
+PASS: failed operation preserves slots
+PASS: equip reduction family
+PASS: different reduction ID cannot replace unrelated slot
+PASS: explicit same-family replacement succeeds
+PASS: replacement returns old UID
+PASS: legacy fixture starts
+PASS: legacy duplicates accepted before migration
+PASS: legacy duplicate returned to bag
+PASS: migration preserves wallet and valid save
+PASS: migration idempotent
+PASS: issued battle retains original equipment
+PASS: next safe commit resolves duplicate
+PASS: full bag sends migrated duplicate to mailbox
+PASS: overflow migration validates
+EQUIPMENT V276: 36 passed, 0 failed

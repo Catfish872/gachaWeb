@@ -1,0 +1,130 @@
+{
+  "groups": [
+    {
+      "meanAfter": 5032.41,
+      "meanBefore": 4998.61,
+      "relativeChange": 0.00676187980258512,
+      "risk": 0,
+      "samples": 100,
+      "theme": "ruins"
+    },
+    {
+      "meanAfter": 6507.48,
+      "meanBefore": 6514.22,
+      "relativeChange": -0.00103465956016223,
+      "risk": 3,
+      "samples": 100,
+      "theme": "ruins"
+    },
+    {
+      "meanAfter": 7711.76,
+      "meanBefore": 7768.02,
+      "relativeChange": -0.00724251482359726,
+      "risk": 5,
+      "samples": 100,
+      "theme": "ruins"
+    },
+    {
+      "meanAfter": 4667.76,
+      "meanBefore": 4686.9,
+      "relativeChange": -0.00408372271650771,
+      "risk": 0,
+      "samples": 100,
+      "theme": "forest"
+    },
+    {
+      "meanAfter": 6035.46,
+      "meanBefore": 6041.45,
+      "relativeChange": -0.000991483832523649,
+      "risk": 3,
+      "samples": 100,
+      "theme": "forest"
+    },
+    {
+      "meanAfter": 7219.25,
+      "meanBefore": 7239.42,
+      "relativeChange": -0.00278613480085421,
+      "risk": 5,
+      "samples": 100,
+      "theme": "forest"
+    },
+    {
+      "meanAfter": 4307.11,
+      "meanBefore": 4321.06,
+      "relativeChange": -0.00322837451921519,
+      "risk": 0,
+      "samples": 100,
+      "theme": "sanctum"
+    },
+    {
+      "meanAfter": 7240.79,
+      "meanBefore": 7332.85,
+      "relativeChange": -0.0125544638169334,
+      "risk": 3,
+      "samples": 100,
+      "theme": "sanctum"
+    },
+    {
+      "meanAfter": 8157.37,
+      "meanBefore": 8185.89,
+      "relativeChange": -0.00348404388527087,
+      "risk": 5,
+      "samples": 100,
+      "theme": "sanctum"
+    },
+    {
+      "meanAfter": 4884.99,
+      "meanBefore": 4892.83,
+      "relativeChange": -0.00160234465534261,
+      "risk": 0,
+      "samples": 100,
+      "theme": "lantern"
+    },
+    {
+      "meanAfter": 6000.21,
+      "meanBefore": 6011.78,
+      "relativeChange": -0.00192455479076081,
+      "risk": 3,
+      "samples": 100,
+      "theme": "lantern"
+    },
+    {
+      "meanAfter": 9084.92,
+      "meanBefore": 9054.04,
+      "relativeChange": 0.00341063215978723,
+      "risk": 5,
+      "samples": 100,
+      "theme": "lantern"
+    },
+    {
+      "meanAfter": 4888.8,
+      "meanBefore": 4917.6,
+      "relativeChange": -0.00585651537335286,
+      "risk": 0,
+      "samples": 100,
+      "theme": "windpass"
+    },
+    {
+      "meanAfter": 7486.55,
+      "meanBefore": 7494.74,
+      "relativeChange": -0.00109276639349731,
+      "risk": 3,
+      "samples": 100,
+      "theme": "windpass"
+    },
+    {
+      "meanAfter": 6866.57,
+      "meanBefore": 6877.56,
+      "relativeChange": -0.00159795043591041,
+      "risk": 5,
+      "samples": 100,
+      "theme": "windpass"
+    }
+  ],
+  "meanAfter": 6406.09533333333,
+  "meanBefore": 6422.46466666667,
+  "relativeChange": -0.00254876191352084,
+  "samples": 1500,
+  "scope": "Conditional loot-only comparison: identical production container draws; 24 offered items packed by value density into 30 cells. No combat/survival or full-run earnings prediction.",
+  "seed": 2811009
+}

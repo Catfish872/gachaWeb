@@ -199,7 +199,9 @@ func _action(button: Button, action: String) -> void:
 	if is_instance_valid(_preview) and action != "preview_close": return
 	var armed: Dictionary = button.get_meta("summon_gesture", {})
 	if armed.is_empty() or int(armed.epoch) != stage_epoch or int(armed.serial) <= _consumed_serial: return
-	if sequence_time < _cooldown_until or stage == "preparing": return
+	# Preview pauses sequence_time, so its close action must not wait on that clock.
+	# Epoch and gesture checks above still reject stale or duplicate input.
+	if (action != "preview_close" and sequence_time < _cooldown_until) or stage == "preparing": return
 	if stage == "opening" and stage_time < 0.55: return
 	if stage == "summary" and stage_time < 0.35: return
 	_consumed_serial = int(armed.serial)

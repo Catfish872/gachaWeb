@@ -1,0 +1,51 @@
+{
+  "version": "2.8.11",
+  "version_code": 20811,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 447,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-05T04:13:31Z",
+      "completed_utc": "2026-11-05T04:16:11Z",
+      "elapsed_seconds": 160,
+      "source_reference": "Development from android-v2.8.10; summon fix and concurrent price edits. Whole-source hash was not recorded during this segment.",
+      "scope": [
+        "Summon baseline reproduction and fixed native-input regressions:31+112+228 checks"
+      ]
+    },
+    {
+      "started_utc": "2026-11-05T04:17:00Z",
+      "completed_utc": "2026-11-05T04:19:44Z",
+      "elapsed_seconds": 164,
+      "production_sha256": "41ae782e149720f616b0609531bc544e515a816d6d228053f9b53124128c0857",
+      "scope": [
+        "Rendered summon profile return at1233x771; temporary editor config rewrite subsequently restored",
+        "Concurrent pricing1413, rewards81, equipment36 and boss-loot21 checks; weighted216 pools and1500 bag comparisons"
+      ],
+      "timing_note": "Conservative window begins ten seconds before timed GUI review to include production packing simulation launched approximately04:17:08; earlier pricing runtime checks fall within first160-second segment."
+    },
+    {
+      "started_utc": "2026-11-05T04:20:54Z",
+      "completed_utc": "2026-11-05T04:22:57Z",
+      "elapsed_seconds": 123,
+      "production_sha256": "700763b38cbc3cbc50c43b9ddad360c9babbae7dfe8e03a4f43aece6ef427f46",
+      "scope": [
+        "Reload restored project config, fresh rendered1280x800 process; summon, profile, return, summary, accept; currency and pity progression"
+      ]
+    }
+  ],
+  "production_sha256": "700763b38cbc3cbc50c43b9ddad360c9babbae7dfe8e03a4f43aece6ef427f46",
+  "production_file_count": 1268,
+  "scope": [
+    "Fix paused summon preview close cooldown; preserve draw state and touch deduplication",
+    "145 item resale value adjustments with fixed same-item prices; preserve216 weighted pool means",
+    "Exact restored release configuration and actual desktop rendered summon flow"
+  ],
+  "limits": [
+    "Desktop Godot4.6.3 Compatibility rendering; Android hardware was not tested.",
+    "Only affected checks; no full regression.",
+    "Preexisting editor Debugger(39) count observed before interaction; entries were not inspected.",
+    "Concurrent review intervals count once as elapsed wall time. Build/signature checks are recorded separately."
+  ]
+}

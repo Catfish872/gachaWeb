@@ -1,0 +1,1 @@
+PASS: only 145 item value fields changed. All purchase prices, effects, drop weights, rarity distributions, item sizes, categories, item IDs, migration metadata and other configuration are identical to android-v2.8.10. All purchasable items retain a positive buy/sell margin.

@@ -1,0 +1,1025 @@
+{
+  "baselineCommit": "06cbf0f0b2189c57822620f6d6e1cbf7fb9a90e8",
+  "changed": 145,
+  "total": 173,
+  "maxRelativeChange": 0.1,
+  "poolConstraints": 216,
+  "maxWeightedPoolSumDelta": 0.0,
+  "items": [
+    {
+      "id": "circuit",
+      "name": "导魔符板",
+      "before": 40,
+      "after": 38,
+      "slots": 2
+    },
+    {
+      "id": "lens",
+      "name": "窥星透镜",
+      "before": 20,
+      "after": 22,
+      "slots": 1
+    },
+    {
+      "id": "battery",
+      "name": "充能晶匣",
+      "before": 60,
+      "after": 62,
+      "slots": 2
+    },
+    {
+      "id": "sensor",
+      "name": "元素探针",
+      "before": 140,
+      "after": 136,
+      "slots": 4
+    },
+    {
+      "id": "processor",
+      "name": "星纹符片",
+      "before": 90,
+      "after": 96,
+      "slots": 1
+    },
+    {
+      "id": "crystal",
+      "name": "紫晶标本",
+      "before": 410,
+      "after": 398,
+      "slots": 4
+    },
+    {
+      "id": "gold_watch",
+      "name": "古代金怀表",
+      "before": 520,
+      "after": 546,
+      "slots": 1
+    },
+    {
+      "id": "idol",
+      "name": "黄金神像",
+      "before": 3420,
+      "after": 3127,
+      "slots": 6
+    },
+    {
+      "id": "reactor",
+      "name": "微型星核",
+      "before": 1200,
+      "after": 1272,
+      "slots": 4
+    },
+    {
+      "id": "crown",
+      "name": "失落王冠",
+      "before": 2760,
+      "after": 2936,
+      "slots": 4
+    },
+    {
+      "id": "red_core",
+      "name": "赤焰灵核",
+      "before": 7641,
+      "after": 7947,
+      "slots": 4
+    },
+    {
+      "id": "archive",
+      "name": "封印秘卷",
+      "before": 4266,
+      "after": 4607,
+      "slots": 2
+    },
+    {
+      "id": "dragon_egg",
+      "name": "龙纹化石",
+      "before": 23274,
+      "after": 22487,
+      "slots": 9
+    },
+    {
+      "id": "cloth",
+      "name": "旅织布卷",
+      "before": 40,
+      "after": 38,
+      "slots": 4
+    },
+    {
+      "id": "ceramic",
+      "name": "古陶碎片",
+      "before": 20,
+      "after": 19,
+      "slots": 1
+    },
+    {
+      "id": "tape",
+      "name": "树脂封带",
+      "before": 30,
+      "after": 31,
+      "slots": 2
+    },
+    {
+      "id": "scrap_plate",
+      "name": "旧铁甲片",
+      "before": 60,
+      "after": 62,
+      "slots": 6
+    },
+    {
+      "id": "tin_cup",
+      "name": "锡制旅杯",
+      "before": 40,
+      "after": 38,
+      "slots": 2
+    },
+    {
+      "id": "rope",
+      "name": "冒险者绳索",
+      "before": 50,
+      "after": 49,
+      "slots": 4
+    },
+    {
+      "id": "gas_filter",
+      "name": "净瘴香囊",
+      "before": 30,
+      "after": 32,
+      "slots": 2
+    },
+    {
+      "id": "pocket_book",
+      "name": "野外手册",
+      "before": 20,
+      "after": 21,
+      "slots": 2
+    },
+    {
+      "id": "radio",
+      "name": "传声符石",
+      "before": 60,
+      "after": 57,
+      "slots": 4
+    },
+    {
+      "id": "compass",
+      "name": "寻路罗盘",
+      "before": 30,
+      "after": 32,
+      "slots": 1
+    },
+    {
+      "id": "pliers",
+      "name": "矮人工匠钳",
+      "before": 40,
+      "after": 42,
+      "slots": 2
+    },
+    {
+      "id": "thermometer",
+      "name": "测温晶棒",
+      "before": 50,
+      "after": 52,
+      "slots": 2
+    },
+    {
+      "id": "motor",
+      "name": "魔偶齿轮",
+      "before": 130,
+      "after": 128,
+      "slots": 4
+    },
+    {
+      "id": "lubricant",
+      "name": "工坊机油",
+      "before": 40,
+      "after": 39,
+      "slots": 2
+    },
+    {
+      "id": "hard_drive",
+      "name": "封印记忆匣",
+      "before": 50,
+      "after": 53,
+      "slots": 2
+    },
+    {
+      "id": "drone_rotor",
+      "name": "魔偶翼片",
+      "before": 280,
+      "after": 266,
+      "slots": 6
+    },
+    {
+      "id": "capacitor",
+      "name": "储能晶柱",
+      "before": 70,
+      "after": 67,
+      "slots": 2
+    },
+    {
+      "id": "camera",
+      "name": "留影晶镜",
+      "before": 160,
+      "after": 157,
+      "slots": 4
+    },
+    {
+      "id": "silver_chain",
+      "name": "银月项链",
+      "before": 30,
+      "after": 32,
+      "slots": 1
+    },
+    {
+      "id": "toolbox",
+      "name": "匠师工具箱",
+      "before": 300,
+      "after": 314,
+      "slots": 6
+    },
+    {
+      "id": "energy_cell",
+      "name": "军团魔晶匣",
+      "before": 140,
+      "after": 143,
+      "slots": 4
+    },
+    {
+      "id": "signal_decoder",
+      "name": "解咒星盘",
+      "before": 280,
+      "after": 270,
+      "slots": 4
+    },
+    {
+      "id": "rare_ore",
+      "name": "星陨矿样",
+      "before": 810,
+      "after": 778,
+      "slots": 6
+    },
+    {
+      "id": "jade_pendant",
+      "name": "翡翠挂坠",
+      "before": 100,
+      "after": 106,
+      "slots": 1
+    },
+    {
+      "id": "hologram",
+      "name": "幻光晶灯",
+      "before": 320,
+      "after": 312,
+      "slots": 4
+    },
+    {
+      "id": "thermal_chip",
+      "name": "焰息符片",
+      "before": 150,
+      "after": 160,
+      "slots": 1
+    },
+    {
+      "id": "research_notes",
+      "name": "贤者手札",
+      "before": 500,
+      "after": 540,
+      "slots": 4
+    },
+    {
+      "id": "platinum_bar",
+      "name": "白金锭",
+      "before": 780,
+      "after": 796,
+      "slots": 2
+    },
+    {
+      "id": "diamond_ring",
+      "name": "星钻戒指",
+      "before": 760,
+      "after": 806,
+      "slots": 1
+    },
+    {
+      "id": "star_map",
+      "name": "古星图",
+      "before": 3960,
+      "after": 4150,
+      "slots": 6
+    },
+    {
+      "id": "fusion_battery",
+      "name": "聚星晶匣",
+      "before": 2700,
+      "after": 2592,
+      "slots": 6
+    },
+    {
+      "id": "ivory_statue",
+      "name": "白瓷仕女像",
+      "before": 2440,
+      "after": 2562,
+      "slots": 3
+    },
+    {
+      "id": "ruby_necklace",
+      "name": "红宝石项链",
+      "before": 960,
+      "after": 989,
+      "slots": 2
+    },
+    {
+      "id": "vintage_vase",
+      "name": "窑变花瓶",
+      "before": 3600,
+      "after": 3396,
+      "slots": 6
+    },
+    {
+      "id": "phoenix_tonic",
+      "name": "凤凰秘药",
+      "before": 600,
+      "after": 642,
+      "slots": 2
+    },
+    {
+      "id": "blood_emblem",
+      "name": "血色徽章",
+      "before": 1200,
+      "after": 1140,
+      "slots": 4
+    },
+    {
+      "id": "guardian_seal",
+      "name": "守护者印章",
+      "before": 600,
+      "after": 642,
+      "slots": 2
+    },
+    {
+      "id": "genesis_disk",
+      "name": "创世铭盘",
+      "before": 11259,
+      "after": 11119,
+      "slots": 4
+    },
+    {
+      "id": "meteor_heart",
+      "name": "陨星之心",
+      "before": 12150,
+      "after": 11514,
+      "slots": 6
+    },
+    {
+      "id": "royal_scepter",
+      "name": "古王权杖",
+      "before": 9909,
+      "after": 10504,
+      "slots": 4
+    },
+    {
+      "id": "sunken_crown",
+      "name": "沉海冠冕",
+      "before": 6750,
+      "after": 6480,
+      "slots": 4
+    },
+    {
+      "id": "void_fossil",
+      "name": "虚空生物化石",
+      "before": 27324,
+      "after": 26168,
+      "slots": 9
+    },
+    {
+      "id": "phoenix_feather",
+      "name": "不灭羽翎",
+      "before": 5400,
+      "after": 5670,
+      "slots": 3
+    },
+    {
+      "id": "world_seed",
+      "name": "世界树种",
+      "before": 2592,
+      "after": 2773,
+      "slots": 1
+    },
+    {
+      "id": "eternal_flame",
+      "name": "永燃火种",
+      "before": 8991,
+      "after": 9261,
+      "slots": 4
+    },
+    {
+      "id": "oracle_tablet",
+      "name": "神谕石板",
+      "before": 12825,
+      "after": 13851,
+      "slots": 6
+    },
+    {
+      "id": "armor_4",
+      "name": "王庭圣甲",
+      "before": 1200,
+      "after": 1146,
+      "slots": 4
+    },
+    {
+      "id": "repair_core",
+      "name": "复原星核",
+      "before": 300,
+      "after": 282,
+      "slots": 1
+    },
+    {
+      "id": "energy_crystal",
+      "name": "源能结晶",
+      "before": 300,
+      "after": 312,
+      "slots": 1
+    },
+    {
+      "id": "revival_phoenix",
+      "name": "凤凰灵羽",
+      "before": 300,
+      "after": 324,
+      "slots": 1
+    },
+    {
+      "id": "ration_4",
+      "name": "王庭盛宴",
+      "before": 600,
+      "after": 540,
+      "slots": 2
+    },
+    {
+      "id": "ruins_cinder_medal",
+      "name": "炉灰勋章",
+      "before": 30,
+      "after": 31,
+      "slots": 1
+    },
+    {
+      "id": "ruins_molten_seal",
+      "name": "熔金玺印",
+      "before": 410,
+      "after": 398,
+      "slots": 4
+    },
+    {
+      "id": "ruins_obsidian_chalice",
+      "name": "黑曜礼盏",
+      "before": 2760,
+      "after": 2898,
+      "slots": 4
+    },
+    {
+      "id": "ruins_sun_crown",
+      "name": "曜日残冠",
+      "before": 4266,
+      "after": 4095,
+      "slots": 2
+    },
+    {
+      "id": "forest_amber_acorn",
+      "name": "琥珀灵实",
+      "before": 20,
+      "after": 21,
+      "slots": 1
+    },
+    {
+      "id": "forest_moon_dew",
+      "name": "月华露珠",
+      "before": 410,
+      "after": 397,
+      "slots": 4
+    },
+    {
+      "id": "forest_verdant_tablet",
+      "name": "翠纹石契",
+      "before": 760,
+      "after": 806,
+      "slots": 1
+    },
+    {
+      "id": "forest_heart_bloom",
+      "name": "古树心蕾",
+      "before": 7641,
+      "after": 7947,
+      "slots": 4
+    },
+    {
+      "id": "sanctum_star_compass",
+      "name": "星盘罗针",
+      "before": 30,
+      "after": 32,
+      "slots": 1
+    },
+    {
+      "id": "sanctum_meteor_shard",
+      "name": "陨星棱晶",
+      "before": 90,
+      "after": 96,
+      "slots": 1
+    },
+    {
+      "id": "sanctum_orbit_lens",
+      "name": "星环透镜",
+      "before": 2760,
+      "after": 2921,
+      "slots": 4
+    },
+    {
+      "id": "ruins_frayed_linen",
+      "name": "旧城麻布",
+      "before": 40,
+      "after": 38,
+      "slots": 4
+    },
+    {
+      "id": "ruins_smith_pincers",
+      "name": "铁匠钳",
+      "before": 40,
+      "after": 42,
+      "slots": 2
+    },
+    {
+      "id": "ruins_copper_lamp",
+      "name": "旧铜油灯",
+      "before": 60,
+      "after": 58,
+      "slots": 4
+    },
+    {
+      "id": "ruins_carpenter_chest",
+      "name": "工匠木箱",
+      "before": 300,
+      "after": 314,
+      "slots": 6
+    },
+    {
+      "id": "ruins_ember_ore",
+      "name": "余烬矿簇",
+      "before": 810,
+      "after": 778,
+      "slots": 6
+    },
+    {
+      "id": "ruins_ruby_brooch",
+      "name": "王庭红玉胸针",
+      "before": 960,
+      "after": 1027,
+      "slots": 2
+    },
+    {
+      "id": "ruins_crimson_feather",
+      "name": "赤焰凤翎",
+      "before": 5400,
+      "after": 5670,
+      "slots": 3
+    },
+    {
+      "id": "ruins_dragon_reliquary",
+      "name": "玄金龙卵匣",
+      "before": 23274,
+      "after": 22999,
+      "slots": 9
+    },
+    {
+      "id": "forest_seed_pot",
+      "name": "裂纹种罐",
+      "before": 20,
+      "after": 19,
+      "slots": 1
+    },
+    {
+      "id": "forest_hemp_coil",
+      "name": "古林麻绳",
+      "before": 130,
+      "after": 128,
+      "slots": 4
+    },
+    {
+      "id": "forest_seed_basket",
+      "name": "林间种篮",
+      "before": 40,
+      "after": 39,
+      "slots": 2
+    },
+    {
+      "id": "forest_specimen_box",
+      "name": "木纹标本匣",
+      "before": 50,
+      "after": 53,
+      "slots": 2
+    },
+    {
+      "id": "forest_moss_mortar",
+      "name": "苔石药臼",
+      "before": 140,
+      "after": 136,
+      "slots": 4
+    },
+    {
+      "id": "forest_jade_leaf",
+      "name": "翠叶玉坠",
+      "before": 100,
+      "after": 107,
+      "slots": 1
+    },
+    {
+      "id": "forest_ivory_stag",
+      "name": "月鹿牙雕",
+      "before": 2440,
+      "after": 2538,
+      "slots": 3
+    },
+    {
+      "id": "forest_amber_amphora",
+      "name": "金珀蜜壶",
+      "before": 3600,
+      "after": 3420,
+      "slots": 6
+    },
+    {
+      "id": "forest_radiant_seed",
+      "name": "翡翠源种",
+      "before": 2592,
+      "after": 2773,
+      "slots": 1
+    },
+    {
+      "id": "forest_root_monolith",
+      "name": "根脉晶碑",
+      "before": 12825,
+      "after": 13851,
+      "slots": 6
+    },
+    {
+      "id": "sanctum_faded_chart",
+      "name": "褪色星图",
+      "before": 20,
+      "after": 19,
+      "slots": 2
+    },
+    {
+      "id": "sanctum_ink_bottle",
+      "name": "星蓝墨瓶",
+      "before": 40,
+      "after": 41,
+      "slots": 2
+    },
+    {
+      "id": "sanctum_brass_astrolabe",
+      "name": "黄铜测星仪",
+      "before": 60,
+      "after": 62,
+      "slots": 2
+    },
+    {
+      "id": "sanctum_constellation_slate",
+      "name": "星纹石板",
+      "before": 280,
+      "after": 266,
+      "slots": 6
+    },
+    {
+      "id": "sanctum_memory_crystal",
+      "name": "幽紫记忆晶",
+      "before": 150,
+      "after": 160,
+      "slots": 1
+    },
+    {
+      "id": "sanctum_prayer_manuscript",
+      "name": "星辉祷典",
+      "before": 500,
+      "after": 540,
+      "slots": 4
+    },
+    {
+      "id": "sanctum_votive_holder",
+      "name": "铂银烛台",
+      "before": 780,
+      "after": 811,
+      "slots": 2
+    },
+    {
+      "id": "sanctum_orbital_sphere",
+      "name": "宝星浑天仪",
+      "before": 3960,
+      "after": 4150,
+      "slots": 6
+    },
+    {
+      "id": "sanctum_sapphire_scepter",
+      "name": "苍穹蓝晶权杖",
+      "before": 9909,
+      "after": 10504,
+      "slots": 4
+    },
+    {
+      "id": "sanctum_eclipse_fossil",
+      "name": "蚀日玄岩遗骸",
+      "before": 27324,
+      "after": 26168,
+      "slots": 9
+    },
+    {
+      "id": "lantern_wick",
+      "name": "旧驿灯芯",
+      "before": 10,
+      "after": 9,
+      "slots": 1
+    },
+    {
+      "id": "lantern_chain",
+      "name": "断裂铜链",
+      "before": 20,
+      "after": 21,
+      "slots": 2
+    },
+    {
+      "id": "lantern_mantle",
+      "name": "灰灯罩布",
+      "before": 40,
+      "after": 38,
+      "slots": 4
+    },
+    {
+      "id": "lantern_pitch_tube",
+      "name": "松脂封管",
+      "before": 30,
+      "after": 31,
+      "slots": 2
+    },
+    {
+      "id": "lantern_lens",
+      "name": "琥珀灯镜",
+      "before": 20,
+      "after": 21,
+      "slots": 1
+    },
+    {
+      "id": "lantern_regulator",
+      "name": "灯流调节板",
+      "before": 40,
+      "after": 39,
+      "slots": 2
+    },
+    {
+      "id": "lantern_tongs",
+      "name": "守灯铜钳",
+      "before": 40,
+      "after": 42,
+      "slots": 2
+    },
+    {
+      "id": "lantern_bellows",
+      "name": "手摇炉风箱",
+      "before": 130,
+      "after": 128,
+      "slots": 4
+    },
+    {
+      "id": "lantern_cell",
+      "name": "长明蓄火筒",
+      "before": 60,
+      "after": 62,
+      "slots": 2
+    },
+    {
+      "id": "lantern_prism",
+      "name": "回廊聚光棱",
+      "before": 140,
+      "after": 136,
+      "slots": 4
+    },
+    {
+      "id": "lantern_rotor",
+      "name": "铜羽送风轮",
+      "before": 280,
+      "after": 266,
+      "slots": 6
+    },
+    {
+      "id": "lantern_seal",
+      "name": "司炉刻印",
+      "before": 90,
+      "after": 95,
+      "slots": 1
+    },
+    {
+      "id": "lantern_glass",
+      "name": "凝火琉璃",
+      "before": 410,
+      "after": 399,
+      "slots": 4
+    },
+    {
+      "id": "lantern_ore",
+      "name": "赤髓炉矿",
+      "before": 810,
+      "after": 778,
+      "slots": 6
+    },
+    {
+      "id": "lantern_signet",
+      "name": "守灯人金徽",
+      "before": 520,
+      "after": 541,
+      "slots": 1
+    },
+    {
+      "id": "lantern_statue",
+      "name": "借火者铜像",
+      "before": 3420,
+      "after": 3142,
+      "slots": 6
+    },
+    {
+      "id": "lantern_reliquary",
+      "name": "千灯纪念龛",
+      "before": 2760,
+      "after": 2926,
+      "slots": 4
+    },
+    {
+      "id": "lantern_heart",
+      "name": "初燃炉心",
+      "before": 7641,
+      "after": 8176,
+      "slots": 4
+    },
+    {
+      "id": "lantern_archive",
+      "name": "万家灯籍",
+      "before": 4266,
+      "after": 4607,
+      "slots": 2
+    },
+    {
+      "id": "lantern_sun",
+      "name": "昼夜不灭灯",
+      "before": 23274,
+      "after": 22258,
+      "slots": 9
+    },
+    {
+      "id": "lantern_feather",
+      "name": "归火金羽",
+      "before": 5400,
+      "after": 5670,
+      "slots": 3
+    },
+    {
+      "id": "windpass_rope",
+      "name": "麻绳卷",
+      "before": 10,
+      "after": 9,
+      "slots": 1
+    },
+    {
+      "id": "windpass_canvas",
+      "name": "旧帆布",
+      "before": 40,
+      "after": 38,
+      "slots": 4
+    },
+    {
+      "id": "windpass_pins",
+      "name": "木销盒",
+      "before": 20,
+      "after": 21,
+      "slots": 2
+    },
+    {
+      "id": "windpass_clapper",
+      "name": "磨损铃舌",
+      "before": 30,
+      "after": 31,
+      "slots": 2
+    },
+    {
+      "id": "windpass_wax",
+      "name": "封蜡匣",
+      "before": 20,
+      "after": 21,
+      "slots": 1
+    },
+    {
+      "id": "windpass_herbs",
+      "name": "干燥草药包",
+      "before": 40,
+      "after": 39,
+      "slots": 2
+    },
+    {
+      "id": "windpass_bushing",
+      "name": "铜轴套",
+      "before": 40,
+      "after": 42,
+      "slots": 2
+    },
+    {
+      "id": "windpass_feather",
+      "name": "风向羽",
+      "before": 130,
+      "after": 128,
+      "slots": 4
+    },
+    {
+      "id": "windpass_lens",
+      "name": "透镜匣",
+      "before": 60,
+      "after": 64,
+      "slots": 2
+    },
+    {
+      "id": "windpass_anemometer",
+      "name": "测风盘",
+      "before": 140,
+      "after": 134,
+      "slots": 4
+    },
+    {
+      "id": "windpass_badge",
+      "name": "巡路徽章",
+      "before": 280,
+      "after": 266,
+      "slots": 6
+    },
+    {
+      "id": "windpass_flute",
+      "name": "银叶风笛",
+      "before": 90,
+      "after": 97,
+      "slots": 1
+    },
+    {
+      "id": "windpass_compass",
+      "name": "嵌晶罗盘",
+      "before": 410,
+      "after": 397,
+      "slots": 4
+    },
+    {
+      "id": "windpass_charm",
+      "name": "羽纹护符",
+      "before": 810,
+      "after": 778,
+      "slots": 6
+    },
+    {
+      "id": "windpass_wheel",
+      "name": "鎏金风轮",
+      "before": 520,
+      "after": 541,
+      "slots": 1
+    },
+    {
+      "id": "windpass_amber",
+      "name": "琥珀巢石",
+      "before": 3420,
+      "after": 3087,
+      "slots": 6
+    },
+    {
+      "id": "windpass_royal_chart",
+      "name": "王庭航图",
+      "before": 2760,
+      "after": 2981,
+      "slots": 4
+    },
+    {
+      "id": "windpass_sky_eye",
+      "name": "天穹风眼",
+      "before": 7641,
+      "after": 8176,
+      "slots": 4
+    },
+    {
+      "id": "windpass_first_instrument",
+      "name": "初代导风仪",
+      "before": 4266,
+      "after": 4522,
+      "slots": 2
+    },
+    {
+      "id": "windpass_feather_crown",
+      "name": "翠羽冠",
+      "before": 23274,
+      "after": 22343,
+      "slots": 9
+    },
+    {
+      "id": "windpass_heartwood",
+      "name": "古树心晶",
+      "before": 5400,
+      "after": 5670,
+      "slots": 3
+    }
+  ]
+}

@@ -1,0 +1,1514 @@
+[
+  {
+    "theme": "default",
+    "rarity": 0,
+    "pool": "ordinary",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "default",
+    "rarity": 0,
+    "pool": "hospital",
+    "before": 9.4,
+    "after": 9.4
+  },
+  {
+    "theme": "default",
+    "rarity": 0,
+    "pool": "workshop",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "default",
+    "rarity": 0,
+    "pool": "shrine",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "default",
+    "rarity": 0,
+    "pool": "vault",
+    "before": 15.0,
+    "after": 15.0
+  },
+  {
+    "theme": "default",
+    "rarity": 0,
+    "pool": "tools",
+    "before": 35.0,
+    "after": 35.0
+  },
+  {
+    "theme": "default",
+    "rarity": 1,
+    "pool": "ordinary",
+    "before": 50.72727272727273,
+    "after": 50.72727272727273
+  },
+  {
+    "theme": "default",
+    "rarity": 1,
+    "pool": "hospital",
+    "before": 19.428571428571427,
+    "after": 19.428571428571427
+  },
+  {
+    "theme": "default",
+    "rarity": 1,
+    "pool": "workshop",
+    "before": 84.28571428571429,
+    "after": 84.28571428571429
+  },
+  {
+    "theme": "default",
+    "rarity": 1,
+    "pool": "shrine",
+    "before": 20.0,
+    "after": 20.0
+  },
+  {
+    "theme": "default",
+    "rarity": 1,
+    "pool": "vault",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "default",
+    "rarity": 1,
+    "pool": "tools",
+    "before": 95.0,
+    "after": 95.0
+  },
+  {
+    "theme": "default",
+    "rarity": 2,
+    "pool": "ordinary",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "default",
+    "rarity": 2,
+    "pool": "hospital",
+    "before": 41.94174757281553,
+    "after": 41.94174757281553
+  },
+  {
+    "theme": "default",
+    "rarity": 2,
+    "pool": "workshop",
+    "before": 154.0,
+    "after": 154.0
+  },
+  {
+    "theme": "default",
+    "rarity": 2,
+    "pool": "shrine",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "default",
+    "rarity": 2,
+    "pool": "vault",
+    "before": 76.66666666666667,
+    "after": 76.66666666666667
+  },
+  {
+    "theme": "default",
+    "rarity": 2,
+    "pool": "tools",
+    "before": 177.5,
+    "after": 177.5
+  },
+  {
+    "theme": "default",
+    "rarity": 3,
+    "pool": "ordinary",
+    "before": 274.3333333333333,
+    "after": 274.3333333333333
+  },
+  {
+    "theme": "default",
+    "rarity": 3,
+    "pool": "hospital",
+    "before": 74.2,
+    "after": 74.2
+  },
+  {
+    "theme": "default",
+    "rarity": 3,
+    "pool": "workshop",
+    "before": 311.1111111111111,
+    "after": 311.1111111111111
+  },
+  {
+    "theme": "default",
+    "rarity": 3,
+    "pool": "shrine",
+    "before": 360.0,
+    "after": 360.0
+  },
+  {
+    "theme": "default",
+    "rarity": 3,
+    "pool": "vault",
+    "before": 200.0,
+    "after": 200.0
+  },
+  {
+    "theme": "default",
+    "rarity": 3,
+    "pool": "tools",
+    "before": 338.57142857142856,
+    "after": 338.57142857142856
+  },
+  {
+    "theme": "default",
+    "rarity": 4,
+    "pool": "ordinary",
+    "before": 1720.909090909091,
+    "after": 1720.909090909091
+  },
+  {
+    "theme": "default",
+    "rarity": 4,
+    "pool": "hospital",
+    "before": 420.0,
+    "after": 420.0
+  },
+  {
+    "theme": "default",
+    "rarity": 4,
+    "pool": "workshop",
+    "before": 1950.0,
+    "after": 1950.0
+  },
+  {
+    "theme": "default",
+    "rarity": 4,
+    "pool": "shrine",
+    "before": 2160.0,
+    "after": 2160.0
+  },
+  {
+    "theme": "default",
+    "rarity": 4,
+    "pool": "vault",
+    "before": 1533.3333333333333,
+    "after": 1533.3333333333333
+  },
+  {
+    "theme": "default",
+    "rarity": 4,
+    "pool": "tools",
+    "before": 1100.0,
+    "after": 1100.0
+  },
+  {
+    "theme": "default",
+    "rarity": 5,
+    "pool": "ordinary",
+    "before": 8412.631578947368,
+    "after": 8412.631578947368
+  },
+  {
+    "theme": "default",
+    "rarity": 5,
+    "pool": "hospital",
+    "before": 1800.0,
+    "after": 1800.0
+  },
+  {
+    "theme": "default",
+    "rarity": 5,
+    "pool": "workshop",
+    "before": 4276.5,
+    "after": 4276.5
+  },
+  {
+    "theme": "default",
+    "rarity": 5,
+    "pool": "shrine",
+    "before": 8010.0,
+    "after": 8010.0
+  },
+  {
+    "theme": "default",
+    "rarity": 5,
+    "pool": "vault",
+    "before": 8997.75,
+    "after": 8997.75
+  },
+  {
+    "theme": "default",
+    "rarity": 5,
+    "pool": "tools",
+    "before": 3960.0,
+    "after": 3960.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 0,
+    "pool": "ordinary",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "ruins",
+    "rarity": 0,
+    "pool": "hospital",
+    "before": 9.4,
+    "after": 9.4
+  },
+  {
+    "theme": "ruins",
+    "rarity": 0,
+    "pool": "workshop",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 0,
+    "pool": "shrine",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "ruins",
+    "rarity": 0,
+    "pool": "vault",
+    "before": 15.0,
+    "after": 15.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 0,
+    "pool": "tools",
+    "before": 35.0,
+    "after": 35.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 1,
+    "pool": "ordinary",
+    "before": 50.72727272727273,
+    "after": 50.72727272727273
+  },
+  {
+    "theme": "ruins",
+    "rarity": 1,
+    "pool": "hospital",
+    "before": 19.428571428571427,
+    "after": 19.428571428571427
+  },
+  {
+    "theme": "ruins",
+    "rarity": 1,
+    "pool": "workshop",
+    "before": 84.28571428571429,
+    "after": 84.28571428571429
+  },
+  {
+    "theme": "ruins",
+    "rarity": 1,
+    "pool": "shrine",
+    "before": 20.0,
+    "after": 20.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 1,
+    "pool": "vault",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 1,
+    "pool": "tools",
+    "before": 95.0,
+    "after": 95.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 2,
+    "pool": "ordinary",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "ruins",
+    "rarity": 2,
+    "pool": "hospital",
+    "before": 41.94174757281553,
+    "after": 41.94174757281553
+  },
+  {
+    "theme": "ruins",
+    "rarity": 2,
+    "pool": "workshop",
+    "before": 154.0,
+    "after": 154.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 2,
+    "pool": "shrine",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "ruins",
+    "rarity": 2,
+    "pool": "vault",
+    "before": 76.66666666666667,
+    "after": 76.66666666666667
+  },
+  {
+    "theme": "ruins",
+    "rarity": 2,
+    "pool": "tools",
+    "before": 177.5,
+    "after": 177.5
+  },
+  {
+    "theme": "ruins",
+    "rarity": 3,
+    "pool": "ordinary",
+    "before": 274.3333333333333,
+    "after": 274.3333333333333
+  },
+  {
+    "theme": "ruins",
+    "rarity": 3,
+    "pool": "hospital",
+    "before": 74.2,
+    "after": 74.2
+  },
+  {
+    "theme": "ruins",
+    "rarity": 3,
+    "pool": "workshop",
+    "before": 311.1111111111111,
+    "after": 311.1111111111111
+  },
+  {
+    "theme": "ruins",
+    "rarity": 3,
+    "pool": "shrine",
+    "before": 360.0,
+    "after": 360.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 3,
+    "pool": "vault",
+    "before": 200.0,
+    "after": 200.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 3,
+    "pool": "tools",
+    "before": 338.57142857142856,
+    "after": 338.57142857142856
+  },
+  {
+    "theme": "ruins",
+    "rarity": 4,
+    "pool": "ordinary",
+    "before": 1720.909090909091,
+    "after": 1720.909090909091
+  },
+  {
+    "theme": "ruins",
+    "rarity": 4,
+    "pool": "hospital",
+    "before": 420.0,
+    "after": 420.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 4,
+    "pool": "workshop",
+    "before": 1950.0,
+    "after": 1950.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 4,
+    "pool": "shrine",
+    "before": 2160.0,
+    "after": 2160.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 4,
+    "pool": "vault",
+    "before": 1533.3333333333333,
+    "after": 1533.3333333333333
+  },
+  {
+    "theme": "ruins",
+    "rarity": 4,
+    "pool": "tools",
+    "before": 1100.0,
+    "after": 1100.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 5,
+    "pool": "ordinary",
+    "before": 8412.631578947368,
+    "after": 8412.631578947368
+  },
+  {
+    "theme": "ruins",
+    "rarity": 5,
+    "pool": "hospital",
+    "before": 1800.0,
+    "after": 1800.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 5,
+    "pool": "workshop",
+    "before": 4276.5,
+    "after": 4276.5
+  },
+  {
+    "theme": "ruins",
+    "rarity": 5,
+    "pool": "shrine",
+    "before": 8010.0,
+    "after": 8010.0
+  },
+  {
+    "theme": "ruins",
+    "rarity": 5,
+    "pool": "vault",
+    "before": 8997.75,
+    "after": 8997.75
+  },
+  {
+    "theme": "ruins",
+    "rarity": 5,
+    "pool": "tools",
+    "before": 3960.0,
+    "after": 3960.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 0,
+    "pool": "ordinary",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "forest",
+    "rarity": 0,
+    "pool": "hospital",
+    "before": 9.4,
+    "after": 9.4
+  },
+  {
+    "theme": "forest",
+    "rarity": 0,
+    "pool": "workshop",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 0,
+    "pool": "shrine",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "forest",
+    "rarity": 0,
+    "pool": "vault",
+    "before": 15.0,
+    "after": 15.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 0,
+    "pool": "tools",
+    "before": 35.0,
+    "after": 35.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 1,
+    "pool": "ordinary",
+    "before": 50.72727272727273,
+    "after": 50.72727272727273
+  },
+  {
+    "theme": "forest",
+    "rarity": 1,
+    "pool": "hospital",
+    "before": 19.428571428571427,
+    "after": 19.428571428571427
+  },
+  {
+    "theme": "forest",
+    "rarity": 1,
+    "pool": "workshop",
+    "before": 84.28571428571429,
+    "after": 84.28571428571429
+  },
+  {
+    "theme": "forest",
+    "rarity": 1,
+    "pool": "shrine",
+    "before": 20.0,
+    "after": 20.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 1,
+    "pool": "vault",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 1,
+    "pool": "tools",
+    "before": 95.0,
+    "after": 95.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 2,
+    "pool": "ordinary",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "forest",
+    "rarity": 2,
+    "pool": "hospital",
+    "before": 41.94174757281553,
+    "after": 41.94174757281553
+  },
+  {
+    "theme": "forest",
+    "rarity": 2,
+    "pool": "workshop",
+    "before": 154.0,
+    "after": 154.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 2,
+    "pool": "shrine",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "forest",
+    "rarity": 2,
+    "pool": "vault",
+    "before": 76.66666666666667,
+    "after": 76.66666666666667
+  },
+  {
+    "theme": "forest",
+    "rarity": 2,
+    "pool": "tools",
+    "before": 177.5,
+    "after": 177.5
+  },
+  {
+    "theme": "forest",
+    "rarity": 3,
+    "pool": "ordinary",
+    "before": 274.3333333333333,
+    "after": 274.3333333333333
+  },
+  {
+    "theme": "forest",
+    "rarity": 3,
+    "pool": "hospital",
+    "before": 74.2,
+    "after": 74.2
+  },
+  {
+    "theme": "forest",
+    "rarity": 3,
+    "pool": "workshop",
+    "before": 311.1111111111111,
+    "after": 311.1111111111111
+  },
+  {
+    "theme": "forest",
+    "rarity": 3,
+    "pool": "shrine",
+    "before": 360.0,
+    "after": 360.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 3,
+    "pool": "vault",
+    "before": 200.0,
+    "after": 200.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 3,
+    "pool": "tools",
+    "before": 338.57142857142856,
+    "after": 338.57142857142856
+  },
+  {
+    "theme": "forest",
+    "rarity": 4,
+    "pool": "ordinary",
+    "before": 1720.909090909091,
+    "after": 1720.909090909091
+  },
+  {
+    "theme": "forest",
+    "rarity": 4,
+    "pool": "hospital",
+    "before": 420.0,
+    "after": 420.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 4,
+    "pool": "workshop",
+    "before": 1950.0,
+    "after": 1950.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 4,
+    "pool": "shrine",
+    "before": 2160.0,
+    "after": 2160.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 4,
+    "pool": "vault",
+    "before": 1533.3333333333333,
+    "after": 1533.3333333333333
+  },
+  {
+    "theme": "forest",
+    "rarity": 4,
+    "pool": "tools",
+    "before": 1100.0,
+    "after": 1100.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 5,
+    "pool": "ordinary",
+    "before": 8412.631578947368,
+    "after": 8412.631578947368
+  },
+  {
+    "theme": "forest",
+    "rarity": 5,
+    "pool": "hospital",
+    "before": 1800.0,
+    "after": 1800.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 5,
+    "pool": "workshop",
+    "before": 4276.5,
+    "after": 4276.5
+  },
+  {
+    "theme": "forest",
+    "rarity": 5,
+    "pool": "shrine",
+    "before": 8010.0,
+    "after": 8010.0
+  },
+  {
+    "theme": "forest",
+    "rarity": 5,
+    "pool": "vault",
+    "before": 8997.75,
+    "after": 8997.75
+  },
+  {
+    "theme": "forest",
+    "rarity": 5,
+    "pool": "tools",
+    "before": 3960.0,
+    "after": 3960.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 0,
+    "pool": "ordinary",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 0,
+    "pool": "hospital",
+    "before": 9.4,
+    "after": 9.4
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 0,
+    "pool": "workshop",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 0,
+    "pool": "shrine",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 0,
+    "pool": "vault",
+    "before": 15.0,
+    "after": 15.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 0,
+    "pool": "tools",
+    "before": 35.0,
+    "after": 35.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 1,
+    "pool": "ordinary",
+    "before": 50.72727272727273,
+    "after": 50.72727272727273
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 1,
+    "pool": "hospital",
+    "before": 19.428571428571427,
+    "after": 19.428571428571427
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 1,
+    "pool": "workshop",
+    "before": 84.28571428571429,
+    "after": 84.28571428571429
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 1,
+    "pool": "shrine",
+    "before": 20.0,
+    "after": 20.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 1,
+    "pool": "vault",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 1,
+    "pool": "tools",
+    "before": 95.0,
+    "after": 95.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 2,
+    "pool": "ordinary",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 2,
+    "pool": "hospital",
+    "before": 41.94174757281553,
+    "after": 41.94174757281553
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 2,
+    "pool": "workshop",
+    "before": 154.0,
+    "after": 154.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 2,
+    "pool": "shrine",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 2,
+    "pool": "vault",
+    "before": 76.66666666666667,
+    "after": 76.66666666666667
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 2,
+    "pool": "tools",
+    "before": 177.5,
+    "after": 177.5
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 3,
+    "pool": "ordinary",
+    "before": 274.3333333333333,
+    "after": 274.3333333333333
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 3,
+    "pool": "hospital",
+    "before": 74.2,
+    "after": 74.2
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 3,
+    "pool": "workshop",
+    "before": 311.1111111111111,
+    "after": 311.1111111111111
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 3,
+    "pool": "shrine",
+    "before": 360.0,
+    "after": 360.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 3,
+    "pool": "vault",
+    "before": 200.0,
+    "after": 200.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 3,
+    "pool": "tools",
+    "before": 338.57142857142856,
+    "after": 338.57142857142856
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 4,
+    "pool": "ordinary",
+    "before": 1720.909090909091,
+    "after": 1720.909090909091
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 4,
+    "pool": "hospital",
+    "before": 420.0,
+    "after": 420.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 4,
+    "pool": "workshop",
+    "before": 1950.0,
+    "after": 1950.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 4,
+    "pool": "shrine",
+    "before": 2160.0,
+    "after": 2160.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 4,
+    "pool": "vault",
+    "before": 1533.3333333333333,
+    "after": 1533.3333333333333
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 4,
+    "pool": "tools",
+    "before": 1100.0,
+    "after": 1100.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 5,
+    "pool": "ordinary",
+    "before": 8412.631578947368,
+    "after": 8412.631578947368
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 5,
+    "pool": "hospital",
+    "before": 1800.0,
+    "after": 1800.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 5,
+    "pool": "workshop",
+    "before": 4276.5,
+    "after": 4276.5
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 5,
+    "pool": "shrine",
+    "before": 8010.0,
+    "after": 8010.0
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 5,
+    "pool": "vault",
+    "before": 8997.75,
+    "after": 8997.75
+  },
+  {
+    "theme": "sanctum",
+    "rarity": 5,
+    "pool": "tools",
+    "before": 3960.0,
+    "after": 3960.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 0,
+    "pool": "ordinary",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "lantern",
+    "rarity": 0,
+    "pool": "hospital",
+    "before": 9.4,
+    "after": 9.4
+  },
+  {
+    "theme": "lantern",
+    "rarity": 0,
+    "pool": "workshop",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 0,
+    "pool": "shrine",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "lantern",
+    "rarity": 0,
+    "pool": "vault",
+    "before": 15.0,
+    "after": 15.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 0,
+    "pool": "tools",
+    "before": 35.0,
+    "after": 35.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 1,
+    "pool": "ordinary",
+    "before": 50.72727272727273,
+    "after": 50.72727272727273
+  },
+  {
+    "theme": "lantern",
+    "rarity": 1,
+    "pool": "hospital",
+    "before": 19.428571428571427,
+    "after": 19.428571428571427
+  },
+  {
+    "theme": "lantern",
+    "rarity": 1,
+    "pool": "workshop",
+    "before": 84.28571428571429,
+    "after": 84.28571428571429
+  },
+  {
+    "theme": "lantern",
+    "rarity": 1,
+    "pool": "shrine",
+    "before": 20.0,
+    "after": 20.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 1,
+    "pool": "vault",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 1,
+    "pool": "tools",
+    "before": 95.0,
+    "after": 95.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 2,
+    "pool": "ordinary",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "lantern",
+    "rarity": 2,
+    "pool": "hospital",
+    "before": 41.94174757281553,
+    "after": 41.94174757281553
+  },
+  {
+    "theme": "lantern",
+    "rarity": 2,
+    "pool": "workshop",
+    "before": 154.0,
+    "after": 154.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 2,
+    "pool": "shrine",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "lantern",
+    "rarity": 2,
+    "pool": "vault",
+    "before": 76.66666666666667,
+    "after": 76.66666666666667
+  },
+  {
+    "theme": "lantern",
+    "rarity": 2,
+    "pool": "tools",
+    "before": 177.5,
+    "after": 177.5
+  },
+  {
+    "theme": "lantern",
+    "rarity": 3,
+    "pool": "ordinary",
+    "before": 274.3333333333333,
+    "after": 274.3333333333333
+  },
+  {
+    "theme": "lantern",
+    "rarity": 3,
+    "pool": "hospital",
+    "before": 74.2,
+    "after": 74.2
+  },
+  {
+    "theme": "lantern",
+    "rarity": 3,
+    "pool": "workshop",
+    "before": 311.1111111111111,
+    "after": 311.1111111111111
+  },
+  {
+    "theme": "lantern",
+    "rarity": 3,
+    "pool": "shrine",
+    "before": 360.0,
+    "after": 360.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 3,
+    "pool": "vault",
+    "before": 200.0,
+    "after": 200.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 3,
+    "pool": "tools",
+    "before": 338.57142857142856,
+    "after": 338.57142857142856
+  },
+  {
+    "theme": "lantern",
+    "rarity": 4,
+    "pool": "ordinary",
+    "before": 1720.909090909091,
+    "after": 1720.909090909091
+  },
+  {
+    "theme": "lantern",
+    "rarity": 4,
+    "pool": "hospital",
+    "before": 420.0,
+    "after": 420.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 4,
+    "pool": "workshop",
+    "before": 1950.0,
+    "after": 1950.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 4,
+    "pool": "shrine",
+    "before": 2160.0,
+    "after": 2160.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 4,
+    "pool": "vault",
+    "before": 1533.3333333333333,
+    "after": 1533.3333333333333
+  },
+  {
+    "theme": "lantern",
+    "rarity": 4,
+    "pool": "tools",
+    "before": 1100.0,
+    "after": 1100.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 5,
+    "pool": "ordinary",
+    "before": 8412.631578947368,
+    "after": 8412.631578947368
+  },
+  {
+    "theme": "lantern",
+    "rarity": 5,
+    "pool": "hospital",
+    "before": 1800.0,
+    "after": 1800.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 5,
+    "pool": "workshop",
+    "before": 4276.5,
+    "after": 4276.5
+  },
+  {
+    "theme": "lantern",
+    "rarity": 5,
+    "pool": "shrine",
+    "before": 8010.0,
+    "after": 8010.0
+  },
+  {
+    "theme": "lantern",
+    "rarity": 5,
+    "pool": "vault",
+    "before": 8997.75,
+    "after": 8997.75
+  },
+  {
+    "theme": "lantern",
+    "rarity": 5,
+    "pool": "tools",
+    "before": 3960.0,
+    "after": 3960.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 0,
+    "pool": "ordinary",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "windpass",
+    "rarity": 0,
+    "pool": "hospital",
+    "before": 9.4,
+    "after": 9.4
+  },
+  {
+    "theme": "windpass",
+    "rarity": 0,
+    "pool": "workshop",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 0,
+    "pool": "shrine",
+    "before": 24.27777777777778,
+    "after": 24.27777777777778
+  },
+  {
+    "theme": "windpass",
+    "rarity": 0,
+    "pool": "vault",
+    "before": 15.0,
+    "after": 15.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 0,
+    "pool": "tools",
+    "before": 35.0,
+    "after": 35.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 1,
+    "pool": "ordinary",
+    "before": 50.72727272727273,
+    "after": 50.72727272727273
+  },
+  {
+    "theme": "windpass",
+    "rarity": 1,
+    "pool": "hospital",
+    "before": 19.428571428571427,
+    "after": 19.428571428571427
+  },
+  {
+    "theme": "windpass",
+    "rarity": 1,
+    "pool": "workshop",
+    "before": 84.28571428571429,
+    "after": 84.28571428571429
+  },
+  {
+    "theme": "windpass",
+    "rarity": 1,
+    "pool": "shrine",
+    "before": 20.0,
+    "after": 20.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 1,
+    "pool": "vault",
+    "before": 30.0,
+    "after": 30.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 1,
+    "pool": "tools",
+    "before": 95.0,
+    "after": 95.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 2,
+    "pool": "ordinary",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "windpass",
+    "rarity": 2,
+    "pool": "hospital",
+    "before": 41.94174757281553,
+    "after": 41.94174757281553
+  },
+  {
+    "theme": "windpass",
+    "rarity": 2,
+    "pool": "workshop",
+    "before": 154.0,
+    "after": 154.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 2,
+    "pool": "shrine",
+    "before": 103.94148020654045,
+    "after": 103.94148020654045
+  },
+  {
+    "theme": "windpass",
+    "rarity": 2,
+    "pool": "vault",
+    "before": 76.66666666666667,
+    "after": 76.66666666666667
+  },
+  {
+    "theme": "windpass",
+    "rarity": 2,
+    "pool": "tools",
+    "before": 177.5,
+    "after": 177.5
+  },
+  {
+    "theme": "windpass",
+    "rarity": 3,
+    "pool": "ordinary",
+    "before": 274.3333333333333,
+    "after": 274.3333333333333
+  },
+  {
+    "theme": "windpass",
+    "rarity": 3,
+    "pool": "hospital",
+    "before": 74.2,
+    "after": 74.2
+  },
+  {
+    "theme": "windpass",
+    "rarity": 3,
+    "pool": "workshop",
+    "before": 311.1111111111111,
+    "after": 311.1111111111111
+  },
+  {
+    "theme": "windpass",
+    "rarity": 3,
+    "pool": "shrine",
+    "before": 360.0,
+    "after": 360.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 3,
+    "pool": "vault",
+    "before": 200.0,
+    "after": 200.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 3,
+    "pool": "tools",
+    "before": 338.57142857142856,
+    "after": 338.57142857142856
+  },
+  {
+    "theme": "windpass",
+    "rarity": 4,
+    "pool": "ordinary",
+    "before": 1720.909090909091,
+    "after": 1720.909090909091
+  },
+  {
+    "theme": "windpass",
+    "rarity": 4,
+    "pool": "hospital",
+    "before": 420.0,
+    "after": 420.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 4,
+    "pool": "workshop",
+    "before": 1950.0,
+    "after": 1950.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 4,
+    "pool": "shrine",
+    "before": 2160.0,
+    "after": 2160.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 4,
+    "pool": "vault",
+    "before": 1533.3333333333333,
+    "after": 1533.3333333333333
+  },
+  {
+    "theme": "windpass",
+    "rarity": 4,
+    "pool": "tools",
+    "before": 1100.0,
+    "after": 1100.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 5,
+    "pool": "ordinary",
+    "before": 8412.631578947368,
+    "after": 8412.631578947368
+  },
+  {
+    "theme": "windpass",
+    "rarity": 5,
+    "pool": "hospital",
+    "before": 1800.0,
+    "after": 1800.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 5,
+    "pool": "workshop",
+    "before": 4276.5,
+    "after": 4276.5
+  },
+  {
+    "theme": "windpass",
+    "rarity": 5,
+    "pool": "shrine",
+    "before": 8010.0,
+    "after": 8010.0
+  },
+  {
+    "theme": "windpass",
+    "rarity": 5,
+    "pool": "vault",
+    "before": 8997.75,
+    "after": 8997.75
+  },
+  {
+    "theme": "windpass",
+    "rarity": 5,
+    "pool": "tools",
+    "before": 3960.0,
+    "after": 3960.0
+  }
+]

@@ -24,8 +24,8 @@ def production_snapshot(root):
 
 def verify(root, record):
     version = json.loads((root / 'data/version.json').read_text())
-    if version['version_name'] != '2.8.10' or version['version_code'] != 20810:
-        raise ValueError('This evidence gate is scoped to release 2.8.10; prepare a new focused review for another version.')
+    if version['version_name'] != '2.8.11' or version['version_code'] != 20811:
+        raise ValueError('This evidence gate is scoped to release 2.8.11; prepare a new focused review for another version.')
     if record.get('version') != version['version_name'] or record.get('version_code') != version['version_code']:
         raise ValueError('Focused evidence belongs to a different release.')
     if record.get('targeted_checks') != 'passed' or record.get('ui_visual_review') != 'passed':
@@ -49,28 +49,14 @@ def verify(root, record):
             raise ValueError('Each test segment requires positive elapsed time and timezones.')
         if elapsed != segment.get('elapsed_seconds') or (previous_end is not None and start < previous_end):
             raise ValueError('Test segments must have exact durations and must not overlap.')
-        if not segment.get('production_sha256') or not segment.get('scope'):
+        if not (segment.get('production_sha256') or segment.get('source_reference')) or not segment.get('scope'):
             raise ValueError('Each segment must identify its source snapshot and affected scope.')
         total += elapsed
         previous_end = end
     if total != duration or total > 600:
         raise ValueError('Each independent stage must remain within ten minutes; cumulative time must be truthful.')
-    if segments[-1]['production_sha256'] != record.get('production_sha256'):
-        # 2.8.10 was reviewed before its release metadata bump. Verify that this
-        # exact two-file version replacement is the only post-review change.
-        if record.get('post_review_version_only') is not True:
-            raise ValueError('The final review must cover the release source.')
-        normalized, _ = production_snapshot(root)
-        for name, count in (('data/version.json', 1), ('export_presets.cfg', 2)):
-            data = (root / name).read_bytes()
-            for new, old in ((b'2.8.10', b'2.8.9'), (b'20810', b'20809')):
-                if data.count(new) != count:
-                    raise ValueError('Unexpected post-review version replacement.')
-                data = data.replace(new, old)
-            normalized[name] = hashlib.sha256(data).hexdigest()
-        reviewed = hashlib.sha256(''.join(f'{p}\0{normalized[p]}\n' for p in sorted(normalized)).encode()).hexdigest()
-        if reviewed != segments[-1]['production_sha256'] or reviewed != '87a446ad27bd7dde6324b27cea3aa96e7d6ea0d57e383dfb3152e6f530ae0b35':
-            raise ValueError('Post-review changes exceed the exact 2.8.10 version metadata bump.')
+    if segments[-1].get('production_sha256') != record.get('production_sha256'):
+        raise ValueError('The final review must cover the exact release source, including version metadata.')
     if not isinstance(record.get('scope'), list) or not record['scope']:
         raise ValueError('The affected test scope must be declared.')
     files, digest = production_snapshot(root)
@@ -81,12 +67,12 @@ def verify(root, record):
 
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2] / 'godot'
-    path = root / 'validation/v2810-release-focused/release-evidence.json'
+    path = root / 'validation/v2811-release-focused/release-evidence.json'
     if not path.is_file():
         raise SystemExit('Focused release evidence is missing; signing remains blocked.')
     try:
         count, digest = verify(root, json.loads(path.read_text()))
     except (ValueError, KeyError, OSError) as error:
         raise SystemExit(str(error)) from error
-    print(f'Focused 2.8.10 evidence verified: {count} files, SHA256 {digest}')
+    print(f'Focused 2.8.11 evidence verified: {count} files, SHA256 {digest}')
     print('Only declared affected checks apply; no broad suite is started.')

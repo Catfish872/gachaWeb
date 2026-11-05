@@ -13,11 +13,11 @@ class FocusedEvidenceTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         for folder in ('data', 'scripts', 'assets'):
             (self.root / folder).mkdir()
-        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.7.1', 'version_code': 20701}))
+        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.8.11', 'version_code': 20811}))
         for name in ('main.tscn', 'project.godot', 'export_presets.cfg'):
             (self.root / name).write_text(name)
         files, digest = production_snapshot(self.root)
-        self.record = {'version': '2.7.1', 'version_code': 20701,
+        self.record = {'version': '2.8.11', 'version_code': 20811,
                        'targeted_checks': 'passed', 'ui_visual_review': 'passed',
                        'test_elapsed_seconds': 120, 'scope': ['changed room UI'],
                        'production_sha256': digest, 'production_file_count': len(files),
@@ -47,6 +47,14 @@ class FocusedEvidenceTests(unittest.TestCase):
         self.record['test_elapsed_seconds'] = 240
         self.assertEqual(verify(self.root, self.record)[1], self.record['production_sha256'])
 
+    def test_historical_reference_requires_final_exact_hash(self):
+        historical = dict(self.record['test_segments'][0])
+        historical.pop('production_sha256')
+        historical['source_reference'] = 'Development checks; whole-source hash was not recorded.'
+        self.record['test_segments'] = [historical]
+        with self.assertRaises((ValueError, KeyError)):
+            verify(self.root, self.record)
+
     def test_changed_source_stops(self):
         (self.root / 'main.tscn').write_text('changed')
         with self.assertRaises(ValueError):
@@ -58,7 +66,7 @@ class FocusedEvidenceTests(unittest.TestCase):
             verify(self.root, self.record)
 
     def test_other_version_stops(self):
-        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.7.2', 'version_code': 20702}))
+        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.8.12', 'version_code': 20812}))
         with self.assertRaises(ValueError):
             verify(self.root, self.record)
 

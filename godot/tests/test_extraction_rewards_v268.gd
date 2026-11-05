@@ -101,7 +101,9 @@ func run_tests() -> void:
 	ex.run().containers = [{"id":"loot_fixture","items":[incoming],"revealed":1}]
 	var worn_before: String = JSON.stringify(ex.run().equipped)
 	var plan: Dictionary = ex.plan_smart_loot("loot_fixture")
-	check(plan.success and plan.gain == 1026, "production smart loot replaces surplus gear")
+	var expected_gain: int = ex.item_value(incoming)
+	for removed_item in plan.get("removed", []): expected_gain -= ex.item_value(removed_item)
+	check(plan.success and plan.gain == expected_gain and expected_gain > 0 and not plan.removed.is_empty(), "production smart loot replaces surplus gear")
 	check(JSON.stringify(ex.run().equipped) == worn_before, "worn gear untouched")
 	print("V268 EXTRACTION: %d passed, %d failed" % [passed, failed])
 	quit(1 if failed else 0)
