@@ -1,0 +1,43 @@
+{
+  "version": "2.8.12",
+  "version_code": 20812,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "test_elapsed_seconds": 237.123,
+  "production_sha256": "8fad8a95fff278bada37b43a1b6f23800fdf311756982023344f3526791fb673",
+  "production_file_count": 1268,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-05T05:16:16.246Z",
+      "completed_utc": "2026-11-05T05:17:25.369Z",
+      "elapsed_seconds": 69.123,
+      "production_sha256": "8fad8a95fff278bada37b43a1b6f23800fdf311756982023344f3526791fb673",
+      "scope": [
+        "Actual merged chapter4:294 text entries,28 scenes;960x540 and1280x720 layout;4709 checks passed"
+      ],
+      "timing_note": "Conservative millisecond bounds around recorded execution timestamps."
+    },
+    {
+      "started_utc": "2026-11-05T05:17:30Z",
+      "completed_utc": "2026-11-05T05:20:18Z",
+      "elapsed_seconds": 168,
+      "production_sha256": "8fad8a95fff278bada37b43a1b6f23800fdf311756982023344f3526791fb673",
+      "scope": [
+        "Five representative scenes at960x540 and1280x720;110 rendered/input checks passed",
+        "All10 screenshots visually reviewed; Continue, Skip, final line completion and repeated closure"
+      ],
+      "timing_note": "Includes initial fixture failure, test-only scaling correction, successful rerun and visual inspection."
+    }
+  ],
+  "scope": [
+    "Approved fourth-chapter294 texts merged verbatim, preserving28 scenes and original letter timing",
+    "Other chapters, speakers, order, gameplay and rewards unchanged;118 static checks passed",
+    "Narrative reference and release pipeline updated with concrete revision examples and full-text review method"
+  ],
+  "limits": [
+    "Desktop Godot4.6.3 X11/OpenGL Compatibility rendering; Android hardware was not tested.",
+    "Final render log has one driver warning about unsupported V-Sync changes; no script errors.",
+    "Only affected tests were run. Build and signing verification are separate.",
+    "Private conversations and raw screenshots are excluded from publication."
+  ]
+}

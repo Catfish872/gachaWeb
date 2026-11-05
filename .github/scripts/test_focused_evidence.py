@@ -13,11 +13,11 @@ class FocusedEvidenceTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         for folder in ('data', 'scripts', 'assets'):
             (self.root / folder).mkdir()
-        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.8.11', 'version_code': 20811}))
+        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.8.12', 'version_code': 20812}))
         for name in ('main.tscn', 'project.godot', 'export_presets.cfg'):
             (self.root / name).write_text(name)
         files, digest = production_snapshot(self.root)
-        self.record = {'version': '2.8.11', 'version_code': 20811,
+        self.record = {'version': '2.8.12', 'version_code': 20812,
                        'targeted_checks': 'passed', 'ui_visual_review': 'passed',
                        'test_elapsed_seconds': 120, 'scope': ['changed room UI'],
                        'production_sha256': digest, 'production_file_count': len(files),
@@ -66,7 +66,7 @@ class FocusedEvidenceTests(unittest.TestCase):
             verify(self.root, self.record)
 
     def test_other_version_stops(self):
-        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.8.12', 'version_code': 20812}))
+        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.8.13', 'version_code': 20813}))
         with self.assertRaises(ValueError):
             verify(self.root, self.record)
 
