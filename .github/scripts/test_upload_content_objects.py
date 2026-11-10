@@ -104,9 +104,9 @@ class DraftDiscoveryTests(unittest.TestCase):
         with self.assertRaises(u.Conflict):u.select_release(api,self.tag,self.current,[self.a,self.b])
         api.request.assert_not_called()
     @patch.object(u,'ensure_equivalent_target')
-    def test_incomparable_partial_drafts_fail(self,_):
+    def test_incomparable_valid_sidecar_drafts_choose_most_reusable(self,_):
         api=self.api([self.make_release(1),self.make_release(2)],{1:{self.a.name:u.identity(self.a)},2:{self.b.name:u.identity(self.b)}})
-        with self.assertRaises(u.Conflict):u.select_release(api,self.tag,self.current,[self.a,self.b])
+        self.assertEqual(u.select_release(api,self.tag,self.current,[self.a,self.b])['id'],1)
     @patch.object(u,'ensure_equivalent_target')
     def test_publish_uses_numeric_id_only(self,_):
         release=self.make_release(42);api=self.api([release],{42:{p.name:u.identity(p) for p in (self.a,self.b)}})
@@ -171,4 +171,31 @@ class DraftDiscoveryTests(unittest.TestCase):
                 with patch.object(u.sys,'argv',['uploader',str(self.root),'--stable']+flags):u.main()
         self.assertEqual(u.json.loads((self.root/'stable-release-id.json').read_text())['id'],77);self.assertEqual(api.request.call_count,1)
         self.assertEqual(release['make_latest'],'true');self.assertIs(release['draft'],False);self.assertIs(release['prerelease'],False)
+    @patch.object(u,'ensure_equivalent_target')
+    def test_equivalent_sidecar_extra_logic_preserved_only_missing_uploaded(self,_):
+        extra_name='obj-'+'b'*64+'.zip';extra={'name':extra_name,'state':'uploaded','size':123,'digest':'sha256:'+'b'*64}
+        release=self.make_release(42);api=self.api([self.make_release(1),release],{1:{},42:{self.a.name:u.identity(self.a),extra_name:extra}})
+        selected=u.select_release(api,self.tag,self.current,[self.a,self.b]);self.assertEqual(selected['id'],42)
+        upload=FakeAPI({self.a.name:u.identity(self.a),extra_name:extra})
+        self.assertEqual(u.upload_missing(upload,release,[self.a,self.b],sleep=lambda _:None,allow_extra_objects=True),1)
+        self.assertEqual(upload.calls,[self.b.name]);self.assertEqual(upload.remote[extra_name],extra)
+        self.assertEqual(u.upload_missing(upload,release,[self.a,self.b],verify_only=True,allow_extra_objects=True),0)
+    def test_sidecar_extra_integrity_is_strict(self):
+        name='obj-'+'b'*64+'.zip';valid={'name':name,'state':'uploaded','size':123,'digest':'sha256:'+'b'*64}
+        for change in ({'digest':'sha256:'+'c'*64},{'state':'starter'},{'size':-1},{'size':True},{'name':'wrong'}):
+            with self.subTest(change=change),self.assertRaises(u.Conflict):u.validate_inventory({name:dict(valid,**change)},{},True)
+        with self.assertRaises(u.Conflict):u.validate_inventory({'unexpected.txt':valid},{},True)
+    def test_stable_rejects_content_addressed_extra(self):
+        name='obj-'+'b'*64+'.zip';valid={'name':name,'state':'uploaded','size':0,'digest':'sha256:'+'b'*64}
+        with self.assertRaises(u.Conflict):u.validate_inventory({name:valid},{},False)
+    def test_expected_filename_collision_still_rejected(self):
+        name=self.a.name;bad=dict(u.identity(self.a),digest='sha256:'+'c'*64)
+        with self.assertRaises(u.Conflict):u.validate_inventory({name:bad},{name:u.identity(self.a)},True)
+    def test_retained_plus_new_asset_limit_fails_before_upload(self):
+        extras={}
+        for index in range(1000):
+            sha=f'{index:064x}';name='obj-'+sha+'.zip';extras[name]={'name':name,'state':'uploaded','size':1,'digest':'sha256:'+sha}
+        api=FakeAPI(extras)
+        with self.assertRaises(u.Conflict):u.upload_missing(api,self.make_release(42),[self.a,self.b],allow_extra_objects=True,sleep=lambda _:None)
+        self.assertEqual(api.calls,[])
 if __name__=='__main__':unittest.main()

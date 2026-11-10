@@ -8,7 +8,7 @@
   "audio_runtime_checks": "passed",
   "content_update_checks": "passed",
   "in_game_subjective_listening": "not_performed",
-  "test_elapsed_seconds": 74.44032,
+  "test_elapsed_seconds": 74.88041,
   "test_segments": [
     {
       "started_utc": "2026-11-10T20:23:49.956766+00:00",
@@ -67,6 +67,16 @@
         "Both sidecar and stable publication by persisted numeric ID",
         "28 uploader, 8 preflight and 18 evidence-gate tests"
       ]
+    },
+    {
+      "started_utc": "2026-11-10T22:51:12.015690+00:00",
+      "completed_utc": "2026-11-10T22:51:12.455780+00:00",
+      "elapsed_seconds": 0.44009,
+      "production_sha256": "96c538b884d1af45387ba1daae2c4e861fb59b25e1fe3b593aaa337024919883",
+      "scope": [
+        "Equivalent source rebuild recovery with retained content-addressed sidecar objects; exact expected file collision checks",
+        "33 uploader, 8 preflight and 18 evidence gate tests; stable release remains exact-four-assets"
+      ]
     }
   ],
   "scope": [
@@ -91,6 +101,7 @@
     "Legacy aggregate relic-set suite has three failures and an exp dictionary access error, reproduced on unmodified baseline. This focused release does not claim aggregate suite success.",
     "Small signed manifest records and save snapshots remain retained for recovery; media objects are garbage-collected with active/previous/pending/in-progress protection.",
     "Upload repair: 17 mocked resumable/rate-limit/pagination checks, 8 preflight checks and 18 evidence-gate checks passed. Existing immutable draft objects retained; serial uploads at minimum nine-second spacing, server-directed backoff and final paginated verification. Production runtime bytes unchanged.",
-    "Draft lookup repair: unpublished releases resolve via authenticated paginated list and numeric ID. All 28 uploader tests pass, including exact duplicate draft subset/superset resolution, verify-only zero uploads, stable/sidecar publication ID persistence and ambiguous-state reconciliation. Runtime snapshot unchanged."
+    "Draft lookup repair: unpublished releases resolve via authenticated paginated list and numeric ID. All 28 uploader tests pass, including exact duplicate draft subset/superset resolution, verify-only zero uploads, stable/sidecar publication ID persistence and ambiguous-state reconciliation. Runtime snapshot unchanged.",
+    "Equivalent Godot rebuilds can produce different logic ZIP hashes. Sidecar recovery retains valid content-addressed unreferenced objects, verifies all expected objects, and uploads only missing hashes; stable release identity remains strict. 33 uploader tests pass."
   ]
 }

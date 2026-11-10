@@ -76,15 +76,26 @@ def identity(path):
     with path.open('rb') as stream: sha=hashlib.file_digest(stream,'sha256').hexdigest()
     return {'name':path.name,'size':path.stat().st_size,'digest':'sha256:'+sha,'state':'uploaded'}
 def matches(remote,expected): return all(remote.get(k)==v for k,v in expected.items())
-def upload_missing(api,release,files,interval=9,sleep=time.sleep,verify_only=False):
+def validate_inventory(remote,expected,allow_extra_objects=False):
+    extras=set(remote)-set(expected)
+    for name in sorted(extras):
+        asset=remote[name]
+        match=re.fullmatch(r'obj-([0-9a-f]{64})\.zip',name)
+        valid=allow_extra_objects and match is not None and asset.get('name')==name and asset.get('state')=='uploaded' and type(asset.get('size')) is int and asset['size']>=0 and asset.get('digest')=='sha256:'+match.group(1)
+        if not valid:raise Conflict('Unexpected or invalid retained asset '+name+'; all drafts preserved')
+    for name in set(remote)&set(expected):
+        if not matches(remote[name],expected[name]):raise Conflict('Existing expected asset differs: '+name+'; all drafts preserved')
+    if extras:print(f'Preserving {len(extras)} additional content-addressed objects from an equivalent build',flush=True)
+    return set(remote)&set(expected)
+
+def upload_missing(api,release,files,interval=9,sleep=time.sleep,verify_only=False,allow_extra_objects=False):
     expected={p.name:identity(p) for p in files}
     remote=api.assets(release['id'])
-    if set(remote)-set(expected): raise Conflict('Unexpected existing objects; draft preserved')
-    for name,asset in remote.items():
-        if not matches(asset,expected[name]): raise Conflict('Existing object differs: '+name)
+    reusable=validate_inventory(remote,expected,allow_extra_objects)
+    if len(set(remote)|set(expected))>1000:raise Conflict('Retained plus missing assets exceed GitHub 1000-asset limit; preserved')
     missing=[p for p in files if p.name not in remote]
     if missing and (verify_only or not release['draft']): raise Conflict('Object release is incomplete; preserved')
-    print(f'Preserving {len(remote)} verified objects; uploading {len(missing)} missing objects at >= {interval}s intervals',flush=True)
+    print(f'Preserving {len(reusable)} expected verified objects; uploading {len(missing)} missing objects at >= {interval}s intervals',flush=True)
     for index,path in enumerate(missing):
         sleep(interval)
         for attempt in range(9):
@@ -124,14 +135,15 @@ def select_release(api,tag,current,files,prerelease=True):
         if release.get('prerelease') is not prerelease:raise Conflict('Exact tag has conflicting release channel; preserved')
         ensure_equivalent_target(api.repo,release,current,api.token)
         assets=api.assets(release['id'])
-        if set(assets)-set(expected):raise Conflict('Exact-tag draft has unexpected assets; all drafts preserved')
-        for name,asset in assets.items():
-            if not matches(asset,expected[name]):raise Conflict('Exact-tag draft has conflicting asset '+name+'; all drafts preserved')
-        if not release['draft'] and set(assets)!=set(expected):raise Conflict('Published exact-tag release is incomplete; preserved')
-        candidates.append((release,set(assets)))
+        reusable=validate_inventory(assets,expected,allow_extra_objects=prerelease)
+        if not release['draft'] and reusable!=set(expected):raise Conflict('Published exact-tag release lacks current expected objects; preserved')
+        candidates.append((release,reusable))
     if not candidates:return None
     supersets=[release for release,names in candidates if all(names>=other for _,other in candidates)]
-    if not supersets:raise Conflict('Exact-tag drafts have incomparable asset sets; all preserved')
+    if not supersets:
+        if not prerelease:raise Conflict('Exact-tag drafts have incomparable asset sets; all preserved')
+        count=max(len(names) for _,names in candidates)
+        supersets=[release for release,names in candidates if len(names)==count]
     # Prefer an already published exact complete release, otherwise deterministic ID.
     selected=min(supersets,key=lambda r:(r['draft'],int(r['id'])))
     print(f'Selected release ID {selected["id"]} from {len(candidates)} verified exact-tag releases; other drafts preserved',flush=True)
@@ -164,7 +176,7 @@ def publish_by_id(api,release,tag,current,files,prerelease):
     for attempt in range(9):
         latest=api.read(f'/repos/{api.repo}/releases/{release_id}')
         validate_release(api,latest,tag,current,prerelease)
-        upload_missing(api,latest,files,verify_only=True)
+        upload_missing(api,latest,files,verify_only=True,allow_extra_objects=prerelease)
         if not latest['draft']:return latest
         payload={'draft':False,'prerelease':prerelease,'make_latest':'false' if prerelease else 'true'}
         try:
@@ -205,7 +217,7 @@ def main():
     validate_release(api,release,tag,current,prerelease)
     record.write_text(json.dumps({'tag':tag,'id':release['id']})+'\n')
     print(f'Pinned {tag} to release ID {release["id"]}',flush=True)
-    upload_missing(api,release,files,verify_only=verify_only or publish)
+    upload_missing(api,release,files,verify_only=verify_only or publish,allow_extra_objects=prerelease)
     if stable and len(json.dumps(api.read(f'/repos/{repo}/releases/{release["id"]}')).encode())>524288:raise Conflict('Stable release metadata exceeds legacy compatibility budget')
     if publish:publish_by_id(api,release,tag,current,files,prerelease)
 if __name__=='__main__':main()
