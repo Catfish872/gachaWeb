@@ -3,9 +3,9 @@ extends RefCounted
 ## Faces are inspected individually; this is not a shared top-center guess.
 
 const FACE_REGIONS := {
-	"raisa": Rect2(365, 0, 330, 330),
-	"vika": Rect2(365, 0, 350, 350),
-	"eve": Rect2(310, 110, 340, 340),
+	"raisa": Rect2(440, 70, 300, 300),
+	"vika": Rect2(225, 70, 300, 300),
+	"eve": Rect2(425, 210, 300, 300),
 	# These two regions use their dedicated 512px portrait assets, framing
 	# the head rather than shrinking their extra shoulders into small avatars.
 	"tiya": Rect2(70, 0, 360, 360),

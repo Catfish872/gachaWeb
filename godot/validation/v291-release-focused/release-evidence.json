@@ -1,0 +1,57 @@
+{
+  "version": "2.9.1",
+  "version_code": 20901,
+  "status": "prebuild_acceptance_passed",
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "music_selection_review": "passed",
+  "audio_runtime_checks": "passed",
+  "in_game_subjective_listening": "not_performed",
+  "test_elapsed_seconds": 19.924885,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-10T18:55:11.486265+00:00",
+      "completed_utc": "2026-11-10T18:55:31.411150+00:00",
+      "elapsed_seconds": 19.924885,
+      "production_sha256": "b1218df03aeb6e0a49b84c8af975ee4af2e1d246d3c9cf395b3aeb57500a1e94",
+      "scope": [
+        "validate_version",
+        "test_focused_evidence",
+        "test_release_preflight",
+        "test_android_build",
+        "test_android_manifest",
+        "test_android_kvm",
+        "verify_thunder_art_v290",
+        "verify_thunder_icons_v290",
+        "validate_chapter5_v290",
+        "test_character_avatars",
+        "test_thunder_banners_v290",
+        "test_thunder_art_review_v290",
+        "test_thunder_visuals_v290",
+        "test_thunder_acquisition_v290",
+        "test_thunder_combat_v290"
+      ]
+    }
+  ],
+  "scope": [
+    "Approved revised 13 thunder artworks and layered summon backgrounds",
+    "Curated face crops and complete CG framing",
+    "Affected summon/combat/layout regression",
+    "Version metadata, release evidence gate and Android prerequisites"
+  ],
+  "production_sha256": "b1218df03aeb6e0a49b84c8af975ee4af2e1d246d3c9cf395b3aeb57500a1e94",
+  "production_file_count": 1468,
+  "blockers": [],
+  "baseline_reference": "528c9a4596ecaa96e6083bff13b8821ed8081007 / validation/v290-release-focused/release-evidence.json",
+  "current_evidence": [
+    "validation/v291-release-focused/results.json",
+    "validation/v290-revised-art/",
+    "../docs/art_v290/REVISED_CHARACTER_ART_QA.md"
+  ],
+  "coverage_notes": [
+    "Fresh focused checks cover restored artwork, UI references and version metadata. Prior music selection/audio checks are inherited from unchanged 2.9.0 audio sources.",
+    "Independent visual review previously inspected actual rendered character, CG, armor and double-layer banner frames at desktop/mobile sizes. Source images were restored byte-identically and production changes recreated. Earlier screenshots were lost with environment replacement; this run is headless.",
+    "Prior integration/development checks and rendering are recorded separately; timing measures this final release check run only.",
+    "Physical Android installation/upgrade and subjective in-game audio listening remain unverified. Broad legacy suites are outside this art-only patch scope."
+  ]
+}

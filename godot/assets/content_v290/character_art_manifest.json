@@ -1,73 +1,8 @@
 {
-  "source": "Built-in image generation tool",
+  "source": "Built-in image generation with approved anime-review-v2 identity references",
   "date": "2026-11-10",
-  "styleReference": "res://assets/content_v280/characters/tiya.png",
-  "identityReferences": {
-    "armor": "res://assets/content_v290/characters/raisa.png",
-    "actions": "res://assets/content_v290/characters/raisa_armor.png"
-  },
-  "promptShared": "One complete full-body character on genuine transparent background, vertical 1024x1536. Premium hand-painted Japanese fantasy RPG illustration with delicately shaded anime face, natural adult proportions, intricate fabrics and metal. Entire body, weapons and primary effects inside frame. Isolated alpha cutout; no scenery, ground, text, panel or watermark. Preserve adult identity and armor design for transformed action variants.",
+  "revision": "approved-anime-review-v2",
   "assets": [
-    {
-      "path": "res://assets/content_v290/characters/raisa.png",
-      "size": [
-        1024,
-        1536
-      ],
-      "mode": "RGBA",
-      "alphaRange": [
-        0,
-        254
-      ],
-      "sha256": "5a4704cd474022fb9744b696dfb912fee36d50177a622f12a9a265a2d3f06c7d",
-      "prompt": "Raisa, adult female knight with violet eyes and deep-purple braided ponytail. Normal travel form in navy knight jacket, brass fittings, light silver guards, dark trousers and boots. Calm confident three-quarter standing pose, long single-edged lightning sword lowered outward.",
-      "review": "Full body and identity visually reviewed. Unique action silhouette verified."
-    },
-    {
-      "path": "res://assets/content_v290/characters/vika.png",
-      "size": [
-        1024,
-        1536
-      ],
-      "mode": "RGBA",
-      "alphaRange": [
-        0,
-        254
-      ],
-      "sha256": "abe8b7203a7b732f937fdf17c07e19bf2388956ea7d313dc7f9094d94138b9ea",
-      "prompt": "Vika, adult female ranger with short warm-brown bob and amber eyes. Navy-violet cropped coat, teal lining, ivory blouse, utility belt and travel boots. Confident lively smile, folding bronze long crossbow with cyan crystal lowered diagonally.",
-      "review": "Full body and identity visually reviewed. Unique action silhouette verified."
-    },
-    {
-      "path": "res://assets/content_v290/characters/eve.png",
-      "size": [
-        1024,
-        1536
-      ],
-      "mode": "RGBA",
-      "alphaRange": [
-        0,
-        254
-      ],
-      "sha256": "ff5b1945195690d8e915289a8f457d14b0db7c8e94487a7cd29314cd7b307d49",
-      "prompt": "Eve, adult female barrier healer with pale-gold mid-length braided hair, blue-gray eyes and calm smile. Ivory/deep-navy physician gown, medical satchel, partly opened ivory/navy bronze parasol staff with luminous golden protective spokes.",
-      "review": "Full body and identity visually reviewed. Unique action silhouette verified."
-    },
-    {
-      "path": "res://assets/content_v290/characters/raisa_armor.png",
-      "size": [
-        1024,
-        1536
-      ],
-      "mode": "RGBA",
-      "alphaRange": [
-        0,
-        254
-      ],
-      "sha256": "7fcb122cf278ac5d1745ca089d1932540807a4e80d9e4f7439d632db329aec4d",
-      "prompt": "Identity-preserving lightning armor transformation of Raisa. Full bright silver articulated plate armor, violet inlays and luminous lightning seams, brass details, purple cape, uncovered recognizable face, violet charged long sword lowered. Powerful composed standing pose.",
-      "review": "Full body and identity visually reviewed. Unique action silhouette verified."
-    },
     {
       "path": "res://assets/content_v290/actions/raisa_armor_normal.png",
       "size": [
@@ -75,13 +10,12 @@
         1536
       ],
       "mode": "RGBA",
+      "sha256": "3852c1d60ad97c68df44b01fdb7aec5a90ffb42516d5e71afa6c31b45ef5eaf8",
+      "review": "Approved revised identity; source artwork visually reviewed before integration.",
       "alphaRange": [
         0,
         254
-      ],
-      "sha256": "d7be95bbdd5a0f3a32196c4dcee11513dd7fe38f37abbcdaf797799b81a7db94",
-      "prompt": "Identity-preserving Raisa armor normal attack: forward low lunge to viewer-right, leading leg bent and rear leg extended, sword thrust horizontally, focused expression, cape and ponytail stream back, thin white-violet electric trajectory.",
-      "review": "Full body and identity visually reviewed. Unique action silhouette verified."
+      ]
     },
     {
       "path": "res://assets/content_v290/actions/raisa_armor_skill.png",
@@ -90,13 +24,12 @@
         1536
       ],
       "mode": "RGBA",
+      "sha256": "fc7b002fb83d1afb44f155082907f7bf77d3afa90462a313b29fe53a97feda7b",
+      "review": "Approved revised identity; source artwork visually reviewed before integration.",
       "alphaRange": [
         0,
         254
-      ],
-      "sha256": "1ecdc811961d2e0438b4ab19cbef61c58d59b739d5817350a639b46c8c51e123",
-      "prompt": "Identity-preserving Raisa armor skill: airborne knees bent, both hands gripping long sword above right shoulder before a diagonal heavy slash, fierce expression, cape arc and segmented violet lightning around blade and plate armor.",
-      "review": "Full body and identity visually reviewed. Unique action silhouette verified."
+      ]
     },
     {
       "path": "res://assets/content_v290/actions/raisa_armor_ult.png",
@@ -105,35 +38,42 @@
         1536
       ],
       "mode": "RGBA",
+      "sha256": "c900d48b4ac36715ce9f7f640ea60fa4e28ed2b58019b8d7a4f0d02db2f29615",
+      "review": "Approved revised identity; source artwork visually reviewed before integration.",
       "alphaRange": [
         0,
         254
-      ],
-      "sha256": "f061b6f736e0c8af0fd2f32985d27d4d37f0fb96e8fa63d3149f4798734d5769",
-      "prompt": "Identity-preserving Raisa armor ultimate: upright midair, sword vertical overhead, other arm extended sideways, boots apart downward, resolute gaze, huge white-violet lightning crown and concentric electric halo behind upper body.",
-      "review": "Full body and identity visually reviewed. Unique action silhouette verified."
+      ]
     },
     {
-      "path": "res://assets/content_v290/cg/raisa_watchtower_meal.png",
+      "path": "res://assets/content_v290/banner/eve_layered_banner.png",
       "size": [
         1536,
         1024
       ],
       "mode": "RGB",
-      "sha256": "6c9e830de1a1fcd4f6a87bcc3ac82810944fc483bf80744179f6f09e37f87d97",
-      "prompt": "Exact normal-form Raisa shares plain travel bread/rations with traveler in a rainy guard watchtower, seated by window. First-person traveler hand reaches for bread. Relaxed quietly amused expression, oil lamp, stone city through rain. No lightning armor. Cinematic visual novel CG in matching hand-painted Japanese fantasy style. Exactly one adult heroine with implied first-person traveler, no player face or gender. Face and key exchange in upper two-thirds, lower quarter for dialogue. No text or watermark.",
-      "review": "Identity, normal outfit, story interaction and first-person framing visually reviewed."
+      "sha256": "fde42befceb4de3b510c2bdecff014d901c976df2399a84cde6d37b71b92d644",
+      "review": "Approved revised identity; source artwork visually reviewed before integration."
     },
     {
-      "path": "res://assets/content_v290/cg/vika_teahouse_map.png",
+      "path": "res://assets/content_v290/banner/raisa_layered_banner.png",
       "size": [
         1536,
         1024
       ],
       "mode": "RGB",
-      "sha256": "3656365de12ec41b10174200b673e5a57adc02258f184ea37735a64f14e6e373",
-      "prompt": "Exact Vika adds routes to open worn travel atlas at modest teahouse table, looks warmly at first-person traveler. Two tea cups, charcoal pencil, traveler hand on atlas, folded map and crossbow near wall. Rainy window and golden lantern light. Cinematic visual novel CG in matching hand-painted Japanese fantasy style. Exactly one adult heroine with implied first-person traveler, no player face or gender. Face and key exchange in upper two-thirds, lower quarter for dialogue. No text or watermark.",
-      "review": "Identity, normal outfit, story interaction and first-person framing visually reviewed."
+      "sha256": "6bd08f4e2e9980da621fd82a4f86f74b07d0f1c6a9c9c800b9be32424a752807",
+      "review": "Approved revised identity; source artwork visually reviewed before integration."
+    },
+    {
+      "path": "res://assets/content_v290/banner/vika_layered_banner.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "4a586f12b3aff762e08d46a813b06a658707e03fe6edf71aceddace2d6968760",
+      "review": "Approved revised identity; source artwork visually reviewed before integration."
     },
     {
       "path": "res://assets/content_v290/cg/eve_clinic_porridge.png",
@@ -142,9 +82,105 @@
         1024
       ],
       "mode": "RGB",
-      "sha256": "53f86819924f093c33c55c8256be7014d9787aefcc2ae08c753185aadf238a17",
-      "prompt": "Exact Eve offers a ceramic bowl of warm rice porridge across small clinic table at night. First-person traveler hand accepts bowl, a second bowl for Eve, herbs and bandages on shelves, closed parasol staff by chair. Warm lamp and blue rainy window. Cinematic visual novel CG in matching hand-painted Japanese fantasy style. Exactly one adult heroine with implied first-person traveler, no player face or gender. Face and key exchange in upper two-thirds, lower quarter for dialogue. No text or watermark.",
-      "review": "Identity, normal outfit, story interaction and first-person framing visually reviewed."
+      "sha256": "12c63f71ec17e2c99533c0e5a9387dccb9af0489b4f8888be07ad506659e50c6",
+      "review": "Approved revised identity; source artwork visually reviewed before integration."
+    },
+    {
+      "path": "res://assets/content_v290/cg/raisa_watchtower_meal.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "217e288de13a33c9c6f684b4d4631fae71a6620e4a9782ec078ffba4faf88466",
+      "review": "Approved revised identity; source artwork visually reviewed before integration."
+    },
+    {
+      "path": "res://assets/content_v290/cg/vika_teahouse_map.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "sha256": "15c9af02d1a0663cbbe62607c0949c16b8e727cc58c0b90adec6ccb2b71ff894",
+      "review": "Approved revised identity; source artwork visually reviewed before integration."
+    },
+    {
+      "path": "res://assets/content_v290/characters/eve.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "6d6824e2784251629fae7546f2cf87cafd16a142b324a5214190cff1acb92bf5",
+      "review": "Approved revised identity; source artwork visually reviewed before integration.",
+      "alphaRange": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "res://assets/content_v290/characters/raisa.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "2b8c91a079427d812d78c5a72e4e0558bd806559b70bb55c784dffb7dd2fa623",
+      "review": "Approved revised identity; source artwork visually reviewed before integration.",
+      "alphaRange": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "res://assets/content_v290/characters/raisa_armor.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "eeedb8764c36c3c9f74f54398435694a9b29c349b1ab470068b33b9f9a3cd257",
+      "review": "Approved revised identity; source artwork visually reviewed before integration.",
+      "alphaRange": [
+        0,
+        254
+      ]
+    },
+    {
+      "path": "res://assets/content_v290/characters/vika.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA",
+      "sha256": "4fefb0f8c7843325c687516d2015232c34bfdc0c603d93df35d5f35c7e920e1b",
+      "review": "Approved revised identity; source artwork visually reviewed before integration.",
+      "alphaRange": [
+        0,
+        254
+      ]
     }
-  ]
+  ],
+  "faceRegions": {
+    "raisa": [
+      440,
+      70,
+      300,
+      300
+    ],
+    "vika": [
+      225,
+      70,
+      300,
+      300
+    ],
+    "eve": [
+      425,
+      210,
+      300,
+      300
+    ]
+  },
+  "reviewEvidence": "godot/validation/v290-revised-art/"
 }

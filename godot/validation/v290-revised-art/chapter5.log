@@ -1,0 +1,10 @@
+{
+  "result": "PASS",
+  "scenes": 40,
+  "dialogueEntries": 425,
+  "stages": 16,
+  "artAssets": 11,
+  "approvedSourceSha256": "163d4e21e3d767b59a9e58ee1cbf19bcec0865336489a2b7e1348b6bda845be2",
+  "firstClearDiamonds": 1750,
+  "fullChapterStamina": 172
+}

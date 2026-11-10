@@ -827,7 +827,7 @@ func _summon() -> void:
 	# Pool art supplies the large background portrait and environment;
 	# the shared portrait stage keeps the foreground full-body illustration.
 	var stage:=_portrait_environment(row,featured,260 if compact else 0,background)
-	stage.set_meta("embedded_banner_character",featured in ["selin", "tiya", "lumi"])
+	stage.set_meta("embedded_banner_character",featured in ["selin", "tiya", "lumi", "raisa", "vika", "eve"])
 	stage.size_flags_stretch_ratio=1.6
 	stage.name="SummonStage"
 	var banner:=_vbox(stage,8);banner.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
@@ -2619,6 +2619,9 @@ func _render_dialogue() -> void:
 	var prose_width := size.x - 2.0 * (inset + padding)
 	var prose_height := theme.default_font.get_multiline_string_size(str(line.get("text", "")), HORIZONTAL_ALIGNMENT_LEFT, prose_width, prose_size).y
 	var panel_height := maxf(170.0, ceilf(prose_height) + 124.0)
+	# Keep the revised thunder CG interaction (hands and props) above dialogue copy.
+	if _dialogue_cg_path().begins_with("res://assets/content_v290/cg/"):
+		art.offset_bottom = -panel_height - 24.0
 	var portrait_id = line.get("portrait")
 	if portrait_id is String and model.catalog.CharacterData.has(portrait_id) and not _dialogue_has_cg():
 		var portrait_height := size.x * 1.8 if compact else size.y * 1.26

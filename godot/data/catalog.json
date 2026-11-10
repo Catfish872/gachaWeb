@@ -11238,7 +11238,7 @@
         "gradientFrom": "#24213e",
         "gradientTo": "#554878",
         "excludeFeaturedFromOffBanner": true,
-        "bannerPath": "res://assets/content_v290/backgrounds/thunder_gate.png"
+        "bannerPath": "res://assets/content_v290/banner/raisa_layered_banner.png"
       },
       "limited_vika": {
         "id": "limited_vika",
@@ -11291,7 +11291,7 @@
         "gradientFrom": "#24213e",
         "gradientTo": "#554878",
         "excludeFeaturedFromOffBanner": true,
-        "bannerPath": "res://assets/content_v290/backgrounds/storm_market.png"
+        "bannerPath": "res://assets/content_v290/banner/vika_layered_banner.png"
       },
       "limited_eve": {
         "id": "limited_eve",
@@ -11344,7 +11344,7 @@
         "gradientFrom": "#24213e",
         "gradientTo": "#554878",
         "excludeFeaturedFromOffBanner": true,
-        "bannerPath": "res://assets/content_v290/backgrounds/ward_clinic.png"
+        "bannerPath": "res://assets/content_v290/banner/eve_layered_banner.png"
       }
     }
   },
