@@ -52,8 +52,8 @@
         1024
       ],
       "mode": "RGB",
-      "sha256": "fde42befceb4de3b510c2bdecff014d901c976df2399a84cde6d37b71b92d644",
-      "review": "Approved revised identity; source artwork visually reviewed before integration."
+      "sha256": "163eeaf1b117aa70e7aa890990f8c7660aab136ae954629a494c5890d9a14ba8",
+      "review": "Approved revised identity; source artwork visually reviewed before integration. Umbrella-gripping hand corrected to five digits with a localized imagegen edit; other pixels and original alpha preserved. Enlarged visual review passed 2026-11-10."
     },
     {
       "path": "res://assets/content_v290/banner/raisa_layered_banner.png",
@@ -112,8 +112,8 @@
         1536
       ],
       "mode": "RGBA",
-      "sha256": "6d6824e2784251629fae7546f2cf87cafd16a142b324a5214190cff1acb92bf5",
-      "review": "Approved revised identity; source artwork visually reviewed before integration.",
+      "sha256": "945bddd9623baed272b7f93048f058ac951fbf48cf2f00eace235ee91dc9c946",
+      "review": "Approved revised identity; source artwork visually reviewed before integration. Umbrella-gripping hand corrected to five digits with a localized imagegen edit; other pixels and original alpha preserved. Enlarged visual review passed 2026-11-10.",
       "alphaRange": [
         0,
         254

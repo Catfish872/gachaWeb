@@ -1,0 +1,50 @@
+{
+  "version": "2.9.2",
+  "version_code": 20902,
+  "status": "prebuild_acceptance_passed",
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "music_selection_review": "passed",
+  "audio_runtime_checks": "passed",
+  "in_game_subjective_listening": "not_performed",
+  "test_elapsed_seconds": 18.078051,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-10T19:23:26.845754+00:00",
+      "completed_utc": "2026-11-10T19:23:44.923805+00:00",
+      "elapsed_seconds": 18.078051,
+      "production_sha256": "4273283b54e62d8b9241a2026f581d5999156f4d5ca2d1fac4afa09fe11a1a6b",
+      "scope": [
+        "validate_version",
+        "test_focused_evidence",
+        "test_release_preflight",
+        "test_android_build",
+        "test_android_manifest",
+        "test_android_kvm",
+        "verify_thunder_art_v290",
+        "test_character_avatars",
+        "test_thunder_banners_v290",
+        "test_thunder_art_review_v290",
+        "test_thunder_visuals_v290"
+      ]
+    }
+  ],
+  "scope": [
+    "Eve umbrella hand corrections in full-body and layered banner art; pixel bounds, alpha and source manifest",
+    "Affected avatar, banner and art UI resource/layout checks",
+    "Version and Android release prerequisites"
+  ],
+  "production_sha256": "4273283b54e62d8b9241a2026f581d5999156f4d5ca2d1fac4afa09fe11a1a6b",
+  "production_file_count": 1468,
+  "blockers": [],
+  "baseline_reference": "e0d6bd5d358a4f29a42e1dcf1eae8d638f950d09 / validation/v291-release-focused/release-evidence.json",
+  "current_evidence": [
+    "validation/v292-release-focused/results.json",
+    "validation/v292-release-focused/art-verification.json"
+  ],
+  "coverage_notes": [
+    "Only the two Eve images, their source manifest, version metadata and release evidence gate changed. Existing mechanics, music and other artwork are unchanged.",
+    "Corrected full-frame images and enlarged hand crops independently visually inspected. Runtime tests here use headless Godot; rendered-device review is not claimed.",
+    "Physical Android installation/upgrade remains unverified. Prior art and music approval evidence inherited only for unchanged content."
+  ]
+}

@@ -24,8 +24,8 @@ def production_snapshot(root):
 
 def verify(root, record):
     version = json.loads((root / 'data/version.json').read_text())
-    if version['version_name'] != '2.9.1' or version['version_code'] != 20901:
-        raise ValueError('This evidence gate is scoped to release 2.9.1; prepare a new focused review for another version.')
+    if version['version_name'] != '2.9.2' or version['version_code'] != 20902:
+        raise ValueError('This evidence gate is scoped to release 2.9.2; prepare a new focused review for another version.')
     if record.get('version') != version['version_name'] or record.get('version_code') != version['version_code']:
         raise ValueError('Focused evidence belongs to a different release.')
     if record.get('targeted_checks') != 'passed' or record.get('ui_visual_review') != 'passed':
@@ -73,12 +73,12 @@ def verify(root, record):
 
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2] / 'godot'
-    path = root / 'validation/v291-release-focused/release-evidence.json'
+    path = root / 'validation/v292-release-focused/release-evidence.json'
     if not path.is_file():
         raise SystemExit('Focused release evidence is missing; signing remains blocked.')
     try:
         count, digest = verify(root, json.loads(path.read_text()))
     except (ValueError, KeyError, OSError) as error:
         raise SystemExit(str(error)) from error
-    print(f'Focused 2.9.1 evidence verified: {count} files, SHA256 {digest}')
+    print(f'Focused 2.9.2 evidence verified: {count} files, SHA256 {digest}')
     print('Only declared affected checks apply; no broad suite is started.')

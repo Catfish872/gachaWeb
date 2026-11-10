@@ -1,0 +1,12 @@
+test_cleanup_failure_fails_otherwise_successful_run (__main__.AndroidKvmTests.test_cleanup_failure_fails_otherwise_successful_run) ... ok
+test_emulator_stops_before_acl_restore (__main__.AndroidKvmTests.test_emulator_stops_before_acl_restore) ... ok
+test_existing_access_requires_no_acl_change (__main__.AndroidKvmTests.test_existing_access_requires_no_acl_change) ... ok
+test_missing_opt_in_or_wrong_runner_never_grants (__main__.AndroidKvmTests.test_missing_opt_in_or_wrong_runner_never_grants) ... ok
+test_named_user_grant_restores_exact_original_acl (__main__.AndroidKvmTests.test_named_user_grant_restores_exact_original_acl) ... ok
+test_original_failure_status_is_preserved (__main__.AndroidKvmTests.test_original_failure_status_is_preserved) ... ok
+test_partial_grant_failure_still_restores (__main__.AndroidKvmTests.test_partial_grant_failure_still_restores) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.057s
+
+OK

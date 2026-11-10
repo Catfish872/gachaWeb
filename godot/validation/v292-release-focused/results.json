@@ -1,0 +1,122 @@
+{
+  "started_utc": "2026-11-10T19:23:26.845754+00:00",
+  "completed_utc": "2026-11-10T19:23:44.923805+00:00",
+  "elapsed_seconds": 18.078051,
+  "results": [
+    {
+      "name": "validate_version",
+      "command": [
+        "python3",
+        "godot/tools/build/validate_version.py"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "test_focused_evidence",
+      "command": [
+        "python3",
+        ".github/scripts/test_focused_evidence.py"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "test_release_preflight",
+      "command": [
+        "python3",
+        ".github/scripts/test_release_preflight.py"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "test_android_build",
+      "command": [
+        "python3",
+        "godot/tests/test_android_build.py"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "test_android_manifest",
+      "command": [
+        "python3",
+        "godot/tests/test_android_manifest.py"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "test_android_kvm",
+      "command": [
+        "python3",
+        "godot/tests/test_android_kvm.py"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "verify_thunder_art_v290",
+      "command": [
+        "python3",
+        "tools/verify_thunder_art_v290.py"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "test_character_avatars",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "godot",
+        "--script",
+        "res://tests/test_character_avatars.gd"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "test_thunder_banners_v290",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "godot",
+        "--script",
+        "res://tests/test_thunder_banners_v290.gd"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "test_thunder_art_review_v290",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "godot",
+        "--script",
+        "res://tests/test_thunder_art_review_v290.gd"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "test_thunder_visuals_v290",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "godot",
+        "--script",
+        "res://tests/test_thunder_visuals_v290.gd"
+      ],
+      "returncode": 0,
+      "passed": true
+    }
+  ]
+}

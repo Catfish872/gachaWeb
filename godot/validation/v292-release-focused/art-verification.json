@@ -1,0 +1,32 @@
+{
+  "baseline_commit": "e0d6bd5d358a4f29a42e1dcf1eae8d638f950d09",
+  "baseline_verification": "All ten Eve imported textures SHA-256 match published 2.9.1 universal.apk. Published manifest source hashes verified through GitHub connector.",
+  "method": "Built-in imagegen surgical five-digit corrections, local-region compositing onto original pixels with ImageMagick; original alpha retained.",
+  "review": "Both umbrella grips visually inspected at 2\u20133x and full frame. Each corrected hand has raised index, three curled fingers, and thumb. Other palm, CG hands and all seven icons inspected; unchanged.",
+  "files": [
+    {
+      "path": "godot/assets/content_v290/characters/eve.png",
+      "sha256": "945bddd9623baed272b7f93048f058ac951fbf48cf2f00eace235ee91dc9c946",
+      "changed_pixels": 7056,
+      "changed_bounds_inclusive": [
+        325,
+        383,
+        413,
+        501
+      ],
+      "alpha_unchanged": true
+    },
+    {
+      "path": "godot/assets/content_v290/banner/eve_layered_banner.png",
+      "sha256": "163eeaf1b117aa70e7aa890990f8c7660aab136ae954629a494c5890d9a14ba8",
+      "changed_pixels": 19314,
+      "changed_bounds_inclusive": [
+        769,
+        427,
+        897,
+        637
+      ],
+      "alpha_unchanged": null
+    }
+  ]
+}
