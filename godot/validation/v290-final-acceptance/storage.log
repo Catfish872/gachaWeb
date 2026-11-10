@@ -1,0 +1,19 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: disk default slot is fresh
+PASS: disk-backed pull commits
+PASS: second slot isolated
+PASS: simulated recharge commits in slot2
+PASS: restart restores active slot2 and resources
+PASS: empty inactive slot cannot export current state
+PASS: inactive slot1 exports
+PASS: inactive export leaves active slot unchanged
+PASS: export contains correct slot1 history
+PASS: web export imports into inactive slot3
+PASS: inactive import leaves current slot unchanged
+PASS: imported slot3 activates correctly
+PASS: restarting imported slot retains progression
+PASS: malformed import rejected
+PASS: rejected import preserves entire in-memory state
+PASS: rejected import preserves disk save
+STORAGE TESTS: 16 passed, 0 failed

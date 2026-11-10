@@ -1,0 +1,12 @@
+[
+  {
+    "test": "story-final",
+    "seconds": 6.511,
+    "exit_code": 0
+  },
+  {
+    "test": "balance",
+    "seconds": 1.203,
+    "exit_code": 0
+  }
+]

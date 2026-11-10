@@ -1,0 +1,62 @@
+{
+  "started_utc": "2026-11-10T07:48:01.598940+00:00",
+  "completed_utc": "2026-11-10T07:48:02.638861+00:00",
+  "elapsed_seconds": 1.039921,
+  "scope": "Release metadata, focused gate and offline Android guards; no engine, render, audio or APK run",
+  "results": [
+    {
+      "command": [
+        "python",
+        ".github/scripts/test_focused_evidence.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.10654831300053047,
+      "output": "..............\n----------------------------------------------------------------------\nRan 14 tests in 0.009s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "godot/tools/build/validate_version.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.03653757199936081,
+      "output": "VERSION VALIDATION PASSED: 2.9.0 (20900)\n"
+    },
+    {
+      "command": [
+        "python",
+        ".github/scripts/test_release_preflight.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.3295486049992178,
+      "output": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.221s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "godot/tests/test_android_build.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.29318282600070233,
+      "output": "test_android_texture_import_required (__main__.BuildValidationTests.test_android_texture_import_required) ... ok\ntest_apk_valid_and_rejection_fixtures (__main__.BuildValidationTests.test_apk_valid_and_rejection_fixtures) ... ok\ntest_bad_metadata (__main__.BuildValidationTests.test_bad_metadata) ... ok\ntest_bad_tags (__main__.BuildValidationTests.test_bad_tags) ... ok\ntest_export_preset_version_must_match (__main__.BuildValidationTests.test_export_preset_version_must_match) ... ok\ntest_finalize_orders_normalization_alignment_and_signing (__main__.BuildValidationTests.test_finalize_orders_normalization_alignment_and_signing) ... ok\ntest_matching_version_and_tag (__main__.BuildValidationTests.test_matching_version_and_tag) ... ok\ntest_project_icon_required (__main__.BuildValidationTests.test_project_icon_required) ... ok\ntest_sdk_view_pins_build_tools (__main__.BuildValidationTests.test_sdk_view_pins_build_tools) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.137s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "godot/tests/test_android_manifest.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.09175822799988964,
+      "output": "..............\n----------------------------------------------------------------------\nRan 14 tests in 0.006s\n\nOK\n"
+    },
+    {
+      "command": [
+        "python",
+        "godot/tests/test_android_kvm.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.18227037399992696,
+      "output": "test_cleanup_failure_fails_otherwise_successful_run (__main__.AndroidKvmTests.test_cleanup_failure_fails_otherwise_successful_run) ... ok\ntest_emulator_stops_before_acl_restore (__main__.AndroidKvmTests.test_emulator_stops_before_acl_restore) ... ok\ntest_existing_access_requires_no_acl_change (__main__.AndroidKvmTests.test_existing_access_requires_no_acl_change) ... ok\ntest_missing_opt_in_or_wrong_runner_never_grants (__main__.AndroidKvmTests.test_missing_opt_in_or_wrong_runner_never_grants) ... ok\ntest_named_user_grant_restores_exact_original_acl (__main__.AndroidKvmTests.test_named_user_grant_restores_exact_original_acl) ... ok\ntest_original_failure_status_is_preserved (__main__.AndroidKvmTests.test_original_failure_status_is_preserved) ... ok\ntest_partial_grant_failure_still_restores (__main__.AndroidKvmTests.test_partial_grant_failure_still_restores) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.092s\n\nOK\n"
+    }
+  ]
+}

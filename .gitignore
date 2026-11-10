@@ -20,3 +20,21 @@ godot/assets/portraits/contact_sheet.png
 CONTRACT.md
 
 .ci/
+
+# Optional original recordings stay local; publish provenance and checksums only.
+/godot/tools/audio/thunder_sources/
+/godot/tools/audio/build_thunder_audio.py
+/godot/tools/audio/thunder_selected_sources/*
+!/godot/tools/audio/thunder_selected_sources/sources.json
+!/godot/tools/audio/thunder_selected_sources/verification.json
+
+# Local development raw simulation data and contact sheets.
+/godot/validation/v290-focused/import.log
+/godot/validation/v290-thunder/components.json
+/godot/validation/v290-thunder/icons/blessings-contact-sheet.png
+/godot/validation/v290-thunder/icons/relics-contact-sheet.png
+/godot/validation/v290-thunder/icons/skills-contact-sheet.png
+/godot/validation/v290-thunder/independent-audit.json
+/godot/validation/v290-thunder/natural-abyss.json
+/godot/validation/v290-thunder/natural-extraction.json
+/godot/validation/v290-thunder/opening-probe.json

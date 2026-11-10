@@ -1,0 +1,837 @@
+{
+  "EnemyData": {
+    "thunder_mane": {
+      "id": "thunder_mane",
+      "name": "雷鬃兽",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 2900,
+        "atk": 175,
+        "def": 85,
+        "spd": 120
+      },
+      "abyssBaseStats": {
+        "hp": 420,
+        "atk": 80,
+        "def": 25,
+        "spd": 115
+      },
+      "skills": [
+        "thunder_mane_pounce",
+        "thunder_mane_bite"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/thunder_mane.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/thunder_gate.png",
+        "res://assets/content_v290/backgrounds/rain_street.png"
+      ],
+      "balanceReference": "thunder_hawk",
+      "abyssMinFloor": 4
+    },
+    "charge_mayfly": {
+      "id": "charge_mayfly",
+      "name": "蓄电蜉蝣",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 2700,
+        "atk": 155,
+        "def": 80,
+        "spd": 100
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 50,
+        "def": 25,
+        "spd": 85
+      },
+      "skills": [
+        "charge_mayfly_flash",
+        "charge_mayfly_sting"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/charge_mayfly.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/thunder_gate.png",
+        "res://assets/content_v290/backgrounds/storm_market.png"
+      ],
+      "balanceReference": "goblin"
+    },
+    "storm_patrol": {
+      "id": "storm_patrol",
+      "name": "巡雷机兵",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3800,
+        "atk": 190,
+        "def": 125,
+        "spd": 80
+      },
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 35,
+        "spd": 75
+      },
+      "skills": [
+        "storm_patrol_warning",
+        "storm_patrol_heavy",
+        "storm_patrol_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/storm_patrol.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rain_street.png",
+        "res://assets/content_v290/backgrounds/sealed_station.png"
+      ],
+      "balanceReference": "goblin",
+      "actionCycle": [
+        "storm_patrol_warning",
+        "storm_patrol_heavy",
+        "storm_patrol_strike"
+      ]
+    },
+    "rift_shade": {
+      "id": "rift_shade",
+      "name": "裂隙游影",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3300,
+        "atk": 170,
+        "def": 100,
+        "spd": 100
+      },
+      "abyssBaseStats": {
+        "hp": 500,
+        "atk": 55,
+        "def": 60,
+        "spd": 60
+      },
+      "skills": [
+        "rift_shade_slash",
+        "rift_shade_veil"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/rift_shade.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/sunken_tower.png",
+        "res://assets/content_v290/backgrounds/rift_core.png"
+      ],
+      "balanceReference": "ice_wolf",
+      "abyssMinFloor": 4
+    },
+    "storm_crossbow": {
+      "id": "storm_crossbow",
+      "name": "鸣雷弩卫",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3100,
+        "atk": 180,
+        "def": 90,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 25,
+        "spd": 95
+      },
+      "skills": [
+        "storm_crossbow_aim",
+        "storm_crossbow_bolt",
+        "storm_crossbow_shot"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/storm_crossbow.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/storm_market.png",
+        "res://assets/content_v290/backgrounds/sealed_station.png"
+      ],
+      "balanceReference": "goblin",
+      "abyssMinFloor": 4,
+      "actionCycle": [
+        "storm_crossbow_aim",
+        "storm_crossbow_bolt",
+        "storm_crossbow_shot"
+      ]
+    },
+    "breaker_cavalier": {
+      "id": "breaker_cavalier",
+      "name": "破阵重骑",
+      "icon": "ϟ",
+      "type": "elite",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 9800,
+        "atk": 270,
+        "def": 145,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 1100,
+        "atk": 90,
+        "def": 85,
+        "spd": 105
+      },
+      "skills": [
+        "breaker_warning",
+        "breaker_charge",
+        "breaker_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/breaker_cavalier.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rain_street.png",
+        "res://assets/content_v290/backgrounds/sealed_station.png"
+      ],
+      "balanceReference": "dark_knight",
+      "actionCycle": [
+        "breaker_warning",
+        "breaker_charge",
+        "breaker_strike"
+      ]
+    },
+    "thunder_core_guard": {
+      "id": "thunder_core_guard",
+      "name": "雷核守卫",
+      "icon": "ϟ",
+      "type": "elite",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 11200,
+        "atk": 255,
+        "def": 170,
+        "spd": 80
+      },
+      "abyssBaseStats": {
+        "hp": 1200,
+        "atk": 80,
+        "def": 100,
+        "spd": 70
+      },
+      "skills": [
+        "core_guard_warning",
+        "core_guard_sweep",
+        "core_guard_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/thunder_core_guard.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/observatory.png",
+        "res://assets/content_v290/backgrounds/sunken_tower.png"
+      ],
+      "balanceReference": "dark_knight",
+      "actionCycle": [
+        "core_guard_warning",
+        "core_guard_sweep",
+        "core_guard_strike"
+      ]
+    },
+    "boss_city_sealer": {
+      "id": "boss_city_sealer",
+      "name": "封城者",
+      "icon": "ϟ",
+      "type": "boss",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 32000,
+        "atk": 340,
+        "def": 180,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 5500,
+        "atk": 140,
+        "def": 55,
+        "spd": 100
+      },
+      "skills": [
+        "sealer_warning",
+        "sealer_storm",
+        "sealer_strike"
+      ],
+      "aiPattern": "boss",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/boss_city_sealer.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rift_core.png"
+      ],
+      "balanceReference": "boss_storm_witch",
+      "isBoss": true,
+      "phaseThreshold": 0.5,
+      "phase2Skills": [
+        "sealer_warning_high",
+        "sealer_tempest",
+        "sealer_crush"
+      ],
+      "actionCycle": [
+        "sealer_warning",
+        "sealer_storm"
+      ],
+      "phase2ActionCycle": [
+        "sealer_warning_high",
+        "sealer_tempest"
+      ],
+      "expeditionAI": {
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
+      },
+      "abyssAttachments": []
+    },
+    "sealer_core": {
+      "id": "sealer_core",
+      "name": "导雷核心",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3600,
+        "atk": 1,
+        "def": 90,
+        "spd": 90
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      },
+      "skills": [
+        "sealer_core_feed"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/sealer_core.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rift_core.png"
+      ],
+      "balanceReference": "furnace_lamp",
+      "encounterAttachment": true
+    },
+    "sealer_ward": {
+      "id": "sealer_ward",
+      "name": "护城节点",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3600,
+        "atk": 1,
+        "def": 90,
+        "spd": 85
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      },
+      "skills": [
+        "sealer_ward_guard"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/sealer_ward.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rift_core.png"
+      ],
+      "balanceReference": "furnace_lamp",
+      "encounterAttachment": true
+    }
+  },
+  "EnemySkillData": {
+    "thunder_mane_pounce": {
+      "name": "雷鬃扑击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "thunder_mane_bite": {
+      "name": "裂爪撕咬",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "charge_mayfly_flash": {
+      "name": "电翅掠过",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.9,
+          "element": "thunder"
+        },
+        {
+          "type": "status",
+          "target": "single",
+          "statusId": "spd_down",
+          "value": 0.12,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 2,
+      "animation": "thunder"
+    },
+    "charge_mayfly_sting": {
+      "name": "微芒刺击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "storm_patrol_warning": {
+      "name": "执戟蓄势",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.7,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "storm_patrol_heavy": {
+      "name": "巡雷重刺",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.6,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "storm_patrol_strike": {
+      "name": "枪柄推击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "rift_shade_slash": {
+      "name": "裂影挥击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "rift_shade_veil": {
+      "name": "虚影守势",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "def_up",
+          "value": 0.25,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 3,
+      "animation": "thunder"
+    },
+    "storm_crossbow_aim": {
+      "name": "弩架校准",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.7,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "storm_crossbow_bolt": {
+      "name": "贯雷弩矢",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "storm_crossbow_shot": {
+      "name": "短弩射击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "breaker_warning": {
+      "name": "重槊回摆·蓄势",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.8,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "breaker_charge": {
+      "name": "破阵突刺",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.7,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "breaker_strike": {
+      "name": "收槊横击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "core_guard_warning": {
+      "name": "雷盾充能·下次行动全体",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.6,
+          "element": "thunder"
+        },
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "shield",
+          "value": 0.04,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "core_guard_sweep": {
+      "name": "雷环横扫",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 0.75,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "core_guard_strike": {
+      "name": "护盾推击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_warning": {
+      "name": "高塔聚雷·下次行动全体",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.3,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "sealer_storm": {
+      "name": "封城雷网",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_strike": {
+      "name": "守城重拳",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.3,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_warning_high": {
+      "name": "雷核过载·下次行动全体",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "sealer_tempest": {
+      "name": "裂隙雷暴",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.4,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_crush": {
+      "name": "雷霆重压",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_core_feed": {
+      "name": "导雷脉冲",
+      "effects": [
+        {
+          "type": "status",
+          "target": "boss_ally",
+          "statusId": "atk_up",
+          "value": 0.08,
+          "duration": 2,
+          "refreshDuration": true
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_ward_guard": {
+      "name": "护城屏障",
+      "effects": [
+        {
+          "type": "status",
+          "target": "boss_ally",
+          "statusId": "shield",
+          "value": 0.08,
+          "duration": 2,
+          "refreshDuration": true,
+          "scalingStat": "maxHp",
+          "multiplier": 0.08
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    }
+  },
+  "AbyssPools": {
+    "normal": [
+      "thunder_mane",
+      "charge_mayfly",
+      "storm_patrol",
+      "rift_shade",
+      "storm_crossbow"
+    ],
+    "elite": [
+      "breaker_cavalier",
+      "thunder_core_guard"
+    ],
+    "boss": [
+      "boss_city_sealer"
+    ]
+  }
+}

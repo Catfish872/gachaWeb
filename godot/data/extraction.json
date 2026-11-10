@@ -4003,6 +4003,457 @@
       "variantOf": "key_ruins",
       "environmentTheme": "windpass",
       "previousValue": 40
+    },
+    "thunder_city_wire": {
+      "name": "铜线卷",
+      "rarity": 0,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 10,
+      "icon": "res://assets/content_v290/loot/thunder_city_wire.tres",
+      "effects": [],
+      "description": "检修导雷线路时留下的铜线，外层缠着干燥的布带。",
+      "category": "遗迹珍藏",
+      "legacyValue": 70,
+      "v6Value": 5,
+      "v7Value": 5,
+      "previousValue": 5,
+      "variantOf": "wire",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_cloth": {
+      "name": "防雨布",
+      "rarity": 0,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "category": "纺织品",
+      "value": 38,
+      "icon": "res://assets/content_v290/loot/thunder_city_cloth.tres",
+      "effects": [],
+      "description": "城门货棚收起的防雨布，边角缝着补过的针脚。",
+      "legacyValue": 210,
+      "v6Value": 20,
+      "v7Value": 20,
+      "previousValue": 20,
+      "variantOf": "cloth",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_insulator": {
+      "name": "陶瓷绝缘子",
+      "rarity": 0,
+      "width": 2,
+      "height": 1,
+      "kind": "loot",
+      "value": 20,
+      "icon": "res://assets/content_v290/loot/thunder_city_insulator.tres",
+      "effects": [],
+      "description": "巡雷机兵线路上的陶瓷零件，表面留着细小的烧痕。",
+      "category": "遗迹珍藏",
+      "legacyValue": 150,
+      "v6Value": 10,
+      "v7Value": 10,
+      "previousValue": 10,
+      "variantOf": "bolts",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_rod_cap": {
+      "name": "引雷杆帽",
+      "rarity": 0,
+      "width": 1,
+      "height": 2,
+      "kind": "loot",
+      "category": "工具",
+      "value": 31,
+      "icon": "res://assets/content_v290/loot/thunder_city_rod_cap.tres",
+      "effects": [],
+      "description": "从屋顶引雷杆换下的铜帽，尖端已经磨圆。",
+      "legacyValue": 180,
+      "v6Value": 15,
+      "v7Value": 15,
+      "previousValue": 15,
+      "variantOf": "tape",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_wax": {
+      "name": "紫纹封蜡",
+      "rarity": 1,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 22,
+      "icon": "res://assets/content_v290/loot/thunder_city_wax.tres",
+      "effects": [],
+      "description": "档案保管员用来封住图筒的蜡，印着旧城纹章。",
+      "category": "遗迹珍藏",
+      "legacyValue": 130,
+      "v6Value": 10,
+      "v7Value": 10,
+      "previousValue": 10,
+      "variantOf": "lens",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_herbs": {
+      "name": "银叶草包",
+      "rarity": 1,
+      "width": 2,
+      "height": 1,
+      "kind": "loot",
+      "value": 38,
+      "icon": "res://assets/content_v290/loot/thunder_city_herbs.tres",
+      "effects": [],
+      "description": "诊所晾干的银叶草，用柔软的布包扎得很仔细。",
+      "category": "遗迹珍藏",
+      "legacyValue": 240,
+      "v6Value": 20,
+      "v7Value": 20,
+      "previousValue": 20,
+      "variantOf": "circuit",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_contacts": {
+      "name": "铜触片",
+      "rarity": 1,
+      "width": 1,
+      "height": 2,
+      "kind": "loot",
+      "category": "工具",
+      "value": 42,
+      "icon": "res://assets/content_v290/loot/thunder_city_contacts.tres",
+      "effects": [],
+      "description": "导雷装置内拆下的铜片，接合处仍然平整。",
+      "legacyValue": 250,
+      "v6Value": 20,
+      "v7Value": 20,
+      "previousValue": 20,
+      "variantOf": "pliers",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_glass": {
+      "name": "雷纹玻璃",
+      "rarity": 1,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "category": "零件",
+      "value": 128,
+      "icon": "res://assets/content_v290/loot/thunder_city_glass.tres",
+      "effects": [],
+      "description": "在雷雨里形成细密晶纹的玻璃，透光时泛出浅蓝色。",
+      "legacyValue": 760,
+      "v6Value": 65,
+      "v7Value": 65,
+      "previousValue": 65,
+      "variantOf": "motor",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_coil": {
+      "name": "感应线圈",
+      "rarity": 2,
+      "width": 1,
+      "height": 2,
+      "kind": "loot",
+      "value": 62,
+      "icon": "res://assets/content_v290/loot/thunder_city_coil.tres",
+      "effects": [],
+      "description": "按顺序绕好的铜线圈，接线端刻着旧式编号。",
+      "category": "遗迹珍藏",
+      "legacyValue": 370,
+      "v6Value": 30,
+      "v7Value": 30,
+      "previousValue": 30,
+      "variantOf": "battery",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_gauge": {
+      "name": "测流仪表",
+      "rarity": 2,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 136,
+      "icon": "res://assets/content_v290/loot/thunder_city_gauge.tres",
+      "effects": [],
+      "description": "修缮工用来检查导雷线路的仪表，指针保存完好。",
+      "category": "遗迹珍藏",
+      "legacyValue": 840,
+      "v6Value": 70,
+      "v7Value": 70,
+      "previousValue": 70,
+      "variantOf": "sensor",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_badge": {
+      "name": "城防徽章",
+      "rarity": 2,
+      "width": 3,
+      "height": 2,
+      "kind": "loot",
+      "category": "零件",
+      "value": 266,
+      "icon": "res://assets/content_v290/loot/thunder_city_badge.tres",
+      "effects": [],
+      "description": "护城骑士留下的徽章，背面刻着执勤人的名字。",
+      "legacyValue": 1650,
+      "v6Value": 140,
+      "v7Value": 140,
+      "previousValue": 140,
+      "variantOf": "drone_rotor",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_ruler": {
+      "name": "折叠测绘尺",
+      "rarity": 2,
+      "width": 2,
+      "height": 3,
+      "kind": "loot",
+      "category": "疗愈用品",
+      "value": 180,
+      "icon": "res://assets/content_v290/loot/thunder_city_ruler.tres",
+      "effects": [],
+      "description": "旧城测绘队的铜尺，展开后能看到细致的刻度。",
+      "legacyValue": 1060,
+      "v6Value": 90,
+      "v7Value": 90,
+      "previousValue": 90,
+      "variantOf": "insulin_case",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_fork": {
+      "name": "银制调音叉",
+      "rarity": 3,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 96,
+      "icon": "res://assets/content_v290/loot/thunder_city_fork.tres",
+      "effects": [],
+      "description": "检修导雷塔时使用的银叉，轻敲后会发出清亮的声音。",
+      "category": "遗迹珍藏",
+      "legacyValue": 550,
+      "v6Value": 45,
+      "v7Value": 45,
+      "previousValue": 45,
+      "variantOf": "processor",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_blueprint": {
+      "name": "旧城线路图",
+      "rarity": 3,
+      "width": 1,
+      "height": 3,
+      "kind": "loot",
+      "category": "古物",
+      "value": 360,
+      "icon": "res://assets/content_v290/loot/thunder_city_blueprint.tres",
+      "effects": [],
+      "description": "记录街区与地下古塔之间线路的图纸，修改处用红墨圈出。",
+      "legacyValue": 2140,
+      "v6Value": 180,
+      "v7Value": 180,
+      "previousValue": 180,
+      "variantOf": "silk_scroll",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_compass": {
+      "name": "引雷罗盘",
+      "rarity": 3,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 398,
+      "icon": "res://assets/content_v290/loot/thunder_city_compass.tres",
+      "effects": [],
+      "description": "晶针随着附近的雷流缓缓偏转，黄铜外壳仍能扣紧。",
+      "category": "遗迹珍藏",
+      "legacyValue": 2470,
+      "v6Value": 205,
+      "v7Value": 205,
+      "previousValue": 205,
+      "variantOf": "crystal",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_amulet": {
+      "name": "避雷护符",
+      "rarity": 3,
+      "width": 2,
+      "height": 3,
+      "kind": "loot",
+      "category": "材料",
+      "value": 778,
+      "icon": "res://assets/content_v290/loot/thunder_city_amulet.tres",
+      "effects": [],
+      "description": "旧城居民珍藏的护符，晶石内保留着淡紫色的光。",
+      "legacyValue": 4880,
+      "v6Value": 405,
+      "v7Value": 405,
+      "previousValue": 405,
+      "variantOf": "rare_ore",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_wheel": {
+      "name": "鎏金导雷轮",
+      "rarity": 4,
+      "width": 1,
+      "height": 1,
+      "kind": "loot",
+      "value": 546,
+      "icon": "res://assets/content_v290/loot/thunder_city_wheel.tres",
+      "effects": [],
+      "description": "古塔上拆下的导雷轮，细密铜线缠绕着镀金轮框。",
+      "category": "遗迹珍藏",
+      "legacyValue": 1530,
+      "v6Value": 130,
+      "v7Value": 130,
+      "previousValue": 130,
+      "variantOf": "gold_watch",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_amber": {
+      "name": "凝雷琥珀",
+      "rarity": 4,
+      "width": 2,
+      "height": 3,
+      "kind": "loot",
+      "value": 3127,
+      "icon": "res://assets/content_v290/loot/thunder_city_amber.tres",
+      "effects": [],
+      "description": "透明晶石中凝结着一道金色雷纹，像停留在雨夜的一瞬。",
+      "category": "遗迹珍藏",
+      "legacyValue": 10260,
+      "v6Value": 855,
+      "v7Value": 855,
+      "previousValue": 855,
+      "variantOf": "idol",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_plans": {
+      "name": "王城营造图",
+      "rarity": 4,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 2936,
+      "icon": "res://assets/content_v290/loot/thunder_city_plans.tres",
+      "effects": [],
+      "description": "封存于金属图匣的旧城图册，连地下排水道都画得十分清楚。",
+      "category": "遗迹珍藏",
+      "legacyValue": 8280,
+      "v6Value": 690,
+      "v7Value": 690,
+      "previousValue": 690,
+      "variantOf": "crown",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_frame": {
+      "name": "银制控制架",
+      "rarity": 4,
+      "width": 3,
+      "height": 3,
+      "kind": "loot",
+      "category": "遗迹装置",
+      "value": 6200,
+      "icon": "res://assets/content_v290/loot/thunder_city_frame.tres",
+      "effects": [],
+      "description": "古塔控制装置的银框，几处磨损显示它曾被长期使用。",
+      "legacyValue": 18630,
+      "v6Value": 1550,
+      "v7Value": 1550,
+      "previousValue": 1550,
+      "variantOf": "quantum_server",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_heart": {
+      "name": "紫霆心晶",
+      "rarity": 5,
+      "width": 2,
+      "height": 2,
+      "kind": "loot",
+      "value": 7947,
+      "icon": "res://assets/content_v290/loot/thunder_city_heart.tres",
+      "effects": [],
+      "description": "古塔中央保存的雷晶，晶面深处映出流动的紫色光芒。",
+      "category": "遗迹珍藏",
+      "legacyValue": 17000,
+      "v6Value": 1415,
+      "v7Value": 1415,
+      "previousValue": 1415,
+      "variantOf": "red_core",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_instrument": {
+      "name": "初代引雷仪",
+      "rarity": 5,
+      "width": 2,
+      "height": 1,
+      "kind": "loot",
+      "value": 4607,
+      "icon": "res://assets/content_v290/loot/thunder_city_instrument.tres",
+      "effects": [],
+      "description": "建立鸣雷城时使用的引雷仪，铜架上的工匠署名依然清晰。",
+      "category": "遗迹珍藏",
+      "legacyValue": 9500,
+      "v6Value": 790,
+      "v7Value": 790,
+      "previousValue": 790,
+      "variantOf": "archive",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_crown": {
+      "name": "护城者金冠",
+      "rarity": 5,
+      "width": 3,
+      "height": 3,
+      "kind": "loot",
+      "value": 22487,
+      "icon": "res://assets/content_v290/loot/thunder_city_crown.tres",
+      "effects": [],
+      "description": "纪念早期守城者的金冠，紫晶间镂刻着城墙与塔楼。",
+      "category": "遗迹珍藏",
+      "legacyValue": 51750,
+      "v6Value": 4310,
+      "v7Value": 4310,
+      "previousValue": 4310,
+      "variantOf": "dragon_egg",
+      "environmentTheme": "thunder_city"
+    },
+    "thunder_city_boundary": {
+      "name": "晴穹界晶",
+      "rarity": 5,
+      "width": 1,
+      "height": 3,
+      "kind": "loot",
+      "category": "奇珍",
+      "value": 5670,
+      "icon": "res://assets/content_v290/loot/thunder_city_boundary.tres",
+      "effects": [],
+      "description": "用于维持古老结界的蓝晶，内部的光像雨后渐晴的天空。",
+      "legacyValue": 12000,
+      "v6Value": 1000,
+      "v7Value": 1000,
+      "previousValue": 1000,
+      "variantOf": "phoenix_feather",
+      "environmentTheme": "thunder_city"
+    },
+    "key_thunder_city": {
+      "name": "古塔档案室钥匙",
+      "rarity": 2,
+      "width": 1,
+      "height": 1,
+      "kind": "key",
+      "value": 40,
+      "icon": "res://assets/items/expedition_v230/key_ruins.png",
+      "effects": [],
+      "category": "补给",
+      "buyPrice": 500,
+      "description": "开启鸣雷城的古塔档案室。",
+      "keyTheme": "thunder_city",
+      "v7Value": 40,
+      "dropWeight": 0.08,
+      "previousValue": 40,
+      "variantOf": "key_ruins",
+      "environmentTheme": "thunder_city"
     }
   },
   "rarityWeightsByAct": [
@@ -4489,6 +4940,133 @@
           80
         ]
       ]
+    },
+    "thunder_city": {
+      "name": "鸣雷城",
+      "music": "thunder_city_gate",
+      "depthMusic": [
+        "thunder_city_gate",
+        "thunder_city_street",
+        "thunder_city_core"
+      ],
+      "bossMusic": "thunder_boss",
+      "depthIds": [
+        "storm_gate",
+        "storm_city",
+        "storm_spire"
+      ],
+      "depthNames": [
+        "雷雨城郊",
+        "鸣雷旧城",
+        "雷塔禁区"
+      ],
+      "backgrounds": [
+        [
+          "res://assets/content_v290/backgrounds/thunder_gate.png",
+          "res://assets/content_v290/backgrounds/rain_street.png"
+        ],
+        [
+          "res://assets/content_v290/backgrounds/storm_market.png",
+          "res://assets/content_v290/backgrounds/ward_clinic.png",
+          "res://assets/content_v290/backgrounds/sealed_station.png"
+        ],
+        [
+          "res://assets/content_v290/backgrounds/observatory.png",
+          "res://assets/content_v290/backgrounds/sunken_tower.png",
+          "res://assets/content_v290/backgrounds/rift_core.png"
+        ]
+      ],
+      "roomNames": {
+        "entry": "雷雨城门",
+        "battle": "巡雷街道",
+        "cache": "封城货棚",
+        "rest": "避雨营地",
+        "event": "旧城告示亭",
+        "elite": "重骑关隘",
+        "vault": "护城宝库",
+        "hospital": "结界诊所",
+        "workshop": "导雷修缮所",
+        "shrine": "鸣雷供台",
+        "boss": "裂隙核心",
+        "key_vault": "古塔档案室",
+        "relay": "城防驿站"
+      },
+      "containers": [
+        "thunder_city_supply",
+        "thunder_city_medicine",
+        "thunder_city_tools",
+        "thunder_city_altar",
+        "thunder_city_archive",
+        "thunder_city_treasury"
+      ],
+      "enemies": {
+        "battle": [
+          "thunder_mane",
+          "charge_mayfly",
+          "storm_patrol",
+          "rift_shade",
+          "storm_crossbow"
+        ],
+        "elite": [
+          "breaker_cavalier",
+          "thunder_core_guard"
+        ],
+        "boss": [
+          "boss_city_sealer"
+        ]
+      },
+      "bossAttachments": [
+        "sealer_core",
+        "sealer_ward"
+      ],
+      "encounterBudget": {
+        "hpRatio": 1.0,
+        "atkRatio": 1.0,
+        "normalEarly": [
+          "wolf",
+          "goblin",
+          "fire_imp"
+        ],
+        "normalLate": [
+          "ice_wolf",
+          "thunder_hawk",
+          "fire_imp"
+        ],
+        "elite": [
+          "dark_knight"
+        ],
+        "boss": [
+          "boss_storm_witch"
+        ],
+        "escortAttackRatio": 0.0
+      },
+      "attachmentAttackByRank": [
+        [
+          15,
+          15
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          90,
+          15
+        ],
+        [
+          90,
+          80
+        ]
+      ],
+      "bossBackground": "res://assets/content_v290/backgrounds/rift_core.png"
     }
   },
   "environmentContainers": {
@@ -4563,6 +5141,30 @@
     "windpass_treasury": {
       "name": "风庭宝匣",
       "sprite": "res://assets/content_v280/containers/windpass_treasury.png"
+    },
+    "thunder_city_supply": {
+      "name": "封城补给箱",
+      "sprite": "res://assets/content_v290/containers/thunder_city_supply.tres"
+    },
+    "thunder_city_medicine": {
+      "name": "结界药柜",
+      "sprite": "res://assets/content_v290/containers/thunder_city_medicine.tres"
+    },
+    "thunder_city_tools": {
+      "name": "导雷工具柜",
+      "sprite": "res://assets/content_v290/containers/thunder_city_tools.tres"
+    },
+    "thunder_city_altar": {
+      "name": "鸣雷供台",
+      "sprite": "res://assets/content_v290/containers/thunder_city_altar.tres"
+    },
+    "thunder_city_archive": {
+      "name": "封存图筒",
+      "sprite": "res://assets/content_v290/containers/thunder_city_archive.tres"
+    },
+    "thunder_city_treasury": {
+      "name": "护城宝匣",
+      "sprite": "res://assets/content_v290/containers/thunder_city_treasury.tres"
     }
   },
   "containerLootCategories": {
@@ -4589,6 +5191,16 @@
       "疗愈用品"
     ],
     "windpass_tool_cabinet": [
+      "工具",
+      "零件",
+      "整备",
+      "装备"
+    ],
+    "thunder_city_medicine": [
+      "补给",
+      "疗愈用品"
+    ],
+    "thunder_city_tools": [
       "工具",
       "零件",
       "整备",

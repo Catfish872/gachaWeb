@@ -1,0 +1,13 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+THUNDER_NATURAL_EXTRACTION 290061 built C0 thunder extracted, candidate={ "energy": 50, "damage": 0.0 } battles=22
+THUNDER_NATURAL_EXTRACTION 290061 built C0 thunder extracted, candidate={ "energy": 100, "damage": 0.0 } battles=23
+THUNDER_NATURAL_EXTRACTION 290061 built C0 thunder extracted, candidate={ "energy": 100, "damage": 1.2 } battles=23
+THUNDER_NATURAL_EXTRACTION 290061 built C0 thunder extracted, candidate={ "energy": 100, "damage": 2.4 } battles=23
+THUNDER_NATURAL_EXTRACTION 290061 built C0 thunder extracted, candidate={ "energy": 100, "damage": 3.6 } battles=23
+THUNDER_NATURAL_EXTRACTION 290062 built C0 thunder extracted, candidate={ "energy": 50, "damage": 0.0 } battles=18
+THUNDER_NATURAL_EXTRACTION 290062 built C0 thunder extracted, candidate={ "energy": 100, "damage": 0.0 } battles=18
+THUNDER_NATURAL_EXTRACTION 290062 built C0 thunder extracted, candidate={ "energy": 100, "damage": 1.2 } battles=18
+THUNDER_NATURAL_EXTRACTION 290062 built C0 thunder extracted, candidate={ "energy": 100, "damage": 2.4 } battles=18
+THUNDER_NATURAL_EXTRACTION 290062 built C0 thunder extracted, candidate={ "energy": 100, "damage": 3.6 } battles=18
+THUNDER_NATURAL_EXTRACTION_REPORT 10 routes; 2572 checks; 0 failures; ms=4588

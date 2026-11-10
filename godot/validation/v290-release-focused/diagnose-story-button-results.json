@@ -1,0 +1,12 @@
+{
+  "started_utc": "2026-11-10T08:27:04.879838+00:00",
+  "completed_utc": "2026-11-10T08:27:08.054782+00:00",
+  "elapsed_seconds": 3.174944,
+  "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+  "scope": [
+    "story-button verbose teardown diagnosis"
+  ],
+  "exit_code": 0,
+  "status": "failed",
+  "log": "diagnose-story-button.log"
+}

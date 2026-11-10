@@ -1,0 +1,220 @@
+{
+  "version": "2.9.0",
+  "version_code": 20900,
+  "status": "prebuild_acceptance_passed",
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "music_selection_review": "passed",
+  "audio_runtime_checks": "passed",
+  "in_game_subjective_listening": "not_performed",
+  "test_elapsed_seconds": 333.47641200000004,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-10T07:50:48.621141+00:00",
+      "completed_utc": "2026-11-10T07:52:07.138440+00:00",
+      "elapsed_seconds": 78.517299,
+      "production_sha256": "90acc0370a82af91982e71b80ce599c6f8e18121680b4f858d54fa01363e2e72",
+      "scope": [
+        "chapter5_v290",
+        "thunder_combat_v290",
+        "thunder_acquisition_v290",
+        "thunder_optimizer_v290",
+        "thunder_world_v290",
+        "thunder_enemy_budget_v290",
+        "thunder_world_ui_v290",
+        "thunder_visuals_v290",
+        "battle_auto_ultimate_v241",
+        "wind_duo_v279",
+        "storage",
+        "approved chapter source equivalence",
+        "42 icon integrity checks",
+        "33 description contracts and 10 reviewed corrections per file"
+      ],
+      "timing_note": "Conservative continuous wall-clock window includes command setup, static inspection, pauses and one failed storage harness attempt before writable XDG directories were restored."
+    },
+    {
+      "started_utc": "2026-11-10T08:25:07.355864+00:00",
+      "completed_utc": "2026-11-10T08:26:40.787495+00:00",
+      "elapsed_seconds": 93.431631,
+      "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+      "scope": [
+        "chapter5_v290-mobile",
+        "story_responsive_v290-desktop",
+        "story_responsive_v290-mobile",
+        "story_button_delta_v285-mobile",
+        "chapter5-persistence-write",
+        "chapter5-persistence-read"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T08:26:52.928421+00:00",
+      "completed_utc": "2026-11-10T08:26:57.397238+00:00",
+      "elapsed_seconds": 4.468817,
+      "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+      "scope": [
+        "thunder_world_ui_v290 runtime music context and audio teardown"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T08:27:04.879838+00:00",
+      "completed_utc": "2026-11-10T08:27:08.054782+00:00",
+      "elapsed_seconds": 3.174944,
+      "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+      "scope": [
+        "story-button verbose teardown diagnosis"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T08:27:23.783808+00:00",
+      "completed_utc": "2026-11-10T08:27:27.275939+00:00",
+      "elapsed_seconds": 3.492131,
+      "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+      "scope": [
+        "story-button touch scrolling and audio teardown after cleanup fix"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T09:46:30.817846+00:00",
+      "completed_utc": "2026-11-10T09:48:42.452307+00:00",
+      "elapsed_seconds": 131.634461,
+      "production_sha256": "f1ad9ee526183e7f6b88b9454e947b51c4c0538f5257cb0477389aef9ddab600",
+      "scope": [
+        "Unified final affected regression and reviewed graphical evidence",
+        "chapter5_v290",
+        "thunder_combat_v290",
+        "thunder_acquisition_v290",
+        "thunder_optimizer_v290",
+        "thunder_world_v290",
+        "thunder_enemy_budget_v290",
+        "thunder_world_ui_v290",
+        "thunder_visuals_v290",
+        "battle_auto_ultimate_v241",
+        "wind_duo_v279",
+        "selected_thunder_audio_v290",
+        "thunder_music_v290",
+        "summon_music_v280",
+        "storage",
+        "story_button_delta_v285",
+        "story_responsive_v290",
+        "dialogue_cg_layout_v290",
+        "story_responsive_v290-desktop",
+        "dialogue_cg_layout_v290-desktop",
+        "validate_version",
+        "test_focused_evidence",
+        "test_release_preflight",
+        "test_android_build",
+        "test_android_manifest",
+        "test_android_kvm",
+        "verify_thunder_icons_v290",
+        "validate_chapter5_v290"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T09:48:52.147224+00:00",
+      "completed_utc": "2026-11-10T09:48:53.726108+00:00",
+      "elapsed_seconds": 1.578884,
+      "production_sha256": "f1ad9ee526183e7f6b88b9454e947b51c4c0538f5257cb0477389aef9ddab600",
+      "scope": [
+        "Fresh-process chapter persistence and evidence gate",
+        "write",
+        "read",
+        "evidence-gate-tests",
+        "diff-check"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T09:49:42.849307+00:00",
+      "completed_utc": "2026-11-10T09:49:56.340894+00:00",
+      "elapsed_seconds": 13.491587,
+      "production_sha256": "f1ad9ee526183e7f6b88b9454e947b51c4c0538f5257cb0477389aef9ddab600",
+      "scope": [
+        "CG desktop/mobile cleanup affected rerun",
+        "cg-desktop",
+        "cg-mobile"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T10:16:19.455562+00:00",
+      "completed_utc": "2026-11-10T10:16:21.225392+00:00",
+      "elapsed_seconds": 1.76983,
+      "production_sha256": "f1ad9ee526183e7f6b88b9454e947b51c4c0538f5257cb0477389aef9ddab600",
+      "scope": [
+        "Exact reconstructed bytes: thunder_boss.wav",
+        "Exact reconstructed bytes: thunder_city_core.flac",
+        "Exact reconstructed bytes: thunder_summon.wav",
+        "Repeated restoration preserves verified files",
+        "Mismatched existing source rejected and preserved",
+        "Production snapshot unchanged"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T11:57:56.624820+00:00",
+      "completed_utc": "2026-11-10T11:57:58.541648+00:00",
+      "elapsed_seconds": 1.916828,
+      "production_sha256": "f1ad9ee526183e7f6b88b9454e947b51c4c0538f5257cb0477389aef9ddab600",
+      "scope": [
+        "All five existing original recordings match provenance hashes",
+        "Missing-original message names retrieval command, source URL and expected hash",
+        "Explicit download follows recorded source and writes only verified bytes (mocked transport)",
+        "Existing mismatched file is preserved and rejected",
+        "Production assets and runtime snapshot unchanged"
+      ]
+    }
+  ],
+  "scope": [
+    "Chapter five approved-source integration, progression, rewards and disk persistence",
+    "Thunder combat, trials, banners, optimizer, maps, enemies, descriptions and resources",
+    "Affected mobile/desktop layout, graphical character/action/CG and full summon review",
+    "User-approved music selection; runtime decoding, routing, teardown and signal checks",
+    "Release version and offline Android prerequisites"
+  ],
+  "production_sha256": "f1ad9ee526183e7f6b88b9454e947b51c4c0538f5257cb0477389aef9ddab600",
+  "production_file_count": 1462,
+  "snapshot_recorded_utc": "2026-11-10T09:51:10.250122+00:00",
+  "blockers": [],
+  "music_selection_evidence": {
+    "user_quote": "把wasteland overdrive作为抽卡音乐，原来的抽卡音乐不需要了。其他的都可以",
+    "selection": "Wasteland Overdrive for thunder summons; Colossal Boss Battle Theme for bosses; Electric City Parts 1/2 and Dark Shrine Loop for the assigned scenes",
+    "basis": "User auditioned source recordings and approved selection; in-game loop/crossfade sound was not subjectively auditioned."
+  },
+  "coverage_notes": [
+    "All 19 current engine suites passed their assertions. The first desktop CG run logged an exit-only resource warning/error after 380 passing assertions; a test-only 0.3-second mixer cleanup wait was added, then both CG modes reran cleanly. The initial log is retained.",
+    "Graphical acceptance uses the recorded cloud renderer review at exact 960x540 and 2048x945, corrected CG frames, live action/reveal lifecycle and full ten-pull/input fixtures. During final checks four original screenshots were reinspected: ultrawide Eve CG, ten-pull summary, compact armor details and ultrawide party roster. This is not a fresh full rendered chapter traversal.",
+    "The 40-scene approved source and 16 stages are checked programmatically. Exhaustive rendered playthrough of all scenes, every tooltip and physical Android input were not performed.",
+    "User music approval covers source recordings. Decoding, gain/peak/seam metrics, real player stream routing and pause/resume are tested using dummy audio. Actual audible game transitions remain unverified.",
+    "19 historical legacy battle-test failures and a baseline array-index error were previously reproduced; the broad legacy suite is not claimed green. See READINESS.md.",
+    "APK export, fixed signing, packaged resources, actual install/upgrade and download verification belong to subsequent build/delivery stages and have not run.",
+    "Previous timed segments remain included. An additional conservative 3.650-second earlier persistence allocation is separately retained; prior untimed developmental GUI captures are not relabeled as fresh timed rendering.",
+    "Three archival source recordings use verified lossless parts for the upload transport size limit. Reconstruction matched all original bytes; runtime assets and production hash are unchanged.",
+    "Final publication scope excludes all optional original audio archives and lossless parts. Only runtime assets, public provenance/checksums and licenses are included. Source helper explicitly retrieves from original URLs on --download and verifies checksums; original archive verification above remains historical only."
+  ],
+  "current_evidence": [
+    "validation/v290-final-acceptance/results.json",
+    "validation/v290-final-acceptance/supplement-results.json",
+    "validation/v290-final-acceptance/cg-cleanup-results.json",
+    "validation/v290-final-acceptance/graphical-development-review.md",
+    "validation/v290-final-acceptance/source-archive-results.json",
+    "validation/v290-final-acceptance/narrow-release-results.json"
+  ],
+  "supplemental_timing": {
+    "prior_persistence_allocation_seconds": 3.65,
+    "accounted_seconds_including_allocation": 337.126412
+  },
+  "test_harness_sha256": {
+    "tests/test_thunder_enemy_budget_v290.gd": "27d214f7a6d64d04fbd62d7b30b12e1e69882e1abe30f7b661aef3452591d2f3",
+    "tests/test_thunder_world_v290.gd": "0290ac71010051a51871c78b86259117a0d0163b92f36fd35b18e02169183c26",
+    "tests/test_story_responsive_v290.gd": "8aa461a13ce04d1a4800081a3131c12a9e4c62b2a76e9df71eeda344350c216f",
+    "tests/test_selected_thunder_audio_v290.gd": "8c3d7b4764dd7c61fbd99bb36f7e66a3cd33796b1a915a61af370a92510d8773",
+    "tests/cloud_visual_review_v290.gd": "80755cc4d0a0de78730346d3452360f272a524d8b293bb246def4f599df281be",
+    "tests/test_dialogue_cg_layout_v290.gd": "9374d96af68c1779375e5b21f3e998a133d9001981dbe6079993aec2ba6ddc50",
+    "tests/cloud_summon_review_v290.gd": "6dabfb2605a69e7f89fe974750a359d9e9c651af764f572383e7c7bdca168a6c",
+    "tests/cloud_animation_review_v290.gd": "2167c0fc622e7f6a471dc2dffb06127273c023451852e928afaf86121aa11ccc",
+    "tests/test_chapter5_v290.gd": "81a0b50422e61a90c83518f1352f0d64825f93bc39033b4bebe0ffb40465b0f5",
+    "tests/test_thunder_visuals_v290.gd": "edfe7f1d02dab3eb8e221d8274011ca9c15d4520a64e32715c33aab03852f667",
+    "tests/test_thunder_acquisition_v290.gd": "18aaaae41a2b3cfc3561c1f93cac0a7d475c528d84eea956f8fb6cb21a159f89",
+    "tests/test_thunder_world_ui_v290.gd": "a3e507af6eddbee05779e8613a4cefe327592e87f7b2aaa06d504efc22c9f1af",
+    "tests/test_thunder_combat_v290.gd": "9816bc216af0c3a854786cb325880dab7d37ae86289003dd5bcf21239af030a5",
+    "tests/test_thunder_music_v290.gd": "52d85e1553ddd5f3b328b6c9a58e5ad04d3a7643c9110db193bac99787b16ee6",
+    "tests/test_thunder_optimizer_v290.gd": "734f4faa46d3f7dd92856408d24408dedaa5fd3166b801a3c598a1e64709c69a"
+  }
+}

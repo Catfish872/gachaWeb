@@ -1,0 +1,139 @@
+{
+  "version": "2.9.0",
+  "version_code": 20900,
+  "status": "pending_remaining_visual_and_audio_acceptance",
+  "targeted_checks": "passed",
+  "ui_visual_review": "pending",
+  "audio_listening_review": "pending",
+  "test_elapsed_seconds": 183.084822,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-10T07:50:48.621141+00:00",
+      "completed_utc": "2026-11-10T07:52:07.138440+00:00",
+      "elapsed_seconds": 78.517299,
+      "production_sha256": "90acc0370a82af91982e71b80ce599c6f8e18121680b4f858d54fa01363e2e72",
+      "scope": [
+        "chapter5_v290",
+        "thunder_combat_v290",
+        "thunder_acquisition_v290",
+        "thunder_optimizer_v290",
+        "thunder_world_v290",
+        "thunder_enemy_budget_v290",
+        "thunder_world_ui_v290",
+        "thunder_visuals_v290",
+        "battle_auto_ultimate_v241",
+        "wind_duo_v279",
+        "storage",
+        "approved chapter source equivalence",
+        "42 icon integrity checks",
+        "33 description contracts and 10 reviewed corrections per file"
+      ],
+      "timing_note": "Conservative continuous wall-clock window includes command setup, static inspection, pauses and one failed storage harness attempt before writable XDG directories were restored."
+    },
+    {
+      "started_utc": "2026-11-10T08:25:07.355864+00:00",
+      "completed_utc": "2026-11-10T08:26:40.787495+00:00",
+      "elapsed_seconds": 93.431631,
+      "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+      "scope": [
+        "chapter5_v290-mobile",
+        "story_responsive_v290-desktop",
+        "story_responsive_v290-mobile",
+        "story_button_delta_v285-mobile",
+        "chapter5-persistence-write",
+        "chapter5-persistence-read"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T08:26:52.928421+00:00",
+      "completed_utc": "2026-11-10T08:26:57.397238+00:00",
+      "elapsed_seconds": 4.468817,
+      "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+      "scope": [
+        "thunder_world_ui_v290 runtime music context and audio teardown"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T08:27:04.879838+00:00",
+      "completed_utc": "2026-11-10T08:27:08.054782+00:00",
+      "elapsed_seconds": 3.174944,
+      "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+      "scope": [
+        "story-button verbose teardown diagnosis"
+      ]
+    },
+    {
+      "started_utc": "2026-11-10T08:27:23.783808+00:00",
+      "completed_utc": "2026-11-10T08:27:27.275939+00:00",
+      "elapsed_seconds": 3.492131,
+      "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+      "scope": [
+        "story-button touch scrolling and audio teardown after cleanup fix"
+      ]
+    }
+  ],
+  "scope": [
+    "Integrated chapter five progression, rewards, dialogue and save continuity",
+    "Thunder combat, acquisition, optimizer and description consistency",
+    "Actual rendered character, banner, battle and chapter review",
+    "Actual music listening and runtime transitions",
+    "Final release metadata and offline Android guards"
+  ],
+  "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+  "production_file_count": 1458,
+  "snapshot_recorded_utc": "2026-11-10T08:28:12.170001+00:00",
+  "blockers": [
+    "Actual GUI review is partial. Remaining character/reveal/action views and full chapter/interlude/ending visual review remain pending; see cloud-ui-review.md.",
+    "Subjective music listening, loop seams and audible transitions blocked by unavailable cloud audio output (dummy driver).",
+    "GUI review duration was not timestamped; combined rendered/listening final acceptance timing remains pending.",
+    "Legacy test_battle failures remain disclosed in READINESS.md; broad suite was not rerun."
+  ],
+  "historical_evidence": [
+    "validation/v290-release-focused/metadata-checks.json",
+    "validation/v290-story/development-story-final.log"
+  ],
+  "audio_duration_exceptions": {
+    "core_seconds": 104.025,
+    "gate_seconds": 90.464,
+    "reason": "Complete musical phrases; exception documented in thunder world design. Final listening acceptance pending."
+  },
+  "coverage_notes": [
+    "11 final Godot suites: 2236 assertions passed. Runtime suite execution took 29.616557 seconds; subsequent static/storage pass took 0.83074 seconds. Continuous final acceptance window was 78.517299 seconds.",
+    "Initial additional storage invocation lacked writable XDG directories and crashed before assertions. Retried with the same isolated /tmp XDG directories as the main run; 16 assertions passed. Source unchanged.",
+    "All 40 approved scenes, 425 dialogue entries and 16 stages match approved source. 42 RGBA icons and all patch references verified. 33 thunder catalog/patch contracts, 12 unique blessings and six eligible per character match.",
+    "No build, package, sign, publish or source-code change performed.",
+    "Refresh: chapter 886, desktop layout 1142, mobile layout 1392, disk write/read 67, thunder-world UI 42, story-button 28 assertions passed. Physical-window sizes and logical viewport scaling are detailed in refresh logs.",
+    "Initial story-button run and verbose diagnostic reproduced a teardown-only Ogg playback leak after 28 passing assertions. A test-only 0.3-second audio mixer wait removed exit diagnostics in the rerun; both failed diagnostic attempts remain timed and retained. Production behavior was unchanged by the harness fix.",
+    "Actual cloud GUI scope is partial, as recorded in cloud-ui-review.md. No Android-device test or subjective listening pass is claimed."
+  ],
+  "current_evidence": [
+    "validation/v290-release-focused/final-targeted-results.json",
+    "validation/v290-release-focused/final-static-storage-results.json",
+    "validation/v290-release-focused/production-files.json",
+    "validation/v290-release-focused/refresh-targeted-results.json",
+    "validation/v290-release-focused/refresh-audio-results.json",
+    "validation/v290-release-focused/diagnose-story-button-results.json",
+    "validation/v290-release-focused/refresh-story-button-fixed-results.json",
+    "validation/v290-release-focused/cloud-ui-review.md",
+    "validation/v290-release-focused/cloud-ui-screenshots.json"
+  ],
+  "supplemental_timing": {
+    "prior_persistence_allocation_seconds": 3.65,
+    "source": "Parent-coordinated conservative allocation; original final-results.json records 1.570920674 seconds of subprocess execution but lacks UTC timestamps. Fresh timestamped write/read included in refresh-targeted-results.json.",
+    "accounted_final_test_seconds_including_allocation": 186.734822,
+    "gui_review_timing": "Actual GUI scope is recorded, but exact review durations were not supplied. This record establishes the automated-test budget only; combined rendered/listening acceptance timing remains pending.",
+    "development_layout_checks": "Prior development layout runs in validation/v290-review/story-responsive are separate; the final affected rerun is included above."
+  },
+  "test_harness_sha256": {
+    "tests/test_story_responsive_v290.gd": "8aa461a13ce04d1a4800081a3131c12a9e4c62b2a76e9df71eeda344350c216f",
+    "tests/test_story_button_delta_v285.gd": "37ca2a9f05acc77a80a5f5d5e2dc1708710a9699e8144b28cc78322626d3541d",
+    "tests/test_chapter5_v290.gd": "81a0b50422e61a90c83518f1352f0d64825f93bc39033b4bebe0ffb40465b0f5",
+    "tests/test_thunder_world_ui_v290.gd": "d9d5b120a7d5169d364051fa3660bf31455679cd747c2e04a1c1f6beea271c8c"
+  },
+  "offline_evidence_gate_regression": {
+    "command": "python -m unittest discover -s .github/scripts -p test_focused_evidence.py",
+    "tests_passed": 14,
+    "runner_reported_seconds": 0.023,
+    "scope": "Offline gate unit tests; separate from final engine review window."
+  }
+}

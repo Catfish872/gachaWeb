@@ -1,0 +1,161 @@
+{
+  "limited_raisa": {
+    "id": "limited_raisa",
+    "name": "雷铠长明",
+    "subtitle": "限定祈愿 · 雷铠·莱莎",
+    "type": "limited",
+    "banner": "✦",
+    "costPerPull": 160,
+    "currency": "diamonds",
+    "description": "雷铠·莱莎概率提升，五星75%为当期角色；偏离后下次五星保证获得当期角色。",
+    "endTime": null,
+    "rates": {
+      "3": 0.834,
+      "4": 0.15,
+      "5": 0.016
+    },
+    "pity": {
+      "soft": 73,
+      "hard": 90,
+      "softIncrease": 0.06
+    },
+    "guaranteedFeatured": true,
+    "featuredRate5": 0.75,
+    "featuredRate4": 0.5,
+    "featured5": [
+      "raisa"
+    ],
+    "pool5": [
+      "raisa",
+      "kaldi",
+      "ayla"
+    ],
+    "featured4": [
+      "gus",
+      "shana"
+    ],
+    "pool4": [
+      "gus",
+      "shana",
+      "lorin"
+    ],
+    "pool3": [
+      "ember",
+      "zeph",
+      "bolt",
+      "tide",
+      "cinder"
+    ],
+    "color": "#a09afa",
+    "gradientFrom": "#24213e",
+    "gradientTo": "#554878",
+    "excludeFeaturedFromOffBanner": true,
+    "bannerPath": "res://assets/content_v290/backgrounds/thunder_gate.png"
+  },
+  "limited_vika": {
+    "id": "limited_vika",
+    "name": "逐电归途",
+    "subtitle": "限定祈愿 · 逐电·维珂",
+    "type": "limited",
+    "banner": "✦",
+    "costPerPull": 160,
+    "currency": "diamonds",
+    "description": "逐电·维珂概率提升，五星75%为当期角色；偏离后下次五星保证获得当期角色。",
+    "endTime": null,
+    "rates": {
+      "3": 0.834,
+      "4": 0.15,
+      "5": 0.016
+    },
+    "pity": {
+      "soft": 73,
+      "hard": 90,
+      "softIncrease": 0.06
+    },
+    "guaranteedFeatured": true,
+    "featuredRate5": 0.75,
+    "featuredRate4": 0.5,
+    "featured5": [
+      "vika"
+    ],
+    "pool5": [
+      "vika",
+      "kaldi",
+      "ayla"
+    ],
+    "featured4": [
+      "gus",
+      "shana"
+    ],
+    "pool4": [
+      "gus",
+      "shana",
+      "lorin"
+    ],
+    "pool3": [
+      "ember",
+      "zeph",
+      "bolt",
+      "tide",
+      "cinder"
+    ],
+    "color": "#debb73",
+    "gradientFrom": "#24213e",
+    "gradientTo": "#554878",
+    "excludeFeaturedFromOffBanner": true,
+    "bannerPath": "res://assets/content_v290/backgrounds/storm_market.png"
+  },
+  "limited_eve": {
+    "id": "limited_eve",
+    "name": "晴穹相伴",
+    "subtitle": "限定祈愿 · 晴穹·伊芙",
+    "type": "limited",
+    "banner": "✦",
+    "costPerPull": 160,
+    "currency": "diamonds",
+    "description": "晴穹·伊芙概率提升，五星75%为当期角色；偏离后下次五星保证获得当期角色。",
+    "endTime": null,
+    "rates": {
+      "3": 0.834,
+      "4": 0.15,
+      "5": 0.016
+    },
+    "pity": {
+      "soft": 73,
+      "hard": 90,
+      "softIncrease": 0.06
+    },
+    "guaranteedFeatured": true,
+    "featuredRate5": 0.75,
+    "featuredRate4": 0.5,
+    "featured5": [
+      "eve"
+    ],
+    "pool5": [
+      "eve",
+      "kaldi",
+      "ayla"
+    ],
+    "featured4": [
+      "gus",
+      "shana"
+    ],
+    "pool4": [
+      "gus",
+      "shana",
+      "lorin"
+    ],
+    "pool3": [
+      "ember",
+      "zeph",
+      "bolt",
+      "tide",
+      "cinder"
+    ],
+    "color": "#a5d8df",
+    "gradientFrom": "#24213e",
+    "gradientTo": "#554878",
+    "excludeFeaturedFromOffBanner": true,
+    "bannerPath": "res://assets/content_v290/backgrounds/ward_clinic.png"
+  }
+}

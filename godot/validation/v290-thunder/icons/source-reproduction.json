@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "count": 42,
+  "method": "Rebuilt original transparent source images using prepare_thunder_icons_v290.py and compared each resulting SHA-256 to thunder-icons-manifest.json.",
+  "result": "All 42 runtime PNGs reproduce byte-for-byte."
+}

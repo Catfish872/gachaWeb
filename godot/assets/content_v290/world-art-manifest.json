@@ -1,0 +1,310 @@
+{
+  "version": "2.9.0-working",
+  "created": "2026-11-10",
+  "method": "Built-in image generation; new original production backgrounds and transparent sprite atlases. AtlasTexture references preserve generated pixels.",
+  "license": "Generated for this project; no external artwork or third-party reference images supplied to image generation.",
+  "sourceRecords": "docs/thunder_world_asset_sources.json",
+  "files": [
+    {
+      "path": "assets/content_v290/atlases/thunder_containers_atlas.png",
+      "sha256": "40f837b524a008260978d83f26bd9a60fa8ca2993a7ad6aca7aeaa746905a276",
+      "bytes": 2716037,
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "decodedRgbaBytes": 6291456
+    },
+    {
+      "path": "assets/content_v290/atlases/thunder_enemies_atlas.png",
+      "sha256": "c33af62080c5a3e9c97460f0c2eba88e640709373bd4ae650fb5cea3975530f9",
+      "bytes": 2017135,
+      "width": 1983,
+      "height": 793,
+      "mode": "RGBA",
+      "decodedRgbaBytes": 6290076
+    },
+    {
+      "path": "assets/content_v290/atlases/thunder_loot_atlas.png",
+      "sha256": "e759cf270af30b82a0e08620750b2c244d7670374c1b4bee6c886d818a87a8a8",
+      "bytes": 2817728,
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "decodedRgbaBytes": 6291456
+    },
+    {
+      "path": "assets/content_v290/backgrounds/observatory.png",
+      "sha256": "b236c9107fa91f41312b8964280f1e7d535daa001206d6b085034a590a215aa0",
+      "bytes": 3186880,
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "decodedRgbaBytes": 6293408
+    },
+    {
+      "path": "assets/content_v290/backgrounds/rain_street.png",
+      "sha256": "bc168f39d5916492c51a5dd908ed8b2912259b2ebe3ad7f3a1fe3abf29142755",
+      "bytes": 3699178,
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "decodedRgbaBytes": 6293408
+    },
+    {
+      "path": "assets/content_v290/backgrounds/rift_core.png",
+      "sha256": "475e1e8b11a542a392e64da76cd99007d5008998c3ea4cd7994cac3f61cd796c",
+      "bytes": 3118854,
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "decodedRgbaBytes": 6293408
+    },
+    {
+      "path": "assets/content_v290/backgrounds/sealed_station.png",
+      "sha256": "1d9eeed5f09655cf6b0a084776b2af4557b578b5c3509a6686ee081d8508bd3b",
+      "bytes": 3565497,
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "decodedRgbaBytes": 6293408
+    },
+    {
+      "path": "assets/content_v290/backgrounds/storm_market.png",
+      "sha256": "91d7287c6e6d2bd4308817597c9c731b902c8a250a388d8a91b2f2c7feae54a5",
+      "bytes": 3071527,
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "decodedRgbaBytes": 6293408
+    },
+    {
+      "path": "assets/content_v290/backgrounds/sunken_tower.png",
+      "sha256": "fb2594ab63570021b80d7da8c13c556c2a537523b1ef9146bc1bf43874dc692d",
+      "bytes": 3136531,
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "decodedRgbaBytes": 6293408
+    },
+    {
+      "path": "assets/content_v290/backgrounds/thunder_gate.png",
+      "sha256": "d11e49c40a12acdd618f2281841a46eb988338ad19a7bdc3218b4dd57456bae9",
+      "bytes": 3520780,
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "decodedRgbaBytes": 6293408
+    },
+    {
+      "path": "assets/content_v290/backgrounds/ward_clinic.png",
+      "sha256": "dbf7abc2616b48d3815ab8e9baf62a5330c7bff5b7615404a360044eb0ecc479",
+      "bytes": 3350307,
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "decodedRgbaBytes": 6293408
+    },
+    {
+      "path": "assets/content_v290/containers/thunder_city_altar.tres",
+      "sha256": "feebac0a7646967000fd174dc847816a2376f158ed47bb65492abc5b80416467",
+      "bytes": 255
+    },
+    {
+      "path": "assets/content_v290/containers/thunder_city_archive.tres",
+      "sha256": "570cd478afc3fafdbcbc6b7411c662c7ba3535101aee0c916cbd189f41b372a1",
+      "bytes": 257
+    },
+    {
+      "path": "assets/content_v290/containers/thunder_city_medicine.tres",
+      "sha256": "178126386363c7b6b3413309f1d82ee1bcf4c4bc0dcddf9fe7bb67c9cd00780d",
+      "bytes": 255
+    },
+    {
+      "path": "assets/content_v290/containers/thunder_city_supply.tres",
+      "sha256": "d766d3cfb3c95b4ea73cd3c2e2e0b66ef70b9bebd0ba8ef4fc76cff0aa6707ec",
+      "bytes": 253
+    },
+    {
+      "path": "assets/content_v290/containers/thunder_city_tools.tres",
+      "sha256": "78bd322362426212ad4e00b96f1c98a1bca6c2e2d3ff89cf97ff0e13d980f657",
+      "bytes": 256
+    },
+    {
+      "path": "assets/content_v290/containers/thunder_city_treasury.tres",
+      "sha256": "52bda4e567c8bb5ee465db46c8f3a5c538b81fc652f56667abe0d8b96bc20ca5",
+      "bytes": 258
+    },
+    {
+      "path": "assets/content_v290/enemies/boss_city_sealer.tres",
+      "sha256": "46c7c35610b08938ea611d23e5e2069162eceb3aa69be91a02cd4a459c683d5a",
+      "bytes": 254
+    },
+    {
+      "path": "assets/content_v290/enemies/breaker_cavalier.tres",
+      "sha256": "07f80dc5fe675a8deb8fd7c2f4709f0ac721ea710101fecb6bde54c96bacd7a2",
+      "bytes": 252
+    },
+    {
+      "path": "assets/content_v290/enemies/charge_mayfly.tres",
+      "sha256": "5b60a36386bd88b716afb34d8d155f8a9f11d28cedbd7160a8bed8a965bdcbc2",
+      "bytes": 252
+    },
+    {
+      "path": "assets/content_v290/enemies/rift_shade.tres",
+      "sha256": "1f8689dc5e714caf24079bf3b063558211c3dcb33749d65bf9e98e2b42e30a80",
+      "bytes": 253
+    },
+    {
+      "path": "assets/content_v290/enemies/sealer_core.tres",
+      "sha256": "61abd06a82edca63c2f635ea3a3e7a00205f5be7b10c51ea31b7690877ddc7af",
+      "bytes": 255
+    },
+    {
+      "path": "assets/content_v290/enemies/sealer_ward.tres",
+      "sha256": "513ec0c8f56d795520426c821dcd42c01c904a242dbc7bbef0fe49ea1595cdd4",
+      "bytes": 255
+    },
+    {
+      "path": "assets/content_v290/enemies/storm_crossbow.tres",
+      "sha256": "c25bf9894d80be8661f3ca8980f5eebfcd9351a814b5a4c144e41242a7c41833",
+      "bytes": 253
+    },
+    {
+      "path": "assets/content_v290/enemies/storm_patrol.tres",
+      "sha256": "14cf86e210ee7550dc81565fd93d7b376cf899d73d2ade5353d083336bf44a59",
+      "bytes": 252
+    },
+    {
+      "path": "assets/content_v290/enemies/thunder_core_guard.tres",
+      "sha256": "0e165ed605c2f63235a9e1d5765a76f498dfb1d9efa8bd48e9acd11e81ca8ce1",
+      "bytes": 254
+    },
+    {
+      "path": "assets/content_v290/enemies/thunder_mane.tres",
+      "sha256": "7a8c7f2d487c50c5a67f8ac743241843123fff9470938929a4e0c6dda3bca4ed",
+      "bytes": 250
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_amber.tres",
+      "sha256": "e041cb2da520529a1387189ddd1e3c70e0910cc202efa939acf353225c7f6a59",
+      "bytes": 252
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_amulet.tres",
+      "sha256": "803c32f2507429588a423a1e1431020e566a78598f580f797eb14d47e09d1ea2",
+      "bytes": 251
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_badge.tres",
+      "sha256": "81085d0e8f351ba40432d86b703045bd8c8c8e3b488cdb51925e27dba3454309",
+      "bytes": 252
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_blueprint.tres",
+      "sha256": "b70ec12fbbff132204117cebf1828c6ee121651598f11c203d95ff1118fef5bf",
+      "bytes": 251
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_boundary.tres",
+      "sha256": "2e5e31b39705905d8e134347fe519e30c0adff1ebf0cfc21050df7a36afea666",
+      "bytes": 252
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_cloth.tres",
+      "sha256": "3ff03999bb79bc8f4d52dfe707ca56479afab27603edefbd6fbab9909a9c69a1",
+      "bytes": 249
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_coil.tres",
+      "sha256": "5ee83d02cb66140bd0c44b5de59a9b20e32727c5c302a514271369ea202bbb50",
+      "bytes": 251
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_compass.tres",
+      "sha256": "6df893635502699779848463320e7fc6d311889dc5a5a1454b2b5c0f69900ec3",
+      "bytes": 251
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_contacts.tres",
+      "sha256": "91ebc42e44ba6f415b830bfc8d8475bd125507f3c8fddc1fa63a38584ea4ecb5",
+      "bytes": 249
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_crown.tres",
+      "sha256": "0e8ef36af3ab649e12fcd9dd20721eb2b906424fabb3e2a75adb4d682d49f65d",
+      "bytes": 252
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_fork.tres",
+      "sha256": "8005c7cb980ab31db23ccc43f131714d8158dd0c47b53aca131a47490b9f685c",
+      "bytes": 249
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_frame.tres",
+      "sha256": "830eec038c8be45d24b5cfd1588a46c73a34dd3293a1c597015a7a0b7e6eb7f5",
+      "bytes": 251
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_gauge.tres",
+      "sha256": "0f0595cb1d36dddac83b1131a545292fff933020510b60e4793acedb1fa46448",
+      "bytes": 251
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_glass.tres",
+      "sha256": "3769cdb44f082d87f4edf8c1eb6851611cb2c07517b9141a17e98fabb3e570c8",
+      "bytes": 251
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_heart.tres",
+      "sha256": "726ecc446907024560b87ba1248ff30be8fdd52c196e1ca1c8e89539cfc8b808",
+      "bytes": 251
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_herbs.tres",
+      "sha256": "92115bc1131d8ee9656add344ccad218c595d9022612366b39d2b28231bc60aa",
+      "bytes": 250
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_instrument.tres",
+      "sha256": "e480b70055735e1a51476955a4b44da560ebfde2dea9bb5de267f7e6111d0b99",
+      "bytes": 251
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_insulator.tres",
+      "sha256": "264ee3fcc26acf29eb21a66baed0b8da758e1e8efb959e3c49232c21257c7a62",
+      "bytes": 249
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_plans.tres",
+      "sha256": "7896187044c8a57258719bc665328ed24188900ec0a3e8dc35ddf92e1b564fd3",
+      "bytes": 249
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_rod_cap.tres",
+      "sha256": "45b1274fd98f50618bb372ab774f56210bee184f8037e02076a991446947077c",
+      "bytes": 249
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_ruler.tres",
+      "sha256": "9732535c2d76ae2ae0e625a1dab6c16ef5f6cbce17e90b6037de0dc6bc37c9ac",
+      "bytes": 252
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_wax.tres",
+      "sha256": "3d2afb60430f53a1abae9448e8c6448549683fa2fd9078ea98196399311eb6ab",
+      "bytes": 250
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_wheel.tres",
+      "sha256": "f8bc2b8ee68e773155adf09583cf047a547a057a47dfd797f27132008c1a9bc0",
+      "bytes": 252
+    },
+    {
+      "path": "assets/content_v290/loot/thunder_city_wire.tres",
+      "sha256": "9fce8204cffd3c4ebf87e3ad9da368436baba7874fcb1749549d8a54d6614ff7",
+      "bytes": 247
+    }
+  ],
+  "corrections": "sunken_tower and rift_core were edited through built-in image generation to replace outdoor vistas with enclosed underground stone vaults.",
+  "atlasQA": "Generated alpha was inspected; enemy row boundary uses the transparent gap y=380 to keep the tall boss crown out of the patrol sprite. AtlasTexture.filter_clip preserves cell sampling boundaries."
+}

@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://tests/cloud_summon_review_v290.gd" id="1"]
+[node name="CloudSummonReview" type="Node"]
+script = ExtResource("1")

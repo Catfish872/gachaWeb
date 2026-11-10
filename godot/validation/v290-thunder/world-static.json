@@ -1,0 +1,108 @@
+{
+  "scope": "world source assets only, engine runtime deferred to shared focused window",
+  "images": [
+    {
+      "file": "godot/assets/content_v290/atlases/thunder_containers_atlas.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 605880,
+      "totalPixels": 1572864,
+      "alphaRange": [
+        0,
+        254
+      ]
+    },
+    {
+      "file": "godot/assets/content_v290/atlases/thunder_enemies_atlas.png",
+      "size": [
+        1983,
+        793
+      ],
+      "transparentPixels": 788336,
+      "totalPixels": 1572519,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "godot/assets/content_v290/atlases/thunder_loot_atlas.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparentPixels": 725957,
+      "totalPixels": 1572864,
+      "alphaRange": [
+        0,
+        254
+      ]
+    },
+    {
+      "file": "godot/assets/content_v290/backgrounds/observatory.png",
+      "size": [
+        1672,
+        941
+      ],
+      "reviewed": true
+    },
+    {
+      "file": "godot/assets/content_v290/backgrounds/rain_street.png",
+      "size": [
+        1672,
+        941
+      ],
+      "reviewed": true
+    },
+    {
+      "file": "godot/assets/content_v290/backgrounds/rift_core.png",
+      "size": [
+        1671,
+        941
+      ],
+      "reviewed": true
+    },
+    {
+      "file": "godot/assets/content_v290/backgrounds/sealed_station.png",
+      "size": [
+        1672,
+        941
+      ],
+      "reviewed": true
+    },
+    {
+      "file": "godot/assets/content_v290/backgrounds/storm_market.png",
+      "size": [
+        1672,
+        941
+      ],
+      "reviewed": true
+    },
+    {
+      "file": "godot/assets/content_v290/backgrounds/sunken_tower.png",
+      "size": [
+        1671,
+        941
+      ],
+      "reviewed": true
+    },
+    {
+      "file": "godot/assets/content_v290/backgrounds/thunder_gate.png",
+      "size": [
+        1672,
+        941
+      ],
+      "reviewed": true
+    },
+    {
+      "file": "godot/assets/content_v290/backgrounds/ward_clinic.png",
+      "size": [
+        1672,
+        941
+      ],
+      "reviewed": true
+    }
+  ]
+}

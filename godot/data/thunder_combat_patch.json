@@ -1,0 +1,964 @@
+{
+  "CharacterData": {
+    "raisa": {
+      "id": "raisa",
+      "name": "雷铠·莱莎",
+      "title": "鸣雷城骑士",
+      "rarity": 5,
+      "element": "thunder",
+      "role": "dps",
+      "gender": "female",
+      "baseStats": {
+        "hp": 1200,
+        "atk": 175,
+        "def": 80,
+        "spd": 108,
+        "cri": 0.18,
+        "criDmg": 1.65
+      },
+      "growthRate": {
+        "hp": 110,
+        "atk": 8,
+        "def": 4,
+        "spd": 0
+      },
+      "skills": [
+        "raisa_normal",
+        "raisa_skill",
+        "raisa_ult"
+      ],
+      "passiveId": "raisa_passive",
+      "passiveDesc": "能量未满时，常态下普攻与战技的能量获取提高25%；每点能量使自身攻击力提高0.25%，最多提高25%。",
+      "synergyIds": [
+        "thunder_trio"
+      ],
+      "description": "鸣雷城的城防骑士，能够将自身的力量凝成雷电铠甲。她习惯站在危险最先袭来的地方，也正在学习把身后的路交给同行的人。",
+      "flavorText": "「你要是有别的打算，就直接告诉我。我们一起商量。」",
+      "color": "#a09afa",
+      "colorDark": "#24213e",
+      "image": "res://assets/content_v290/characters/raisa.png",
+      "portrait": "res://assets/content_v290/characters/raisa.png",
+      "portraitBackground": "res://assets/content_v290/backgrounds/thunder_gate.png",
+      "passiveIconPath": "res://assets/content_v290/icons/skills/raisa_passive.png",
+      "relicObjective": {
+        "type": "damage",
+        "label": "雷铠循环",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "storm_armor",
+            "reason": "提高雷铠状态下的伤害，配合常态积蓄能量后的连续行动。"
+          }
+        ]
+      },
+      "thunderArmor": {
+        "duration": 4,
+        "chargeBonus": 0.25,
+        "energyAttackBonus": 0.25,
+        "skills": [
+          "raisa_armor_normal",
+          "raisa_armor_skill",
+          "raisa_armor_ult"
+        ],
+        "image": "res://assets/content_v290/characters/raisa_armor.png"
+      },
+      "constellationOverrides": {
+        "5": {
+          "label": "雷鸣蓄势",
+          "desc": "常态且能量未满时，普攻与战技的能量获取额外提高30%。",
+          "buff": {
+            "thunderChargeBonus": 0.3
+          }
+        }
+      }
+    },
+    "vika": {
+      "id": "vika",
+      "name": "逐电·维珂",
+      "title": "远路寻迹者",
+      "rarity": 5,
+      "element": "thunder",
+      "role": "dps",
+      "gender": "female",
+      "baseStats": {
+        "hp": 1050,
+        "atk": 125,
+        "def": 75,
+        "spd": 112,
+        "cri": 0.12,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 100,
+        "atk": 6,
+        "def": 4,
+        "spd": 0
+      },
+      "skills": [
+        "vika_normal",
+        "vika_skill",
+        "vika_ult"
+      ],
+      "passiveId": "vika_passive",
+      "passiveDesc": "雷属性队友行动对导电目标造成生命伤害后，维珂对存活目标追加面板攻击力18%的雷属性贯穿追击，每次行动对每个目标触发一次，每回合对每个目标最多触发两次。追击无视防御且无法暴击。",
+      "synergyIds": [
+        "thunder_trio"
+      ],
+      "description": "往来于旧城与远路的寻迹者，使用折叠雷弩寻找遗失的货物，也把亲自走过的道路画进旅行图册。她给每笔委托算得清楚，却总愿意为值得一看的地方多留几页空白。",
+      "flavorText": "「前面那家店我记在地图上了。你陪我去看看，回来再告诉我画得准不准。」",
+      "color": "#debb73",
+      "colorDark": "#24213e",
+      "image": "res://assets/content_v290/characters/vika.png",
+      "portrait": "res://assets/content_v290/characters/vika.png",
+      "portraitBackground": "res://assets/content_v290/backgrounds/storm_market.png",
+      "passiveIconPath": "res://assets/content_v290/icons/skills/vika_passive.png",
+      "relicObjective": {
+        "type": "damage",
+        "label": "导电协同",
+        "referenceStatuses": [
+          "thunder_mark"
+        ],
+        "recommendedSets": [
+          {
+            "setId": "storm_tracer",
+            "reason": "提高维珂的导电追击伤害，兼顾雷属性队友触发的协同攻击。"
+          }
+        ]
+      },
+      "conductFollowUp": 0.18
+    },
+    "eve": {
+      "id": "eve",
+      "name": "晴穹·伊芙",
+      "title": "白伞医师",
+      "rarity": 5,
+      "element": "thunder",
+      "role": "support",
+      "gender": "female",
+      "baseStats": {
+        "hp": 1150,
+        "atk": 145,
+        "def": 95,
+        "spd": 104,
+        "cri": 0.12,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 100,
+        "atk": 6,
+        "def": 4,
+        "spd": 0
+      },
+      "skills": [
+        "eve_normal",
+        "eve_skill",
+        "eve_ult"
+      ],
+      "passiveId": "eve_passive",
+      "passiveDesc": "回合结束时，为带有护盾的队友提供2回合再生，并恢复自身攻击力22%的生命值。自身存活时，带有护盾的雷属性队友伤害加深10%。",
+      "synergyIds": [
+        "thunder_trio"
+      ],
+      "description": "擅长结界与疗愈的医师，以伞杖为同行的人挡住伤害。她记得伤者需要的药，也记得谁还欠着一顿热饭，盼着有一天开一家能让旅人坐下歇脚的伞铺。",
+      "flavorText": "「坐到这里来吧。你慢慢说，我会听着。」",
+      "color": "#a5d8df",
+      "colorDark": "#24213e",
+      "image": "res://assets/content_v290/characters/eve.png",
+      "portrait": "res://assets/content_v290/characters/eve.png",
+      "portraitBackground": "res://assets/content_v290/backgrounds/ward_clinic.png",
+      "passiveIconPath": "res://assets/content_v290/icons/skills/eve_passive.png",
+      "relicObjective": {
+        "type": "healing",
+        "label": "护盾与再生",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "storm_shelter",
+            "reason": "提高护盾与主动治疗量，保护队友并维持再生。"
+          }
+        ]
+      },
+      "shieldThunderDamage": 0.1,
+      "shieldThunderDamageC6": 0.14
+    }
+  },
+  "SkillData": {
+    "raisa_normal": {
+      "id": "raisa_normal",
+      "name": "巡城刀光",
+      "type": "normal",
+      "element": "thunder",
+      "energyGain": 15,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对单体敌人造成120%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_normal.png"
+    },
+    "raisa_skill": {
+      "id": "raisa_skill",
+      "name": "引雷横斩",
+      "type": "skill",
+      "element": "thunder",
+      "energyGain": 20,
+      "energyCost": 0,
+      "cooldown": 3,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 0.9,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对全体敌人造成90%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_skill.png"
+    },
+    "raisa_ult": {
+      "id": "raisa_ult",
+      "name": "雷铠着装",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "thunderArmor",
+          "target": "self"
+        }
+      ],
+      "description": "消耗当前生命的一半，获得等量护盾并进入雷电铠甲状态，持续4回合，包含本回合。能量锁定为100，技能组替换为雷铠技能。依次使用雷铠普攻与战技，解锁雷铠战技与终结技；状态结束时清空能量。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_ult.png",
+      "entersThunderArmor": true,
+      "actionImage": "res://assets/content_v290/characters/raisa_armor.png"
+    },
+    "raisa_armor_normal": {
+      "id": "raisa_armor_normal",
+      "name": "雷铠·踏霆斩",
+      "type": "normal",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.7,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "scalingStat": "atk",
+          "defPierce": 1.0,
+          "rawAtk": true,
+          "canCrit": false
+        }
+      ],
+      "description": "对单体敌人造成170%攻击力的雷属性伤害，再追加100%攻击力的雷属性贯穿伤害。贯穿伤害无视防御且无法暴击。解锁雷铠战技。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_armor_normal.png",
+      "armorStageRequired": 0,
+      "actionImage": "res://assets/content_v290/actions/raisa_armor_normal.png"
+    },
+    "raisa_armor_skill": {
+      "id": "raisa_armor_skill",
+      "name": "雷铠·环雷破",
+      "type": "skill",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "chain3",
+          "multiplier": 2.45,
+          "scalingStat": "atk",
+          "chainDecay": 0.34693877551020413,
+          "chainFloor": 0.6530612244897959
+        },
+        {
+          "type": "damage",
+          "target": "chain3",
+          "multiplier": 1.2,
+          "scalingStat": "atk",
+          "defPierce": 1.0,
+          "rawAtk": true,
+          "canCrit": false,
+          "chainDecay": 0.29166666666666663,
+          "chainFloor": 0.7083333333333334
+        }
+      ],
+      "description": "对选定敌人造成245%攻击力的雷属性伤害及120%攻击力的贯穿伤害，再向其他最多2名敌人分别造成160%攻击力的雷属性伤害及85%攻击力的贯穿伤害。贯穿伤害无视防御且无法暴击。解锁雷铠终结技。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_armor_skill.png",
+      "armorStageRequired": 1,
+      "actionImage": "res://assets/content_v290/actions/raisa_armor_skill.png"
+    },
+    "raisa_armor_ult": {
+      "id": "raisa_armor_ult",
+      "name": "雷铠·天霆裁决",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "chain3",
+          "multiplier": 2.7,
+          "scalingStat": "atk",
+          "chainDecay": 0.33333333333333337,
+          "chainFloor": 0.6666666666666666
+        },
+        {
+          "type": "damage",
+          "target": "chain3",
+          "multiplier": 1.4,
+          "scalingStat": "atk",
+          "defPierce": 1.0,
+          "rawAtk": true,
+          "canCrit": false,
+          "chainDecay": 0.3214285714285714,
+          "chainFloor": 0.6785714285714286
+        }
+      ],
+      "description": "对选定敌人造成270%攻击力的雷属性伤害及140%攻击力的贯穿伤害，再向其他最多2名敌人分别造成180%攻击力的雷属性伤害及95%攻击力的贯穿伤害。贯穿伤害无视防御且无法暴击。雷铠期间能量保持100。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_armor_ult.png",
+      "armorStageRequired": 2,
+      "actionImage": "res://assets/content_v290/actions/raisa_armor_ult.png"
+    },
+    "vika_normal": {
+      "id": "vika_normal",
+      "name": "循迹鸣弦",
+      "type": "normal",
+      "element": "thunder",
+      "energyGain": 15,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "status",
+          "target": "single",
+          "statusId": "thunder_mark",
+          "duration": 2,
+          "chance": 1,
+          "refreshDuration": true,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 2.1,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对单体敌人施加2回合导电，防御降低35%，随后造成210%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/vika_normal.png"
+    },
+    "vika_skill": {
+      "id": "vika_skill",
+      "name": "雷轨交织",
+      "type": "skill",
+      "element": "thunder",
+      "energyGain": 20,
+      "energyCost": 0,
+      "cooldown": 3,
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "thunder_mark",
+          "duration": 3,
+          "chance": 1,
+          "refreshDuration": true,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 1.3,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对全体敌人施加3回合导电，防御降低35%，随后造成130%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/vika_skill.png"
+    },
+    "vika_ult": {
+      "id": "vika_ult",
+      "name": "逐电归航",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "thunder_mark",
+          "duration": 4,
+          "chance": 1,
+          "refreshDuration": true,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 3.2,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对全体敌人施加4回合导电，防御降低35%，随后造成320%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/vika_ult.png"
+    },
+    "eve_normal": {
+      "id": "eve_normal",
+      "name": "晴光微芒",
+      "type": "normal",
+      "element": "thunder",
+      "energyGain": 15,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "heal",
+          "target": "lowest_hp_ally",
+          "multiplier": 0.25,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对单体敌人造成150%攻击力的雷属性伤害，为生命比例最低的队友恢复25%攻击力的生命值。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/eve_normal.png"
+    },
+    "eve_skill": {
+      "id": "eve_skill",
+      "name": "穹幕庇护",
+      "type": "skill",
+      "element": "thunder",
+      "energyGain": 20,
+      "energyCost": 0,
+      "cooldown": 3,
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "shield",
+          "duration": 3,
+          "chance": 1,
+          "refreshDuration": true,
+          "scalingStat": "atk",
+          "multiplier": 2.0
+        },
+        {
+          "type": "heal",
+          "target": "all_allies",
+          "multiplier": 0.45,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "为全队提供自身攻击力200%的护盾，持续3回合，并恢复45%攻击力的生命值。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/eve_skill.png"
+    },
+    "eve_ult": {
+      "id": "eve_ult",
+      "name": "雨后晴穹",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "shield",
+          "duration": 4,
+          "chance": 1,
+          "refreshDuration": true,
+          "scalingStat": "atk",
+          "multiplier": 3.0
+        },
+        {
+          "type": "heal",
+          "target": "all_allies",
+          "multiplier": 0.9,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "regen",
+          "duration": 3,
+          "chance": 1,
+          "refreshDuration": true
+        }
+      ],
+      "description": "为全队提供自身攻击力300%的护盾，持续4回合，恢复90%攻击力的生命值并提供3回合再生。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/eve_ult.png"
+    }
+  },
+  "ConstellationC6": {
+    "raisa": {
+      "label": "与你共赴雷明",
+      "desc": "雷电铠甲持续时间延长1回合。完成普攻与战技后，可连续使用两次雷铠终结技。",
+      "buff": {
+        "c6_type": "thunder_armor_extend"
+      }
+    },
+    "vika": {
+      "label": "循光归来",
+      "desc": "导电追击倍率提高15%，计入遗物与祝福提供的基础倍率加成；基础倍率为18%时，提高至20.7%。",
+      "buff": {
+        "c6_type": "thunder_conduct_up"
+      }
+    },
+    "eve": {
+      "label": "晴穹长明",
+      "desc": "被动为带有护盾的队友恢复的生命值，由攻击力的22%提高至28%；带有护盾的雷属性队友伤害加深由10%提高至14%。",
+      "buff": {
+        "c6_type": "thunder_shelter_up"
+      }
+    }
+  },
+  "RelicSets": {
+    "storm_armor": {
+      "id": "storm_armor",
+      "name": "雷铠誓卫",
+      "theme": "雷铠",
+      "color": "#a09afa",
+      "slotIcons": {
+        "helmet": "res://assets/content_v290/icons/relics/storm_armor_helmet.png",
+        "chest": "res://assets/content_v290/icons/relics/storm_armor_chest.png",
+        "belt": "res://assets/content_v290/icons/relics/storm_armor_belt.png",
+        "boots": "res://assets/content_v290/icons/relics/storm_armor_boots.png",
+        "necklace": "res://assets/content_v290/icons/relics/storm_armor_necklace.png"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "攻击力提高12%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "攻击力额外提高12%；雷铠状态下普攻、战技和终结技造成的直接伤害提高20%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            },
+            {
+              "type": "thunderArmorDamage",
+              "value": 0.2
+            }
+          ]
+        }
+      ]
+    },
+    "storm_tracer": {
+      "id": "storm_tracer",
+      "name": "逐电归途",
+      "theme": "雷轨",
+      "color": "#debb73",
+      "slotIcons": {
+        "helmet": "res://assets/content_v290/icons/relics/storm_tracer_helmet.png",
+        "chest": "res://assets/content_v290/icons/relics/storm_tracer_chest.png",
+        "belt": "res://assets/content_v290/icons/relics/storm_tracer_belt.png",
+        "boots": "res://assets/content_v290/icons/relics/storm_tracer_boots.png",
+        "necklace": "res://assets/content_v290/icons/relics/storm_tracer_necklace.png"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "攻击力提高12%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "攻击力额外提高12%；佩戴者的导电追击基础倍率增加攻击力的8%。通过技能施加导电后，全队雷铠状态下普攻、战技和终结技造成的直接伤害提高20%，持续2回合。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            },
+            {
+              "type": "thunderConductBonus",
+              "value": 0.08
+            },
+            {
+              "type": "onStatusAppliedPartyArmorAmp",
+              "statusId": "thunder_mark",
+              "value": 0.2,
+              "duration": 2
+            }
+          ]
+        }
+      ]
+    },
+    "storm_shelter": {
+      "id": "storm_shelter",
+      "name": "晴穹祈愿",
+      "theme": "晴穹",
+      "color": "#a5d8df",
+      "slotIcons": {
+        "helmet": "res://assets/content_v290/icons/relics/storm_shelter_helmet.png",
+        "chest": "res://assets/content_v290/icons/relics/storm_shelter_chest.png",
+        "belt": "res://assets/content_v290/icons/relics/storm_shelter_belt.png",
+        "boots": "res://assets/content_v290/icons/relics/storm_shelter_boots.png",
+        "necklace": "res://assets/content_v290/icons/relics/storm_shelter_necklace.png"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "主动技能提供的护盾量提高15%。",
+          "effects": [
+            {
+              "type": "skillShieldMult",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "主动技能提供的护盾量额外提高15%，主动治疗量提高20%；每次主动治疗行动额外恢复5点能量。",
+          "effects": [
+            {
+              "type": "skillShieldMult",
+              "value": 0.15
+            },
+            {
+              "type": "activeSkillHealMult",
+              "value": 0.2
+            },
+            {
+              "type": "energyOnActiveHeal",
+              "value": 5
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "AbyssRewards": [
+    {
+      "id": "thunder_shelter_white",
+      "name": "雷幕同行",
+      "pool": "character",
+      "rarity": "white",
+      "eligibleCharacters": [
+        "raisa",
+        "vika",
+        "eve"
+      ],
+      "characterId": "raisa",
+      "effects": [
+        {
+          "type": "damageWhileShielded",
+          "value": 0.12
+        }
+      ],
+      "description": "带有护盾的队友普攻、战技和终结技造成的直接伤害提高12%。",
+      "icon": "⚡",
+      "target": "雷队协同",
+      "iconPath": "res://assets/content_v290/icons/blessings/thunder_shelter_white.png",
+      "sharedPoolId": "thunder_core"
+    },
+    {
+      "id": "thunder_mark_blue",
+      "name": "引雷共鸣",
+      "pool": "character",
+      "rarity": "blue",
+      "eligibleCharacters": [
+        "raisa",
+        "vika",
+        "eve"
+      ],
+      "characterId": "raisa",
+      "effects": [
+        {
+          "type": "damageVsStatus",
+          "statusId": "thunder_mark",
+          "value": 0.18
+        }
+      ],
+      "description": "全队普攻、战技和终结技攻击导电目标时，造成的直接伤害提高18%。",
+      "icon": "⚡",
+      "target": "雷队协同",
+      "iconPath": "res://assets/content_v290/icons/blessings/thunder_mark_blue.png",
+      "sharedPoolId": "thunder_core"
+    },
+    {
+      "id": "thunder_link_gold",
+      "name": "千雷同归",
+      "pool": "character",
+      "rarity": "gold",
+      "eligibleCharacters": [
+        "raisa",
+        "vika",
+        "eve"
+      ],
+      "characterId": "raisa",
+      "effects": [
+        {
+          "type": "thunderLinkedPierce",
+          "value": 0.24
+        }
+      ],
+      "description": "全队每次行动对导电目标造成生命伤害后，对存活目标追加行动角色面板攻击力24%的雷属性贯穿追击。每次行动对每个目标触发一次，追击无视防御且无法暴击。",
+      "icon": "⚡",
+      "target": "雷队协同",
+      "iconPath": "res://assets/content_v290/icons/blessings/thunder_link_gold.png",
+      "sharedPoolId": "thunder_core"
+    },
+    {
+      "id": "raisa_charge_white",
+      "name": "积雷于刃",
+      "pool": "character",
+      "rarity": "white",
+      "eligibleCharacters": [
+        "raisa"
+      ],
+      "characterId": "raisa",
+      "effects": [
+        {
+          "type": "thunderChargeBonus",
+          "value": 0.12
+        }
+      ],
+      "description": "莱莎常态且能量未满时，普攻与战技的能量获取额外提高12%。",
+      "icon": "⚡",
+      "target": "城防骑士",
+      "iconPath": "res://assets/content_v290/icons/blessings/raisa_charge_white.png"
+    },
+    {
+      "id": "raisa_armor_blue",
+      "name": "披霆而行",
+      "pool": "character",
+      "rarity": "blue",
+      "eligibleCharacters": [
+        "raisa"
+      ],
+      "characterId": "raisa",
+      "effects": [
+        {
+          "type": "thunderArmorDamage",
+          "value": 0.15
+        }
+      ],
+      "description": "莱莎雷铠状态下的普攻、战技和终结技伤害提高15%。",
+      "icon": "⚡",
+      "target": "城防骑士",
+      "iconPath": "res://assets/content_v290/icons/blessings/raisa_armor_blue.png"
+    },
+    {
+      "id": "raisa_armor_gold",
+      "name": "天雷照夜",
+      "pool": "character",
+      "rarity": "gold",
+      "eligibleCharacters": [
+        "raisa"
+      ],
+      "characterId": "raisa",
+      "effects": [
+        {
+          "type": "thunderArmorDamage",
+          "value": 0.2
+        }
+      ],
+      "description": "莱莎雷铠状态下的普攻、战技和终结技伤害提高20%。",
+      "icon": "⚡",
+      "target": "城防骑士",
+      "iconPath": "res://assets/content_v290/icons/blessings/raisa_armor_gold.png"
+    },
+    {
+      "id": "vika_mark_white",
+      "name": "逐迹留光",
+      "pool": "character",
+      "rarity": "white",
+      "eligibleCharacters": [
+        "vika"
+      ],
+      "characterId": "vika",
+      "effects": [
+        {
+          "type": "thunderMarkDuration",
+          "value": 1
+        }
+      ],
+      "description": "全队施加的导电持续时间延长1回合。",
+      "icon": "⚡",
+      "target": "雷轨寻迹者",
+      "iconPath": "res://assets/content_v290/icons/blessings/vika_mark_white.png"
+    },
+    {
+      "id": "vika_link_blue",
+      "name": "弩弦续雷",
+      "pool": "character",
+      "rarity": "blue",
+      "eligibleCharacters": [
+        "vika"
+      ],
+      "characterId": "vika",
+      "effects": [
+        {
+          "type": "thunderConductBonus",
+          "value": 0.04
+        }
+      ],
+      "description": "维珂导电追击的基础倍率增加攻击力的4%。",
+      "icon": "⚡",
+      "target": "雷轨寻迹者",
+      "iconPath": "res://assets/content_v290/icons/blessings/vika_link_blue.png"
+    },
+    {
+      "id": "vika_open_gold",
+      "name": "照亮归途",
+      "pool": "character",
+      "rarity": "gold",
+      "eligibleCharacters": [
+        "vika"
+      ],
+      "characterId": "vika",
+      "effects": [
+        {
+          "type": "enemyBattleStartStatus",
+          "statusId": "thunder_mark",
+          "duration": 3,
+          "sourcePolicy": "blessing",
+          "value": 0.35
+        },
+        {
+          "type": "thunderConductBonus",
+          "value": 0.08
+        }
+      ],
+      "description": "每场战斗开始时，全体敌人获得3回合导电，防御降低35%；维珂导电追击的基础倍率增加攻击力的8%。",
+      "icon": "⚡",
+      "target": "雷轨寻迹者",
+      "iconPath": "res://assets/content_v290/icons/blessings/vika_open_gold.png"
+    },
+    {
+      "id": "eve_shield_white",
+      "name": "晴幕加护",
+      "pool": "character",
+      "rarity": "white",
+      "eligibleCharacters": [
+        "eve"
+      ],
+      "characterId": "eve",
+      "effects": [
+        {
+          "type": "thunderShieldMult",
+          "value": 0.15
+        }
+      ],
+      "description": "伊芙主动技能提供的护盾量提高15%。",
+      "icon": "⚡",
+      "target": "结界医师",
+      "iconPath": "res://assets/content_v290/icons/blessings/eve_shield_white.png"
+    },
+    {
+      "id": "eve_guard_blue",
+      "name": "穹光守望",
+      "pool": "character",
+      "rarity": "blue",
+      "eligibleCharacters": [
+        "eve"
+      ],
+      "characterId": "eve",
+      "effects": [
+        {
+          "type": "damageTakenWhileStatus",
+          "statusId": "regen",
+          "value": -0.15
+        }
+      ],
+      "description": "处于再生的队友受到的伤害降低15%，与既有减伤共同遵守90%上限。",
+      "icon": "⚡",
+      "target": "结界医师",
+      "iconPath": "res://assets/content_v290/icons/blessings/eve_guard_blue.png"
+    },
+    {
+      "id": "eve_dawn_gold",
+      "name": "雷雨初晴",
+      "pool": "character",
+      "rarity": "gold",
+      "eligibleCharacters": [
+        "eve"
+      ],
+      "characterId": "eve",
+      "effects": [
+        {
+          "type": "battleStartStatus",
+          "statusId": "shield",
+          "duration": 3,
+          "value": 0.15
+        },
+        {
+          "type": "battleStartStatus",
+          "statusId": "regen",
+          "duration": 2
+        }
+      ],
+      "description": "每场战斗开始时，全队获得最大生命15%的护盾，持续3回合，并获得2回合再生。",
+      "icon": "⚡",
+      "target": "结界医师",
+      "iconPath": "res://assets/content_v290/icons/blessings/eve_dawn_gold.png"
+    }
+  ]
+}

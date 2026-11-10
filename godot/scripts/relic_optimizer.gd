@@ -92,6 +92,10 @@ var _normalizer_safe := false
 var _raw_slot_max: Array = []
 var _domain_set_stats: Dictionary = {}
 var _wind_team_specs: Array = []
+var _thunder_team_specs: Array = []
+var _thunder_specs_ready := false
+var _thunder_breakdowns: Dictionary = {}
+var _thunder_cap_values: Dictionary = {}
 var _reference_team: Array = []
 var _reference_has_zeph := false
 var _selin_team_specs: Array = []
@@ -182,6 +186,7 @@ static func _applies_wind_armor(catalog: Dictionary, character: Dictionary) -> b
 static func _reference_pair(catalog: Dictionary, left: String, right: String) -> bool:
 	var source: Dictionary = catalog.CharacterData.get(left,{})
 	var friend: Dictionary = catalog.CharacterData.get(right,{})
+	if left in ["raisa","vika","eve"] and right in ["raisa","vika","eve"]: return true
 	if source.get("passiveId","")=="selin_passive":
 		if friend.get("passiveId","")=="ember_passive": return true
 		for sid in friend.get("skills",[]):
@@ -222,7 +227,7 @@ static func _relic_fingerprint_bytes(relic: Variant) -> PackedByteArray:
 	return var_to_bytes([relic.get("uid"),relic.get("slotId"),relic.get("setId",""),relic.get("rarity"),relic.get("level"),relic.get("equippedBy"),_canonical_variant(main),subs,_canonical_variant(extras)])
 
 static func _fingerprint_header(game, char_id: String, context: Dictionary) -> String:
-	return var_to_bytes(_canonical_variant({"version":"relic-reference-v8-steady-correlated-bounds","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size(),"team":game.state.team,"ownedCharacters":game.state.ownedCharacters})).hex_encode() + "\n"
+	return var_to_bytes(_canonical_variant({"version":"relic-reference-v10-thunder-party-cap","slot":game.active_slot,"charId":char_id,"character":game.state.ownedCharacters.get(char_id,{}),"context":context_for_character(game,char_id,context),"characters":game.catalog.get("CharacterData",{}),"skills":game.catalog.get("SkillData",{}),"sets":game.catalog.get("RelicSets",{}),"total":game.state.relics.size(),"team":game.state.team,"ownedCharacters":game.state.ownedCharacters})).hex_encode() + "\n"
 
 static func plan_fingerprint(game, char_id: String, context: Dictionary = {}) -> String:
 	var digest := HashingContext.new()
@@ -243,8 +248,8 @@ func _init(game, char_id: String, context: Dictionary = {}) -> void:
 		_error = "长期循环评价采用自动技能优先级，请为手动策略指定行动次数"; _phase = "error"; return
 	if _context.includeEquippedByOthers:
 		_error = "请先解除其他角色装备后重新计算"; _phase = "error"; return
-	_reference_team = reference_team_ids(game,char_id) if char_id in ["tiya","lumi","selin"] else []
-	if char_id in ["lumi","selin"]:
+	_reference_team = reference_team_ids(game,char_id) if char_id in ["tiya","lumi","selin","raisa","vika","eve"] else []
+	if char_id in ["lumi","selin","raisa","vika","eve"]:
 		for id in _reference_team:
 			if id!=char_id and _catalog.CharacterData[id].get("passiveId","")=="zeph_passive": _reference_has_zeph=true
 	_saved = game.state.ownedCharacters[char_id].duplicate(true)
@@ -258,8 +263,11 @@ func _init(game, char_id: String, context: Dictionary = {}) -> void:
 		for bonus in _catalog.RelicSets[set_id].bonuses:
 			for effect in bonus.effects:
 				if effect.type=="stat": _domain_set_stats[effect.stat]+=maxf(0.0,float(effect.value))
-				elif effect.type in ["damageVsStatus","damageWhenFasterThanTarget","windNativeDamage","activeSkillHealMult","skillShieldMult"]: _domain_effect_factor*=1.0+maxf(0.0,float(effect.get("value",0)))
-	for sid in _catalog.CharacterData[_char_id].skills:
+				elif effect.type in ["damageVsStatus","damageWhenFasterThanTarget","windNativeDamage","thunderArmorDamage","onStatusAppliedPartyArmorAmp","activeSkillHealMult","skillShieldMult"]: _domain_effect_factor*=1.0+maxf(0.0,float(effect.get("value",0)))
+	var domain_skills: Array=_catalog.CharacterData[_char_id].skills.duplicate()
+	domain_skills.append_array(_catalog.CharacterData[_char_id].get("thunderArmor",{}).get("skills",[]))
+	_domain_effect_factor*=1.0+maxf(0.0,float(_catalog.CharacterData[_char_id].get("thunderArmor",{}).get("energyAttackBonus",0.0)))
+	for sid in domain_skills:
 		for effect in _catalog.SkillData[sid].get("effects",[]): _domain_skill_factor=maxf(_domain_skill_factor,absf(float(effect.get("multiplier",effect.get("value",1.0)) if effect.get("value")!=null else effect.get("multiplier",1.0))))
 	_normalizer_safe=1000000000.0*1.15*1.7*(1.0+maxf(float(_cst.normalDmgBonus),maxf(float(_cst.skillDmgBonus),float(_cst.ultDmgBonus))))*_domain_effect_factor*_domain_skill_factor<9000000000000000000.0
 	if not _numeric_domain_safe(): _error="角色数值超出可证明的计算范围，请检查存档"; _phase="error"; return
@@ -304,7 +312,7 @@ func _numeric_domain_safe() -> bool:
 	return is_finite(combat_upper) and combat_upper<SAFE_INTEGER
 
 func _has_linear_floor_safety() -> bool:
-	if _char_id in ["selin", "tiya", "lumi"]: return false # Team contributions and non-critical piercing are not source-homogeneous.
+	if _char_id in ["selin", "tiya", "lumi", "raisa", "vika", "eve"]: return false # Team contributions and non-critical piercing are not source-homogeneous.
 	# Positive permanent attributes only increase the no-relic source. Prove all
 	# scored hits/heals are above their max(1, amount) floor before normalizing.
 	if _profile.type=="survival": return false
@@ -319,13 +327,14 @@ func _has_linear_floor_safety() -> bool:
 				for hit in range(count):
 					var mult: float=float(effect.get("multiplier",1.0))*chain*_battle._damage_multiplier(actor,target,str(skill.type),false)
 					if _battle._raw_effect_damage(actor,target,skill,effect,mult,false)<1.0: return false
-					chain=maxf(0.3,chain-float(effect.get("chainDecay",0.0)))
+					chain=maxf(float(effect.get("chainFloor",0.3)),chain-float(effect.get("chainDecay",0.0)))
 			if _profile.type=="healing" and effect.get("type","")=="heal":
 				if _battle.effect_source_value(actor,effect,actor)*float(effect.get("multiplier",1.0))<1.0: return false
 	if _profile.type=="healing" and _catalog.CharacterData[_char_id].get("passiveId","")=="ayla_passive" and float(actor.stats.atk)*0.4<1.0: return false
 	return true
 
 func _relevant_dimensions() -> Array:
+	if _char_id in ["raisa","vika","eve"]: return [0,1,2,3,4,5,6,7,8,9,10]
 	if _profile.type == "survival":
 		var defensive: Array=[0,2,3,5]
 		for sid in _catalog.CharacterData[_char_id].skills:
@@ -505,7 +514,7 @@ func _prepare_step() -> void:
 	_phase = "seed"
 
 func _prepare_cadence_step() -> void:
-	if _context.evaluation!="steady" or _profile.type=="survival":_cadence_prepared=true;return
+	if _context.evaluation!="steady" or _profile.type=="survival" or _char_id in ["raisa","vika","eve"]:_cadence_prepared=true;return
 	if _cadence_bound==null:
 		# Build once, cooperatively, over the inventory's whole energy domain.
 		# Every later box takes a prefix envelope, never a single max-energy cycle.
@@ -898,12 +907,16 @@ func _snapshot(items: Array) -> Dictionary:
 	var stats := _stats(attrs)
 	var uids: Dictionary = {}
 	for item in items: uids[item.slotId] = item.uid
-	return {"charId":_char_id,"relics":items.duplicate(true),"relicUids":uids,"stats":stats,"counts":evaluated.counts,"activeBonuses":evaluated.activeBonuses,"statBonuses":evaluated.statBonuses,"ownerEffects":evaluated.ownerEffects,"objective":_evaluate(stats,evaluated.ownerEffects)}
+	var objective:=_evaluate(stats,evaluated.ownerEffects)
+	var result: Dictionary={"charId":_char_id,"relics":items.duplicate(true),"relicUids":uids,"stats":stats,"counts":evaluated.counts,"activeBonuses":evaluated.activeBonuses,"statBonuses":evaluated.statBonuses,"ownerEffects":evaluated.ownerEffects,"objective":objective}
+	if _char_id in ["raisa","vika","eve"]: result.breakdown=_thunder_breakdowns.get(_objective_key(stats,evaluated.ownerEffects,false),{}).duplicate(true)
+	return result
 
 func evaluate_loadout(items: Array) -> Dictionary:
 	return _snapshot(items)
 
 func _reference(stats: Dictionary,effects: Array) -> Dictionary:
+	_battle._events=[]; _battle._extra_flags={}
 	var actor: Dictionary = _battle._make_ally({"id":_char_id,"stats":stats,"constellation":int(_saved.constellation),"ownerEffects":effects},0)
 	var other_stats := {"maxHp":1000000000,"atk":100,"def":float(_context.enemyDefense),"spd":float(_context.otherSpeed),"cri":0.0,"criDmg":1.5}
 	var target: Dictionary = _battle._make_ally({"id":"reference","stats":other_stats,"element":"neutral"},9)
@@ -1012,7 +1025,7 @@ func _fast_wind_upper(stats: Dictionary,effects: Array,joint_factor: float) -> f
 					var mult: float=float(effect.get("multiplier",1.0))*chain*_battle._damage_multiplier(actor,target,str(skill.type),false)
 					direct+=_battle._raw_effect_damage(actor,target,skill,effect,mult,false)*taken/NORMALIZER
 					hits+=1
-					chain=maxf(0.3,chain-float(effect.get("chainDecay",0.0)))
+					chain=maxf(float(effect.get("chainFloor",0.3)),chain-float(effect.get("chainDecay",0.0)))
 			if actor.passiveId=="tiya_passive" and _battle.has_status(target,"wind_armor"):
 				var count:=_wind_skill_targets(skill)
 				var amount: float=(0.66 if int(actor.constellation)>=6 else 0.60)*(1.0+float(_battle._timed_follow_up_amp(actor,"innate_piercing")))
@@ -1049,6 +1062,7 @@ func _fast_wind_upper(stats: Dictionary,effects: Array,joint_factor: float) -> f
 	return result+1e-8*maxf(1.0,absf(result))
 
 func _objective_key(stats: Dictionary,effects: Array,upper: bool) -> String:
+	if _char_id in ["raisa","vika","eve"]: return var_to_bytes([upper,stats,effects]).hex_encode()
 	var values: Array = [upper]
 	if _profile.type=="survival":
 		values.append_array([stats.maxHp,stats.def])
@@ -1085,7 +1099,9 @@ func _evaluate(stats: Dictionary,effects: Array,upper: bool = false) -> float:
 	var actor: Dictionary = reference.actor
 	var target: Dictionary = reference.target
 	var result := 0.0
-	if _profile.type == "survival":
+	if _char_id in ["raisa","vika","eve"]:
+		result = _evaluate_thunder(actor,target,upper)
+	elif _profile.type == "survival":
 		var own_shield := 0
 		for sid in actor.skills:
 			var skill: Dictionary = _catalog.SkillData[sid]
@@ -1134,8 +1150,8 @@ func _prepare_skills(actor: Dictionary,target: Dictionary,calculate_rewards: boo
 							reward += crit*0.4*_battle.predict_effect_damage(actor,target,normal,normal.effects[0],false,true,1.0+float(actor.stats.normalDmgBonus))
 						if actor.id == "kaldi" and int(actor.constellation)>=6 and skill.type == "ultimate" and _context.targetStatuses.has("burn"):
 							reward += _battle.predict_effect_damage(actor,target,{"type":"follow_up","element":"fire"},{"multiplier":0.8,"rawAtk":true},false,true)
-					hits += 1
-					chain = maxf(0.3,chain-float(effect.get("chainDecay",0.0)))
+					if effect.get("canCrit", true): hits += 1
+					chain = maxf(float(effect.get("chainFloor",0.3)),chain-float(effect.get("chainDecay",0.0)))
 			elif effect.type == "heal":
 				healing = true
 				if calculate_rewards and _profile.type == "healing":
@@ -1189,6 +1205,7 @@ func _current_cycle() -> Dictionary:
 func cycle_summary(stats: Dictionary,effects: Array) -> Dictionary:
 	var reference: Dictionary=_reference(stats,effects)
 	_prepare_skills(reference.actor,reference.target)
+	if _char_id=="raisa": return _thunder_cycle(reference.actor)
 	return _current_cycle().duplicate(true)
 
 func _weighted_reward(rewards: Array,weights: Array) -> float:
@@ -1293,14 +1310,17 @@ func preview() -> Dictionary:
 	var useful:bool=not _before.is_empty() and _best.get("relicUids",{}) != _before.get("relicUids",{})
 	var proven := _error.is_empty() and not _cancelled and _phase=="done" and upper<=_score
 	var objective := str(_profile.get("type","damage"))
-	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"evaluationMode":str(_context.evaluation),"referenceTeam":_reference_team.duplicate(),"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"highestRarities":_highest_rarity.duplicate(),"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"teamCacheHits":_team_cache_hits,"cadenceBoundHits":_cadence_hits,"singleItemPruned":_screen_removed,"singleItemScreenUsec":_screen_usec,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":("队伍贡献" if _char_id in ["selin","lumi"] else {"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective)),"objectiveLabel":_objective_label(),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
+	return {"success":_error.is_empty(),"error":_error,"charId":_char_id,"evaluationMode":str(_context.evaluation),"referenceTeam":_reference_team.duplicate(),"context":_context.duplicate(true),"fingerprint":_fingerprint,"phase":_phase,"done":_phase in ["done","cancelled","error"],"cancelled":_cancelled,"provenOptimal":proven,"lowerBound":_score,"upperBound":upper,"gap":maxf(0.0,upper-_score)/maxf(absf(_score),EPS),"scanned":_scan,"total":_total,"visited":_visited,"pruned":_removed,"highestRarities":_highest_rarity.duplicate(),"candidateCounts":counts,"evaluationCalls":_evaluation_calls,"evaluationCacheHits":_evaluation_hits,"teamCacheHits":_team_cache_hits,"cadenceBoundHits":_cadence_hits,"singleItemPruned":_screen_removed,"singleItemScreenUsec":_screen_usec,"fastBounds":_fast_bounds,"boundCacheHits":_bound_cache_hits,"frontierNodes":_stack.size(),"costGold":0,"before":_before.duplicate(true),"after":_best.duplicate(true),"roleLabel":str(_profile.get("label","输出")),"objectiveShortLabel":("护盾与治疗" if _char_id=="eve" else "队伍输出" if _char_id in ["raisa","vika"] else "队伍贡献" if _char_id in ["selin","lumi"] else {"damage":"参考输出","healing":"潜在治疗","survival":"承伤能力"}.get(objective,objective)),"objectiveLabel":_objective_label(),"assumptions":_assumptions(),"improvement":improvement,"filledEmptySlots":filled,"usefulChange":useful,"canApply":not _fingerprint.is_empty() and not _cancelled and _error.is_empty() and useful}
 
 func _objective_label() -> String:
+	if _char_id in ["raisa","vika","eve"]: return ("长期循环 · 每回合" if _context.evaluation=="steady" else "%d 回合开局 · "%int(_context.actions))+("护盾与治疗量" if _char_id=="eve" else "队伍期望伤害")
 	if _profile.get("type","")=="survival": return "施放自身护盾后的有效承伤"
 	if _context.evaluation=="steady": return "长期循环 · 每行动"+("协同收益" if _char_id in ["selin","lumi"] else ("潜在治疗" if _profile.get("type","")=="healing" else "期望伤害"))
 	return "%d 次开局行动 · "%int(_context.actions)+("协同收益" if _char_id in ["selin","lumi"] else ("潜在治疗" if _profile.get("type","")=="healing" else "期望伤害"))
 
 func _assumptions() -> Array:
+	if _char_id in ["raisa","vika","eve"]:
+		return ["固定实际三人参考队伍，每名队友每回合行动一次。雷铠按实际充能及冷却进入，施放回合计入4回合；六命5回合，依次普攻、战技、终结技并追加一次终结技，期间能量锁定100、退出清零。", "普通形态逐次结算能量攻击力与可暴击命中的回能；雷铠分别计算普通伤害与无法暴击的贯穿。队友施加的导电、破甲、六回合燃烧及套装状态按持续覆盖；导电每目标每回合最多两次。确定充能按队友同步循环，随机回能按独立稳定相位；开局按逐回合命中分布合并；瑟琳誓约按循环覆盖率计入。", "伊芙以生命值单位分别统计主动治疗、护盾供给、盾下被动治疗与再生，队伍伤害另列。护盾参考持续消耗并刷新、友方持续有足够缺失生命；实战破盾、击杀和双方行动先后由战况决定。"]
 	if _context.evaluation=="steady" and _profile.get("type","")!="survival":
 		var notes: Array=["按自动优先级、实际充能、冷却及暴击回能求长期循环，每行动收益不受开局第几次开大影响。","%d 个中性敌人，防御 %.0f；参考状态持续覆盖。能量每次上限100，终结技清空能量后再结算事件回能。"%[int(_context.enemyCount),float(_context.enemyDefense)]]
 		if _char_id in ["tiya","lumi"]: notes.append("参考队伍中计入缇娅非暴击贯穿；露弥队友收益按各自长期技能频率计算。破甲和可触发套装按持续覆盖，行动顺序与起手状态另在实战变化。")
@@ -1475,7 +1495,7 @@ func _wind_average_damage(unit: Dictionary,target: Dictionary) -> float:
 			var chain := 1.0
 			for hit in range(count):
 				reward+=_battle.expected_effect_damage(unit,target,skill,effect,chain)
-				chain=maxf(0.3,chain-float(effect.get("chainDecay",0.0)))
+				chain=maxf(float(effect.get("chainFloor",0.3)),chain-float(effect.get("chainDecay",0.0)))
 		reward+=_wind_innate_reference(unit,target,skill)
 		result+=float(frequencies[skill_index])*reward
 	return result
@@ -1522,3 +1542,322 @@ func _wind_team_contribution(actor: Dictionary,target: Dictionary,upper: bool) -
 		if _team_values.size()>=4096: _team_values.clear()
 		_team_values[team_key]=contribution
 	return contribution
+
+# Thunder references share one party, so marks, shield deepening and conduct
+# are priced where they are triggered. HP support and damage remain separate.
+func _thunder_cycle(unit: Dictionary) -> Dictionary:
+	var armor: Dictionary=_catalog.CharacterData[unit.id].get("thunderArmor",{})
+	var turns:=int(armor.get("duration",4))+(1 if int(unit.constellation)>=6 else 0)
+	var result: Dictionary=Cycle.thunder_weights(_skills,_transitions,turns,int(_context.actions) if _context.evaluation=="opening" else 0,int(_context.initialEnergy))
+	if not bool(result.get("success",false)):
+		_error="雷铠循环暂无法计算："+str(result.get("error","循环状态不可用")); _phase="error"
+	return result
+
+func _thunder_reference_party(actor: Dictionary,target: Dictionary) -> Array:
+	if not _thunder_specs_ready:
+		for id in _reference_team:
+			if id==_char_id: continue
+			_thunder_team_specs.append({"id":id,"stats":_game.computed_stats(id),"constellation":int(_game.state.ownedCharacters[id].constellation),"ownerEffects":Sets.evaluate(_catalog,_game.equipped_relics(id)).ownerEffects})
+		_thunder_specs_ready=true
+	var allies: Array=[actor]
+	for spec in _thunder_team_specs: allies.append(_battle._make_ally(spec.duplicate(true),allies.size()))
+	_battle.state.allies=allies
+	var shield_source: Dictionary={}
+	for unit in allies:
+		if unit.passiveId=="eve_passive": shield_source=unit
+		for sid in unit.skills:
+			for effect in _catalog.SkillData[sid].get("effects",[]):
+				var status: String=str(effect.get("statusId",""))
+				if status not in ["thunder_mark","wind_armor","burn","electrify"]: continue
+				if not _battle.has_status(target,status): target.statuses.append({"id":status,"duration":6 if status=="burn" else 99,"value":effect.get("value"),"stacks":1})
+				if status=="burn":
+					for existing in target.statuses:
+						if existing.id==status: existing.duration=6
+				if status=="wind_armor":
+					var reduction: float=0.45 if unit.passiveId=="lumi_passive" and int(unit.constellation)>=6 else 0.35
+					for existing in target.statuses:
+						if existing.id==status: existing.value=maxf(float(existing.get("value",0.0)) if existing.get("value")!=null else 0.0,reduction)
+				_battle._apply_owner_status_effects(unit,status)
+		# Selin's wearer-bound set is maintained by her actual burn detonations.
+		if unit.passiveId=="selin_passive" and _battle.has_status(target,"burn"):
+			for effect in unit.ownerEffects:
+				if effect.get("type","")!="onBurnDetonation": continue
+				for friend in allies: _battle._refresh_combat_buff(friend,"ember_lantern_burn",float(effect.get("partyBurnAmp",0.4)),99,unit)
+				_battle._refresh_combat_buff(unit,"ember_lantern_direct",float(effect.get("ownerDirectAmp",0.25)),99,unit)
+	if not shield_source.is_empty():
+		# This potential-sustain reference assumes shields are replenished and
+		# survive until the next action; incoming pressure is a separate scenario.
+		var amount:=0
+		for sid in shield_source.skills:
+			for effect in _catalog.SkillData[sid].get("effects",[]):
+				if effect.get("statusId","")=="shield": amount=maxi(amount,_battle.skill_effect_amount(shield_source,effect,shield_source))
+		for unit in allies: unit.shield=amount
+	_wind_reference_buffs(allies)
+	return allies
+
+func _thunder_entry_damage(unit: Dictionary,target: Dictionary,skill: Dictionary,energy: int,armored: bool,upper: bool) -> float:
+	var saved_energy:=int(unit.energy)
+	var saved_armor: Dictionary=unit.get("thunderArmor",{}).duplicate(true)
+	var saved_shield:=int(unit.shield)
+	unit.thunderArmor={"remainingTurns":1} if armored else {}
+	if armored: unit.shield=maxi(1,int(unit.maxHp/2)) if saved_shield<=0 else saved_shield
+	unit.energy=100 if armored else energy
+	if not armored:
+		unit.energy=0 if skill.type=="ultimate" else mini(100,int(unit.energy)+_battle.action_energy_gain(unit,skill))
+	var crit:=clampf(float(unit.stats.cri),0.0,1.0)
+	var crit_energy:=int(_battle.owner_effect_sum(unit,"energyOnCrit"))
+	# Distribution over whether the once-per-action critical energy has fired.
+	# This retains energy/ATK correlation between targets of the ordinary AoE.
+	var states: Dictionary={int(unit.energy)*2:1.0}
+	var result:=0.0
+	for effect in skill.get("effects",[]):
+		if effect.get("type","")!="damage": continue
+		var count:=int(_context.enemyCount) if effect.get("target","") in ["all","all_enemies","chain3"] else 1
+		var chain:=1.0
+		for _hit in range(count):
+			var next: Dictionary={}
+			for state in states:
+				unit.energy=100 if armored or upper else int(state/2)
+				for critical in [false,true]:
+					var hit_crit: float=crit if effect.get("canCrit",true) else 0.0
+					var probability: float=float(states[state])*(hit_crit if critical else 1.0-hit_crit)
+					if probability<=0.0: continue
+					result+=probability*_battle.predict_effect_damage(unit,target,skill,effect,critical,false,chain)
+					if unit.id=="gus" and int(unit.constellation)>=6 and critical:
+						var normal: Dictionary=_catalog.SkillData.gus_normal
+						result+=probability*0.4*_battle.predict_effect_damage(unit,target,normal,normal.effects[0],false,true,1.0+float(unit.stats.normalDmgBonus))
+					var after:=int(state/2)
+					if critical:
+						if int(state)%2==0: after+=crit_energy
+						if unit.passiveId=="gus_passive": after+=5
+					var key: int=(100 if armored else mini(100,after))*2+(1 if critical or int(state)%2==1 else 0)
+					next[key]=float(next.get(key,0.0))+probability
+			states=next
+			chain=maxf(float(effect.get("chainFloor",0.3)),chain-float(effect.get("chainDecay",0.0)))
+	result+=_wind_innate_reference(unit,target,skill)
+	if unit.id=="kaldi" and int(unit.constellation)>=6 and skill.type=="ultimate" and _battle.has_status(target,"burn"):
+		result+=_wind_skill_targets(skill)*_battle.predict_effect_damage(unit,target,{"type":"follow_up","element":"fire"},{"multiplier":0.8,"rawAtk":true},false,true)
+	if unit.passiveId=="selin_passive":
+		if int(unit.constellation)>=6 and skill.type=="ultimate": result+=int(_context.enemyCount)*_battle.predict_effect_damage(unit,target,{"type":"follow_up","element":"fire"},{"multiplier":0.6,"rawAtk":true},false,true)
+		if _battle.has_status(target,"burn"):
+			result+=int(_context.enemyCount)*maxi(1,int(_battle._effective_atk(unit)*(0.15+0.001*_battle.burn_remaining_turns(target))*_battle.burn_damage_multiplier(unit,target)))
+	unit.energy=saved_energy
+	unit.thunderArmor=saved_armor
+	unit.shield=saved_shield
+	return result
+
+func _thunder_entries(unit: Dictionary, cycle: Dictionary) -> Array:
+	if unit.passiveId=="raisa_passive": return cycle.get("entries",[])
+	var entries: Array=[]
+	for index in range(unit.skills.size()): entries.append({"index":index,"energy":0,"weight":float(cycle.get("skillWeights",[0.0,0.0,0.0])[index])})
+	return entries
+
+func _thunder_hit_probabilities(unit: Dictionary,skills: Array,entries: Array) -> Array:
+	var probabilities: Array=[]
+	probabilities.resize(int(_context.enemyCount)); probabilities.fill(0.0)
+	if unit.element!="thunder": return probabilities
+	for entry in entries:
+		var skill: Dictionary=_catalog.SkillData[skills[int(entry.index)]]
+		var per_target: Array=[];per_target.resize(probabilities.size());per_target.fill(0.0)
+		for effect in skill.get("effects",[]):
+			if effect.get("type","")!="damage": continue
+			var target_kind: String=str(effect.get("target","single"))
+			for target_index in range(probabilities.size()):
+				var chance: float=1.0 if target_kind in ["all","all_enemies","chain3"] or (target_index==0 and target_kind in ["single","single_enemy"]) else (1.0/probabilities.size() if target_kind in ["random","random_enemy"] else 0.0)
+				per_target[target_index]=maxf(float(per_target[target_index]),chance)
+		for target_index in range(probabilities.size()): probabilities[target_index]+=float(entry.weight)*float(per_target[target_index])
+	return probabilities
+
+func _thunder_deterministic_schedule(unit: Dictionary,skills: Array) -> Dictionary:
+	for branches in _transitions:
+		if branches.size()!=1: return {}
+	var energy: int=int(_context.initialEnergy)
+	var cooldown:=0;var armor:=0
+	var armor_turns: int=int(_catalog.CharacterData[unit.id].get("thunderArmor",{}).get("duration",4))+(1 if int(unit.constellation)>=6 else 0)
+	var seen: Dictionary={};var sequence: Array=[]
+	for step in range(2048):
+		var key: int=(energy*32+cooldown)*8+armor
+		if seen.has(key): return {"prefix":sequence.slice(0,int(seen[key])),"period":sequence.slice(int(seen[key]))}
+		seen[key]=step
+		var index: int=-1
+		if armor>0:
+			index=3 if armor==armor_turns-1 else 4 if armor==armor_turns-2 else 5
+			armor-=1;energy=100 if armor>0 else 0;cooldown=maxi(0,cooldown-1)
+		else:
+			for candidate in _auto_skill_order:
+				var skill: Dictionary=_skills[candidate]
+				if skill.type=="ultimate" and energy<int(skill.cost):continue
+				if skill.type=="skill" and cooldown>0:continue
+				index=candidate;break
+			if index<0:return {}
+			var skill: Dictionary=_skills[index]
+			cooldown=maxi(0,int(skill.cooldown)-1) if skill.type=="skill" else maxi(0,cooldown-1)
+			if unit.passiveId=="raisa_passive" and index==2:
+				armor=armor_turns-1;energy=100
+			else: energy=mini(100,(0 if skill.type=="ultimate" else energy+int(skill.gain))+int(_transitions[index][0].energy))
+		sequence.append(_thunder_hit_probabilities(unit,skills,[{"index":index,"weight":1.0}]))
+	return {}
+
+func _thunder_capped_hits(chances: Array) -> float:
+	var counts: Array=[1.0,0.0,0.0]
+	for chance in chances:
+		counts=[float(counts[0])*(1.0-float(chance)),float(counts[1])*(1.0-float(chance))+float(counts[0])*float(chance),float(counts[2])+float(counts[1])*float(chance)]
+	return float(counts[1])+2.0*float(counts[2])
+
+func _thunder_synchronized_hits(allies: Array,outputs: Array) -> float:
+	var schedules: Array=[];var period:=1;var offset:=0
+	for index in range(allies.size()):
+		if allies[index].element!="thunder":continue
+		var schedule: Dictionary=outputs[index].conductSchedule
+		if schedule.is_empty():return -1.0
+		schedules.append(schedule)
+		offset=maxi(offset,schedule.prefix.size())
+		var a:=period;var b: int=schedule.period.size()
+		while b>0:
+			var remainder:=a%b;a=b;b=remainder
+		period=int(period/a)*schedule.period.size()
+	var key: String=var_to_bytes(schedules).hex_encode()
+	if _thunder_cap_values.has(key): return float(_thunder_cap_values[key])
+	var total:=0.0
+	for turn in range(offset,offset+period):
+		for target_index in range(int(_context.enemyCount)):
+			var chances: Array=[]
+			for schedule in schedules: chances.append(schedule.period[(turn-schedule.prefix.size())%schedule.period.size()][target_index])
+			total+=_thunder_capped_hits(chances)
+	var result: float=total/period
+	if _thunder_cap_values.size()>=512:_thunder_cap_values.clear()
+	_thunder_cap_values[key]=result
+	return result
+
+func _thunder_unit_output(unit: Dictionary,target: Dictionary,upper: bool,aura_uptime: float=0.0) -> Dictionary:
+	_prepare_skills(unit,target,false)
+	var cycle: Dictionary=_thunder_cycle(unit) if unit.passiveId=="raisa_passive" else (_current_cycle() if _context.evaluation=="steady" else Cycle.finite_weights(_skills,_transitions,_auto_skill_order,int(_context.actions),int(_context.initialEnergy)))
+	var entries: Array=_thunder_entries(unit,cycle)
+	var skills: Array=unit.skills.duplicate()
+	if unit.passiveId=="raisa_passive": skills.append_array(_catalog.CharacterData[unit.id].thunderArmor.skills)
+	var probabilities: Array=_thunder_hit_probabilities(unit,skills,entries)
+	var timeline: Array=[probabilities]
+	if _context.evaluation=="opening":
+		timeline=[]
+		var previous: Array=[];previous.resize(probabilities.size());previous.fill(0.0)
+		for turn in range(1,int(_context.actions)+1):
+			var prefix: Dictionary=Cycle.thunder_weights(_skills,_transitions,int(cycle.armorTurns),turn,int(_context.initialEnergy)) if unit.passiveId=="raisa_passive" else Cycle.finite_weights(_skills,_transitions,_auto_skill_order,turn,int(_context.initialEnergy))
+			var cumulative: Array=_thunder_hit_probabilities(unit,skills,_thunder_entries(unit,prefix))
+			var current: Array=[]
+			for target_index in range(cumulative.size()):
+				var count: float=float(cumulative[target_index])*turn
+				current.append(clampf(count-float(previous[target_index]),0.0,1.0));previous[target_index]=count
+			timeline.append(current)
+	if upper:
+		entries=[]
+		for index in range(skills.size()): entries.append({"index":index,"energy":100,"weight":1.0})
+	var schedule: Dictionary=_thunder_deterministic_schedule(unit,skills) if _context.evaluation=="steady" and not upper else {}
+	var result: Dictionary={"damage":0.0,"activeHealing":0.0,"shieldSupply":0.0,"cycle":cycle,"conductTimeline":timeline,"conductSchedule":schedule}
+	for entry in entries:
+		var index:=int(entry.index)
+		var skill: Dictionary=_catalog.SkillData[skills[index]]
+		var armored: bool=unit.passiveId=="raisa_passive" and index>=2
+		var damage:=_thunder_entry_damage(unit,target,skill,int(entry.energy),armored,upper)
+		if aura_uptime>0.0 and unit.passiveId!="selin_passive" and _battle.has_status(target,"burn"):
+			unit.statuses.append({"id":"ember_oath","duration":99,"value":0.8,"stacks":1})
+			var boosted: float=_thunder_entry_damage(unit,target,skill,int(entry.energy),armored,upper)
+			unit.statuses.pop_back()
+			damage=lerpf(damage,boosted,aura_uptime)
+		var healing:=0.0
+		var shielding:=0.0
+		for effect in skill.get("effects",[]):
+			var count: int=_battle.state.allies.size() if effect.get("target","")=="all_allies" else 1
+			if effect.get("type","")=="heal": healing+=count*_battle.skill_effect_amount(unit,effect,unit)
+			if effect.get("statusId","")=="shield": shielding+=count*_battle.skill_effect_amount(unit,effect,unit)
+		if upper:
+			result.damage=maxf(float(result.damage),damage)
+			result.activeHealing=maxf(float(result.activeHealing),healing)
+			result.shieldSupply=maxf(float(result.shieldSupply),shielding)
+		else:
+			result.damage+=float(entry.weight)*damage
+			result.activeHealing+=float(entry.weight)*healing
+			result.shieldSupply+=float(entry.weight)*shielding
+	return result
+
+func _thunder_conduct_output(allies: Array,outputs: Array,target: Dictionary,upper: bool,aura_uptime: float) -> Dictionary:
+	if not _battle.has_status(target,"thunder_mark") or not allies.any(func(unit):return unit.passiveId=="vika_passive"): return {"damage":0.0,"triggersPerRound":0.0}
+	var synchronized: float=_thunder_synchronized_hits(allies,outputs) if _context.evaluation=="steady" and not upper else -1.0
+	var triggers:=0.0
+	var turns: int=int(_context.actions) if _context.evaluation=="opening" else 1
+	for turn in range(turns):
+		for target_index in range(int(_context.enemyCount)):
+			var counts: Array=[1.0,0.0,0.0]
+			for index in range(allies.size()):
+				var chance: float=1.0 if upper and allies[index].element=="thunder" else float(outputs[index].conductTimeline[turn][target_index])
+				# Exact capped sum of independent hit indicators, including all
+				# three potential actors. The third hit stays at the cap of two.
+				counts=[float(counts[0])*(1.0-chance),float(counts[1])*(1.0-chance)+float(counts[0])*chance,float(counts[2])+float(counts[1])*chance]
+			triggers+=float(counts[1])+2.0*float(counts[2])
+	triggers=synchronized if synchronized>=0.0 else triggers/turns
+	var damage:=0.0
+	if _battle.has_status(target,"thunder_mark"):
+		for support in allies:
+			if support.passiveId!="vika_passive": continue
+			var coefficient: float=float(_catalog.CharacterData[support.id].get("conductFollowUp",0.30))+_battle.owner_effect_sum(support,"thunderConductBonus")+_battle._effect_sum("thunderConductBonus")
+			if int(support.constellation)>=6: coefficient*=1.15
+			var effect: Dictionary={"multiplier":coefficient,"defPierce":1.0,"rawAtk":true,"followUpTag":"thunder_conduct"}
+			var amount: float=_battle.predict_effect_damage(support,target,{"type":"follow_up","element":"thunder"},effect,false,true)
+			if aura_uptime>0.0 and _battle.has_status(target,"burn"):
+				support.statuses.append({"id":"ember_oath","duration":99,"value":0.8,"stacks":1})
+				amount=lerpf(amount,float(_battle.predict_effect_damage(support,target,{"type":"follow_up","element":"thunder"},effect,false,true)),aura_uptime)
+				support.statuses.pop_back()
+			damage+=triggers*amount
+	return {"damage":damage,"triggersPerRound":triggers}
+
+func _thunder_burn_output(allies: Array,target: Dictionary,aura_uptime: float) -> float:
+	if not _battle.has_status(target,"burn"): return 0.0
+	var normal:=0.0;var boosted:=0.0
+	for unit in allies:
+		var applies: bool=unit.passiveId=="ember_passive"
+		for sid in unit.skills:
+			for effect in _catalog.SkillData[sid].get("effects",[]):
+				if effect.get("statusId","")=="burn": applies=true
+		if not applies: continue
+		var amount: float=_battle._effective_atk(unit)*_battle.dot_rule("burnAttackRatio",0.18)*_battle.burn_damage_multiplier(unit,target)
+		normal=maxf(normal,amount)
+		if unit.passiveId!="selin_passive":
+			unit.statuses.append({"id":"ember_oath","duration":99,"value":0.8,"stacks":1})
+			amount=_battle._effective_atk(unit)*_battle.dot_rule("burnAttackRatio",0.18)*_battle.burn_damage_multiplier(unit,target)
+			unit.statuses.pop_back()
+		boosted=maxf(boosted,amount)
+	return int(_context.enemyCount)*lerpf(floorf(normal),floorf(boosted),aura_uptime)
+
+func _evaluate_thunder(actor: Dictionary,target: Dictionary,upper: bool) -> float:
+	var allies:=_thunder_reference_party(actor,target)
+	var aura_uptime:=0.0
+	for unit in allies:
+		if unit.passiveId!="selin_passive": continue
+		_prepare_skills(unit,target,false)
+		var cycle: Dictionary=_current_cycle() if _context.evaluation=="steady" else Cycle.finite_weights(_skills,_transitions,_auto_skill_order,int(_context.actions),int(_context.initialEnergy))
+		aura_uptime=1.0 if upper else float(cycle.get("auraUptime",0.0))
+	var team_damage:=0.0
+	var own: Dictionary={}
+	var outputs: Array=[]
+	for unit in allies:
+		var output:=_thunder_unit_output(_optimistic_teammate(unit) if upper else unit,target,upper,aura_uptime)
+		outputs.append(output)
+		team_damage+=float(output.damage)
+		if unit.uid==actor.uid: own=output
+	var conduct: Dictionary=_thunder_conduct_output(allies,outputs,target,upper,aura_uptime)
+	var burn: float=_thunder_burn_output(allies,target,aura_uptime)
+	team_damage+=float(conduct.damage)+burn
+	var passive:=0.0
+	var regeneration:=0.0
+	if actor.passiveId=="eve_passive":
+		for unit in allies:
+			if int(unit.shield)<=0: continue
+			passive+=maxi(1,int(_battle._effective_atk(actor)*(0.28 if int(actor.constellation)>=6 else 0.22)*(1.0+_battle._effect_sum("healMult"))))
+			regeneration+=maxi(1,int(unit.maxHp*0.08))
+	var scale:=_action_scale()
+	var breakdown: Dictionary={"teamDamage":team_damage*scale,"conductDamage":float(conduct.damage)*scale,"conductTriggersPerRound":conduct.triggersPerRound,"burnDamage":burn*scale,"activeHealing":float(own.get("activeHealing",0.0))*scale,"shieldSupply":float(own.get("shieldSupply",0.0))*scale,"passiveHealing":passive*scale,"regeneration":regeneration*scale,"cycle":own.get("cycle",{}),"unit":"HP" if actor.id=="eve" else "damage","normalization":"round","referenceTeam":_reference_team.duplicate()}
+	var result:=team_damage*scale
+	if actor.id=="eve": result=float(breakdown.activeHealing)+float(breakdown.shieldSupply)+float(breakdown.passiveHealing)+float(breakdown.regeneration)
+	if not upper:
+		if _thunder_breakdowns.size()>=2048: _thunder_breakdowns.clear()
+		_thunder_breakdowns[_objective_key(actor.stats,actor.ownerEffects,false)]=breakdown
+	return result+1e-8*maxf(1.0,absf(result)) if upper else result

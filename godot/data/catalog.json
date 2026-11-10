@@ -35,20 +35,28 @@
         "leaf_spirit",
         "moss_climber",
         "bridge_warden",
-        "songwing_attendant"
+        "songwing_attendant",
+        "thunder_mane",
+        "charge_mayfly",
+        "storm_patrol",
+        "rift_shade",
+        "storm_crossbow"
       ],
       "elite": [
         "dark_knight",
         "stone_golem",
         "lamp_overseer",
         "brokenbridge_hunter",
-        "windwheel_sentinel"
+        "windwheel_sentinel",
+        "breaker_cavalier",
+        "thunder_core_guard"
       ],
       "boss": [
         "boss_flame_lord",
         "boss_storm_witch",
         "boss_hedor",
-        "boss_highland_roc"
+        "boss_highland_roc",
+        "boss_city_sealer"
       ]
     },
     "rogue": {
@@ -831,6 +839,271 @@
           "icon": "🌪️",
           "target": "露弥支援",
           "iconPath": "res://assets/content_v280/icons/blessings/lumi_open_gold.png"
+        },
+        {
+          "id": "thunder_shelter_white",
+          "name": "雷幕同行",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "raisa",
+            "vika",
+            "eve"
+          ],
+          "characterId": "raisa",
+          "effects": [
+            {
+              "type": "damageWhileShielded",
+              "value": 0.12
+            }
+          ],
+          "description": "带有护盾的队友普攻、战技和终结技造成的直接伤害提高12%。",
+          "icon": "⚡",
+          "target": "雷队协同",
+          "iconPath": "res://assets/content_v290/icons/blessings/thunder_shelter_white.png",
+          "sharedPoolId": "thunder_core"
+        },
+        {
+          "id": "thunder_mark_blue",
+          "name": "引雷共鸣",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "raisa",
+            "vika",
+            "eve"
+          ],
+          "characterId": "raisa",
+          "effects": [
+            {
+              "type": "damageVsStatus",
+              "statusId": "thunder_mark",
+              "value": 0.18
+            }
+          ],
+          "description": "全队普攻、战技和终结技攻击导电目标时，造成的直接伤害提高18%。",
+          "icon": "⚡",
+          "target": "雷队协同",
+          "iconPath": "res://assets/content_v290/icons/blessings/thunder_mark_blue.png",
+          "sharedPoolId": "thunder_core"
+        },
+        {
+          "id": "thunder_link_gold",
+          "name": "千雷同归",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "raisa",
+            "vika",
+            "eve"
+          ],
+          "characterId": "raisa",
+          "effects": [
+            {
+              "type": "thunderLinkedPierce",
+              "value": 0.24
+            }
+          ],
+          "description": "全队每次行动对导电目标造成生命伤害后，对存活目标追加行动角色面板攻击力24%的雷属性贯穿追击。每次行动对每个目标触发一次，追击无视防御且无法暴击。",
+          "icon": "⚡",
+          "target": "雷队协同",
+          "iconPath": "res://assets/content_v290/icons/blessings/thunder_link_gold.png",
+          "sharedPoolId": "thunder_core"
+        },
+        {
+          "id": "raisa_charge_white",
+          "name": "积雷于刃",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "raisa"
+          ],
+          "characterId": "raisa",
+          "effects": [
+            {
+              "type": "thunderChargeBonus",
+              "value": 0.12
+            }
+          ],
+          "description": "莱莎常态且能量未满时，普攻与战技的能量获取额外提高12%。",
+          "icon": "⚡",
+          "target": "城防骑士",
+          "iconPath": "res://assets/content_v290/icons/blessings/raisa_charge_white.png"
+        },
+        {
+          "id": "raisa_armor_blue",
+          "name": "披霆而行",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "raisa"
+          ],
+          "characterId": "raisa",
+          "effects": [
+            {
+              "type": "thunderArmorDamage",
+              "value": 0.15
+            }
+          ],
+          "description": "莱莎雷铠状态下的普攻、战技和终结技伤害提高15%。",
+          "icon": "⚡",
+          "target": "城防骑士",
+          "iconPath": "res://assets/content_v290/icons/blessings/raisa_armor_blue.png"
+        },
+        {
+          "id": "raisa_armor_gold",
+          "name": "天雷照夜",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "raisa"
+          ],
+          "characterId": "raisa",
+          "effects": [
+            {
+              "type": "thunderArmorDamage",
+              "value": 0.2
+            }
+          ],
+          "description": "莱莎雷铠状态下的普攻、战技和终结技伤害提高20%。",
+          "icon": "⚡",
+          "target": "城防骑士",
+          "iconPath": "res://assets/content_v290/icons/blessings/raisa_armor_gold.png"
+        },
+        {
+          "id": "vika_mark_white",
+          "name": "逐迹留光",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "vika"
+          ],
+          "characterId": "vika",
+          "effects": [
+            {
+              "type": "thunderMarkDuration",
+              "value": 1
+            }
+          ],
+          "description": "全队施加的导电持续时间延长1回合。",
+          "icon": "⚡",
+          "target": "雷轨寻迹者",
+          "iconPath": "res://assets/content_v290/icons/blessings/vika_mark_white.png"
+        },
+        {
+          "id": "vika_link_blue",
+          "name": "弩弦续雷",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "vika"
+          ],
+          "characterId": "vika",
+          "effects": [
+            {
+              "type": "thunderConductBonus",
+              "value": 0.04
+            }
+          ],
+          "description": "维珂导电追击的基础倍率增加攻击力的4%。",
+          "icon": "⚡",
+          "target": "雷轨寻迹者",
+          "iconPath": "res://assets/content_v290/icons/blessings/vika_link_blue.png"
+        },
+        {
+          "id": "vika_open_gold",
+          "name": "照亮归途",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "vika"
+          ],
+          "characterId": "vika",
+          "effects": [
+            {
+              "type": "enemyBattleStartStatus",
+              "statusId": "thunder_mark",
+              "duration": 3,
+              "sourcePolicy": "blessing",
+              "value": 0.35
+            },
+            {
+              "type": "thunderConductBonus",
+              "value": 0.08
+            }
+          ],
+          "description": "每场战斗开始时，全体敌人获得3回合导电，防御降低35%；维珂导电追击的基础倍率增加攻击力的8%。",
+          "icon": "⚡",
+          "target": "雷轨寻迹者",
+          "iconPath": "res://assets/content_v290/icons/blessings/vika_open_gold.png"
+        },
+        {
+          "id": "eve_shield_white",
+          "name": "晴幕加护",
+          "pool": "character",
+          "rarity": "white",
+          "eligibleCharacters": [
+            "eve"
+          ],
+          "characterId": "eve",
+          "effects": [
+            {
+              "type": "thunderShieldMult",
+              "value": 0.15
+            }
+          ],
+          "description": "伊芙主动技能提供的护盾量提高15%。",
+          "icon": "⚡",
+          "target": "结界医师",
+          "iconPath": "res://assets/content_v290/icons/blessings/eve_shield_white.png"
+        },
+        {
+          "id": "eve_guard_blue",
+          "name": "穹光守望",
+          "pool": "character",
+          "rarity": "blue",
+          "eligibleCharacters": [
+            "eve"
+          ],
+          "characterId": "eve",
+          "effects": [
+            {
+              "type": "damageTakenWhileStatus",
+              "statusId": "regen",
+              "value": -0.15
+            }
+          ],
+          "description": "处于再生的队友受到的伤害降低15%，与既有减伤共同遵守90%上限。",
+          "icon": "⚡",
+          "target": "结界医师",
+          "iconPath": "res://assets/content_v290/icons/blessings/eve_guard_blue.png"
+        },
+        {
+          "id": "eve_dawn_gold",
+          "name": "雷雨初晴",
+          "pool": "character",
+          "rarity": "gold",
+          "eligibleCharacters": [
+            "eve"
+          ],
+          "characterId": "eve",
+          "effects": [
+            {
+              "type": "battleStartStatus",
+              "statusId": "shield",
+              "duration": 3,
+              "value": 0.15
+            },
+            {
+              "type": "battleStartStatus",
+              "statusId": "regen",
+              "duration": 2
+            }
+          ],
+          "description": "每场战斗开始时，全队获得最大生命15%的护盾，持续3回合，并获得2回合再生。",
+          "icon": "⚡",
+          "target": "结界医师",
+          "iconPath": "res://assets/content_v290/icons/blessings/eve_dawn_gold.png"
         }
       ]
     }
@@ -1487,6 +1760,187 @@
           }
         ]
       }
+    },
+    "raisa": {
+      "id": "raisa",
+      "name": "雷铠·莱莎",
+      "title": "鸣雷城骑士",
+      "rarity": 5,
+      "element": "thunder",
+      "role": "dps",
+      "gender": "female",
+      "baseStats": {
+        "hp": 1200,
+        "atk": 175,
+        "def": 80,
+        "spd": 108,
+        "cri": 0.18,
+        "criDmg": 1.65
+      },
+      "growthRate": {
+        "hp": 110,
+        "atk": 8,
+        "def": 4,
+        "spd": 0
+      },
+      "skills": [
+        "raisa_normal",
+        "raisa_skill",
+        "raisa_ult"
+      ],
+      "passiveId": "raisa_passive",
+      "passiveDesc": "能量未满时，常态下普攻与战技的能量获取提高25%；每点能量使自身攻击力提高0.25%，最多提高25%。",
+      "synergyIds": [
+        "thunder_trio"
+      ],
+      "description": "鸣雷城的城防骑士，能够将自身的力量凝成雷电铠甲。她习惯站在危险最先袭来的地方，也正在学习把身后的路交给同行的人。",
+      "flavorText": "「你要是有别的打算，就直接告诉我。我们一起商量。」",
+      "color": "#a09afa",
+      "colorDark": "#24213e",
+      "image": "res://assets/content_v290/characters/raisa.png",
+      "portrait": "res://assets/content_v290/characters/raisa.png",
+      "portraitBackground": "res://assets/content_v290/backgrounds/thunder_gate.png",
+      "passiveIconPath": "res://assets/content_v290/icons/skills/raisa_passive.png",
+      "relicObjective": {
+        "type": "damage",
+        "label": "雷铠循环",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "storm_armor",
+            "reason": "提高雷铠状态下的伤害，配合常态积蓄能量后的连续行动。"
+          }
+        ]
+      },
+      "thunderArmor": {
+        "duration": 4,
+        "chargeBonus": 0.25,
+        "energyAttackBonus": 0.25,
+        "skills": [
+          "raisa_armor_normal",
+          "raisa_armor_skill",
+          "raisa_armor_ult"
+        ],
+        "image": "res://assets/content_v290/characters/raisa_armor.png"
+      },
+      "constellationOverrides": {
+        "5": {
+          "label": "雷鸣蓄势",
+          "desc": "常态且能量未满时，普攻与战技的能量获取额外提高30%。",
+          "buff": {
+            "thunderChargeBonus": 0.3
+          }
+        }
+      }
+    },
+    "vika": {
+      "id": "vika",
+      "name": "逐电·维珂",
+      "title": "远路寻迹者",
+      "rarity": 5,
+      "element": "thunder",
+      "role": "dps",
+      "gender": "female",
+      "baseStats": {
+        "hp": 1050,
+        "atk": 125,
+        "def": 75,
+        "spd": 112,
+        "cri": 0.12,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 100,
+        "atk": 6,
+        "def": 4,
+        "spd": 0
+      },
+      "skills": [
+        "vika_normal",
+        "vika_skill",
+        "vika_ult"
+      ],
+      "passiveId": "vika_passive",
+      "passiveDesc": "雷属性队友行动对导电目标造成生命伤害后，维珂对存活目标追加面板攻击力18%的雷属性贯穿追击，每次行动对每个目标触发一次，每回合对每个目标最多触发两次。追击无视防御且无法暴击。",
+      "synergyIds": [
+        "thunder_trio"
+      ],
+      "description": "往来于旧城与远路的寻迹者，使用折叠雷弩寻找遗失的货物，也把亲自走过的道路画进旅行图册。她给每笔委托算得清楚，却总愿意为值得一看的地方多留几页空白。",
+      "flavorText": "「前面那家店我记在地图上了。你陪我去看看，回来再告诉我画得准不准。」",
+      "color": "#debb73",
+      "colorDark": "#24213e",
+      "image": "res://assets/content_v290/characters/vika.png",
+      "portrait": "res://assets/content_v290/characters/vika.png",
+      "portraitBackground": "res://assets/content_v290/backgrounds/storm_market.png",
+      "passiveIconPath": "res://assets/content_v290/icons/skills/vika_passive.png",
+      "relicObjective": {
+        "type": "damage",
+        "label": "导电协同",
+        "referenceStatuses": [
+          "thunder_mark"
+        ],
+        "recommendedSets": [
+          {
+            "setId": "storm_tracer",
+            "reason": "提高维珂的导电追击伤害，兼顾雷属性队友触发的协同攻击。"
+          }
+        ]
+      },
+      "conductFollowUp": 0.18
+    },
+    "eve": {
+      "id": "eve",
+      "name": "晴穹·伊芙",
+      "title": "白伞医师",
+      "rarity": 5,
+      "element": "thunder",
+      "role": "support",
+      "gender": "female",
+      "baseStats": {
+        "hp": 1150,
+        "atk": 145,
+        "def": 95,
+        "spd": 104,
+        "cri": 0.12,
+        "criDmg": 1.5
+      },
+      "growthRate": {
+        "hp": 100,
+        "atk": 6,
+        "def": 4,
+        "spd": 0
+      },
+      "skills": [
+        "eve_normal",
+        "eve_skill",
+        "eve_ult"
+      ],
+      "passiveId": "eve_passive",
+      "passiveDesc": "回合结束时，为带有护盾的队友提供2回合再生，并恢复自身攻击力22%的生命值。自身存活时，带有护盾的雷属性队友伤害加深10%。",
+      "synergyIds": [
+        "thunder_trio"
+      ],
+      "description": "擅长结界与疗愈的医师，以伞杖为同行的人挡住伤害。她记得伤者需要的药，也记得谁还欠着一顿热饭，盼着有一天开一家能让旅人坐下歇脚的伞铺。",
+      "flavorText": "「坐到这里来吧。你慢慢说，我会听着。」",
+      "color": "#a5d8df",
+      "colorDark": "#24213e",
+      "image": "res://assets/content_v290/characters/eve.png",
+      "portrait": "res://assets/content_v290/characters/eve.png",
+      "portraitBackground": "res://assets/content_v290/backgrounds/ward_clinic.png",
+      "passiveIconPath": "res://assets/content_v290/icons/skills/eve_passive.png",
+      "relicObjective": {
+        "type": "healing",
+        "label": "护盾与再生",
+        "referenceStatuses": [],
+        "recommendedSets": [
+          {
+            "setId": "storm_shelter",
+            "reason": "提高护盾与主动治疗量，保护队友并维持再生。"
+          }
+        ]
+      },
+      "shieldThunderDamage": 0.1,
+      "shieldThunderDamageC6": 0.14
     }
   },
   "ElementNames": {
@@ -1694,6 +2148,27 @@
       "desc": "本人主动施加的破甲由35%提高至45%。",
       "buff": {
         "c6_type": "wind_armor_up"
+      }
+    },
+    "raisa": {
+      "label": "与你共赴雷明",
+      "desc": "雷电铠甲持续时间延长1回合。完成普攻与战技后，可连续使用两次雷铠终结技。",
+      "buff": {
+        "c6_type": "thunder_armor_extend"
+      }
+    },
+    "vika": {
+      "label": "循光归来",
+      "desc": "导电追击倍率提高15%，计入遗物与祝福提供的基础倍率加成；基础倍率为18%时，提高至20.7%。",
+      "buff": {
+        "c6_type": "thunder_conduct_up"
+      }
+    },
+    "eve": {
+      "label": "晴穹长明",
+      "desc": "被动为带有护盾的队友恢复的生命值，由攻击力的22%提高至28%；带有护盾的雷属性队友伤害加深由10%提高至14%。",
+      "buff": {
+        "c6_type": "thunder_shelter_up"
       }
     }
   },
@@ -5135,6 +5610,2620 @@
         "text": "缇娅把行杖靠在桌边，露弥也放下了工具袋，在同伴身旁坐了下来。忙完了救援和修桥，大家终于能安心吃顿热饭，听彼此说完这一路的经过。",
         "portrait": null
       }
+    ],
+    "ch5_1_pre": [
+      {
+        "speaker": "narrator",
+        "text": "离开灯镇的第三天下午，众人终于望见了鸣雷城的城墙。雨水沿着石像的肩头流进街沟，城门前挤满了避雨的货车。缇娅把刚买来的地图举到旅行者面前，指着城内一条弯曲的街道。",
+        "portrait": null
+      },
+      {
+        "speaker": "tiya",
+        "text": "这条街上有一家卖果酱面包的店。我替店主送过好几次信，每次都赶着离开。这回总算能坐下来吃一顿了。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "kaldi",
+        "text": "你早说啊！我一路都在想，到了城里该吃点什么。",
+        "portrait": "kaldi",
+        "element": "fire"
+      },
+      {
+        "speaker": "narrator",
+        "text": "城门上方突然亮起一道紫光。排在最前面的驮兽受了惊，把车上的木箱拖倒了。两个搬货的人被压在车辕旁，雨雾中，一头鬃毛闪着电光的野兽正朝他们逼近。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "靠近城门的人先往屋檐下退！那辆车后面还有人，给我留出一条路！",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "深紫色长发的骑士从守门台跃下，长刀挡住了野兽伸向车底的利爪。她的靴子在湿石板上滑出半步，身后的车辕也被撞得翘了起来。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "卡尔迪，帮他们抬起车辕！我去骑士那边。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "你会用武器？那就站在我右侧。它扑过来的时候，我们一起把它逼离货车！",
+        "portrait": "raisa",
+        "element": "thunder"
+      }
+    ],
+    "ch5_1_post": [
+      {
+        "speaker": "narrator",
+        "text": "雷鬃兽退进了城外的雨幕。卡尔迪和车夫抬起车辕，艾拉把被困的人扶进门房。旅行者正要收起武器，骑士却伸手指了指他的袖口。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "你的袖子被钩破了。手臂能活动吗？",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "只是衣服破了。你刚才退了半步，我还以为那头野兽要撞进车底。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "我本来准备再退一点，好让它扑到空处。你过来得正好，省得我在雨里摔个难看的跟头。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者望向她脚边。骑士站的地方已经积了一小滩泥水，靴跟卡在石缝里，拔出来时发出很响的一声。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "现在也可以假装我没听见。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "那就劳烦你了。我叫莱莎，负责西城门。欢迎来到鸣雷城，这场雨已经下到第三天，招待恐怕要迟些。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "tiya",
+        "text": "城里的道路还通着吗？我们想先给受伤的人找个能休息的地方。",
+        "portrait": "tiya",
+        "element": "wind"
+      },
+      {
+        "speaker": "raisa",
+        "text": "旧街的诊所还开着，屋顶上挂着白色的伞灯。值守的人会带你们过去。我得去西边岗楼看看，那边刚才连着发了两次警报。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我陪你过去。城门口刚出了事，你路上也许还会遇到这些野兽。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "艾拉留下来照看伤者，缇娅与露弥陪车夫安顿货车。瑟琳把一包干粮递给旅行者，又替他扣好被雨水冲开的行囊搭扣。",
+        "portrait": null
+      },
+      {
+        "speaker": "selin",
+        "text": "我们先陪大家去诊所。你忙完了就过来，晚饭给你留着。",
+        "portrait": "selin",
+        "element": "fire"
+      },
+      {
+        "speaker": "raisa",
+        "text": "走我这边，墙下能少淋一点雨。前面那家铺子的檐水很厉害，第一次来的人总要被浇一头。",
+        "portrait": "raisa",
+        "element": "thunder"
+      }
+    ],
+    "ch5_2_pre": [
+      {
+        "speaker": "narrator",
+        "text": "两人沿着城墙穿过一条窄街。莱莎刚抬手示意旅行者绕开檐水，街口的铁门就突然降了下来。一名推着药车的青年被拦在门内，车轮夹在铁门下面。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_joan",
+        "text": "莱莎！它们把货站也封了，我只能从这里回来。可我的车还卡着，里面还有诊所订的药！",
+        "portrait": null,
+        "speakerName": "乔安"
+      },
+      {
+        "speaker": "raisa",
+        "text": "乔安，你先松开车把，往旁边的石阶退。旅行者，帮我看看门轴，我得把这扇门抬起来。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "两具巡雷机兵从铁门后转了出来。它们胸前的铜牌依次亮起，矛尖越过药车，指向青年佩戴的护身符。",
+        "portrait": null
+      },
+      {
+        "speaker": "storm_patrol",
+        "text": "发现可用雷源。等待归队。",
+        "portrait": null,
+        "speakerName": "巡雷机兵"
+      },
+      {
+        "speaker": "traveler",
+        "text": "它们在看他的护身符。乔安，把护身符放进车里，然后退回来！",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "乔安解下护身符扔进车厢。一具机兵立即转向药车，另一具胸前却亮起“已登记”的字样，仍朝他抬起长矛。莱莎把长刀横在青年身前。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "我认识这个人，他每天都从这里送药。你退到我后面，旅行者，我们先让这些机兵停下来！",
+        "portrait": "raisa",
+        "element": "thunder"
+      }
+    ],
+    "ch5_2_post": [
+      {
+        "speaker": "narrator",
+        "text": "机兵胸口的光熄灭了。旅行者用断矛垫住铁门，莱莎和乔安一起把药车推了出来。乔安找回护身符时，发现镶在上面的晶石已经裂开。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_joan",
+        "text": "这是伊芙给我做的。她说搬货时摔着了，它能帮我挡一下。以前我一直戴着，机兵从来没拦过我。",
+        "portrait": null,
+        "speakerName": "乔安"
+      },
+      {
+        "speaker": "raisa",
+        "text": "今天早上，它们还在照常巡街。城门出了警报以后，连我的通行牌也失效了。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "它们刚才说要收集雷源。城门上亮起的那道光，会不会和这件事有关？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "城门和机兵都接着山上的雷塔。我得先找到岗楼里的人，问清警报是从哪里发出来的。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "thunder_joan",
+        "text": "我从货站跑出来时，看见机兵往岗楼送了一辆空车。车后面还有人，好像是今天轮值的骑士。",
+        "portrait": null,
+        "speakerName": "乔安"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎蹲下来检查倒地机兵的铜牌。铜牌边缘多出了一道发白的裂缝，刻在里面的字却仍然清楚。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "上面写着“封城”，后面还有一串我从没见过的旧编号。西岗楼就在前面，我们过去找人。乔安，你沿这条巷子去诊所，门口有我的同伴。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "thunder_joan",
+        "text": "好。我会告诉伊芙，今天又有人帮我把药车抢回来了。",
+        "portrait": null,
+        "speakerName": "乔安"
+      },
+      {
+        "speaker": "traveler",
+        "text": "又有人？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "上次是车轮掉进沟里。等事情结束，你可以听他慢慢讲。他能从第一瓶药讲到最后一个轮子。",
+        "portrait": "raisa",
+        "element": "thunder"
+      }
+    ],
+    "ch5_3_pre": [
+      {
+        "speaker": "narrator",
+        "text": "西岗楼的门敞着，里面却听不到交谈声。旅行者推开门，在楼梯口发现了两只打翻的饭盒。更深处传来金属摩擦的响声，还有人压低声音叫着莱莎。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_watch_knight",
+        "text": "我们在下面！升降台卡住了，机兵把上面的门锁了！",
+        "portrait": null,
+        "speakerName": "值守骑士"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎赶到栏边。三名骑士被关在下降了一半的升降台上，台底的铁网正在收紧。一具破阵重骑守在楼梯口，胸口的雷光随着铁网一同闪动。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "底下那些铁丝绕着他们的护甲，像是在吸走上面的雷光。莱莎，这里有手动绞盘，我能试着把升降台拉回来。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "那具重骑会挡住你。我来把它引离楼梯，你听见它的枪砸下去，就开始转动绞盘。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎将长刀竖在身前，掌心沿刀脊压下。紫色的电光从刀刃散向肩背，依次凝成覆住胸口、手臂与双腿的银色铠甲。她呼吸一沉，随后抬起了覆甲的手。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "你脸色变了。这副铠甲会让你受伤？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "它会抽走一部分体力，也会替我挡住接下来的攻击。我能维持一阵。等我把它逼开，你把下面的人带上来。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "破阵重骑举起长枪，枪尖撞上莱莎肩前的护盾。她迎着飞溅的电光踏上台阶，长刀切进重骑胸前的护甲缝隙。",
+        "portrait": null
+      }
+    ],
+    "ch5_3_post": [
+      {
+        "speaker": "narrator",
+        "text": "重骑倒下时，旅行者已经把升降台拉到了地面。三名骑士互相搀扶着走出来，其中一人仍伸手去扶莱莎。她摆了摆手，请他先坐到墙边。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "楼上的水壶还在，先喝一点。你们被带到这里多久了？",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "thunder_watch_knight",
+        "text": "警报响起以后，机兵就突然关了门。它们还给我们的护甲编了号，说接下来要送到雷塔去。",
+        "portrait": null,
+        "speakerName": "值守骑士"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你们身上的雷光已经很淡了。再留在这里，恐怕连站起来都困难。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "thunder_watch_knight",
+        "text": "我刚才也这样想……听见绞盘转动的时候，我还以为又要往下去了。",
+        "portrait": null,
+        "speakerName": "值守骑士"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者把水递过去。莱莎靠在栏边，铠甲上的光一片片散开。她想收回长刀，手指却在刀柄上滑了一下。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "刀先交给我。楼上有干净的凳子，你坐一会儿，我去叫人。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "你知道这把刀有多重吗？",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者接过长刀，手臂立即往下一沉。莱莎看着他重新握稳刀柄，终于忍不住笑了。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "现在知道了吧。扶我一把，楼梯也比刚才长了。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你刚才可以早点告诉我，铠甲退去以后会这么累。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "以前跟我一起值守的人都知道。我忘了，你今天才认识我。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者让她的手臂搭在自己肩上，陪她走上楼梯。楼上的窗户朝着雨街，远处诊所的白色伞灯已经亮了起来。",
+        "portrait": null
+      }
+    ],
+    "ch5_interlude_1": [
+      {
+        "speaker": "narrator",
+        "text": "接到消息的守门人赶到岗楼，把三名骑士送往诊所。莱莎坐在窗边吃瑟琳留下的干粮，旅行者则拿着干布，擦去她刀鞘上的泥水。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "你擦得这么仔细，我会想把明天的值勤也交给你。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "明天的事等明天再说。我现在想知道，你每次穿上铠甲，都要像刚才那样撑到最后吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "平时有人替我看着后面，我也会提前退开。今天听见他们在下面，我心里着急，想快一点把重骑解决掉。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那你应该告诉我。我站在绞盘旁边，看着你的护盾越来越淡，只能猜自己还剩多少时间。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎咽下嘴里的干粮，抬头看了旅行者一会儿。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "你生气了？",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我想和你配合。可你连自己什么时候需要帮忙，都准备替我决定。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "这话说得挺重。城门口认识我的人，通常会先问我打算怎么做。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你也可以问我打算怎么做。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "窗外一阵雷声滚过。莱莎把剩下的干粮分成两半，将其中一半放到旅行者手里。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "那我现在问。等会儿还要去查货站，你愿意继续陪我吗？我会把铠甲的情况告诉你，你也把自己的打算告诉我。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "愿意。还有，下次我叫你回来，你至少要回答一声。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "我会回答的。你要是准备往危险的地方跑，也记得让我听见。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者坐到她身边，把最后一块干粮吃完。莱莎望了眼重新擦亮的刀鞘，伸手将窗户关小一些，挡住吹向两人的雨。",
+        "portrait": null
+      }
+    ],
+    "ch5_4_pre": [
+      {
+        "speaker": "narrator",
+        "text": "傍晚的市集已经收了大半摊位。旅行者和莱莎来到货站附近，刚想问路，一支带着电光的弩箭便钉进了前方的木柱。柱上正在伸出触须的蜉蝣被击落，一名短发女子从雨棚后探出头来。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "先停在那儿。你脚边那只也会放电，踩着它的话，今天的袜子就彻底保不住了。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你怎么知道我准备从这里过去？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "因为另外两条路都封着。我在这屋顶上待了半个钟头，数过七个和你走一样路线的人。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "木柱里的电光引来了更多蓄电蜉蝣。女子抬起折叠长弩，瞄准雨棚上逐渐聚拢的亮点。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "维珂，你又在货站附近做什么？",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "vika",
+        "text": "等我的委托人。不过现在嘛，我想先请你的新朋友帮个忙。旅行者，后面的摊主还在收东西，你把旁边的油布放下来，替他挡住电火，我就能把这群东西引到街中间。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你连我的称呼都听见了？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "你们在下面聊得那么认真。放心，等解决了这些虫子，我请你喝点热的。",
+        "portrait": "vika",
+        "element": "thunder"
+      }
+    ],
+    "ch5_4_post": [
+      {
+        "speaker": "narrator",
+        "text": "最后几只蜉蝣飞出了市集。维珂从雨棚后绕下来，先把被撞歪的摊架扶好，又把一枚钱币压在破掉的油布下面。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "这块油布算我的。摊主回来问起来，劳烦莱莎替我作证，我今天真的付钱了。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "上次你也付了钱，只是顺手拿走了人家的粉笔。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "vika",
+        "text": "那支粉笔很好用，我特意买了两支回来。这位就是你的新搭档？",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "今天刚认识。你一直在这里等什么？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "一位晶石商人。他雇我找回被机兵拖走的货，我赶到时，他自己也被关进货站了。现在连报酬该找谁领，都成了问题。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她拿出一张折得很小的货单。上面列着整整一车结界晶石，末尾还写了一个地址。旅行者认出那是乔安送药的诊所。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这批货原来要送去诊所？我们刚才遇到送药的人，他也被机兵拦住了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "你见过乔安？那我少找一个人了。他替诊所订了一半，剩下的准备分给街上的店铺。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "我得先回城门，让值守的人停用机兵的通行牌。维珂，你熟悉货站里面的路，能带他过去吗？",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "vika",
+        "text": "当然能。不过旅行者，进门以前，我们得把条件说好。你要找里面的人，我要找那车货，看到其中一样，都得告诉对方。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "货物和人都找到了以后呢？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "那杯热饮照请。至于报酬，我会认真考虑分你一点。",
+        "portrait": "vika",
+        "element": "thunder"
+      }
+    ],
+    "ch5_5_pre": [
+      {
+        "speaker": "narrator",
+        "text": "维珂带旅行者从卸货棚的侧门进入货站。里面的轨道仍在缓缓转动，一只只空货箱被运向地下。站台上躲着几个搬运工，机兵守在他们和出口之间。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "我昨天来过，通往地下的轨道还封着。你看那些货箱，连固定的绳扣都被拆了。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那边有人认识你。他一直在朝你招手。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "一名满脸灰尘的商人躲在车厢后，隔着站台举起半截断绳。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_merchant",
+        "text": "维珂！我在这里！货已经送下去了，机兵连车上的备用晶石都取走了！",
+        "portrait": null,
+        "speakerName": "晶石商人"
+      },
+      {
+        "speaker": "vika",
+        "text": "你的命比货值钱，先待在车厢后面！旅行者，那个弩卫正在转过来，我把它胸口的铜盖射开，你留意后面的机兵。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "维珂的弩箭钉住了弩卫外壳的接缝，细小的电光沿着裂开的铜盖游走。弩卫的弩臂突然偏向站台，旅行者赶在它发射前跃下台阶。",
+        "portrait": null
+      }
+    ],
+    "ch5_5_post": [
+      {
+        "speaker": "narrator",
+        "text": "商人和搬运工从车厢后走了出来。维珂向他们确认出口的位置，旅行者则把卡在轨道上的碎木移开，让最后一个人能够跨过站台。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_merchant",
+        "text": "城里的人都在等那些晶石。雷雨这么大，屋顶上的结界天天要补，我这一车原本已经全卖出去了。",
+        "portrait": null,
+        "speakerName": "晶石商人"
+      },
+      {
+        "speaker": "vika",
+        "text": "记得留下收据。等货找回来，你得照原价卖给他们，我可听见你刚才说全卖出去了。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "thunder_merchant",
+        "text": "我什么时候说要涨价了？",
+        "portrait": null,
+        "speakerName": "晶石商人"
+      },
+      {
+        "speaker": "vika",
+        "text": "我先提醒一下，省得你待会儿高兴得忘记。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者在货台上找到两本并排打开的账册。一本登记晶石的数量，另一本却记着人名，每个名字后面也跟着一个数值。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这里还有三名骑士的名字。我们刚在岗楼救出他们，身上的雷光已经被抽走了不少。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "连人都登记到货册里了？让我看看日期……第一笔是今天下午，正好在封街警报之后。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "还有这一行，“送往旧观测台，等待入塔”。我们得把这些人找回来。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "地下有一条旧支线，终点就是观测台。我以前为了画地图，走过前半段。你愿意跟我下去看看吗？",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "先把账册交给外面的人，让他们拿去给莱莎。她会知道还缺了谁。然后我们去找那条支线。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "维珂从账册上抄下班次，把自己的货单也夹了进去。两人请商人将消息带给城防骑士，随后穿过空荡的卸货棚，走向地下站台。",
+        "portrait": null
+      }
+    ],
+    "ch5_6_pre": [
+      {
+        "speaker": "narrator",
+        "text": "地下站台的灯亮着，售票窗却积满了灰。旅行者在墙上看见一幅旧城地图，维珂正用手里的图册逐条比较轨道的位置。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "这条支线原先运送修塔的材料。后来雷塔改用新路，车站就关了。我还想过，等找到完整路线，就把这座站画进图册里。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你自己在画旅行地图？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "等出去以后给你看。现在我们得先弄清楚，这辆车会把人送到哪里。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "站台尽头传来沉重的脚步声。一具雷核守卫拖着电缆走出维修间，身后的小车上坐着两名双手发抖的工人。守卫停在岔道旁，电缆正缠住他们的座椅。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "他们还醒着。维珂，你能让车停在这里吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "可以，车轮下面有制动扣。我得绕到另一边，你替我挡住守卫。它身后的电缆连着座椅，出手时留意那里！",
+        "portrait": "vika",
+        "element": "thunder"
+      }
+    ],
+    "ch5_6_post": [
+      {
+        "speaker": "narrator",
+        "text": "旅行者拆开座椅上的扣锁，扶两名工人走下小车。维珂把随身的水壶交给他们，又从维修间找出一只亮着的警示灯，挂在已经停住的车头。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_worker",
+        "text": "我们修灯的时候，机兵说要送我们去避雷。后来椅子上的锁扣越收越紧，手臂也越来越沉……",
+        "portrait": null,
+        "speakerName": "工人"
+      },
+      {
+        "speaker": "traveler",
+        "text": "现在能站起来吗？我们陪你们回到上面，城防骑士已经在接应了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "通往观测台的铁门已经关了，守卫身上也没有钥匙。不过车里的运单还在，我们先把它带上。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "一张发脆的线路图卡在车底。旅行者伸手抽出图纸，发现边角已经被电光烧掉，剩下的部分正好标着观测台的下层入口。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "小心，纸很脆。这张图比我找到的早了很多年，连封起来的站台都画着。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你来拿图，我扶着他。等上去以后，我们一起把路线补完整。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "维珂接过图纸，原本张口想说的话又停在了嘴边。她把图放进防水袋，随后扶起另一名工人。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "刚才我还在想，该拿什么跟你换这张图。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你还欠我一杯热饮。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "那可得选一家好喝的。你这样算账，我占的便宜就大了。",
+        "portrait": "vika",
+        "element": "thunder"
+      }
+    ],
+    "ch5_interlude_2": [
+      {
+        "speaker": "narrator",
+        "text": "城防骑士将两名工人送往诊所后，维珂带旅行者钻进了市集边的一间小茶铺。炉上只剩一壶热茶，老板给他们找出两个大小不同的杯子。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "大的给你，说好了是我请客。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你刚才从屋顶下来时，看起来可比现在精神多了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "那时候有钱可赚。现在人找回来了，货还在地下，我连委托人都得先送去休息。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她喝了口茶，把图册摊在桌上。前半本画着道路、旅店和渡口，旁边挤满了细小的字。旅行者翻到一页，发现那里还画着一碗冒热气的汤。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "你连旅店的汤都记下来了？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "那家店的床太硬。我得告诉后来的人，至少晚饭值得期待。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "长风谷刚修好一座桥。你这张图上还画着绕行路线，得改一改了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "维珂把笔递给他，自己挪开茶杯，腾出桌面。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "那就请亲眼看过的人来画。桥有多宽？推着车能过去吗？",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "能。我们还帮忙推过一辆粮车，露弥仔细检查过。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者画下桥和两端的石阶，维珂在旁边补上日期。翻过这一页，后面还留着几页空白，只在页角写着不同的地名。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这些地方你还没去过？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "还在攒路费。有个出版商愿意买前半本，催了我好几次。我总想着再添一点，结果一拖就拖到了这里。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "等这场雷雨结束，你打算先去哪里？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "原本想去海边。不过现在我挺想跟着你走一段。你去过的地方，总有些地图上找不到的事。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那你得留够纸。我讲起来也很慢。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "正好。你慢慢讲，我画错的地方就由你指出来。今天那杯茶，看来还得再添一次。",
+        "portrait": "vika",
+        "element": "thunder"
+      }
+    ],
+    "ch5_7_pre": [
+      {
+        "speaker": "narrator",
+        "text": "两人赶到诊所时，雨已经淹过门前的第一层石阶。艾拉正在屋里替伤者换药，瑟琳将铜灯挂在窗边。门外，一位浅金色头发的女子撑开伞杖，透明的结界挡住了不断落下的电火。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "门口这块地方还能站稳。两位先把鞋底的泥擦一擦，里面刚铺了干净的布，等会儿还有人要躺下。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你就是伊芙？乔安把药送回来了吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "送回来了，还把你们帮忙推车的经过说了两遍。你是旅行者吧？艾拉替你留了一碗粥。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "结界外侧突然浮起一群亮点。蓄电蜉蝣沿着伞面的弧线聚拢，后面的街口，一头雷鬃兽正撞向摆满药瓶的木架。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "它们追着结界里的雷光来了。伊芙，你先让门口的人进去，我和旅行者把它们引到街那边。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "eve",
+        "text": "好，门前这面护盾我会维持住。旅行者，你右手上有血，握武器时留意伤口，回来让我看看。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你隔着雨也看见了？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "你每次换手，都把掌心朝里藏。等会儿坐下来，我们再聊这件事。",
+        "portrait": "eve",
+        "element": "thunder"
+      }
+    ],
+    "ch5_7_post": [
+      {
+        "speaker": "narrator",
+        "text": "雷鬃兽被赶进了空巷。维珂带乔安去收起倒下的药架，旅行者走进诊所，发现自己的粥碗旁边已经放好了清水和布带。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "坐在这里吧，手掌摊开一点。我先把里面的碎屑清理出来。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "转动绞盘的时候磨破了。后来一直在赶路，就忘了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "艾拉说你下午陪莱莎去了岗楼。那个旧绞盘的把手一向很粗，乔安上次用过，回来也磨了一手伤。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "伊芙把湿布轻轻按在伤口边。旅行者的手指缩了一下，她立即停住，等他重新放松，才继续清理。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "现在这样可以吗？",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "可以。刚才那一下有点疼。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "疼就告诉我。我能放轻一些，也能等你缓过来。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "ayla",
+        "text": "我去给莱莎看看，她在门口跟骑士说话。你就在这里吃饭，伊芙已经忙了一整天，也该让她坐一会儿了。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者向旁边挪出一个位置。伊芙看见那把椅子，先把用过的布收好，随后脱下湿外衣，坐到了他身边。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "今天总算有人记得这把椅子也能坐人。我本来已经打算把它让给药箱了。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "粥还有半锅，我给你盛一碗。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "盛小半碗就好。我想先趁热吃完，免得待会儿又有人叫我。",
+        "portrait": "eve",
+        "element": "thunder"
+      }
+    ],
+    "ch5_8_pre": [
+      {
+        "speaker": "narrator",
+        "text": "莱莎回来后，众人把货站的账册和运单摊在诊所桌上。伊芙拿出自己的订货记录，逐一找到了上面的晶石编号。就在她翻到最后一页时，隔壁药房忽然传来玻璃碎裂的声音。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_joan",
+        "text": "药柜后面有东西！刚才还贴在墙上，现在走出来了！",
+        "portrait": null,
+        "speakerName": "乔安"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者赶到门边，看见墙上浮着一道细长的黑痕。几个模糊的身影正从黑痕里挤出来，经过油灯时，地上也没有出现影子。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "屋里的人都到前厅去，靠近艾拉。旅行者，帮我把药房的侧门关上，它们就只能从这里过来。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你能把那道黑痕封住吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "我可以先用结界隔开它，得等里面这些东西离开墙边。你们动手时，我会护住后面的药柜。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "伊芙收起伞杖，把伞尖抵在两间房之间。弧形护盾沿地面升起，挡住了游影伸向门外的手。",
+        "portrait": null
+      }
+    ],
+    "ch5_8_post": [
+      {
+        "speaker": "narrator",
+        "text": "最后一只游影消散后，黑痕缩回了墙里。伊芙在墙边留下一层结界，旅行者则扶起歪倒的药柜，从柜后找到一块冒着白光的晶石。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "这是昨晚给屋顶结界用的晶石。早上收回来时，我发现里面多了几条黑线，就单独放在这里了。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "机兵收走雷晶，城里却出现了这些东西。我们得上观测台看看，那里一定留着雷塔启动的记录。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "vika",
+        "text": "地下的支线还封着。我们从旧街上去，路近一些。那张旧图上正好画着后门。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "先等等。我们已经折腾了一整天，诊所还在收治伤者。城外的雷雨也没有停，今晚就往山上走，大家都很难撑住。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎望向窗外。两名城防骑士正把最后一副担架抬进院子，卡尔迪替他们掀起门帘。她把摊开的地图折回一半。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "今晚先把街上的人接到这里，守住诊所和城门。天一亮，我带你们去观测台。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "eve",
+        "text": "我也去。被机兵带走的人可能还需要治疗，那块晶石我会装进隔离匣，带给观测台的人看看。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "ayla",
+        "text": "这里交给我们。我和瑟琳照顾伤者，卡尔迪守着外院，缇娅和露弥帮忙接人。你们回来时，记得从侧门进，前厅尽量留给担架。",
+        "portrait": "ayla",
+        "element": "water"
+      },
+      {
+        "speaker": "narrator",
+        "text": "乔安在门上挂好引路的铜铃。雨街上的呼喊声渐渐移向诊所，灯下的人终于有空吃一口热饭。",
+        "portrait": null
+      }
+    ],
+    "ch5_interlude_3": [
+      {
+        "speaker": "narrator",
+        "text": "深夜，旅行者醒来时，诊所前厅只剩一盏小灯。伊芙坐在桌边记录伤者的情况，手边那碗粥已经凉透了。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "你下午说想趁热吃完。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "后来来了两副担架。我以为只是离开一小会儿，回来才发现天已经全黑了。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者把小锅放回炉上，又将水壶移到旁边。伊芙抬起头，看着他用包扎过的手去拿碗。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "那只碗有些烫，用另一只手。我来把桌子腾出来。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "这次你就坐着吧。粥很快就热好了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "那我提一个要求。碗里只盛一半，剩下的你吃。你醒来以后，肚子已经响过两次了。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "原来你一直听着。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "屋里这么安静，想装作没听见也很难。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "两人在桌边分完了热粥。伊芙翻过记录册，旅行者看见空白页上画着几只形状不同的伞，有一只伞沿还坠着小铃。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这些也是结界用的吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "是我想开的店。卖伞，修伞，也让赶路的人坐下来喝杯热水。我画了好几年，店面还在纸上。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "门口这盏白伞灯，原来是为它做的？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "嗯。后来诊所缺一盏好找的灯，我就先挂在这里了。现在大家都认得它，换个地方开店，还得重新告诉他们。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她把记录册合上，却没有立即起身。前厅的雨声柔和了一些，炉火烤干了旅行者衣袖上最后一片湿痕。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "明天要是觉得累，就跟我说一声。你今天总在替别人找地方休息，自己却绕着街走了一整天。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你也一样。有人叫你以前，你可以先把这半碗粥吃完。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "好。明天我会把你的话也记着。现在可以陪我坐一会儿吗？我想把这顿夜宵慢慢吃完。",
+        "portrait": "eve",
+        "element": "thunder"
+      }
+    ],
+    "ch5_9_pre": [
+      {
+        "speaker": "narrator",
+        "text": "第二天清晨，四人从旧街登上观测台。雨还在下，天边却已经透出一点灰白。莱莎推开铁门时，里面传来一声急促的呼喊。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_observer",
+        "text": "请等一下！门后接着警报线，踩上去，楼里的机兵都会过来！",
+        "portrait": null,
+        "speakerName": "值守员"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者及时停住。老人从楼梯旁露出半张脸，手里还提着一串拆开的铜铃。他指了指墙上的电缆，正想说明，楼上便响起了弩臂张开的声音。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "它们已经发现我们了。老人家，你从侧面下来，我会挡住楼梯上的弩卫。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "旅行者，带他到门外。这里的机兵从昨晚起就失去了控制，我们得先清出一条能上楼的路。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "伊芙，请照看他。莱莎，我从楼梯右侧过去，你能看清我的位置。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "看见了。我等你站稳，再把机兵引过来。",
+        "portrait": "raisa",
+        "element": "thunder"
+      }
+    ],
+    "ch5_9_post": [
+      {
+        "speaker": "narrator",
+        "text": "值守员领着四人来到记录室。窗外的雷光每闪动一次，墙上的铜针就抖动一次，最后停在一条已经越过红线的刻度上。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_observer",
+        "text": "三天前，塔下的读数开始升高。我们以为只是雷雨太强，昨天重新比较记录，才发现地下的变化比第一声雷早了半天。下午，铜针越过了红线，机兵随即封了整座楼。",
+        "portrait": null,
+        "speakerName": "值守员"
+      },
+      {
+        "speaker": "eve",
+        "text": "诊所的晶石也出现了异常。这些黑线会在附近展开，有东西从里面出来。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她把隔离匣放在桌上。老人看见匣中的晶石，立即翻开一本封皮发黑的旧册子，找出夹在中间的图。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_observer",
+        "text": "和这里画的一样。这本记录说，鸣雷城最早的雷塔建在一道裂隙上，塔里的结界一直压着它。那道裂隙通向哪里，后人只留下了“虚空”这个名字。",
+        "portrait": null,
+        "speakerName": "值守员"
+      },
+      {
+        "speaker": "traveler",
+        "text": "昨天药房墙上的黑痕，就是从这里扩散出去的？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "thunder_observer",
+        "text": "很可能。旧册子里记着，裂隙扩大时，受到污染的晶石会在附近打开小缺口。城里的导雷管道连着雷塔，诊所的晶石也会受到影响。",
+        "portrait": null,
+        "speakerName": "值守员"
+      },
+      {
+        "speaker": "narrator",
+        "text": "维珂把货站运单放到桌上。老人读完“等待入塔”，又翻过几页，将一张绘着巨像的图铺在众人面前。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_observer",
+        "text": "守在塔下的巨像叫封城者。危急时，它会收集能够使用的雷源，强化塔内结界。晶石和机关都在清单上……这里还有佩戴雷甲的人。",
+        "portrait": null,
+        "speakerName": "值守员"
+      },
+      {
+        "speaker": "raisa",
+        "text": "所以它们把值守骑士也关了起来。我们训练时只学过怎样使用铠甲，从来没人告诉我们，塔会把人也算进去。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "原来的值守者怎么让它停下来？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "thunder_observer",
+        "text": "他们能在塔内发出撤回命令。可这些年，我们只在上层记录雷雨，地下早就封闭了。眼下连进去的办法都得重新找。",
+        "portrait": null,
+        "speakerName": "值守员"
+      },
+      {
+        "speaker": "vika",
+        "text": "昨天那张线路图有下层入口。我把它带来了，大家一起看，比在这里猜要快。",
+        "portrait": "vika",
+        "element": "thunder"
+      }
+    ],
+    "ch5_10_pre": [
+      {
+        "speaker": "narrator",
+        "text": "值守员正在寻找雷塔的旧钥匙，楼下却突然响起马蹄般的金属声。一具破阵重骑停在门前，身后的小车里坐着一名被铁索固定住的骑士。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "是昨晚从城门赶来的那个人。他怎么又被带走了？",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "重骑胸前展开一块铜板，上面滚动的编号，和货站账册里的编号一模一样。莱莎的通行牌也随之亮了起来。",
+        "portrait": null
+      },
+      {
+        "speaker": "breaker_cavalier",
+        "text": "雷甲持有者。返回塔内。",
+        "portrait": null,
+        "speakerName": "破阵重骑"
+      },
+      {
+        "speaker": "traveler",
+        "text": "莱莎，把通行牌摘下来。它正在用那块牌子找你。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎摘下铜牌，放到窗台上。重骑仍然抬起了长枪，枪尖沿着她的位置缓缓转动。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "它认的是我身上的力量。维珂，先把车后的锁链截断，我带它离开门口。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们一起过去。等那位骑士能走了，我陪你退到台阶上，那里能避开它的冲锋。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch5_10_post": [
+      {
+        "speaker": "narrator",
+        "text": "被解救的骑士坐在门边，向伊芙说明城中的变化。机兵已经开始挨家搜查结界晶石，诊所门外也聚起了一队巡逻兵。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_rescued_knight",
+        "text": "卡尔迪他们守住了院门，缇娅正在把伤者转移到街后的石屋。艾拉让我告诉你们，屋里的病人都还能走，让你们先顾好自己。",
+        "portrait": null,
+        "speakerName": "骑士"
+      },
+      {
+        "speaker": "narrator",
+        "text": "伊芙把手里的布带递给骑士，起身走到窗边。雨幕里的白伞灯时隐时现，她的手按在窗框上，许久才开口。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "那些人昨晚刚睡了几个安稳觉，现在又得冒雨离开。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们先回去，把去塔里的事告诉大家。只要城市的结界还连着雷塔，他们换一间屋子，也可能再被找到。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "我去召回街上还在值勤的骑士，让他们一起保护伤者。塔里的撤回命令，我会试着用自己的铠甲发出。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "vika",
+        "text": "你也在它的清单上。到了里面，它可能先把你关起来。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "所以我会让旅行者跟着我。我需要有人留意退路，也需要有人在我判断错的时候提醒我。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我会提醒。我们先找齐能进塔的东西，再带着办法进去。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "值守员取来旧钥匙和一份塔内记录。四人离开观测台时，老人从门边拿走了那块仍在发光的通行牌，将它锁进空铁柜里。",
+        "portrait": null
+      }
+    ],
+    "ch5_11_pre": [
+      {
+        "speaker": "narrator",
+        "text": "返回旧街的路被机兵截断。维珂带旅行者绕到货站上方，望见下层有一辆空车正在折返。莱莎和伊芙已经从另一条小路赶往诊所。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "这辆车每隔一阵就会回来，收走下一批晶石。我们要是让它沿旧支线开走，后面的机兵也许会跟过去。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你怎么让它认出旧支线？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "运单上有目的地的铜签。昨天救人时，我顺手留下了一片。换到这辆车上，就能试试。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她刚从栏杆旁探身，一支弩箭便射穿了身侧的雨棚。守在高处的鸣雷弩卫同时转向两人，电光把整个站台照得发白。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "你去换铜签，我守住这边。等车轮开始转动，就从台阶回来，我会在那里等你。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "记住你说的台阶。我可要照着这个地方找人了。",
+        "portrait": "vika",
+        "element": "thunder"
+      }
+    ],
+    "ch5_11_post": [
+      {
+        "speaker": "narrator",
+        "text": "空车沿着旧轨道缓缓驶出。附近的机兵跟着车上的铜签转向，街口终于让出了一段空隙。维珂跨过护栏，顺着台阶赶回旅行者身旁。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "铜签真的有用。我原本只想留着找委托人报销，没想到能拿来调车。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你走过来的时候，我看见后面还有一辆。那些晶石也许还放在货站底下，来得及运回来。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "维珂拿出新画的路线，指尖停在地下货库。她看了一会儿，将图翻到背面，在空白处写下小车折返的时间。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "那就再走一趟。你跟着我，还是先回诊所？",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "一起去。伊芙正需要那些晶石，我也想把昨天答应找回的货交给她。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "你还记得我们的条件。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "人和货都找到了，要告诉对方。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "维珂把图册交给旅行者，腾出双手重新扣好弩机。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "替我拿着，里面还有你昨天画的桥。等会儿经过泥水，你记得把它举高一点。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "这是你的整本图册。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "是啊。我现在知道，台阶上会有人等我。图放在你那里，我也能安心一点。",
+        "portrait": "vika",
+        "element": "thunder"
+      }
+    ],
+    "ch5_12_pre": [
+      {
+        "speaker": "narrator",
+        "text": "旅行者和维珂找回大半车晶石时，莱莎已经把众人接到了旧街的石屋。伊芙与艾拉重新展开结界，院外的雨声终于小了一些。莱莎却站在墙角，手臂上的雷纹仍在发亮。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "我带回货了。你怎么站在这里？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "刚才击退机兵时，我穿上了铠甲。退出以后，雷纹一直亮着，好像有什么在叫我回塔里。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "墙上的影子突然抖动。几只裂隙游影从残留的黑痕里挤出，朝莱莎手臂上的雷光扑来。她抬起长刀，身后正好是伤者休息的房间。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "它们在追着我。旅行者，带我去外面的空院，屋里的人才刚安顿下来。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我陪你出去。伊芙，先把这扇门护住，我们会从院门回来。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎推开院门，雨水迎面落在她脸上。她重新唤起雷铠，电光聚拢在长刀周围，也把那些模糊的身影引离了屋檐。",
+        "portrait": null
+      }
+    ],
+    "ch5_12_post": [
+      {
+        "speaker": "narrator",
+        "text": "院中的游影散去。莱莎解除铠甲，手臂上的雷纹却依然发亮。伊芙来到门边，用一层护盾罩住雷纹，细碎的鸣响才渐渐低下去。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "这层护盾能暂时隔开它和雷塔的联系。你的力量还在，只是外面的命令很难传进来。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "原来可以这样处理。我一直以为，它和铠甲连在一起，只能等它自己停下。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "刚才里面的声音说了什么？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "和重骑说的一样，让我回去。小时候第一次学会穿上铠甲，我还觉得整座城都在替我鼓劲。现在听见同样的声音，感觉真够糟的。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者把干外衣披到她肩上。莱莎用手指捏住衣领，慢慢吐出一口气。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "我还是想进去。守在下面的人留下了处理裂隙的办法，我们总得亲眼看一看。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们一起进去。到时候你想继续，或者想退回来，都直接告诉我。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "这次我记得。刚才在院子里，我叫了你两次，你每次都回答了。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我也听见你叫我了。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch5_interlude_4": [
+      {
+        "speaker": "narrator",
+        "text": "趁伊芙检查大家的护盾，莱莎在廊下整理长刀。旅行者替她扶住刀鞘，看见内侧用小字刻着一个姓名，后面还刻了一道歪斜的星星。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "星星也是你刻的？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "刚入队时刻的。那时候觉得，骑士的刀上总该有个漂亮纹样。后来刻坏了，只好说那是一道闪电。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我觉得还能看出是星星。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "你可以小声一点。旁边那个新来的骑士，昨天还夸我的刀很有气势。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者把刀鞘还给她。莱莎摸了摸那道刻痕，忽然问起他离开这座城后的打算。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "你们下一站准备去哪儿？",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "本来想到了鸣雷城再商量。缇娅要找面包店，瑟琳想寄一封信，我还没来得及看地图。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "那你替我也留一点商量的时间。我今年的轮休一直没用，原本打算挑个晴天，去城外待几日。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你想去哪里？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "去一个街上的人先问我叫什么、再问我会做什么的地方。在这里，从小认识我的人，现在也一口一个骑士大人。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那我再问一次。莱莎，你愿意和我们一起走吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她把长刀系回腰间，抬头时脸上的疲惫还在，眼里却有了笑意。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "愿意。等城里的事情结束，我会把轮休交代清楚。这次出门，你要是还把重行李全揽过去，我会当场找你商量。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "连行李也要商量？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "当然。我们刚约好的，彼此的打算都要说出来。",
+        "portrait": "raisa",
+        "element": "thunder"
+      }
+    ],
+    "ch5_13_pre": [
+      {
+        "speaker": "narrator",
+        "text": "午后，四人沿旧货轨进入雷塔地下。入口的铁门认出了观测台的钥匙，沉重地向内退开。门后的石阶往下延伸，尽头悬着一道竖直的裂隙，边缘缓慢闪动着陌生的星光。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "这地方比图上画的大多了。昨天的货车就是从这里进去的。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "一只空木箱从轨道上滑落，跌进裂隙前的阴影。箱子的一角突然消失，余下的部分悬在半空，随后被扭曲的黑线拖了进去。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "都留在石阶上，离那道黑线远一些。这里连箱子都会被卷走。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "护盾还能挡住裂隙附近的游影，却未必能承受里面的力量。大家沿着有栏杆的地方走，我会留意身后的路。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "两具巡雷机兵从石柱后走出，枪尖同时指向莱莎。更深处的雷核守卫转动胸口铜环，将裂隙旁的电光引向四人。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "它们守着通往控制台的路。旅行者，我先过去引开守卫，你和维珂沿栏杆靠近，伊芙留在能看见我们的位置。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "好。你退回来时，就到左边这根石柱旁，我会把这里留出来。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch5_13_post": [
+      {
+        "speaker": "narrator",
+        "text": "控制台后的墙面布满了字迹。四人凑近后发现，旧刻文下面还有一排新刻的小字，记录着历代值守者怎样更换晶石、怎样封闭外侧的导雷管。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这里写着，封城时要先让居民离开，随后隔开城里的管道，再给塔内结界补充力量。昨天的机兵直接把大家留在了城里。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "维珂找到墙上所画的操纵杆，才发现它已经断在底座旁。连接上层的铜缆也被扯开，露出的断口长满了锈。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "撤回命令原本从这里传下去。现在操纵杆和铜缆都断了，封城者恐怕从启动以后，就一直照着旧清单做事。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "难怪我的通行牌失效了。真正能让它停下的东西，早就坏在下面。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "伊芙沿着墙上的图示检查铜管，发现通往旧街的那根仍在持续发光。诊所的结界晶石与这根铜管之间，浮着一缕相同的黑线。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "城里的结界还在给雷塔输送力量。时间越久，留下的人就越疲惫，我们得先把这根管道隔开。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "隔开以后，塔里的结界还能维持吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "需要另外补充晶石。昨天被送进来的那一批还在货架上，我们可以先用它们。等塔内安稳下来，再把剩下的运回去。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "vika",
+        "text": "货架就在下一层，轨道也通着。我和你去搬，莱莎留在这里守住入口。伊芙，你看清楚需要哪几箱，免得我们搬错。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者正要离开，控制台上忽然亮起数个远近不同的光点。其中一个与脚下的鸣雷城重合，另一个落在地图西侧的海岸上。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这里还标着别的地方……海岸那一点，也在记录裂隙吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "把这页位置先记下来。等城里的人安全了，我们再请值守员一起看。",
+        "portrait": "raisa",
+        "element": "thunder"
+      }
+    ],
+    "ch5_14_pre": [
+      {
+        "speaker": "narrator",
+        "text": "伊芙准备隔开管道时，街上的铜铃声突然沿着管壁传了下来。她分辨出那是诊所门口的铃，紧接着，乔安断断续续的声音响了起来。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_joan",
+        "text": "伊芙……听得到吗？缇娅把联络线找回来了，我们都在石屋这边。艾拉说，有几个人突然觉得特别冷，护盾也一直在变淡。",
+        "portrait": null,
+        "speakerName": "乔安"
+      },
+      {
+        "speaker": "eve",
+        "text": "我听到了。请艾拉把大家集中在里间，只留下最小的一层结界。我们就在雷塔下面，很快会把这条管道隔开。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "管壁上的黑线猛地扩散。几只裂隙游影从铜管之间钻出，朝伊芙手中的晶石扑来。她将伞杖压向石台，保护晶石的护盾立即亮了起来。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "维珂，先把准备好的晶石放进支架。我和莱莎挡住这些东西，伊芙才能隔开城里的管道。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "我从石柱右侧过去。旅行者，你留意伊芙身后，那边也有黑线在动！",
+        "portrait": "raisa",
+        "element": "thunder"
+      }
+    ],
+    "ch5_14_post": [
+      {
+        "speaker": "narrator",
+        "text": "伊芙将晶石逐一放进铜架。塔内的结界重新稳定后，她慢慢转动控制轮，直到连向旧街的铜管失去光泽。管壁里传来乔安的呼喊，声音比刚才清楚了许多。",
+        "portrait": null
+      },
+      {
+        "speaker": "thunder_joan",
+        "text": "暖起来了！艾拉说大家都好些了，屋里的灯也亮了。你们那边怎么样？",
+        "portrait": null,
+        "speakerName": "乔安"
+      },
+      {
+        "speaker": "eve",
+        "text": "我们都在。先让大家喝些温水，休息一会儿。这里还需要一点时间，我会再联系你们。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "伊芙说完，手臂沿着伞杖滑下。旅行者扶住她的手肘，陪她坐在石台边。她想抬起头继续听铃声，却被自己的呼吸打断了。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "先缓一缓。乔安的消息我会听着，你坐稳就好。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "我刚才把护盾撑得有些久，手指都麻了。那只水壶可以递给我吗？",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "在这里。要我帮你打开吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "要。还得请你帮我扶着壶底，等我喝完这一口。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者让水壶靠近她的唇边。伊芙喝完，缓慢活动了几下手指，终于能自己握住壶柄。她朝旅行者笑了笑。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "我今天把累说出来了。你答应我的那一份，也要记得。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我记得。等会儿我也坐下喝点水，剩下的路一起走。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch5_interlude_5": [
+      {
+        "speaker": "narrator",
+        "text": "维珂去检查下一层的轨道，莱莎留意着封城者的动静。伊芙把伞杖靠在石台边，将一块干净布巾放进旅行者手中。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "擦擦额头吧。你脸上的汗都流到眼睛里了。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我刚才还想，你会不会已经累得说不出话。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "会累，也会饿。你下午给我留的面包，还在背包最里面，帮我拿出来吧。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者取出纸包。面包已经压扁，里面的果酱从边缘漏出一点。伊芙小心掰开，把果酱更多的那一半递给了他。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这块是你特意留下的吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "乔安上午买来的。我想着，你昨晚替我热了粥，今天总该由我带点吃的。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "两人慢慢吃完面包。旅行者把剩下的纸包叠好，伊芙望着伞面上一道浅浅的裂纹，伸手摸了摸。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "这把伞用了好多年，回去得换一根伞骨。你要是肯陪我去店里，可以自己挑一块伞布。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "给我做一把？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "嗯。你总把外衣借给别人，遇到雨，最后淋湿的往往是你自己。我想让你随身带着一点能挡雨的东西。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那你和我们一起出门的时候，也可以用它。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "伊芙看着旅行者，随后把伞杖重新握好。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "我还在想，要怎么跟你开口。我想沿着古塔的记录去看看别处的结界，也想亲自走一走你和维珂说过的那些地方。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "诊所这边呢？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "这里原本由两位医师轮值，我在雷雨前过来帮忙。等大家恢复，我把结界的用法教给他们，就能启程。路上的休息由我们一起商量，可以吗？",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "可以。先从吃完东西再起身开始。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "这一回我已经吃完了。我等你，你慢慢来。",
+        "portrait": "eve",
+        "element": "thunder"
+      }
+    ],
+    "ch5_15_pre": [
+      {
+        "speaker": "narrator",
+        "text": "四人来到塔心前的货台。维珂把装着备用晶石的小车推上轨道，尽头的铜门却在此时合拢。两具雷核守卫转向货台，身后还有一队机兵正从低处赶来。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "封城者发现城里的供给停了。它正在重新接管这里的轨道，想把车一起收回去。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "我可以穿过铜门旁边的缺口，帮你们打开门。可里面太窄，长刀很难挥开。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们留在这边把守卫引过来。你从缺口进去以后，先找到能退回来的地方，再动门锁。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "我会把护盾留在你身上。铜门打开以后，我跟着小车过去，替塔心的结界补足力量。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "vika",
+        "text": "旅行者，我在左边的守卫身上做个记号。你看见电光聚到胸口，再和我一起出手，它就很难继续挡着轨道了。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎向旅行者示意，随后贴着石壁进入铜门侧面的窄道。旅行者站到轨道中央，直到里面传来她清楚的回应，才转向逼近的守卫。",
+        "portrait": null
+      }
+    ],
+    "ch5_15_post": [
+      {
+        "speaker": "narrator",
+        "text": "守卫倒下，铜门从里面打开。莱莎站在门边，肩甲上多了一道新伤。她向旅行者抬了抬手，先把自己的状况说了出来。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "护盾挡住了大部分冲击，肩膀还有些疼。我能继续，但接下来要少用这一侧。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我会站在你左边。伊芙，先帮她看看，我们等一会儿再进去。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "伊芙检查莱莎的肩膀，替她调整护盾的位置。维珂把小车停在门内，随后将图册翻到塔心这一页，交给旅行者。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "门后的三个位置已经看清楚了。中间是封城者，左边的导雷核心给它供能，右边的护城节点会替它补充护盾。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们先处理两边的装置。那道裂隙靠塔内的结界维持，结界用的晶石已经补好了，这些装置停下来，结界也能继续工作，对吗？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "对。我刚才检查过两边的管道，它们各自独立。把封城者的供给截断以后，我会继续照看裂隙前的结界。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "那就按这个办法。它转向我时，你们去对付两边的装置。旅行者，你看见护盾撑不住，就叫我回来。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "你也可以先叫我。我会听着。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎把长刀横在掌中，朝他点了点头。四人越过停住的货车，走进塔心明亮的电光里。",
+        "portrait": null
+      }
+    ],
+    "ch5_16_pre": [
+      {
+        "speaker": "narrator",
+        "text": "封城者站在裂隙前，铜铸的肩背几乎碰到穹顶。它胸口的光沿着两侧装置流动，地面的金属轨道随之缓缓抬起，将四人围在中央。",
+        "portrait": null
+      },
+      {
+        "speaker": "boss_city_sealer",
+        "text": "封锁持续。可用雷源，归入塔心。",
+        "portrait": null,
+        "speakerName": "封城者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "城里的人已经转移了，塔内结界也有了新的晶石。现在撤回街上的机兵，打开城门！",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "巨像胸前的铜环停顿了一瞬，随后继续旋转。它抬起手臂，对准莱莎身上的雷纹。右侧的护城节点亮起，厚重的护盾重新覆住它的全身。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "它还在执行收集雷源的命令。维珂，我们先从护城节点开始，让莱莎能靠近它。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "我看见外壳的接缝了。你跟着我的弩箭过去，我会替你留住那道缺口！",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "eve",
+        "text": "大家的护盾都在。受伤就退到我身边，裂隙前的结界也已经稳住了，我们可以一步步来。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎唤起雷铠。银紫色的甲片从肩背延展至长刀，四周的雨声与雷声仿佛都远了些。她站到旅行者身旁，等他回过头来。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "准备好了吗？这次我的后面，就交给你了。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "准备好了。等它抬起手臂，我们一起过去。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      }
+    ],
+    "ch5_16_post": [
+      {
+        "speaker": "narrator",
+        "text": "护城节点的光先熄灭，导雷核心也停止了转动。封城者向前迈出半步，抬起的手臂重重落在地面。四人退到石柱后，等最后一阵电光沿铜轨消散。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "旅行者，我要解除铠甲了。你在旁边吗？",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "在。刀给我，手臂扶在这里。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "雷铠散去，莱莎靠着旅行者站稳。她看见他又被长刀的重量压得沉了沉手臂，笑出了声，随后才发现自己连笑的时候都有些发抖。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "回去以后，我教你怎么握这把刀。每次都让它往下坠，我看着也累。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那你得先养好肩膀。等你教我的时候，我再把今天的事提一遍。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "narrator",
+        "text": "伊芙检查裂隙前的结界，确认新换的晶石仍在平稳发光。失去封城者的供能后，维珂终于取下了控制台上那片被电光锁住的“封城”铜签。铜门外的轨道慢慢降回地面。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "门开了！这回总算轮到我们挑路走了。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "远处传来铜铃声，先是一声，随后接连响起。乔安在联络线的另一头说，城门已经升起，街上的机兵也停在了原地。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "请大家先在屋里休息。等城防骑士检查过街道，再慢慢回家。我们很快就到。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "四人在塔内留下备用晶石和醒目的路标。离开控制台前，旅行者请维珂抄下了那张标着海岸的地图，连同旁边的记录一起带了出去。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "这上面写着“西岸观测所”。它最后一次发来消息，是雷雨开始的前一天。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "只隔了一天。我们先让观测台的人看过，再决定往哪边走。地图上的海岸我没去过，这次倒是有伴了。",
+        "portrait": "vika",
+        "element": "thunder"
+      }
+    ],
+    "ch5_epilogue_1": [
+      {
+        "speaker": "narrator",
+        "text": "回到旧街时，雨已经小了许多。卡尔迪远远地看见他们，放下正在搬动的木箱，招呼大家到屋檐下。艾拉和瑟琳赶出来，接过行囊，也接过莱莎那把沉重的长刀。",
+        "portrait": null
+      },
+      {
+        "speaker": "kaldi",
+        "text": "人都回来了就好！桌上的饭刚热过，我还让乔安多买了几块面包。这回谁都先吃完，再讲塔里的事！",
+        "portrait": "kaldi",
+        "element": "fire"
+      }
+    ],
+    "ch5_epilogue_2": [
+      {
+        "speaker": "narrator",
+        "text": "两天后，鸣雷城的道路重新开放。值守员带着检修工进入地下，按旧记录重新设立了有人看守的控制台。莱莎把城门值勤交给接班骑士，亲手递上了那张折过许多次的轮休单。",
+        "portrait": null
+      },
+      {
+        "speaker": "narrator",
+        "text": "维珂从商人那里领到了报酬，将约好的那一份放在旅行者掌心。旅行者数了数，比他想的多了几枚。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "别急着高兴。这里面还有下一程的茶钱，等我们找到好店，由你来请。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "那地图上得先添一个茶杯。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "位置我留好了，等你亲自挑地方。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "伊芙在诊所里演示完最后一道结界，把白伞灯重新挂回门口。乔安帮她系好行李，反复确认新来的医师已经学会更换晶石。走到旅行者身边时，她递来一把折好的伞。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "伞骨换好了，布是我们昨天一起挑的。试着撑开看看，手上的伤口还疼吗？",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "已经好多了。你那把呢？",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "eve",
+        "text": "也修好了。今天我带着它，我们各自背好自己的行李，走累了就一起找地方歇脚。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "城门外，莱莎已经换下值勤的披肩。她看见旅行者过来，往旁边让出半步，把身侧的路留给他。",
+        "portrait": null
+      },
+      {
+        "speaker": "raisa",
+        "text": "这次轮到你带路了。我从这扇门送出去过很多人，今天终于能和你一起走出去。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "先去面包店。缇娅惦记了三天，我们刚答应陪她吃一顿。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "raisa",
+        "text": "那我还带得了最后一段。穿过前面的街口就到，店主认识我，会把刚出炉的留给我们。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "缇娅听见这句话，立刻走到她身旁。露弥把新买的工具放回袋里，瑟琳也收好了准备寄给灯镇的信。众人沿着还湿润的街道往前走，屋檐上的雨水一滴滴落下，远处已经能看见一小片明亮的天空。",
+        "portrait": null
+      }
+    ],
+    "ch5_interlude_6": [
+      {
+        "speaker": "narrator",
+        "text": "早餐过后，旅行者在城外的路标旁摊开地图。西岸观测所落在长河入海的地方，沿途还有几座陌生的小城。维珂把新画的鸣雷城夹进图册，特意留出了昨天的日期。",
+        "portrait": null
+      },
+      {
+        "speaker": "vika",
+        "text": "这一章该写什么？“在雨里追了一车晶石”，听起来好像只做成一笔生意。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "traveler",
+        "text": "把我们什么时候见面，也写进去吧。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "已经写了。你在雨棚下面差点踩到那只蜉蝣，我画得特别清楚。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "莱莎凑过来看了一眼，随即笑着问旅行者，是否也要把他第一次拿起长刀的模样画下来。旅行者把地图折好，佯装准备提前出发。",
+        "portrait": null
+      },
+      {
+        "speaker": "eve",
+        "text": "先等一下，你的袖口又翻起来了。布带还在里面，磨到伤口会疼。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "她替旅行者整理好袖子，退开一步，确认行囊带子也避开了伤处。莱莎走到路口，指着通往河岸的石路，等旅行者选定方向。",
+        "portrait": null
+      },
+      {
+        "speaker": "traveler",
+        "text": "我们沿河走。到了下一座镇子，先打听西岸观测所的消息。",
+        "portrait": null,
+        "element": "wind",
+        "speakerName": "旅行者"
+      },
+      {
+        "speaker": "vika",
+        "text": "好。我去前面看看那块路牌，上面的字被树枝挡住了一半。你走到那儿的时候，记得叫我。",
+        "portrait": "vika",
+        "element": "thunder"
+      },
+      {
+        "speaker": "raisa",
+        "text": "我就走你旁边。等这段路宽一点，咱们再聊聊长刀的握法。",
+        "portrait": "raisa",
+        "element": "thunder"
+      },
+      {
+        "speaker": "eve",
+        "text": "午饭前找一处有水的地方吧。我想把杯子洗干净，也给大家煮一点热茶。",
+        "portrait": "eve",
+        "element": "thunder"
+      },
+      {
+        "speaker": "narrator",
+        "text": "旅行者答应下来，和她们一起踏上河边的石路。鸣雷城的城门在身后缓缓远去，图册里空着的那几页，随着行囊一起轻轻晃动。",
+        "portrait": null
+      }
     ]
   },
   "EnemyData": {
@@ -6122,6 +9211,441 @@
       ],
       "balanceReference": "furnace_lamp",
       "encounterAttachment": true
+    },
+    "thunder_mane": {
+      "id": "thunder_mane",
+      "name": "雷鬃兽",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 2900,
+        "atk": 175,
+        "def": 85,
+        "spd": 120
+      },
+      "abyssBaseStats": {
+        "hp": 420,
+        "atk": 80,
+        "def": 25,
+        "spd": 115
+      },
+      "skills": [
+        "thunder_mane_pounce",
+        "thunder_mane_bite"
+      ],
+      "aiPattern": "aggressive",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/thunder_mane.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/thunder_gate.png",
+        "res://assets/content_v290/backgrounds/rain_street.png"
+      ],
+      "balanceReference": "thunder_hawk",
+      "abyssMinFloor": 4
+    },
+    "charge_mayfly": {
+      "id": "charge_mayfly",
+      "name": "蓄电蜉蝣",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 2700,
+        "atk": 155,
+        "def": 80,
+        "spd": 100
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 50,
+        "def": 25,
+        "spd": 85
+      },
+      "skills": [
+        "charge_mayfly_flash",
+        "charge_mayfly_sting"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/charge_mayfly.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/thunder_gate.png",
+        "res://assets/content_v290/backgrounds/storm_market.png"
+      ],
+      "balanceReference": "goblin"
+    },
+    "storm_patrol": {
+      "id": "storm_patrol",
+      "name": "巡雷机兵",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3800,
+        "atk": 190,
+        "def": 125,
+        "spd": 80
+      },
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 35,
+        "spd": 75
+      },
+      "skills": [
+        "storm_patrol_warning",
+        "storm_patrol_heavy",
+        "storm_patrol_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/storm_patrol.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rain_street.png",
+        "res://assets/content_v290/backgrounds/sealed_station.png"
+      ],
+      "balanceReference": "goblin",
+      "actionCycle": [
+        "storm_patrol_warning",
+        "storm_patrol_heavy",
+        "storm_patrol_strike"
+      ]
+    },
+    "rift_shade": {
+      "id": "rift_shade",
+      "name": "裂隙游影",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3300,
+        "atk": 170,
+        "def": 100,
+        "spd": 100
+      },
+      "abyssBaseStats": {
+        "hp": 500,
+        "atk": 55,
+        "def": 60,
+        "spd": 60
+      },
+      "skills": [
+        "rift_shade_slash",
+        "rift_shade_veil"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/rift_shade.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/sunken_tower.png",
+        "res://assets/content_v290/backgrounds/rift_core.png"
+      ],
+      "balanceReference": "ice_wolf",
+      "abyssMinFloor": 4
+    },
+    "storm_crossbow": {
+      "id": "storm_crossbow",
+      "name": "鸣雷弩卫",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3100,
+        "atk": 180,
+        "def": 90,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 380,
+        "atk": 45,
+        "def": 25,
+        "spd": 95
+      },
+      "skills": [
+        "storm_crossbow_aim",
+        "storm_crossbow_bolt",
+        "storm_crossbow_shot"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/storm_crossbow.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/storm_market.png",
+        "res://assets/content_v290/backgrounds/sealed_station.png"
+      ],
+      "balanceReference": "goblin",
+      "abyssMinFloor": 4,
+      "actionCycle": [
+        "storm_crossbow_aim",
+        "storm_crossbow_bolt",
+        "storm_crossbow_shot"
+      ]
+    },
+    "breaker_cavalier": {
+      "id": "breaker_cavalier",
+      "name": "破阵重骑",
+      "icon": "ϟ",
+      "type": "elite",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 9800,
+        "atk": 270,
+        "def": 145,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 1100,
+        "atk": 90,
+        "def": 85,
+        "spd": 105
+      },
+      "skills": [
+        "breaker_warning",
+        "breaker_charge",
+        "breaker_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/breaker_cavalier.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rain_street.png",
+        "res://assets/content_v290/backgrounds/sealed_station.png"
+      ],
+      "balanceReference": "dark_knight",
+      "actionCycle": [
+        "breaker_warning",
+        "breaker_charge",
+        "breaker_strike"
+      ]
+    },
+    "thunder_core_guard": {
+      "id": "thunder_core_guard",
+      "name": "雷核守卫",
+      "icon": "ϟ",
+      "type": "elite",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 11200,
+        "atk": 255,
+        "def": 170,
+        "spd": 80
+      },
+      "abyssBaseStats": {
+        "hp": 1200,
+        "atk": 80,
+        "def": 100,
+        "spd": 70
+      },
+      "skills": [
+        "core_guard_warning",
+        "core_guard_sweep",
+        "core_guard_strike"
+      ],
+      "aiPattern": "random",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/thunder_core_guard.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/observatory.png",
+        "res://assets/content_v290/backgrounds/sunken_tower.png"
+      ],
+      "balanceReference": "dark_knight",
+      "actionCycle": [
+        "core_guard_warning",
+        "core_guard_sweep",
+        "core_guard_strike"
+      ]
+    },
+    "boss_city_sealer": {
+      "id": "boss_city_sealer",
+      "name": "封城者",
+      "icon": "ϟ",
+      "type": "boss",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 32000,
+        "atk": 340,
+        "def": 180,
+        "spd": 110
+      },
+      "abyssBaseStats": {
+        "hp": 5500,
+        "atk": 140,
+        "def": 55,
+        "spd": 100
+      },
+      "skills": [
+        "sealer_warning",
+        "sealer_storm",
+        "sealer_strike"
+      ],
+      "aiPattern": "boss",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/boss_city_sealer.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rift_core.png"
+      ],
+      "balanceReference": "boss_storm_witch",
+      "isBoss": true,
+      "phaseThreshold": 0.5,
+      "phase2Skills": [
+        "sealer_warning_high",
+        "sealer_tempest",
+        "sealer_crush"
+      ],
+      "actionCycle": [
+        "sealer_warning",
+        "sealer_storm"
+      ],
+      "phase2ActionCycle": [
+        "sealer_warning_high",
+        "sealer_tempest"
+      ],
+      "expeditionAI": {
+        "aoeChance": 0.5,
+        "recoveryPolicy": "single"
+      },
+      "abyssAttachments": []
+    },
+    "sealer_core": {
+      "id": "sealer_core",
+      "name": "导雷核心",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3600,
+        "atk": 1,
+        "def": 90,
+        "spd": 90
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      },
+      "skills": [
+        "sealer_core_feed"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/sealer_core.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rift_core.png"
+      ],
+      "balanceReference": "furnace_lamp",
+      "encounterAttachment": true
+    },
+    "sealer_ward": {
+      "id": "sealer_ward",
+      "name": "护城节点",
+      "icon": "ϟ",
+      "type": "normal",
+      "element": "thunder",
+      "baseStats": {
+        "hp": 3600,
+        "atk": 1,
+        "def": 90,
+        "spd": 85
+      },
+      "abyssBaseStats": {
+        "hp": 350,
+        "atk": 1,
+        "def": 25,
+        "spd": 80
+      },
+      "skills": [
+        "sealer_ward_guard"
+      ],
+      "aiPattern": "support",
+      "drops": {
+        "gold": [
+          25,
+          45
+        ],
+        "exp": 30
+      },
+      "color": "#bd9beb",
+      "portrait": "res://assets/content_v290/enemies/sealer_ward.tres",
+      "environmentTheme": "thunder_city",
+      "abyssBackgrounds": [
+        "res://assets/content_v290/backgrounds/rift_core.png"
+      ],
+      "balanceReference": "furnace_lamp",
+      "encounterAttachment": true
     }
   },
   "EnemySkillData": {
@@ -7009,6 +10533,386 @@
       ],
       "cooldown": 0,
       "animation": "wind"
+    },
+    "thunder_mane_pounce": {
+      "name": "雷鬃扑击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "thunder_mane_bite": {
+      "name": "裂爪撕咬",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "charge_mayfly_flash": {
+      "name": "电翅掠过",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.9,
+          "element": "thunder"
+        },
+        {
+          "type": "status",
+          "target": "single",
+          "statusId": "spd_down",
+          "value": 0.12,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 2,
+      "animation": "thunder"
+    },
+    "charge_mayfly_sting": {
+      "name": "微芒刺击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "storm_patrol_warning": {
+      "name": "执戟蓄势",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.7,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "storm_patrol_heavy": {
+      "name": "巡雷重刺",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.6,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "storm_patrol_strike": {
+      "name": "枪柄推击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "rift_shade_slash": {
+      "name": "裂影挥击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "rift_shade_veil": {
+      "name": "虚影守势",
+      "effects": [
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "def_up",
+          "value": 0.25,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 3,
+      "animation": "thunder"
+    },
+    "storm_crossbow_aim": {
+      "name": "弩架校准",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.7,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "storm_crossbow_bolt": {
+      "name": "贯雷弩矢",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "storm_crossbow_shot": {
+      "name": "短弩射击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "breaker_warning": {
+      "name": "重槊回摆·蓄势",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.8,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "breaker_charge": {
+      "name": "破阵突刺",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.7,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "breaker_strike": {
+      "name": "收槊横击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "core_guard_warning": {
+      "name": "雷盾充能·下次行动全体",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 0.6,
+          "element": "thunder"
+        },
+        {
+          "type": "status",
+          "target": "self",
+          "statusId": "shield",
+          "value": 0.04,
+          "duration": 2,
+          "refreshDuration": true
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "core_guard_sweep": {
+      "name": "雷环横扫",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 0.75,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "core_guard_strike": {
+      "name": "护盾推击",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_warning": {
+      "name": "高塔聚雷·下次行动全体",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.3,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "sealer_storm": {
+      "name": "封城雷网",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.0,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_strike": {
+      "name": "守城重拳",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.3,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_warning_high": {
+      "name": "雷核过载·下次行动全体",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder",
+      "telegraphNext": true
+    },
+    "sealer_tempest": {
+      "name": "裂隙雷暴",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all",
+          "multiplier": 1.4,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_crush": {
+      "name": "雷霆重压",
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_core_feed": {
+      "name": "导雷脉冲",
+      "effects": [
+        {
+          "type": "status",
+          "target": "boss_ally",
+          "statusId": "atk_up",
+          "value": 0.08,
+          "duration": 2,
+          "refreshDuration": true
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
+    },
+    "sealer_ward_guard": {
+      "name": "护城屏障",
+      "effects": [
+        {
+          "type": "status",
+          "target": "boss_ally",
+          "statusId": "shield",
+          "value": 0.08,
+          "duration": 2,
+          "refreshDuration": true,
+          "scalingStat": "maxHp",
+          "multiplier": 0.08
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "element": "thunder"
+        }
+      ],
+      "cooldown": 0,
+      "animation": "thunder"
     }
   },
   "GachaPoolData": {
@@ -7017,7 +10921,10 @@
       "limited_kaldi",
       "limited_selin",
       "limited_tiya",
-      "limited_lumi"
+      "limited_lumi",
+      "limited_raisa",
+      "limited_vika",
+      "limited_eve"
     ],
     "pools": {
       "standard": {
@@ -7279,6 +11186,165 @@
         "gradientTo": "#4c7057",
         "excludeFeaturedFromOffBanner": true,
         "bannerPath": "res://assets/content_v280/banner/lumi_layered_banner.png"
+      },
+      "limited_raisa": {
+        "id": "limited_raisa",
+        "name": "雷铠长明",
+        "subtitle": "限定祈愿 · 雷铠·莱莎",
+        "type": "limited",
+        "banner": "✦",
+        "costPerPull": 160,
+        "currency": "diamonds",
+        "description": "雷铠·莱莎概率提升，五星75%为当期角色；偏离后下次五星保证获得当期角色。",
+        "endTime": null,
+        "rates": {
+          "3": 0.834,
+          "4": 0.15,
+          "5": 0.016
+        },
+        "pity": {
+          "soft": 73,
+          "hard": 90,
+          "softIncrease": 0.06
+        },
+        "guaranteedFeatured": true,
+        "featuredRate5": 0.75,
+        "featuredRate4": 0.5,
+        "featured5": [
+          "raisa"
+        ],
+        "pool5": [
+          "raisa",
+          "kaldi",
+          "ayla"
+        ],
+        "featured4": [
+          "gus",
+          "shana"
+        ],
+        "pool4": [
+          "gus",
+          "shana",
+          "lorin"
+        ],
+        "pool3": [
+          "ember",
+          "zeph",
+          "bolt",
+          "tide",
+          "cinder"
+        ],
+        "color": "#a09afa",
+        "gradientFrom": "#24213e",
+        "gradientTo": "#554878",
+        "excludeFeaturedFromOffBanner": true,
+        "bannerPath": "res://assets/content_v290/backgrounds/thunder_gate.png"
+      },
+      "limited_vika": {
+        "id": "limited_vika",
+        "name": "逐电归途",
+        "subtitle": "限定祈愿 · 逐电·维珂",
+        "type": "limited",
+        "banner": "✦",
+        "costPerPull": 160,
+        "currency": "diamonds",
+        "description": "逐电·维珂概率提升，五星75%为当期角色；偏离后下次五星保证获得当期角色。",
+        "endTime": null,
+        "rates": {
+          "3": 0.834,
+          "4": 0.15,
+          "5": 0.016
+        },
+        "pity": {
+          "soft": 73,
+          "hard": 90,
+          "softIncrease": 0.06
+        },
+        "guaranteedFeatured": true,
+        "featuredRate5": 0.75,
+        "featuredRate4": 0.5,
+        "featured5": [
+          "vika"
+        ],
+        "pool5": [
+          "vika",
+          "kaldi",
+          "ayla"
+        ],
+        "featured4": [
+          "gus",
+          "shana"
+        ],
+        "pool4": [
+          "gus",
+          "shana",
+          "lorin"
+        ],
+        "pool3": [
+          "ember",
+          "zeph",
+          "bolt",
+          "tide",
+          "cinder"
+        ],
+        "color": "#debb73",
+        "gradientFrom": "#24213e",
+        "gradientTo": "#554878",
+        "excludeFeaturedFromOffBanner": true,
+        "bannerPath": "res://assets/content_v290/backgrounds/storm_market.png"
+      },
+      "limited_eve": {
+        "id": "limited_eve",
+        "name": "晴穹相伴",
+        "subtitle": "限定祈愿 · 晴穹·伊芙",
+        "type": "limited",
+        "banner": "✦",
+        "costPerPull": 160,
+        "currency": "diamonds",
+        "description": "晴穹·伊芙概率提升，五星75%为当期角色；偏离后下次五星保证获得当期角色。",
+        "endTime": null,
+        "rates": {
+          "3": 0.834,
+          "4": 0.15,
+          "5": 0.016
+        },
+        "pity": {
+          "soft": 73,
+          "hard": 90,
+          "softIncrease": 0.06
+        },
+        "guaranteedFeatured": true,
+        "featuredRate5": 0.75,
+        "featuredRate4": 0.5,
+        "featured5": [
+          "eve"
+        ],
+        "pool5": [
+          "eve",
+          "kaldi",
+          "ayla"
+        ],
+        "featured4": [
+          "gus",
+          "shana"
+        ],
+        "pool4": [
+          "gus",
+          "shana",
+          "lorin"
+        ],
+        "pool3": [
+          "ember",
+          "zeph",
+          "bolt",
+          "tide",
+          "cinder"
+        ],
+        "color": "#a5d8df",
+        "gradientFrom": "#24213e",
+        "gradientTo": "#554878",
+        "excludeFeaturedFromOffBanner": true,
+        "bannerPath": "res://assets/content_v290/backgrounds/ward_clinic.png"
       }
     }
   },
@@ -7832,6 +11898,137 @@
         "boots": "res://assets/content_v280/icons/relics/wind_strings_boots.png",
         "necklace": "res://assets/content_v280/icons/relics/wind_strings_necklace.png"
       }
+    },
+    "storm_armor": {
+      "id": "storm_armor",
+      "name": "雷铠誓卫",
+      "theme": "雷铠",
+      "color": "#a09afa",
+      "slotIcons": {
+        "helmet": "res://assets/content_v290/icons/relics/storm_armor_helmet.png",
+        "chest": "res://assets/content_v290/icons/relics/storm_armor_chest.png",
+        "belt": "res://assets/content_v290/icons/relics/storm_armor_belt.png",
+        "boots": "res://assets/content_v290/icons/relics/storm_armor_boots.png",
+        "necklace": "res://assets/content_v290/icons/relics/storm_armor_necklace.png"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "攻击力提高12%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "攻击力额外提高12%；雷铠状态下普攻、战技和终结技造成的直接伤害提高20%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            },
+            {
+              "type": "thunderArmorDamage",
+              "value": 0.2
+            }
+          ]
+        }
+      ]
+    },
+    "storm_tracer": {
+      "id": "storm_tracer",
+      "name": "逐电归途",
+      "theme": "雷轨",
+      "color": "#debb73",
+      "slotIcons": {
+        "helmet": "res://assets/content_v290/icons/relics/storm_tracer_helmet.png",
+        "chest": "res://assets/content_v290/icons/relics/storm_tracer_chest.png",
+        "belt": "res://assets/content_v290/icons/relics/storm_tracer_belt.png",
+        "boots": "res://assets/content_v290/icons/relics/storm_tracer_boots.png",
+        "necklace": "res://assets/content_v290/icons/relics/storm_tracer_necklace.png"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "攻击力提高12%。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "攻击力额外提高12%；佩戴者的导电追击基础倍率增加攻击力的8%。通过技能施加导电后，全队雷铠状态下普攻、战技和终结技造成的直接伤害提高20%，持续2回合。",
+          "effects": [
+            {
+              "type": "stat",
+              "stat": "atk_pct",
+              "value": 0.12
+            },
+            {
+              "type": "thunderConductBonus",
+              "value": 0.08
+            },
+            {
+              "type": "onStatusAppliedPartyArmorAmp",
+              "statusId": "thunder_mark",
+              "value": 0.2,
+              "duration": 2
+            }
+          ]
+        }
+      ]
+    },
+    "storm_shelter": {
+      "id": "storm_shelter",
+      "name": "晴穹祈愿",
+      "theme": "晴穹",
+      "color": "#a5d8df",
+      "slotIcons": {
+        "helmet": "res://assets/content_v290/icons/relics/storm_shelter_helmet.png",
+        "chest": "res://assets/content_v290/icons/relics/storm_shelter_chest.png",
+        "belt": "res://assets/content_v290/icons/relics/storm_shelter_belt.png",
+        "boots": "res://assets/content_v290/icons/relics/storm_shelter_boots.png",
+        "necklace": "res://assets/content_v290/icons/relics/storm_shelter_necklace.png"
+      },
+      "bonuses": [
+        {
+          "pieces": 2,
+          "description": "主动技能提供的护盾量提高15%。",
+          "effects": [
+            {
+              "type": "skillShieldMult",
+              "value": 0.15
+            }
+          ]
+        },
+        {
+          "pieces": 4,
+          "description": "主动技能提供的护盾量额外提高15%，主动治疗量提高20%；每次主动治疗行动额外恢复5点能量。",
+          "effects": [
+            {
+              "type": "skillShieldMult",
+              "value": 0.15
+            },
+            {
+              "type": "activeSkillHealMult",
+              "value": 0.2
+            },
+            {
+              "type": "energyOnActiveHeal",
+              "value": 5
+            }
+          ]
+        }
+      ]
     }
   },
   "ShopData": {
@@ -8991,6 +13188,360 @@
       "icon": "🌪️",
       "iconPath": "res://assets/content_v280/icons/skills/lumi_ult.png",
       "onHitPerActionTarget": true
+    },
+    "raisa_normal": {
+      "id": "raisa_normal",
+      "name": "巡城刀光",
+      "type": "normal",
+      "element": "thunder",
+      "energyGain": 15,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.2,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对单体敌人造成120%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_normal.png"
+    },
+    "raisa_skill": {
+      "id": "raisa_skill",
+      "name": "引雷横斩",
+      "type": "skill",
+      "element": "thunder",
+      "energyGain": 20,
+      "energyCost": 0,
+      "cooldown": 3,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 0.9,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对全体敌人造成90%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_skill.png"
+    },
+    "raisa_ult": {
+      "id": "raisa_ult",
+      "name": "雷铠着装",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "thunderArmor",
+          "target": "self"
+        }
+      ],
+      "description": "消耗当前生命的一半，获得等量护盾并进入雷电铠甲状态，持续4回合，包含本回合。能量锁定为100，技能组替换为雷铠技能。依次使用雷铠普攻与战技，解锁雷铠战技与终结技；状态结束时清空能量。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_ult.png",
+      "entersThunderArmor": true,
+      "actionImage": "res://assets/content_v290/characters/raisa_armor.png"
+    },
+    "raisa_armor_normal": {
+      "id": "raisa_armor_normal",
+      "name": "雷铠·踏霆斩",
+      "type": "normal",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.7,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.0,
+          "scalingStat": "atk",
+          "defPierce": 1.0,
+          "rawAtk": true,
+          "canCrit": false
+        }
+      ],
+      "description": "对单体敌人造成170%攻击力的雷属性伤害，再追加100%攻击力的雷属性贯穿伤害。贯穿伤害无视防御且无法暴击。解锁雷铠战技。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_armor_normal.png",
+      "armorStageRequired": 0,
+      "actionImage": "res://assets/content_v290/actions/raisa_armor_normal.png"
+    },
+    "raisa_armor_skill": {
+      "id": "raisa_armor_skill",
+      "name": "雷铠·环雷破",
+      "type": "skill",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "chain3",
+          "multiplier": 2.45,
+          "scalingStat": "atk",
+          "chainDecay": 0.34693877551020413,
+          "chainFloor": 0.6530612244897959
+        },
+        {
+          "type": "damage",
+          "target": "chain3",
+          "multiplier": 1.2,
+          "scalingStat": "atk",
+          "defPierce": 1.0,
+          "rawAtk": true,
+          "canCrit": false,
+          "chainDecay": 0.29166666666666663,
+          "chainFloor": 0.7083333333333334
+        }
+      ],
+      "description": "对选定敌人造成245%攻击力的雷属性伤害及120%攻击力的贯穿伤害，再向其他最多2名敌人分别造成160%攻击力的雷属性伤害及85%攻击力的贯穿伤害。贯穿伤害无视防御且无法暴击。解锁雷铠终结技。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_armor_skill.png",
+      "armorStageRequired": 1,
+      "actionImage": "res://assets/content_v290/actions/raisa_armor_skill.png"
+    },
+    "raisa_armor_ult": {
+      "id": "raisa_armor_ult",
+      "name": "雷铠·天霆裁决",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "chain3",
+          "multiplier": 2.7,
+          "scalingStat": "atk",
+          "chainDecay": 0.33333333333333337,
+          "chainFloor": 0.6666666666666666
+        },
+        {
+          "type": "damage",
+          "target": "chain3",
+          "multiplier": 1.4,
+          "scalingStat": "atk",
+          "defPierce": 1.0,
+          "rawAtk": true,
+          "canCrit": false,
+          "chainDecay": 0.3214285714285714,
+          "chainFloor": 0.6785714285714286
+        }
+      ],
+      "description": "对选定敌人造成270%攻击力的雷属性伤害及140%攻击力的贯穿伤害，再向其他最多2名敌人分别造成180%攻击力的雷属性伤害及95%攻击力的贯穿伤害。贯穿伤害无视防御且无法暴击。雷铠期间能量保持100。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/raisa_armor_ult.png",
+      "armorStageRequired": 2,
+      "actionImage": "res://assets/content_v290/actions/raisa_armor_ult.png"
+    },
+    "vika_normal": {
+      "id": "vika_normal",
+      "name": "循迹鸣弦",
+      "type": "normal",
+      "element": "thunder",
+      "energyGain": 15,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "status",
+          "target": "single",
+          "statusId": "thunder_mark",
+          "duration": 2,
+          "chance": 1,
+          "refreshDuration": true,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 2.1,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对单体敌人施加2回合导电，防御降低35%，随后造成210%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/vika_normal.png"
+    },
+    "vika_skill": {
+      "id": "vika_skill",
+      "name": "雷轨交织",
+      "type": "skill",
+      "element": "thunder",
+      "energyGain": 20,
+      "energyCost": 0,
+      "cooldown": 3,
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "thunder_mark",
+          "duration": 3,
+          "chance": 1,
+          "refreshDuration": true,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 1.3,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对全体敌人施加3回合导电，防御降低35%，随后造成130%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/vika_skill.png"
+    },
+    "vika_ult": {
+      "id": "vika_ult",
+      "name": "逐电归航",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_enemies",
+          "statusId": "thunder_mark",
+          "duration": 4,
+          "chance": 1,
+          "refreshDuration": true,
+          "value": 0.35
+        },
+        {
+          "type": "damage",
+          "target": "all_enemies",
+          "multiplier": 3.2,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对全体敌人施加4回合导电，防御降低35%，随后造成320%攻击力的雷属性伤害。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/vika_ult.png"
+    },
+    "eve_normal": {
+      "id": "eve_normal",
+      "name": "晴光微芒",
+      "type": "normal",
+      "element": "thunder",
+      "energyGain": 15,
+      "energyCost": 0,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "damage",
+          "target": "single",
+          "multiplier": 1.5,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "heal",
+          "target": "lowest_hp_ally",
+          "multiplier": 0.25,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "对单体敌人造成150%攻击力的雷属性伤害，为生命比例最低的队友恢复25%攻击力的生命值。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/eve_normal.png"
+    },
+    "eve_skill": {
+      "id": "eve_skill",
+      "name": "穹幕庇护",
+      "type": "skill",
+      "element": "thunder",
+      "energyGain": 20,
+      "energyCost": 0,
+      "cooldown": 3,
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "shield",
+          "duration": 3,
+          "chance": 1,
+          "refreshDuration": true,
+          "scalingStat": "atk",
+          "multiplier": 2.0
+        },
+        {
+          "type": "heal",
+          "target": "all_allies",
+          "multiplier": 0.45,
+          "scalingStat": "atk"
+        }
+      ],
+      "description": "为全队提供自身攻击力200%的护盾，持续3回合，并恢复45%攻击力的生命值。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/eve_skill.png"
+    },
+    "eve_ult": {
+      "id": "eve_ult",
+      "name": "雨后晴穹",
+      "type": "ultimate",
+      "element": "thunder",
+      "energyGain": 0,
+      "energyCost": 100,
+      "cooldown": 0,
+      "effects": [
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "shield",
+          "duration": 4,
+          "chance": 1,
+          "refreshDuration": true,
+          "scalingStat": "atk",
+          "multiplier": 3.0
+        },
+        {
+          "type": "heal",
+          "target": "all_allies",
+          "multiplier": 0.9,
+          "scalingStat": "atk"
+        },
+        {
+          "type": "status",
+          "target": "all_allies",
+          "statusId": "regen",
+          "duration": 3,
+          "chance": 1,
+          "refreshDuration": true
+        }
+      ],
+      "description": "为全队提供自身攻击力300%的护盾，持续4回合，恢复90%攻击力的生命值并提供3回合再生。",
+      "animation": "thunder",
+      "icon": "⚡",
+      "iconPath": "res://assets/content_v290/icons/skills/eve_ult.png"
     }
   },
   "StageData": {
@@ -9806,6 +14357,485 @@
             "firstClearRewardLabel": "长风归途 · 完章"
           }
         ]
+      },
+      {
+        "id": "ch5",
+        "name": "第五章：雷鸣之后",
+        "unlocked": false,
+        "unlockCondition": "ch4_12",
+        "stages": [
+          {
+            "id": "ch5_1",
+            "name": "5-1 雷雨城门",
+            "waves": [
+              {
+                "enemies": [
+                  "thunder_mane"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+            "postDialogueKeys": [
+              "ch5_1_post"
+            ],
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                258,
+                298
+              ],
+              "exp": 510
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_2",
+            "name": "5-2 封街警报",
+            "waves": [
+              {
+                "enemies": [
+                  "storm_patrol",
+                  "storm_patrol"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/rain_street.png",
+            "postDialogueKeys": [
+              "ch5_2_post"
+            ],
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                266,
+                306
+              ],
+              "exp": 530
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_3",
+            "name": "5-3 雨夜的空岗",
+            "waves": [
+              {
+                "enemies": [
+                  "breaker_cavalier"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+            "postDialogueKeys": [
+              "ch5_3_post",
+              "ch5_interlude_1"
+            ],
+            "isElite": true,
+            "firstClearRewardLabel": "幕间 · 可以问出口的话",
+            "staminaCost": 12,
+            "rewards": {
+              "gold": [
+                274,
+                314
+              ],
+              "exp": 550
+            },
+            "firstClearRewards": {
+              "diamonds": 160
+            },
+            "firstClearRelic": {
+              "rarity": 5,
+              "slotId": "helmet",
+              "setId": "storm_armor"
+            }
+          },
+          {
+            "id": "ch5_4",
+            "name": "5-4 雨棚下的委托",
+            "waves": [
+              {
+                "enemies": [
+                  "charge_mayfly",
+                  "charge_mayfly",
+                  "charge_mayfly"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/storm_market.png",
+            "postDialogueKeys": [
+              "ch5_4_post"
+            ],
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                282,
+                322
+              ],
+              "exp": 570
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_5",
+            "name": "5-5 消失的一车货",
+            "waves": [
+              {
+                "enemies": [
+                  "storm_crossbow",
+                  "storm_crossbow"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+            "postDialogueKeys": [
+              "ch5_5_post"
+            ],
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                290,
+                330
+              ],
+              "exp": 590
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_6",
+            "name": "5-6 封闭的站台",
+            "waves": [
+              {
+                "enemies": [
+                  "thunder_core_guard"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+            "postDialogueKeys": [
+              "ch5_6_post",
+              "ch5_interlude_2"
+            ],
+            "isElite": true,
+            "firstClearRewardLabel": "幕间 · 空白的那一页",
+            "staminaCost": 12,
+            "rewards": {
+              "gold": [
+                298,
+                338
+              ],
+              "exp": 610
+            },
+            "firstClearRewards": {
+              "diamonds": 160
+            },
+            "firstClearRelic": {
+              "rarity": 5,
+              "slotId": "necklace",
+              "setId": "storm_tracer"
+            }
+          },
+          {
+            "id": "ch5_7",
+            "name": "5-7 白伞灯下",
+            "waves": [
+              {
+                "enemies": [
+                  "thunder_mane",
+                  "charge_mayfly",
+                  "charge_mayfly"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+            "postDialogueKeys": [
+              "ch5_7_post"
+            ],
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                306,
+                346
+              ],
+              "exp": 630
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_8",
+            "name": "5-8 隔墙的脚步",
+            "waves": [
+              {
+                "enemies": [
+                  "rift_shade",
+                  "rift_shade",
+                  "rift_shade"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+            "postDialogueKeys": [
+              "ch5_8_post",
+              "ch5_interlude_3"
+            ],
+            "firstClearRewardLabel": "幕间 · 留下半碗热粥",
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                314,
+                354
+              ],
+              "exp": 650
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_9",
+            "name": "5-9 观测台上的旧记录",
+            "waves": [
+              {
+                "enemies": [
+                  "storm_patrol",
+                  "storm_patrol"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/observatory.png",
+            "postDialogueKeys": [
+              "ch5_9_post"
+            ],
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                322,
+                362
+              ],
+              "exp": 670
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_10",
+            "name": "5-10 一张写着人名的清单",
+            "waves": [
+              {
+                "enemies": [
+                  "breaker_cavalier"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/observatory.png",
+            "postDialogueKeys": [
+              "ch5_10_post"
+            ],
+            "isElite": true,
+            "staminaCost": 12,
+            "rewards": {
+              "gold": [
+                330,
+                370
+              ],
+              "exp": 690
+            },
+            "firstClearRewards": {
+              "diamonds": 160
+            }
+          },
+          {
+            "id": "ch5_11",
+            "name": "5-11 空车驶向旧街",
+            "waves": [
+              {
+                "enemies": [
+                  "storm_crossbow",
+                  "storm_crossbow"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+            "postDialogueKeys": [
+              "ch5_11_post"
+            ],
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                338,
+                378
+              ],
+              "exp": 710
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_12",
+            "name": "5-12 铠甲留下的回声",
+            "waves": [
+              {
+                "enemies": [
+                  "rift_shade",
+                  "rift_shade",
+                  "rift_shade"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+            "postDialogueKeys": [
+              "ch5_12_post",
+              "ch5_interlude_4"
+            ],
+            "firstClearRewardLabel": "幕间 · 还给你的名字",
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                346,
+                386
+              ],
+              "exp": 730
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_13",
+            "name": "5-13 雷塔之下",
+            "waves": [
+              {
+                "enemies": [
+                  "storm_patrol",
+                  "storm_patrol",
+                  "thunder_core_guard"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/sunken_tower.png",
+            "postDialogueKeys": [
+              "ch5_13_post"
+            ],
+            "isElite": true,
+            "staminaCost": 12,
+            "rewards": {
+              "gold": [
+                354,
+                394
+              ],
+              "exp": 750
+            },
+            "firstClearRewards": {
+              "diamonds": 160
+            }
+          },
+          {
+            "id": "ch5_14",
+            "name": "5-14 从城里传来的声音",
+            "waves": [
+              {
+                "enemies": [
+                  "rift_shade",
+                  "rift_shade",
+                  "rift_shade"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/sunken_tower.png",
+            "postDialogueKeys": [
+              "ch5_14_post",
+              "ch5_interlude_5"
+            ],
+            "firstClearRewardLabel": "幕间 · 伞下的位置",
+            "staminaCost": 10,
+            "rewards": {
+              "gold": [
+                362,
+                402
+              ],
+              "exp": 770
+            },
+            "firstClearRewards": {
+              "diamonds": 70
+            }
+          },
+          {
+            "id": "ch5_15",
+            "name": "5-15 最后一班空车",
+            "waves": [
+              {
+                "enemies": [
+                  "thunder_core_guard",
+                  "thunder_core_guard"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/rift_core.png",
+            "postDialogueKeys": [
+              "ch5_15_post"
+            ],
+            "isElite": true,
+            "staminaCost": 12,
+            "rewards": {
+              "gold": [
+                370,
+                410
+              ],
+              "exp": 790
+            },
+            "firstClearRewards": {
+              "diamonds": 160
+            }
+          },
+          {
+            "id": "ch5_16",
+            "name": "5-16 雷鸣之后",
+            "waves": [
+              {
+                "enemies": [
+                  "sealer_core",
+                  "boss_city_sealer",
+                  "sealer_ward"
+                ]
+              }
+            ],
+            "background": "res://assets/content_v290/backgrounds/rift_core.png",
+            "postDialogueKeys": [
+              "ch5_16_post",
+              "ch5_epilogue_1",
+              "ch5_epilogue_2",
+              "ch5_interlude_6"
+            ],
+            "isBoss": true,
+            "firstClearRewardLabel": "幕间 · 下一页的同行者",
+            "staminaCost": 12,
+            "rewards": {
+              "gold": [
+                378,
+                418
+              ],
+              "exp": 810
+            },
+            "firstClearRewards": {
+              "diamonds": 250
+            },
+            "firstClearRelic": {
+              "rarity": 5,
+              "slotId": "necklace",
+              "setId": "storm_shelter"
+            }
+          }
+        ],
+        "description": "雷雨封住了城门，与莱莎、维珂和伊芙走进旧街，寻找封城的缘由，接回仍在等待的人。"
       }
     ],
     "dungeonTower": {
@@ -9985,6 +15015,249 @@
       "scene": "云巢风庭",
       "background": "res://assets/content_v280/backgrounds/cloud_nest.png",
       "kind": "post"
+    },
+    "ch5_1_pre": {
+      "title": "雷雨城门 · 战前",
+      "scene": "雷雨城门",
+      "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+      "kind": "pre"
+    },
+    "ch5_1_post": {
+      "title": "雷雨城门 · 战后",
+      "scene": "雷雨城门",
+      "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+      "kind": "post"
+    },
+    "ch5_2_pre": {
+      "title": "封街警报 · 战前",
+      "scene": "封街警报",
+      "background": "res://assets/content_v290/backgrounds/rain_street.png",
+      "kind": "pre"
+    },
+    "ch5_2_post": {
+      "title": "封街警报 · 战后",
+      "scene": "封街警报",
+      "background": "res://assets/content_v290/backgrounds/rain_street.png",
+      "kind": "post"
+    },
+    "ch5_3_pre": {
+      "title": "雨夜的空岗 · 战前",
+      "scene": "雨夜的空岗",
+      "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+      "kind": "pre"
+    },
+    "ch5_3_post": {
+      "title": "雨夜的空岗 · 战后",
+      "scene": "雨夜的空岗",
+      "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+      "kind": "post"
+    },
+    "ch5_interlude_1": {
+      "title": "幕间 · 可以问出口的话",
+      "scene": "幕间",
+      "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+      "kind": "interlude",
+      "illustration": "res://assets/content_v290/cg/raisa_watchtower_meal.png"
+    },
+    "ch5_4_pre": {
+      "title": "雨棚下的委托 · 战前",
+      "scene": "雨棚下的委托",
+      "background": "res://assets/content_v290/backgrounds/storm_market.png",
+      "kind": "pre"
+    },
+    "ch5_4_post": {
+      "title": "雨棚下的委托 · 战后",
+      "scene": "雨棚下的委托",
+      "background": "res://assets/content_v290/backgrounds/storm_market.png",
+      "kind": "post"
+    },
+    "ch5_5_pre": {
+      "title": "消失的一车货 · 战前",
+      "scene": "消失的一车货",
+      "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+      "kind": "pre"
+    },
+    "ch5_5_post": {
+      "title": "消失的一车货 · 战后",
+      "scene": "消失的一车货",
+      "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+      "kind": "post"
+    },
+    "ch5_6_pre": {
+      "title": "封闭的站台 · 战前",
+      "scene": "封闭的站台",
+      "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+      "kind": "pre"
+    },
+    "ch5_6_post": {
+      "title": "封闭的站台 · 战后",
+      "scene": "封闭的站台",
+      "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+      "kind": "post"
+    },
+    "ch5_interlude_2": {
+      "title": "幕间 · 空白的那一页",
+      "scene": "幕间",
+      "background": "res://assets/content_v290/backgrounds/storm_market.png",
+      "kind": "interlude",
+      "illustration": "res://assets/content_v290/cg/vika_teahouse_map.png"
+    },
+    "ch5_7_pre": {
+      "title": "白伞灯下 · 战前",
+      "scene": "白伞灯下",
+      "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+      "kind": "pre"
+    },
+    "ch5_7_post": {
+      "title": "白伞灯下 · 战后",
+      "scene": "白伞灯下",
+      "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+      "kind": "post"
+    },
+    "ch5_8_pre": {
+      "title": "隔墙的脚步 · 战前",
+      "scene": "隔墙的脚步",
+      "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+      "kind": "pre"
+    },
+    "ch5_8_post": {
+      "title": "隔墙的脚步 · 战后",
+      "scene": "隔墙的脚步",
+      "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+      "kind": "post"
+    },
+    "ch5_interlude_3": {
+      "title": "幕间 · 留下半碗热粥",
+      "scene": "幕间",
+      "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+      "kind": "interlude",
+      "illustration": "res://assets/content_v290/cg/eve_clinic_porridge.png"
+    },
+    "ch5_9_pre": {
+      "title": "观测台上的旧记录 · 战前",
+      "scene": "观测台上的旧记录",
+      "background": "res://assets/content_v290/backgrounds/observatory.png",
+      "kind": "pre"
+    },
+    "ch5_9_post": {
+      "title": "观测台上的旧记录 · 战后",
+      "scene": "观测台上的旧记录",
+      "background": "res://assets/content_v290/backgrounds/observatory.png",
+      "kind": "post"
+    },
+    "ch5_10_pre": {
+      "title": "一张写着人名的清单 · 战前",
+      "scene": "一张写着人名的清单",
+      "background": "res://assets/content_v290/backgrounds/observatory.png",
+      "kind": "pre"
+    },
+    "ch5_10_post": {
+      "title": "一张写着人名的清单 · 战后",
+      "scene": "一张写着人名的清单",
+      "background": "res://assets/content_v290/backgrounds/observatory.png",
+      "kind": "post"
+    },
+    "ch5_11_pre": {
+      "title": "空车驶向旧街 · 战前",
+      "scene": "空车驶向旧街",
+      "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+      "kind": "pre"
+    },
+    "ch5_11_post": {
+      "title": "空车驶向旧街 · 战后",
+      "scene": "空车驶向旧街",
+      "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+      "kind": "post"
+    },
+    "ch5_12_pre": {
+      "title": "铠甲留下的回声 · 战前",
+      "scene": "铠甲留下的回声",
+      "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+      "kind": "pre"
+    },
+    "ch5_12_post": {
+      "title": "铠甲留下的回声 · 战后",
+      "scene": "铠甲留下的回声",
+      "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+      "kind": "post"
+    },
+    "ch5_interlude_4": {
+      "title": "幕间 · 还给你的名字",
+      "scene": "幕间",
+      "background": "res://assets/content_v290/backgrounds/rain_street.png",
+      "kind": "interlude"
+    },
+    "ch5_13_pre": {
+      "title": "雷塔之下 · 战前",
+      "scene": "雷塔之下",
+      "background": "res://assets/content_v290/backgrounds/sunken_tower.png",
+      "kind": "pre"
+    },
+    "ch5_13_post": {
+      "title": "雷塔之下 · 战后",
+      "scene": "雷塔之下",
+      "background": "res://assets/content_v290/backgrounds/sunken_tower.png",
+      "kind": "post"
+    },
+    "ch5_14_pre": {
+      "title": "从城里传来的声音 · 战前",
+      "scene": "从城里传来的声音",
+      "background": "res://assets/content_v290/backgrounds/sunken_tower.png",
+      "kind": "pre"
+    },
+    "ch5_14_post": {
+      "title": "从城里传来的声音 · 战后",
+      "scene": "从城里传来的声音",
+      "background": "res://assets/content_v290/backgrounds/sunken_tower.png",
+      "kind": "post"
+    },
+    "ch5_interlude_5": {
+      "title": "幕间 · 伞下的位置",
+      "scene": "幕间",
+      "background": "res://assets/content_v290/backgrounds/sunken_tower.png",
+      "kind": "interlude"
+    },
+    "ch5_15_pre": {
+      "title": "最后一班空车 · 战前",
+      "scene": "最后一班空车",
+      "background": "res://assets/content_v290/backgrounds/rift_core.png",
+      "kind": "pre"
+    },
+    "ch5_15_post": {
+      "title": "最后一班空车 · 战后",
+      "scene": "最后一班空车",
+      "background": "res://assets/content_v290/backgrounds/rift_core.png",
+      "kind": "post"
+    },
+    "ch5_16_pre": {
+      "title": "雷鸣之后 · 战前",
+      "scene": "雷鸣之后",
+      "background": "res://assets/content_v290/backgrounds/rift_core.png",
+      "kind": "pre"
+    },
+    "ch5_16_post": {
+      "title": "雷鸣之后 · 战后",
+      "scene": "雷鸣之后",
+      "background": "res://assets/content_v290/backgrounds/rift_core.png",
+      "kind": "post"
+    },
+    "ch5_epilogue_1": {
+      "title": "尾声 · 旧街的热饭",
+      "scene": "尾声",
+      "background": "res://assets/content_v290/backgrounds/rain_street.png",
+      "kind": "epilogue"
+    },
+    "ch5_epilogue_2": {
+      "title": "尾声 · 终于轮到自己",
+      "scene": "尾声",
+      "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+      "kind": "epilogue"
+    },
+    "ch5_interlude_6": {
+      "title": "幕间 · 下一页的同行者",
+      "scene": "幕间",
+      "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+      "kind": "interlude"
     }
   }
 }

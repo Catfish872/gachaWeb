@@ -699,6 +699,7 @@ func constellation_info(char_id: String) -> Array:
 	var result: Array = []
 	for index in range(6):
 		var entry: Dictionary = catalog.ConstellationGeneric[index].duplicate(true)
+		entry.merge(catalog.CharacterData[char_id].get("constellationOverrides", {}).get(str(index + 1), {}), true)
 		if index == 5:
 			entry.merge(catalog.ConstellationC6.get(char_id, {}), true)
 		entry.index = index
@@ -1259,6 +1260,57 @@ func prepare_selin_trial() -> Dictionary:
 	_issued_config = config
 	return {"success":true,"config":config.duplicate(true)}
 
+func thunder_trial_info(kind: String) -> Dictionary:
+	var entries := {
+		"raisa":{"title":"披雷同行 · 莱莎试用","party":["raisa","bolt","ayla"],"background":"thunder_gate","guide":"莱莎以100点能量开始战斗。先使用终结技，将当前生命的一半转为等量护盾并进入雷电铠甲。接下来依次使用雷铠普攻、战技与终结技，观察技能解锁、动作立绘和剩余回合。"},
+		"vika":{"title":"循迹归来 · 维珂试用","party":["vika","gus","ayla"],"background":"storm_market","guide":"维珂先施加导电，降低敌人防御。雷属性队友命中导电目标后，她会追加贯穿追击，每个目标每回合最多触发两次。由维珂施加导电，再让格斯接续攻击。"},
+		"eve":{"title":"晴幕相伴 · 伊芙试用","party":["eve","gus","bolt"],"background":"ward_clinic","guide":"伊芙的战技与终结技提供全队护盾和治疗。带有护盾的队友在回合结束时获得再生与治疗，雷属性队友同时获得伤害加深。先展开结界，再观察队友承伤后的恢复。"},
+		"trio":{"title":"雷雨同行 · 雷队联合演示","party":["vika","eve","raisa"],"background":"observatory","guide":"维珂施加导电，伊芙提供护盾，莱莎随后进入雷电铠甲。依次完成雷铠普攻、战技与终结技，观察贯穿追击、护盾再生和队伍增伤。每名角色携带自己的专属遗物。"}}
+	if not entries.has(kind): return {}
+	var info: Dictionary = entries[kind].duplicate(true)
+	info.id = "trial_thunder_trio" if kind == "trio" else "trial_" + kind
+	info.reward = 0 if kind == "trio" else 160
+	return info
+
+func prepare_thunder_trial(kind: String) -> Dictionary:
+	if team_is_locked(): return _fail("请先结束当前战斗或远征")
+	var info := thunder_trial_info(kind)
+	if info.is_empty(): return _fail("请选择有效角色试用")
+	var party: Array = []
+	var zero_cst := {"hpPercent":0.0,"atkPercent":0.0,"defPercent":0.0,"normalDmgBonus":0.0,"skillDmgBonus":0.0,"ultDmgBonus":0.0,"skillCdReduce":0,"custom":{}}
+	var sets := {"raisa":"storm_armor","vika":"storm_tracer","eve":"storm_shelter","gus":"thunder_hunt","bolt":"thunder_hunt","ayla":"aurora_prayer"}
+	for id in info.party:
+		if not catalog.CharacterData.has(id) or not catalog.RelicSets.has(sets[id]): return _fail("角色试用资料尚未就绪")
+		var data: Dictionary = catalog.CharacterData[id]
+		var gear: Array = []
+		for slot in catalog.RelicSlots:
+			var relic := _generate_relic_with_source(5, str(slot.id), sets[id], func(): return 0.35, "thunder_trial_" + id + "_" + str(slot.id))
+			relic.level = 8
+			gear.append(relic)
+		var evaluated := RelicSets.evaluate(catalog, gear)
+		var stats := computed_stats(id, 5, {"constellation":zero_cst,"awakening":0,"relics":RelicSets.attribute_bonuses(catalog, gear),"relicSetBonuses":evaluated.statBonuses})
+		party.append({"id":id,"name":data.name,"element":data.element,"stats":stats,"skills":data.skills.duplicate(),"passiveId":data.get("passiveId",""),"ownerEffects":evaluated.ownerEffects,"level":5,"constellation":0,"saveData":default_character(),"maxHp":stats.maxHp,"currentHp":stats.maxHp,"energy":100,"cooldowns":{},"trialRelics":gear})
+	var waves := [{"enemies":["storm_patrol","storm_crossbow"]},{"enemies":["thunder_core_guard"]}]
+	for wave in waves:
+		for id in wave.enemies:
+			if not catalog.EnemyData.has(id): return _fail("试用战斗资料尚未就绪")
+	var config := {"id":info.id,"name":info.title,"isTrial":true,"trialKind":"thunder","trialCharacter":kind,"trialGuide":info.guide,"isAbyss":false,"isBoss":false,"background":"res://assets/content_v290/backgrounds/%s.png" % info.background,"waves":waves,"enemies":waves[0].enemies.duplicate(),"scaleMult":{"hpMod":1.35,"atkMod":0.55,"defMod":1.0,"spdMod":0.7},"rewards":{"gold":[0,0],"exp":0,"diamonds":0},"firstClearRewards":{"diamonds":info.reward},"token":_uid("trial"),"seed":29001,"_team":[],"partySnapshot":party}
+	_issued_config = config
+	return {"success":true,"config":config.duplicate(true)}
+
+func _finish_thunder_trial(issued: Dictionary, battle_state: Dictionary) -> Dictionary:
+	var victory: bool = battle_state.phase == "victory"
+	var first_clear: bool = victory and issued.get("trialCharacter", "") != "trio" and not bool(state.stageProgress.get(issued.id, {}).get("cleared", false))
+	var award := 160 if first_clear else 0
+	var result := {"success":true,"victory":victory,"rewards":{"gold":0,"exp":0,"diamonds":award},"gift":{},"relic":{},"progression":[],"firstClear":first_clear,"ended":false}
+	if first_clear:
+		var previous := state.duplicate(true)
+		state.resources.diamonds += award
+		state.stageProgress[issued.id] = {"cleared":true,"stars":1,"bestTurns":maxi(1, int(battle_state.get("turn", 1)))}
+		result = _commit(previous, result)
+	if result.success: _issued_config.clear()
+	return result
+
 func wind_trial_info(kind: String) -> Dictionary:
 	var entries := {
 		"tiya": {"title":"巡路试锋 · 缇娅试用", "party":["tiya", "zeph", "ayla"], "background":"wind_outpost", "guide":"缇娅的战技在两段攻击后施加破甲，终结技先施加破甲再攻击。行动结束时，她会对本次受到自身技能伤害的破甲目标追加贯穿追击。轮到缇娅时，尝试终结技，观察技能伤害与贯穿伤害。"},
@@ -1359,6 +1411,8 @@ func finish_battle(config: Dictionary, battle_state: Dictionary) -> Dictionary:
 		return _fail("战斗尚未结束")
 	# Settlement uses the issued config, never caller-modified reward/cost fields.
 	var issued := _issued_config.duplicate(true)
+	if issued.get("isTrial", false) and issued.get("trialKind", "") == "thunder":
+		return _finish_thunder_trial(issued, battle_state)
 	if issued.get("isTrial", false) and issued.get("trialKind", "") == "wind":
 		return _finish_wind_trial(issued, battle_state)
 	var previous := state.duplicate(true)
@@ -1500,7 +1554,7 @@ func abyss_music_track(scene: Dictionary = {}) -> String:
 
 func abyss_boss_music_track(scene: Dictionary) -> String:
 	# Preserve the 2.8.3 expedition boss mapping, including the wind road score.
-	return {"lantern": "lantern_core", "windpass": "windpass_road"}.get(str(scene.get("theme", "")), "determined_pursuit")
+	return {"lantern": "lantern_core", "windpass": "windpass_road", "thunder_city": "thunder_boss"}.get(str(scene.get("theme", "")), "determined_pursuit")
 
 func abyss_scene_enemy_pool(floor_number: int, scene: Dictionary = {}) -> Array:
 	if scene.is_empty(): scene = abyss_scene(floor_number)

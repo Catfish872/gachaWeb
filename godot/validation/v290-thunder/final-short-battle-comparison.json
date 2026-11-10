@@ -1,0 +1,255 @@
+{
+  "scope": "Final short-battle redistribution. Four paired seeds per mode; native progression with all teams sharing gear and route policy. Route totals are functional samples, not statistical win rates. Baseline comparison uses original two seeds only. Long output is a separate neutralized 96-turn window, not proof of endgame survival.",
+  "changes": {
+    "normal": 1.2,
+    "skill": 0.9,
+    "armor_normal": 1.7,
+    "armor_skill_primary": 2.45,
+    "armor_skill_secondary": 1.6,
+    "armor_ultimate_primary": 2.7,
+    "armor_ultimate_secondary": 1.8,
+    "piercing": "unchanged",
+    "AI": "Raisa normal form only: guaranteed direct-hit finisher against last foe; conservative noncritical/block/shield preview; ordered armor rotation unchanged"
+  },
+  "long_ratios": {
+    "0": {
+      "abyss_10": 1.1335828574887512,
+      "abyss_50": 1.085899817142528,
+      "abyss_100": 1.0545360396169583,
+      "extraction_0": 1.1517453824439106,
+      "extraction_3": 1.107807184922361,
+      "extraction_5": 1.1306958784918728
+    },
+    "6": {
+      "abyss_10": 1.149064246053592,
+      "abyss_50": 1.1153380838279123,
+      "abyss_100": 1.1944175483449833,
+      "extraction_0": 1.123338273182295,
+      "extraction_3": 1.1840635840702898,
+      "extraction_5": 1.0662049603169832
+    }
+  },
+  "extraction_before_two_seeds": {
+    "developing_C0": {
+      "fire": 41,
+      "wind": 39,
+      "duo": 51,
+      "thunder": 50
+    },
+    "developing_C6": {
+      "fire": 41,
+      "wind": 37,
+      "duo": 45,
+      "thunder": 50
+    },
+    "built_C0": {
+      "fire": 45,
+      "wind": 41,
+      "duo": 62,
+      "thunder": 63
+    },
+    "built_C6": {
+      "fire": 42,
+      "wind": 42,
+      "duo": 54,
+      "thunder": 56
+    },
+    "advanced_C0": {
+      "fire": 76,
+      "wind": 65,
+      "duo": 105,
+      "thunder": 99
+    },
+    "advanced_C6": {
+      "fire": 65,
+      "wind": 57,
+      "duo": 86,
+      "thunder": 94
+    }
+  },
+  "extraction_after_same_two_seeds": {
+    "developing_C0": {
+      "fire": 41,
+      "wind": 39,
+      "duo": 46,
+      "thunder": 46
+    },
+    "developing_C6": {
+      "fire": 41,
+      "wind": 37,
+      "duo": 46,
+      "thunder": 47
+    },
+    "built_C0": {
+      "fire": 45,
+      "wind": 41,
+      "duo": 55,
+      "thunder": 58
+    },
+    "built_C6": {
+      "fire": 42,
+      "wind": 42,
+      "duo": 49,
+      "thunder": 51
+    },
+    "advanced_C0": {
+      "fire": 76,
+      "wind": 65,
+      "duo": 87,
+      "thunder": 89
+    },
+    "advanced_C6": {
+      "fire": 65,
+      "wind": 57,
+      "duo": 82,
+      "thunder": 86
+    }
+  },
+  "extraction_after_four_seeds": {
+    "developing_C0": {
+      "fire": 84,
+      "wind": 79,
+      "duo": 91,
+      "thunder": 95
+    },
+    "developing_C6": {
+      "fire": 80,
+      "wind": 77,
+      "duo": 89,
+      "thunder": 97
+    },
+    "built_C0": {
+      "fire": 95,
+      "wind": 84,
+      "duo": 105,
+      "thunder": 118
+    },
+    "built_C6": {
+      "fire": 87,
+      "wind": 81,
+      "duo": 99,
+      "thunder": 103
+    },
+    "advanced_C0": {
+      "fire": 148,
+      "wind": 125,
+      "duo": 166,
+      "thunder": 176
+    },
+    "advanced_C6": {
+      "fire": 125,
+      "wind": 113,
+      "duo": 154,
+      "thunder": 167
+    }
+  },
+  "abyss_before_two_seeds": {
+    "developing_C0": {
+      "fire": 158,
+      "wind": 121,
+      "duo": 160,
+      "thunder": 169
+    },
+    "developing_C6": {
+      "fire": 145,
+      "wind": 118,
+      "duo": 150,
+      "thunder": 157
+    },
+    "built_C0": {
+      "fire": 351,
+      "wind": 201,
+      "duo": 252,
+      "thunder": 261
+    },
+    "built_C6": {
+      "fire": 303,
+      "wind": 182,
+      "duo": 229,
+      "thunder": 233
+    }
+  },
+  "abyss_after_same_two_seeds": {
+    "developing_C0": {
+      "fire": 158,
+      "wind": 121,
+      "duo": 149,
+      "thunder": 154
+    },
+    "developing_C6": {
+      "fire": 145,
+      "wind": 118,
+      "duo": 139,
+      "thunder": 147
+    },
+    "built_C0": {
+      "fire": 351,
+      "wind": 201,
+      "duo": 242,
+      "thunder": 237
+    },
+    "built_C6": {
+      "fire": 303,
+      "wind": 182,
+      "duo": 217,
+      "thunder": 218
+    }
+  },
+  "abyss_after_four_seeds": {
+    "developing_C0": {
+      "fire": 318,
+      "wind": 255,
+      "duo": 320,
+      "thunder": 316
+    },
+    "developing_C6": {
+      "fire": 288,
+      "wind": 242,
+      "duo": 293,
+      "thunder": 301
+    },
+    "built_C0": {
+      "fire": 659,
+      "wind": 419,
+      "duo": 525,
+      "thunder": 493
+    },
+    "built_C6": {
+      "fire": 581,
+      "wind": 385,
+      "duo": 476,
+      "thunder": 447
+    }
+  },
+  "checks": {
+    "combat": 80,
+    "acquisition": 308,
+    "optimizer": 72,
+    "auto_ultimate": 81,
+    "wind_duo": 41,
+    "constructed_balance": 3080,
+    "natural_extraction": 25010,
+    "natural_abyss": 33111
+  },
+  "route_outcomes": {
+    "extraction": {
+      "extracted": 96
+    },
+    "abyss": {
+      "target_reached": 64
+    }
+  },
+  "minimum_thunder_survivors": {
+    "extraction": 3,
+    "abyss": 3
+  },
+  "legacy_test": "test_battle.gd: same 19 failures and pre-existing array-index runtime error reproduced with exact pre-tuning battle model and catalog. Generic suite is not passing. Dedicated current combat, acquisition, optimizer, auto-ultimate and wind-duo checks passed.",
+  "sourceHashes": {
+    "godot/scripts/battle_model.gd": "eabcec3104289a4d0dca4befab273c69805826299d20ff1b3f4f14a53c9af641",
+    "godot/data/catalog.json": "4a9ffde8a8e398335ad88746c04ca48b949a4b1f86aff530fe711ff6fae3194f",
+    "godot/data/thunder_combat_patch.json": "f2a40089baea5886af9d101a1f14ba0d05673a1dd6684327155f27240e406ac5",
+    "godot/tests/test_thunder_combat_v290.gd": "9816bc216af0c3a854786cb325880dab7d37ae86289003dd5bcf21239af030a5",
+    "godot/tools/audit_thunder_extraction_v290.gd": "aee01f925e966d461f99ea8f7f2d6ae22fe327226e14f2866e210a342d0060da",
+    "godot/tools/audit_thunder_natural_v290.gd": "ab0bec9c37d2e6d382f31c24df9b6fd44e6ebcf52f6868920178377eb080c466"
+  }
+}

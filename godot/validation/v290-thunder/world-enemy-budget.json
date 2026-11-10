@@ -1,0 +1,351 @@
+{
+  "rows": [
+    {
+      "damageRatio": 0.92696264044654,
+      "defense": 0,
+      "mode": "abyss_10",
+      "new": {
+        "attackActions": 6.0,
+        "damage": 2246.1,
+        "hpDamage": 2225.125,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 225.8,
+        "teamPeak": 522.9
+      },
+      "phase2": false,
+      "reference": {
+        "attackActions": 4.25,
+        "damage": 2423.075,
+        "hpDamage": 2397.625,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 338.1,
+        "teamPeak": 1014.3
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.929950954511808,
+      "defense": 0,
+      "mode": "extraction_A3_rank5",
+      "new": {
+        "attackActions": 18.0,
+        "damage": 487425.399999999,
+        "hpDamage": 489648.625,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 9268.0,
+        "singlePeak": 31866.5,
+        "teamPeak": 73539.9
+      },
+      "phase2": false,
+      "reference": {
+        "attackActions": 15.5,
+        "damage": 524140.974999999,
+        "hpDamage": 528727.375,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 21262.0,
+        "singlePeak": 44520.0,
+        "teamPeak": 133560.0
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.808326035153465,
+      "defense": 0,
+      "mode": "abyss_10",
+      "new": {
+        "attackActions": 6.0,
+        "damage": 2976.6,
+        "hpDamage": 2952.0,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 261.4,
+        "teamPeak": 730.8
+      },
+      "phase2": true,
+      "reference": {
+        "attackActions": 6.0,
+        "damage": 3682.425,
+        "hpDamage": 3628.125,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 261.4,
+        "teamPeak": 784.2
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.864116444101198,
+      "defense": 0,
+      "mode": "extraction_A3_rank5",
+      "new": {
+        "attackActions": 18.0,
+        "damage": 590015.499999999,
+        "hpDamage": 593189.75,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 9268.0,
+        "singlePeak": 36769.9,
+        "teamPeak": 102954.6
+      },
+      "phase2": true,
+      "reference": {
+        "attackActions": 16.375,
+        "damage": 682796.287499999,
+        "hpDamage": 689871.5,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 21262.0,
+        "singlePeak": 34246.8,
+        "teamPeak": 102740.4
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.928408761541965,
+      "defense": 100,
+      "mode": "abyss_10",
+      "new": {
+        "attackActions": 6.0,
+        "damage": 1121.1,
+        "hpDamage": 1110.625,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 112.4,
+        "teamPeak": 261.3
+      },
+      "phase2": false,
+      "reference": {
+        "attackActions": 4.25,
+        "damage": 1207.55,
+        "hpDamage": 1194.75,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 169.0,
+        "teamPeak": 507.0
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.929952815170693,
+      "defense": 100,
+      "mode": "extraction_A3_rank5",
+      "new": {
+        "attackActions": 18.0,
+        "damage": 243710.700000001,
+        "hpDamage": 244822.25,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 9268.0,
+        "singlePeak": 15932.8,
+        "teamPeak": 36769.8
+      },
+      "phase2": false,
+      "reference": {
+        "attackActions": 15.5,
+        "damage": 262067.8125,
+        "hpDamage": 264361.0,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 21262.0,
+        "singlePeak": 22260.0,
+        "teamPeak": 66780.0
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.811262072352267,
+      "defense": 100,
+      "mode": "abyss_10",
+      "new": {
+        "attackActions": 6.0,
+        "damage": 1486.8,
+        "hpDamage": 1474.5,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 130.2,
+        "teamPeak": 365.4
+      },
+      "phase2": true,
+      "reference": {
+        "attackActions": 6.0,
+        "damage": 1832.7,
+        "hpDamage": 1805.25,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 130.2,
+        "teamPeak": 390.6
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.864120587854072,
+      "defense": 100,
+      "mode": "extraction_A3_rank5",
+      "new": {
+        "attackActions": 18.0,
+        "damage": 295005.800000001,
+        "hpDamage": 296592.875,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 9268.0,
+        "singlePeak": 18384.5,
+        "teamPeak": 51477.3
+      },
+      "phase2": true,
+      "reference": {
+        "attackActions": 16.375,
+        "damage": 341394.25,
+        "hpDamage": 344932.0,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 21262.0,
+        "singlePeak": 17123.4,
+        "teamPeak": 51370.2
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.919915800056552,
+      "defense": 500,
+      "mode": "abyss_10",
+      "new": {
+        "attackActions": 6.0,
+        "damage": 366.0,
+        "hpDamage": 362.5,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 36.8,
+        "teamPeak": 85.2
+      },
+      "phase2": false,
+      "reference": {
+        "attackActions": 4.25,
+        "damage": 397.8625,
+        "hpDamage": 393.625,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 55.7,
+        "teamPeak": 167.1
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.92998050617543,
+      "defense": 500,
+      "mode": "extraction_A3_rank5",
+      "new": {
+        "attackActions": 18.0,
+        "damage": 81232.1,
+        "hpDamage": 81602.625,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 9268.0,
+        "singlePeak": 5310.9,
+        "teamPeak": 12256.5
+      },
+      "phase2": false,
+      "reference": {
+        "attackActions": 15.5,
+        "damage": 87348.1749999999,
+        "hpDamage": 88113.0,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 21262.0,
+        "singlePeak": 7419.4,
+        "teamPeak": 22258.2
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.812453300124532,
+      "defense": 500,
+      "mode": "abyss_10",
+      "new": {
+        "attackActions": 6.0,
+        "damage": 489.3,
+        "hpDamage": 485.125,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 43.1,
+        "teamPeak": 120.0
+      },
+      "phase2": true,
+      "reference": {
+        "attackActions": 6.0,
+        "damage": 602.25,
+        "hpDamage": 592.875,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 43.1,
+        "teamPeak": 129.3
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 0.86411327118191,
+      "defense": 500,
+      "mode": "extraction_A3_rank5",
+      "new": {
+        "attackActions": 18.0,
+        "damage": 98327.9999999999,
+        "hpDamage": 98857.25,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 9268.0,
+        "singlePeak": 6127.8,
+        "teamPeak": 17158.2
+      },
+      "phase2": true,
+      "reference": {
+        "attackActions": 16.375,
+        "damage": 113790.6375,
+        "hpDamage": 114969.875,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 21262.0,
+        "singlePeak": 5707.8,
+        "teamPeak": 17123.4
+      },
+      "samples": 8
+    },
+    {
+      "damageRatio": 1.12408470215714,
+      "enemy": "breaker_cavalier",
+      "mode": "abyss_5",
+      "new": {
+        "attackActions": 6.0,
+        "damage": 355.0,
+        "hpDamage": 359.375,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 0.0,
+        "singlePeak": 81.9,
+        "teamPeak": 81.9
+      },
+      "reference": {
+        "attackActions": 4.125,
+        "damage": 315.8125,
+        "hpDamage": 310.0,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 160.0,
+        "singlePeak": 96.6,
+        "teamPeak": 96.6
+      }
+    },
+    {
+      "damageRatio": 1.03225806451613,
+      "enemy": "thunder_core_guard",
+      "mode": "abyss_5",
+      "new": {
+        "attackActions": 6.0,
+        "damage": 326.0,
+        "hpDamage": 325.0,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 64.0,
+        "singlePeak": 43.0,
+        "teamPeak": 94.8
+      },
+      "reference": {
+        "attackActions": 4.125,
+        "damage": 315.8125,
+        "hpDamage": 310.0,
+        "shieldAbsorbed": 0.0,
+        "shieldPeak": 160.0,
+        "singlePeak": 96.6,
+        "teamPeak": 96.6
+      }
+    }
+  ],
+  "scope": "six enemy actions per unit, neutral three-player fixtures, 8 fixed seeds; current damage chain; not player progression simulation"
+}

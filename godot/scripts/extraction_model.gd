@@ -257,7 +257,7 @@ func _generate_map() -> void:
 				map.edges.append([map.rooms[(district-1)*6+second*2+1].id,map.rooms[district*6+second*2].id])
 	var boss_id := _uid("room")
 	var boss_row := int(_rand()*3)
-	map.rooms.append({"id":boss_id, "name":labels.boss, "type":"boss", "description":"击败首领，撤离或深入下一幕", "tier":4, "districtId":"district_2", "x":0.95, "y":0.18+boss_row*0.31, "visited":false, "cleared":false, "background":map.districts[2].background, "containers":[], "actions":[]})
+	map.rooms.append({"id":boss_id, "name":labels.boss, "type":"boss", "description":"击败首领，撤离或深入下一幕", "tier":4, "districtId":"district_2", "x":0.95, "y":0.18+boss_row*0.31, "visited":false, "cleared":false, "background":str(config.get("bossBackground",map.districts[2].background)), "containers":[], "actions":[]})
 	if themed:
 		map.rooms.back().environmentTheme = environment
 		map.rooms.back().depth = 2
@@ -2578,7 +2578,7 @@ func _move_owned_keys(items:Array,ring:Array)->void:
 
 func keyring()->Array:
 	var result:Array=[]
-	for id in ["key_ruins","key_forest","key_sanctum","key_lantern","key_windpass"]:
+	for id in ["key_ruins","key_forest","key_sanctum","key_lantern","key_windpass","key_thunder_city"]:
 		var d:=item_def(id)
 		var count:=0;var value:=0
 		for item in state().get("keyring",[]):

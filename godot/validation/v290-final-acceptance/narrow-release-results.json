@@ -1,0 +1,14 @@
+{
+  "started_utc": "2026-11-10T11:57:56.624820+00:00",
+  "completed_utc": "2026-11-10T11:57:58.541648+00:00",
+  "elapsed_seconds": 1.916828,
+  "production_sha256": "f1ad9ee526183e7f6b88b9454e947b51c4c0538f5257cb0477389aef9ddab600",
+  "status": "passed",
+  "checks": [
+    "All five existing original recordings match provenance hashes",
+    "Missing-original message names retrieval command, source URL and expected hash",
+    "Explicit download follows recorded source and writes only verified bytes (mocked transport)",
+    "Existing mismatched file is preserved and rejected",
+    "Production assets and runtime snapshot unchanged"
+  ]
+}

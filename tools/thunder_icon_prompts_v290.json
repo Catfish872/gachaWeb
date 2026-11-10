@@ -1,0 +1,254 @@
+[
+  {
+    "category": "skills",
+    "id": "raisa_normal",
+    "label": "巡城刀光",
+    "prompt": "Use case: stylized-concept. Create one premium hand-painted anime fantasy RPG inventory / ability icon, square composition, transparent background. Subject: a single slim lightning knight sword, diagonal from lower left to upper right, long polished silver blade with a subtle violet central fuller, dark amethyst and antique gold guard, black-purple wrapped grip and small violet tassel. One elegant lavender lightning arc curls around the blade. Refined painterly texture, beveled metal highlights, crisp dark outline, coherent Genshin-like collectible fantasy item rendering. Palette silver, deep violet, amethyst, restrained gold. Strong immediately readable silhouette at 64px; central object fills 78 percent of the canvas, generous clear transparent margin; show complete blade tip and hilt. Isolated object only, no characters, no text, no badge, no border, no tile backdrop, no ground shadow, no numbers, no watermark. This is Raisa normal attack: city patrol sword slash."
+  },
+  {
+    "category": "skills",
+    "id": "raisa_skill",
+    "label": "引雷横斩",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An elegant silver-violet knight sword sweeping sideways, with a bold curved lavender crescent slash curling around its blade and three tiny branching lightning sparks. Deep purple, silver, a little antique gold."
+  },
+  {
+    "category": "skills",
+    "id": "raisa_ult",
+    "label": "雷铠着装",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A magnificent silver and dark-violet knight breastplate with gold piping and a glowing amethyst heart, suspended between two stylized curved lavender lightning wings. Armor transformation, powerful compact symmetric silhouette."
+  },
+  {
+    "category": "skills",
+    "id": "raisa_armor_normal",
+    "label": "雷铠·踏霆斩",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An armored silver-violet gauntlet gripping a downward striking silver longsword, its pointed tip piercing a tiny lavender spark burst. A single sweeping lightning trail expresses a forceful sword strike. Antique-gold details, deep violet cloth."
+  },
+  {
+    "category": "skills",
+    "id": "raisa_armor_skill",
+    "label": "雷铠·环雷破",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A broad electrified silver knight blade crossing diagonally through an almost complete ring of vivid lavender lightning, five angular arcs radiating outward. Deep violet and silver, restrained gold hilt. Circular breaking-storm ability emblem."
+  },
+  {
+    "category": "skills",
+    "id": "raisa_armor_ult",
+    "label": "雷铠·天霆裁决",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A monumental upright silver execution sword suspended point-down beneath a three-point golden thunder crown, flanked by two lavender lightning spears. Brilliant amethyst gemstone and strong luminous silver center. Majestic sky-thunder judgment ability."
+  },
+  {
+    "category": "skills",
+    "id": "raisa_passive",
+    "label": "蓄雷之心",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An elegant silver-violet armored gauntlet cradling a bright faceted amethyst energy crystal, with a compact thin ring of lavender electricity winding around the palm. Dark purple leather and tiny antique-gold fasteners."
+  },
+  {
+    "category": "skills",
+    "id": "vika_normal",
+    "label": "循迹鸣弦",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A compact ornate fantasy crossbow at three-quarter angle, warm walnut stock, gilded bow limbs, teal enamel inlays, taut pale-blue luminous string and one ready silver lightning bolt. Cream ribbon detail, small gold fittings."
+  },
+  {
+    "category": "skills",
+    "id": "vika_skill",
+    "label": "雷轨交织",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A pair of silver-tipped gilded crossbow bolts crossing above an elegant teal-and-gold crossbow, connected by three cyan lightning threads like an electrical circuit. Warm wood stock. Clean compact triangular silhouette, readable sharp tips."
+  },
+  {
+    "category": "skills",
+    "id": "vika_ult",
+    "label": "逐电归航",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A splendid silver-and-gold lightning arrow flying diagonally above a small teal brass navigator compass, three cyan electric trails opening behind it in a fan, a tiny gold star on the compass. Adventurous ornate crossbow-bolt fantasy motif."
+  },
+  {
+    "category": "skills",
+    "id": "vika_passive",
+    "label": "导电追击",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A swift silver-tipped crossbow bolt with gold shaft piercing the center of a tiny glowing amethyst diamond, cyan electrical arcs linking entry and exit. Teal fletching and clear long diagonal silhouette express a piercing follow-up attack."
+  },
+  {
+    "category": "skills",
+    "id": "eve_normal",
+    "label": "晴光微芒",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An elegant closed ivory silk parasol with gold ribs and handle tilted diagonally, luminous pale-blue dew droplet and a small ivory lily beside its tip. Fine lace scallops, delicate warm gold details, restrained cyan restorative light."
+  },
+  {
+    "category": "skills",
+    "id": "eve_skill",
+    "label": "穹幕庇护",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An open ivory-and-gold silk parasol at three-quarter angle, scalloped lace edges and pale-blue jewel at its top, sheltering a luminous cyan curved shield-shaped energy veil underneath. Luxurious soft ivory, pale gold, turquoise light."
+  },
+  {
+    "category": "skills",
+    "id": "eve_ult",
+    "label": "雨后晴穹",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An open white and gold lace parasol viewed at a lovely angle, a tiny radiant gold sun rising just behind its canopy, two ivory lilies and soft cyan restorative ribbons beneath. Warm dawn light, ivory-gold and pale aqua, graceful complete silhouette."
+  },
+  {
+    "category": "skills",
+    "id": "eve_passive",
+    "label": "晴穹恩泽",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An elegant golden shield-shaped filigree charm cradling a glowing aqua dew droplet, framed by two small ivory lily petals and a soft curved cyan restorative ribbon. Calm healer motif, polished gold, ivory, turquoise."
+  },
+  {
+    "category": "blessings",
+    "id": "thunder_shelter_white",
+    "label": "雷幕同行",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: Three elegant overlapping silver shields in a compact arc, their amethyst centers connected by a fine lavender lightning line. Central shield largest, protected companions motif. Violet-silver, restrained gold trim."
+  },
+  {
+    "category": "blessings",
+    "id": "thunder_mark_blue",
+    "label": "引雷共鸣",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A luminous amethyst crystal diamond between two small silver lightning forks, a circular ring of cyan electrical resonance connecting all three. Delicate golden mount, rich violet, aqua, silver. A clear conductive target motif."
+  },
+  {
+    "category": "blessings",
+    "id": "thunder_link_gold",
+    "label": "千雷同归",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: Three ornate golden and silver lightning arrowheads converging onto one vivid violet crystal star, linked by three graceful cyan electrical streams. Rich antique gold, amethyst and lightning white. Unified thunder pursuit blessing."
+  },
+  {
+    "category": "blessings",
+    "id": "raisa_charge_white",
+    "label": "积雷于刃",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A silver-violet knight sword angled upward, absorbing three small faceted amethyst crystal sparks toward its blade's fuller. Dark-purple wrapped grip, small gold guard; a thin winding electric ribbon suggests stored energy."
+  },
+  {
+    "category": "blessings",
+    "id": "raisa_armor_blue",
+    "label": "披霆而行",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A single magnificent silver armored knight sabaton with violet leather underneath, wing-shaped gold ankle accent and a curling lavender lightning trail behind the heel. One dynamic stepping boot, complete toe and heel, elegant strong silhouette."
+  },
+  {
+    "category": "blessings",
+    "id": "raisa_armor_gold",
+    "label": "天雷照夜",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A radiant violet-and-gold thunder crown floating above two crossed silver knight swords, centered on a large pale-violet lightning star. Majestic intricate enamel and gold filigree, compact powerful triangular silhouette."
+  },
+  {
+    "category": "blessings",
+    "id": "vika_mark_white",
+    "label": "逐迹留光",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A slim silver and gold crossbow arrow with teal fletching crossing a tiny ornate brass hourglass containing glowing violet sand, linked by a short cyan lightning trail. Track persistence motif, compact diagonal composition."
+  },
+  {
+    "category": "blessings",
+    "id": "vika_link_blue",
+    "label": "弩弦续雷",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A beautiful gold-and-teal crossbow bow-limb with a vivid taut electric cyan string, two small silver bolt tips riding along twin electrical arcs beside it. Walnut and cream details. Clear repeating electric shot motif."
+  },
+  {
+    "category": "blessings",
+    "id": "vika_open_gold",
+    "label": "照亮归途",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A small elegant brass navigation lantern with glowing aqua crystal light, teal enamel roof and gold compass star, paired with a silver crossbow bolt pointing forward. A curled cyan lightning ribbon suggests a lit homeward route."
+  },
+  {
+    "category": "blessings",
+    "id": "eve_shield_white",
+    "label": "晴幕加护",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A small open ivory-and-gold lace parasol resting above a shield-shaped pale-aqua gemstone set in delicate gold filigree. Pearly edges, calm gentle restorative light, compact elegant protective blessing."
+  },
+  {
+    "category": "blessings",
+    "id": "eve_guard_blue",
+    "label": "穹光守望",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A splendid ivory and pale-gold shield with an aqua gem, two graceful gold-framed white wings and a thin cyan protective arc overhead. Delicate carved filigree and small lily accent, strong symmetric protection motif."
+  },
+  {
+    "category": "blessings",
+    "id": "eve_dawn_gold",
+    "label": "雷雨初晴",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A radiant small golden rising sun above an open ivory lily and a single translucent aqua rain droplet, framed by two delicate gold parasol ribs. Clear dawn-after-rain healing motif, warm champagne gold and pearly white."
+  },
+  {
+    "category": "relics",
+    "id": "storm_armor_helmet",
+    "label": "雷铠誓卫·头盔",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A beautiful silver knight's close helm with deep-violet cheek plates, gold edging, sharp upward crown fins and a small brilliant amethyst above the brow; dark plum lining. Three-quarter view, exquisite polished armor collectible."
+  },
+  {
+    "category": "relics",
+    "id": "storm_armor_chest",
+    "label": "雷铠誓卫·胸甲",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A fitted silver knight cuirass with angular deep-violet side plates, gold piping, central amethyst, pointed layered pauldrons, and a short torn plum cloth tabard. Empty wearable armor displayed alone, three-quarter view."
+  },
+  {
+    "category": "relics",
+    "id": "storm_armor_belt",
+    "label": "雷铠誓卫·腰带",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A complete curved dark-purple leather knight belt with layered silver hip plates, gold borders and a prominent lightning-shaped faceted amethyst buckle. Tiny elegant chain tassel, three-quarter perspective, isolated wearable equipment."
+  },
+  {
+    "category": "relics",
+    "id": "storm_armor_boots",
+    "label": "雷铠誓卫·长靴",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A pair of tall silver-plated knight boots with deep-violet leather, gold edged knee armor, angular layered sabatons and small amethyst ankle gems. One boot slightly behind the other, both entirely visible."
+  },
+  {
+    "category": "relics",
+    "id": "storm_armor_necklace",
+    "label": "雷铠誓卫·项链",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A noble silver and antique-gold necklace with a faceted violet lightning-shaped pendant set inside a small silver sword-wing crest, fine chain forming an elegant upper loop. Rich purple enamel, precise gemstone reflections."
+  },
+  {
+    "category": "relics",
+    "id": "storm_tracer_helmet",
+    "label": "逐电归途·头饰",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An adventurous short hunter's cap in teal leather with warm brown ear panels, golden visor band, a tiny brass crossbow-shaped brooch and cream trailing ribbon. Three-quarter view, elegant fantasy scout headwear, clear complete silhouette."
+  },
+  {
+    "category": "relics",
+    "id": "storm_tracer_chest",
+    "label": "逐电归途·猎装",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An elegant fitted teal scout jacket with cream fabric front, brown leather diagonal straps, gold buttons and brass crossbow-bolt buckles, short asymmetric cape over one shoulder, small utility pouch. Empty wearable garment, three-quarter view."
+  },
+  {
+    "category": "relics",
+    "id": "storm_tracer_belt",
+    "label": "逐电归途·腰带",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A curved warm brown leather scout belt with ornate brass lightning-compass buckle, one teal pouch and a little side quiver holding two silver crossbow bolts. Cream stitching and rich gold hardware, complete isolated wearable equipment."
+  },
+  {
+    "category": "relics",
+    "id": "storm_tracer_boots",
+    "label": "逐电归途·短靴",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A pair of elegant warm brown leather hunter ankle boots with teal folded cuffs, gold clasp details, cream laces and practical slim soles, one slightly behind the other. Beautiful stylized fantasy scout equipment, entirely visible."
+  },
+  {
+    "category": "relics",
+    "id": "storm_tracer_necklace",
+    "label": "逐电归途·项链",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An ornate brass compass pendant hanging from a thin gold chain, rich teal enamel face and a tiny silver crossbow bolt as the compass needle, small cream ribbon tie. Full loop and pendant visible, refined adventurous scout jewelry."
+  },
+  {
+    "category": "relics",
+    "id": "storm_shelter_helmet",
+    "label": "晴穹祈愿·冠饰",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A delicate ivory lace healer bonnet with a pale-gold openwork tiara across the front, one luminous aqua teardrop gem and small ivory lilies at each side. Three-quarter angle, soft silk ribbons, elegant fantasy headwear."
+  },
+  {
+    "category": "relics",
+    "id": "storm_shelter_chest",
+    "label": "晴穹祈愿·礼服",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: An elegant ivory healer bodice with pale-gold filigree seams, lace shoulder cape, aqua teardrop brooch at the collar, long soft cream fabric panels and a narrow golden waist ribbon. Empty wearable fantasy garment, three-quarter view."
+  },
+  {
+    "category": "relics",
+    "id": "storm_shelter_belt",
+    "label": "晴穹祈愿·腰带",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A beautiful ivory silk healer sash with an ornate pale-gold lily buckle around an aqua gemstone, delicate gold chain swags and one small white tassel, shaped as a complete curved wearable belt. Pearly silk and intricate filigree."
+  },
+  {
+    "category": "relics",
+    "id": "storm_shelter_boots",
+    "label": "晴穹祈愿·长靴",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A pair of graceful ivory healer boots with pale-gold lace-like filigree, aqua teardrop clasps at the outer ankles, soft cream ribbon ties and low elegant heels. One slightly behind the other, entire complete pair visible."
+  },
+  {
+    "category": "relics",
+    "id": "storm_shelter_necklace",
+    "label": "晴穹祈愿·项链",
+    "prompt": "Use case: stylized-concept. Create exactly ONE premium hand-painted anime fantasy RPG icon, isolated on a genuinely transparent background, square canvas. Beautiful collectible item rendering, delicately painted bevels, elegant fine metalwork, crisp dark outline, bright readable highlights and rich shaded facets. Match a polished fantasy gacha game's painterly inventory art. Strong silhouette clearly readable at 64px, complete object centered at 76 percent of canvas width/height with broad clear transparent margin. Object only; no text, letters, numerals, borders, badges, ground shadow, background scene, or watermark. Subject: A refined pale-gold chain necklace with a luminous aqua teardrop pendant held by three ivory lily petals and delicate golden parasol-rib filigree. Fine elegant chain forms a complete oval loop, pearly white and champagne gold."
+  }
+]

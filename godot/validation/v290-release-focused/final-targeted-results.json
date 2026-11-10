@@ -1,0 +1,91 @@
+{
+  "started_utc": "2026-11-10T07:50:48.621141+00:00",
+  "completed_utc": "2026-11-10T07:51:18.237698+00:00",
+  "elapsed_seconds": 29.616557,
+  "production_sha256_before": "90acc0370a82af91982e71b80ce599c6f8e18121680b4f858d54fa01363e2e72",
+  "production_sha256_after": "90acc0370a82af91982e71b80ce599c6f8e18121680b4f858d54fa01363e2e72",
+  "production_file_count": 1431,
+  "source_unchanged": true,
+  "results": [
+    {
+      "suite": "chapter5_v290",
+      "started_utc": "2026-11-10T07:50:48.621317+00:00",
+      "elapsed_seconds": 6.798963,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-chapter5_v290.log"
+    },
+    {
+      "suite": "thunder_combat_v290",
+      "started_utc": "2026-11-10T07:50:55.420387+00:00",
+      "elapsed_seconds": 0.817921,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-thunder_combat_v290.log"
+    },
+    {
+      "suite": "thunder_acquisition_v290",
+      "started_utc": "2026-11-10T07:50:56.238408+00:00",
+      "elapsed_seconds": 0.726367,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-thunder_acquisition_v290.log"
+    },
+    {
+      "suite": "thunder_optimizer_v290",
+      "started_utc": "2026-11-10T07:50:56.964843+00:00",
+      "elapsed_seconds": 1.568799,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-thunder_optimizer_v290.log"
+    },
+    {
+      "suite": "thunder_world_v290",
+      "started_utc": "2026-11-10T07:50:58.533821+00:00",
+      "elapsed_seconds": 1.377875,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-thunder_world_v290.log"
+    },
+    {
+      "suite": "thunder_enemy_budget_v290",
+      "started_utc": "2026-11-10T07:50:59.911644+00:00",
+      "elapsed_seconds": 1.28575,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-thunder_enemy_budget_v290.log"
+    },
+    {
+      "suite": "thunder_world_ui_v290",
+      "started_utc": "2026-11-10T07:51:01.197481+00:00",
+      "elapsed_seconds": 3.899559,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-thunder_world_ui_v290.log"
+    },
+    {
+      "suite": "thunder_visuals_v290",
+      "started_utc": "2026-11-10T07:51:05.097266+00:00",
+      "elapsed_seconds": 11.203409,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-thunder_visuals_v290.log"
+    },
+    {
+      "suite": "battle_auto_ultimate_v241",
+      "started_utc": "2026-11-10T07:51:16.300764+00:00",
+      "elapsed_seconds": 1.202671,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-battle_auto_ultimate_v241.log"
+    },
+    {
+      "suite": "wind_duo_v279",
+      "started_utc": "2026-11-10T07:51:17.503504+00:00",
+      "elapsed_seconds": 0.734127,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "final-wind_duo_v279.log"
+    }
+  ]
+}

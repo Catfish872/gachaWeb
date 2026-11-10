@@ -65,7 +65,7 @@ func _init(game, char_id: String, context: Dictionary = {}) -> void:
 	var effect_type := "heal" if _profile.type == "healing" else "damage"
 	for sid in _catalog.CharacterData[_char_id].skills:
 		for effect in _catalog.SkillData[sid].get("effects", []):
-			if effect.get("type", "") != effect_type: continue
+			if effect.get("type", "") != effect_type and not (_char_id=="eve" and effect.get("statusId","")=="shield"): continue
 			var source := str(effect.get("scalingStat", "atk"))
 			if source == "hp": source = "maxHp"
 			var count := int(_context.enemyCount) if effect.get("target", "") in ["all", "all_enemies", "chain3"] else 1
@@ -227,6 +227,7 @@ func _quick_rank_insert(items: Array, candidate: Dictionary, lane: int, limit: i
 func _quick_reference_step() -> void:
 	if _quick_reference_index >= _reference_team.size():
 		_selin_specs_ready = true
+		_thunder_specs_ready = true
 		_phase = "baseline"
 		return
 	var id: String = _reference_team[_quick_reference_index]
@@ -241,6 +242,7 @@ func _quick_reference_step() -> void:
 	var spec := {"id":id, "stats":_game.computed_stats_for_relic_loadout(id, items), "constellation":int(_game.state.ownedCharacters[id].constellation), "ownerEffects":Sets.evaluate(_catalog, items).ownerEffects}
 	if _char_id in ["tiya", "lumi"]: _wind_team_specs.append(spec)
 	if _char_id == "selin": _selin_team_specs.append(spec)
+	if _char_id in ["raisa","vika","eve"]: _thunder_team_specs.append(spec)
 
 func _quick_baseline_step() -> void:
 	_before = _quick_evaluate(_current_items)

@@ -1,0 +1,32 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+          at: test_statuses (res://tests/test_battle.gd:188)
+          GDScript backtrace (most recent call first):
+              [0] test_statuses (res://tests/test_battle.gd:188)
+              [1] _init (res://tests/test_battle.gd:15)
+SCRIPT ERROR: Invalid access of index '0' on a base object of type: 'Array'.
+          at: test_rogue_effects (res://tests/test_battle.gd:429)
+          GDScript backtrace (most recent call first):
+              [0] test_rogue_effects (res://tests/test_battle.gd:429)
+              [1] _init (res://tests/test_battle.gd:17)
+BATTLE TESTS: 905 checks; 48 player skills; 92 enemy skills; 23 rogue rewards exercised; 19 failures
+FAIL: catalog has 30 player skills
+FAIL: raisa_ult energy consumed
+FAIL: catalog has 23 enemy skills
+FAIL: windfield_updraft_feed enemy status
+FAIL: windfield_crosswind_guard enemy status
+FAIL: sealer_core_feed enemy status
+FAIL: sealer_ward_guard enemy status
+FAIL: thunder_mark duration adds
+FAIL: wind_armor duration adds
+FAIL: burn apply
+FAIL: burn present
+FAIL: Kaldi burn deepen passive: actual 1.0 expected 1.2
+FAIL: Cinder burn skill passive: actual 1.0 expected 1.4
+FAIL: Kaldi C6 extra damage
+FAIL: Cinder C6 burn damage: actual 1.2 expected 2.04
+FAIL: kaldi_burn_amp_white status bonus: actual 1.0 expected 1.368
+FAIL: kaldi_ult_burn_blue ult burned bonus: actual 1.18 expected 1.58592
+FAIL: kaldi_burn_execute_gold true extra damage
+FAIL: kaldi_ult_amp_white ult bonus: actual 1.1 expected 1.18

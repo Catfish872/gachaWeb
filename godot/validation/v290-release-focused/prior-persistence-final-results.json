@@ -1,0 +1,15 @@
+{
+  "phases": [
+    {
+      "phase": "write",
+      "seconds": 0.9227534339988779,
+      "exit_code": 0
+    },
+    {
+      "phase": "read",
+      "seconds": 0.647960898000747,
+      "exit_code": 0
+    }
+  ],
+  "total_seconds": 1.5709206739993533
+}

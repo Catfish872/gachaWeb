@@ -1,0 +1,861 @@
+{
+  "status": "passed",
+  "count": 42,
+  "referenceCount": 42,
+  "catalogReferenceCount": 42,
+  "categories": {
+    "skills": 15,
+    "blessings": 12,
+    "relics": 15
+  },
+  "checks": [
+    "exact patch and runtime catalog reference closure",
+    "42 unique runtime and source hashes",
+    "PNG RGBA decoding",
+    "384x384 size",
+    "transparent and opaque alpha",
+    "centered transparent margins"
+  ],
+  "assets": [
+    {
+      "id": "raisa_normal",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        64,
+        32,
+        342,
+        351
+      ],
+      "coverage": 0.0944,
+      "sha256": "8ddabc252f99ce23d7bec56103d558b61203f71e268159553dcc48314cef7a3f"
+    },
+    {
+      "id": "raisa_skill",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        54,
+        54,
+        338,
+        336
+      ],
+      "coverage": 0.1828,
+      "sha256": "0422074f48d8acff90e18a63a37a616a13d33de33c04eed154347cc9717ba9a8"
+    },
+    {
+      "id": "raisa_ult",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        32,
+        54,
+        349,
+        311
+      ],
+      "coverage": 0.3253,
+      "sha256": "d7737053682a3c99dea0bec35a88920fd87dbc97018e95fd683932407fc5acff"
+    },
+    {
+      "id": "raisa_armor_normal",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        63,
+        34,
+        335,
+        344
+      ],
+      "coverage": 0.2337,
+      "sha256": "1c12ce58555360e32d2cdbbbb99507643fec1020134c6cb581bb6fbc22de605f"
+    },
+    {
+      "id": "raisa_armor_skill",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        47,
+        37,
+        346,
+        331
+      ],
+      "coverage": 0.2352,
+      "sha256": "92545cd60945d75876cca2ca2f6de2e16fcc997d88541ab12ecf8d3096415ce5"
+    },
+    {
+      "id": "raisa_armor_ult",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        72,
+        33,
+        319,
+        347
+      ],
+      "coverage": 0.2064,
+      "sha256": "84ebfd959b5e77fae12474bc4765557f8d3fd0b66d1671154f0f46c9680ff11f"
+    },
+    {
+      "id": "raisa_passive",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        84,
+        50,
+        302,
+        336
+      ],
+      "coverage": 0.2327,
+      "sha256": "e3146f6dd11fc3fa2dbfb6eff3dbebb8822095b36f5c5222c770e11e476cb701"
+    },
+    {
+      "id": "vika_normal",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        42,
+        58,
+        344,
+        290
+      ],
+      "coverage": 0.2105,
+      "sha256": "c79817d70044b31eeee103b2740f3e1acdbe7ce1f5a3f71ee8de7c1f03cadd98"
+    },
+    {
+      "id": "vika_skill",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        47,
+        41,
+        338,
+        337
+      ],
+      "coverage": 0.17,
+      "sha256": "f8cb3d4cb9deb744fd5b8d536b3caf95a4f514d54ea3f690a5ea0c4cce6372bc"
+    },
+    {
+      "id": "vika_ult",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        63,
+        73,
+        336,
+        345
+      ],
+      "coverage": 0.222,
+      "sha256": "c82dbf570aa5167f7921daa9e9a6cb431dc8d85864f839d60c36634872cd8b75"
+    },
+    {
+      "id": "vika_passive",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        57,
+        60,
+        343,
+        330
+      ],
+      "coverage": 0.1096,
+      "sha256": "24968152e3033ae4e16e0cd79c3706e21df560ba4d9e9417d32e6e49e0e99ec7"
+    },
+    {
+      "id": "eve_normal",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        83,
+        56,
+        327,
+        337
+      ],
+      "coverage": 0.1584,
+      "sha256": "caa1756ed0e564098c1f4bb04a5de5e84b6a79feac8b9920431bc2e918e1da92"
+    },
+    {
+      "id": "eve_skill",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        60,
+        42,
+        325,
+        323
+      ],
+      "coverage": 0.2801,
+      "sha256": "95873213d389ed9317cd80d05e97f05aac1635ba8d36f97fa7dcb1441e96144a"
+    },
+    {
+      "id": "eve_ult",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        62,
+        43,
+        328,
+        334
+      ],
+      "coverage": 0.3386,
+      "sha256": "513a0af07d7a60f0266b60e056cb3bf61c7fe4d1d4f662754802071fe08bf969"
+    },
+    {
+      "id": "eve_passive",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        55,
+        32,
+        328,
+        352
+      ],
+      "coverage": 0.4055,
+      "sha256": "9a0de7a240c41c45c8f9fbc308bfe928d7561db17a6b611a7a258ff66cda7811"
+    },
+    {
+      "id": "thunder_shelter_white",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        46,
+        72,
+        343,
+        312
+      ],
+      "coverage": 0.2771,
+      "sha256": "9940c9791950d5072863ccce15a5aa494ea927f2ca17b75e28acea628b0539a8"
+    },
+    {
+      "id": "thunder_mark_blue",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        50,
+        53,
+        336,
+        328
+      ],
+      "coverage": 0.2196,
+      "sha256": "ba455c8e17e21fa8759c039d1caa55dba18db4fe07cd4308ed93c1524a8b7b56"
+    },
+    {
+      "id": "thunder_link_gold",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        56,
+        49,
+        334,
+        340
+      ],
+      "coverage": 0.2599,
+      "sha256": "543565d8c37f4f7ecf77901cc166a09e2f904f61419e94bf8ff6f36fe7504301"
+    },
+    {
+      "id": "raisa_charge_white",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        80,
+        41,
+        342,
+        341
+      ],
+      "coverage": 0.1987,
+      "sha256": "0fa06c84b413665bda6e72abd4cc2df9f84b903810b25f5535ae13a191f62f66"
+    },
+    {
+      "id": "raisa_armor_blue",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        63,
+        55,
+        327,
+        322
+      ],
+      "coverage": 0.2133,
+      "sha256": "f0ba9339910368aa8d6277b925aa26a558e9d5a2e26fea29aefacd5c64537c50"
+    },
+    {
+      "id": "raisa_armor_gold",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        53,
+        34,
+        331,
+        336
+      ],
+      "coverage": 0.2352,
+      "sha256": "1a598efc3f312793a85f3bb92e23dbd25fbc6db95ca059ecc96a85d2c9476619"
+    },
+    {
+      "id": "vika_mark_white",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        70,
+        77,
+        328,
+        320
+      ],
+      "coverage": 0.1716,
+      "sha256": "34895fb078b678915aae3fbb9822bb52307caf4fafa108c2a3761408577af560"
+    },
+    {
+      "id": "vika_link_blue",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        42,
+        55,
+        340,
+        316
+      ],
+      "coverage": 0.2203,
+      "sha256": "6afc2febb90d463a2526d2a48ed074148938940a4bb1db62a74a1ea92766834f"
+    },
+    {
+      "id": "vika_open_gold",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        45,
+        37,
+        352,
+        346
+      ],
+      "coverage": 0.2535,
+      "sha256": "03d50c6c05a98aedda0364ee5425b04aec90bd6f129bcd079aedc373d08ebaa9"
+    },
+    {
+      "id": "eve_shield_white",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        88,
+        41,
+        303,
+        337
+      ],
+      "coverage": 0.222,
+      "sha256": "784633563466735c90481961de054aa53bef9de171f3e70c2038c86e3e10e66b"
+    },
+    {
+      "id": "eve_guard_blue",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        38,
+        36,
+        335,
+        341
+      ],
+      "coverage": 0.3557,
+      "sha256": "9adcec43b892db3376990c42f9ae3a32e24a292ba682d153aa13096d8c59b295"
+    },
+    {
+      "id": "eve_dawn_gold",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        64,
+        55,
+        324,
+        317
+      ],
+      "coverage": 0.2795,
+      "sha256": "d47aa9a905796a8c152c7570fef3319af6617feb955949388c58c3e848717a9c"
+    },
+    {
+      "id": "storm_armor_helmet",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        92,
+        38,
+        295,
+        350
+      ],
+      "coverage": 0.2884,
+      "sha256": "54ba034a4dd329125962a2fc9a1571a4c0fe173f5670b7878f25f1a1778e10a4"
+    },
+    {
+      "id": "storm_armor_chest",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        62,
+        35,
+        322,
+        341
+      ],
+      "coverage": 0.2936,
+      "sha256": "377f32bbdb2b6b2bf248dae2991ff9970908230f5771c6fc6af0261d6912519c"
+    },
+    {
+      "id": "storm_armor_belt",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        53,
+        60,
+        341,
+        299
+      ],
+      "coverage": 0.2577,
+      "sha256": "94aa6b142510f5e7d122edca4a5b8e5934daabd4905c1bf9599554aa3b73df4e"
+    },
+    {
+      "id": "storm_armor_boots",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        90,
+        49,
+        282,
+        341
+      ],
+      "coverage": 0.2199,
+      "sha256": "0c846685abb1389688518e5bf3014044da31240f24f03138d10cefe68f102ff4"
+    },
+    {
+      "id": "storm_armor_necklace",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        72,
+        37,
+        312,
+        342
+      ],
+      "coverage": 0.1861,
+      "sha256": "0675c8c8693b4ea45b7906a2b5d240c69eb3dff2035a292f451c7dd3253373cc"
+    },
+    {
+      "id": "storm_tracer_helmet",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        57,
+        69,
+        327,
+        309
+      ],
+      "coverage": 0.2538,
+      "sha256": "1a28be6d1b8d633237c2147d4f55a31147d3dc7338d48cbba101286186668add"
+    },
+    {
+      "id": "storm_tracer_chest",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        68,
+        42,
+        326,
+        336
+      ],
+      "coverage": 0.3258,
+      "sha256": "3bb946a1b579f20d6892d243e27f2ba78cda6fb118813c61a6f85b284f966ed1"
+    },
+    {
+      "id": "storm_tracer_belt",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        48,
+        91,
+        346,
+        284
+      ],
+      "coverage": 0.2473,
+      "sha256": "452ea55798275f86dde96c097d308b97b48d3933d6f6753f626f943b57a94707"
+    },
+    {
+      "id": "storm_tracer_boots",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        66,
+        73,
+        325,
+        316
+      ],
+      "coverage": 0.2746,
+      "sha256": "58097898ae96ceea11a9e11c2d2dea2ee759c7365a12bc4bb528ae634e89e1ac"
+    },
+    {
+      "id": "storm_tracer_necklace",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        104,
+        41,
+        300,
+        339
+      ],
+      "coverage": 0.1914,
+      "sha256": "4c51ea32363651e50041eefbb37ab7139af4a2a546e9b69cbabb1b8d5f97cb10"
+    },
+    {
+      "id": "storm_shelter_helmet",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        56,
+        53,
+        331,
+        333
+      ],
+      "coverage": 0.3178,
+      "sha256": "a7200293f747db9968760ec8caeac7e7e2b6c4ce08b0d286fa898b32e181468c"
+    },
+    {
+      "id": "storm_shelter_chest",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        59,
+        48,
+        341,
+        345
+      ],
+      "coverage": 0.3382,
+      "sha256": "e8db9de6cd9157f05675e0b96da157cc47f220b9da16a77d68f1d602c282b97a"
+    },
+    {
+      "id": "storm_shelter_belt",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        59,
+        53,
+        338,
+        331
+      ],
+      "coverage": 0.2654,
+      "sha256": "a8910d81912f660b4cc6849f550a0088053b4a1b9bbbb4ea6e77e4ed31492769"
+    },
+    {
+      "id": "storm_shelter_boots",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "alphaBounds": [
+        87,
+        55,
+        332,
+        328
+      ],
+      "coverage": 0.2993,
+      "sha256": "f99160545f33d8d52466339467b28617a5964fc62290bb1a86516429afa55f73"
+    },
+    {
+      "id": "storm_shelter_necklace",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        254
+      ],
+      "alphaBounds": [
+        44,
+        32,
+        342,
+        352
+      ],
+      "coverage": 0.3425,
+      "sha256": "8cdc34864bd7efcdee06f0eee6410324b2a169a9723a8636fd75d916222836d0"
+    }
+  ]
+}

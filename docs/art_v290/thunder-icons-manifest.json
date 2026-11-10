@@ -1,0 +1,434 @@
+{
+  "version": "2.9.0",
+  "generator": "built-in image_gen",
+  "sourceUse": "Original fictional fantasy game item artwork generated for this project.",
+  "runtimeRoot": "res://assets/content_v290/icons/",
+  "runtimeSize": [
+    384,
+    384
+  ],
+  "processing": "Generated RGBA artwork. Transparent trim, proportional 320px fit, centered on transparent 384px square; original alpha retained.",
+  "prompts": "tools/thunder_icon_prompts_v290.json",
+  "assets": [
+    {
+      "id": "raisa_normal",
+      "name": "巡城刀光",
+      "category": "skills",
+      "file": "skills/raisa_normal.png",
+      "source": "exec-3873f63a-0d8d-4915-8ba5-f8d46aa0a7b8.png",
+      "sourceSha256": "7c9ec251716b18e9a972326565055e24aa235563a2a652341cc6215c3db24b4c",
+      "sha256": "8ddabc252f99ce23d7bec56103d558b61203f71e268159553dcc48314cef7a3f",
+      "bytes": 53062
+    },
+    {
+      "id": "raisa_skill",
+      "name": "引雷横斩",
+      "category": "skills",
+      "file": "skills/raisa_skill.png",
+      "source": "exec-75119d1c-33c5-423a-b037-cb3ef3425858.png",
+      "sourceSha256": "c5ddfd7eeaf60d78518c06d6063ca0aca26981e86558e2974beba96695292151",
+      "sha256": "0422074f48d8acff90e18a63a37a616a13d33de33c04eed154347cc9717ba9a8",
+      "bytes": 94119
+    },
+    {
+      "id": "raisa_ult",
+      "name": "雷铠着装",
+      "category": "skills",
+      "file": "skills/raisa_ult.png",
+      "source": "exec-ef26c793-25f0-4eca-8a13-47db63c979fd.png",
+      "sourceSha256": "2dd7d8686ae3c9e2c242226c72768a9dee3579d94f0cca654784b55089007082",
+      "sha256": "d7737053682a3c99dea0bec35a88920fd87dbc97018e95fd683932407fc5acff",
+      "bytes": 145129
+    },
+    {
+      "id": "raisa_armor_normal",
+      "name": "雷铠·踏霆斩",
+      "category": "skills",
+      "file": "skills/raisa_armor_normal.png",
+      "source": "exec-16273a27-497c-4b3e-b893-2049f48e3fb7.png",
+      "sourceSha256": "b6e6138473db36e1fffd7324ff4aed4e071eef9b5fab635b1f3da67310380444",
+      "sha256": "1c12ce58555360e32d2cdbbbb99507643fec1020134c6cb581bb6fbc22de605f",
+      "bytes": 113067
+    },
+    {
+      "id": "raisa_armor_skill",
+      "name": "雷铠·环雷破",
+      "category": "skills",
+      "file": "skills/raisa_armor_skill.png",
+      "source": "exec-1e80f414-eedb-43f2-9d68-8455c10e4d07.png",
+      "sourceSha256": "a6d8422bff3ebffed3bd19cb5de18487027b34ccbe5eb0cdc2798b7eaddf1305",
+      "sha256": "92545cd60945d75876cca2ca2f6de2e16fcc997d88541ab12ecf8d3096415ce5",
+      "bytes": 113386
+    },
+    {
+      "id": "raisa_armor_ult",
+      "name": "雷铠·天霆裁决",
+      "category": "skills",
+      "file": "skills/raisa_armor_ult.png",
+      "source": "exec-de243fb1-2913-4aad-ba2e-53865d04fc42.png",
+      "sourceSha256": "b79e51b075139bef095134032869c824617350be63c2a0ddae479a345a0f74ed",
+      "sha256": "84ebfd959b5e77fae12474bc4765557f8d3fd0b66d1671154f0f46c9680ff11f",
+      "bytes": 108049
+    },
+    {
+      "id": "raisa_passive",
+      "name": "蓄雷之心",
+      "category": "skills",
+      "file": "skills/raisa_passive.png",
+      "source": "exec-8ca0c3fd-a307-4551-a361-1154db8a0f23.png",
+      "sourceSha256": "cd0b985a6a9df0a18d7fafe8ae3f625fa4a6900864e6653d71161661e962e900",
+      "sha256": "e3146f6dd11fc3fa2dbfb6eff3dbebb8822095b36f5c5222c770e11e476cb701",
+      "bytes": 103946
+    },
+    {
+      "id": "vika_normal",
+      "name": "循迹鸣弦",
+      "category": "skills",
+      "file": "skills/vika_normal.png",
+      "source": "exec-e79769d6-64ca-4c02-a69f-ccd0f5ac2575.png",
+      "sourceSha256": "2a45e76c6c0f2baa71c84e6675836e1f2fefdf993ad97da9675b66b03d3c01ab",
+      "sha256": "c79817d70044b31eeee103b2740f3e1acdbe7ce1f5a3f71ee8de7c1f03cadd98",
+      "bytes": 104512
+    },
+    {
+      "id": "vika_skill",
+      "name": "雷轨交织",
+      "category": "skills",
+      "file": "skills/vika_skill.png",
+      "source": "exec-73bfcae6-5941-4de6-983d-ed793c746349.png",
+      "sourceSha256": "0cd45cad8f58a1f6f62a9ba3740185d3bcf43ec3ca102cf583df874f9ad46836",
+      "sha256": "f8cb3d4cb9deb744fd5b8d536b3caf95a4f514d54ea3f690a5ea0c4cce6372bc",
+      "bytes": 89462
+    },
+    {
+      "id": "vika_ult",
+      "name": "逐电归航",
+      "category": "skills",
+      "file": "skills/vika_ult.png",
+      "source": "exec-24dc0d15-1116-46e5-8c1d-0615f5a95786.png",
+      "sourceSha256": "20e23276b61001fe47f11f96438da6c6d460943f2695ab8c40632ed539d883c4",
+      "sha256": "c82dbf570aa5167f7921daa9e9a6cb431dc8d85864f839d60c36634872cd8b75",
+      "bytes": 107400
+    },
+    {
+      "id": "vika_passive",
+      "name": "导电追击",
+      "category": "skills",
+      "file": "skills/vika_passive.png",
+      "source": "exec-1f4de8fc-c012-4de4-ac34-0b5b3c9b1683.png",
+      "sourceSha256": "dfb4c538e8b89a60637fb7d05285520fc3bfcbdffb078402225310b2af2ff417",
+      "sha256": "24968152e3033ae4e16e0cd79c3706e21df560ba4d9e9417d32e6e49e0e99ec7",
+      "bytes": 55215
+    },
+    {
+      "id": "eve_normal",
+      "name": "晴光微芒",
+      "category": "skills",
+      "file": "skills/eve_normal.png",
+      "source": "exec-92578045-a3e5-42e0-80b9-f2bccbf0f746.png",
+      "sourceSha256": "cf1cdfe5f7a0abc07fae931a81552501e52b24ad1cb47efaedbe26348347ab1e",
+      "sha256": "caa1756ed0e564098c1f4bb04a5de5e84b6a79feac8b9920431bc2e918e1da92",
+      "bytes": 79529
+    },
+    {
+      "id": "eve_skill",
+      "name": "穹幕庇护",
+      "category": "skills",
+      "file": "skills/eve_skill.png",
+      "source": "exec-f766e89c-d4d9-4364-b795-970e1099ef55.png",
+      "sourceSha256": "e6780960370f036967acddd033da3832b1d6e0677eb94a58f00a2b42cdde41d6",
+      "sha256": "95873213d389ed9317cd80d05e97f05aac1635ba8d36f97fa7dcb1441e96144a",
+      "bytes": 117894
+    },
+    {
+      "id": "eve_ult",
+      "name": "雨后晴穹",
+      "category": "skills",
+      "file": "skills/eve_ult.png",
+      "source": "exec-1f22b711-7f39-4385-8fd3-b0142220f66e.png",
+      "sourceSha256": "73058fe2a3c708002f9bab9746b118461d7e8dda94e9f72bb092632f9a1ff224",
+      "sha256": "513a0af07d7a60f0266b60e056cb3bf61c7fe4d1d4f662754802071fe08bf969",
+      "bytes": 154389
+    },
+    {
+      "id": "eve_passive",
+      "name": "晴穹恩泽",
+      "category": "skills",
+      "file": "skills/eve_passive.png",
+      "source": "exec-c5ddda6f-ee5b-4517-a0d5-c43c0305bebd.png",
+      "sourceSha256": "dfad7698c5572dbfbc43f9ad861dbb8c74d622c4c5b031532690be679d1a39ba",
+      "sha256": "9a0de7a240c41c45c8f9fbc308bfe928d7561db17a6b611a7a258ff66cda7811",
+      "bytes": 161532
+    },
+    {
+      "id": "thunder_shelter_white",
+      "name": "雷幕同行",
+      "category": "blessings",
+      "file": "blessings/thunder_shelter_white.png",
+      "source": "exec-75f799cc-d7f6-42cd-850c-557a314cd0e9.png",
+      "sourceSha256": "af916a159ff8df1d4eb5e4c506912832af4661d806e72b1a7b54a135de5e9f2b",
+      "sha256": "9940c9791950d5072863ccce15a5aa494ea927f2ca17b75e28acea628b0539a8",
+      "bytes": 118631
+    },
+    {
+      "id": "thunder_mark_blue",
+      "name": "引雷共鸣",
+      "category": "blessings",
+      "file": "blessings/thunder_mark_blue.png",
+      "source": "exec-1dd64b9e-f0de-4517-897a-49d46287a9bc.png",
+      "sourceSha256": "641b7cb9eef9da7c8ae06c3fff606b1454f65614d2970df872d0fdb1fc5bddf1",
+      "sha256": "ba455c8e17e21fa8759c039d1caa55dba18db4fe07cd4308ed93c1524a8b7b56",
+      "bytes": 110305
+    },
+    {
+      "id": "thunder_link_gold",
+      "name": "千雷同归",
+      "category": "blessings",
+      "file": "blessings/thunder_link_gold.png",
+      "source": "exec-1e44d345-b35d-4d97-a898-18b47f63c9ba.png",
+      "sourceSha256": "babd1e370783cc0ea58ad5bd9ac2db07598820639ee1817868f664b71ef65f7c",
+      "sha256": "543565d8c37f4f7ecf77901cc166a09e2f904f61419e94bf8ff6f36fe7504301",
+      "bytes": 122275
+    },
+    {
+      "id": "raisa_charge_white",
+      "name": "积雷于刃",
+      "category": "blessings",
+      "file": "blessings/raisa_charge_white.png",
+      "source": "exec-8a29d55a-639f-4d9e-8fde-ed1dd9024639.png",
+      "sourceSha256": "bc9ca4a5e7552fd6f39f0b1e9cc1c58606a2c8ca5e775f88d47eb45253ed3caa",
+      "sha256": "0fa06c84b413665bda6e72abd4cc2df9f84b903810b25f5535ae13a191f62f66",
+      "bytes": 88776
+    },
+    {
+      "id": "raisa_armor_blue",
+      "name": "披霆而行",
+      "category": "blessings",
+      "file": "blessings/raisa_armor_blue.png",
+      "source": "exec-22488479-a15a-452f-b6ac-d9b232535c6c.png",
+      "sourceSha256": "b4975a1efbb5252418b89365b6cf7fcf8deafcd062ca625f0bec91c29287ed82",
+      "sha256": "f0ba9339910368aa8d6277b925aa26a558e9d5a2e26fea29aefacd5c64537c50",
+      "bytes": 98903
+    },
+    {
+      "id": "raisa_armor_gold",
+      "name": "天雷照夜",
+      "category": "blessings",
+      "file": "blessings/raisa_armor_gold.png",
+      "source": "exec-b6807528-11b9-4f16-9682-b730572a4e2c.png",
+      "sourceSha256": "23e2d8c9e7e8cc53c0b8d4a07f5ed205580282aceeca701fb2d1418ad6cc5b27",
+      "sha256": "1a598efc3f312793a85f3bb92e23dbd25fbc6db95ca059ecc96a85d2c9476619",
+      "bytes": 113967
+    },
+    {
+      "id": "vika_mark_white",
+      "name": "逐迹留光",
+      "category": "blessings",
+      "file": "blessings/vika_mark_white.png",
+      "source": "exec-d5def5d1-ca6d-42f6-b862-c6c4f4a4b9a7.png",
+      "sourceSha256": "498e3edbc31898167f951842067c2fce6738b69032088ead83e774ab0c06b88e",
+      "sha256": "34895fb078b678915aae3fbb9822bb52307caf4fafa108c2a3761408577af560",
+      "bytes": 85094
+    },
+    {
+      "id": "vika_link_blue",
+      "name": "弩弦续雷",
+      "category": "blessings",
+      "file": "blessings/vika_link_blue.png",
+      "source": "exec-15e03de8-2ea9-4f94-989d-20be2c4ddf30.png",
+      "sourceSha256": "d14482ca4a30c6059a1b7ee53b2a37a12ee70246fc22d0b61ae15c0672d3dec9",
+      "sha256": "6afc2febb90d463a2526d2a48ed074148938940a4bb1db62a74a1ea92766834f",
+      "bytes": 109123
+    },
+    {
+      "id": "vika_open_gold",
+      "name": "照亮归途",
+      "category": "blessings",
+      "file": "blessings/vika_open_gold.png",
+      "source": "exec-6a7e655e-2c5d-46a8-8f4b-9f6d66e71879.png",
+      "sourceSha256": "da9818e32da49ee01d60a16d24ca2c57aa4e3722de1a3a6f0f82de712302f546",
+      "sha256": "03d50c6c05a98aedda0364ee5425b04aec90bd6f129bcd079aedc373d08ebaa9",
+      "bytes": 122038
+    },
+    {
+      "id": "eve_shield_white",
+      "name": "晴幕加护",
+      "category": "blessings",
+      "file": "blessings/eve_shield_white.png",
+      "source": "exec-70ad9a40-6ec1-4058-b714-bc4618c8c20b.png",
+      "sourceSha256": "797fc20f990164f70074efc62003a58599712944ecd2a1e7f0996a6938f83792",
+      "sha256": "784633563466735c90481961de054aa53bef9de171f3e70c2038c86e3e10e66b",
+      "bytes": 101850
+    },
+    {
+      "id": "eve_guard_blue",
+      "name": "穹光守望",
+      "category": "blessings",
+      "file": "blessings/eve_guard_blue.png",
+      "source": "exec-9bce0ada-91c0-42e1-be0c-c8138b589c2d.png",
+      "sourceSha256": "d52a4e606177eb6580fb2b8b937b6a05a2a7467cbe7bee8c4b9a993a85567d58",
+      "sha256": "9adcec43b892db3376990c42f9ae3a32e24a292ba682d153aa13096d8c59b295",
+      "bytes": 149089
+    },
+    {
+      "id": "eve_dawn_gold",
+      "name": "雷雨初晴",
+      "category": "blessings",
+      "file": "blessings/eve_dawn_gold.png",
+      "source": "exec-ccd5816e-9f9b-4786-85b1-199fd3939ccf.png",
+      "sourceSha256": "a21d604cfac79f0a35b55bc4523811d491a19ecf29389a91fbd4c16282100bda",
+      "sha256": "d47aa9a905796a8c152c7570fef3319af6617feb955949388c58c3e848717a9c",
+      "bytes": 121765
+    },
+    {
+      "id": "storm_armor_helmet",
+      "name": "雷铠誓卫·头盔",
+      "category": "relics",
+      "file": "relics/storm_armor_helmet.png",
+      "source": "exec-db4ccccd-a717-4ebd-9cad-0099feebc81d.png",
+      "sourceSha256": "25ecca6f38570849239a4b094ecdd273a67162e4f96fbc5ad94ce01facd4645b",
+      "sha256": "54ba034a4dd329125962a2fc9a1571a4c0fe173f5670b7878f25f1a1778e10a4",
+      "bytes": 121731
+    },
+    {
+      "id": "storm_armor_chest",
+      "name": "雷铠誓卫·胸甲",
+      "category": "relics",
+      "file": "relics/storm_armor_chest.png",
+      "source": "exec-7c249738-6a85-4fb4-ade0-1b1b6a8c6354.png",
+      "sourceSha256": "4c27a20f894e46945211e34e1d85c17d00a812b606b3eb1efe39ad1d9a691869",
+      "sha256": "377f32bbdb2b6b2bf248dae2991ff9970908230f5771c6fc6af0261d6912519c",
+      "bytes": 128686
+    },
+    {
+      "id": "storm_armor_belt",
+      "name": "雷铠誓卫·腰带",
+      "category": "relics",
+      "file": "relics/storm_armor_belt.png",
+      "source": "exec-f86b7d0f-4455-4e46-b065-f72477b5ff66.png",
+      "sourceSha256": "9ed54bbdd2b2496a42d48dfb65549755729d6895461f29a972eea08f51b707ae",
+      "sha256": "94aa6b142510f5e7d122edca4a5b8e5934daabd4905c1bf9599554aa3b73df4e",
+      "bytes": 109554
+    },
+    {
+      "id": "storm_armor_boots",
+      "name": "雷铠誓卫·长靴",
+      "category": "relics",
+      "file": "relics/storm_armor_boots.png",
+      "source": "exec-8337935b-7c57-4dac-8b63-e5ad658c601e.png",
+      "sourceSha256": "e79c791793ae372240541bf3a5d7645670fa8717a4aa0c131ba3a5e7b5c36a27",
+      "sha256": "0c846685abb1389688518e5bf3014044da31240f24f03138d10cefe68f102ff4",
+      "bytes": 96444
+    },
+    {
+      "id": "storm_armor_necklace",
+      "name": "雷铠誓卫·项链",
+      "category": "relics",
+      "file": "relics/storm_armor_necklace.png",
+      "source": "exec-775fff75-73f9-438f-88e8-da8c082ae93b.png",
+      "sourceSha256": "10729adcdcd2a39548db72bb0720b2d87e2162cd0273cd714db8b564d3437493",
+      "sha256": "0675c8c8693b4ea45b7906a2b5d240c69eb3dff2035a292f451c7dd3253373cc",
+      "bytes": 97175
+    },
+    {
+      "id": "storm_tracer_helmet",
+      "name": "逐电归途·头饰",
+      "category": "relics",
+      "file": "relics/storm_tracer_helmet.png",
+      "source": "exec-ca7838ff-c2be-4440-b70b-e3b890133d60.png",
+      "sourceSha256": "da98e6ac330af097b664e425cdba31b159c6d9d158f1b17185f0ae9052b68737",
+      "sha256": "1a28be6d1b8d633237c2147d4f55a31147d3dc7338d48cbba101286186668add",
+      "bytes": 103155
+    },
+    {
+      "id": "storm_tracer_chest",
+      "name": "逐电归途·猎装",
+      "category": "relics",
+      "file": "relics/storm_tracer_chest.png",
+      "source": "exec-23aa3d46-5c2b-4ae7-ac7d-952224c23d82.png",
+      "sourceSha256": "1aadac1451e9f6c4b0e9ab459e782417767d28616bc827975726d7a7fe930f23",
+      "sha256": "3bb946a1b579f20d6892d243e27f2ba78cda6fb118813c61a6f85b284f966ed1",
+      "bytes": 132473
+    },
+    {
+      "id": "storm_tracer_belt",
+      "name": "逐电归途·腰带",
+      "category": "relics",
+      "file": "relics/storm_tracer_belt.png",
+      "source": "exec-70b5f70a-07b8-4900-b842-502d6d3680ce.png",
+      "sourceSha256": "b617720fa6cc124425f2228b4c0f9c0c8de5611a92fed18ce7695ae735deeb05",
+      "sha256": "452ea55798275f86dde96c097d308b97b48d3933d6f6753f626f943b57a94707",
+      "bytes": 106080
+    },
+    {
+      "id": "storm_tracer_boots",
+      "name": "逐电归途·短靴",
+      "category": "relics",
+      "file": "relics/storm_tracer_boots.png",
+      "source": "exec-707830b1-4395-4410-84ad-d7601bd8d780.png",
+      "sourceSha256": "5094ba2677ed6d2286b3a6bb073793d95489c40ded877bcf2f76884dbcc6ae2f",
+      "sha256": "58097898ae96ceea11a9e11c2d2dea2ee759c7365a12bc4bb528ae634e89e1ac",
+      "bytes": 108906
+    },
+    {
+      "id": "storm_tracer_necklace",
+      "name": "逐电归途·项链",
+      "category": "relics",
+      "file": "relics/storm_tracer_necklace.png",
+      "source": "exec-ea3bbd9d-20c9-493e-a17e-b85e2a0f9db7.png",
+      "sourceSha256": "fef9ea2884dfd325dc1655c24304cbcff270c99d92ecfdf59f10c30027af22a4",
+      "sha256": "4c51ea32363651e50041eefbb37ab7139af4a2a546e9b69cbabb1b8d5f97cb10",
+      "bytes": 93266
+    },
+    {
+      "id": "storm_shelter_helmet",
+      "name": "晴穹祈愿·冠饰",
+      "category": "relics",
+      "file": "relics/storm_shelter_helmet.png",
+      "source": "exec-093770b1-f0ce-498d-be87-95e3c9131c0a.png",
+      "sourceSha256": "5a1c5d1ae615a9327aed609c972ef71d8a5f5c13844b73216347ac9fb7be8358",
+      "sha256": "a7200293f747db9968760ec8caeac7e7e2b6c4ce08b0d286fa898b32e181468c",
+      "bytes": 140362
+    },
+    {
+      "id": "storm_shelter_chest",
+      "name": "晴穹祈愿·礼服",
+      "category": "relics",
+      "file": "relics/storm_shelter_chest.png",
+      "source": "exec-40fbc4b3-a516-4323-830e-0653b2f0ada0.png",
+      "sourceSha256": "b6c3c77cef41aa01d02433cb0a6a9798b8bfad1aa6357a687228128add2cae14",
+      "sha256": "e8db9de6cd9157f05675e0b96da157cc47f220b9da16a77d68f1d602c282b97a",
+      "bytes": 140187
+    },
+    {
+      "id": "storm_shelter_belt",
+      "name": "晴穹祈愿·腰带",
+      "category": "relics",
+      "file": "relics/storm_shelter_belt.png",
+      "source": "exec-030512a6-ed52-4b2b-88ac-a76cb1863085.png",
+      "sourceSha256": "0910f1dc19eee2ffb9dc70bd4fe71c08edb60f49624de9263a56e1c4b04543f5",
+      "sha256": "a8910d81912f660b4cc6849f550a0088053b4a1b9bbbb4ea6e77e4ed31492769",
+      "bytes": 120093
+    },
+    {
+      "id": "storm_shelter_boots",
+      "name": "晴穹祈愿·长靴",
+      "category": "relics",
+      "file": "relics/storm_shelter_boots.png",
+      "source": "exec-569213e9-6e18-4fc5-83f1-e924f7ca20ba.png",
+      "sourceSha256": "4600cb21bfd832545d2ffc43d92a57536b5e7f9db190639b256023e1e053f493",
+      "sha256": "f99160545f33d8d52466339467b28617a5964fc62290bb1a86516429afa55f73",
+      "bytes": 122383
+    },
+    {
+      "id": "storm_shelter_necklace",
+      "name": "晴穹祈愿·项链",
+      "category": "relics",
+      "file": "relics/storm_shelter_necklace.png",
+      "source": "exec-79a31831-adfb-4bd9-829c-29e2ae5e2a28.png",
+      "sourceSha256": "64d6fc703f73fac53c5d85b35bd467892c2af445e6497d988c610a8d1696cec3",
+      "sha256": "8cdc34864bd7efcdee06f0eee6410324b2a169a9723a8636fd75d916222836d0",
+      "bytes": 137073
+    }
+  ]
+}

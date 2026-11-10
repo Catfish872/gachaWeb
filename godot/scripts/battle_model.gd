@@ -7,7 +7,7 @@ const AbyssBalance = preload("res://scripts/abyss_balance.gd")
 const MIN_ORDINARY_DAMAGE_TAKEN := 0.1
 const ENEMY_RECOVERY_SKILL := "enemy_recover"
 const CONTROL_STATUSES = ["freeze", "stun", "electrify"]
-const STATUS_IDS = ["wind_armor", "wind_oath", "burn", "freeze", "stun", "poison", "electrify", "regen", "atk_up", "def_up", "spd_down", "shield", "invincible", "taunt", "ember_oath", "ember_lantern_burn", "ember_lantern_direct"]
+const STATUS_IDS = ["thunder_mark", "thunder_armor", "thunder_oath", "wind_armor", "wind_oath", "burn", "freeze", "stun", "poison", "electrify", "regen", "atk_up", "def_up", "spd_down", "shield", "invincible", "taunt", "ember_oath", "ember_lantern_burn", "ember_lantern_direct"]
 const ELEMENT_ADVANTAGE = {
 	"fire": ["wind", "water"], "water": ["fire", "thunder"],
 	"wind": ["thunder", "fire"], "thunder": ["water", "wind"]
@@ -155,16 +155,35 @@ func auto_step() -> Dictionary:
 				break
 			if data.get("type") == "skill":
 				chosen = sid
+		chosen = _raisa_auto_finisher(actor, skills, chosen)
 	else:
 		chosen = _enemy_choice(actor, skills)
 	return _take_action(actor, chosen, "")
+
+# Preserve the ordered armor rotation. In normal form, finish the last foe
+# with a guaranteed direct hit before spending a turn on transformation.
+# This preview does not draw RNG, count follow-ups or assume a critical hit.
+func _raisa_auto_finisher(actor: Dictionary, skills: Array, chosen: String) -> String:
+	if actor.get("id", "") != "raisa" or thunder_armor_active(actor): return chosen
+	var foes := _foes(actor)
+	if foes.size() != 1: return chosen
+	var target: Dictionary = foes[0]
+	for sid in ["raisa_normal", "raisa_skill"]:
+		if not skills.has(sid): continue
+		var data := skill_data(sid)
+		var minimum := 0
+		for effect in data.get("effects", []):
+			if effect.get("type", "") == "damage":
+				minimum += predict_effect_damage(actor, target, data, effect, false, false, 1.0, _can_block(target))
+		if minimum >= int(target.currentHp) + int(target.get("shield", 0)): return sid
+	return chosen
 
 func _hold_healing_skill(actor: Dictionary, skill: Dictionary) -> bool:
 	# Ready ultimates always fire, including full-HP healing and on-heal effects.
 	if skill.get("type", "") == "ultimate": return false
 	var has_heal := false
 	for effect in skill.get("effects", []):
-		if effect.get("type", "") == "damage": return false
+		if effect.get("type", "") == "damage" or effect.get("statusId", "") == "shield": return false
 		if effect.get("type", "") == "heal": has_heal = true
 	if not has_heal: return false
 	var threshold := 0.90
@@ -198,7 +217,7 @@ func _make_ally(input: Dictionary, index: int) -> Dictionary:
 	if not stats.has("normalDmgBonus"): stats.normalDmgBonus = 0.15 if c >= 1 else 0.0
 	if not stats.has("skillCdReduce"): stats.skillCdReduce = 1 if c >= 2 else 0
 	if not stats.has("skillDmgBonus"): stats.skillDmgBonus = 0.2 if c >= 3 else 0.0
-	if not stats.has("ultDmgBonus"): stats.ultDmgBonus = 0.3 if c >= 5 else 0.0
+	if not stats.has("ultDmgBonus"): stats.ultDmgBonus = float(data.get("constellationOverrides", {}).get("5", {}).get("buff", {"ultDmgBonus":0.3}).get("ultDmgBonus", 0.0)) if c >= 5 else 0.0
 	return {"uid": "ally_%d" % index, "id": id, "dataId": id,
 		"name": str(input.get("name", data.get("name", id))), "isAlly": true,
 		"element": input.get("element", data.get("element", "wind")),
@@ -214,7 +233,7 @@ func _make_ally(input: Dictionary, index: int) -> Dictionary:
 		"passiveId": input.get("passiveId", data.get("passiveId", "")), "constellation": c,
 		"statuses": [], "shield": 0, "cooldowns": input.get("cooldowns", {}).duplicate(),
 		"baseAtk": stats.atk, "isBoss": false, "inPhase2": false,
-		"c6Used": false, "deathReported": false}
+		"c6Used": false, "deathReported": false, "thunderArmor": {}}
 
 func _normalize_stats(stats: Dictionary) -> void:
 	stats.maxHp = maxi(1, int(stats.get("maxHp", stats.get("hp", 1000))))
@@ -277,7 +296,7 @@ func _spawn_wave() -> void:
 			"phaseThreshold": data.get("phaseThreshold", 0.5), "phase2Skills": data.get("phase2Skills", []).duplicate(),
 			"energy": 0, "maxEnergy": 100, "cooldowns": {}, "statuses": [], "shield": 0,
 			"baseAtk": stats.atk, "inPhase2": false, "passiveId": "", "constellation": 0,
-			"c6Used": false, "deathReported": false})
+			"c6Used": false, "deathReported": false, "thunderArmor": {}})
 	_emit("wave", {}, {}, state.wave, "第 %d 波" % state.wave)
 
 func abyss_scale(floor_number: int, enemy_id: String) -> Dictionary:
@@ -371,6 +390,14 @@ func _build_queue() -> void:
 	_order_contiguous_allies()
 	_cursor = 0
 	state.turn += 1
+	for ally in state.allies:
+		if thunder_armor_active(ally):
+			if int(state.turn) > int(ally.thunderArmor.get("expiresAfterTurn", state.turn)):
+				_leave_thunder_armor(ally)
+			else:
+				ally.thunderArmor.remainingTurns = int(ally.thunderArmor.expiresAfterTurn) - int(state.turn) + 1
+				for status in ally.statuses:
+					if status.id == "thunder_armor" or status.get("source", "") == "thunder_armor_conversion": status.duration = ally.thunderArmor.remainingTurns
 	state.turnOrder = _queue.map(func(unit): return unit.uid)
 	_emit("round", {}, {}, state.turn, "第 %d 回合" % state.turn)
 	if state.config.get("isAbyss", false) and state.turn in [21, 40]:
@@ -462,6 +489,8 @@ func _resolve_outcome() -> bool:
 	return false
 
 func _finish(phase: String, reason: String) -> void:
+	for unit in state.get("allies", []):
+		if thunder_armor_active(unit): _leave_thunder_armor(unit)
 	state.phase = phase
 	state.reason = reason
 	state.currentActor = ""
@@ -469,6 +498,14 @@ func _finish(phase: String, reason: String) -> void:
 	_emit("win" if phase == "victory" else "defeat", {}, {}, 0, reason)
 
 func _end_round() -> void:
+	# Grant shielded regeneration before any ally ticks, independent of formation.
+	for unit in _alive(state.allies):
+		if unit.passiveId == "eve_passive":
+			for friend in _friends(unit):
+				if int(friend.shield) > 0:
+					apply_status(friend, "regen", 2, null, unit, -1, {"refreshDuration":true})
+					_heal(unit, friend, maxi(1, int(_effective_atk(unit) * (0.28 if _c6(unit) else 0.22) * (1.0 + _effect_sum("healMult")))), "eve_passive", false, "passive")
+
 	for unit in state.allies + state.enemies:
 		if unit.currentHp <= 0: continue
 		if unit.passiveId == "ayla_passive":
@@ -499,6 +536,7 @@ func _end_round() -> void:
 		for status in unit.statuses:
 			if not status.id in CONTROL_STATUSES and not status.get("persistent", false): status.duration -= 1
 		_cleanup_statuses(unit)
+		_tick_thunder_armor(unit)
 
 func _available(unit: Dictionary) -> Array:
 	var result: Array = []
@@ -511,6 +549,7 @@ func _available(unit: Dictionary) -> Array:
 	for sid in skills:
 		var data = skill_data(sid, unit.isAlly)
 		if data.is_empty(): continue
+		if thunder_armor_active(unit) and int(data.get("armorStageRequired", 0)) > int(unit.thunderArmor.get("unlockStage", 0)): continue
 		if int(unit.cooldowns.get(sid, 0)) > 0: continue
 		if unit.isAlly and data.get("type", "") == "ultimate" and unit.energy < int(data.get("energyCost", 100)): continue
 		result.append(sid)
@@ -722,9 +761,9 @@ func _execute_skill(caster: Dictionary, sid: String, selected: String = "") -> v
 	_extra_flags = {}
 	var skill = skill_data(sid, caster.isAlly)
 	var kind = str(skill.get("type", "enemy"))
-	_emit("skill", caster, {}, 0, caster.name + " · " + str(skill.get("name", sid)), {"skill_id": sid, "skill_type": kind, "animation": skill.get("animation", "slash")})
+	_emit("skill", caster, {}, 0, caster.name + " · " + str(skill.get("name", sid)), {"skill_id": sid, "skill_type": kind, "animation": skill.get("animation", "slash"), "actionImage":skill.get("actionImage", ""), "armor":thunder_armor_active(caster) or bool(skill.get("entersThunderArmor", false))})
 	if caster.isAlly:
-		if kind == "ultimate": caster.energy = 0
+		if kind == "ultimate": caster.energy = 100 if thunder_armor_active(caster) else 0
 		else:
 			_gain_energy(caster, action_energy_gain(caster, skill))
 	if int(skill.get("cooldown", 0)) > 0:
@@ -746,9 +785,11 @@ func _execute_skill(caster: Dictionary, sid: String, selected: String = "") -> v
 			if target.currentHp <= 0: continue
 			var first_event := _events.size()
 			match effect.type:
+				"thunderArmor":
+					_enter_thunder_armor(caster)
 				"damage":
 					_damage(caster, target, skill, sid, effect, float(effect.get("multiplier", 1.0)) * chain)
-					chain = maxf(0.3, chain - float(effect.get("chainDecay", 0.0)))
+					chain = maxf(float(effect.get("chainFloor", 0.3)), chain - float(effect.get("chainDecay", 0.0)))
 				"heal":
 					var amount = skill_effect_amount(caster, effect, target)
 					_heal(caster, target, amount, sid, true, kind)
@@ -768,6 +809,10 @@ func _execute_skill(caster: Dictionary, sid: String, selected: String = "") -> v
 				chain_hit += 1
 				presentation_step += 1
 		if target_type != "chain3": presentation_step += 1
+	if thunder_armor_active(caster):
+		if sid == str(caster.thunderArmor.skills[0]): caster.thunderArmor.unlockStage = maxi(1, int(caster.thunderArmor.unlockStage))
+		elif sid == str(caster.thunderArmor.skills[1]): caster.thunderArmor.unlockStage = 2
+		caster.energy = 100
 	if had_heal: _gain_owner_action_energy(caster, "energyOnActiveHeal")
 	if caster.id == "ayla" and _c6(caster) and had_heal:
 		for friend in _friends(caster): apply_status(friend, "regen", 1, null, caster)
@@ -782,6 +827,8 @@ func _execute_skill(caster: Dictionary, sid: String, selected: String = "") -> v
 func action_energy_gain(caster: Dictionary, skill: Dictionary) -> int:
 	if not caster.get("isAlly", false) or skill.get("type", "") == "ultimate": return 0
 	var energy_bonus = float(caster.stats.get("energyRate", 0.0)) + _effect_sum("energyGainMult")
+	if caster.get("passiveId", "") == "raisa_passive" and not thunder_armor_active(caster) and int(caster.energy) < 100:
+		energy_bonus += float(_thunder_armor_config(caster).get("chargeBonus", 0.25)) + _effect_sum("thunderChargeBonus") + _constellation_effect(caster, "thunderChargeBonus")
 	return int(floor(float(skill.get("energyGain", 15)) * maxf(0, 1 + energy_bonus)))
 
 func owner_effect_sum(unit: Dictionary, type: String) -> float:
@@ -818,13 +865,14 @@ func skill_effect_amount(caster: Dictionary, effect: Dictionary, target: Diction
 	if effect.get("statusId", "") == "shield":
 		var value := float(effect.value) if effect.get("value") != null else 0.3
 		var coefficient := float(effect.get("multiplier", value)) if effect.has("scalingStat") else value
-		return maxi(0, int(source * coefficient * maxf(0.0, 1.0 + owner_effect_sum(caster, "skillShieldMult"))))
+		return maxi(0, int(source * coefficient * maxf(0.0, 1.0 + owner_effect_sum(caster, "skillShieldMult") + (_effect_sum("thunderShieldMult") if caster.get("passiveId", "") == "eve_passive" else 0.0))))
 	var heal_mult := float(effect.get("multiplier", 1.0)) * (maxf(0, 1 + _effect_sum("healMult")) if caster.isAlly else 1.0)
 	heal_mult *= maxf(0.0, 1.0 + owner_effect_sum(caster, "activeSkillHealMult"))
 	return maxi(1, int(source * heal_mult))
 
 func _effective_atk(unit: Dictionary) -> int:
 	var mult = modifiers(unit).atkMult
+	if unit.passiveId == "raisa_passive": mult *= 1.0 + float(_thunder_armor_config(unit).get("energyAttackBonus", 0.25)) * clampf(float(unit.energy) / 100.0, 0.0, 1.0)
 	if unit.passiveId == "zeph_passive" and _above_average_speed(unit): mult *= 1.15
 	mult *= boss_enrage_mult(unit)
 	return maxi(1, int(unit.stats.atk * mult))
@@ -856,14 +904,14 @@ func predict_effect_damage(caster: Dictionary, target: Dictionary, skill: Dictio
 	var mult := float(effect.get("multiplier", 1.0)) * chain
 	if not follow_up: mult *= _damage_multiplier(caster, target, str(skill.get("type", "enemy")), false)
 	else: mult *= _owner_follow_up_multiplier(caster, target)
-	var raw := _raw_effect_damage(caster, target, skill, effect, mult, critical and not follow_up)
+	var raw := _raw_effect_damage(caster, target, skill, effect, mult, critical and not follow_up and bool(effect.get("canCrit", true)))
 	var taken := _damage_taken_multiplier(target, caster)
 	var preliminary := maxi(1, int(raw * taken))
 	if target.get("id", "") == "lorin" and _c6(target) and not target.get("c6Used", false) and target.get("shield", 0) > 0 and preliminary > target.maxHp * 0.3: return 0
 	return maxi(1, int(raw * ordinary_damage_taken_multiplier(target, caster, blocked)))
 
 func expected_effect_damage(caster: Dictionary, target: Dictionary, skill: Dictionary, effect: Dictionary, chain: float = 1.0) -> float:
-	var chance := clampf(float(caster.stats.cri), 0.0, 1.0)
+	var chance := clampf(float(caster.stats.cri), 0.0, 1.0) if effect.get("canCrit", true) else 0.0
 	var block_chance := 0.3 if _can_block(target) else 0.0
 	var result := 0.0
 	for critical in [false, true]:
@@ -886,7 +934,7 @@ func _damage(caster: Dictionary, target: Dictionary, skill: Dictionary, sid: Str
 	else:
 		mult *= _owner_follow_up_multiplier(caster, target)
 	var element = str(skill.get("element", effect.get("element", caster.element)))
-	var crit_chance = float(caster.stats.cri) if not follow_up else 0.0
+	var crit_chance = float(caster.stats.cri) if not follow_up and effect.get("canCrit", true) else 0.0
 	var crit = rng.randf() < crit_chance
 	var element_bonus = element_mult(element, target.element)
 	var raw := _raw_effect_damage(caster, target, skill, effect, mult, crit)
@@ -951,7 +999,7 @@ func _damage_multiplier(caster: Dictionary, target: Dictionary, kind: String, in
 		if caster.passiveId == "cinder_passive" and kind in ["skill", "ultimate"] and has_status(target, "burn"): deepening += 0.7 if _c6(caster) else 0.4
 		if caster.id == "bolt" and _c6(caster) and has_status(target, "electrify"): deepening += 0.35
 		result *= 1.0 + deepening
-	var buckets = {"status": _timed_status_value(caster, "ember_lantern_direct") if has_status(target, "burn") else 0.0, "type": 0.0, "typeStatus": 0.0, "shield": 0.0, "execute": 0.0, "speed": 0.0}
+	var buckets = {"status": _timed_status_value(caster, "ember_lantern_direct") if has_status(target, "burn") else 0.0, "type": _timed_status_value(caster, "thunder_oath") if thunder_armor_active(caster) else 0.0, "typeStatus": 0.0, "shield": 0.0, "execute": 0.0, "speed": 0.0}
 	for effect in _effects + caster.get("ownerEffects", []):
 		var value = float(effect.get("value", 0))
 		match effect.get("type", ""):
@@ -961,6 +1009,8 @@ func _damage_multiplier(caster: Dictionary, target: Dictionary, kind: String, in
 				if caster.isAlly and float(target.currentHp) / target.maxHp <= clampf(float(effect.get("threshold", 0.35)), 0.0, 1.0): buckets.execute += value
 			"damageVsStatus":
 				if caster.isAlly and has_status(target, effect.statusId): buckets.status += value
+			"thunderArmorDamage":
+				if thunder_armor_active(caster): buckets.type += value
 			"windNativeDamage":
 				if caster.isAlly and kind in ["normal", "skill", "ultimate"]: buckets.type += value
 			"skillTypeDamage":
@@ -1021,6 +1071,7 @@ func maximum_damage_reduction(party: Array, effects: Array) -> Array:
 	return result
 
 func _preview_status_available(id: String, target: Dictionary, on_enemy: bool = false) -> bool:
+	if id == "regen" and not on_enemy and _living_passive("eve_passive").size() > 0 and _preview_status_available("shield", target): return true
 	for effect in _effects:
 		if effect.get("statusId", "") != id or int(effect.get("duration", 1)) <= 0 or float(effect.get("chance", 1.0)) <= 0.0: continue
 		var kind := str(effect.get("type", ""))
@@ -1089,6 +1140,10 @@ func _heal(caster: Dictionary, target: Dictionary, amount: int, source: String, 
 		apply_status(target, "shield", 1, float(overflow) / target.maxHp, caster)
 
 func apply_status(unit: Dictionary, status_id: String, duration: int, value = null, caster: Dictionary = {}, shield_amount: int = -1, options: Dictionary = {}) -> bool:
+	if status_id == "thunder_mark":
+		duration += int(_effect_sum("thunderMarkDuration"))
+		options = options.duplicate(true)
+		options.refreshDuration = true
 	if status_id == "wind_armor":
 		if unit.get("currentHp", 0) <= 0 or duration <= 0: return false
 		duration += int(_effect_sum("windArmorDuration"))
@@ -1117,7 +1172,7 @@ func apply_status(unit: Dictionary, status_id: String, duration: int, value = nu
 	if status_id != "poison":
 		for status in unit.statuses:
 			if status.id != status_id or int(status.duration) <= 0 or status.get("source", "") == "expedition_equipment": continue
-			if refresh and status.get("refreshSourceUid", "") != refresh_source: continue
+			if refresh and status_id != "regen" and status.get("refreshSourceUid", "") != refresh_source: continue
 			existing = status
 			break
 	if existing.is_empty():
@@ -1125,7 +1180,7 @@ func apply_status(unit: Dictionary, status_id: String, duration: int, value = nu
 		if status_id == "shield": existing.shieldHp = shield_amount if shield_amount >= 0 else maxi(0, int(unit.maxHp * (float(value) if value != null else 0.3)))
 		unit.statuses.append(existing)
 	else:
-		existing.duration = duration if refresh else int(existing.duration) + duration
+		existing.duration = maxi(int(existing.duration), duration) if refresh and status_id == "regen" else (duration if refresh else int(existing.duration) + duration)
 		if value != null: existing.value = value
 		if status_id == "shield":
 			var added := shield_amount if shield_amount >= 0 else maxi(0, int(unit.maxHp * (float(value) if value != null else 0.3)))
@@ -1164,7 +1219,7 @@ func modifiers(unit: Dictionary) -> Dictionary:
 			"def_up": mods.defMult *= 1 + value
 			"spd_down": mods.spdMult *= maxf(0.01, 1 - value)
 			"stun": mods.defMult *= 0.7
-			"wind_armor": mods.defMult *= maxf(0.01, 1.0 - value)
+			"wind_armor", "thunder_mark": mods.defMult *= maxf(0.01, 1.0 - value)
 			"invincible": mods.damageReduction = 1.0
 	return mods
 
@@ -1307,7 +1362,7 @@ func _effect_sum(type: String) -> float:
 	return sum
 
 func _gain_energy(unit: Dictionary, amount: float) -> void:
-	unit.energy = clampi(int(unit.energy + amount), 0, 100)
+	unit.energy = 100 if thunder_armor_active(unit) else clampi(int(unit.energy + amount), 0, 100)
 
 func _c6(unit: Dictionary) -> bool:
 	return bool(unit.get("isAlly", false)) and int(unit.get("constellation", 0)) >= 6
@@ -1315,6 +1370,7 @@ func _c6(unit: Dictionary) -> bool:
 func _report_deaths() -> void:
 	for unit in state.allies + state.enemies:
 		if unit.currentHp <= 0 and _control_check.get("uid", "") == unit.uid: _control_check = {}
+		if unit.currentHp <= 0 and thunder_armor_active(unit): _leave_thunder_armor(unit)
 		if unit.currentHp <= 0 and not unit.deathReported:
 			unit.deathReported = true
 			_emit("death", {}, unit, 0, unit.name + " 倒下了")
@@ -1350,11 +1406,14 @@ func _refresh_combat_buff(unit: Dictionary, id: String, value: float, duration: 
 			status.sourceUid = source.uid
 			return
 	unit.statuses.append({"id":id,"duration":duration,"value":value,"stacks":1,"sourceUid":source.uid})
-	_emit("status", source, unit, duration, unit.name + " · " + {"ember_oath":"烬灯誓约","ember_lantern_burn":"织焰","ember_lantern_direct":"引火","wind_oath":"风誓"}.get(id,id), {"status":id,"statusId":id,"duration":duration,"value":value})
+	_emit("status", source, unit, duration, unit.name + " · " + {"ember_oath":"烬灯誓约","ember_lantern_burn":"织焰","ember_lantern_direct":"引火","wind_oath":"风誓","thunder_oath":"雷轨协同"}.get(id,id), {"status":id,"statusId":id,"duration":duration,"value":value})
 
 func _apply_owner_status_effects(caster: Dictionary, status_id: String) -> void:
 	if caster.is_empty() or int(caster.get("currentHp", 0)) <= 0: return
 	for effect in caster.get("ownerEffects", []):
+		if effect.get("type", "") == "onStatusAppliedPartyArmorAmp" and effect.get("statusId", "") == status_id:
+			for friend in _friends(caster): _refresh_combat_buff(friend, "thunder_oath", float(effect.get("value", .2)), int(effect.get("duration", 2)), caster)
+			continue
 		if effect.get("type", "") != "onStatusAppliedPartyFollowUpAmp" or effect.get("statusId", "") != status_id: continue
 		var buff_id := str(effect.get("buffId", "wind_oath"))
 		var tag := str(effect.get("followUpTag", "innate_piercing"))
@@ -1379,6 +1438,12 @@ func _timed_status_value(unit: Dictionary, id: String) -> float:
 func _external_deepening(caster: Dictionary, target: Dictionary) -> float:
 	if caster.is_empty() or not caster.get("isAlly", false): return 0.0
 	var value := _timed_status_value(caster, "ember_oath") if has_status(target, "burn") else 0.0
+	if caster.get("element", "") == "thunder" and int(caster.get("shield", 0)) > 0:
+		var shelter := 0.0
+		for healer in _living_passive("eve_passive"):
+			var data: Dictionary = catalog.CharacterData.get("eve", {})
+			shelter = maxf(shelter, float(data.get("shieldThunderDamageC6", 0.14) if _c6(healer) else data.get("shieldThunderDamage", 0.10)))
+		value += shelter
 	if has_status(target, "wind_armor") and _lumi_alive(): value += float(catalog.get("CharacterData", {}).get("lumi", {}).get("windArmorDamageDeepening", 0.20))
 	return value
 
@@ -1406,6 +1471,7 @@ func burn_remaining_turns(target: Dictionary) -> int:
 	return turns
 
 func _after_active_action(caster: Dictionary) -> void:
+	_after_thunder_action(caster)
 	if caster.get("isAlly", false) and caster.get("currentHp", 0) > 0:
 		if caster.get("passiveId", "") == "tiya_passive":
 			for target in _foes(caster):
@@ -1430,3 +1496,74 @@ func _after_active_action(caster: Dictionary) -> void:
 			if effect.get("type", "") != "onBurnDetonation": continue
 			for friend in _friends(caster): _refresh_combat_buff(friend, "ember_lantern_burn", float(effect.get("partyBurnAmp", 0.4)), 2, caster)
 			_refresh_combat_buff(caster, "ember_lantern_direct", float(effect.get("ownerDirectAmp", 0.25)), 2, caster)
+
+
+func thunder_armor_active(unit: Dictionary) -> bool:
+	return int(unit.get("thunderArmor", {}).get("remainingTurns", 0)) > 0
+
+func _thunder_armor_config(unit: Dictionary) -> Dictionary:
+	return catalog.get("CharacterData", {}).get(unit.get("id", ""), {}).get("thunderArmor", {})
+
+func _enter_thunder_armor(unit: Dictionary) -> void:
+	var config := _thunder_armor_config(unit)
+	if config.is_empty() or int(unit.get("currentHp", 0)) <= 0 or thunder_armor_active(unit): return
+	var turns := int(config.get("duration", 4)) + (1 if _c6(unit) else 0)
+	var transferred := int(floor(float(unit.currentHp) * 0.5))
+	unit.currentHp -= transferred
+	unit.thunderArmor = {"remainingTurns":turns,"unlockStage":0,"expiresAfterTurn":int(state.get("turn", 1)) + turns - 1,"normalSkills":unit.skills.duplicate(),"normalImage":unit.image,"skills":config.skills.duplicate()}
+	unit.skills = config.skills.duplicate()
+	unit.image = config.get("image", unit.image)
+	unit.energy = 100
+	# The conversion is exact and independent of damage reduction, healing,
+	# shield bonuses, invulnerability and existing shields.
+	unit.statuses.append({"id":"shield","duration":turns,"value":null,"stacks":1,"shieldHp":transferred,"source":"thunder_armor_conversion"})
+	unit.statuses.append({"id":"thunder_armor","duration":turns,"value":null,"stacks":1})
+	_sync_shield(unit)
+	_emit("hp_cost", unit, unit, transferred, "%s 将 %d 点生命转化为雷铠护盾" % [unit.name,transferred], {"skill_id":"raisa_ult","hpAfter":unit.currentHp,"shieldGained":transferred})
+	_emit("state_change", unit, unit, turns, unit.name + " · 雷电铠甲", {"form":"armor","image":unit.image,"remainingTurns":turns})
+
+func _tick_thunder_armor(unit: Dictionary) -> void:
+	if not thunder_armor_active(unit): return
+	unit.thunderArmor.remainingTurns = maxi(0, int(unit.thunderArmor.get("expiresAfterTurn", state.turn)) - int(state.turn))
+	if int(unit.thunderArmor.remainingTurns) <= 0: _leave_thunder_armor(unit)
+	else: unit.energy = 100
+
+func _leave_thunder_armor(unit: Dictionary) -> void:
+	var armor: Dictionary = unit.get("thunderArmor", {})
+	if armor.is_empty(): return
+	unit.skills = armor.get("normalSkills", unit.skills).duplicate()
+	unit.image = armor.get("normalImage", unit.image)
+	unit.thunderArmor = {}
+	unit.energy = 0
+	unit.statuses = unit.statuses.filter(func(status): return status.id != "thunder_armor" and status.get("source", "") != "thunder_armor_conversion")
+	_sync_shield(unit)
+	_emit("state_change", unit, unit, 0, unit.name + " · 雷铠解除", {"form":"normal","image":unit.image,"remainingTurns":0})
+
+func _living_passive(passive: String) -> Array:
+	return state.get("allies", []).filter(func(ally): return ally.get("passiveId", "") == passive and int(ally.get("currentHp", 0)) > 0)
+
+func _after_thunder_action(caster: Dictionary) -> void:
+	if not caster.get("isAlly", false) or int(caster.get("currentHp", 0)) <= 0: return
+	for target in _foes(caster):
+		if not has_status(target, "thunder_mark") or int(_extra_flags.get("wind_hits_" + str(target.uid), 0)) <= 0: continue
+		if caster.get("element", "") == "thunder":
+			for support in _living_passive("vika_passive"):
+				if int(support.get("conductRound", -1)) != int(state.turn):
+					support.conductRound = int(state.turn)
+					support.conductCounts = {}
+				if int(support.conductCounts.get(target.uid, 0)) >= 2: continue
+				support.conductCounts[target.uid] = int(support.conductCounts.get(target.uid, 0)) + 1
+				var coefficient := float(catalog.CharacterData.get("vika", {}).get("conductFollowUp", 0.18))
+				coefficient += _effect_sum("thunderConductBonus") + owner_effect_sum(support, "thunderConductBonus")
+				if _c6(support): coefficient *= 1.15
+				_damage(support, target, {"type":"follow_up","element":"thunder"}, "vika_passive", {"defPierce":1.0,"rawAtk":true,"followUpTag":"thunder_conduct"}, coefficient, true)
+		for effect in _effects:
+			if effect.get("type", "") == "thunderLinkedPierce":
+				_damage(caster, target, {"type":"follow_up","element":"thunder"}, "thunder_linked", {"defPierce":1.0,"rawAtk":true,"followUpTag":"thunder_linked"}, float(effect.get("value", 0.24)), true)
+
+func _constellation_effect(unit: Dictionary, effect_id: String) -> float:
+	var total := 0.0
+	var overrides: Dictionary = catalog.get("CharacterData", {}).get(unit.get("id", ""), {}).get("constellationOverrides", {})
+	for level in overrides:
+		if int(unit.get("constellation", 0)) >= int(level): total += float(overrides[level].get("buff", {}).get(effect_id, 0.0))
+	return total

@@ -1,0 +1,33 @@
+{
+  "scope": "Final short-battle redistribution candidate; no packaging, upload or publication. Story approval and integrated release checks remain parent-owned.",
+  "tests": {
+    "combat": 80,
+    "acquisition": 308,
+    "optimizer": 72,
+    "auto_ultimate": 81,
+    "wind_duo": 41,
+    "constructed_balance": 3080,
+    "natural_extraction": 25010,
+    "natural_abyss": 33111
+  },
+  "failures": 0,
+  "balance_reference": "independent-audit.json",
+  "natural_abyss_reference": "natural-abyss.json",
+  "natural_extraction_reference": "natural-extraction.json",
+  "hashes": {
+    "godot/scripts/battle_model.gd": "eabcec3104289a4d0dca4befab273c69805826299d20ff1b3f4f14a53c9af641",
+    "godot/scripts/game_model.gd": "aecce7b1f95920447fb2517e727757ba9695b41e86c67c665465eb1ae70e3c7b",
+    "godot/scripts/relic_optimizer.gd": "fa8511538954d8017021fa52f0b2488c889c0db208fac6382bf8639d1f5eac0f",
+    "godot/data/catalog.json": "4a9ffde8a8e398335ad88746c04ca48b949a4b1f86aff530fe711ff6fae3194f",
+    "godot/data/thunder_combat_patch.json": "f2a40089baea5886af9d101a1f14ba0d05673a1dd6684327155f27240e406ac5",
+    "godot/data/thunder_acquisition_patch.json": "c29ef35441ea9abd8f844ba9b29a22a162cb33364957343c00c51db8793658fc",
+    "godot/tests/test_thunder_combat_v290.gd": "9816bc216af0c3a854786cb325880dab7d37ae86289003dd5bcf21239af030a5",
+    "godot/tests/test_thunder_acquisition_v290.gd": "18aaaae41a2b3cfc3561c1f93cac0a7d475c528d84eea956f8fb6cb21a159f89",
+    "godot/tests/test_thunder_optimizer_v290.gd": "734f4faa46d3f7dd92856408d24408dedaa5fd3166b801a3c598a1e64709c69a",
+    "godot/tools/audit_thunder_balance_v290.gd": "1ab5a91600ab44f8aa5be240cd6533c4735591a016ca836df0a056396cb85e50",
+    "godot/tools/audit_thunder_natural_v290.gd": "ab0bec9c37d2e6d382f31c24df9b6fd44e6ebcf52f6868920178377eb080c466",
+    "godot/tools/audit_thunder_extraction_v290.gd": "aee01f925e966d461f99ea8f7f2d6ae22fe327226e14f2866e210a342d0060da"
+  },
+  "knownLegacyFailure": "test_battle.gd: same 19 failures and pre-existing array-index runtime error reproduced with exact pre-tuning battle model and catalog. Generic suite is not passing. Dedicated current combat, acquisition, optimizer, auto-ultimate and wind-duo checks passed.",
+  "finalComparisonReference": "final-short-battle-comparison.json"
+}

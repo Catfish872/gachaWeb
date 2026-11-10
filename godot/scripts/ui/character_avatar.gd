@@ -3,6 +3,9 @@ extends RefCounted
 ## Faces are inspected individually; this is not a shared top-center guess.
 
 const FACE_REGIONS := {
+	"raisa": Rect2(365, 0, 330, 330),
+	"vika": Rect2(365, 0, 350, 350),
+	"eve": Rect2(310, 110, 340, 340),
 	# These two regions use their dedicated 512px portrait assets, framing
 	# the head rather than shrinking their extra shoulders into small avatars.
 	"tiya": Rect2(70, 0, 360, 360),
@@ -19,6 +22,9 @@ const FACE_REGIONS := {
 	"zeph": Rect2(290, 0, 490, 490),
 }
 const BUST_REGIONS := {
+	"raisa": Rect2(260, 0, 650, 700),
+	"vika": Rect2(250, 0, 650, 700),
+	"eve": Rect2(190, 80, 650, 700),
 	# Match the legacy upper-body framing: crown through waist, centered on the face.
 	# Keep the dedicated face asset and battle/full-body source independent.
 	"selin": Rect2(175, 0, 650, 650),
@@ -38,6 +44,7 @@ const BUST_REGIONS := {
 static var _cache: Dictionary = {}
 
 static func source_path(id: String) -> String:
+	if id in ["raisa", "vika", "eve"]:return "res://assets/content_v290/characters/%s.png" % id
 	if id == "selin":return "res://assets/content_v270/characters/selin.png"
 	if id in ["tiya", "lumi"]:return "res://assets/content_v280/characters/%s.png" % id
 	return "res://assets/characters/%s.png" % ("kaldi-battle" if id == "kaldi" else id)

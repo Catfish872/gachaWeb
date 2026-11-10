@@ -1,0 +1,65 @@
+{
+  "started_utc": "2026-11-10T08:25:07.355864+00:00",
+  "completed_utc": "2026-11-10T08:26:40.787495+00:00",
+  "elapsed_seconds": 93.431631,
+  "production_sha256_before": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+  "production_sha256_after": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+  "production_file_count": 1458,
+  "source_unchanged": true,
+  "results": [
+    {
+      "suite": "chapter5_v290-mobile",
+      "started_utc": "2026-11-10T08:25:07.359152+00:00",
+      "completed_utc": "2026-11-10T08:25:17.364122+00:00",
+      "elapsed_seconds": 10.00497,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "refresh-chapter5_v290-mobile.log"
+    },
+    {
+      "suite": "story_responsive_v290-desktop",
+      "started_utc": "2026-11-10T08:25:17.364530+00:00",
+      "completed_utc": "2026-11-10T08:25:52.975517+00:00",
+      "elapsed_seconds": 35.610987,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "refresh-story_responsive_v290-desktop.log"
+    },
+    {
+      "suite": "story_responsive_v290-mobile",
+      "started_utc": "2026-11-10T08:25:52.976785+00:00",
+      "completed_utc": "2026-11-10T08:26:33.264405+00:00",
+      "elapsed_seconds": 40.28762,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "refresh-story_responsive_v290-mobile.log"
+    },
+    {
+      "suite": "story_button_delta_v285-mobile",
+      "started_utc": "2026-11-10T08:26:33.265581+00:00",
+      "completed_utc": "2026-11-10T08:26:39.405441+00:00",
+      "elapsed_seconds": 6.13986,
+      "exit_code": 0,
+      "status": "failed",
+      "log": "refresh-story_button_delta_v285-mobile.log"
+    },
+    {
+      "suite": "chapter5-persistence-write",
+      "started_utc": "2026-11-10T08:26:39.405692+00:00",
+      "completed_utc": "2026-11-10T08:26:40.052165+00:00",
+      "elapsed_seconds": 0.646473,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "refresh-chapter5-persistence-write.log"
+    },
+    {
+      "suite": "chapter5-persistence-read",
+      "started_utc": "2026-11-10T08:26:40.052460+00:00",
+      "completed_utc": "2026-11-10T08:26:40.787227+00:00",
+      "elapsed_seconds": 0.734767,
+      "exit_code": 0,
+      "status": "passed",
+      "log": "refresh-chapter5-persistence-read.log"
+    }
+  ]
+}

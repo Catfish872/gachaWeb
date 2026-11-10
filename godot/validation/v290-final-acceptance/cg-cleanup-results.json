@@ -1,0 +1,44 @@
+{
+  "started_utc": "2026-11-10T09:49:42.849307+00:00",
+  "completed_utc": "2026-11-10T09:49:56.340894+00:00",
+  "elapsed_seconds": 13.491587,
+  "results": [
+    {
+      "suite": "cg-desktop",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/workspace/scratch/8f1fc457a062/gacha-release-current/godot",
+        "--script",
+        "res://tests/test_dialogue_cg_layout_v290.gd",
+        "--",
+        "--test-session"
+      ],
+      "started_utc": "2026-11-10T09:49:42.850547+00:00",
+      "completed_utc": "2026-11-10T09:49:49.719034+00:00",
+      "elapsed_seconds": 6.868487,
+      "exit_code": 0,
+      "status": "passed"
+    },
+    {
+      "suite": "cg-mobile",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/workspace/scratch/8f1fc457a062/gacha-release-current/godot",
+        "--script",
+        "res://tests/test_dialogue_cg_layout_v290.gd",
+        "--",
+        "--test-session",
+        "--mobile-ui"
+      ],
+      "started_utc": "2026-11-10T09:49:49.719087+00:00",
+      "completed_utc": "2026-11-10T09:49:56.340856+00:00",
+      "elapsed_seconds": 6.621769,
+      "exit_code": 0,
+      "status": "passed"
+    }
+  ]
+}

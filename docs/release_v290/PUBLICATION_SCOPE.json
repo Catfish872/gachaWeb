@@ -1,0 +1,20 @@
+{
+  "scope": "Publish necessary runtime assets, source, licenses/provenance, build tools, tests and final acceptance; omit optional original audio archives, parts, large raw simulation records and contact sheets.",
+  "initial_candidate_changed_file_bytes": 196864365,
+  "after_source_archive_removal_bytes": 89992227,
+  "additional_development_bytes_removed": 12494821,
+  "changed_file_bytes_before_this_small_record": 77497406,
+  "omitted_development_paths": [
+    "godot/validation/v290-focused/import.log",
+    "godot/validation/v290-thunder/components.json",
+    "godot/validation/v290-thunder/icons/blessings-contact-sheet.png",
+    "godot/validation/v290-thunder/icons/relics-contact-sheet.png",
+    "godot/validation/v290-thunder/icons/skills-contact-sheet.png",
+    "godot/validation/v290-thunder/independent-audit.json",
+    "godot/validation/v290-thunder/natural-abyss.json",
+    "godot/validation/v290-thunder/natural-extraction.json",
+    "godot/validation/v290-thunder/opening-probe.json"
+  ],
+  "production_snapshot_sha256": "f1ad9ee526183e7f6b88b9454e947b51c4c0538f5257cb0477389aef9ddab600",
+  "size_note": "Repository changed-file byte sums, not APK compressed size or Git transfer size. Existing historical repository objects are unaffected."
+}

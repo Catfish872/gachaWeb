@@ -1,0 +1,14 @@
+{
+  "status": "applied_pending_final_acceptance",
+  "candidate": {
+    "version_name": "2.9.0",
+    "version_code": 20900,
+    "repository": "Catfish872/gachaWeb",
+    "release_asset": "universal.apk"
+  },
+  "tag": "android-v2.9.0",
+  "release_package": "org.catfish872.voidrift",
+  "debug_package": "org.catfish872.voidrift.debug",
+  "integration_gate": "Approved chapter integrated; affected story/layout/persistence/audio-teardown checks passed on refreshed snapshot. Partial cloud GUI review recorded; remaining visual views, subjective listening and combined acceptance timing pending.",
+  "publication_status": "not_started"
+}

@@ -1,0 +1,90 @@
+{
+  "reviewed_utc": "2026-11-10T07:31:12.556929+00:00",
+  "baseline_commit": "1af30caf6723a317727b69063b229bffdfef40ce",
+  "scope": "Read-only static release preparation; historical runtime logs inspected, no new Godot run, build, upload, push or publication.",
+  "resource_reference_count": 657,
+  "missing_resources": [],
+  "acquisition_patch_matches_catalog_pools": {
+    "limited_raisa": true,
+    "limited_vika": true,
+    "limited_eve": true
+  },
+  "existing_dialogue_unchanged": true,
+  "stage_data_unchanged": true,
+  "combat_handoff_hash_matches": {
+    "godot/scripts/battle_model.gd": true,
+    "godot/scripts/game_model.gd": true,
+    "godot/scripts/relic_optimizer.gd": true,
+    "godot/data/catalog.json": true,
+    "godot/data/thunder_combat_patch.json": true,
+    "godot/data/thunder_acquisition_patch.json": true,
+    "godot/tests/test_thunder_combat_v290.gd": true,
+    "godot/tests/test_thunder_acquisition_v290.gd": true,
+    "godot/tests/test_thunder_optimizer_v290.gd": true,
+    "godot/tools/audit_thunder_balance_v290.gd": true,
+    "godot/tools/audit_thunder_natural_v290.gd": true,
+    "godot/tools/audit_thunder_extraction_v290.gd": true
+  },
+  "asset_hash_checks": [
+    {
+      "path": "res://assets/content_v290/characters/raisa.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/content_v290/characters/vika.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/content_v290/characters/eve.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/content_v290/characters/raisa_armor.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/content_v290/actions/raisa_armor_normal.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/content_v290/actions/raisa_armor_skill.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/content_v290/actions/raisa_armor_ult.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/content_v290/cg/raisa_watchtower_meal.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/content_v290/cg/vika_teahouse_map.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/content_v290/cg/eve_clinic_porridge.png",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/audio/content_v290/thunder_city_gate.ogg",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/audio/content_v290/thunder_city_street.ogg",
+      "sha256_matches": true
+    },
+    {
+      "path": "res://assets/audio/content_v290/thunder_city_core.ogg",
+      "sha256_matches": true
+    }
+  ],
+  "checks_run": {
+    "validate_version": "passed for active 2.8.12 / 20812 only",
+    "release_preflight_unit_tests": "8 passed",
+    "focused_evidence_unit_tests": "10 passed",
+    "thunder_icon_verifier": "42 unique RGBA icons; all patch references resolve",
+    "active_focused_evidence_gate": "failed: Production files changed after focused review"
+  },
+  "release_status": "blocked_pending_story_approval_and_final_review"
+}

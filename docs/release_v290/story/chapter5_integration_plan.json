@@ -1,0 +1,344 @@
+{
+  "status": "wiring_proposal_only_not_balance_complete_not_applied",
+  "narrativeSourceSha256": "163d4e21e3d767b59a9e58ee1cbf19bcec0865336489a2b7e1348b6bda845be2",
+  "chapter": {
+    "id": "ch5",
+    "name": "第五章：雷鸣之后",
+    "unlocked": false,
+    "unlockCondition": "ch4_12",
+    "stages": [
+      {
+        "id": "ch5_1",
+        "name": "5-1 雷雨城门",
+        "waves": [
+          {
+            "enemies": [
+              "thunder_mane"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+        "postDialogueKeys": [
+          "ch5_1_post"
+        ]
+      },
+      {
+        "id": "ch5_2",
+        "name": "5-2 封街警报",
+        "waves": [
+          {
+            "enemies": [
+              "storm_patrol",
+              "storm_patrol"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/rain_street.png",
+        "postDialogueKeys": [
+          "ch5_2_post"
+        ]
+      },
+      {
+        "id": "ch5_3",
+        "name": "5-3 雨夜的空岗",
+        "waves": [
+          {
+            "enemies": [
+              "breaker_cavalier"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/thunder_gate.png",
+        "postDialogueKeys": [
+          "ch5_3_post",
+          "ch5_interlude_1"
+        ],
+        "isElite": true,
+        "firstClearRewardLabel": "幕间 · 可以问出口的话"
+      },
+      {
+        "id": "ch5_4",
+        "name": "5-4 雨棚下的委托",
+        "waves": [
+          {
+            "enemies": [
+              "charge_mayfly",
+              "charge_mayfly",
+              "charge_mayfly"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/storm_market.png",
+        "postDialogueKeys": [
+          "ch5_4_post"
+        ]
+      },
+      {
+        "id": "ch5_5",
+        "name": "5-5 消失的一车货",
+        "waves": [
+          {
+            "enemies": [
+              "storm_crossbow",
+              "storm_crossbow"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+        "postDialogueKeys": [
+          "ch5_5_post"
+        ]
+      },
+      {
+        "id": "ch5_6",
+        "name": "5-6 封闭的站台",
+        "waves": [
+          {
+            "enemies": [
+              "thunder_core_guard"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+        "postDialogueKeys": [
+          "ch5_6_post",
+          "ch5_interlude_2"
+        ],
+        "isElite": true,
+        "firstClearRewardLabel": "幕间 · 空白的那一页"
+      },
+      {
+        "id": "ch5_7",
+        "name": "5-7 白伞灯下",
+        "waves": [
+          {
+            "enemies": [
+              "thunder_mane",
+              "charge_mayfly",
+              "charge_mayfly"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+        "postDialogueKeys": [
+          "ch5_7_post"
+        ]
+      },
+      {
+        "id": "ch5_8",
+        "name": "5-8 隔墙的脚步",
+        "waves": [
+          {
+            "enemies": [
+              "rift_shade",
+              "rift_shade",
+              "rift_shade"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+        "postDialogueKeys": [
+          "ch5_8_post",
+          "ch5_interlude_3"
+        ],
+        "firstClearRewardLabel": "幕间 · 留下半碗热粥"
+      },
+      {
+        "id": "ch5_9",
+        "name": "5-9 观测台上的旧记录",
+        "waves": [
+          {
+            "enemies": [
+              "storm_patrol",
+              "storm_patrol"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/observatory.png",
+        "postDialogueKeys": [
+          "ch5_9_post"
+        ]
+      },
+      {
+        "id": "ch5_10",
+        "name": "5-10 一张写着人名的清单",
+        "waves": [
+          {
+            "enemies": [
+              "breaker_cavalier"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/observatory.png",
+        "postDialogueKeys": [
+          "ch5_10_post"
+        ],
+        "isElite": true
+      },
+      {
+        "id": "ch5_11",
+        "name": "5-11 空车驶向旧街",
+        "waves": [
+          {
+            "enemies": [
+              "storm_crossbow",
+              "storm_crossbow"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/sealed_station.png",
+        "postDialogueKeys": [
+          "ch5_11_post"
+        ]
+      },
+      {
+        "id": "ch5_12",
+        "name": "5-12 铠甲留下的回声",
+        "waves": [
+          {
+            "enemies": [
+              "rift_shade",
+              "rift_shade",
+              "rift_shade"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/ward_clinic.png",
+        "postDialogueKeys": [
+          "ch5_12_post",
+          "ch5_interlude_4"
+        ],
+        "firstClearRewardLabel": "幕间 · 还给你的名字"
+      },
+      {
+        "id": "ch5_13",
+        "name": "5-13 雷塔之下",
+        "waves": [
+          {
+            "enemies": [
+              "storm_patrol",
+              "storm_patrol",
+              "thunder_core_guard"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/sunken_tower.png",
+        "postDialogueKeys": [
+          "ch5_13_post"
+        ],
+        "isElite": true
+      },
+      {
+        "id": "ch5_14",
+        "name": "5-14 从城里传来的声音",
+        "waves": [
+          {
+            "enemies": [
+              "rift_shade",
+              "rift_shade",
+              "rift_shade"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/sunken_tower.png",
+        "postDialogueKeys": [
+          "ch5_14_post",
+          "ch5_interlude_5"
+        ],
+        "firstClearRewardLabel": "幕间 · 伞下的位置"
+      },
+      {
+        "id": "ch5_15",
+        "name": "5-15 最后一班空车",
+        "waves": [
+          {
+            "enemies": [
+              "thunder_core_guard",
+              "thunder_core_guard"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/rift_core.png",
+        "postDialogueKeys": [
+          "ch5_15_post"
+        ],
+        "isElite": true
+      },
+      {
+        "id": "ch5_16",
+        "name": "5-16 雷鸣之后",
+        "waves": [
+          {
+            "enemies": [
+              "sealer_core",
+              "boss_city_sealer",
+              "sealer_ward"
+            ]
+          }
+        ],
+        "background": "res://assets/content_v290/backgrounds/rift_core.png",
+        "postDialogueKeys": [
+          "ch5_16_post",
+          "ch5_epilogue_1",
+          "ch5_epilogue_2",
+          "ch5_interlude_6"
+        ],
+        "isBoss": true,
+        "firstClearRewardLabel": "幕间 · 下一页的同行者"
+      }
+    ]
+  },
+  "sceneOrder": [
+    "ch5_1_pre",
+    "ch5_1_post",
+    "ch5_2_pre",
+    "ch5_2_post",
+    "ch5_3_pre",
+    "ch5_3_post",
+    "ch5_interlude_1",
+    "ch5_4_pre",
+    "ch5_4_post",
+    "ch5_5_pre",
+    "ch5_5_post",
+    "ch5_6_pre",
+    "ch5_6_post",
+    "ch5_interlude_2",
+    "ch5_7_pre",
+    "ch5_7_post",
+    "ch5_8_pre",
+    "ch5_8_post",
+    "ch5_interlude_3",
+    "ch5_9_pre",
+    "ch5_9_post",
+    "ch5_10_pre",
+    "ch5_10_post",
+    "ch5_11_pre",
+    "ch5_11_post",
+    "ch5_12_pre",
+    "ch5_12_post",
+    "ch5_interlude_4",
+    "ch5_13_pre",
+    "ch5_13_post",
+    "ch5_14_pre",
+    "ch5_14_post",
+    "ch5_interlude_5",
+    "ch5_15_pre",
+    "ch5_15_post",
+    "ch5_16_pre",
+    "ch5_16_post",
+    "ch5_epilogue_1",
+    "ch5_epilogue_2",
+    "ch5_interlude_6"
+  ],
+  "economyFieldsPending": [
+    "staminaCost",
+    "rewards",
+    "firstClearRewards",
+    "firstClearRelic"
+  ],
+  "notes": [
+    "文案须由用户批准后才能合入。此文件没有剧情正文，也不能直接作为完整 StageData 投产。",
+    "关卡敌人数量按审阅稿可见敌人配置；数值、体力和奖励由战斗/整合负责人校准。",
+    "角色在叙事中同行不等于首通免费赠送；不要修改 _chapter_gift 映射。"
+  ]
+}

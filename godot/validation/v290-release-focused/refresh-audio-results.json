@@ -1,0 +1,12 @@
+{
+  "started_utc": "2026-11-10T08:26:52.928421+00:00",
+  "completed_utc": "2026-11-10T08:26:57.397238+00:00",
+  "elapsed_seconds": 4.468817,
+  "production_sha256": "ef5e41517c760b83cedf8011e54a9e8a71bed43712f0af144c6dd99ed483088a",
+  "scope": [
+    "thunder_world_ui_v290 runtime music context and audio teardown"
+  ],
+  "exit_code": 0,
+  "status": "passed",
+  "log": "refresh-thunder_world_ui_v290.log"
+}

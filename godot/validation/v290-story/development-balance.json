@@ -1,0 +1,872 @@
+{
+  "checks": 1364,
+  "elapsedMs": 569,
+  "failures": [],
+  "rows": [
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_1",
+      "team": "fire",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_2",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_3",
+      "team": "fire",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.992210624707898,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_4",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_5",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.993301137248793,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_6",
+      "team": "fire",
+      "turn": 6
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.992210624707898,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_7",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_8",
+      "team": "fire",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_9",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_10",
+      "team": "fire",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_11",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_12",
+      "team": "fire",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.989873812120268,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_13",
+      "team": "fire",
+      "turn": 7
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_14",
+      "team": "fire",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_15",
+      "team": "fire",
+      "turn": 8
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_16",
+      "team": "fire",
+      "turn": 15
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_1",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_2",
+      "team": "wind",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_3",
+      "team": "wind",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_4",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_5",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_6",
+      "team": "wind",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_7",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_8",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_9",
+      "team": "wind",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_10",
+      "team": "wind",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_11",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_12",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_13",
+      "team": "wind",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_14",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_15",
+      "team": "wind",
+      "turn": 5
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.993379031001714,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_16",
+      "team": "wind",
+      "turn": 7
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_1",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_2",
+      "team": "thunder",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_3",
+      "team": "thunder",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_4",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_5",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.845357663114314,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_6",
+      "team": "thunder",
+      "turn": 5
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_7",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_8",
+      "team": "thunder",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_9",
+      "team": "thunder",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_10",
+      "team": "thunder",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_11",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_12",
+      "team": "thunder",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.947634746607376,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_13",
+      "team": "thunder",
+      "turn": 6
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_14",
+      "team": "thunder",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_15",
+      "team": "thunder",
+      "turn": 7
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290051,
+      "stage": "ch5_16",
+      "team": "thunder",
+      "turn": 8
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_1",
+      "team": "fire",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_2",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_3",
+      "team": "fire",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.996094022459371,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_4",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_5",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.99644277045407,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_6",
+      "team": "fire",
+      "turn": 5
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.996094022459371,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_7",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.996861268047709,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_8",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_9",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_10",
+      "team": "fire",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_11",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.996861268047709,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_12",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.989956057752668,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_13",
+      "team": "fire",
+      "turn": 7
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.996861268047709,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_14",
+      "team": "fire",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.99274604171026,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_15",
+      "team": "fire",
+      "turn": 7
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.98193485387459,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_16",
+      "team": "fire",
+      "turn": 14
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_1",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_2",
+      "team": "wind",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_3",
+      "team": "wind",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_4",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_5",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_6",
+      "team": "wind",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_7",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_8",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_9",
+      "team": "wind",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_10",
+      "team": "wind",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_11",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_12",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.995605775266792,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_13",
+      "team": "wind",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_14",
+      "team": "wind",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_15",
+      "team": "wind",
+      "turn": 5
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.985282834623701,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_16",
+      "team": "wind",
+      "turn": 7
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_1",
+      "team": "thunder",
+      "turn": 1
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_2",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_3",
+      "team": "thunder",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_4",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_5",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_6",
+      "team": "thunder",
+      "turn": 4
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_7",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_8",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_9",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_10",
+      "team": "thunder",
+      "turn": 3
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_11",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_12",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.908002477121035,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_13",
+      "team": "thunder",
+      "turn": 7
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_14",
+      "team": "thunder",
+      "turn": 2
+    },
+    {
+      "alive": 3,
+      "hpRatio": 0.974471891557146,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_15",
+      "team": "thunder",
+      "turn": 8
+    },
+    {
+      "alive": 3,
+      "hpRatio": 1.0,
+      "result": "victory",
+      "seed": 290052,
+      "stage": "ch5_16",
+      "team": "thunder",
+      "turn": 9
+    }
+  ],
+  "scope": "96 independent full-health story battles; two fixed seeds; C0 level5; legal four-star +12 relics chosen from four candidates per slot, equal per-role budget, each signature set; no blessings; auto combat. No reward/XP carry-over. A bounded fixture, not a player-population win rate."
+}

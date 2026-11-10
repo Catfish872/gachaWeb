@@ -7,6 +7,9 @@ const COMPACT_CELL_WIDTH := 44.0
 const COMPACT_THRESHOLD := 220.0
 const MAX_VISIBLE := 5
 const DEFINITIONS := {
+ "thunder_mark":["导电","防御力降低35%；雷属性队友攻击后，维珂对导电目标发起贯穿追击"],
+ "thunder_oath":["雷轨协同","雷铠状态下伤害提高20%"],
+ "thunder_armor":["雷电铠甲","普攻解锁战技，战技解锁终结技；形态结束后恢复常态"],
  "wind_armor":["破甲","防御力降低35%"],
  "wind_oath":["风誓","角色被动的贯穿追击倍率提高40%"],
  "ember_oath":["烬灯誓约","对燃烧目标伤害加深80%"],
@@ -43,6 +46,8 @@ func _ready() -> void:
 static func status_description(state: Dictionary, data: Dictionary) -> String:
  var id := str(state.get("id", state.get("statusId", state.get("status", state.get("type", "unknown")))))
  if id == "shock": id = "electrify"
+ if id == "thunder_mark": return "防御力降低%d%%；雷属性队友攻击后，维珂对导电目标发起贯穿追击" % roundi(float(state.get("value",0.35) if state.get("value")!=null else 0.35)*100.0)
+ if id == "thunder_oath": return "雷铠状态下伤害提高%d%%" % roundi(float(state.get("value",0.20) if state.get("value")!=null else 0.20)*100.0)
  if id == "wind_armor": return "防御力降低%d%%" % roundi(float(state.get("value",0.35))*100.0)
  if id == "wind_oath": return "角色被动的贯穿追击倍率提高%d%%" % roundi(float(state.get("value",0.40))*100.0)
  if id == "electrify":

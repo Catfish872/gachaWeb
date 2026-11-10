@@ -21,4 +21,6 @@ func run()->void:
   fits(app.find_child("StoryReplay",true,false),"cleared chapter replay")
   await capture(str(resolution.x)+"-chapter3-final")
  app.queue_free();await frames(4)
+ # Allow the audio mixer to release stopped Ogg playback before process exit.
+ await create_timer(0.3).timeout
  print("STORY BUTTON DELTA V285: %d checks, %d failures"%[checks,failures]);quit(1 if failures else 0)

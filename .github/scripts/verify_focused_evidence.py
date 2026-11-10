@@ -24,12 +24,16 @@ def production_snapshot(root):
 
 def verify(root, record):
     version = json.loads((root / 'data/version.json').read_text())
-    if version['version_name'] != '2.8.12' or version['version_code'] != 20812:
-        raise ValueError('This evidence gate is scoped to release 2.8.12; prepare a new focused review for another version.')
+    if version['version_name'] != '2.9.0' or version['version_code'] != 20900:
+        raise ValueError('This evidence gate is scoped to release 2.9.0; prepare a new focused review for another version.')
     if record.get('version') != version['version_name'] or record.get('version_code') != version['version_code']:
         raise ValueError('Focused evidence belongs to a different release.')
     if record.get('targeted_checks') != 'passed' or record.get('ui_visual_review') != 'passed':
         raise ValueError('Focused behavior checks and actual UI visual review must be completed.')
+    if record.get('music_selection_review') != 'passed':
+        raise ValueError('User audition and approval of selected music must be recorded.')
+    if record.get('audio_runtime_checks') != 'passed':
+        raise ValueError('Selected music decoding, routing and loop-signal checks must pass.')
     duration = record.get('test_elapsed_seconds')
     if isinstance(duration, bool) or not isinstance(duration, (int, float)) or not 0 < duration <= 600:
         raise ValueError('Focused review must remain within ten minutes.')
@@ -49,6 +53,8 @@ def verify(root, record):
             raise ValueError('Each test segment requires positive elapsed time and timezones.')
         if elapsed != segment.get('elapsed_seconds') or (previous_end is not None and start < previous_end):
             raise ValueError('Test segments must have exact durations and must not overlap.')
+        if not isinstance(segment.get('scope'), list) or not all(isinstance(item, str) and item.strip() for item in segment['scope']):
+            raise ValueError('Segment scope must contain named affected checks.')
         if not (segment.get('production_sha256') or segment.get('source_reference')) or not segment.get('scope'):
             raise ValueError('Each segment must identify its source snapshot and affected scope.')
         total += elapsed
@@ -57,7 +63,7 @@ def verify(root, record):
         raise ValueError('Each independent stage must remain within ten minutes; cumulative time must be truthful.')
     if segments[-1].get('production_sha256') != record.get('production_sha256'):
         raise ValueError('The final review must cover the exact release source, including version metadata.')
-    if not isinstance(record.get('scope'), list) or not record['scope']:
+    if not isinstance(record.get('scope'), list) or not record['scope'] or not all(isinstance(item, str) and item.strip() for item in record['scope']):
         raise ValueError('The affected test scope must be declared.')
     files, digest = production_snapshot(root)
     if digest != record.get('production_sha256') or len(files) != record.get('production_file_count'):
@@ -67,12 +73,12 @@ def verify(root, record):
 
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2] / 'godot'
-    path = root / 'validation/v2812-release-focused/release-evidence.json'
+    path = root / 'validation/v290-release-focused/release-evidence.json'
     if not path.is_file():
         raise SystemExit('Focused release evidence is missing; signing remains blocked.')
     try:
         count, digest = verify(root, json.loads(path.read_text()))
     except (ValueError, KeyError, OSError) as error:
         raise SystemExit(str(error)) from error
-    print(f'Focused 2.8.12 evidence verified: {count} files, SHA256 {digest}')
+    print(f'Focused 2.9.0 evidence verified: {count} files, SHA256 {digest}')
     print('Only declared affected checks apply; no broad suite is started.')

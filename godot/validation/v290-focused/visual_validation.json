@@ -1,0 +1,40 @@
+{
+  "suite": "test_thunder_visuals_v290.gd",
+  "status": "passed",
+  "checks": 134,
+  "failures": 0,
+  "runtimeErrors": 0,
+  "resolutions": [
+    [
+      1440,
+      810
+    ],
+    [
+      960,
+      540
+    ]
+  ],
+  "coverage": [
+    "normal versus live armor portrait",
+    "unlock stages and disabled actions",
+    "three unique action illustrations",
+    "idle restoration",
+    "armor duration and status inspection",
+    "normal portrait outside combat",
+    "solo and trio trial entries",
+    "trial reward labels",
+    "six skill descriptions",
+    "Eve recovery components separate from team damage"
+  ],
+  "artReview": {
+    "fullBodyAndActions": 7,
+    "storyIllustrations": 3,
+    "method": "Individual generated-source visual inspection"
+  },
+  "renderedCapture": {
+    "status": "blocked",
+    "reason": "No DISPLAY; local Xorg could not establish listening sockets. Headless scene geometry checks completed."
+  },
+  "log": "godot/validation/v290-focused/thunder-visuals-final.log",
+  "importLog": "godot/validation/v290-focused/import-final.log"
+}

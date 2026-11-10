@@ -1,0 +1,68 @@
+{
+  "started_utc": "2026-11-10T09:48:52.147224+00:00",
+  "completed_utc": "2026-11-10T09:48:53.726108+00:00",
+  "elapsed_seconds": 1.578884,
+  "results": [
+    {
+      "suite": "write",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/workspace/scratch/8f1fc457a062/gacha-release-current/godot",
+        "--script",
+        "/tmp/v290-unified-final/persistence/check.gd",
+        "--",
+        "write"
+      ],
+      "started_utc": "2026-11-10T09:48:52.147598+00:00",
+      "completed_utc": "2026-11-10T09:48:52.903648+00:00",
+      "elapsed_seconds": 0.75605,
+      "exit_code": 0,
+      "status": "passed"
+    },
+    {
+      "suite": "read",
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "/workspace/scratch/8f1fc457a062/gacha-release-current/godot",
+        "--script",
+        "/tmp/v290-unified-final/persistence/check.gd",
+        "--",
+        "read"
+      ],
+      "started_utc": "2026-11-10T09:48:52.903693+00:00",
+      "completed_utc": "2026-11-10T09:48:53.576977+00:00",
+      "elapsed_seconds": 0.673284,
+      "exit_code": 0,
+      "status": "passed"
+    },
+    {
+      "suite": "evidence-gate-tests",
+      "command": [
+        "python3",
+        ".github/scripts/test_focused_evidence.py"
+      ],
+      "started_utc": "2026-11-10T09:48:53.577024+00:00",
+      "completed_utc": "2026-11-10T09:48:53.693796+00:00",
+      "elapsed_seconds": 0.116772,
+      "exit_code": 0,
+      "status": "passed"
+    },
+    {
+      "suite": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_utc": "2026-11-10T09:48:53.693823+00:00",
+      "completed_utc": "2026-11-10T09:48:53.726085+00:00",
+      "elapsed_seconds": 0.032262,
+      "exit_code": 0,
+      "status": "passed"
+    }
+  ]
+}

@@ -68,5 +68,6 @@ func run() -> void:
 	ck(audible == 1, "foreground leaves one current score audible")
 	app.queue_free()
 	await process_frame
+	await create_timer(0.3).timeout
 	print("SUMMON MUSIC V280: %d checks, %d failures" % [checks, failures])
 	quit(0 if failures == 0 else 1)

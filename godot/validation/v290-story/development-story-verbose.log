@@ -1,0 +1,225 @@
+WorkerThreadPool: 9 threads, 2 max low-priority.
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+TextServer: Added interface "Dummy"
+TextServer: Added interface "ICU / HarfBuzz / Graphite (Built-in)"
+Unrecognized output string "misc2" in mapping:
+030000008a2e0000dd10000011010000,Hand Held Legend GC Ultimate,a:b0,b:b2,back:b17,dpdown:b5,dpleft:b6,dpright:b7,dpup:b4,guide:b18,leftshoulder:b10,leftstick:b8,lefttrigger:a3,leftx:a0,lefty:a1,misc1:b19,misc2:b24,paddle1:b13,paddle2:b12,rightshoulder:b11,rightstick:b9,righttrigger:a4,rightx:a2,righty:a5,start:b16,x:b1,y:b3,platform:Linux,
+Unrecognized output string "misc2" in mapping:
+030000000d0f0000ab01000011010000,Horipad Steam,a:b0,b:b1,back:b10,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b6,leftstick:b13,lefttrigger:a5,leftx:a0,lefty:a1,misc2:b2,paddle1:b19,paddle2:b18,paddle3:b15,paddle4:b5,rightshoulder:b7,rightstick:b14,righttrigger:a4,rightx:a2,righty:a3,start:b11,x:b3,y:b4,platform:Linux,
+Unrecognized output string "misc2" in mapping:
+050000000d0f00009601000091000000,Horipad Steam,a:b0,b:b1,back:b10,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b12,leftshoulder:b6,leftstick:b13,lefttrigger:a5,leftx:a0,lefty:a1,misc2:b2,paddle1:b19,paddle2:b18,paddle3:b15,paddle4:b5,rightshoulder:b7,rightstick:b14,righttrigger:a4,rightx:a2,righty:a3,start:b11,x:b3,y:b4,platform:Linux,
+Unrecognized output string "misc2" in mapping:
+030000007e0500006920000011010000,Nintendo Switch 2 Pro Controller,a:b0,b:b1,back:b14,dpdown:b8,dpleft:b10,dpright:b9,dpup:b11,guide:b16,leftshoulder:b12,leftstick:b15,lefttrigger:b13,leftx:a0,lefty:a1~,misc1:b17,misc2:b20,paddle1:b18,paddle2:b19,rightshoulder:b4,rightstick:b7,righttrigger:b5,rightx:a2,righty:a3~,start:b6,x:b2,y:b3,platform:Linux,
+SDL: Init OK!
+Using "default" pen tablet driver...
+
+TextServer: Primary interface set to: "ICU / HarfBuzz / Graphite (Built-in)".
+CORE API HASH: 2475187701
+EDITOR API HASH: 3867286884
+Loading resource: res://tests/test_chapter5_v290.gd
+SceneTreeFTI: traversal method DEFAULT
+Loaded system CA certificates
+Loading resource: res://main.tscn
+Loading resource: res://scripts/main.gd
+Loading resource: res://assets/fonts/NotoSansSC.otf
+Loading resource: res://.godot/imported/NotoSansSC.otf-3e84daac75282ad29409aea0e6fc92e1.fontdata
+Loading resource: res://assets/fonts/NotoSansSymbols2-Regular.ttf
+Loading resource: res://.godot/imported/NotoSansSymbols2-Regular.ttf-7788f1b789d60481fa956b02b4581693.fontdata
+Loading resource: res://assets/backgrounds/camp.png
+Loading resource: res://.godot/imported/camp.png-08990235b53e5c34666a8eab0494f105.ctex
+Loading resource: res://assets/ui/runes/secondary_normal.svg
+Loading resource: res://.godot/imported/secondary_normal.svg-29ed17510c466a22d610c683ede49ddc.ctex
+Loading resource: res://assets/ui/runes/secondary_hover.svg
+Loading resource: res://.godot/imported/secondary_hover.svg-67b608b1ce921f9941b4c99aa871fc62.ctex
+Loading resource: res://assets/ui/runes/secondary_pressed.svg
+Loading resource: res://.godot/imported/secondary_pressed.svg-2a23ba152033f7fc13030a310d75e664.ctex
+Loading resource: res://assets/ui/runes/secondary_disabled.svg
+Loading resource: res://.godot/imported/secondary_disabled.svg-00787a7630df135f43e3ba2d6605933a.ctex
+Loading resource: res://assets/ui/runes/back.svg
+Loading resource: res://.godot/imported/back.svg-2ab07ed5b75ac90a02b7bef24827a67a.ctex
+Loading resource: res://assets/ui/runes/menu.svg
+Loading resource: res://.godot/imported/menu.svg-4e0816818fc880b5ddb1e2f9d080381d.ctex
+Loading resource: res://assets/ui/runes/gem.svg
+Loading resource: res://.godot/imported/gem.svg-f10a2d3c15b07408a7e0a34a6ef6930f.ctex
+Loading resource: res://assets/ui/runes/coin.svg
+Loading resource: res://.godot/imported/coin.svg-b73f171ecda6053bdc12658c5f302fab.ctex
+Loading resource: res://assets/ui/runes/energy.svg
+Loading resource: res://.godot/imported/energy.svg-fdebe2c61446f3a5393c71d246411272.ctex
+Loading resource: res://assets/ui/runes/primary_normal.svg
+Loading resource: res://.godot/imported/primary_normal.svg-a958c4b68ba950e575222fd75cca3ee3.ctex
+Loading resource: res://assets/ui/runes/primary_hover.svg
+Loading resource: res://.godot/imported/primary_hover.svg-35ca8319d962ae5fe7e6fbb4bca9ac7c.ctex
+Loading resource: res://assets/ui/runes/primary_pressed.svg
+Loading resource: res://.godot/imported/primary_pressed.svg-ba7ceb98472a3ad862cf40faad4c2436.ctex
+Loading resource: res://assets/ui/runes/primary_disabled.svg
+Loading resource: res://.godot/imported/primary_disabled.svg-83f06f9868017595aafbacc9f93dca1e.ctex
+Loading resource: res://assets/audio/music/licensed/old_tower_inn.ogg
+Loading resource: res://.godot/imported/old_tower_inn.ogg-555d10bc8b278d742b19c97d41a40812.oggvorbisstr
+Loading resource: res://assets/ui/runes/path.svg
+Loading resource: res://.godot/imported/path.svg-b196cead8b006d8b237db963630f0476.ctex
+Loading resource: res://assets/extraction/rooms/ruins_1.webp
+Loading resource: res://.godot/imported/ruins_1.webp-aafe69c2761bb6c8a22d179ebaa28b16.ctex
+Loading resource: res://assets/backgrounds/abyss.png
+Loading resource: res://.godot/imported/abyss.png-b3cac08d129ef6e0c055e5f0e94ebea0.ctex
+Loading resource: res://assets/backgrounds/snowfield.png
+Loading resource: res://.godot/imported/snowfield.png-e8ecc4ef8cb0a49f289aa9bf398b8e8e.ctex
+Loading resource: res://assets/characters/ember.png
+Loading resource: res://.godot/imported/ember.png-daef8849bb1f8a7bc185e2a4c01ae02c.ctex
+Loading resource: res://assets/characters/zeph.png
+Loading resource: res://.godot/imported/zeph.png-cab4eff3e85a962c3fb7b500fdd81399.ctex
+Loading resource: res://assets/content_v290/backgrounds/thunder_gate.png
+Loading resource: res://.godot/imported/thunder_gate.png-52bfb7d1cf7861e4d8a0b3391fad19f9.ctex
+Loading resource: res://assets/ui/runes/book.svg
+Loading resource: res://.godot/imported/book.svg-0ce87e767c7365efdb36db322382b68c.ctex
+Loading resource: res://assets/ui/runes/skip.svg
+Loading resource: res://.godot/imported/skip.svg-f0ccb5060467088ac237437622f7d01c.ctex
+Loading resource: res://assets/ui/runes/next.svg
+Loading resource: res://.godot/imported/next.svg-fbaf36dca87a4dfd435f15f3fdf9adad.ctex
+Loading resource: res://assets/content_v290/backgrounds/rain_street.png
+Loading resource: res://.godot/imported/rain_street.png-7fdb10649c14338002d8f25c22846b55.ctex
+Loading resource: res://assets/content_v290/characters/raisa.png
+Loading resource: res://.godot/imported/raisa.png-d7e711d20f6746f45d9aff6c0a23c3b7.ctex
+Loading resource: res://assets/content_v290/backgrounds/thunder_gate.png
+Loading resource: res://.godot/imported/thunder_gate.png-52bfb7d1cf7861e4d8a0b3391fad19f9.ctex
+Loading resource: res://assets/ui/runes/book.svg
+Loading resource: res://.godot/imported/book.svg-0ce87e767c7365efdb36db322382b68c.ctex
+Loading resource: res://assets/content_v290/cg/raisa_watchtower_meal.png
+Loading resource: res://.godot/imported/raisa_watchtower_meal.png-9d8d52b6a466e29401b4f0582ace712f.ctex
+Loading resource: res://assets/content_v290/backgrounds/storm_market.png
+Loading resource: res://.godot/imported/storm_market.png-ca2b56cb4e420657a0906069de424941.ctex
+Loading resource: res://assets/content_v290/characters/vika.png
+Loading resource: res://.godot/imported/vika.png-1c98a643da9560a5d80edb1075b15c25.ctex
+Loading resource: res://assets/content_v290/backgrounds/sealed_station.png
+Loading resource: res://.godot/imported/sealed_station.png-aabd14e1d6ca04fc0dcede686eedf016.ctex
+Loading resource: res://assets/ui/runes/book.svg
+Loading resource: res://.godot/imported/book.svg-0ce87e767c7365efdb36db322382b68c.ctex
+Loading resource: res://assets/content_v290/cg/vika_teahouse_map.png
+Loading resource: res://.godot/imported/vika_teahouse_map.png-ae0d4d5370cf109f6a1f716657d0508b.ctex
+Loading resource: res://assets/content_v290/backgrounds/ward_clinic.png
+Loading resource: res://.godot/imported/ward_clinic.png-6f45edc18692afa1cbda495ccfb66eec.ctex
+Loading resource: res://assets/content_v290/cg/eve_clinic_porridge.png
+Loading resource: res://.godot/imported/eve_clinic_porridge.png-274860ac803be3accfea9b2fbe8840cb.ctex
+Loading resource: res://assets/content_v290/backgrounds/observatory.png
+Loading resource: res://.godot/imported/observatory.png-0b6b36ea37b55b9c127a7050490c7202.ctex
+Loading resource: res://assets/ui/runes/star.svg
+Loading resource: res://.godot/imported/star.svg-ccf863867133edcce3f03fe239fd4dc0.ctex
+Loading resource: res://assets/ui/runes/book.svg
+Loading resource: res://.godot/imported/book.svg-0ce87e767c7365efdb36db322382b68c.ctex
+Loading resource: res://assets/ui/runes/star.svg
+Loading resource: res://.godot/imported/star.svg-ccf863867133edcce3f03fe239fd4dc0.ctex
+Loading resource: res://assets/content_v290/backgrounds/sealed_station.png
+Loading resource: res://.godot/imported/sealed_station.png-aabd14e1d6ca04fc0dcede686eedf016.ctex
+Loading resource: res://assets/ui/runes/book.svg
+Loading resource: res://.godot/imported/book.svg-0ce87e767c7365efdb36db322382b68c.ctex
+Loading resource: res://assets/content_v290/backgrounds/ward_clinic.png
+Loading resource: res://.godot/imported/ward_clinic.png-6f45edc18692afa1cbda495ccfb66eec.ctex
+Loading resource: res://assets/content_v290/characters/raisa.png
+Loading resource: res://.godot/imported/raisa.png-d7e711d20f6746f45d9aff6c0a23c3b7.ctex
+Loading resource: res://assets/content_v290/backgrounds/rain_street.png
+Loading resource: res://.godot/imported/rain_street.png-7fdb10649c14338002d8f25c22846b55.ctex
+Loading resource: res://assets/ui/runes/book.svg
+Loading resource: res://.godot/imported/book.svg-0ce87e767c7365efdb36db322382b68c.ctex
+Loading resource: res://assets/content_v290/backgrounds/sunken_tower.png
+Loading resource: res://.godot/imported/sunken_tower.png-644d558e5fd5fd1f8912a484f70c266e.ctex
+Loading resource: res://assets/content_v290/characters/eve.png
+Loading resource: res://.godot/imported/eve.png-d8015d45d5068f3b90d0540a61aa0086.ctex
+Loading resource: res://assets/content_v290/backgrounds/rift_core.png
+Loading resource: res://.godot/imported/rift_core.png-fa595fd50c36f0e8738d0f0d0ae26e31.ctex
+Loading resource: res://assets/ui/runes/book.svg
+Loading resource: res://.godot/imported/book.svg-0ce87e767c7365efdb36db322382b68c.ctex
+Loading resource: res://assets/ui/runes/leaf.svg
+Loading resource: res://.godot/imported/leaf.svg-9ea61d20d51a8cae08fb42148c0a0ff1.ctex
+Loading resource: res://assets/ui/runes/book.svg
+Loading resource: res://.godot/imported/book.svg-0ce87e767c7365efdb36db322382b68c.ctex
+Loading resource: res://assets/content_v290/backgrounds/rain_street.png
+Loading resource: res://.godot/imported/rain_street.png-7fdb10649c14338002d8f25c22846b55.ctex
+Loading resource: res://assets/content_v290/backgrounds/thunder_gate.png
+Loading resource: res://.godot/imported/thunder_gate.png-52bfb7d1cf7861e4d8a0b3391fad19f9.ctex
+Loading resource: res://assets/content_v290/backgrounds/rift_core.png
+Loading resource: res://.godot/imported/rift_core.png-fa595fd50c36f0e8738d0f0d0ae26e31.ctex
+Loading resource: res://assets/ui/runes/fire.svg
+Loading resource: res://.godot/imported/fire.svg-e7329230853c05edc21251625213e5bf.ctex
+Loading resource: res://assets/ui/runes/ice.svg
+Loading resource: res://.godot/imported/ice.svg-9af737d74f733a9ac667a30bf8442f0e.ctex
+Loading resource: res://assets/ui/runes/wind.svg
+Loading resource: res://.godot/imported/wind.svg-587efd03f8aa47b345d9f964cc5318c5.ctex
+Loading resource: res://assets/ui/runes/check.svg
+Loading resource: res://.godot/imported/check.svg-58744b510ebe56a50152a51570674e24.ctex
+Loading resource: res://assets/ui/runes/sword.svg
+Loading resource: res://.godot/imported/sword.svg-f826c79d145c76253da60b7130fac6ca.ctex
+Loading resource: res://assets/ui/runes/crown.svg
+Loading resource: res://.godot/imported/crown.svg-74067597e6e5603b3c35c2180d71f443.ctex
+Loading resource: res://assets/content_v290/enemies/sealer_core.tres
+Loading resource: res://assets/content_v290/atlases/thunder_enemies_atlas.png
+Loading resource: res://.godot/imported/thunder_enemies_atlas.png-e3d5a39669c3ac6b33c6366ce0358f84.ctex
+Loading resource: res://assets/content_v290/enemies/boss_city_sealer.tres
+Loading resource: res://assets/content_v290/enemies/sealer_ward.tres
+getaddrinfo failed! Cannot resolve hostname.
+Loading resource: res://assets/content_v290/backgrounds/thunder_gate.png
+Loading resource: res://.godot/imported/thunder_gate.png-52bfb7d1cf7861e4d8a0b3391fad19f9.ctex
+Loading resource: res://assets/ui/runes/skip.svg
+Loading resource: res://.godot/imported/skip.svg-f0ccb5060467088ac237437622f7d01c.ctex
+Loading resource: res://assets/ui/runes/next.svg
+Loading resource: res://.godot/imported/next.svg-fbaf36dca87a4dfd435f15f3fdf9adad.ctex
+Loading resource: res://assets/content_v290/backgrounds/rain_street.png
+Loading resource: res://.godot/imported/rain_street.png-7fdb10649c14338002d8f25c22846b55.ctex
+Loading resource: res://assets/content_v290/characters/raisa.png
+Loading resource: res://.godot/imported/raisa.png-d7e711d20f6746f45d9aff6c0a23c3b7.ctex
+Loading resource: res://assets/content_v290/backgrounds/thunder_gate.png
+Loading resource: res://.godot/imported/thunder_gate.png-52bfb7d1cf7861e4d8a0b3391fad19f9.ctex
+Loading resource: res://assets/content_v290/cg/raisa_watchtower_meal.png
+Loading resource: res://.godot/imported/raisa_watchtower_meal.png-9d8d52b6a466e29401b4f0582ace712f.ctex
+Loading resource: res://assets/content_v290/backgrounds/storm_market.png
+Loading resource: res://.godot/imported/storm_market.png-ca2b56cb4e420657a0906069de424941.ctex
+Loading resource: res://assets/content_v290/characters/vika.png
+Loading resource: res://.godot/imported/vika.png-1c98a643da9560a5d80edb1075b15c25.ctex
+Loading resource: res://assets/content_v290/backgrounds/sealed_station.png
+Loading resource: res://.godot/imported/sealed_station.png-aabd14e1d6ca04fc0dcede686eedf016.ctex
+Loading resource: res://assets/content_v290/cg/vika_teahouse_map.png
+Loading resource: res://.godot/imported/vika_teahouse_map.png-ae0d4d5370cf109f6a1f716657d0508b.ctex
+Loading resource: res://assets/content_v290/backgrounds/ward_clinic.png
+Loading resource: res://.godot/imported/ward_clinic.png-6f45edc18692afa1cbda495ccfb66eec.ctex
+Loading resource: res://assets/content_v290/cg/eve_clinic_porridge.png
+Loading resource: res://.godot/imported/eve_clinic_porridge.png-274860ac803be3accfea9b2fbe8840cb.ctex
+Loading resource: res://assets/content_v290/backgrounds/observatory.png
+Loading resource: res://.godot/imported/observatory.png-0b6b36ea37b55b9c127a7050490c7202.ctex
+Loading resource: res://assets/ui/runes/star.svg
+Loading resource: res://.godot/imported/star.svg-ccf863867133edcce3f03fe239fd4dc0.ctex
+Loading resource: res://assets/ui/runes/star.svg
+Loading resource: res://.godot/imported/star.svg-ccf863867133edcce3f03fe239fd4dc0.ctex
+Loading resource: res://assets/content_v290/backgrounds/sealed_station.png
+Loading resource: res://.godot/imported/sealed_station.png-aabd14e1d6ca04fc0dcede686eedf016.ctex
+Loading resource: res://assets/content_v290/backgrounds/ward_clinic.png
+Loading resource: res://.godot/imported/ward_clinic.png-6f45edc18692afa1cbda495ccfb66eec.ctex
+Loading resource: res://assets/content_v290/characters/raisa.png
+Loading resource: res://.godot/imported/raisa.png-d7e711d20f6746f45d9aff6c0a23c3b7.ctex
+Loading resource: res://assets/content_v290/backgrounds/rain_street.png
+Loading resource: res://.godot/imported/rain_street.png-7fdb10649c14338002d8f25c22846b55.ctex
+Loading resource: res://assets/content_v290/backgrounds/sunken_tower.png
+Loading resource: res://.godot/imported/sunken_tower.png-644d558e5fd5fd1f8912a484f70c266e.ctex
+Loading resource: res://assets/content_v290/characters/eve.png
+Loading resource: res://.godot/imported/eve.png-d8015d45d5068f3b90d0540a61aa0086.ctex
+Loading resource: res://assets/ui/runes/leaf.svg
+Loading resource: res://.godot/imported/leaf.svg-9ea61d20d51a8cae08fb42148c0a0ff1.ctex
+Loading resource: res://assets/content_v290/backgrounds/rain_street.png
+Loading resource: res://.godot/imported/rain_street.png-7fdb10649c14338002d8f25c22846b55.ctex
+Loading resource: res://assets/content_v290/backgrounds/thunder_gate.png
+Loading resource: res://.godot/imported/thunder_gate.png-52bfb7d1cf7861e4d8a0b3391fad19f9.ctex
+Loading resource: res://assets/content_v290/backgrounds/rain_street.png
+Loading resource: res://.godot/imported/rain_street.png-7fdb10649c14338002d8f25c22846b55.ctex
+CHAPTER5 V290: 885 checks, 0 failures
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2663)
+ERROR: 1 resources still in use at exit.
+   at: clear (core/io/resource.cpp:805)
+XR: Clearing primary interface
+XR: Removed interface "Native mobile"
+XR: Removed interface "OpenXR"
+Leaked instance: AudioStreamOggVorbis:9223372082287478456 - Reference count: 1
+Leaked instance: OggPacketSequencePlayback:9223372082337810105 - Reference count: 1
+Leaked instance: OggPacketSequence:9223372082203592378 - Reference count: 3
+Leaked instance: AudioStreamPlaybackOggVorbis:9223372082321032891 - Reference count: 1
+Hint: Leaked instances typically happen when nodes are removed from the scene tree (with `remove_child()`) but not freed (with `free()` or `queue_free()`).
+Resource still in use: res://assets/audio/music/licensed/old_tower_inn.ogg::OggPacketSequence_aqui3 (OggPacketSequence)
+Orphan StringName: Master (static: 0, total: 2)
+StringName: 1 unclaimed string names at exit.

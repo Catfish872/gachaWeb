@@ -1,0 +1,54 @@
+Thunder music: selected by user
+CC BY tracks require artist/title/license/source and modification credit when distributed.
+CC0 attribution is retained voluntarily.
+
+thunder_city_gate.ogg
+Electric City - Part 1 — Tsorthan Grove
+CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+https://opengameart.org/content/electric-city
+Electric City - Part 1 by Tsorthan Grove. CC BY 4.0. https://opengameart.org/content/electric-city
+Original download: https://opengameart.org/sites/default/files/electric_city_-_part_1_loop.flac
+Source SHA-256: 95b5b741c3b30d39e7f80a030f691fde6dcf272b24e2939772ac97aeb1875d2d
+Changes: Retained complete selected authored loop and original tempo/instrumentation. Applied 5 ms cosine/sine fades only at file edges to suppress sample discontinuities. Applied constant gain 1.320000 dB targeting -22 LUFS and -2.1 dBTP ceiling; no dynamic compression. Encoded stereo 44100 Hz Ogg Vorbis quality 6.
+
+thunder_city_core.ogg
+Electric City - Part 2 — Tsorthan Grove
+CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+https://opengameart.org/content/electric-city
+Electric City - Part 2 by Tsorthan Grove. CC BY 4.0. https://opengameart.org/content/electric-city
+Original download: https://opengameart.org/sites/default/files/electric_city_-_part_2_loop.flac
+Source SHA-256: ba5e98b35fb36e1aea2ea951496aa97a199379ac30f6bc0fe472d2f6c22babba
+Changes: Retained complete selected authored loop and original tempo/instrumentation. Applied 5 ms cosine/sine fades only at file edges to suppress sample discontinuities. Applied constant gain -11.390000 dB targeting -22 LUFS and -2.1 dBTP ceiling; no dynamic compression. Encoded stereo 44100 Hz Ogg Vorbis quality 6.
+
+thunder_city_shrine.ogg
+Dark Shrine Loop — qubodup and yd
+CC0 1.0
+https://creativecommons.org/publicdomain/zero/1.0/
+https://opengameart.org/content/dark-shrine-loop
+Dark Shrine Loop by qubodup and yd. CC0 1.0. https://opengameart.org/content/dark-shrine-loop
+Original download: https://opengameart.org/sites/default/files/qubodup-yd-DarkShrineLoop-OpenGameArt.ogg
+Source SHA-256: 9580618dc851f70c3a11b5ff87672867de44cd38b35dabf926d6befde20e78d0
+Changes: Retained complete selected authored loop and original tempo/instrumentation. Applied 5 ms cosine/sine fades only at file edges to suppress sample discontinuities. Applied constant gain 0.000000 dB targeting -22 LUFS and -2.1 dBTP ceiling; no dynamic compression. Encoded stereo 44100 Hz Ogg Vorbis quality 6.
+
+thunder_summon.ogg
+Wasteland Overdrive — Matthew Pablo
+CC BY 3.0
+https://creativecommons.org/licenses/by/3.0/
+https://opengameart.org/content/wasteland-overdrive
+Music by Matthew Pablo — www.matthewpablo.com. Wasteland Overdrive. CC BY 3.0. https://opengameart.org/content/wasteland-overdrive
+Original download: https://opengameart.org/sites/default/files/Wasteland%20Overdrive.zip
+Source SHA-256: f65ff0b66eb8693af48fb84d61d06389d80bdb83669633076cb34f82b3a8f27e
+Changes: Retained complete selected authored loop and original tempo/instrumentation. Applied 5 ms cosine/sine fades only at file edges to suppress sample discontinuities. Applied constant gain -11.080000 dB targeting -22 LUFS and -2.1 dBTP ceiling; no dynamic compression. Encoded stereo 44100 Hz Ogg Vorbis quality 6.
+
+thunder_boss.ogg
+Colossal Boss Battle Theme — Matthew Pablo
+CC BY 3.0
+https://creativecommons.org/licenses/by/3.0/
+https://opengameart.org/content/colossal-boss-battle-theme
+Music by Matthew Pablo — www.matthewpablo.com. Colossal Boss Battle Theme. CC BY 3.0. https://opengameart.org/content/colossal-boss-battle-theme
+Original download: https://opengameart.org/sites/default/files/Colossal%20Boss%20Battle%20Theme_0.zip
+Source SHA-256: 9c1cc130b53fff98585682765ddd1ff95b7d18b2ea84468f6c1e6b7aa2ca74d7
+Changes: Retained complete selected authored loop and original tempo/instrumentation. Applied 5 ms cosine/sine fades only at file edges to suppress sample discontinuities. Applied constant gain -10.600000 dB targeting -22 LUFS and -2.1 dBTP ceiling; no dynamic compression. Encoded stereo 44100 Hz Ogg Vorbis quality 6.
+

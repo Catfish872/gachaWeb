@@ -1,0 +1,13 @@
+{
+  "test": "test_thunder_optimizer_v290.gd",
+  "checks": 72,
+  "failures": 0,
+  "scope": "Focused optimizer regression only. Final full release validation remains with parent.",
+  "hashes": {
+    "godot/scripts/relic_optimizer.gd": "c24a8f224f1e5a713ebb5ad7a252010da1a2e7c2bf5bf4fc9b6b751876b8bbef",
+    "godot/scripts/relic_cycle.gd": "0faa09bf38b28913cbebab58ee57d495c8102f94a18b23c9d3deb9729f029a11",
+    "godot/tests/test_thunder_optimizer_v290.gd": "2796e922306166560f20f7d6f88a0930d5cdfdb483765c4dc68d002fecd77e47",
+    "godot/scripts/battle_model.gd": "bf81f9967c7c9aa8f02d89e4b076176efa7532db04ceaa33e6cb58770f898ece",
+    "godot/data/catalog.json": "dc3c3bc5b459af4ad716e695102018aab41762246b4d57ef52a331f994f32fca"
+  }
+}

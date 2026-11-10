@@ -1,0 +1,45 @@
+{
+  "started_utc": "2026-11-10T07:52:06.307700+00:00",
+  "completed_utc": "2026-11-10T07:52:07.138440+00:00",
+  "elapsed_seconds": 0.83074,
+  "results": [
+    {
+      "command": [
+        "python",
+        "tools/validate_chapter5_v290.py"
+      ],
+      "status": "passed",
+      "output": "{\n  \"result\": \"PASS\",\n  \"scenes\": 40,\n  \"dialogueEntries\": 425,\n  \"stages\": 16,\n  \"artAssets\": 11,\n  \"approvedSourceSha256\": \"163d4e21e3d767b59a9e58ee1cbf19bcec0865336489a2b7e1348b6bda845be2\",\n  \"firstClearDiamonds\": 1750,\n  \"fullChapterStamina\": 172\n}\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/verify_thunder_icons_v290.py"
+      ],
+      "status": "passed",
+      "output": "PASS: 42 unique RGBA thunder icons; all 42 patch references resolve.\n"
+    },
+    {
+      "command": [
+        "godot",
+        "--headless",
+        "--path",
+        "godot",
+        "--script",
+        "tests/test_storage.gd",
+        "--",
+        "--test-session"
+      ],
+      "status": "passed",
+      "output": "Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org\n\nPASS: disk default slot is fresh\nPASS: disk-backed pull commits\nPASS: second slot isolated\nPASS: simulated recharge commits in slot2\nPASS: restart restores active slot2 and resources\nPASS: empty inactive slot cannot export current state\nPASS: inactive slot1 exports\nPASS: inactive export leaves active slot unchanged\nPASS: export contains correct slot1 history\nPASS: web export imports into inactive slot3\nPASS: inactive import leaves current slot unchanged\nPASS: imported slot3 activates correctly\nPASS: restarting imported slot retains progression\nPASS: malformed import rejected\nPASS: rejected import preserves entire in-memory state\nPASS: rejected import preserves disk save\nSTORAGE TESTS: 16 passed, 0 failed\n"
+    },
+    {
+      "status": "passed",
+      "description_contracts": 33,
+      "corrected_description_fields_per_file": 10,
+      "unique_blessings": 12,
+      "eligible_blessings_per_character": 6,
+      "scope": "Exact patch/catalog comparison and persistence of reviewed textual corrections. Existing mechanics audit retained; headless runtime description coverage from visual suite."
+    }
+  ]
+}

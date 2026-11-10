@@ -62,6 +62,87 @@ static func clear_cache() -> void:
 	_cache.clear()
 	_cache_order.clear()
 
+## A thunder renewal ends when armor expires, with zero energy. The cast is
+## the first of four turns; C6 adds one more armored ultimate. Event energy
+## remains stochastic outside armor and is locked to 100 throughout armor.
+## Entries retain pre-action energy so the attack passive is priced at the
+## actual energy reached before each hit, rather than at a flat mean energy.
+static func thunder_weights(skills: Array, transitions: Array, armor_turns: int = 4, actions: int = 0, initial_energy: int = 0) -> Dictionary:
+	var signature := var_to_bytes(["thunder-v1",skills,transitions,armor_turns,actions,initial_energy]).hex_encode()
+	if _cache.has(signature):
+		var cached: Dictionary = _cache[signature].duplicate(true)
+		cached.cacheHit = true
+		return cached
+	var model := _model(skills, transitions, [2,1,0])
+	if not model.error.is_empty(): return _failure(model.error)
+	if skills.size()!=3 or armor_turns<4 or int(model.skills[1].cooldown)>armor_turns:
+		return _failure("Thunder armor requires three base skills and a cooldown covered by its duration.")
+	model.armorTurns = armor_turns
+	var segment := _thunder_segment(model, clampi(initial_energy,0,100) if actions>0 else 0, 0, actions, {}, {})
+	if segment.has("error"): return _failure(segment.error)
+	var length: float = float(segment.length)
+	if length<=0.0: return _failure("Thunder armor cycle has no turns.")
+	var weights := _zeros(6)
+	var entries: Array=[]
+	for key in segment.entries:
+		var entry: Dictionary=segment.entries[key].duplicate()
+		entry.weight=float(entry.count)/length
+		weights[int(entry.index)]+=float(entry.weight)
+		entries.append(entry)
+	var total:=0.0
+	for weight in weights: total+=float(weight)
+	var residual:=absf(total-1.0)
+	if residual>TOLERANCE: return _failure("Thunder cycle probabilities do not normalize.")
+	var result := {"success":true,"error":"","method":"thunder_armor_renewal" if actions==0 else "thunder_opening_expectation","skillWeights":weights,"entries":entries,"meanCycleLength":length,"armorTurns":armor_turns,"armorUptime":float(segment.armor)/length,"auraUptime":0.0,"skillAuraWeights":_zeros(6),"residual":residual,"states":int(segment.states),"cacheHit":false,"energyLocked":100,"exitEnergy":0}
+	if _cache_order.size()>=CACHE_LIMIT: _cache.erase(_cache_order.pop_front())
+	_cache[signature]=result.duplicate(true)
+	_cache_order.append(signature)
+	return result
+
+static func _thunder_segment(model: Dictionary, energy: int, cooldown: int, remaining: int, memo: Dictionary, visiting: Dictionary) -> Dictionary:
+	var key:=var_to_bytes([energy,cooldown,remaining]).hex_encode()
+	if memo.has(key): return memo[key]
+	if visiting.has(key) or visiting.size()>=DEPTH_LIMIT: return {"error":"Thunder energy cycle cannot reach its transformation."}
+	visiting[key]=true
+	var index:=_choose(model,energy,cooldown)
+	if index<0: return {"error":"Thunder cycle has no legal action."}
+	var result: Dictionary={"length":1.0,"armor":0.0,"entries":{},"states":1}
+	_thunder_entry(result.entries,index,energy,1.0)
+	if index==2:
+		result.armor=1.0
+		var turns:=mini(int(model.armorTurns),remaining) if remaining>0 else int(model.armorTurns)
+		for turn in range(1,turns):
+			_thunder_entry(result.entries,mini(turn+2,5),100,1.0)
+			result.length+=1.0
+			result.armor+=1.0
+		if remaining>turns:
+			var tail:=_thunder_segment(model,0,0,remaining-turns,memo,visiting)
+			if tail.has("error"): return tail
+			_thunder_merge(result,tail,1.0)
+	elif remaining!=1:
+		var branches:=_next(model,[energy,cooldown,0],index)
+		for target in branches:
+			var state:=_unpack(int(target),int(model.stride))
+			var tail:=_thunder_segment(model,int(state[0]),int(state[1]),maxi(0,remaining-1),memo,visiting)
+			if tail.has("error"): return tail
+			_thunder_merge(result,tail,float(branches[target]))
+	visiting.erase(key)
+	memo[key]=result
+	return result
+
+static func _thunder_entry(entries: Dictionary, index: int, energy: int, count: float) -> void:
+	var key:=index*101+energy
+	if not entries.has(key): entries[key]={"index":index,"energy":energy,"count":0.0}
+	entries[key].count+=count
+
+static func _thunder_merge(result: Dictionary, tail: Dictionary, probability: float) -> void:
+	result.length+=probability*float(tail.length)
+	result.armor+=probability*float(tail.armor)
+	result.states+=int(tail.states)
+	for key in tail.entries:
+		var entry: Dictionary=tail.entries[key]
+		_thunder_entry(result.entries,int(entry.index),int(entry.energy),probability*float(entry.count))
+
 static func _model(skills: Array, transitions: Array, order: Array) -> Dictionary:
 	var model := {"skills": [], "transitions": [], "order": order.duplicate(), "stride": 1, "deterministic": true, "error": ""}
 	if skills.is_empty() or skills.size() != transitions.size():

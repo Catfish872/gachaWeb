@@ -1,0 +1,16 @@
+{
+  "source_directory": "/workspace/scratch/8f1fc457a062/cloud-ui-review",
+  "files": {
+    "compact-battle.png": "b1ce6ad10c2f4cc260c67dadfa1013d078e147d4fad27f801d7ebc4c59db6301",
+    "godot-diagnostics.png": "5bb7e0eea8f5b27d18f09bab870617918967fa75776f34dcf44660f4c12467f0",
+    "normal-restored.png": "2eff6862a9625eb3fb51445d58242166d9b361bc728f1fe273e000a5dd0b40d5",
+    "trio-battle.png": "d555f77926e95f98f4e937d85cf31d6c3b94ca18610d5d139f8d2feb28b4c780",
+    "eve-banner.png": "dffde0c4a361f6c2cab9e57f3452fd666ac661299452e8210854b66c5742a55a",
+    "chapter5-wide.png": "60b0a58469ed19b87394a4477b7c9eb0ffff1588328d4fa163c2490a600a4354",
+    "chapter5-fixed-862x539.png": "e3cbebbd32020fecdcad3b0176848588059ffc7002c506e4d44d238efe635252",
+    "vika-banner.png": "cc70042fbf197d36a73f775e92038f35ba315f88d1896264dce09a7472407a0d",
+    "chapter5-compact.png": "a537853551d2fa20206a774840387bbef0b41ff29ee42fc4e699e24acdd7cf0d",
+    "chapter5-fixed-detail-scroll.png": "c372cf87240f9819473766b2e86ad213a89fef677903d3a84e6557e3c24c9531"
+  },
+  "scope": "Original cloud GUI screenshots; review text copied to cloud-ui-review.md; source screenshots retained in source_directory."
+}

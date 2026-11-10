@@ -1,0 +1,52 @@
+[
+  {
+    "id": "thunder_city_gate",
+    "title": "Electric City - Part 1",
+    "sha256_verified": true,
+    "license": "CC BY 4.0",
+    "source_page_verified": true,
+    "duration": 76.7995238095238,
+    "subjective_listening_verified": false,
+    "user_selection_confirmed": true
+  },
+  {
+    "id": "thunder_city_core",
+    "title": "Electric City - Part 2",
+    "sha256_verified": true,
+    "license": "CC BY 4.0",
+    "source_page_verified": true,
+    "duration": 115.19950113378685,
+    "subjective_listening_verified": false,
+    "user_selection_confirmed": true
+  },
+  {
+    "id": "thunder_city_shrine",
+    "title": "Dark Shrine Loop",
+    "sha256_verified": true,
+    "license": "CC0 1.0",
+    "source_page_verified": true,
+    "duration": 56.57251700680272,
+    "subjective_listening_verified": false,
+    "user_selection_confirmed": true
+  },
+  {
+    "id": "thunder_summon",
+    "title": "Wasteland Overdrive",
+    "sha256_verified": true,
+    "license": "CC BY 3.0",
+    "source_page_verified": true,
+    "duration": 145.88233560090703,
+    "subjective_listening_verified": false,
+    "user_selection_confirmed": true
+  },
+  {
+    "id": "thunder_boss",
+    "title": "Colossal Boss Battle Theme",
+    "sha256_verified": true,
+    "license": "CC BY 3.0",
+    "source_page_verified": true,
+    "duration": 117.64705215419501,
+    "subjective_listening_verified": false,
+    "user_selection_confirmed": true
+  }
+]

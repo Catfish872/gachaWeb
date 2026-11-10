@@ -100,7 +100,8 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	app._clear(ui.comparison)
 	var metric=app._hbox(app._panel(ui.comparison,app.CYAN.darkened(.65),10),8)
 	var metric_copy=app._vbox(metric,3);metric_copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-	app._label(metric_copy,("长期每行动 · " if plan.get("evaluationMode","")=="steady" and plan.get("objectiveShortLabel","")!="承伤能力" else "")+str(plan.get("objectiveShortLabel","角色收益")),13,app.MUTED,true)
+	var normalized_by_round:bool=str(after.get("breakdown",{}).get("normalization",""))=="round"
+	app._label(metric_copy,(("长期每回合 · " if normalized_by_round else "长期每行动 · ") if plan.get("evaluationMode","")=="steady" and plan.get("objectiveShortLabel","")!="承伤能力" else "")+str(plan.get("objectiveShortLabel","角色收益")),13,app.MUTED,true)
 	app._label(metric_copy,"%.1f  →  %.1f"%[float(before.get("objective",0)),float(after.get("objective",0))],24,app.TEXT)
 	var start:float=float(before.get("objective",0))
 	var gain:float=float(after.get("objective",0))-start
@@ -111,6 +112,7 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	if not reference_names.is_empty():
 		var reference=app._label(ui.comparison,"参考队伍："+"、".join(reference_names),12,app.MUTED,true)
 		reference.name="RelicLoadoutReferenceTeam"
+	_thunder_breakdown(app,ui.comparison,plan,before,after)
 	var attributes=app._grid(ui.comparison,3)
 	for stat in [["hp","生命"],["atk","攻击"],["def","防御"],["spd","速度"],["cri","暴击率"],["criDmg","暴击伤害"],["energyRate","能量恢复"]]:
 		var old:float=float(before.get("stats",{}).get(stat[0],0))
@@ -141,6 +143,34 @@ static func _update(app,ui:Dictionary,plan:Dictionary)->void:
 	var toggle=app._button(notes,"评价条件" if quick else "评价条件与差距",func():ui.detailsOpen=not bool(ui.detailsOpen);details.visible=bool(ui.detailsOpen))
 	toggle.name="RelicLoadoutDetails";app._button_icon(toggle,"book");notes.move_child(toggle,0)
 	_restore_scroll(app,scroll,offset)
+
+static func _thunder_breakdown(app,parent:Node,plan:Dictionary,before:Dictionary,after:Dictionary)->void:
+	var old:Dictionary=before.get("breakdown",{})
+	var value:Dictionary=after.get("breakdown",{})
+	if value.is_empty() or not value.has("teamDamage"):return
+	var steady:bool=str(plan.get("evaluationMode",""))=="steady"
+	var period:String="每回合" if steady else "开场合计"
+	if str(value.get("unit",""))=="HP":
+		var restore=app._vbox(app._panel(parent,app.CYAN.darkened(.65),9),4)
+		restore.name="RelicLoadoutRecoveryBreakdown"
+		app._label(restore,period+"恢复与护盾 · 生命值",13,app.CYAN,true)
+		var rows=app._grid(restore,2)
+		for item in [["activeHealing","主动治疗"],["shieldSupply","护盾供给"],["passiveHealing","被动治疗"],["regeneration","再生恢复"]]:
+			app._label(rows,str(item[1])+"  %.1f → %.1f"%[float(old.get(item[0],0)),float(value.get(item[0],0))],12,app.TEXT,true).name="RelicBreakdown_"+str(item[0])
+	var damage=app._vbox(app._panel(parent,app.LINE,9),4)
+	damage.name="RelicLoadoutTeamDamageBreakdown"
+	app._label(damage,period+"队伍伤害 · %.1f → %.1f"%[float(old.get("teamDamage",0)),float(value.get("teamDamage",0))],13,app.GOLD,true)
+	if str(value.get("unit",""))=="HP":app._label(damage,"队伍伤害单独列出，搭配收益按恢复与护盾计算。",12,app.MUTED,true)
+	var cycle:Dictionary=value.get("cycle",{})
+	if cycle.has("armorUptime"):
+		app._label(damage,"雷铠持续%d回合 · 循环平均%.1f回合 · 雷铠覆盖%.1f%%"%[int(cycle.get("armorTurns",4)),float(cycle.get("meanCycleLength",0)),float(cycle.get("armorUptime",0))*100.0],12,app.MUTED,true).name="RelicLoadoutArmorCycle"
+	var coverage:Array[String]=[]
+	var team:Array=value.get("referenceTeam",[])
+	if team.has("vika"):coverage.append("维珂维持导电")
+	if team.has("eve"):coverage.append("伊芙维持护盾")
+	var conditions:String="按参考队伍实际成员评价"+("；"+"、".join(coverage) if not coverage.is_empty() else "")+"。"
+	if str(value.get("unit",""))=="HP":conditions+="治疗按缺失生命充足、护盾按刷新前消耗计算。"
+	app._label(damage,conditions,12,app.MUTED,true).name="RelicLoadoutThunderCoverage"
 
 static func _bound_description(plan:Dictionary)->String:
 	var upper:float=float(plan.get("upperBound",INF))

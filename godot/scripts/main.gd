@@ -5,6 +5,7 @@ const CharacterBust = preload("res://scripts/ui/character_bust.gd")
 const RuneTheme = preload("res://scripts/ui/rune_theme.gd")
 const SummonSequence = preload("res://scripts/ui/summon_sequence.gd")
 const WindpassAudio = preload("res://scripts/windpass_audio.gd")
+const ThunderAudio = preload("res://scripts/thunder_audio.gd")
 
 const INK := Color("080e19")
 const PANEL := Color("111b2b")
@@ -21,7 +22,7 @@ const BattleFX = preload("res://scripts/ui/battle_fx.gd")
 const AbyssView = preload("res://scripts/ui/abyss_view.gd")
 const ExtractionView = preload("res://scripts/ui/extraction_view.gd")
 const UpdateChecker = preload("res://scripts/update_checker.gd")
-const STATUS_NAMES := {"wind_armor":"破甲", "wind_oath":"风誓", "ember_oath":"烬灯誓约", "ember_lantern_burn":"织焰", "ember_lantern_direct":"引火", "burn": "燃烧", "freeze": "冰冻", "shock": "感电", "electrify": "感电", "poison": "中毒", "regen": "再生", "def_up": "防御提升", "atk_up": "攻击提升", "spd_up": "速度提升", "def_down": "防御降低", "atk_down": "攻击降低", "spd_down": "减速", "taunt": "嘲讽", "shield": "护盾", "bleed": "流血", "stun": "眩晕", "vulnerable": "易伤", "invincible": "无敌"}
+const STATUS_NAMES := {"thunder_oath":"雷轨协同", "thunder_mark":"导电", "thunder_armor":"雷电铠甲", "wind_armor":"破甲", "wind_oath":"风誓", "ember_oath":"烬灯誓约", "ember_lantern_burn":"织焰", "ember_lantern_direct":"引火", "burn": "燃烧", "freeze": "冰冻", "shock": "感电", "electrify": "感电", "poison": "中毒", "regen": "再生", "def_up": "防御提升", "atk_up": "攻击提升", "spd_up": "速度提升", "def_down": "防御降低", "atk_down": "攻击降低", "spd_down": "减速", "taunt": "嘲讽", "shield": "护盾", "bleed": "流血", "stun": "眩晕", "vulnerable": "易伤", "invincible": "无敌"}
 const TABS := [["home", "旅者营地", "01"], ["story", "世界探索", "02"], ["summon", "星辰祈愿", "03"], ["party", "冒险编队", "04"], ["growth", "角色养成", "05"], ["relics", "遗物工坊", "06"], ["abyss", "深渊远征", "07"], ["extraction", "遗境搜打撤", "08"], ["shop", "补给商店", "09"], ["save", "旅程档案", "10"]]
 
 var model
@@ -332,6 +333,7 @@ func _go_back() -> void:
 		dialogue_key = ""
 		dialogue_done = Callable()
 		_clear_overlay()
+		_sync_music()
 		return
 	if overlay.get_child_count() > 0:
 		if current_screen == "extraction" and extraction_searching:
@@ -674,12 +676,13 @@ func _story() -> void:
 	set_page_fixed(not compact)
 	_page_title("世界探索", "选择目的地，继续旅程")
 	var chapters: Array = model.catalog.StageData.chapters
-	var tabs: Container = _flow(main_body, 8) if compact else _hbox(main_body, 8)
+	# Chapter names retain their full touch targets and wrap at the available page width.
+	var tabs: Container = _flow(main_body, 8)
 	for i in chapters.size():
 		var chapter_button:=_button(tabs,str(chapters[i].name),func():_select_story_chapter(i),selected_chapter==i)
 		chapter_button.name="StoryChapter_"+str(i)
 		var chapter_open:bool=bool(chapters[i].get("unlocked",false)) or bool(model.state.stageProgress.get(chapters[i].get("unlockCondition",""),{}).get("cleared",false))
-		var chapter_icon: String = {"ch1":"fire", "ch2":"ice", "ch3":"fire", "ch4":"wind"}.get(str(chapters[i].id), "map")
+		var chapter_icon: String = {"ch1":"fire", "ch2":"ice", "ch3":"fire", "ch4":"wind", "ch5":"energy"}.get(str(chapters[i].id), "map")
 		_button_icon(chapter_button,chapter_icon if chapter_open else "lock",selected_chapter==i)
 	var row := _responsive_box(main_body,compact,16)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -869,6 +872,16 @@ func _summon() -> void:
 		duo_trial.name = "WindTrial_duo"
 		duo_trial.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		_label(side, "已领取角色首通奖励 · 可再次体验" if model.state.stageProgress.get("trial_" + featured, {}).get("cleared", false) else "角色试用首通 160 星尘晶 · 联合演示自由体验", 13, CYAN, true).name = "WindTrialReward"
+	if featured in ["raisa", "vika", "eve"]:
+		var trial_actions := _hbox(side,8)
+		var solo_trial := _button(trial_actions,_char_name(featured)+"试用",func():_show_thunder_trial(featured))
+		solo_trial.name="ThunderTrial_"+featured;solo_trial.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		var trio_trial := _button(trial_actions,"三雷联合演示",func():_show_thunder_trial("trio"))
+		trio_trial.name="ThunderTrial_trio";trio_trial.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		var trial_info:Dictionary=model.thunder_trial_info(featured)
+		solo_trial.tooltip_text=str(trial_info.get("guide",""))
+		trio_trial.tooltip_text=str(model.thunder_trial_info("trio").get("guide",""))
+		_label(side,"已领取角色首通奖励 · 可再次体验" if model.state.stageProgress.get("trial_"+featured,{}).get("cleared",false) else "角色试用首通160星尘晶 · 联合演示自由体验",13,CYAN,true).name="ThunderTrialReward"
 	var current:=_hbox(side,6);_rune_icon(current,"gem",21)
 	_label(current,"持有 %d" % int(model.state.resources.get(pool.currency,0)),14,CYAN)
 	var actions:=_responsive_box(side,compact,10)
@@ -883,6 +896,10 @@ func _show_wind_trial(kind: String) -> void:
 	var result: Dictionary = model.prepare_wind_trial(kind)
 	if _check(result):
 		_start_battle(result.config)
+
+func _show_thunder_trial(kind: String) -> void:
+	var result: Dictionary = model.prepare_thunder_trial(kind)
+	if _check(result):_start_battle(result.config)
 
 func _pool_details() -> void:
 	var pool: Dictionary = model.catalog.GachaPoolData.pools[selected_pool]
@@ -916,6 +933,12 @@ func _summon_summary() -> void:
 		_reveal_summon()
 	if is_instance_valid(summon_sequence): summon_sequence.show_summary()
 
+func _character_skill_ids(data: Dictionary) -> Array:
+	var result: Array = data.get("skills",[]).duplicate()
+	for sid in data.get("thunderArmor",{}).get("skills",[]):
+		if not result.has(sid):result.append(sid)
+	return result
+
 func _summon_character_preview(id:String,back:Callable=Callable()) -> void:
 	var data:Dictionary=model.catalog.CharacterData[id]
 	var box:=_modal("旅者档案",1040,500)
@@ -925,7 +948,7 @@ func _summon_character_preview(id:String,back:Callable=Callable()) -> void:
 	_label(copy,str(data.name),26,_rarity_color(int(data.rarity)),true)
 	_label(copy,"★".repeat(int(data.rarity)),16,GOLD)
 	_label(copy,"已加入收藏" if model.state.ownedCharacters.has(id) else "尚未获得",14,CYAN)
-	for sid in data.get("skills",[]):
+	for sid in _character_skill_ids(data):
 		var skill:Dictionary=model.catalog.SkillData.get(sid,{})
 		var heading:=_hbox(copy,6);_skill_art_icon(heading,skill,22)
 		_label(heading,str(skill.get("name",sid)),16,TEXT)
@@ -1214,7 +1237,7 @@ func _growth() -> void:
 			_label(passbody,str(data.get("passiveDesc","")),14,TEXT,true)
 			_label(body,str(data.get("description","")),14,MUTED,true)
 		"skills":
-			for sid in data.skills:
+			for sid in _character_skill_ids(data):
 				var skill:Dictionary=model.catalog.SkillData[sid]
 				var cell:=_panel(body,_element_color(data.element).darkened(0.5),10);var cv:=_vbox(cell,5)
 				var heading:=_hbox(cv,8)
@@ -1222,7 +1245,7 @@ func _growth() -> void:
 				_label(heading,skill.name,20,TEXT)
 				_label(heading,{"normal":"普通攻击","skill":"战技","ultimate":"终结技"}.get(skill.type,"技能"),12,CYAN)
 				_label(cv,skill.description,14,MUTED,true)
-				_label(cv,"冷却 %d 回合 · %s" % [skill.get("cooldown",0),"消耗 %d 能量" % skill.get("energyCost",100) if skill.type=="ultimate" else "获得 %d 能量" % skill.get("energyGain",0)],12,GOLD)
+				_label(cv,"雷铠期间能量保持100" if skill.has("armorStageRequired") else "冷却 %d 回合 · %s" % [skill.get("cooldown",0),"消耗 %d 能量" % skill.get("energyCost",100) if skill.type=="ultimate" else "获得 %d 能量" % skill.get("energyGain",0)],12,GOLD)
 		"constellation":
 			var current:int=int(progress.get("constellation",progress.get("awakening",0)))
 			var balance:=_hbox(body,8)
@@ -1786,7 +1809,8 @@ func _start_battle(config: Dictionary) -> void:
 	current_screen = "battle"
 	_render_screen()
 	for unit in battle.state.get("enemies",[]):
-		var entry: Dictionary = WindpassAudio.field_entry(str(unit.get("dataId",unit.get("id",""))))
+		var entry: Dictionary = ThunderAudio.field_entry(str(unit.get("dataId",unit.get("id",""))))
+		if entry.is_empty():entry=WindpassAudio.field_entry(str(unit.get("dataId",unit.get("id",""))))
 		if not entry.is_empty():
 			_play_battle_clip(entry)
 			break
@@ -1826,7 +1850,7 @@ func _render_battle() -> void:
 		var chip := _panel(order, GOLD if uid == active_uid else LINE, 2)
 		chip.size_flags_horizontal=Control.SIZE_FILL
 		chip.tooltip_text=str(unit.name)
-		var avatar:=_portrait(chip,str(unit.id),24,false,not bool(unit.get("isAlly",true)))
+		var avatar:=_battle_portrait(chip,unit,24)
 		avatar.custom_minimum_size.x=32
 	var arena := _panel(main_body, Color(0,0,0,0), 8)
 	arena.add_theme_stylebox_override("panel", _box(Color(0.035,0.055,0.09,0.12),Color(0,0,0,0),8))
@@ -1864,7 +1888,9 @@ func _render_battle() -> void:
 			b.custom_minimum_size=Vector2(160,60)
 			b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 			b.disabled=sid not in available or battle_auto
-			b.tooltip_text=str(skill.get("description",""))
+			var lock_reason := _battle_skill_lock_reason(active, skill)
+			b.tooltip_text=str(skill.get("description",""))+("\n"+lock_reason if not lock_reason.is_empty() else "")
+			b.set_meta("armor_lock_reason",lock_reason)
 			var inner:=_hbox(b,7)
 			inner.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 			inner.offset_left=9;inner.offset_right=-9;inner.offset_top=6;inner.offset_bottom=-6
@@ -1876,7 +1902,7 @@ func _render_battle() -> void:
 			inner.add_child(icon)
 			var copy:=_vbox(inner,1);copy.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 			_label(copy,str(skill.get("name",sid)),15,INK if selected_skill==sid else TEXT,true)
-			_label(copy,"冷却 %d" % cd if cd>0 else ("%d 能量" % cost if cost>0 else "普攻" if skill.get("type","")=="normal" else "战技"),11,INK.lightened(.25) if selected_skill==sid else GOLD)
+			_label(copy,lock_reason if not lock_reason.is_empty() else "冷却 %d" % cd if cd>0 else ("能量保持100" if skill.has("armorStageRequired") and skill.get("type","")=="ultimate" else "%d 能量" % cost if cost>0 else "普攻" if skill.get("type","")=="normal" else "战技"),11,INK.lightened(.25) if selected_skill==sid else GOLD)
 			_ignore_children(inner)
 			if b.disabled:inner.modulate.a=.45
 		var chosen: Dictionary = model.catalog.SkillData.get(selected_skill,{})
@@ -1891,6 +1917,45 @@ func _render_battle() -> void:
 		_label(lower,"目标 · "+str(_battle_unit(selected_target).get("name","点击选择")),12,GOLD)
 	else:
 		_center_label(controls,"敌方正在行动…" if state.phase == "enemy_turn" else "战斗结算中…",18,MUTED)
+
+func _battle_portrait(parent: Node, unit: Dictionary, height: float) -> Control:
+	var id := str(unit.get("id",""))
+	var enemy := not bool(unit.get("isAlly",true))
+	var runtime_image := ""
+	# The catalog remains the source outside combat; only a live armor state opts in.
+	if not enemy and int(unit.get("thunderArmor",{}).get("remainingTurns",0))>0:
+		runtime_image=str(unit.get("image",""))
+	return _portrait(parent,id,height,false,enemy,"",runtime_image)
+
+func _battle_skill_lock_reason(unit: Dictionary, skill: Dictionary) -> String:
+	var armor: Dictionary = unit.get("thunderArmor",{})
+	if int(armor.get("remainingTurns",0))<=0:return ""
+	var required := int(skill.get("armorStageRequired",0))
+	if required<=int(armor.get("unlockStage",0)):return ""
+	return "先施放雷铠普攻" if required==1 else "先施放雷铠战技"
+
+func _show_battle_action_art(event: Dictionary) -> void:
+	var path := str(event.get("actionImage",""))
+	if path.is_empty() or not ResourceLoader.exists(path):return
+	var actor_card = unit_cards.get(str(event.get("actor","")))
+	if not is_instance_valid(actor_card):return
+	var portrait = actor_card.find_child("BattlePortrait_*",true,false)
+	if not is_instance_valid(portrait):return
+	var previous=portrait.get_node_or_null("ThunderActionIllustration")
+	if previous!=null:
+		previous.finish()
+		portrait.remove_child(previous)
+	var action=load("res://scripts/ui/battle_action_art.gd").new()
+	action.name="ThunderActionIllustration"
+	action.configure(path,str(event.get("skill_id","")),maxf(1.0,battle_speed),extraction_reduced_motion)
+	action.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	portrait.add_child(action)
+	# Hide only the idle texture. Ground, status, hit numbers and inspection stay live.
+	var idle=portrait.get_node_or_null("CharacterPortraitTexture")
+	if idle!=null:
+		idle.visible=false
+		action.idle_portrait=idle
+	portrait.move_child(action,maxi(0,portrait.get_child_count()-2))
 
 func _show_battle_log() -> void:
 	var box := _modal("战斗记录",760,440)
@@ -1928,7 +1993,14 @@ func _battle_unit_card(parent: Node, unit: Dictionary, active_uid: String) -> vo
 	var furnace_phase: bool = unit.get("id", "") == "boss_hedor" and bool(unit.get("inPhase2", false))
 	var phase_badge := _label(badge,"炉心Ⅱ" if furnace_phase else _element_name(unit.get("element","")),10,Color("ffe8b5") if furnace_phase else color)
 	if furnace_phase:phase_badge.name="HedorPhaseTwoBadge"
-	var art := _portrait(v,unit.id,138,false,not ally)
+	var armor: Dictionary = unit.get("thunderArmor",{})
+	if int(armor.get("remainingTurns",0))>0:
+		phase_badge.text="雷铠·%d回合" % int(armor.remainingTurns)
+		phase_badge.name="ThunderArmorBadge"
+		phase_badge.modulate=Color("d5b8ff")
+	var art := _battle_portrait(v,unit,138)
+	art.name="BattlePortrait_"+str(unit.uid)
+	art.set_meta("battle_portrait",true)
 	var ground=load("res://scripts/ui/unit_ground.gd").new()
 	ground.accent=GOLD if selected else CYAN
 	ground.selected=selected;ground.active=unit.uid==active_uid
@@ -2039,6 +2111,10 @@ func _battle_sound_clip(events: Array) -> String:
 
 func _play_battle_sound(events: Array) -> void:
 	if not sound_enabled or bool(get_meta("application_paused",false)):return
+	var thunder: Dictionary = ThunderAudio.battle_sound(events,battle.state.get("allies",[])+battle.state.get("enemies",[]))
+	if not thunder.is_empty():
+		_play_battle_clip(thunder)
+		return
 	var wind: Dictionary = WindpassAudio.battle_sound(events,battle.state.get("allies",[])+battle.state.get("enemies",[]))
 	if not wind.is_empty():
 		_play_battle_clip(wind)
@@ -2215,6 +2291,7 @@ func _show_combat_events(events: Array) -> void:
 		var animated_actors: Dictionary = {}
 		for e in beat.events:
 			var channel := str(e.get("feedbackChannel", ""))
+			if e.get("type", "") == "skill": _show_battle_action_art(e)
 			if e.get("type", "") == "skill" and model.catalog.SkillData.get(e.get("skill_id", ""), {}).get("type", "") == "ultimate":
 				fx.flash(_element_color(_battle_event_element(e)))
 				var source_unit := _battle_unit(str(e.get("actor", "")))
@@ -2249,6 +2326,11 @@ func _show_combat_events(events: Array) -> void:
 			elif channel == "poison":color=Color("b8e786");pos.y-=88+extra_rows
 			elif channel == "detonation":color=Color("ffe0a1");pos.y-=132+extra_rows
 			elif channel == "follow_up":color=Color("d9b9ff");pos.y+=44
+			if type == "hp_cost":
+				_float_text(pos+Vector2(0,-45),"生命 −%d · 护盾 +%d" % [int(e.get("amount",0)),int(e.get("shieldGained",0))],Color("d5b8ff"),14)
+				fx.shield_ring(pos)
+			if type == "state_change" and str(e.get("form",""))=="normal":
+				_float_text(pos+Vector2(0,-35),"雷铠解除",Color("d5b8ff"),14)
 			if type == "heal": fx.heal_ring(pos)
 			if type == "shield": fx.shield_ring(pos)
 			if type in ["damage", "heal", "shield", "miss", "block"]:
@@ -2509,6 +2591,7 @@ func _play_dialogue(key: String, done: Callable) -> void:
 func _render_dialogue() -> void:
 	if dialogue_tween:dialogue_tween.kill()
 	_clear_overlay()
+	_sync_music()
 	var bg := ColorRect.new()
 	bg.color = Color(0.02, 0.03, 0.06, 0.97)
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -2517,7 +2600,8 @@ func _render_dialogue() -> void:
 	art.name = "DialogueBackdrop"
 	art.texture = load(_dialogue_background_path())
 	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	# Illustrations preserve the full composition; scenery continues to fill the screen.
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED if _dialogue_has_cg() else TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	art.modulate = Color(0.88, 0.88, 0.92)
 	art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -2610,6 +2694,7 @@ func _finish_dialogue() -> void:
 	var callback := dialogue_done
 	dialogue_done = Callable()
 	if callback.is_valid(): callback.call()
+	_sync_music()
 
 func _box(color: Color, border: Color = LINE, padding: int = 14) -> StyleBoxFlat:
 	padding = mini(padding, 14) if compact else padding
@@ -2795,7 +2880,7 @@ func _scene_panel(parent: Node, path: String, height: int) -> Control:
 	p.add_child(border)
 	return p
 
-func _portrait(parent: Node, id: String, height: float, _wide: bool = false, enemy: bool = false, avatar_style: String = "") -> Control:
+func _portrait(parent: Node, id: String, height: float, _wide: bool = false, enemy: bool = false, avatar_style: String = "", runtime_image: String = "") -> Control:
 	var c := Control.new()
 	c.custom_minimum_size.y = height
 	c.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -2810,11 +2895,13 @@ func _portrait(parent: Node, id: String, height: float, _wide: bool = false, ene
 		if ResourceLoader.exists(defined_path):path=defined_path
 	if id=="kaldi" and not enemy and ResourceLoader.exists("res://assets/characters/kaldi-battle.png"):
 		path="res://assets/characters/kaldi-battle.png"
+	if not runtime_image.is_empty() and ResourceLoader.exists(runtime_image):path=runtime_image
+	c.set_meta("portrait_source",path)
 	if not ResourceLoader.exists(path):
 		path = "res://assets/portraits/%s.svg" % id
 	if ResourceLoader.exists(path):
 		var style:String=avatar_style if not avatar_style.is_empty() else ("face" if height>0 and height<=80 and not _wide else "")
-		if style == "bust" and not enemy and CharacterAvatars.BUST_REGIONS.has(id):
+		if style == "bust" and runtime_image.is_empty() and not enemy and CharacterAvatars.BUST_REGIONS.has(id):
 			var bust := CharacterBust.new()
 			bust.name = "CharacterPortraitTexture"
 			bust.configure(id)
@@ -2824,7 +2911,12 @@ func _portrait(parent: Node, id: String, height: float, _wide: bool = false, ene
 			c.set_meta("portrait_id", id)
 			return c
 		var t := TextureRect.new()
-		var avatar:Texture2D=CharacterAvatars.get_texture(id,style) if not enemy and not style.is_empty() else null
+		var avatar:Texture2D=CharacterAvatars.get_texture(id,style) if runtime_image.is_empty() and not enemy and not style.is_empty() else null
+		if not runtime_image.is_empty() and style == "face":
+			var crop := AtlasTexture.new()
+			crop.atlas=load(runtime_image)
+			crop.region=CharacterAvatars.region_for(id,"face")
+			if crop.region.has_area():avatar=crop
 		t.texture = avatar if avatar!=null else load(path)
 		t.flip_h = enemy and bool(defined.get("portraitFlipH", false))
 		c.set_meta("portrait_mode",style if avatar!=null else "full")
@@ -3306,7 +3398,7 @@ func set_page_fixed(fixed: bool) -> void:
 
 func _music_gain(player: AudioStreamPlayer) -> float:
 	var track := str(player.get_meta("track",""))
-	return music_volume_db + WindpassAudio.music_gain_db(track) - (2.0 if track == "determined_pursuit" else 0.0)
+	return music_volume_db + (ThunderAudio.music_gain_db(track) if not ThunderAudio.music_path(track).is_empty() else WindpassAudio.music_gain_db(track)) - (2.0 if track == "determined_pursuit" else 0.0)
 
 func _music_cancel_tween(player: AudioStreamPlayer, key: String) -> void:
 	var tween=player.get_meta(key) if player.has_meta(key) else null
@@ -3330,14 +3422,16 @@ func _sync_music() -> void:
 				_music_cancel_tween(player,"music_fade");_music_cancel_tween(player,"duck_tween")
 				player.stream_paused=true
 		return
-	var path := WindpassAudio.music_path(track)
+	var path := ThunderAudio.music_path(track)
+	if path.is_empty():path=WindpassAudio.music_path(track)
 	if path.is_empty(): path="res://assets/audio/content_v270/"+track+".ogg" if track in ["lantern_road","lantern_hall","lantern_core"] else "res://assets/audio/music/licensed/"+track+".ogg"
 	if not ResourceLoader.exists(path):return
 	var target:AudioStreamPlayer=_music_pool.get(track)
 	if not is_instance_valid(target):
 		target=AudioStreamPlayer.new();target.set_meta("track",track)
 		var stream:AudioStreamOggVorbis=load(path).duplicate();stream.loop=true
-		if not WindpassAudio.music_path(track).is_empty():stream.loop_offset=WindpassAudio.music_loop_offset(track)
+		if not ThunderAudio.music_path(track).is_empty():stream.loop_offset=ThunderAudio.music_loop_offset(track)
+		elif not WindpassAudio.music_path(track).is_empty():stream.loop_offset=WindpassAudio.music_loop_offset(track)
 		target.stream=stream;target.volume_db=-60
 		add_child(target);_music_pool[track]=target
 	if music_audio==target:
@@ -3438,6 +3532,10 @@ func _show_unit_details(unit: Dictionary) -> void:
 		_label(v,str(value[0]),13,MUTED)
 		_label(v,str(value[1]),20,TEXT).name="BattleDetail_"+str({"生命":"hp","攻击":"atk","防御":"def"}.get(str(value[0]),"stat"))
 	if float(unit.get("shield",0))>0:_label(box,"护盾 %d" % int(unit.shield),15,CYAN)
+	var armor: Dictionary = unit.get("thunderArmor",{})
+	if int(armor.get("remainingTurns",0))>0:
+		var progress: String = ["施放雷铠普攻后解锁战技", "施放雷铠战技后解锁终结技", "雷铠技能已全部解锁"][clampi(int(armor.get("unlockStage",0)),0,2)]
+		_label(box,"雷电铠甲 · 剩余%d回合 · %s" % [int(armor.remainingTurns),progress],14,Color("d5b8ff"),true).name="ThunderArmorDetails"
 	var status_view = load("res://scripts/ui/battle_status_strip.gd")
 	var grouped_statuses = status_view.new()
 	grouped_statuses.configure(unit.get("statuses",[]),extraction_reduced_motion,model.catalog)
@@ -3470,7 +3568,7 @@ func _show_music_credits() -> void:
 	var lantern:=_vbox(_panel(box,LINE,12),4)
 	_label(lantern,"余烬灯途 · 灯渠夜行 · 炉心归火",18,GOLD)
 	_label(lantern,"游戏原创配乐",14,MUTED)
-	for entry in WindpassAudio.music_credits():
+	for entry in WindpassAudio.music_credits()+ThunderAudio.music_credits():
 		var card:=_vbox(_panel(box,LINE,12),4)
 		_label(card,str(entry.title),18,GOLD,true)
 		_label(card,str(entry.creator)+" · "+str(entry.license),14,MUTED,true)
@@ -3516,12 +3614,18 @@ func _exploration_music_track(deep: bool) -> String:
 	return "dungeon_mystic" if deep else "sunset_walk"
 
 func _music_track_for_context() -> String:
+	if not dialogue_key.is_empty():
+		var dialogue_track:=ThunderAudio.scene_track(str(_dialogue_meta().get("background","")))
+		if not dialogue_track.is_empty():return dialogue_track
 	# Functional pages inherit the scene they were opened from. Inventory,
 	# upgrades, shops, menus and previews never choose a new score themselves.
 	if current_screen=="home":_music_context_id="hub"
 	elif current_screen=="story":
 		_music_context_id="lantern" if selected_chapter==2 else "windpass_road" if selected_chapter==3 else "story"
 		if selected_chapter==3 and str(model.get_stage(selected_stage_id).get("background","")).contains("resonance_gallery"):_music_context_id="windpass_gallery"
+		if selected_chapter==4:
+			var thunder_track:=ThunderAudio.scene_track(str(model.get_stage(selected_stage_id).get("background","")))
+			_music_context_id=thunder_track if not thunder_track.is_empty() else "thunder_city_gate"
 	elif current_screen=="summon":
 		if _music_context_id != "summon": _summon_music_origin = _music_context_id
 		_music_context_id = "summon"
@@ -3534,12 +3638,16 @@ func _music_track_for_context() -> String:
 		var expedition:bool=battle_config.get("isExtraction",false) or battle_config.get("isAbyss",false)
 		var wind_track: String="windpass_gallery" if str(battle_config.get("background","")).contains("resonance_gallery") else "windpass_road"
 		if wind_scene and not expedition:_music_context_id=wind_track
+		var thunder_track:=ThunderAudio.scene_track(str(battle_config.get("background","")))
+		if not thunder_track.is_empty():_music_context_id=thunder_track
 		var boss:bool=battle_config.get("kind","")=="boss" or battle_config.get("isBoss",false)
 		for enemy_id in battle_config.get("enemies",[]):
 			if str(enemy_id).begins_with("boss_"):boss=true
 		if battle_config.get("isAbyss",false) and battle_config.has("abyssScene"):
 			return str(battle_config.abyssBossMusic if boss else battle_config.abyssMusic)
 		if boss:
+			if battle_config.get("enemies",[]).has("boss_city_sealer"):return "thunder_boss"
+			if not thunder_track.is_empty():return "thunder_boss"
 			# Expedition encounters retain their exploration score; wind bosses
 			# receive the scene track previously assigned to ordinary encounters.
 			if expedition and (wind_scene or battle_config.get("enemies",[]).has("boss_highland_roc")):return wind_track
@@ -3548,11 +3656,11 @@ func _music_track_for_context() -> String:
 			return "determined_pursuit"
 	var context := _music_context_id
 	if context == "summon":
-		var pool_track: String = {"limited_selin":"lantern_road", "limited_tiya":"tiya_reveal", "limited_lumi":"lumi_reveal"}.get(selected_pool, "")
+		var pool_track: String = {"limited_selin":"lantern_road", "limited_tiya":"tiya_reveal", "limited_lumi":"lumi_reveal", "limited_raisa":"raisa_reveal", "limited_vika":"vika_reveal", "limited_eve":"eve_reveal"}.get(selected_pool, "")
 		if not pool_track.is_empty(): return pool_track
 		context = _summon_music_origin
 	match context:
-		"windpass_road","windpass_gallery":return context
+		"windpass_road","windpass_gallery","thunder_city_gate","thunder_city_street","thunder_city_core","thunder_city_shrine","thunder_summon":return context
 		"extraction":
 			if not model.extraction.active():return "medieval_exploration"
 			return model.extraction.environment_music_track()
