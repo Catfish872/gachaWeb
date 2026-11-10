@@ -113,11 +113,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
         run: |
-          OBJECT_TAG="$RELEASE_TAG-assets"
           python3 .github/scripts/upload_content_objects.py "$RUNNER_TEMP/apk/content"
           python3 .github/scripts/upload_content_objects.py "$RUNNER_TEMP/apk/content" --verify-only
-          gh release edit "$OBJECT_TAG" --repo "$GITHUB_REPOSITORY" --draft=false --prerelease --latest=false
-          gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title "$RELEASE_TAG" --generate-notes
-          gh release upload "$RELEASE_TAG" "$RUNNER_TEMP/apk/universal.apk" "$RUNNER_TEMP/apk/SHA256SUMS.txt" "$RUNNER_TEMP/apk/content/content-manifest.json" "$RUNNER_TEMP/apk/content/content-manifest.sig" --repo "$GITHUB_REPOSITORY"
-          python3 godot/tools/build/verify_content_upload.py "$RUNNER_TEMP/apk" "$RELEASE_TAG" stable
-          gh release edit "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --draft=false --latest
+          python3 .github/scripts/upload_content_objects.py "$RUNNER_TEMP/apk/content" --publish
+          python3 .github/scripts/upload_content_objects.py "$RUNNER_TEMP/apk" --stable
+          python3 .github/scripts/upload_content_objects.py "$RUNNER_TEMP/apk" --stable --verify-only
+          python3 .github/scripts/upload_content_objects.py "$RUNNER_TEMP/apk" --stable --publish

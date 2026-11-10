@@ -55,6 +55,13 @@ class API:
                 delay=retry_delay(error,attempt)
                 if delay is None or attempt==8: raise
                 print(f'GitHub metadata backoff {delay:.0f}s',flush=True); self.sleep(delay)
+    def releases(self):
+        result=[];page=1
+        while True:
+            rows=self.read(f'/repos/{self.repo}/releases?per_page=100&page={page}')
+            result.extend(rows)
+            if len(rows)<100:return result
+            page+=1
     def assets(self,release_id):
         result={}; page=1
         while True:
@@ -82,7 +89,7 @@ def upload_missing(api,release,files,interval=9,sleep=time.sleep,verify_only=Fal
         sleep(interval)
         for attempt in range(9):
             try:
-                asset=api.request('POST',f'https://uploads.github.com/repos/{api.repo}/releases/{release["id"]}/assets?name='+urllib.parse.quote(path.name,safe=''),path.read_bytes(),'application/zip')
+                asset=api.request('POST',f'https://uploads.github.com/repos/{api.repo}/releases/{release["id"]}/assets?name='+urllib.parse.quote(path.name,safe=''),path.read_bytes(),'application/octet-stream')
                 if not matches(asset,expected[path.name]): raise Conflict('Upload response failed digest verification: '+path.name)
                 break
             except (HTTPFailure,urllib.error.URLError,TimeoutError,OSError) as error:
@@ -109,12 +116,32 @@ def ensure_equivalent_target(repo,release,current,token):
     git('.', 'fetch','--no-tags','--depth=1',f'https://github.com/{repo}.git',target,env=env)
     if production_tree('.',target)!=production_tree('.',current): raise Conflict('Existing draft production source differs; preserved')
 
-def get_or_create_release(api,tag,current):
+def select_release(api,tag,current,files,prerelease=True):
+    expected={p.name:identity(p) for p in files}
+    candidates=[]
+    for release in api.releases():
+        if release.get('tag_name')!=tag:continue
+        if release.get('prerelease') is not prerelease:raise Conflict('Exact tag has conflicting release channel; preserved')
+        ensure_equivalent_target(api.repo,release,current,api.token)
+        assets=api.assets(release['id'])
+        if set(assets)-set(expected):raise Conflict('Exact-tag draft has unexpected assets; all drafts preserved')
+        for name,asset in assets.items():
+            if not matches(asset,expected[name]):raise Conflict('Exact-tag draft has conflicting asset '+name+'; all drafts preserved')
+        if not release['draft'] and set(assets)!=set(expected):raise Conflict('Published exact-tag release is incomplete; preserved')
+        candidates.append((release,set(assets)))
+    if not candidates:return None
+    supersets=[release for release,names in candidates if all(names>=other for _,other in candidates)]
+    if not supersets:raise Conflict('Exact-tag drafts have incomparable asset sets; all preserved')
+    # Prefer an already published exact complete release, otherwise deterministic ID.
+    selected=min(supersets,key=lambda r:(r['draft'],int(r['id'])))
+    print(f'Selected release ID {selected["id"]} from {len(candidates)} verified exact-tag releases; other drafts preserved',flush=True)
+    return selected
+
+def get_or_create_release(api,tag,current,files,prerelease=True):
     for attempt in range(9):
-        try:return api.read(f'/repos/{api.repo}/releases/tags/{tag}')
-        except HTTPFailure as error:
-            if error.code!=404:raise
-        payload={'tag_name':tag,'target_commitish':current,'draft':True,'prerelease':True,'name':tag,'body':'Immutable content objects referenced by the signed stable release manifest.'}
+        existing=select_release(api,tag,current,files,prerelease)
+        if existing is not None:return existing
+        payload={'tag_name':tag,'target_commitish':current,'draft':True,'prerelease':prerelease,'name':tag,'body':'Verified Android content release. Immutable assets are validated against the signed content manifest.'}
         try:return api.request('POST',f'/repos/{api.repo}/releases',json.dumps(payload).encode())
         except (HTTPFailure,urllib.error.URLError,TimeoutError,OSError) as error:
             if isinstance(error,HTTPFailure):
@@ -123,20 +150,62 @@ def get_or_create_release(api,tag,current):
                 if delay is None:raise
             else:delay=min(900,60*2**attempt)
             if attempt==8:raise
-            print(f'Release creation interrupted; waiting {delay:.0f}s before resolving tag again',flush=True)
+            print(f'Release creation interrupted; waiting {delay:.0f}s before authenticated list reconciliation',flush=True)
             api.sleep(delay)
     raise Conflict('Release creation retry budget exhausted')
 
+def validate_release(api,release,tag,current,prerelease):
+    if release.get('tag_name')!=tag or release.get('prerelease') is not prerelease:raise Conflict('Stored release ID identity differs')
+    ensure_equivalent_target(api.repo,release,current,api.token)
+
+def publish_by_id(api,release,tag,current,files,prerelease):
+    # Verification and mutation address exactly the same immutable numeric identity.
+    release_id=release['id']
+    for attempt in range(9):
+        latest=api.read(f'/repos/{api.repo}/releases/{release_id}')
+        validate_release(api,latest,tag,current,prerelease)
+        upload_missing(api,latest,files,verify_only=True)
+        if not latest['draft']:return latest
+        payload={'draft':False,'prerelease':prerelease,'make_latest':'false' if prerelease else 'true'}
+        try:
+            result=api.request('PATCH',f'/repos/{api.repo}/releases/{release_id}',json.dumps(payload).encode())
+            validate_release(api,result,tag,current,prerelease)
+            if result['draft']:raise Conflict('Publication response remains draft')
+            return result
+        except (HTTPFailure,urllib.error.URLError,TimeoutError,OSError) as error:
+            if isinstance(error,HTTPFailure):
+                delay=retry_delay(error,attempt)
+                if delay is None:raise
+            else:delay=min(900,60*2**attempt)
+            if attempt==8:raise
+            api.sleep(delay)  # next iteration reads ID before any retry
+    raise Conflict('Publication retry budget exhausted')
+
 def main():
-    output=Path(sys.argv[1]); repo=os.environ['GITHUB_REPOSITORY'];tag=os.environ['RELEASE_TAG']+'-assets';current=os.environ['GITHUB_SHA'];token=os.environ['GH_TOKEN']
-    if repo!='Catfish872/gachaWeb' or not re.fullmatch(r'android-v[0-9]+\.[0-9]+\.[0-9]+-assets',tag):raise Conflict('Unexpected release destination')
-    api=API(repo,token)
-    verify_only='--verify-only' in sys.argv[2:]
-    release=api.read(f'/repos/{repo}/releases/tags/{tag}') if verify_only else get_or_create_release(api,tag,current)
-    if release['tag_name']!=tag or not release['prerelease']:raise Conflict('Existing object release channel differs')
-    ensure_equivalent_target(repo,release,current,token)
-    names=(output/'content-upload-list.txt').read_text().splitlines()
-    if len(names)!=len(set(names)) or not all(re.fullmatch(r'obj-[0-9a-f]{64}\.zip',n) for n in names): raise Conflict('Invalid upload inventory')
-    if len(names)>1000:raise Conflict('GitHub object count limit exceeded')
-    upload_missing(api,release,[output/n for n in names],verify_only=verify_only)
+    output=Path(sys.argv[1]);repo=os.environ['GITHUB_REPOSITORY'];stable='--stable' in sys.argv[2:]
+    tag=os.environ['RELEASE_TAG']+('' if stable else '-assets');current=os.environ['GITHUB_SHA'];token=os.environ['GH_TOKEN']
+    if repo!='Catfish872/gachaWeb' or not re.fullmatch(r'android-v[0-9]+\.[0-9]+\.[0-9]+(?:-assets)?',tag):raise Conflict('Unexpected release destination')
+    api=API(repo,token);verify_only='--verify-only' in sys.argv[2:];publish='--publish' in sys.argv[2:];prerelease=not stable
+    if stable:
+        files=[output/'universal.apk',output/'SHA256SUMS.txt',output/'content/content-manifest.json',output/'content/content-manifest.sig']
+    else:
+        names=(output/'content-upload-list.txt').read_text().splitlines()
+        if len(names)!=len(set(names)) or not all(re.fullmatch(r'obj-[0-9a-f]{64}\.zip',n) for n in names):raise Conflict('Invalid upload inventory')
+        if len(names)>1000:raise Conflict('GitHub object count limit exceeded')
+        files=[output/n for n in names]
+    record=output/('stable-release-id.json' if stable else 'objects-release-id.json')
+    if record.is_file():
+        saved=json.loads(record.read_text())
+        if saved.get('tag')!=tag or not isinstance(saved.get('id'),int):raise Conflict('Invalid persisted release identity')
+        release=api.read(f'/repos/{repo}/releases/{saved["id"]}')
+    elif verify_only or publish:
+        release=select_release(api,tag,current,files,prerelease)
+        if release is None:raise Conflict('Expected existing release was not found; no creation during verification/publication')
+    else:release=get_or_create_release(api,tag,current,files,prerelease)
+    validate_release(api,release,tag,current,prerelease)
+    record.write_text(json.dumps({'tag':tag,'id':release['id']})+'\n')
+    print(f'Pinned {tag} to release ID {release["id"]}',flush=True)
+    upload_missing(api,release,files,verify_only=verify_only or publish)
+    if stable and len(json.dumps(api.read(f'/repos/{repo}/releases/{release["id"]}')).encode())>524288:raise Conflict('Stable release metadata exceeds legacy compatibility budget')
+    if publish:publish_by_id(api,release,tag,current,files,prerelease)
 if __name__=='__main__':main()

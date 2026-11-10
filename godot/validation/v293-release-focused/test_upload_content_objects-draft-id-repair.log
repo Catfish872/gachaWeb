@@ -1,0 +1,42 @@
+Selected release ID 42 from 2 verified exact-tag releases; other drafts preserved
+Pinned android-v2.9.3-assets to release ID 42
+Preserving 1 verified objects; uploading 0 missing objects at >= 9s intervals
+Pinned android-v2.9.3-assets to release ID 42
+Preserving 1 verified objects; uploading 0 missing objects at >= 9s intervals
+Pinned android-v2.9.3-assets to release ID 42
+Preserving 1 verified objects; uploading 0 missing objects at >= 9s intervals
+Preserving 1 verified objects; uploading 0 missing objects at >= 9s intervals
+Selected release ID 77 from 1 verified exact-tag releases; other drafts preserved
+Pinned android-v2.9.3 to release ID 77
+Preserving 4 verified objects; uploading 0 missing objects at >= 9s intervals
+Pinned android-v2.9.3 to release ID 77
+Preserving 4 verified objects; uploading 0 missing objects at >= 9s intervals
+Pinned android-v2.9.3 to release ID 77
+Preserving 4 verified objects; uploading 0 missing objects at >= 9s intervals
+Preserving 4 verified objects; uploading 0 missing objects at >= 9s intervals
+Preserving 2 verified objects; uploading 0 missing objects at >= 9s intervals
+Preserving 2 verified objects; uploading 0 missing objects at >= 9s intervals
+Selected release ID 2 from 2 verified exact-tag releases; other drafts preserved
+Preserving 2 verified objects; uploading 0 missing objects at >= 9s intervals
+Preserving 2 verified objects; uploading 0 missing objects at >= 9s intervals
+Preserving 2 verified objects; uploading 0 missing objects at >= 9s intervals
+Selected release ID 2 from 1 verified exact-tag releases; other drafts preserved
+Release creation interrupted; waiting 120s before authenticated list reconciliation
+Release creation interrupted; waiting 60s before authenticated list reconciliation
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Verified new object 1/1: obj-b.zip
+Preserving 2 verified objects; uploading 0 missing objects at >= 9s intervals
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Upload interrupted; waiting 121s then reconciling exact asset before retry
+Verified new object 1/1: obj-b.zip
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Upload interrupted; waiting 60s then reconciling exact asset before retry
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Upload interrupted; waiting 60s then reconciling exact asset before retry
+Verified new object 1/1: obj-b.zip
+............................
+----------------------------------------------------------------------
+Ran 28 tests in 0.013s
+
+OK
