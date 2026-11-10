@@ -38,3 +38,6 @@ CONTRACT.md
 /godot/validation/v290-thunder/natural-abyss.json
 /godot/validation/v290-thunder/natural-extraction.json
 /godot/validation/v290-thunder/opening-probe.json
+
+# Public content-signature trust anchor; private signing material stays ignored.
+!godot/data/content_public_key.pem
