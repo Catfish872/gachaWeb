@@ -36,7 +36,7 @@ def verify(apk, sdk, mode, fingerprint):
         assert architectures == {'armeabi-v7a', 'arm64-v8a'}, 'Unexpected native architectures'
         for name in names:
             lower = name.lower()
-            assert not lower.endswith(('.keystore', '.jks', '.p12', '.pfx', '.pem', '.key', '.log', '.md')), f'Forbidden file in APK: {name}'
+            assert name == 'assets/data/content_public_key.pem' or not lower.endswith(('.keystore', '.jks', '.p12', '.pfx', '.pem', '.key', '.log', '.md')), f'Forbidden file in APK: {name}'
             assert not re.search(r'(^|/)(tests|validation|tools|build)/', lower), f'Development files in APK: {name}'
         for required in ['data/version.json', 'data/catalog.json', 'data/rogue_v2.json', 'assets/fonts/LICENSE-Noto.txt', 'assets/fonts/LICENSE-NotoSymbols.txt']:
             assert 'assets/' + required in names and archive.getinfo('assets/' + required).file_size > 0, 'Required packaged resource missing: ' + required

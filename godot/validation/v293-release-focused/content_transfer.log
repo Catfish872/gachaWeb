@@ -1,0 +1,8 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+HTTP_TRANSFER: persistent cache survived process restart; downloaded ZIP mounted actual target data
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+HTTP_TRANSFER: GC retains active/previous/pending/downloading objects and referenced partial transfers; orphan partials removed; corrupt state/signature or booting blocks deletion
+HTTP_TRANSFER: corruption rejected, cached retry, embedded reuse, multi-version jump staged
+HTTP_TRANSFER: exact server request counts verified; 0 unchanged bytes transferred

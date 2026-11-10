@@ -15,6 +15,9 @@ func _init() -> void:
 	resized.connect(queue_redraw)
 
 func configure(id: String) -> void:
+	# Dense lace/hair linework needs mipmaps when a 1536px source becomes a card.
+	if id in ["raisa", "vika", "eve"]:
+		texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	character_id = id
 	composition_region = Avatars.region_for(id, "bust")
 	texture = Avatars.get_texture(id, "bust")

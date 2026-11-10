@@ -1,0 +1,14 @@
+test_android_texture_import_required (__main__.BuildValidationTests.test_android_texture_import_required) ... ok
+test_apk_valid_and_rejection_fixtures (__main__.BuildValidationTests.test_apk_valid_and_rejection_fixtures) ... ok
+test_bad_metadata (__main__.BuildValidationTests.test_bad_metadata) ... ok
+test_bad_tags (__main__.BuildValidationTests.test_bad_tags) ... ok
+test_export_preset_version_must_match (__main__.BuildValidationTests.test_export_preset_version_must_match) ... ok
+test_finalize_orders_normalization_alignment_and_signing (__main__.BuildValidationTests.test_finalize_orders_normalization_alignment_and_signing) ... ok
+test_matching_version_and_tag (__main__.BuildValidationTests.test_matching_version_and_tag) ... ok
+test_project_icon_required (__main__.BuildValidationTests.test_project_icon_required) ... ok
+test_sdk_view_pins_build_tools (__main__.BuildValidationTests.test_sdk_view_pins_build_tools) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.379s
+
+OK

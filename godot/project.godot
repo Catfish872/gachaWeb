@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="虚空裂变 · VOID RIFT"
-run/main_scene="res://main.tscn"
+run/main_scene="res://content_bootstrap.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0.025, 0.04, 0.065, 1)
 boot_splash/show_image=false

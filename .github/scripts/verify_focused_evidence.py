@@ -15,7 +15,7 @@ def production_snapshot(root):
     paths = [p for folder in ('scripts', 'data', 'assets')
              for p in (root / folder).rglob('*')
              if p.is_file() and p.relative_to(root).as_posix() not in excluded]
-    paths += [root / name for name in ('main.tscn', 'project.godot', 'export_presets.cfg')]
+    paths += [root / name for name in ('main.tscn', 'content_bootstrap.tscn', 'project.godot', 'export_presets.cfg')]
     files = {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
              for p in paths}
     digest = hashlib.sha256(''.join(f'{p}\0{files[p]}\n' for p in sorted(files)).encode()).hexdigest()
@@ -24,8 +24,8 @@ def production_snapshot(root):
 
 def verify(root, record):
     version = json.loads((root / 'data/version.json').read_text())
-    if version['version_name'] != '2.9.2' or version['version_code'] != 20902:
-        raise ValueError('This evidence gate is scoped to release 2.9.2; prepare a new focused review for another version.')
+    if version['version_name'] != '2.9.3' or version['version_code'] != 20903:
+        raise ValueError('This evidence gate is scoped to release 2.9.3; prepare a new focused review for another version.')
     if record.get('version') != version['version_name'] or record.get('version_code') != version['version_code']:
         raise ValueError('Focused evidence belongs to a different release.')
     if record.get('targeted_checks') != 'passed' or record.get('ui_visual_review') != 'passed':
@@ -34,6 +34,8 @@ def verify(root, record):
         raise ValueError('User audition and approval of selected music must be recorded.')
     if record.get('audio_runtime_checks') != 'passed':
         raise ValueError('Selected music decoding, routing and loop-signal checks must pass.')
+    if record.get('content_update_checks') != 'passed':
+        raise ValueError('Incremental content update and recovery checks must pass.')
     duration = record.get('test_elapsed_seconds')
     if isinstance(duration, bool) or not isinstance(duration, (int, float)) or not 0 < duration <= 600:
         raise ValueError('Focused review must remain within ten minutes.')
@@ -73,12 +75,12 @@ def verify(root, record):
 
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2] / 'godot'
-    path = root / 'validation/v292-release-focused/release-evidence.json'
+    path = root / 'validation/v293-release-focused/release-evidence.json'
     if not path.is_file():
         raise SystemExit('Focused release evidence is missing; signing remains blocked.')
     try:
         count, digest = verify(root, json.loads(path.read_text()))
     except (ValueError, KeyError, OSError) as error:
         raise SystemExit(str(error)) from error
-    print(f'Focused 2.9.2 evidence verified: {count} files, SHA256 {digest}')
+    print(f'Focused 2.9.3 evidence verified: {count} files, SHA256 {digest}')
     print('Only declared affected checks apply; no broad suite is started.')

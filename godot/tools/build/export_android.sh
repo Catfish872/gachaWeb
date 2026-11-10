@@ -48,6 +48,27 @@ else
   PRESET='Android Debug'
   FLAG=--export-debug
 fi
+# Derived trust/ABI files belong to the reviewed source snapshot. Check them
+# without rewriting project bytes after the focused evidence gate.
+if [[ "$MODE" == release ]]; then
+  "$JAVA_HOME/bin/java" "$ROOT/tools/build/SignContent.java" public "$WORK/content_public_key.pem"
+  cmp -- "$WORK/content_public_key.pem" "$ROOT/data/content_public_key.pem" || {
+    echo 'Signing public key differs from reviewed source; refresh and review before export' >&2
+    exit 1
+  }
+fi
+python3 - "$ROOT" <<'PYVERIFY'
+import importlib.util
+from pathlib import Path
+import sys
+root = Path(sys.argv[1])
+spec = importlib.util.spec_from_file_location("content_release", root / "tools/build/content_release.py")
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+expected = module.canonical(module.platform(root))
+if (root / "data/content_platform.json").read_bytes() != expected:
+    raise SystemExit("Platform identity differs from reviewed source; refresh and review before export")
+PYVERIFY
 "$ENGINE" --headless --editor --path "$ROOT" --import --quit > "$WORK/import.log" 2>&1 || { cat "$WORK/import.log"; exit 1; }
 if grep -Eq 'SCRIPT ERROR|^ERROR:' "$WORK/import.log"; then cat "$WORK/import.log"; exit 1; fi
 "$ENGINE" --headless --path "$ROOT" "$FLAG" "$PRESET" "$OUTPUT/universal.apk" > "$WORK/export.log" 2>&1 || { cat "$WORK/export.log"; exit 1; }
@@ -55,5 +76,14 @@ if grep -Eq 'SCRIPT ERROR|^ERROR:' "$WORK/export.log"; then cat "$WORK/export.lo
 [[ -s "$OUTPUT/universal.apk" ]]
 bash "$ROOT/tools/build/finalize_apk.sh" "$OUTPUT/universal.apk" "$MODE"
 python3 "$ROOT/tools/build/verify_apk.py" "$OUTPUT/universal.apk" --sdk "$SDK" --mode "$MODE" --fingerprint "$FINGERPRINT"
+if [[ "$MODE" == release ]]; then
+  mkdir -p "$WORK/previous" "$OUTPUT/content"
+  python3 "$ROOT/tools/build/reuse_content_manifest.py" "$ROOT" "$WORK/previous"
+  PREVIOUS=()
+  [[ ! -f "$WORK/previous/previous.json" ]] || PREVIOUS=(--previous "$WORK/previous/previous.json")
+  python3 "$ROOT/tools/build/content_release.py" build "$OUTPUT/universal.apk" "$OUTPUT/content" "${PREVIOUS[@]}"
+  "$JAVA_HOME/bin/java" "$ROOT/tools/build/SignContent.java" sign "$OUTPUT/content/content-manifest.json" "$OUTPUT/content/content-manifest.sig"
+  openssl dgst -sha256 -verify "$ROOT/data/content_public_key.pem" -signature "$OUTPUT/content/content-manifest.sig" "$OUTPUT/content/content-manifest.json"
+fi
 (cd "$OUTPUT" && sha256sum universal.apk > SHA256SUMS.txt)
 echo "Verified $MODE APK and SHA256SUMS.txt ready in $OUTPUT"

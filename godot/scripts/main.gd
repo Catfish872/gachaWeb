@@ -1645,12 +1645,12 @@ func _update_panel() -> void:
 	var actions := _responsive_box(content, compact, 10)
 	var check_button := _button(actions, "检查更新", updater.check_for_updates, true)
 	check_button.name = "CheckForUpdates"
-	check_button.disabled = updater.busy or not updater.android_updater.record.is_empty()
+	check_button.disabled = updater.busy or updater.content_downloader.busy or not updater.android_updater.record.is_empty()
 	_button(actions, "GitHub 发布页", func():
 		if updater.open_releases() != OK:
 			_toast("无法打开浏览器，请稍后重试。", RED)).name = "OpenReleases"
 	if status.get("status") == "available":
-		_button(content, "下载更新" if OS.has_feature("android") else "在浏览器下载 APK", func():
+		_button(content, "下载更新" if OS.has_feature("android") or not status.get("content_manifest", "").is_empty() else "在浏览器下载 APK", func():
 			if updater.open_download() != OK:
 				_toast("下载暂未开始，请查看更新状态或发布页。", RED), true).name = "DownloadUpdate"
 		# Untrusted release prose is plain Label text, never rich text or code.
@@ -1672,8 +1672,8 @@ func _update_panel() -> void:
 
 func _refresh_update_notice() -> void:
 	if is_instance_valid(update_notice):
-		update_notice.visible = updater.state.get("status") in ["available", "downloading", "downloaded", "install_permission", "installing", "download_error"] and current_screen != "battle" and current_screen != "save"
-		update_notice.text = {"available":"有更新","downloading":"下载中","downloaded":"安装更新","install_permission":"安装更新","installing":"安装中","download_error":"重试更新"}.get(str(updater.state.get("status","")),"检查更新")
+		update_notice.visible = updater.state.get("status") in ["available", "downloading", "downloaded", "install_permission", "installing", "download_error", "content_ready"] and current_screen != "battle" and current_screen != "save"
+		update_notice.text = {"available":"有更新","downloading":"下载中","downloaded":"安装更新","install_permission":"安装更新","installing":"安装中","download_error":"重试更新","content_ready":"重启生效"}.get(str(updater.state.get("status","")),"检查更新")
 		update_notice.tooltip_text = str(updater.state.get("message", "发现新版本"))
 
 func _on_update_state_changed(_state: Dictionary) -> void:
@@ -2925,6 +2925,8 @@ func _portrait(parent: Node, id: String, height: float, _wide: bool = false, ene
 		c.set_meta("portrait_mode",style if avatar!=null else "full")
 		c.set_meta("portrait_id",id)
 		t.name="CharacterPortraitTexture"
+		if id in ["raisa", "vika", "eve"]:
+			t.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		t.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)

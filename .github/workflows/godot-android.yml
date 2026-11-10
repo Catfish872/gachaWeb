@@ -39,6 +39,8 @@ jobs:
         run: |
           python3 godot/tools/build/validate_version.py
           python3 .github/scripts/test_release_preflight.py
+          python3 godot/tests/test_content_release.py
+          python3 godot/tests/test_content_signing.py
           python3 godot/tests/test_android_build.py
           python3 godot/tests/test_android_manifest.py
           python3 godot/tests/test_android_kvm.py
@@ -98,6 +100,7 @@ jobs:
       - name: Export and verify production signature
         if: steps.preflight.outputs.publish == 'true'
         env:
+          GH_TOKEN: ${{ github.token }}
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
@@ -109,6 +112,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
         run: |
+          OBJECT_TAG="$RELEASE_TAG-assets"
+          gh release create "$OBJECT_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --prerelease --title "$OBJECT_TAG" --notes 'Immutable content objects referenced by the signed stable release manifest.'
+          mapfile -t ASSETS < "$RUNNER_TEMP/apk/content/content-upload-list.txt"
+          for ((i=0; i<${#ASSETS[@]}; i+=40)); do
+            FILES=()
+            for asset in "${ASSETS[@]:i:40}"; do FILES+=("$RUNNER_TEMP/apk/content/$asset"); done
+            gh release upload "$OBJECT_TAG" "${FILES[@]}" --repo "$GITHUB_REPOSITORY"
+          done
+          python3 godot/tools/build/verify_content_upload.py "$RUNNER_TEMP/apk" "$OBJECT_TAG" objects
+          gh release edit "$OBJECT_TAG" --repo "$GITHUB_REPOSITORY" --draft=false --prerelease --latest=false
           gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title "$RELEASE_TAG" --generate-notes
-          gh release upload "$RELEASE_TAG" "$RUNNER_TEMP/apk/universal.apk" "$RUNNER_TEMP/apk/SHA256SUMS.txt" --repo "$GITHUB_REPOSITORY"
-          gh release edit "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --draft=false
+          gh release upload "$RELEASE_TAG" "$RUNNER_TEMP/apk/universal.apk" "$RUNNER_TEMP/apk/SHA256SUMS.txt" "$RUNNER_TEMP/apk/content/content-manifest.json" "$RUNNER_TEMP/apk/content/content-manifest.sig" --repo "$GITHUB_REPOSITORY"
+          python3 godot/tools/build/verify_content_upload.py "$RUNNER_TEMP/apk" "$RELEASE_TAG" stable
+          gh release edit "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --draft=false --latest

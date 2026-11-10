@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Cipher",
+    "creator": "Kevin MacLeod (incompetech.com)",
+    "page": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100844",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "attribution": "\"Cipher\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/",
+    "unchanged_full_mp3": true,
+    "instruments": "Synths, Electric Piano, Percussion, Strings",
+    "feel": "Bright, Grooving, Uplifting",
+    "id": "vika_reveal",
+    "expected_source_sha256": "d3d0614535a61d748e2fd8d5117fc4d781022a7624794802a2462d8af3fdd522",
+    "source": "Vika_01_Cipher_Kevin_MacLeod.mp3",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Cipher2.mp3",
+    "loop_offset_seconds": 0.0
+  },
+  {
+    "title": "Ascending the Vale",
+    "creator": "Kevin MacLeod (incompetech.com)",
+    "page": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600064",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "attribution": "\"Ascending the Vale\" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/",
+    "unchanged_full_mp3": true,
+    "instruments": "Harp, Choir, Flute, Percussion, Anyafil Horn",
+    "feel": "Relaxed, Calming, Mystical",
+    "id": "eve_reveal",
+    "expected_source_sha256": "a0ab3aae9a942d797c381df8d914dfef453e7e455c1c6333d1916d59ba005353",
+    "source": "Eve_01_Ascending_the_Vale_Kevin_MacLeod.mp3",
+    "download": "https://incompetech.com/music/royalty-free/mp3-royaltyfree/Ascending%20the%20Vale.mp3",
+    "loop_offset_seconds": 0.0
+  }
+]

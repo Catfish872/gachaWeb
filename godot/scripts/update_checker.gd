@@ -5,6 +5,7 @@ extends Node
 
 signal state_changed(state: Dictionary)
 
+const ContentDownloader = preload("res://scripts/content_downloader.gd")
 const AndroidUpdater = preload("res://scripts/android_updater.gd")
 const REPOSITORY := "Catfish872/gachaWeb"
 const API_URL := "https://api.github.com/repos/" + REPOSITORY + "/releases/latest"
@@ -13,7 +14,7 @@ const DOWNLOAD_HOST_ALLOWLIST := ["github.com"]
 const RELEASE_ASSET := "universal.apk"
 const STARTUP_DELAY_SECONDS := 3.0
 const REQUEST_TIMEOUT_SECONDS := 12.0
-const MAX_RESPONSE_BYTES := 1048576
+const MAX_RESPONSE_BYTES := 8388608
 const MAX_RELEASE_NOTES := 6000
 const MAX_ANDROID_VERSION_CODE := 2100000000
 
@@ -25,6 +26,7 @@ var auto_check_enabled := true
 var _startup_scheduled := false
 var _startup_attempted := false
 var auto_download_enabled := true
+var content_downloader: Node
 var android_updater: Node
 var release_candidate: Dictionary = {}
 var _auto_download_tag := ""
@@ -35,6 +37,11 @@ func _ready() -> void:
 	android_updater.name = "AndroidUpdateDownload"
 	android_updater.changed.connect(_on_download_state)
 	add_child(android_updater)
+	content_downloader = ContentDownloader.new()
+	content_downloader.name = "ContentDownload"
+	content_downloader.changed.connect(_on_content_state)
+	content_downloader.apk_required.connect(_on_apk_required)
+	add_child(content_downloader)
 	_request = HTTPRequest.new()
 	_request.name = "PublicReleaseRequest"
 	_request.timeout = REQUEST_TIMEOUT_SECONDS
@@ -188,9 +195,25 @@ static func evaluate_release(release: Dictionary, metadata: Dictionary) -> Dicti
 		digest_re.compile("^sha256:[0-9a-f]{64}$")
 		if digest_re.search(supplied_digest) != null:
 			digest = supplied_digest.trim_prefix("sha256:")
-	if matched == 0:
+	var content_manifest := ""
+	var content_signature := ""
+	for name in ["content-manifest.json", "content-manifest.sig"]:
+		var content_matches := 0
+		for asset in assets:
+			if not asset is Dictionary or asset.get("name") != name:
+				continue
+			content_matches += 1
+			if content_matches > 1 or asset.get("state") != "uploaded" or not ContentDownloader.trusted_asset(str(asset.get("browser_download_url", "")), tag, name):
+				return _status("untrusted_asset", "内容附件链接无效，已停止更新。")
+			if name == "content-manifest.json":
+				content_manifest = str(asset.browser_download_url)
+			else:
+				content_signature = str(asset.browser_download_url)
+	if content_manifest.is_empty() != content_signature.is_empty():
+		return _status("invalid_asset", "内容更新附件尚未完整发布，请稍后重试。")
+	if matched == 0 and content_manifest.is_empty():
 		return _status("missing_asset", "发现新版本 %s，但尚未提供 universal.apk。" % candidate.version_name)
-	if matched != 1:
+	if matched > 1:
 		return _status("invalid_asset", "存在多个同名 APK 附件，无法安全选择。")
 	var notes: Variant = release.get("body", "")
 	if notes == null:
@@ -203,10 +226,11 @@ static func evaluate_release(release: Dictionary, metadata: Dictionary) -> Dicti
 	return {"status": "available", "message": "发现新版本 %s" % candidate.version_name,
 		"version_name": candidate.version_name, "version_code": candidate.version_code,
 		"tag": tag, "release_url": release_url, "download_url": download_url, "sha256": digest, "size": download_size,
+		"content_manifest": content_manifest, "content_signature": content_signature,
 		"release_notes": display_notes if not display_notes.is_empty() else "此版本未填写发布说明。"}
 
 func check_for_updates() -> void:
-	if busy or (is_instance_valid(android_updater) and not android_updater.record.is_empty()):
+	if busy or (is_instance_valid(content_downloader) and content_downloader.busy) or (is_instance_valid(android_updater) and not android_updater.record.is_empty()):
 		return
 	if not valid_local_version(local_version):
 		_set_state(_status("configuration_error", "本地版本信息无效，请通过 GitHub 发布页核对安装包。"))
@@ -233,7 +257,7 @@ func _set_state(next_state: Dictionary) -> void:
 	if state.get("status") == "available":
 		release_candidate = state.duplicate(true)
 	state_changed.emit(state.duplicate(true))
-	if state.get("status") == "available" and auto_download_enabled and not state.get("sha256", "").is_empty() and state.get("tag", "") != _auto_download_tag and OS.has_feature("android"):
+	if state.get("status") == "available" and auto_download_enabled and (not state.get("sha256", "").is_empty() or not state.get("content_manifest", "").is_empty()) and state.get("tag", "") != _auto_download_tag and OS.has_feature("android"):
 		_auto_download_tag = str(state.tag)
 		open_download.call_deferred()
 
@@ -252,7 +276,25 @@ func _on_download_state(download_state: Dictionary) -> void:
 func probe_android_bridge() -> Dictionary:
 	return android_updater.probe() if is_instance_valid(android_updater) else {"success": false}
 
+func _on_content_state(content_state: Dictionary) -> void:
+	state = release_candidate.duplicate(true)
+	state.merge(content_state, true)
+	state_changed.emit(state.duplicate(true))
+
+func _on_apk_required() -> void:
+	release_candidate["requires_apk"] = true
+	_on_content_state(_status("available", "此更新包含 Android 平台变更，将下载完整安装包并由系统确认安装。"))
+	if trusted_download_url(str(release_candidate.get("download_url", "")), str(release_candidate.get("tag", ""))):
+		var result := _begin_apk_download(release_candidate)
+		if result != OK:
+			_on_content_state(_status("download_error", "完整安装包下载暂未开始，请重试或打开发布页。"))
+	else:
+		_on_content_state(_status("download_error", "此更新需要新版 Android 引擎，请通过发布页获取完整安装包。"))
+
 func cancel_download() -> void:
+	if is_instance_valid(content_downloader) and content_downloader.busy:
+		content_downloader.cancel()
+		return
 	if is_instance_valid(android_updater):
 		android_updater.cancel()
 
@@ -264,6 +306,11 @@ func open_install_settings() -> Error:
 
 func open_download() -> Error:
 	var candidate := release_candidate if not release_candidate.is_empty() else state
+	if not candidate.get("requires_apk", false) and not str(candidate.get("content_manifest", "")).is_empty():
+		return content_downloader.begin(candidate)
+	return _begin_apk_download(candidate)
+
+func _begin_apk_download(candidate: Dictionary) -> Error:
 	if not trusted_download_url(str(candidate.get("download_url", "")), str(candidate.get("tag", ""))):
 		return ERR_INVALID_DATA
 	if OS.has_feature("android"):

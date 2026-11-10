@@ -22,8 +22,10 @@ const FACE_REGIONS := {
 	"zeph": Rect2(290, 0, 490, 490),
 }
 const BUST_REGIONS := {
-	"raisa": Rect2(260, 0, 650, 700),
-	"vika": Rect2(250, 0, 650, 700),
+	# Align the upper-body mass with the stage aura; weapons and long hair
+	# extend naturally on either side instead of driving the horizontal anchor.
+	"raisa": Rect2(305, 0, 650, 700),
+	"vika": Rect2(120, 0, 650, 700),
 	"eve": Rect2(190, 80, 650, 700),
 	# Match the legacy upper-body framing: crown through waist, centered on the face.
 	# Keep the dedicated face asset and battle/full-body source independent.

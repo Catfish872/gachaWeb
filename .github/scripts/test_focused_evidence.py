@@ -13,13 +13,14 @@ class FocusedEvidenceTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         for folder in ('data', 'scripts', 'assets'):
             (self.root / folder).mkdir()
-        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.9.2', 'version_code': 20902}))
-        for name in ('main.tscn', 'project.godot', 'export_presets.cfg'):
+        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.9.3', 'version_code': 20903}))
+        for name in ('main.tscn', 'content_bootstrap.tscn', 'project.godot', 'export_presets.cfg'):
             (self.root / name).write_text(name)
         files, digest = production_snapshot(self.root)
-        self.record = {'version': '2.9.2', 'version_code': 20902,
+        self.record = {'version': '2.9.3', 'version_code': 20903,
                        'targeted_checks': 'passed', 'ui_visual_review': 'passed',
                        'music_selection_review': 'passed', 'audio_runtime_checks': 'passed',
+                       'content_update_checks': 'passed',
                        'test_elapsed_seconds': 120, 'scope': ['changed room UI'],
                        'production_sha256': digest, 'production_file_count': len(files),
                        'test_segments': [{'started_utc': '2026-11-01T16:00:00Z',
@@ -58,6 +59,16 @@ class FocusedEvidenceTests(unittest.TestCase):
 
     def test_changed_source_stops(self):
         (self.root / 'main.tscn').write_text('changed')
+        with self.assertRaises(ValueError):
+            verify(self.root, self.record)
+
+    def test_changed_bootstrap_stops(self):
+        (self.root / 'content_bootstrap.tscn').write_text('changed')
+        with self.assertRaises(ValueError):
+            verify(self.root, self.record)
+
+    def test_pending_content_updates_stops(self):
+        self.record['content_update_checks'] = 'pending'
         with self.assertRaises(ValueError):
             verify(self.root, self.record)
 

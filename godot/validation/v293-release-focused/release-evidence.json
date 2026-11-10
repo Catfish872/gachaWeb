@@ -1,0 +1,70 @@
+{
+  "version": "2.9.3",
+  "version_code": 20903,
+  "status": "prebuild_acceptance_passed",
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "music_selection_review": "passed",
+  "audio_runtime_checks": "passed",
+  "content_update_checks": "passed",
+  "in_game_subjective_listening": "not_performed",
+  "test_elapsed_seconds": 73.47384,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-10T20:23:49.956766+00:00",
+      "completed_utc": "2026-11-10T20:25:03.430606+00:00",
+      "elapsed_seconds": 73.47384,
+      "production_sha256": "96c538b884d1af45387ba1daae2c4e861fb59b25e1fe3b593aaa337024919883",
+      "scope": [
+        "import",
+        "version",
+        "focused_evidence_tests",
+        "release_preflight",
+        "android_build",
+        "android_manifest",
+        "android_kvm",
+        "art",
+        "content_store",
+        "content_downloader",
+        "content_save_guard",
+        "updates",
+        "thunder_avatar_framing_v293",
+        "character_avatars",
+        "thunder_art_review_v290",
+        "thunder_visuals_v290",
+        "character_summon_audio_v293",
+        "selected_thunder_audio_v290",
+        "music_context",
+        "redesign_audio",
+        "thunder_banners_v290",
+        "content_release",
+        "content_signing",
+        "content_transfer",
+        "content_bootstrap",
+        "content_runtime_mount"
+      ]
+    }
+  ],
+  "scope": [
+    "Signed GitHub incremental content transfer, cross-version jump, exact exported resource mounting, corrupt data rejection, persistent cache retry, startup recovery and rollback save protection, bounded media cache garbage collection",
+    "Raisa/Vika bust centering, Eve minification filtering, preserved original artwork and prior hand correction",
+    "Independent Vika Cipher and Eve Ascending the Vale audio; retained Raisa track, volume, crossfade, toggle and visible credits",
+    "Android version, build, manifest and immutable publication prerequisites"
+  ],
+  "production_sha256": "96c538b884d1af45387ba1daae2c4e861fb59b25e1fe3b593aaa337024919883",
+  "production_file_count": 1486,
+  "blockers": [],
+  "baseline_reference": "f94a243b28d19f48943f7c42a00137028819a375",
+  "current_evidence": [
+    "validation/v293-release-focused/acceptance.json",
+    "validation/v293-avatar-review/REVIEW.md",
+    "validation/v293-character-audio/verification.json",
+    "validation/v293-content-build/baseline-reuse.json"
+  ],
+  "coverage_notes": [
+    "All 26 final targeted stages passed against the frozen source in 73.474 seconds. Final integration uses headless Godot; prior actual Godot renderer evidence at 960x540 and 1440x810 applies to unchanged avatar code.",
+    "Physical Android installation/upgrade and subjective in-game listening were not performed. Production-signature APK verification and public downloads follow in CI.",
+    "Legacy aggregate relic-set suite has three failures and an exp dictionary access error, reproduced on unmodified baseline. This focused release does not claim aggregate suite success.",
+    "Small signed manifest records and save snapshots remain retained for recovery; media objects are garbage-collected with active/previous/pending/in-progress protection."
+  ]
+}

@@ -19,8 +19,9 @@ func run() -> void:
   ck(bool(entry.seam_jump_below_p999),"sample seam "+id)
   ck(not hashes.has(entry.sha256),"distinct audio "+id);hashes.append(entry.sha256)
  ck(Thunder.music_path("thunder_city_street")==Thunder.music_path("thunder_city_gate"),"shared exploration theme")
- for id in ["raisa_reveal","vika_reveal","eve_reveal"]:
-  ck(Thunder.music_path(id)==Thunder.music_path("thunder_summon"),"approved Wasteland summon "+id)
+ ck(Thunder.music_path("raisa_reveal")==Thunder.music_path("thunder_summon"),"retained Wasteland summon for Raisa")
+ for id in ["vika_reveal","eve_reveal"]:
+  ck(Thunder.music_path(id)==Thunder.CHARACTER_ROOT+id+".ogg","independent selected summon "+id)
  ck(Thunder.music_path("thunder_boss")!=Thunder.music_path("thunder_city_core"),"boss no longer aliases core")
  ck(Thunder.music_path("thunder_boss")!=Thunder.music_path("thunder_summon"),"boss and summon distinct")
  app._show_music_credits();await frames(3)

@@ -1,0 +1,32 @@
+{
+  "scope": "User-selected Vika Cipher and Eve Ascending the Vale integration; Raisa preserved. No packaging/publication.",
+  "base_commit": "f94a243b28d19f48943f7c42a00137028819a375",
+  "focused_checks": 234,
+  "focused_failures": 0,
+  "engine_import": "passed without errors",
+  "diff_whitespace": "passed",
+  "aggregate": "stopped at legacy test_relic_sets_v250, 208499 checks / 3 failures, exp dictionary access script error",
+  "baseline_reproduction": "same 3 failures and exp error on isolated git HEAD scripts/data/content/test",
+  "unchanged_raisa_asset": true,
+  "tracks": [
+    {
+      "id": "vika_reveal",
+      "title": "Cipher",
+      "duration_seconds": 231.26204081632653,
+      "measured_lufs": -22.06,
+      "measured_true_peak_db": -4.81,
+      "bytes": 5327858,
+      "sha256": "46f6dd121b47f908db5922d6df9d31a4315a199ab0215e3b35cf937e42b20bc4"
+    },
+    {
+      "id": "eve_reveal",
+      "title": "Ascending the Vale",
+      "duration_seconds": 247.64081632653063,
+      "measured_lufs": -21.98,
+      "measured_true_peak_db": -7.34,
+      "bytes": 5333585,
+      "sha256": "ec989e307acd597f1472848a48305b337c55ac6a04a1561e856f017b34275e95"
+    }
+  ],
+  "subjective_listening": "User auditioned and selected original full MP3s; assistant performed technical validation only."
+}

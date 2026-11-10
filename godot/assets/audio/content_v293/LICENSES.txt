@@ -1,0 +1,16 @@
+User-selected character summon music. CC BY 4.0 attribution and modification record.
+
+vika_reveal.ogg
+"Cipher" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/
+https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100844
+Original download: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Cipher2.mp3
+Source SHA-256: d3d0614535a61d748e2fd8d5117fc4d781022a7624794802a2462d8af3fdd522
+Changes: Preserved full recording, original tempo, instrumentation and natural tail; whole-piece restart at 0 seconds. Applied 5 ms fades at the file edges to suppress sample discontinuities; no claim of musically seamless loop. Applied constant gain -4.840000 dB targeting -22 LUFS and a -2.1 dBTP ceiling; no dynamic compression. Encoded Ogg Vorbis quality 6, stereo 44100 Hz from the selected MP3 source.
+
+eve_reveal.ogg
+"Ascending the Vale" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/
+https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600064
+Original download: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Ascending%20the%20Vale.mp3
+Source SHA-256: a0ab3aae9a942d797c381df8d914dfef453e7e455c1c6333d1916d59ba005353
+Changes: Preserved full recording, original tempo, instrumentation and natural tail; whole-piece restart at 0 seconds. Applied 5 ms fades at the file edges to suppress sample discontinuities; no claim of musically seamless loop. Applied constant gain -3.050000 dB targeting -22 LUFS and a -2.1 dBTP ceiling; no dynamic compression. Encoded Ogg Vorbis quality 6, stereo 44100 Hz from the selected MP3 source.
+

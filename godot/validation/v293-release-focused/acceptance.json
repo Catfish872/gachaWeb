@@ -1,0 +1,169 @@
+{
+  "started_utc": "2026-11-10T20:23:49.956766+00:00",
+  "completed_utc": "2026-11-10T20:25:03.430606+00:00",
+  "elapsed_seconds": 73.47384,
+  "production_sha256": "96c538b884d1af45387ba1daae2c4e861fb59b25e1fe3b593aaa337024919883",
+  "production_file_count": 1486,
+  "results": [
+    {
+      "check": "import",
+      "passed": true,
+      "seconds": 5.079,
+      "returncode": 0
+    },
+    {
+      "check": "version",
+      "passed": true,
+      "seconds": 0.057,
+      "returncode": 0
+    },
+    {
+      "check": "focused_evidence_tests",
+      "passed": true,
+      "seconds": 0.141,
+      "returncode": 0
+    },
+    {
+      "check": "release_preflight",
+      "passed": true,
+      "seconds": 0.38,
+      "returncode": 0
+    },
+    {
+      "check": "android_build",
+      "passed": true,
+      "seconds": 0.652,
+      "returncode": 0
+    },
+    {
+      "check": "android_manifest",
+      "passed": true,
+      "seconds": 0.349,
+      "returncode": 0
+    },
+    {
+      "check": "android_kvm",
+      "passed": true,
+      "seconds": 0.554,
+      "returncode": 0
+    },
+    {
+      "check": "art",
+      "passed": true,
+      "seconds": 0.978,
+      "returncode": 0
+    },
+    {
+      "check": "content_store",
+      "passed": true,
+      "seconds": 0.505,
+      "returncode": 0
+    },
+    {
+      "check": "content_downloader",
+      "passed": true,
+      "seconds": 0.427,
+      "returncode": 0
+    },
+    {
+      "check": "content_save_guard",
+      "passed": true,
+      "seconds": 0.336,
+      "returncode": 0
+    },
+    {
+      "check": "updates",
+      "passed": true,
+      "seconds": 17.76,
+      "returncode": 0
+    },
+    {
+      "check": "thunder_avatar_framing_v293",
+      "passed": true,
+      "seconds": 7.203,
+      "returncode": 0
+    },
+    {
+      "check": "character_avatars",
+      "passed": true,
+      "seconds": 1.22,
+      "returncode": 0
+    },
+    {
+      "check": "thunder_art_review_v290",
+      "passed": true,
+      "seconds": 5.156,
+      "returncode": 0
+    },
+    {
+      "check": "thunder_visuals_v290",
+      "passed": true,
+      "seconds": 10.913,
+      "returncode": 0
+    },
+    {
+      "check": "character_summon_audio_v293",
+      "passed": true,
+      "seconds": 4.664,
+      "returncode": 0
+    },
+    {
+      "check": "selected_thunder_audio_v290",
+      "passed": true,
+      "seconds": 2.636,
+      "returncode": 0
+    },
+    {
+      "check": "music_context",
+      "passed": true,
+      "seconds": 1.976,
+      "returncode": 0
+    },
+    {
+      "check": "redesign_audio",
+      "passed": true,
+      "seconds": 1.87,
+      "returncode": 0
+    },
+    {
+      "check": "thunder_banners_v290",
+      "passed": true,
+      "seconds": 3.454,
+      "returncode": 0
+    },
+    {
+      "check": "content_release",
+      "passed": true,
+      "seconds": 0.109,
+      "returncode": 0
+    },
+    {
+      "check": "content_signing",
+      "passed": true,
+      "seconds": 3.41,
+      "returncode": 0
+    },
+    {
+      "check": "content_transfer",
+      "passed": true,
+      "seconds": 1.864,
+      "returncode": 0
+    },
+    {
+      "check": "content_bootstrap",
+      "passed": true,
+      "seconds": 0.795,
+      "returncode": 0
+    },
+    {
+      "check": "content_runtime_mount",
+      "passed": true,
+      "seconds": 0.984,
+      "returncode": 0
+    }
+  ],
+  "passed": true,
+  "baseline_commit": "f94a243b28d19f48943f7c42a00137028819a375",
+  "publication": "authorized, blocked until full combined acceptance passes",
+  "coverage": "Final integration is headless; rendered visual evidence is in v293-avatar-review. Physical Android installation and subjective in-game listening not performed."
+}

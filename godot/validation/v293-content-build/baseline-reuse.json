@@ -1,0 +1,13 @@
+{
+  "source": "verified published 2.9.2 APK",
+  "baseline_asset_objects": 632,
+  "baseline_logic_zip_bytes": 1268258,
+  "baseline_pack_bytes": 259652616,
+  "direct_jump": "2.9.2 -> fixture 2.9.9",
+  "reused_asset_objects": 632,
+  "new_asset_objects": 1,
+  "jump_logic_zip_bytes": 1268192,
+  "new_transfer_bytes": 1268431,
+  "seconds": 23.0,
+  "scope": "Pack construction, real baseline bytes hash verification and manifest reuse, not APK installation or network transfer"
+}
