@@ -1,0 +1,19 @@
+Release creation interrupted; waiting 120s before resolving tag again
+Release creation interrupted; waiting 60s before resolving tag again
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Verified new object 1/1: obj-b.zip
+Preserving 2 verified objects; uploading 0 missing objects at >= 9s intervals
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Upload interrupted; waiting 121s then reconciling exact asset before retry
+Verified new object 1/1: obj-b.zip
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Upload interrupted; waiting 60s then reconciling exact asset before retry
+Preserving 1 verified objects; uploading 1 missing objects at >= 9s intervals
+Upload interrupted; waiting 60s then reconciling exact asset before retry
+Verified new object 1/1: obj-b.zip
+.................
+----------------------------------------------------------------------
+Ran 17 tests in 0.006s
+
+OK

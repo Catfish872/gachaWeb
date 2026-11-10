@@ -39,6 +39,7 @@ jobs:
         run: |
           python3 godot/tools/build/validate_version.py
           python3 .github/scripts/test_release_preflight.py
+          python3 .github/scripts/test_upload_content_objects.py
           python3 godot/tests/test_content_release.py
           python3 godot/tests/test_content_signing.py
           python3 godot/tests/test_android_build.py
@@ -55,7 +56,7 @@ jobs:
             ((github.event_name == 'workflow_dispatch' && inputs.publish) ||
              vars.ANDROID_RELEASE_ENABLED == 'true'))) }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 180
     environment: android-release
     permissions:
       contents: write
@@ -113,14 +114,8 @@ jobs:
           RELEASE_TAG: ${{ steps.release.outputs.tag }}
         run: |
           OBJECT_TAG="$RELEASE_TAG-assets"
-          gh release create "$OBJECT_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --prerelease --title "$OBJECT_TAG" --notes 'Immutable content objects referenced by the signed stable release manifest.'
-          mapfile -t ASSETS < "$RUNNER_TEMP/apk/content/content-upload-list.txt"
-          for ((i=0; i<${#ASSETS[@]}; i+=40)); do
-            FILES=()
-            for asset in "${ASSETS[@]:i:40}"; do FILES+=("$RUNNER_TEMP/apk/content/$asset"); done
-            gh release upload "$OBJECT_TAG" "${FILES[@]}" --repo "$GITHUB_REPOSITORY"
-          done
-          python3 godot/tools/build/verify_content_upload.py "$RUNNER_TEMP/apk" "$OBJECT_TAG" objects
+          python3 .github/scripts/upload_content_objects.py "$RUNNER_TEMP/apk/content"
+          python3 .github/scripts/upload_content_objects.py "$RUNNER_TEMP/apk/content" --verify-only
           gh release edit "$OBJECT_TAG" --repo "$GITHUB_REPOSITORY" --draft=false --prerelease --latest=false
           gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --draft --title "$RELEASE_TAG" --generate-notes
           gh release upload "$RELEASE_TAG" "$RUNNER_TEMP/apk/universal.apk" "$RUNNER_TEMP/apk/SHA256SUMS.txt" "$RUNNER_TEMP/apk/content/content-manifest.json" "$RUNNER_TEMP/apk/content/content-manifest.sig" --repo "$GITHUB_REPOSITORY"

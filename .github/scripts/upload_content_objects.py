@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+"""Resume an immutable object release with serial, rate-limit-aware uploads."""
+import base64
+import email.utils
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from release_preflight import production_tree, git
+
+class Conflict(RuntimeError): pass
+class HTTPFailure(RuntimeError):
+    def __init__(self,code,headers,body):
+        self.code,self.headers,self.body=code,headers,body
+        super().__init__(f'GitHub HTTP {code}: {body[:250]}')
+
+def retry_delay(error,attempt,now=None):
+    now=time.time() if now is None else now
+    if error.code not in (403,429,500,502,503,504): return None
+    limited=error.code==429 or 'rate limit' in error.body.lower() or 'secondary' in error.body.lower() or error.headers.get('X-RateLimit-Remaining')=='0'
+    if error.code==403 and not limited: return None
+    delay=min(900,60*2**attempt)
+    value=error.headers.get('Retry-After')
+    if value:
+        try: delay=max(delay,float(value))
+        except ValueError:
+            try: delay=max(delay,email.utils.parsedate_to_datetime(value).timestamp()-now)
+            except (TypeError,ValueError): pass
+    if error.headers.get('X-RateLimit-Remaining')=='0':
+        try: delay=max(delay,float(error.headers.get('X-RateLimit-Reset','0'))-now+5)
+        except ValueError: pass
+    return max(1,delay)
+
+class API:
+    def __init__(self,repo,token,sleep=time.sleep): self.repo,self.token,self.sleep=repo,token,sleep
+    def request(self,method,path,data=None,content_type='application/json'):
+        url=path if path.startswith('https://uploads.github.com/') else 'https://api.github.com'+path
+        headers={'Authorization':'Bearer '+self.token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','User-Agent':'VoidRift-Content-Publisher','Content-Type':content_type}
+        request=urllib.request.Request(url,data=data,headers=headers,method=method)
+        try:
+            with urllib.request.urlopen(request,timeout=180) as response: return json.load(response)
+        except urllib.error.HTTPError as error:
+            raise HTTPFailure(error.code,error.headers,error.read().decode(errors='replace')) from None
+    def read(self,path):
+        for attempt in range(9):
+            try: return self.request('GET',path)
+            except HTTPFailure as error:
+                delay=retry_delay(error,attempt)
+                if delay is None or attempt==8: raise
+                print(f'GitHub metadata backoff {delay:.0f}s',flush=True); self.sleep(delay)
+    def assets(self,release_id):
+        result={}; page=1
+        while True:
+            rows=self.read(f'/repos/{self.repo}/releases/{release_id}/assets?per_page=100&page={page}')
+            for asset in rows:
+                if asset['name'] in result: raise Conflict('Duplicate remote asset name')
+                result[asset['name']]=asset
+            if len(rows)<100: return result
+            page+=1
+
+def identity(path):
+    with path.open('rb') as stream: sha=hashlib.file_digest(stream,'sha256').hexdigest()
+    return {'name':path.name,'size':path.stat().st_size,'digest':'sha256:'+sha,'state':'uploaded'}
+def matches(remote,expected): return all(remote.get(k)==v for k,v in expected.items())
+def upload_missing(api,release,files,interval=9,sleep=time.sleep,verify_only=False):
+    expected={p.name:identity(p) for p in files}
+    remote=api.assets(release['id'])
+    if set(remote)-set(expected): raise Conflict('Unexpected existing objects; draft preserved')
+    for name,asset in remote.items():
+        if not matches(asset,expected[name]): raise Conflict('Existing object differs: '+name)
+    missing=[p for p in files if p.name not in remote]
+    if missing and (verify_only or not release['draft']): raise Conflict('Object release is incomplete; preserved')
+    print(f'Preserving {len(remote)} verified objects; uploading {len(missing)} missing objects at >= {interval}s intervals',flush=True)
+    for index,path in enumerate(missing):
+        sleep(interval)
+        for attempt in range(9):
+            try:
+                asset=api.request('POST',f'https://uploads.github.com/repos/{api.repo}/releases/{release["id"]}/assets?name='+urllib.parse.quote(path.name,safe=''),path.read_bytes(),'application/zip')
+                if not matches(asset,expected[path.name]): raise Conflict('Upload response failed digest verification: '+path.name)
+                break
+            except (HTTPFailure,urllib.error.URLError,TimeoutError,OSError) as error:
+                if isinstance(error,HTTPFailure):
+                    delay=retry_delay(error,attempt)
+                    if error.code==422: delay=60
+                    if delay is None: raise
+                else: delay=min(900,60*2**attempt)
+                if attempt==8: raise
+                print(f'Upload interrupted; waiting {delay:.0f}s then reconciling exact asset before retry',flush=True); sleep(delay)
+                found=api.assets(release['id']).get(path.name)
+                if found:
+                    if not matches(found,expected[path.name]): raise Conflict('Uncertain upload produced an incomplete or mismatched object; preserved: '+path.name)
+                    break
+        print(f'Verified new object {index+1}/{len(missing)}: {path.name}',flush=True)
+    return len(missing)
+
+def ensure_equivalent_target(repo,release,current,token):
+    target=release.get('target_commitish','')
+    if not re.fullmatch('[0-9a-f]{40}',target): raise Conflict('Existing draft requires an exact original target commit')
+    if target==current:return
+    auth=base64.b64encode(('x-access-token:'+token).encode()).decode()
+    env=os.environ.copy();env.update(GIT_CONFIG_COUNT='1',GIT_CONFIG_KEY_0='http.https://github.com/.extraheader',GIT_CONFIG_VALUE_0='AUTHORIZATION: basic '+auth,GIT_TERMINAL_PROMPT='0')
+    git('.', 'fetch','--no-tags','--depth=1',f'https://github.com/{repo}.git',target,env=env)
+    if production_tree('.',target)!=production_tree('.',current): raise Conflict('Existing draft production source differs; preserved')
+
+def get_or_create_release(api,tag,current):
+    for attempt in range(9):
+        try:return api.read(f'/repos/{api.repo}/releases/tags/{tag}')
+        except HTTPFailure as error:
+            if error.code!=404:raise
+        payload={'tag_name':tag,'target_commitish':current,'draft':True,'prerelease':True,'name':tag,'body':'Immutable content objects referenced by the signed stable release manifest.'}
+        try:return api.request('POST',f'/repos/{api.repo}/releases',json.dumps(payload).encode())
+        except (HTTPFailure,urllib.error.URLError,TimeoutError,OSError) as error:
+            if isinstance(error,HTTPFailure):
+                delay=retry_delay(error,attempt)
+                if error.code==422:delay=60
+                if delay is None:raise
+            else:delay=min(900,60*2**attempt)
+            if attempt==8:raise
+            print(f'Release creation interrupted; waiting {delay:.0f}s before resolving tag again',flush=True)
+            api.sleep(delay)
+    raise Conflict('Release creation retry budget exhausted')
+
+def main():
+    output=Path(sys.argv[1]); repo=os.environ['GITHUB_REPOSITORY'];tag=os.environ['RELEASE_TAG']+'-assets';current=os.environ['GITHUB_SHA'];token=os.environ['GH_TOKEN']
+    if repo!='Catfish872/gachaWeb' or not re.fullmatch(r'android-v[0-9]+\.[0-9]+\.[0-9]+-assets',tag):raise Conflict('Unexpected release destination')
+    api=API(repo,token)
+    verify_only='--verify-only' in sys.argv[2:]
+    release=api.read(f'/repos/{repo}/releases/tags/{tag}') if verify_only else get_or_create_release(api,tag,current)
+    if release['tag_name']!=tag or not release['prerelease']:raise Conflict('Existing object release channel differs')
+    ensure_equivalent_target(repo,release,current,token)
+    names=(output/'content-upload-list.txt').read_text().splitlines()
+    if len(names)!=len(set(names)) or not all(re.fullmatch(r'obj-[0-9a-f]{64}\.zip',n) for n in names): raise Conflict('Invalid upload inventory')
+    if len(names)>1000:raise Conflict('GitHub object count limit exceeded')
+    upload_missing(api,release,[output/n for n in names],verify_only=verify_only)
+if __name__=='__main__':main()
