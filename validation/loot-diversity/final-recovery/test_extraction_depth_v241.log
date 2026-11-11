@@ -1,0 +1,110 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+{"act":1,"after":{"atk":32,"cri":0.1,"criDmg":1.5,"def":13,"maxHp":234,"spd":100.32},"before":{"atk":32,"cri":0.1,"criDmg":1.5,"def":13,"maxHp":234,"spd":100.32},"enemy":"leaf_spirit","kind":"battle","sameSeed":846599872,"tier":1}
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+{"act":1,"after":{"atk":42,"cri":0.1,"criDmg":1.5,"def":18,"maxHp":390,"spd":92.9387317073171},"before":{"atk":40,"cri":0.1,"criDmg":1.5,"def":17,"maxHp":368,"spd":87.6780487804878},"enemy":"leaf_spirit","kind":"battle","sameSeed":949144097,"tier":4}
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+{"act":1,"after":{"atk":91,"cri":0.1,"criDmg":1.5,"def":47,"maxHp":2016,"spd":108.36},"before":{"atk":91,"cri":0.1,"criDmg":1.5,"def":47,"maxHp":2016,"spd":108.36},"enemy":"boss_highland_roc","kind":"boss","sameSeed":1023614347,"tier":4}
+{"act":2,"after":{"atk":74,"cri":0.1,"criDmg":1.5,"def":25,"maxHp":772,"spd":91.1943859649123},"before":{"atk":74,"cri":0.1,"criDmg":1.5,"def":25,"maxHp":772,"spd":91.1943859649123},"enemy":"storm_patrol","kind":"battle","sameSeed":1418746323,"tier":1}
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+{"act":2,"after":{"atk":86,"cri":0.1,"criDmg":1.5,"def":22,"maxHp":831,"spd":120.0},"before":{"atk":81,"cri":0.1,"criDmg":1.5,"def":21,"maxHp":784,"spd":120.0},"enemy":"thunder_mane","kind":"battle","sameSeed":1719037945,"tier":4}
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+{"act":2,"after":{"atk":136,"cri":0.1,"criDmg":1.5,"def":50,"maxHp":4167,"spd":112.56},"before":{"atk":136,"cri":0.1,"criDmg":1.5,"def":50,"maxHp":4167,"spd":112.56},"enemy":"boss_city_sealer","kind":"boss","sameSeed":158986464,"tier":4}
+{"act":3,"after":{"atk":148,"cri":0.1,"criDmg":1.5,"def":36,"maxHp":2068,"spd":92.8742028985507},"before":{"atk":148,"cri":0.1,"criDmg":1.5,"def":36,"maxHp":2068,"spd":92.8742028985507},"enemy":"furnace_guard","kind":"battle","sameSeed":1675091462,"tier":1}
+{"act":3,"after":{"atk":123,"cri":0.1,"criDmg":1.5,"def":24,"maxHp":1950,"spd":120.0},"before":{"atk":116,"cri":0.1,"criDmg":1.5,"def":23,"maxHp":1839,"spd":120.0},"enemy":"lamp_wraith","kind":"battle","sameSeed":1588802720,"tier":4}
+{"act":3,"after":{"atk":187,"cri":0.1,"criDmg":1.5,"def":65,"maxHp":8603,"spd":121.486},"before":{"atk":163,"cri":0.1,"criDmg":1.5,"def":57,"maxHp":7481,"spd":105.64},"enemy":"boss_hedor","kind":"boss","sameSeed":11763947,"tier":4}
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL actual ATK DEF exact once
+FAIL old key UID and appraisal retained
+FAIL sale retains actual legacy appraisal rather than new purchase price
+EXTRACTION DEPTH V241 3803 checks 98 failures

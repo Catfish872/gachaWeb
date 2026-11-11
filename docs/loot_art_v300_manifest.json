@@ -1,0 +1,6213 @@
+{
+  "method": "Newly regenerated original art after workspace loss; not recovered original pixels. Native image generation and editing only.",
+  "license": "Generated for project, no third-party artwork supplied.",
+  "count": 233,
+  "missing": [],
+  "atlases": [
+    {
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2158031,
+      "sha256": "f87c11c734edac07d706a490cb8c738c3db53c5ffedc978a248fc3ad27528ff5",
+      "alphaZeroPixels": 1118129,
+      "items": [
+        "general_processor_1",
+        "general_processor_2",
+        "general_processor_3",
+        "general_crystal_1",
+        "general_crystal_2",
+        "general_crystal_3",
+        "general_signal_decoder_1",
+        "general_signal_decoder_2",
+        "general_signal_decoder_3",
+        "general_rare_ore_1",
+        "general_rare_ore_2",
+        "general_rare_ore_3",
+        "general_jade_pendant_1",
+        "general_jade_pendant_2",
+        "general_jade_pendant_3",
+        "general_silk_scroll_1",
+        "general_silk_scroll_2",
+        "general_silk_scroll_3",
+        "general_hologram_1",
+        "general_hologram_2",
+        "general_hologram_3",
+        "general_thermal_chip_1",
+        "general_thermal_chip_2",
+        "general_thermal_chip_3"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2176385,
+      "sha256": "5fb75c24d75c3cd693af90ee05fa4a9ea6826fa9c2dc5be81d48501ba0d5d2a4",
+      "alphaZeroPixels": 1100945,
+      "items": [
+        "general_servo_arm_1",
+        "general_servo_arm_2",
+        "general_servo_arm_3",
+        "general_research_notes_1",
+        "general_research_notes_2",
+        "general_research_notes_3",
+        "general_gold_watch_1",
+        "general_gold_watch_2",
+        "general_gold_watch_3",
+        "general_idol_1",
+        "general_idol_2",
+        "general_idol_3",
+        "general_crown_1",
+        "general_crown_2",
+        "general_crown_3",
+        "general_platinum_bar_1",
+        "general_platinum_bar_2",
+        "general_platinum_bar_3",
+        "general_diamond_ring_1",
+        "general_diamond_ring_2",
+        "general_diamond_ring_3",
+        "general_antique_camera_1",
+        "general_antique_camera_2",
+        "general_antique_camera_3"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2182640,
+      "sha256": "e6059ee9f37efc365c8b7ff42167e7b7c5698332f8742be359f2ddfd3ec69d16",
+      "alphaZeroPixels": 1050716,
+      "items": [
+        "general_star_map_1",
+        "general_star_map_2",
+        "general_star_map_3",
+        "general_fusion_battery_1",
+        "general_fusion_battery_2",
+        "general_fusion_battery_3",
+        "general_ivory_statue_1",
+        "general_ivory_statue_2",
+        "general_ivory_statue_3",
+        "general_ruby_necklace_1",
+        "general_ruby_necklace_2",
+        "general_ruby_necklace_3",
+        "general_quantum_server_1",
+        "general_quantum_server_2",
+        "general_quantum_server_3",
+        "general_vintage_vase_1",
+        "general_vintage_vase_2",
+        "general_vintage_vase_3",
+        "general_red_core_1",
+        "general_red_core_2",
+        "general_red_core_3",
+        "general_archive_1",
+        "general_archive_2",
+        "general_archive_3"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2505091,
+      "sha256": "040228efc3ee66a1cfc0a7234e5d2c1eb71308c1cbb0014ae3922e8ccf5c3ce8",
+      "alphaZeroPixels": 615308,
+      "items": [
+        "general_dragon_egg_1",
+        "general_dragon_egg_2",
+        "general_dragon_egg_3",
+        "general_astral_clock_1",
+        "general_astral_clock_2",
+        "general_astral_clock_3",
+        "general_genesis_disk_1",
+        "general_genesis_disk_2",
+        "general_genesis_disk_3",
+        "general_meteor_heart_1",
+        "general_meteor_heart_2",
+        "general_meteor_heart_3",
+        "general_royal_scepter_1",
+        "general_royal_scepter_2",
+        "general_royal_scepter_3",
+        "general_sunken_crown_1",
+        "general_sunken_crown_2",
+        "general_sunken_crown_3",
+        "general_void_fossil_1",
+        "general_void_fossil_2",
+        "general_void_fossil_3",
+        "general_phoenix_feather_1",
+        "general_phoenix_feather_2",
+        "general_phoenix_feather_3"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2077093,
+      "sha256": "19a64470444e514ae47fe0a80b9ebb3a75f099b9fc16b87a06b2bf928ab5c55d",
+      "alphaZeroPixels": 1168912,
+      "items": [
+        "general_world_seed_1",
+        "general_world_seed_2",
+        "general_world_seed_3",
+        "general_eternal_flame_1",
+        "general_eternal_flame_2",
+        "general_eternal_flame_3",
+        "general_oracle_tablet_1",
+        "general_oracle_tablet_2",
+        "general_oracle_tablet_3",
+        "general_ration_5_1",
+        "general_ration_5_2",
+        "general_ration_5_3",
+        "general_phoenix_tonic_1",
+        "general_phoenix_tonic_2",
+        "general_phoenix_tonic_3",
+        "general_guardian_seal_1",
+        "general_guardian_seal_2",
+        "general_guardian_seal_3",
+        "general_eclipse_relic_1",
+        "general_eclipse_relic_2",
+        "general_eclipse_relic_3"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 1935946,
+      "sha256": "69696f567822c17dad437e2f2edaad34cd2af7c6cd17474687ea2eb5961bfb3f",
+      "alphaZeroPixels": 1095779,
+      "items": [
+        "general_wire_1",
+        "general_wire_2",
+        "general_wire_3",
+        "general_bolts_1",
+        "general_bolts_2",
+        "general_bolts_3",
+        "general_circuit_1",
+        "general_circuit_2",
+        "general_circuit_3",
+        "general_lens_1",
+        "general_lens_2",
+        "general_lens_3",
+        "general_lucky_coin_1",
+        "general_lucky_coin_2",
+        "general_lucky_coin_3",
+        "general_battery_1",
+        "general_battery_2",
+        "general_battery_3",
+        "general_sensor_1",
+        "general_sensor_2",
+        "general_sensor_3",
+        "general_silver_chain_1",
+        "general_silver_chain_2",
+        "general_silver_chain_3"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2063765,
+      "sha256": "58bd49ff718590acbc8a42c5c490bd22823dbee757282b0c08f9b6c031c1a9bb",
+      "alphaZeroPixels": 1154134,
+      "items": [
+        "general_emergency_pack_1",
+        "general_emergency_pack_2",
+        "general_emergency_pack_3",
+        "general_ration_3_1",
+        "general_ration_3_2",
+        "general_ration_3_3",
+        "general_scope_1",
+        "general_scope_2",
+        "general_scope_3",
+        "general_venom_vial_1",
+        "general_venom_vial_2",
+        "general_venom_vial_3",
+        "general_healer_charm_1",
+        "general_healer_charm_2",
+        "general_healer_charm_3",
+        "general_tape_1",
+        "general_tape_2",
+        "general_tape_3",
+        "general_pliers_1",
+        "general_pliers_2",
+        "general_pliers_3",
+        "general_toolbox_1",
+        "general_toolbox_2",
+        "general_toolbox_3"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2107744,
+      "sha256": "250ed073d1f02fa941e16c25613a7eca26c75b0a1c79659ca73655f08117a2a9",
+      "alphaZeroPixels": 1127710,
+      "items": [
+        "general_scrap_plate_1",
+        "general_scrap_plate_2",
+        "general_scrap_plate_3",
+        "general_blade_1",
+        "general_blade_2",
+        "general_blade_3",
+        "general_hard_drive_1",
+        "general_hard_drive_2",
+        "general_hard_drive_3",
+        "general_insulin_case_1",
+        "general_insulin_case_2",
+        "general_insulin_case_3",
+        "general_ration_1",
+        "general_ration_2",
+        "general_ration_3",
+        "general_medkit_1",
+        "general_medkit_2",
+        "general_medkit_3",
+        "general_spark_plug_1",
+        "general_spark_plug_2",
+        "general_spark_plug_3",
+        "general_vest_1",
+        "general_vest_2",
+        "general_vest_3"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "size": [
+        1448,
+        1086
+      ],
+      "bytes": 1424285,
+      "sha256": "086c237df442e82e773e587e2633e50cb63e4a1b0eeadb5ca63abe2e75bbd7fa",
+      "alphaZeroPixels": 845708,
+      "items": [
+        "general_combat_manual_1",
+        "general_combat_manual_2",
+        "general_combat_manual_3",
+        "general_memory_card_1",
+        "general_memory_card_2",
+        "general_memory_card_3",
+        "general_ration_4_1",
+        "general_ration_4_2",
+        "general_ration_4_3",
+        "general_repair_core_1",
+        "general_repair_core_2",
+        "general_repair_core_3"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2183744,
+      "sha256": "48cb82b7db301c77639e526e4c7627605ec340d4ae10e9acccb9f2d62fd136fa",
+      "alphaZeroPixels": 1065006,
+      "items": [
+        "thunder_city_ferry_tokens",
+        "thunder_city_wading_boots",
+        "thunder_city_ginger_tea",
+        "thunder_city_shutter_latch",
+        "thunder_city_rescue_cradle",
+        "thunder_city_suture_roll",
+        "thunder_city_flood_gauge",
+        "thunder_city_street_stamps",
+        "thunder_city_flood_diary",
+        "thunder_city_lung_model",
+        "thunder_city_rescue_kite",
+        "thunder_city_opera_relief",
+        "thunder_city_gate_seal",
+        "thunder_city_physician_case",
+        "thunder_city_fulgurite_slides",
+        "thunder_city_rain_recorder",
+        "thunder_city_canal_model",
+        "thunder_city_gate_winch",
+        "thunder_city_serum_prototype",
+        "thunder_city_rescue_registry",
+        "thunder_city_storm_standard",
+        "thunder_city_first_bell",
+        "thunder_city_canal_charter",
+        "thunder_city_founding_dose"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/thunder_loot/legacy_redesign.png",
+      "size": [
+        1774,
+        887
+      ],
+      "bytes": 1330688,
+      "sha256": "e5773855f407211a1e3bbd6ea16cb634264e3c4af74eee7d05afb9577eb69f2d",
+      "alphaZeroPixels": 1044833,
+      "items": [
+        "thunder_city_glass",
+        "thunder_city_badge",
+        "thunder_city_ruler",
+        "thunder_city_amulet",
+        "thunder_city_amber",
+        "thunder_city_plans",
+        "thunder_city_crown"
+      ]
+    },
+    {
+      "atlas": "assets/extraction/v300/thunder_loot/ceremonial_flute_vertical.png",
+      "size": [
+        724,
+        2172
+      ],
+      "bytes": 1768657,
+      "sha256": "97eb2301ee41734745a80460b61d821e93f06a886f412ba5d9d6f53320bbd45b",
+      "alphaZeroPixels": 764122,
+      "items": [
+        "thunder_city_boundary"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "general_processor_1",
+      "name": "银蚀印模",
+      "icon": "res://assets/extraction/v300/general_loot/general_processor_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        37,
+        39,
+        200,
+        200
+      ],
+      "sourceCell": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        55,
+        57,
+        219,
+        221
+      ],
+      "pixelSha256": "19a9bdf368a955dd556f24b0f989a4691e2f41a29859dc434f3c8f691fcffb76"
+    },
+    {
+      "id": "general_processor_2",
+      "name": "镶玉棋子",
+      "icon": "res://assets/extraction/v300/general_loot/general_processor_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        291,
+        38,
+        194,
+        194
+      ],
+      "sourceCell": [
+        256,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        84,
+        56,
+        180,
+        215
+      ],
+      "pixelSha256": "1dd0679485f2a1e5104ec018fb049b6610da5c2cb7f8c6b38b943554afb0ca35"
+    },
+    {
+      "id": "general_processor_3",
+      "name": "琉璃药匙",
+      "icon": "res://assets/extraction/v300/general_loot/general_processor_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        541,
+        34,
+        200,
+        200
+      ],
+      "sourceCell": [
+        512,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        47,
+        59,
+        211,
+        209
+      ],
+      "pixelSha256": "df0d5d8c5fc409bd817929109d238e862284381a98111d1161b5f4917a94bb7f"
+    },
+    {
+      "id": "general_crystal_1",
+      "name": "珐琅妆匣",
+      "icon": "res://assets/extraction/v300/general_loot/general_crystal_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        786,
+        30,
+        209,
+        209
+      ],
+      "sourceCell": [
+        768,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        48,
+        49,
+        197,
+        220
+      ],
+      "pixelSha256": "37c171c1010d23c7e476ec4526c58cffa17e67bc97e4ce21a42adc9eee692ac7"
+    },
+    {
+      "id": "general_crystal_2",
+      "name": "银壳测绘仪",
+      "icon": "res://assets/extraction/v300/general_loot/general_crystal_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        1051,
+        35,
+        200,
+        200
+      ],
+      "sourceCell": [
+        1024,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        57,
+        209,
+        213
+      ],
+      "pixelSha256": "00ffd4bb45d75376da14d6d1cd7960ca13842edb413323f087bc44cb059a9d21"
+    },
+    {
+      "id": "general_crystal_3",
+      "name": "嵌贝乐盒",
+      "icon": "res://assets/extraction/v300/general_loot/general_crystal_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        1298,
+        32,
+        209,
+        209
+      ],
+      "sourceCell": [
+        1280,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        37,
+        53,
+        208,
+        219
+      ],
+      "pixelSha256": "380a118050f71466387b7f638930879f27f4ca91566a9119c814431c3288db6f"
+    },
+    {
+      "id": "general_signal_decoder_1",
+      "name": "密齿密码轮",
+      "icon": "res://assets/extraction/v300/general_loot/general_signal_decoder_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        38,
+        284,
+        199,
+        199
+      ],
+      "sourceCell": [
+        0,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        68,
+        46,
+        206,
+        209
+      ],
+      "pixelSha256": "5ac247f9778bc2750830b1abd02d40f01f302147af1ecab413c12a717f100b0a"
+    },
+    {
+      "id": "general_signal_decoder_2",
+      "name": "折叠航向架",
+      "icon": "res://assets/extraction/v300/general_loot/general_signal_decoder_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        290,
+        280,
+        202,
+        202
+      ],
+      "sourceCell": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        52,
+        43,
+        217,
+        208
+      ],
+      "pixelSha256": "a88c6113b7c52f8b15cfe4277615c7b83cf698bf15beb7e3d0f679167ec5e410"
+    },
+    {
+      "id": "general_signal_decoder_3",
+      "name": "古式计步匣",
+      "icon": "res://assets/extraction/v300/general_loot/general_signal_decoder_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        532,
+        272,
+        216,
+        216
+      ],
+      "sourceCell": [
+        512,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        56,
+        35,
+        201,
+        212
+      ],
+      "pixelSha256": "1ce31673f1b6f47cc57132486a406164cc23f118947bf78d53a8b1eb074f8c76"
+    },
+    {
+      "id": "general_rare_ore_1",
+      "name": "青金釉料罐",
+      "icon": "res://assets/extraction/v300/general_loot/general_rare_ore_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        796,
+        287,
+        196,
+        196
+      ],
+      "sourceCell": [
+        768,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        49,
+        49,
+        203,
+        209
+      ],
+      "pixelSha256": "3fb977a732937bd58c3ec410a9efdb5d5bebe264260757ad77b6e2a51ef99566"
+    },
+    {
+      "id": "general_rare_ore_2",
+      "name": "银线织毯",
+      "icon": "res://assets/extraction/v300/general_loot/general_rare_ore_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        1039,
+        278,
+        220,
+        220
+      ],
+      "sourceCell": [
+        1024,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        35,
+        53,
+        215,
+        211
+      ],
+      "pixelSha256": "0b3de71d1adc6cadd2112074daa7a8a8febd7ceb854be4a16370e456162abeeb"
+    },
+    {
+      "id": "general_rare_ore_3",
+      "name": "嵌骨香木箱",
+      "icon": "res://assets/extraction/v300/general_loot/general_rare_ore_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        1296,
+        278,
+        215,
+        215
+      ],
+      "sourceCell": [
+        1280,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        36,
+        64,
+        212,
+        195
+      ],
+      "pixelSha256": "d65720b8ba8a2ce360fb0c90c8a603270b9f98298df5259c39ce98a5f45b8318"
+    },
+    {
+      "id": "general_jade_pendant_1",
+      "name": "珍珠领扣",
+      "icon": "res://assets/extraction/v300/general_loot/general_jade_pendant_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        33,
+        526,
+        208,
+        208
+      ],
+      "sourceCell": [
+        0,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        52,
+        71,
+        222,
+        165
+      ],
+      "pixelSha256": "39190f24b0328da845922f9308757f73606dfedc5ae20d3f7aebfbe0d946925e"
+    },
+    {
+      "id": "general_jade_pendant_2",
+      "name": "镂金耳坠",
+      "icon": "res://assets/extraction/v300/general_loot/general_jade_pendant_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        288,
+        528,
+        204,
+        204
+      ],
+      "sourceCell": [
+        256,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        91,
+        34,
+        177,
+        201
+      ],
+      "pixelSha256": "1257450467dee37c35139312bc3511317eec6b87b46a1d670a71ea217e7f3dd2"
+    },
+    {
+      "id": "general_jade_pendant_3",
+      "name": "海纹玛瑙章",
+      "icon": "res://assets/extraction/v300/general_loot/general_jade_pendant_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        540,
+        527,
+        202,
+        202
+      ],
+      "sourceCell": [
+        512,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        46,
+        37,
+        211,
+        195
+      ],
+      "pixelSha256": "7529020767215daea88dd51559e68f863202c9b24da0f178086d9c287ac840e8"
+    },
+    {
+      "id": "general_silk_scroll_1",
+      "name": "漆木横笛",
+      "icon": "res://assets/extraction/v300/general_loot/general_silk_scroll_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        786,
+        517,
+        216,
+        216
+      ],
+      "sourceCell": [
+        768,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        37,
+        65,
+        214,
+        161
+      ],
+      "pixelSha256": "051ef5b12aabca580ed2d50437ec8bd68074034f539838f982858570e1f89fc7"
+    },
+    {
+      "id": "general_silk_scroll_2",
+      "name": "刺绣祭带",
+      "icon": "res://assets/extraction/v300/general_loot/general_silk_scroll_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        1041,
+        524,
+        208,
+        208
+      ],
+      "sourceCell": [
+        1024,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        36,
+        36,
+        206,
+        197
+      ],
+      "pixelSha256": "b3997e7febe8d104f6c84bbef6d79bb17c7a4c1ac488d347c05fac7171eb0aa1"
+    },
+    {
+      "id": "general_silk_scroll_3",
+      "name": "象牙书签组",
+      "icon": "res://assets/extraction/v300/general_loot/general_silk_scroll_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        1291,
+        522,
+        218,
+        218
+      ],
+      "sourceCell": [
+        1280,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        31,
+        37,
+        209,
+        201
+      ],
+      "pixelSha256": "8fc56c0e4b085ca4dce4fe8e7b76f0b2c894f949bd4f845b51e28487f2863629"
+    },
+    {
+      "id": "general_hologram_1",
+      "name": "水银测压计",
+      "icon": "res://assets/extraction/v300/general_loot/general_hologram_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        30,
+        768,
+        218,
+        218
+      ],
+      "sourceCell": [
+        0,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        93,
+        14,
+        185,
+        192
+      ],
+      "pixelSha256": "1ec5f33b13c0b1d50f3e694d2444f9ed8cec0c23c1899706c817a1a32c15d9b9"
+    },
+    {
+      "id": "general_hologram_2",
+      "name": "铜框显微镜",
+      "icon": "res://assets/extraction/v300/general_loot/general_hologram_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        278,
+        769,
+        210,
+        210
+      ],
+      "sourceCell": [
+        256,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        74,
+        20,
+        181,
+        192
+      ],
+      "pixelSha256": "5f2e076ad7170a84ea9ab4b9b06528f890e59bb6d955fc0fe777206021a6e0ad"
+    },
+    {
+      "id": "general_hologram_3",
+      "name": "蓝釉茶炉",
+      "icon": "res://assets/extraction/v300/general_loot/general_hologram_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        536,
+        774,
+        199,
+        199
+      ],
+      "sourceCell": [
+        512,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        51,
+        24,
+        197,
+        187
+      ],
+      "pixelSha256": "a9b381307aec70405a0c2a3a5e9271a4606f476a421a0eb2f1a4c3bc66925d14"
+    },
+    {
+      "id": "general_thermal_chip_1",
+      "name": "透光雕花片",
+      "icon": "res://assets/extraction/v300/general_loot/general_thermal_chip_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        794,
+        776,
+        196,
+        196
+      ],
+      "sourceCell": [
+        768,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        44,
+        33,
+        204,
+        180
+      ],
+      "pixelSha256": "01dcab51be506cf6312c7dd71132d06f97efb84eca42f972f1023c0120fd5786"
+    },
+    {
+      "id": "general_thermal_chip_2",
+      "name": "微雕银骰",
+      "icon": "res://assets/extraction/v300/general_loot/general_thermal_chip_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        1054,
+        779,
+        187,
+        187
+      ],
+      "sourceCell": [
+        1024,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        55,
+        28,
+        192,
+        181
+      ],
+      "pixelSha256": "8002e30c182d9ccccaaffd44b72155982e58680cffbb60adfae54e1aebf30388"
+    },
+    {
+      "id": "general_thermal_chip_3",
+      "name": "密封香膏盒",
+      "icon": "res://assets/extraction/v300/general_loot/general_thermal_chip_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_01.png",
+      "region": [
+        1294,
+        768,
+        213,
+        213
+      ],
+      "sourceCell": [
+        1280,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        34,
+        43,
+        208,
+        159
+      ],
+      "pixelSha256": "50b95e073f0cc729cef74c0fa8ab5e0afb80a9a02a7b664023ea86ea700b3371"
+    },
+    {
+      "id": "general_servo_arm_1",
+      "name": "双臂天平",
+      "icon": "res://assets/extraction/v300/general_loot/general_servo_arm_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        33,
+        26,
+        214,
+        214
+      ],
+      "sourceCell": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        58,
+        46,
+        222,
+        221
+      ],
+      "pixelSha256": "fed511f48d31b0b2554371a763165508c5295cf48f70ca488c9f82ee63046c59"
+    },
+    {
+      "id": "general_servo_arm_2",
+      "name": "折叠铜梯",
+      "icon": "res://assets/extraction/v300/general_loot/general_servo_arm_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        288,
+        33,
+        200,
+        200
+      ],
+      "sourceCell": [
+        256,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        57,
+        51,
+        206,
+        215
+      ],
+      "pixelSha256": "a88fa41c2e4041cbc62b6b407e75ef88b21a24621f975ce46993e039c62689ca"
+    },
+    {
+      "id": "general_servo_arm_3",
+      "name": "古织机梭架",
+      "icon": "res://assets/extraction/v300/general_loot/general_servo_arm_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        538,
+        29,
+        209,
+        209
+      ],
+      "sourceCell": [
+        512,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        46,
+        48,
+        215,
+        219
+      ],
+      "pixelSha256": "53e0c3bb125208cfc0db6c46ef7e431a0891454b96fbc5f4ff79e4b2dc91d314"
+    },
+    {
+      "id": "general_research_notes_1",
+      "name": "手绘海潮册",
+      "icon": "res://assets/extraction/v300/general_loot/general_research_notes_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        784,
+        28,
+        222,
+        222
+      ],
+      "sourceCell": [
+        768,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        36,
+        70,
+        218,
+        209
+      ],
+      "pixelSha256": "7e701331e2c770434f35e5fc01a1670e9da451f854b5db99eb61fe34d8d4f940"
+    },
+    {
+      "id": "general_research_notes_2",
+      "name": "彩绘兽谱",
+      "icon": "res://assets/extraction/v300/general_loot/general_research_notes_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        1044,
+        30,
+        216,
+        216
+      ],
+      "sourceCell": [
+        1024,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        40,
+        74,
+        217,
+        202
+      ],
+      "pixelSha256": "13f6939d788c856080e4127cfe661c04d22563b31aa7f4de9245c728f6562279"
+    },
+    {
+      "id": "general_research_notes_3",
+      "name": "铜版地契集",
+      "icon": "res://assets/extraction/v300/general_loot/general_research_notes_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        1304,
+        28,
+        209,
+        209
+      ],
+      "sourceCell": [
+        1280,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        47,
+        211,
+        218
+      ],
+      "pixelSha256": "c54380f498875c169d509d5a4bb802f59099c7820629318acdb8c3726cd29627"
+    },
+    {
+      "id": "general_gold_watch_1",
+      "name": "金壳鼻烟盒",
+      "icon": "res://assets/extraction/v300/general_loot/general_gold_watch_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        40,
+        281,
+        196,
+        196
+      ],
+      "sourceCell": [
+        0,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        61,
+        43,
+        216,
+        203
+      ],
+      "pixelSha256": "45bad61f8bd8af4fb93471b1d633049459a84c7e6efd04683d82e0ccd432f810"
+    },
+    {
+      "id": "general_gold_watch_2",
+      "name": "蓝钻领针",
+      "icon": "res://assets/extraction/v300/general_loot/general_gold_watch_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        292,
+        280,
+        196,
+        196
+      ],
+      "sourceCell": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        71,
+        42,
+        196,
+        202
+      ],
+      "pixelSha256": "ad651b6cce2b2c5007e01d2bdc732d6ee51e6e68bd9fd6567183e87cbf5ffbb3"
+    },
+    {
+      "id": "general_gold_watch_3",
+      "name": "古廷封蜡章",
+      "icon": "res://assets/extraction/v300/general_loot/general_gold_watch_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        536,
+        276,
+        204,
+        204
+      ],
+      "sourceCell": [
+        512,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        54,
+        39,
+        197,
+        206
+      ],
+      "pixelSha256": "29dc17a89b9209fe9119755f2c97064cdbbe0d9c1b52121ed9f6673a4ab72514"
+    },
+    {
+      "id": "general_idol_1",
+      "name": "鎏金竖琴",
+      "icon": "res://assets/extraction/v300/general_loot/general_idol_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        796,
+        280,
+        202,
+        202
+      ],
+      "sourceCell": [
+        768,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        56,
+        42,
+        203,
+        207
+      ],
+      "pixelSha256": "88f1c46ee85aa9a86385525445b8d436e43f56278f1de895ced6577731a11071"
+    },
+    {
+      "id": "general_idol_2",
+      "name": "珐琅壁钟",
+      "icon": "res://assets/extraction/v300/general_loot/general_idol_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        1050,
+        272,
+        208,
+        208
+      ],
+      "sourceCell": [
+        1024,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        68,
+        35,
+        191,
+        205
+      ],
+      "pixelSha256": "fa02bbea60d03f185aac1ed018885634031d01845a4145c802aeb1c0a0e77917"
+    },
+    {
+      "id": "general_idol_3",
+      "name": "金枝礼树",
+      "icon": "res://assets/extraction/v300/general_loot/general_idol_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        1312,
+        280,
+        198,
+        198
+      ],
+      "sourceCell": [
+        1280,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        57,
+        42,
+        204,
+        204
+      ],
+      "pixelSha256": "15fcb7aeb816aeb6c15ef24b1d7234552d84b9ddcf799dca73b17eec671bbec9"
+    },
+    {
+      "id": "general_crown_1",
+      "name": "宝石舞会面具",
+      "icon": "res://assets/extraction/v300/general_loot/general_crown_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        34,
+        522,
+        205,
+        205
+      ],
+      "sourceCell": [
+        0,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        52,
+        36,
+        220,
+        190
+      ],
+      "pixelSha256": "d0d3a4029f50b5a051365ea6a439f411dada422cc18e4c1d3518e1f5811be642"
+    },
+    {
+      "id": "general_crown_2",
+      "name": "王家银餐盘",
+      "icon": "res://assets/extraction/v300/general_loot/general_crown_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        280,
+        520,
+        210,
+        210
+      ],
+      "sourceCell": [
+        256,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        43,
+        43,
+        215,
+        182
+      ],
+      "pixelSha256": "73cda26d641bbf6098b75fb3171b170afa8778ec35ddf257e90fff2073dfaaf5"
+    },
+    {
+      "id": "general_crown_3",
+      "name": "金缕祈祷冠",
+      "icon": "res://assets/extraction/v300/general_loot/general_crown_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        536,
+        514,
+        210,
+        210
+      ],
+      "sourceCell": [
+        512,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        43,
+        52,
+        215,
+        162
+      ],
+      "pixelSha256": "503e13d0cc5efe2e13cd47c114cc88a5b33f31b8eee510af0f05dfd32c566239"
+    },
+    {
+      "id": "general_platinum_bar_1",
+      "name": "镀金圣餐刀",
+      "icon": "res://assets/extraction/v300/general_loot/general_platinum_bar_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        796,
+        529,
+        191,
+        191
+      ],
+      "sourceCell": [
+        768,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        46,
+        36,
+        202,
+        189
+      ],
+      "pixelSha256": "abfafa3b98794e56d9bd22ebebe645f627e07333fea8713ab54987504812a8a0"
+    },
+    {
+      "id": "general_platinum_bar_2",
+      "name": "宝石袖扣盒",
+      "icon": "res://assets/extraction/v300/general_loot/general_platinum_bar_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        1050,
+        521,
+        208,
+        208
+      ],
+      "sourceCell": [
+        1024,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        45,
+        215,
+        181
+      ],
+      "pixelSha256": "0d199272c142768b9c41213b5fc967269847fe278d3e7eab613b0ffcb87bddcc"
+    },
+    {
+      "id": "general_platinum_bar_3",
+      "name": "银嵌测量尺",
+      "icon": "res://assets/extraction/v300/general_loot/general_platinum_bar_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        1311,
+        525,
+        196,
+        196
+      ],
+      "sourceCell": [
+        1280,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        49,
+        46,
+        209,
+        176
+      ],
+      "pixelSha256": "bf4d55ee41da31f3d1f1a86383f87c6623179ff9e302933ce89e7a169e247883"
+    },
+    {
+      "id": "general_diamond_ring_1",
+      "name": "鸽血石胸扣",
+      "icon": "res://assets/extraction/v300/general_loot/general_diamond_ring_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        40,
+        780,
+        193,
+        193
+      ],
+      "sourceCell": [
+        0,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        58,
+        42,
+        216,
+        174
+      ],
+      "pixelSha256": "d8f22224c0e928e6cf3227778b20dbe8367a5f90b43bc1bcb58b6ec69a04ff53"
+    },
+    {
+      "id": "general_diamond_ring_2",
+      "name": "金丝发梳",
+      "icon": "res://assets/extraction/v300/general_loot/general_diamond_ring_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        290,
+        778,
+        190,
+        190
+      ],
+      "sourceCell": [
+        256,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        51,
+        39,
+        206,
+        171
+      ],
+      "pixelSha256": "1e98001a2b567c67dcb0cb69086e4d089bfbce73c888dcd71b9489e11d390fa4"
+    },
+    {
+      "id": "general_diamond_ring_3",
+      "name": "王室纪念币",
+      "icon": "res://assets/extraction/v300/general_loot/general_diamond_ring_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        536,
+        770,
+        207,
+        207
+      ],
+      "sourceCell": [
+        512,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        43,
+        44,
+        212,
+        168
+      ],
+      "pixelSha256": "30939a3bde03dd55c6b4b7fd8b56c4a684706720fc49df58acdec72eb53b0423"
+    },
+    {
+      "id": "general_antique_camera_1",
+      "name": "贵族印刷机",
+      "icon": "res://assets/extraction/v300/general_loot/general_antique_camera_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        796,
+        772,
+        205,
+        205
+      ],
+      "sourceCell": [
+        768,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        46,
+        26,
+        214,
+        186
+      ],
+      "pixelSha256": "b3fc56554e63c9d545c0d8fd04e2fedbc83e1e0c3b29eb9e6a81c86eae8a3448"
+    },
+    {
+      "id": "general_antique_camera_2",
+      "name": "古代投影箱",
+      "icon": "res://assets/extraction/v300/general_loot/general_antique_camera_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        1056,
+        776,
+        193,
+        193
+      ],
+      "sourceCell": [
+        1024,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        49,
+        26,
+        207,
+        183
+      ],
+      "pixelSha256": "ab22d76e407448645994c9cc52a7ac1bc48c2850f26b8d42c0750306ef958de3"
+    },
+    {
+      "id": "general_antique_camera_3",
+      "name": "御用琉璃壶",
+      "icon": "res://assets/extraction/v300/general_loot/general_antique_camera_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_02.png",
+      "region": [
+        1308,
+        774,
+        199,
+        199
+      ],
+      "sourceCell": [
+        1280,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        55,
+        24,
+        200,
+        187
+      ],
+      "pixelSha256": "dea679dd080c5e18b2c50fbd75ba1f5114af312a15bac042a0404100dce45d99"
+    },
+    {
+      "id": "general_star_map_1",
+      "name": "绣金疆域挂图",
+      "icon": "res://assets/extraction/v300/general_loot/general_star_map_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        32,
+        30,
+        220,
+        220
+      ],
+      "sourceCell": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        52,
+        62,
+        232,
+        219
+      ],
+      "pixelSha256": "1dfed24367c6c64c5c712a213164b5adca80958251bc66bd165813c6d1113cdb"
+    },
+    {
+      "id": "general_star_map_2",
+      "name": "航海总志",
+      "icon": "res://assets/extraction/v300/general_loot/general_star_map_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        286,
+        46,
+        190,
+        190
+      ],
+      "sourceCell": [
+        256,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        50,
+        63,
+        199,
+        218
+      ],
+      "pixelSha256": "517726e304ba757a8e46d1489db01af064d58fb33838415f72b8aa6e705f1231"
+    },
+    {
+      "id": "general_star_map_3",
+      "name": "宫廷藏书目录",
+      "icon": "res://assets/extraction/v300/general_loot/general_star_map_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        535,
+        38,
+        198,
+        198
+      ],
+      "sourceCell": [
+        512,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        41,
+        60,
+        203,
+        215
+      ],
+      "pixelSha256": "bab4595949d3ef6a7605efe42f88952c53a0daf676a69273cb259183669d8443"
+    },
+    {
+      "id": "general_fusion_battery_1",
+      "name": "密封魔晶炉",
+      "icon": "res://assets/extraction/v300/general_loot/general_fusion_battery_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        802,
+        46,
+        186,
+        186
+      ],
+      "sourceCell": [
+        768,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        57,
+        63,
+        197,
+        215
+      ],
+      "pixelSha256": "5cb9f4598350b7ad9a804cc14b685a86366f0d223472b01a84dc18d52d02eece"
+    },
+    {
+      "id": "general_fusion_battery_2",
+      "name": "深井储压罐",
+      "icon": "res://assets/extraction/v300/general_loot/general_fusion_battery_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        1064,
+        46,
+        187,
+        187
+      ],
+      "sourceCell": [
+        1024,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        62,
+        63,
+        206,
+        216
+      ],
+      "pixelSha256": "5a694c139e5dfb0eb39307e96e0bf6aa157005b8888cc68c71b658d374dafe81"
+    },
+    {
+      "id": "general_fusion_battery_3",
+      "name": "日照蓄热板",
+      "icon": "res://assets/extraction/v300/general_loot/general_fusion_battery_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        1305,
+        48,
+        185,
+        185
+      ],
+      "sourceCell": [
+        1280,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        42,
+        65,
+        193,
+        216
+      ],
+      "pixelSha256": "fed45ee0bb425a2a3dfe7c8d5ea1b3c3b01b65bc9d5ce828079d95c8fe780c21"
+    },
+    {
+      "id": "general_ivory_statue_1",
+      "name": "珐琅长颈壶",
+      "icon": "res://assets/extraction/v300/general_loot/general_ivory_statue_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        33,
+        278,
+        204,
+        204
+      ],
+      "sourceCell": [
+        0,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        75,
+        41,
+        195,
+        208
+      ],
+      "pixelSha256": "f5b1d4f1aa1a62ed23662cc885fe37e549349c614683ee08eb2038346f58b911"
+    },
+    {
+      "id": "general_ivory_statue_2",
+      "name": "金叶宴会烛台",
+      "icon": "res://assets/extraction/v300/general_loot/general_ivory_statue_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        286,
+        278,
+        204,
+        204
+      ],
+      "sourceCell": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        59,
+        40,
+        205,
+        207
+      ],
+      "pixelSha256": "8fe9fb1b163b60290f147e1971fbaaef51977958f51228334f68941a9f2cfa47"
+    },
+    {
+      "id": "general_ivory_statue_3",
+      "name": "彩瓷鹤瓶",
+      "icon": "res://assets/extraction/v300/general_loot/general_ivory_statue_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        546,
+        286,
+        196,
+        196
+      ],
+      "sourceCell": [
+        512,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        91,
+        48,
+        174,
+        208
+      ],
+      "pixelSha256": "72fbdcfe72736835a901e6ff6e7c0db3d58d960e98afbe1dfada53874e05efe3"
+    },
+    {
+      "id": "general_ruby_necklace_1",
+      "name": "镶金折扇",
+      "icon": "res://assets/extraction/v300/general_loot/general_ruby_necklace_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        780,
+        274,
+        226,
+        226
+      ],
+      "sourceCell": [
+        768,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        32,
+        56,
+        217,
+        206
+      ],
+      "pixelSha256": "f54903a29c2fc7a2211973a62c8bc1dc0c9b54b757f0b6c12f0ba0d864a3e8b3"
+    },
+    {
+      "id": "general_ruby_necklace_2",
+      "name": "珍珠发冠",
+      "icon": "res://assets/extraction/v300/general_loot/general_ruby_necklace_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        1051,
+        276,
+        197,
+        197
+      ],
+      "sourceCell": [
+        1024,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        57,
+        206,
+        181
+      ],
+      "pixelSha256": "755ba69789e0885b4e9a86c43a7f10496f8e3058614f8acd91ea33f65d28c086"
+    },
+    {
+      "id": "general_ruby_necklace_3",
+      "name": "琥珀腰饰",
+      "icon": "res://assets/extraction/v300/general_loot/general_ruby_necklace_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        1294,
+        282,
+        210,
+        210
+      ],
+      "sourceCell": [
+        1280,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        33,
+        72,
+        205,
+        190
+      ],
+      "pixelSha256": "fa6f154c1d27f557e1673cedbcf0b11ae542a763f434cd731250489ef4657daf"
+    },
+    {
+      "id": "general_quantum_server_1",
+      "name": "古代自动织机",
+      "icon": "res://assets/extraction/v300/general_loot/general_quantum_server_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        42,
+        530,
+        194,
+        194
+      ],
+      "sourceCell": [
+        0,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        60,
+        37,
+        219,
+        192
+      ],
+      "pixelSha256": "1226f48b3b2e71be58eb1ca575446992ffd74fd20bba5495187914e7e4b8846b"
+    },
+    {
+      "id": "general_quantum_server_2",
+      "name": "大型机械算盘",
+      "icon": "res://assets/extraction/v300/general_loot/general_quantum_server_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        286,
+        528,
+        200,
+        200
+      ],
+      "sourceCell": [
+        256,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        48,
+        44,
+        212,
+        188
+      ],
+      "pixelSha256": "efd9e816278b23fae5ddaacae4ed45b6e5b83c19ae82f7b92bfe51c04859e846"
+    },
+    {
+      "id": "general_quantum_server_3",
+      "name": "宫廷自鸣乐器",
+      "icon": "res://assets/extraction/v300/general_loot/general_quantum_server_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        542,
+        525,
+        202,
+        202
+      ],
+      "sourceCell": [
+        512,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        49,
+        39,
+        214,
+        189
+      ],
+      "pixelSha256": "db50979f994bd1dff9383d40b4511508c13afd5532176e3e2b84ebddd6c827a0"
+    },
+    {
+      "id": "general_vintage_vase_1",
+      "name": "雕银酒桶",
+      "icon": "res://assets/extraction/v300/general_loot/general_vintage_vase_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        802,
+        529,
+        187,
+        187
+      ],
+      "sourceCell": [
+        768,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        53,
+        34,
+        202,
+        187
+      ],
+      "pixelSha256": "71c698cd6705fd5c01ad2ca87e59c1aac9f149301aded8f5092530db06d26a71"
+    },
+    {
+      "id": "general_vintage_vase_2",
+      "name": "孔雀珐琅屏",
+      "icon": "res://assets/extraction/v300/general_loot/general_vintage_vase_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        1051,
+        525,
+        197,
+        197
+      ],
+      "sourceCell": [
+        1024,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        40,
+        206,
+        183
+      ],
+      "pixelSha256": "c00ed8f6d422508c7d140933f352a6af6e42bb2ee36ea6f20f078d7b1afa62cc"
+    },
+    {
+      "id": "general_vintage_vase_3",
+      "name": "镶贝首饰柜",
+      "icon": "res://assets/extraction/v300/general_loot/general_vintage_vase_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        1296,
+        522,
+        202,
+        202
+      ],
+      "sourceCell": [
+        1280,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        35,
+        36,
+        200,
+        185
+      ],
+      "pixelSha256": "9fc37ba07a483579f6219dc5bc698d8acc6283f0478e5af98cd295710aeff3b0"
+    },
+    {
+      "id": "general_red_core_1",
+      "name": "深海星珠匣",
+      "icon": "res://assets/extraction/v300/general_loot/general_red_core_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        42,
+        768,
+        196,
+        196
+      ],
+      "sourceCell": [
+        0,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        67,
+        13,
+        214,
+        173
+      ],
+      "pixelSha256": "4d3662e8bbe30eacc49c6d1dc772f33a65a28f96767e90ba0f385bee63bd3744"
+    },
+    {
+      "id": "general_red_core_2",
+      "name": "黎明晶卵",
+      "icon": "res://assets/extraction/v300/general_loot/general_red_core_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        294,
+        768,
+        183,
+        183
+      ],
+      "sourceCell": [
+        256,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        70,
+        17,
+        188,
+        167
+      ],
+      "pixelSha256": "3ac2ca7fadc771bf6e18b2341071b99bbf819e5a48438f13c526fe55f07b25f0"
+    },
+    {
+      "id": "general_red_core_3",
+      "name": "古龙血珀",
+      "icon": "res://assets/extraction/v300/general_loot/general_red_core_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        543,
+        774,
+        174,
+        174
+      ],
+      "sourceCell": [
+        512,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        47,
+        23,
+        189,
+        164
+      ],
+      "pixelSha256": "a4d7a44dc15171ea12baa350e61bde54ad1db95b897be55da2761d8dbbd3360f"
+    },
+    {
+      "id": "general_archive_1",
+      "name": "失传王谕卷",
+      "icon": "res://assets/extraction/v300/general_loot/general_archive_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        790,
+        768,
+        196,
+        196
+      ],
+      "sourceCell": [
+        768,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        40,
+        27,
+        200,
+        160
+      ],
+      "pixelSha256": "cfb832a87eaaf48376e5feff9277d2e239c1808ba32adc22c8bd4ea79a9ef636"
+    },
+    {
+      "id": "general_archive_2",
+      "name": "初代契约书",
+      "icon": "res://assets/extraction/v300/general_loot/general_archive_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        1046,
+        768,
+        199,
+        199
+      ],
+      "sourceCell": [
+        1024,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        40,
+        32,
+        203,
+        163
+      ],
+      "pixelSha256": "9aafef9e601b0818ee5a12a94085a91f2d7e96f53d9291c43c8263de74249c60"
+    },
+    {
+      "id": "general_archive_3",
+      "name": "永夜抄本",
+      "icon": "res://assets/extraction/v300/general_loot/general_archive_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_03.png",
+      "region": [
+        1304,
+        772,
+        182,
+        182
+      ],
+      "sourceCell": [
+        1280,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        41,
+        24,
+        190,
+        167
+      ],
+      "pixelSha256": "35e11cbda17da389f5f777dbefe989f35c089d77372310f3ab779c26bad369b2"
+    },
+    {
+      "id": "general_dragon_egg_1",
+      "name": "整副幼龙骨架",
+      "icon": "res://assets/extraction/v300/general_loot/general_dragon_egg_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        24,
+        25,
+        221,
+        221
+      ],
+      "sourceCell": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        44,
+        45,
+        224,
+        226
+      ],
+      "pixelSha256": "9208847e0ebfedd3412b1dc104505a0f54e8b99c8cdb5e0eef0758cd9cb78425"
+    },
+    {
+      "id": "general_dragon_egg_2",
+      "name": "古海兽头骨",
+      "icon": "res://assets/extraction/v300/general_loot/general_dragon_egg_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        280,
+        36,
+        209,
+        209
+      ],
+      "sourceCell": [
+        256,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        43,
+        58,
+        214,
+        224
+      ],
+      "pixelSha256": "e8b459f684853d5e3c10f071e9c79268a7e6e1a63a0ee4f5ca2ee44cb0faaa01"
+    },
+    {
+      "id": "general_dragon_egg_3",
+      "name": "琉璃海景箱",
+      "icon": "res://assets/extraction/v300/general_loot/general_dragon_egg_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        529,
+        22,
+        222,
+        222
+      ],
+      "sourceCell": [
+        512,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        37,
+        43,
+        219,
+        224
+      ],
+      "pixelSha256": "41ad64cd7922953ba9bef010f049c19bc3103adf121d3678f6cb51f1c2cbe125"
+    },
+    {
+      "id": "general_astral_clock_1",
+      "name": "万年历机械匣",
+      "icon": "res://assets/extraction/v300/general_loot/general_astral_clock_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        782,
+        22,
+        224,
+        224
+      ],
+      "sourceCell": [
+        768,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        35,
+        43,
+        218,
+        224
+      ],
+      "pixelSha256": "daa23d9d88a28dda31bde2074b4a30426b18107dc1258635628625158958671a"
+    },
+    {
+      "id": "general_astral_clock_2",
+      "name": "潮汐演算球",
+      "icon": "res://assets/extraction/v300/general_loot/general_astral_clock_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        1038,
+        19,
+        230,
+        230
+      ],
+      "sourceCell": [
+        1024,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        43,
+        40,
+        214,
+        228
+      ],
+      "pixelSha256": "2b24bcf2584c1cc9f96f326d103bdd6746b86c22e75b304aed99595fa5312edf"
+    },
+    {
+      "id": "general_astral_clock_3",
+      "name": "古王庭测天盘",
+      "icon": "res://assets/extraction/v300/general_loot/general_astral_clock_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        1292,
+        24,
+        225,
+        225
+      ],
+      "sourceCell": [
+        1280,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        32,
+        48,
+        216,
+        224
+      ],
+      "pixelSha256": "2e2283f9f6da8ead017d1b81748f38a50ccc156cd71effff842e2c3ab92780c4"
+    },
+    {
+      "id": "general_genesis_disk_1",
+      "name": "诸王盟誓册",
+      "icon": "res://assets/extraction/v300/general_loot/general_genesis_disk_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        23,
+        279,
+        209,
+        209
+      ],
+      "sourceCell": [
+        0,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        42,
+        42,
+        213,
+        213
+      ],
+      "pixelSha256": "3d0f3e18ef82f35687948d253a8b140f87b74fdc71599179e3e27f137eee93aa"
+    },
+    {
+      "id": "general_genesis_disk_2",
+      "name": "失落音律谱",
+      "icon": "res://assets/extraction/v300/general_loot/general_genesis_disk_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        262,
+        269,
+        236,
+        236
+      ],
+      "sourceCell": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        27,
+        51,
+        220,
+        211
+      ],
+      "pixelSha256": "3936a660231b57c43f18946250a56feaece70a979d5cf696acb1aa2b3566e79e"
+    },
+    {
+      "id": "general_genesis_disk_3",
+      "name": "古圣祭仪典",
+      "icon": "res://assets/extraction/v300/general_loot/general_genesis_disk_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        530,
+        278,
+        215,
+        215
+      ],
+      "sourceCell": [
+        512,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        42,
+        41,
+        210,
+        217
+      ],
+      "pixelSha256": "0b8e6591810d5593c29ceb6c41bf967d5b602dbf6e9b74f8ef23260108bda2a9"
+    },
+    {
+      "id": "general_meteor_heart_1",
+      "name": "极昼琥珀树",
+      "icon": "res://assets/extraction/v300/general_loot/general_meteor_heart_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        784,
+        275,
+        218,
+        218
+      ],
+      "sourceCell": [
+        768,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        37,
+        39,
+        214,
+        217
+      ],
+      "pixelSha256": "72878b49284b89e528c9893f16c5be6c754b8bf5cbca119652c68bc92130074e"
+    },
+    {
+      "id": "general_meteor_heart_2",
+      "name": "海底七彩珊瑚",
+      "icon": "res://assets/extraction/v300/general_loot/general_meteor_heart_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        1044,
+        278,
+        214,
+        214
+      ],
+      "sourceCell": [
+        1024,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        39,
+        43,
+        214,
+        214
+      ],
+      "pixelSha256": "c586586695a1de456c47ffc313ed75c41bf188a617625314dc71173a4fda8b84"
+    },
+    {
+      "id": "general_meteor_heart_3",
+      "name": "双生月辉晶簇",
+      "icon": "res://assets/extraction/v300/general_loot/general_meteor_heart_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        1298,
+        274,
+        219,
+        219
+      ],
+      "sourceCell": [
+        1280,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        43,
+        38,
+        211,
+        217
+      ],
+      "pixelSha256": "fc09d7beae2d71fa27b04ce11fe98ddf456c0e33e6d24d756d84e31cecd09417"
+    },
+    {
+      "id": "general_royal_scepter_1",
+      "name": "加冕仪仗剑",
+      "icon": "res://assets/extraction/v300/general_loot/general_royal_scepter_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        16,
+        519,
+        218,
+        218
+      ],
+      "sourceCell": [
+        0,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        46,
+        27,
+        203,
+        205
+      ],
+      "pixelSha256": "9bfafc5fc9653ba2fa2a6db6aa635af63b840a53a0c9b51596036ba44d76702f"
+    },
+    {
+      "id": "general_royal_scepter_2",
+      "name": "先王巡礼杖",
+      "icon": "res://assets/extraction/v300/general_loot/general_royal_scepter_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        270,
+        518,
+        226,
+        226
+      ],
+      "sourceCell": [
+        256,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        42,
+        26,
+        212,
+        211
+      ],
+      "pixelSha256": "f2b0f811e485af78160fa4cd41625d2a55317ef72db0b07b79c0e1222ac3be70"
+    },
+    {
+      "id": "general_royal_scepter_3",
+      "name": "御前金节旗杆",
+      "icon": "res://assets/extraction/v300/general_loot/general_royal_scepter_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        524,
+        522,
+        219,
+        219
+      ],
+      "sourceCell": [
+        512,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        39,
+        30,
+        205,
+        209
+      ],
+      "pixelSha256": "2ca539b2c2484b43c26acbd06df8dbaaa12c15bef7e64e5275b480d36873c1e1"
+    },
+    {
+      "id": "general_sunken_crown_1",
+      "name": "初王礼仪面甲",
+      "icon": "res://assets/extraction/v300/general_loot/general_sunken_crown_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        786,
+        518,
+        222,
+        222
+      ],
+      "sourceCell": [
+        768,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        39,
+        26,
+        218,
+        208
+      ],
+      "pixelSha256": "5153dddb7fafa1232bb99bc690e9f60a56132ed5f6b6d2d8f1d5c79add8ad940"
+    },
+    {
+      "id": "general_sunken_crown_2",
+      "name": "王后宝石妆镜",
+      "icon": "res://assets/extraction/v300/general_loot/general_sunken_crown_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        1042,
+        521,
+        222,
+        222
+      ],
+      "sourceCell": [
+        1024,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        52,
+        29,
+        205,
+        211
+      ],
+      "pixelSha256": "cd79eef4f6bc32b57e024537eca11c9fed3e5c3870eaa0ef06f3507a2c3271bc"
+    },
+    {
+      "id": "general_sunken_crown_3",
+      "name": "古王印玺匣",
+      "icon": "res://assets/extraction/v300/general_loot/general_sunken_crown_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        1292,
+        520,
+        224,
+        224
+      ],
+      "sourceCell": [
+        1280,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        33,
+        28,
+        215,
+        211
+      ],
+      "pixelSha256": "b574f6632f046d9db6525f88b7e0b3a17fe07caf0986a04eb6e3edb228e7bce4"
+    },
+    {
+      "id": "general_void_fossil_1",
+      "name": "远古巨蝶标本",
+      "icon": "res://assets/extraction/v300/general_loot/general_void_fossil_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        26,
+        782,
+        209,
+        209
+      ],
+      "sourceCell": [
+        0,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        33,
+        216,
+        204
+      ],
+      "pixelSha256": "37e16653824ccf7b1cd823b81493a49efb5c717d4661399ba8e8ccff05aac88d"
+    },
+    {
+      "id": "general_void_fossil_2",
+      "name": "深渊螺旋化石",
+      "icon": "res://assets/extraction/v300/general_loot/general_void_fossil_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        280,
+        782,
+        208,
+        208
+      ],
+      "sourceCell": [
+        256,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        43,
+        35,
+        213,
+        201
+      ],
+      "pixelSha256": "5741b5d6531f8ce34181865eaa2d8885ff94b9c684c214638e9c64cfbea5fcae"
+    },
+    {
+      "id": "general_void_fossil_3",
+      "name": "史前巨蚌化石",
+      "icon": "res://assets/extraction/v300/general_loot/general_void_fossil_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        530,
+        776,
+        220,
+        220
+      ],
+      "sourceCell": [
+        512,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        38,
+        39,
+        218,
+        197
+      ],
+      "pixelSha256": "336d87f3d53d7b386585e384b87b971493fcfd0e5a5d9a830100b6522e50bca6"
+    },
+    {
+      "id": "general_phoenix_feather_1",
+      "name": "晶化龙须",
+      "icon": "res://assets/extraction/v300/general_loot/general_phoenix_feather_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        778,
+        768,
+        236,
+        236
+      ],
+      "sourceCell": [
+        768,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        31,
+        29,
+        224,
+        205
+      ],
+      "pixelSha256": "731cce2e90f5d47f7923bed5aadd0b408186dcc70b54f7b4e350f37c2ecfb443"
+    },
+    {
+      "id": "general_phoenix_feather_2",
+      "name": "极光丝轴",
+      "icon": "res://assets/extraction/v300/general_loot/general_phoenix_feather_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        1046,
+        774,
+        215,
+        215
+      ],
+      "sourceCell": [
+        1024,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        41,
+        30,
+        217,
+        197
+      ],
+      "pixelSha256": "a3aab94d5736a8709ec018f82c74ccbcdc7b64febe680aeb5d619f79479541ee"
+    },
+    {
+      "id": "general_phoenix_feather_3",
+      "name": "古树金叶枝",
+      "icon": "res://assets/extraction/v300/general_loot/general_phoenix_feather_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_04.png",
+      "region": [
+        1301,
+        784,
+        211,
+        211
+      ],
+      "sourceCell": [
+        1280,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        40,
+        36,
+        213,
+        208
+      ],
+      "pixelSha256": "11c5b66e2e9ec7ee7f090a9a304c814831f78ac34310ac6945acca22c220efdf"
+    },
+    {
+      "id": "general_world_seed_1",
+      "name": "虹彩黑珍珠",
+      "icon": "res://assets/extraction/v300/general_loot/general_world_seed_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        42,
+        44,
+        182,
+        182
+      ],
+      "sourceCell": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        59,
+        62,
+        208,
+        209
+      ],
+      "pixelSha256": "8fb89a0940ba566e6533ec9b945d0b058f110bbdcc33589804fc000b2bc56ce9"
+    },
+    {
+      "id": "general_world_seed_2",
+      "name": "千年冰玫瑰",
+      "icon": "res://assets/extraction/v300/general_loot/general_world_seed_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        290,
+        28,
+        202,
+        202
+      ],
+      "sourceCell": [
+        256,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        55,
+        47,
+        214,
+        212
+      ],
+      "pixelSha256": "0e0b22e3605ed3aa2011fa431b71d734ee98ea45d4396990c47dd401c416697e"
+    },
+    {
+      "id": "general_world_seed_3",
+      "name": "纯金蝉蜕",
+      "icon": "res://assets/extraction/v300/general_loot/general_world_seed_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        540,
+        32,
+        200,
+        200
+      ],
+      "sourceCell": [
+        512,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        46,
+        53,
+        210,
+        211
+      ],
+      "pixelSha256": "52a422e945ef1119d30b4f8d4eac4394acf90b8f38394c29c2cf39a8e2cc8717"
+    },
+    {
+      "id": "general_eternal_flame_1",
+      "name": "地心熔晶罐",
+      "icon": "res://assets/extraction/v300/general_loot/general_eternal_flame_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        800,
+        30,
+        203,
+        203
+      ],
+      "sourceCell": [
+        768,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        65,
+        48,
+        201,
+        214
+      ],
+      "pixelSha256": "efdb48c5ff9dba980d693e857ab47dd31956883c0967038bb77615b53890c1ec"
+    },
+    {
+      "id": "general_eternal_flame_2",
+      "name": "万年霜核瓶",
+      "icon": "res://assets/extraction/v300/general_loot/general_eternal_flame_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        1049,
+        24,
+        207,
+        207
+      ],
+      "sourceCell": [
+        1024,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        64,
+        43,
+        193,
+        212
+      ],
+      "pixelSha256": "6fcae68812b86999685398ad7bf5b1a2d0c50af76ab08e06a7a0d205f90e17cc"
+    },
+    {
+      "id": "general_eternal_flame_3",
+      "name": "昼光收集匣",
+      "icon": "res://assets/extraction/v300/general_loot/general_eternal_flame_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        1306,
+        32,
+        203,
+        203
+      ],
+      "sourceCell": [
+        1280,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        61,
+        211,
+        205
+      ],
+      "pixelSha256": "27f3fa8092faa99a02c61444497af55960c19369e0b1260a94d810a946436d81"
+    },
+    {
+      "id": "general_oracle_tablet_1",
+      "name": "远古迁徙壁画",
+      "icon": "res://assets/extraction/v300/general_loot/general_oracle_tablet_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        26,
+        274,
+        213,
+        213
+      ],
+      "sourceCell": [
+        0,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        50,
+        219,
+        200
+      ],
+      "pixelSha256": "1023727bf21c16fb647c1f6183fa9d41dda4f4124de2a296c029c57f967e74ee"
+    },
+    {
+      "id": "general_oracle_tablet_2",
+      "name": "帝国铸币母版",
+      "icon": "res://assets/extraction/v300/general_loot/general_oracle_tablet_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        284,
+        282,
+        205,
+        205
+      ],
+      "sourceCell": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        46,
+        53,
+        214,
+        205
+      ],
+      "pixelSha256": "1c29786347875382e49ec7fc303a318164981b2ebc556771e79c9e27b587d8ac"
+    },
+    {
+      "id": "general_oracle_tablet_3",
+      "name": "古城立约碑",
+      "icon": "res://assets/extraction/v300/general_loot/general_oracle_tablet_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        535,
+        276,
+        208,
+        208
+      ],
+      "sourceCell": [
+        512,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        44,
+        39,
+        210,
+        209
+      ],
+      "pixelSha256": "5df438c55189cda4d1749c651386fb00d13840ab9c31017c5b8536140347a672"
+    },
+    {
+      "id": "general_ration_5_1",
+      "name": "圣泉蜜酿",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_5_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        784,
+        271,
+        222,
+        222
+      ],
+      "sourceCell": [
+        768,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        80,
+        35,
+        175,
+        217
+      ],
+      "pixelSha256": "b23539c9f39372313ffb0ab9522859bdeaa80c35041bbd10fb374fad40ed29a3"
+    },
+    {
+      "id": "general_ration_5_2",
+      "name": "金穗精华饮",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_5_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        1041,
+        270,
+        224,
+        224
+      ],
+      "sourceCell": [
+        1024,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        73,
+        35,
+        185,
+        218
+      ],
+      "pixelSha256": "946dc80a3522eb1ff4722cf0f1a778020f985cc89f7c55daed6240a24045f563"
+    },
+    {
+      "id": "general_ration_5_3",
+      "name": "月华琼浆",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_5_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        1298,
+        268,
+        224,
+        224
+      ],
+      "sourceCell": [
+        1280,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        58,
+        33,
+        201,
+        216
+      ],
+      "pixelSha256": "83516b62097a802a0383c31dbde64ce4efa016c894c39a752bb1934b5d513a7e"
+    },
+    {
+      "id": "general_phoenix_tonic_1",
+      "name": "赤露复元瓶",
+      "icon": "res://assets/extraction/v300/general_loot/general_phoenix_tonic_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        23,
+        524,
+        216,
+        216
+      ],
+      "sourceCell": [
+        0,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        84,
+        32,
+        178,
+        209
+      ],
+      "pixelSha256": "047e58318b07ec582e4db7a1fe6b2d0db5beebda827bb6115fbbee23edf29a0b"
+    },
+    {
+      "id": "general_phoenix_tonic_2",
+      "name": "雪莲滋养剂",
+      "icon": "res://assets/extraction/v300/general_loot/general_phoenix_tonic_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        284,
+        523,
+        218,
+        218
+      ],
+      "sourceCell": [
+        256,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        65,
+        31,
+        208,
+        209
+      ],
+      "pixelSha256": "ce572f3f14735aa58e69856d0f6e9dd75db3459970ff0f0104f6693fc539dea9"
+    },
+    {
+      "id": "general_phoenix_tonic_3",
+      "name": "琥珀愈合露",
+      "icon": "res://assets/extraction/v300/general_loot/general_phoenix_tonic_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        540,
+        525,
+        210,
+        210
+      ],
+      "sourceCell": [
+        512,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        65,
+        32,
+        201,
+        204
+      ],
+      "pixelSha256": "8c01c21c17051c8ba62583e35c4836e7a537dd9ff810084ec5ad6a7249cf7c15"
+    },
+    {
+      "id": "general_guardian_seal_1",
+      "name": "祈卫圣徽",
+      "icon": "res://assets/extraction/v300/general_loot/general_guardian_seal_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        798,
+        526,
+        213,
+        213
+      ],
+      "sourceCell": [
+        768,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        64,
+        33,
+        209,
+        207
+      ],
+      "pixelSha256": "165208030b1832f85b8194c9823f9239c66f2b8ad5838a95c24f34eb5f979f3d"
+    },
+    {
+      "id": "general_guardian_seal_2",
+      "name": "护命骨符",
+      "icon": "res://assets/extraction/v300/general_loot/general_guardian_seal_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        1035,
+        523,
+        221,
+        221
+      ],
+      "sourceCell": [
+        1024,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        62,
+        31,
+        181,
+        212
+      ],
+      "pixelSha256": "89c7d72d20e41c2f121625bb9c10f920bb985edc6cde1547ec3992dc9ba22dd8"
+    },
+    {
+      "id": "general_guardian_seal_3",
+      "name": "守夜金牌",
+      "icon": "res://assets/extraction/v300/general_loot/general_guardian_seal_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        1304,
+        528,
+        210,
+        210
+      ],
+      "sourceCell": [
+        1280,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        56,
+        35,
+        202,
+        207
+      ],
+      "pixelSha256": "c7b7ab8da339e8c7848ef9f9300c7b663fae34af5777c59d4ed4acb4308abd7f"
+    },
+    {
+      "id": "general_eclipse_relic_1",
+      "name": "暮光圣龛",
+      "icon": "res://assets/extraction/v300/general_loot/general_eclipse_relic_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        26,
+        786,
+        207,
+        207
+      ],
+      "sourceCell": [
+        0,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        49,
+        37,
+        211,
+        206
+      ],
+      "pixelSha256": "fcd5aae29a79b5edd20d01fcf125a2864a30afde1405bbc71440dbd4547a6b1a"
+    },
+    {
+      "id": "general_eclipse_relic_2",
+      "name": "古誓战旗",
+      "icon": "res://assets/extraction/v300/general_loot/general_eclipse_relic_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        279,
+        781,
+        211,
+        211
+      ],
+      "sourceCell": [
+        256,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        51,
+        32,
+        206,
+        205
+      ],
+      "pixelSha256": "ce9b9a49a32dd6cbb156f6b6d791a4581a7725b44272a13d20aee4e40a5acfed"
+    },
+    {
+      "id": "general_eclipse_relic_3",
+      "name": "鎏银战仪盘",
+      "icon": "res://assets/extraction/v300/general_loot/general_eclipse_relic_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_05.png",
+      "region": [
+        536,
+        786,
+        208,
+        208
+      ],
+      "sourceCell": [
+        512,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        43,
+        42,
+        213,
+        201
+      ],
+      "pixelSha256": "177d4e32288e1c6e8d2e5d04667eefefa86ed33dde2a9879154d838f26ba7684"
+    },
+    {
+      "id": "general_wire_1",
+      "name": "黄铜顶针",
+      "icon": "res://assets/extraction/v300/general_loot/general_wire_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        61,
+        64,
+        159,
+        159
+      ],
+      "sourceCell": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        84,
+        78,
+        197,
+        208
+      ],
+      "pixelSha256": "de4c6fecb9d2f8748822b42be3ae48c6b5a35375edc11047caffdd22a8a7ea94"
+    },
+    {
+      "id": "general_wire_2",
+      "name": "旧门闩扣",
+      "icon": "res://assets/extraction/v300/general_loot/general_wire_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        296,
+        52,
+        182,
+        182
+      ],
+      "sourceCell": [
+        256,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        56,
+        87,
+        205,
+        199
+      ],
+      "pixelSha256": "689f3e69859bda18b10806b3ce2ddbfde3dedb236505b598b49997e92fe486b7"
+    },
+    {
+      "id": "general_wire_3",
+      "name": "石制墨碟",
+      "icon": "res://assets/extraction/v300/general_loot/general_wire_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        550,
+        53,
+        180,
+        180
+      ],
+      "sourceCell": [
+        512,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        55,
+        91,
+        202,
+        195
+      ],
+      "pixelSha256": "b493ddb026c4abc9f025e4ebf04592e57931c32fc719f4a92073c083f5325508"
+    },
+    {
+      "id": "general_bolts_1",
+      "name": "木柄锉刀",
+      "icon": "res://assets/extraction/v300/general_loot/general_bolts_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        804,
+        50,
+        179,
+        179
+      ],
+      "sourceCell": [
+        768,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        53,
+        66,
+        198,
+        212
+      ],
+      "pixelSha256": "54e2f25eb0eba78d370bf916d94713611ce7d8c3bacea9eda5b3c7a4429163f4"
+    },
+    {
+      "id": "general_bolts_2",
+      "name": "竹骨扇",
+      "icon": "res://assets/extraction/v300/general_loot/general_bolts_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        1040,
+        35,
+        213,
+        213
+      ],
+      "sourceCell": [
+        1024,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        36,
+        76,
+        210,
+        207
+      ],
+      "pixelSha256": "ed09539b681be25d190ee4335cc5d7882d1eff451205dff7ea769326bff7c60c"
+    },
+    {
+      "id": "general_bolts_3",
+      "name": "铜制鞋拔",
+      "icon": "res://assets/extraction/v300/general_loot/general_bolts_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        1308,
+        51,
+        188,
+        188
+      ],
+      "sourceCell": [
+        1280,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        52,
+        68,
+        191,
+        222
+      ],
+      "pixelSha256": "1a74c2c5c98e066fc32098ce613e184488057c9394de1e7e899ea9d5d66a0656"
+    },
+    {
+      "id": "general_circuit_1",
+      "name": "榫接木盒",
+      "icon": "res://assets/extraction/v300/general_loot/general_circuit_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        38,
+        282,
+        203,
+        203
+      ],
+      "sourceCell": [
+        0,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        57,
+        68,
+        223,
+        187
+      ],
+      "pixelSha256": "00adb22fa16ed4ce73a4f90a8138a9689b38707ccae3ca0ff16659fd8693f128"
+    },
+    {
+      "id": "general_circuit_2",
+      "name": "黄铜锁具",
+      "icon": "res://assets/extraction/v300/general_loot/general_circuit_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        292,
+        290,
+        193,
+        193
+      ],
+      "sourceCell": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        54,
+        66,
+        212,
+        195
+      ],
+      "pixelSha256": "e30d51f92efbd2fd71f0ae1a8873bff67a855f34ef4bd36917574d90073531bf"
+    },
+    {
+      "id": "general_circuit_3",
+      "name": "双头量勺",
+      "icon": "res://assets/extraction/v300/general_loot/general_circuit_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        554,
+        292,
+        172,
+        172
+      ],
+      "sourceCell": [
+        512,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        58,
+        58,
+        199,
+        186
+      ],
+      "pixelSha256": "abb652e052a8cce165f128b9dd81d05d6a858bcc37a2f8f7ad4b8dd3c9e54e50"
+    },
+    {
+      "id": "general_lens_1",
+      "name": "兽牙纽扣",
+      "icon": "res://assets/extraction/v300/general_loot/general_lens_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        810,
+        299,
+        169,
+        169
+      ],
+      "sourceCell": [
+        768,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        57,
+        64,
+        195,
+        191
+      ],
+      "pixelSha256": "4aae8177dc8734574e770b54729269187bec8691fdbd8610243d0bfe03d28044"
+    },
+    {
+      "id": "general_lens_2",
+      "name": "青瓷香插",
+      "icon": "res://assets/extraction/v300/general_loot/general_lens_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        1056,
+        290,
+        186,
+        186
+      ],
+      "sourceCell": [
+        1024,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        49,
+        70,
+        201,
+        183
+      ],
+      "pixelSha256": "c92e045750eeb70cf36644d1ba01015fb242d0634fe82c3869856ed4ab9d99fc"
+    },
+    {
+      "id": "general_lens_3",
+      "name": "铜雕鸟哨",
+      "icon": "res://assets/extraction/v300/general_loot/general_lens_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        1312,
+        290,
+        183,
+        183
+      ],
+      "sourceCell": [
+        1280,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        48,
+        80,
+        198,
+        171
+      ],
+      "pixelSha256": "01bb6d2eae943e97ad614ee46352cbf8847fb9f1cec248abf76fb19f339d9149"
+    },
+    {
+      "id": "general_lucky_coin_1",
+      "name": "旧城粮票牌",
+      "icon": "res://assets/extraction/v300/general_loot/general_lucky_coin_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        52,
+        546,
+        170,
+        170
+      ],
+      "sourceCell": [
+        0,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        87,
+        49,
+        186,
+        188
+      ],
+      "pixelSha256": "e48fd44b50530283c2bb336ce283bb9e91ac5454e7f2ad39f052c00ad2801626"
+    },
+    {
+      "id": "general_lucky_coin_2",
+      "name": "古商行印章",
+      "icon": "res://assets/extraction/v300/general_loot/general_lucky_coin_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        299,
+        546,
+        171,
+        171
+      ],
+      "sourceCell": [
+        256,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        68,
+        49,
+        189,
+        189
+      ],
+      "pixelSha256": "27f56b7644c4550f53bbf5cc222d2bd4c6f85f78f90191749512764c603527aa"
+    },
+    {
+      "id": "general_lucky_coin_3",
+      "name": "旧历纪年钱",
+      "icon": "res://assets/extraction/v300/general_loot/general_lucky_coin_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        558,
+        550,
+        165,
+        165
+      ],
+      "sourceCell": [
+        512,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        62,
+        53,
+        194,
+        188
+      ],
+      "pixelSha256": "250fd37d7fc44579b73fb490166b6948fc941c6a11e1c44a0a2c78f6cd5aa653"
+    },
+    {
+      "id": "general_battery_1",
+      "name": "密封颜料筒",
+      "icon": "res://assets/extraction/v300/general_loot/general_battery_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        810,
+        542,
+        174,
+        174
+      ],
+      "sourceCell": [
+        768,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        95,
+        46,
+        163,
+        188
+      ],
+      "pixelSha256": "f03445a25ff73d545c9ea1088418bae255921a8f332abe0a0b9f6e7dc8f2c2cf"
+    },
+    {
+      "id": "general_battery_2",
+      "name": "陶制滤水芯",
+      "icon": "res://assets/extraction/v300/general_loot/general_battery_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        1062,
+        548,
+        168,
+        168
+      ],
+      "sourceCell": [
+        1024,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        53,
+        60,
+        190,
+        179
+      ],
+      "pixelSha256": "91a3ec82067475e3187fd8a52783e58bf2fc33f2057904fa96272563788c92ce"
+    },
+    {
+      "id": "general_battery_3",
+      "name": "卷轴收纳套",
+      "icon": "res://assets/extraction/v300/general_loot/general_battery_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        1308,
+        533,
+        193,
+        193
+      ],
+      "sourceCell": [
+        1280,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        46,
+        62,
+        204,
+        173
+      ],
+      "pixelSha256": "a1e0cf5c5789e1a1383172af8bbd103cdff2ba695430efff50189556e1fbfb36"
+    },
+    {
+      "id": "general_sensor_1",
+      "name": "折叠药秤",
+      "icon": "res://assets/extraction/v300/general_loot/general_sensor_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        44,
+        795,
+        187,
+        187
+      ],
+      "sourceCell": [
+        0,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        61,
+        44,
+        214,
+        197
+      ],
+      "pixelSha256": "e78e3d93ce6dbdca237cc754f6a83c331674e4558b85a2ec74aeea422deaa947"
+    },
+    {
+      "id": "general_sensor_2",
+      "name": "铜丝鱼篓",
+      "icon": "res://assets/extraction/v300/general_loot/general_sensor_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        300,
+        799,
+        177,
+        177
+      ],
+      "sourceCell": [
+        256,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        67,
+        47,
+        198,
+        192
+      ],
+      "pixelSha256": "6d2d8d3862555991eafb0be77ae68e1d42470df265fffa3ef2c3e7f131b8d8c1"
+    },
+    {
+      "id": "general_sensor_3",
+      "name": "彩釉储茶罐",
+      "icon": "res://assets/extraction/v300/general_loot/general_sensor_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        557,
+        805,
+        166,
+        166
+      ],
+      "sourceCell": [
+        512,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        68,
+        52,
+        188,
+        188
+      ],
+      "pixelSha256": "98dffded6ca6f98d96e5e86c363efef759366b9dc7384f35b281f3764fdb0274"
+    },
+    {
+      "id": "general_silver_chain_1",
+      "name": "银丝胸花",
+      "icon": "res://assets/extraction/v300/general_loot/general_silver_chain_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        804,
+        796,
+        183,
+        183
+      ],
+      "sourceCell": [
+        768,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        53,
+        55,
+        203,
+        184
+      ],
+      "pixelSha256": "2b4b46e98dbb4eb6aa73b12ad392f3bc8f5c3ecc076b270743ed4ffa5b27a3be"
+    },
+    {
+      "id": "general_silver_chain_2",
+      "name": "虎眼石戒面",
+      "icon": "res://assets/extraction/v300/general_loot/general_silver_chain_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        1070,
+        810,
+        158,
+        158
+      ],
+      "sourceCell": [
+        1024,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        71,
+        57,
+        178,
+        186
+      ],
+      "pixelSha256": "7036303a3bc6def38142f96e69d5b5bb9ce2870c428bda4226a1760872cd9468"
+    },
+    {
+      "id": "general_silver_chain_3",
+      "name": "贝母领饰",
+      "icon": "res://assets/extraction/v300/general_loot/general_silver_chain_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_06.png",
+      "region": [
+        1308,
+        794,
+        188,
+        188
+      ],
+      "sourceCell": [
+        1280,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        63,
+        199,
+        177
+      ],
+      "pixelSha256": "15fd8e0df5280163da8b83729d2eed0ce9b237587578f0a6084c3b9ae7af40d6"
+    },
+    {
+      "id": "general_emergency_pack_1",
+      "name": "巡医急救箱",
+      "icon": "res://assets/extraction/v300/general_loot/general_emergency_pack_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        44,
+        48,
+        208,
+        208
+      ],
+      "sourceCell": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        76,
+        67,
+        221,
+        237
+      ],
+      "pixelSha256": "63225d88b6daa429b71dee94dd4528cc07bed5d6a29ca0fe879e84aff659ba54"
+    },
+    {
+      "id": "general_emergency_pack_2",
+      "name": "野战护理包",
+      "icon": "res://assets/extraction/v300/general_loot/general_emergency_pack_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        296,
+        49,
+        205,
+        205
+      ],
+      "sourceCell": [
+        256,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        58,
+        70,
+        226,
+        233
+      ],
+      "pixelSha256": "28336f2bb4b6a67c9a0c69b4405f579c9df45aa4cb6ae93dd8dea0f59eed1026"
+    },
+    {
+      "id": "general_emergency_pack_3",
+      "name": "修院药剂匣",
+      "icon": "res://assets/extraction/v300/general_loot/general_emergency_pack_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        548,
+        56,
+        198,
+        198
+      ],
+      "sourceCell": [
+        512,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        54,
+        78,
+        216,
+        231
+      ],
+      "pixelSha256": "e6f523cebf960d573e05bbcbcb007287d6f2ccca8e634a007e9c17ad89c65fd2"
+    },
+    {
+      "id": "general_ration_3_1",
+      "name": "浓缩药膳羹",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_3_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        798,
+        56,
+        196,
+        196
+      ],
+      "sourceCell": [
+        768,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        62,
+        74,
+        195,
+        234
+      ],
+      "pixelSha256": "21d6636a5fc934cdd83a35cfe1d9a09ad915e161be3dc3b1427636c0a40ab795"
+    },
+    {
+      "id": "general_ration_3_2",
+      "name": "行军参蜜饮",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_3_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        1038,
+        44,
+        211,
+        211
+      ],
+      "sourceCell": [
+        1024,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        82,
+        63,
+        156,
+        236
+      ],
+      "pixelSha256": "fe039181b39488bfe098117ccd598781ac3ad764199c37cb9b50d0be95e074ed"
+    },
+    {
+      "id": "general_ration_3_3",
+      "name": "果仁恢复饼",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_3_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        1285,
+        58,
+        198,
+        198
+      ],
+      "sourceCell": [
+        1280,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        23,
+        95,
+        185,
+        231
+      ],
+      "pixelSha256": "fb40864a52aaef43d4a65b4de4c59e982a42ff27a71dd863886f15eeea7f9d1b"
+    },
+    {
+      "id": "general_scope_1",
+      "name": "游侠瞄准镜",
+      "icon": "res://assets/extraction/v300/general_loot/general_scope_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        52,
+        284,
+        197,
+        197
+      ],
+      "sourceCell": [
+        0,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        70,
+        69,
+        231,
+        183
+      ],
+      "pixelSha256": "52061ce448a4632f2fb7374a7e8dc8941a8abce7181f89d98de9daf6f60d818a"
+    },
+    {
+      "id": "general_scope_2",
+      "name": "猎手观测片",
+      "icon": "res://assets/extraction/v300/general_loot/general_scope_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        294,
+        280,
+        202,
+        202
+      ],
+      "sourceCell": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        56,
+        59,
+        221,
+        190
+      ],
+      "pixelSha256": "408d6a8824bb1eadb4789161f01556993a283e6dc851418ba4d19cdbe54791ba"
+    },
+    {
+      "id": "general_scope_3",
+      "name": "双瞳侦视镜",
+      "icon": "res://assets/extraction/v300/general_loot/general_scope_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        541,
+        278,
+        207,
+        207
+      ],
+      "sourceCell": [
+        512,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        48,
+        57,
+        217,
+        194
+      ],
+      "pixelSha256": "517dc6f7719d5e0a400f268dfa519d156c1564e15aee39f5a2f6130bbfb0a568"
+    },
+    {
+      "id": "general_venom_vial_1",
+      "name": "青蛇毒囊",
+      "icon": "res://assets/extraction/v300/general_loot/general_venom_vial_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        800,
+        292,
+        188,
+        188
+      ],
+      "sourceCell": [
+        768,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        57,
+        53,
+        194,
+        207
+      ],
+      "pixelSha256": "720aa552c5cface6e587c6ad85742055cf027d12b6554c98f3d2f01df1af11d1"
+    },
+    {
+      "id": "general_venom_vial_2",
+      "name": "淬刃药筒",
+      "icon": "res://assets/extraction/v300/general_loot/general_venom_vial_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        1038,
+        288,
+        194,
+        194
+      ],
+      "sourceCell": [
+        1024,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        32,
+        49,
+        189,
+        208
+      ],
+      "pixelSha256": "39c53e58ec0aceb5ab3b0c74e11497fab2c841d687a84556e12aa83b7a284ca1"
+    },
+    {
+      "id": "general_venom_vial_3",
+      "name": "荆棘毒针匣",
+      "icon": "res://assets/extraction/v300/general_loot/general_venom_vial_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        1286,
+        284,
+        199,
+        199
+      ],
+      "sourceCell": [
+        1280,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        24,
+        54,
+        187,
+        201
+      ],
+      "pixelSha256": "a51f4e7465e8e0f727637a9cc6de68f30e8cc8abc7ee6f96bfdd27654619800b"
+    },
+    {
+      "id": "general_healer_charm_1",
+      "name": "白瓷护生坠",
+      "icon": "res://assets/extraction/v300/general_loot/general_healer_charm_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        60,
+        528,
+        183,
+        183
+      ],
+      "sourceCell": [
+        0,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        82,
+        33,
+        221,
+        183
+      ],
+      "pixelSha256": "2317d522106ec74c14cd171ae34dbcec629629983c7d6254ba0d38da8e45283e"
+    },
+    {
+      "id": "general_healer_charm_2",
+      "name": "银叶疗护扣",
+      "icon": "res://assets/extraction/v300/general_loot/general_healer_charm_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        302,
+        523,
+        192,
+        192
+      ],
+      "sourceCell": [
+        256,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        63,
+        40,
+        220,
+        174
+      ],
+      "pixelSha256": "2781ddf2380c42b9b0d81f69780d1e1606900b0e363cd969ae7f5bf8934fa0b0"
+    },
+    {
+      "id": "general_healer_charm_3",
+      "name": "药师祈愿结",
+      "icon": "res://assets/extraction/v300/general_loot/general_healer_charm_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        535,
+        520,
+        205,
+        205
+      ],
+      "sourceCell": [
+        512,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        65,
+        27,
+        186,
+        195
+      ],
+      "pixelSha256": "e296a442aa5572d034b434a56a9a97fe7bed3e761c5d013d00f2e2359335461b"
+    },
+    {
+      "id": "general_tape_1",
+      "name": "蜂蜡封口块",
+      "icon": "res://assets/extraction/v300/general_loot/general_tape_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        792,
+        524,
+        191,
+        191
+      ],
+      "sourceCell": [
+        768,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        42,
+        40,
+        198,
+        175
+      ],
+      "pixelSha256": "ab7498123cf9a3c670ad536127cd7dbb50189ac8679f7fdcca28586748377e67"
+    },
+    {
+      "id": "general_tape_2",
+      "name": "皮柄刮刀",
+      "icon": "res://assets/extraction/v300/general_loot/general_tape_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        1042,
+        528,
+        187,
+        187
+      ],
+      "sourceCell": [
+        1024,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        36,
+        33,
+        187,
+        186
+      ],
+      "pixelSha256": "8a87fbf5650d9a55480652bc964a303f714795d85573c8dbe9376c0d195db9ec"
+    },
+    {
+      "id": "general_tape_3",
+      "name": "木制绕线板",
+      "icon": "res://assets/extraction/v300/general_loot/general_tape_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        1284,
+        522,
+        202,
+        202
+      ],
+      "sourceCell": [
+        1280,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        23,
+        42,
+        188,
+        180
+      ],
+      "pixelSha256": "e822ba69ac90d10bfe4a49cce83542b5aa876fe4e65c3bc3c246244f5e9689f2"
+    },
+    {
+      "id": "general_pliers_1",
+      "name": "双钩扳手",
+      "icon": "res://assets/extraction/v300/general_loot/general_pliers_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        62,
+        772,
+        176,
+        176
+      ],
+      "sourceCell": [
+        0,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        81,
+        20,
+        220,
+        164
+      ],
+      "pixelSha256": "e91642dfae625cf9f16c739e24aee6dca8941eaa37544d864463aad333c152d2"
+    },
+    {
+      "id": "general_pliers_2",
+      "name": "短柄手钻",
+      "icon": "res://assets/extraction/v300/general_loot/general_pliers_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        303,
+        768,
+        183,
+        183
+      ],
+      "sourceCell": [
+        256,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        78,
+        15,
+        199,
+        165
+      ],
+      "pixelSha256": "ba6afdd0b28f7b2fc42f42b237b6514016053b648f21aae7897ce1cb9912f13a"
+    },
+    {
+      "id": "general_pliers_3",
+      "name": "齿口夹具",
+      "icon": "res://assets/extraction/v300/general_loot/general_pliers_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        546,
+        768,
+        192,
+        192
+      ],
+      "sourceCell": [
+        512,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        51,
+        33,
+        208,
+        145
+      ],
+      "pixelSha256": "b72d045e211919eaf4bcaf5869df0dbfaa89911e7b38e56cc1510973c4c270b4"
+    },
+    {
+      "id": "general_toolbox_1",
+      "name": "木工刨具箱",
+      "icon": "res://assets/extraction/v300/general_loot/general_toolbox_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        776,
+        768,
+        216,
+        216
+      ],
+      "sourceCell": [
+        768,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        27,
+        18,
+        204,
+        166
+      ],
+      "pixelSha256": "d53c7382c1693a19f096203072f23cf9df816fa1a9c4743b0994f82aeba402db"
+    },
+    {
+      "id": "general_toolbox_2",
+      "name": "玻璃工器具箱",
+      "icon": "res://assets/extraction/v300/general_loot/general_toolbox_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        1024,
+        768,
+        219,
+        219
+      ],
+      "sourceCell": [
+        1024,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        19,
+        19,
+        198,
+        163
+      ],
+      "pixelSha256": "08ba749efb3315ce42121b77ebdcdc9478fadd292908797db67037052e155c49"
+    },
+    {
+      "id": "general_toolbox_3",
+      "name": "精密修表盒",
+      "icon": "res://assets/extraction/v300/general_loot/general_toolbox_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_07.png",
+      "region": [
+        1280,
+        768,
+        200,
+        200
+      ],
+      "sourceCell": [
+        1280,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        16,
+        15,
+        180,
+        170
+      ],
+      "pixelSha256": "75ee55769ef23f6adb573d48a11c52353759d84fa4accf7050b22d3a1bb05fa2"
+    },
+    {
+      "id": "general_scrap_plate_1",
+      "name": "废旧炉门",
+      "icon": "res://assets/extraction/v300/general_loot/general_scrap_plate_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        46,
+        44,
+        192,
+        192
+      ],
+      "sourceCell": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        63,
+        70,
+        220,
+        209
+      ],
+      "pixelSha256": "64bfd69cd99032944d703c247c7083f7d36aa07bb6817b9d17eb659f47ef113d"
+    },
+    {
+      "id": "general_scrap_plate_2",
+      "name": "破损铁皮路牌",
+      "icon": "res://assets/extraction/v300/general_loot/general_scrap_plate_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        302,
+        43,
+        194,
+        194
+      ],
+      "sourceCell": [
+        256,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        64,
+        70,
+        223,
+        210
+      ],
+      "pixelSha256": "36d53cff33c54410bd9f0998512f01519eaa693450d60d64965531de146d3531"
+    },
+    {
+      "id": "general_scrap_plate_3",
+      "name": "铜包木盾残件",
+      "icon": "res://assets/extraction/v300/general_loot/general_scrap_plate_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        541,
+        40,
+        193,
+        193
+      ],
+      "sourceCell": [
+        512,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        52,
+        57,
+        199,
+        215
+      ],
+      "pixelSha256": "2d3a94b70fd20b7d08b94f7c2cfd7ba9b9e2fae6d7cdece2edec044dd655795b"
+    },
+    {
+      "id": "general_blade_1",
+      "name": "赤铜战锤",
+      "icon": "res://assets/extraction/v300/general_loot/general_blade_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        798,
+        34,
+        205,
+        205
+      ],
+      "sourceCell": [
+        768,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        63,
+        52,
+        201,
+        220
+      ],
+      "pixelSha256": "8518a521cf9fe4404ff1afef3740f05881452bc45bcce8ceca2716434abf7c44"
+    },
+    {
+      "id": "general_blade_2",
+      "name": "银纹军刀",
+      "icon": "res://assets/extraction/v300/general_loot/general_blade_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        1048,
+        34,
+        202,
+        202
+      ],
+      "sourceCell": [
+        1024,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        44,
+        53,
+        207,
+        218
+      ],
+      "pixelSha256": "ace1503296be73502ecc2394f08bfd98c8075b5cdd6630cfa79b842630e5053a"
+    },
+    {
+      "id": "general_blade_3",
+      "name": "双翼枪尖",
+      "icon": "res://assets/extraction/v300/general_loot/general_blade_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        1306,
+        34,
+        204,
+        204
+      ],
+      "sourceCell": [
+        1280,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        63,
+        53,
+        192,
+        220
+      ],
+      "pixelSha256": "5c05e9568f5c2db5dd22d838990f0c311bbe037b3a5dba0279a7ddd25d10cf84"
+    },
+    {
+      "id": "general_hard_drive_1",
+      "name": "玻璃底片盒",
+      "icon": "res://assets/extraction/v300/general_loot/general_hard_drive_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        36,
+        284,
+        202,
+        202
+      ],
+      "sourceCell": [
+        0,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        56,
+        47,
+        219,
+        212
+      ],
+      "pixelSha256": "2809b6d266fe8f5714053144f31fe56712de9b3475481d3287927b87aab146e0"
+    },
+    {
+      "id": "general_hard_drive_2",
+      "name": "双轮计数器",
+      "icon": "res://assets/extraction/v300/general_loot/general_hard_drive_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        294,
+        286,
+        207,
+        207
+      ],
+      "sourceCell": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        57,
+        63,
+        226,
+        204
+      ],
+      "pixelSha256": "16a67b886a61f32e9335b9babbfd31a8439329f9f7e7560ffc851bb655762c4a"
+    },
+    {
+      "id": "general_hard_drive_3",
+      "name": "折叠星象尺",
+      "icon": "res://assets/extraction/v300/general_loot/general_hard_drive_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        546,
+        290,
+        188,
+        188
+      ],
+      "sourceCell": [
+        512,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        51,
+        56,
+        205,
+        201
+      ],
+      "pixelSha256": "d6351bf176c84c37638f2e975317db0dad917f743ee063775d95580f94ec1192"
+    },
+    {
+      "id": "general_insulin_case_1",
+      "name": "诊疗听诊铜管",
+      "icon": "res://assets/extraction/v300/general_loot/general_insulin_case_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        794,
+        284,
+        202,
+        202
+      ],
+      "sourceCell": [
+        768,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        50,
+        210,
+        208
+      ],
+      "pixelSha256": "6eb5955fdc416692b14ae091e1e05a28800f90bd29a2d422be342b3327036587"
+    },
+    {
+      "id": "general_insulin_case_2",
+      "name": "药房分装架",
+      "icon": "res://assets/extraction/v300/general_loot/general_insulin_case_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        1050,
+        283,
+        198,
+        198
+      ],
+      "sourceCell": [
+        1024,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        44,
+        52,
+        206,
+        200
+      ],
+      "pixelSha256": "b57ce9401b49d86b34c6ec770e831abebb8f19c17b3a953e1adcad9fe840adc3"
+    },
+    {
+      "id": "general_insulin_case_3",
+      "name": "病房熏蒸罐",
+      "icon": "res://assets/extraction/v300/general_loot/general_insulin_case_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        1300,
+        278,
+        209,
+        209
+      ],
+      "sourceCell": [
+        1280,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        55,
+        41,
+        195,
+        212
+      ],
+      "pixelSha256": "c06d271b29f370acf22a921a6a8db256f32e561c9acac6b7a9e0d18e015b93d7"
+    },
+    {
+      "id": "general_ration_1",
+      "name": "烤麦面饼",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        38,
+        528,
+        203,
+        203
+      ],
+      "sourceCell": [
+        0,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        56,
+        42,
+        222,
+        193
+      ],
+      "pixelSha256": "40f8b9fe4a16b5305499d435e4a3b930dd397fb387e6ebfbd9b741cec431c0bb"
+    },
+    {
+      "id": "general_ration_2",
+      "name": "盐渍肉条",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        298,
+        535,
+        192,
+        192
+      ],
+      "sourceCell": [
+        256,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        60,
+        41,
+        217,
+        197
+      ],
+      "pixelSha256": "e61d019b4d4d15eb713ffa2c4b2c30a88d6bdd57f60653a43dfe5f0595fe8080"
+    },
+    {
+      "id": "general_ration_3",
+      "name": "硬酪燕麦块",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        539,
+        532,
+        198,
+        198
+      ],
+      "sourceCell": [
+        512,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        46,
+        207,
+        191
+      ],
+      "pixelSha256": "6238c57cc11286ea34b9ee943685d883e1bad1eed4415b2335201eb68372b420"
+    },
+    {
+      "id": "general_medkit_1",
+      "name": "草药敷料盒",
+      "icon": "res://assets/extraction/v300/general_loot/general_medkit_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        799,
+        532,
+        197,
+        197
+      ],
+      "sourceCell": [
+        768,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        49,
+        42,
+        210,
+        195
+      ],
+      "pixelSha256": "18777aac206e30522ea3d5be29ff4bfbc046fc9d4e46842485a4cdba38743271"
+    },
+    {
+      "id": "general_medkit_2",
+      "name": "随行诊疗袋",
+      "icon": "res://assets/extraction/v300/general_loot/general_medkit_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        1046,
+        524,
+        210,
+        210
+      ],
+      "sourceCell": [
+        1024,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        41,
+        39,
+        213,
+        194
+      ],
+      "pixelSha256": "c652a24fee56b6eacacfae54c524e7df8060b144ef1504ddd9d24607474be44c"
+    },
+    {
+      "id": "general_medkit_3",
+      "name": "便携洗创箱",
+      "icon": "res://assets/extraction/v300/general_loot/general_medkit_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        1312,
+        536,
+        183,
+        183
+      ],
+      "sourceCell": [
+        1280,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        49,
+        41,
+        199,
+        190
+      ],
+      "pixelSha256": "3eec7375351a0c8cf7f39358c36108108394786ba2f20556ea3687ce3d242a66"
+    },
+    {
+      "id": "general_spark_plug_1",
+      "name": "铜制滑轮芯",
+      "icon": "res://assets/extraction/v300/general_loot/general_spark_plug_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        46,
+        790,
+        181,
+        181
+      ],
+      "sourceCell": [
+        0,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        69,
+        39,
+        204,
+        187
+      ],
+      "pixelSha256": "c266dd0a24a166d1482b70edf1d2fa591da54bf2df2a47d3ad7a126791a59409"
+    },
+    {
+      "id": "general_spark_plug_2",
+      "name": "铁柄固定销",
+      "icon": "res://assets/extraction/v300/general_loot/general_spark_plug_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        298,
+        790,
+        180,
+        180
+      ],
+      "sourceCell": [
+        256,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        60,
+        39,
+        205,
+        186
+      ],
+      "pixelSha256": "5365787a04664ea9b4eaeb92b997212dc017fdaf1a46e24911b0e79bb891c6ea"
+    },
+    {
+      "id": "general_spark_plug_3",
+      "name": "陶瓷绝缘扣",
+      "icon": "res://assets/extraction/v300/general_loot/general_spark_plug_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        556,
+        800,
+        169,
+        169
+      ],
+      "sourceCell": [
+        512,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        59,
+        48,
+        197,
+        185
+      ],
+      "pixelSha256": "e5b85c68a204974cb1d28029b33d4aa2da7ca75ff097273f2bc04c64a01542f7"
+    },
+    {
+      "id": "general_vest_1",
+      "name": "镶片皮甲",
+      "icon": "res://assets/extraction/v300/general_loot/general_vest_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        797,
+        783,
+        196,
+        196
+      ],
+      "sourceCell": [
+        768,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        47,
+        36,
+        207,
+        190
+      ],
+      "pixelSha256": "dc6e9bc0b98545c32f290b9944aa4a59f9928667c0c484a96516f0a0cf1873db"
+    },
+    {
+      "id": "general_vest_2",
+      "name": "藤编胸甲",
+      "icon": "res://assets/extraction/v300/general_loot/general_vest_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        1056,
+        789,
+        185,
+        185
+      ],
+      "sourceCell": [
+        1024,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        59,
+        38,
+        189,
+        189
+      ],
+      "pixelSha256": "0a5ecaf38c84ec1cd6a548f41ce9b9b4d27fa27f015ac047fe4c229dd9ecac60"
+    },
+    {
+      "id": "general_vest_3",
+      "name": "护卫锁子衣",
+      "icon": "res://assets/extraction/v300/general_loot/general_vest_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_08.png",
+      "region": [
+        1302,
+        782,
+        200,
+        200
+      ],
+      "sourceCell": [
+        1280,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        40,
+        36,
+        204,
+        193
+      ],
+      "pixelSha256": "a79fd918ef5e22e59ca617904781f392970d3abce7c0da1f498e48f3eedf2e3a"
+    },
+    {
+      "id": "general_combat_manual_1",
+      "name": "斥候战术图册",
+      "icon": "res://assets/extraction/v300/general_loot/general_combat_manual_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        40,
+        40,
+        308,
+        308
+      ],
+      "sourceCell": [
+        0,
+        0,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        68,
+        103,
+        320,
+        285
+      ],
+      "pixelSha256": "349a3554ff059b88c556ee3ef14cba38c4ebbaa487bf6b2d8ad6bc54127dd004"
+    },
+    {
+      "id": "general_combat_manual_2",
+      "name": "猎手瞄准手记",
+      "icon": "res://assets/extraction/v300/general_loot/general_combat_manual_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        408,
+        45,
+        300,
+        300
+      ],
+      "sourceCell": [
+        362,
+        0,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        108,
+        72,
+        283,
+        318
+      ],
+      "pixelSha256": "c20a9aa10bba097093b25b947dc7a83718abb97bcab2cc699c02344e9e5d9c87"
+    },
+    {
+      "id": "general_combat_manual_3",
+      "name": "军团协同令板",
+      "icon": "res://assets/extraction/v300/general_loot/general_combat_manual_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        759,
+        42,
+        305,
+        305
+      ],
+      "sourceCell": [
+        724,
+        0,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        93,
+        70,
+        282,
+        320
+      ],
+      "pixelSha256": "b7ef91b8b1e9fa2ae314476e71293181c6e78c2ef92f8b9d6b13d839419a8b56"
+    },
+    {
+      "id": "general_memory_card_1",
+      "name": "铜线接续扣",
+      "icon": "res://assets/extraction/v300/general_loot/general_memory_card_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        1130,
+        68,
+        269,
+        269
+      ],
+      "sourceCell": [
+        1086,
+        0,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        68,
+        121,
+        288,
+        285
+      ],
+      "pixelSha256": "33ac937e42e3d806123e7239340a9c4bd8123f3654c3b18d84e1eadcfa2e2b1f"
+    },
+    {
+      "id": "general_memory_card_2",
+      "name": "折光晶垫",
+      "icon": "res://assets/extraction/v300/general_loot/general_memory_card_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        62,
+        416,
+        258,
+        258
+      ],
+      "sourceCell": [
+        0,
+        362,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        86,
+        77,
+        295,
+        288
+      ],
+      "pixelSha256": "9742cd151946b64a6c1c46b84f2d8fc95007cc045a50bd883baf76e0ee7badfb"
+    },
+    {
+      "id": "general_memory_card_3",
+      "name": "陶芯微阀",
+      "icon": "res://assets/extraction/v300/general_loot/general_memory_card_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        407,
+        404,
+        275,
+        275
+      ],
+      "sourceCell": [
+        362,
+        362,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        70,
+        73,
+        295,
+        286
+      ],
+      "pixelSha256": "84882c69f6ca6229852ad17fb8621b2ed811ac211eb86e458944676c8a7c450a"
+    },
+    {
+      "id": "general_ration_4_1",
+      "name": "王室旅行肉脯",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_4_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        744,
+        386,
+        308,
+        308
+      ],
+      "sourceCell": [
+        724,
+        362,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        48,
+        69,
+        300,
+        288
+      ],
+      "pixelSha256": "f9d015a64bc53b5bef830a0f9904ea2a1007b752a50afc64f54a489b65129645"
+    },
+    {
+      "id": "general_ration_4_2",
+      "name": "蜂王浆糕",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_4_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        1118,
+        396,
+        291,
+        291
+      ],
+      "sourceCell": [
+        1086,
+        362,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        59,
+        79,
+        297,
+        281
+      ],
+      "pixelSha256": "06c337d54f92280e18fcab6faacfe763bfb7bc29867951a0a46fbc9d4205b296"
+    },
+    {
+      "id": "general_ration_4_3",
+      "name": "雪参炖乳罐",
+      "icon": "res://assets/extraction/v300/general_loot/general_ration_4_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        58,
+        752,
+        287,
+        287
+      ],
+      "sourceCell": [
+        0,
+        724,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        139,
+        54,
+        265,
+        289
+      ],
+      "pixelSha256": "cdfd7b867bd773b9978c42e4179eeca4810d27f9716fdfa6a2f445ab65632e36"
+    },
+    {
+      "id": "general_repair_core_1",
+      "name": "金缮复甲膏",
+      "icon": "res://assets/extraction/v300/general_loot/general_repair_core_1.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        400,
+        754,
+        277,
+        277
+      ],
+      "sourceCell": [
+        362,
+        724,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        77,
+        55,
+        277,
+        282
+      ],
+      "pixelSha256": "73b556b7079673c15b7c1a3e097d0a7b5be397719aac74bf907fd9929be6e325"
+    },
+    {
+      "id": "general_repair_core_2",
+      "name": "再生铆接钉",
+      "icon": "res://assets/extraction/v300/general_loot/general_repair_core_2.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        760,
+        758,
+        276,
+        276
+      ],
+      "sourceCell": [
+        724,
+        724,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        61,
+        60,
+        287,
+        284
+      ],
+      "pixelSha256": "32ab51d13d43bf56ef5ca84dc8d87b4fffa59c258d5548c61fcb6e76ffb751e5"
+    },
+    {
+      "id": "general_repair_core_3",
+      "name": "织甲灵胶",
+      "icon": "res://assets/extraction/v300/general_loot/general_repair_core_3.tres",
+      "atlas": "assets/extraction/v300/general_loot/atlas_09.png",
+      "region": [
+        1128,
+        765,
+        264,
+        264
+      ],
+      "sourceCell": [
+        1086,
+        724,
+        362,
+        362
+      ],
+      "visibleBounds": [
+        66,
+        65,
+        282,
+        281
+      ],
+      "pixelSha256": "d5d46a186122ecfd7e0c7123fd879f6893c20f1971f93bf7008e7e4eb66b3472"
+    },
+    {
+      "id": "thunder_city_ferry_tokens",
+      "name": "雨季渡船筹",
+      "icon": "res://assets/content_v310/loot/thunder_city_ferry_tokens.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        46,
+        60,
+        174,
+        174
+      ],
+      "sourceCell": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        66,
+        76,
+        199,
+        218
+      ],
+      "pixelSha256": "c486d92c6cf29a40e1d7e5ff7b22a46be1413c8a773958ce2956281c02262297"
+    },
+    {
+      "id": "thunder_city_wading_boots",
+      "name": "高筒涉水靴",
+      "icon": "res://assets/content_v310/loot/thunder_city_wading_boots.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        296,
+        52,
+        182,
+        182
+      ],
+      "sourceCell": [
+        256,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        66,
+        69,
+        195,
+        218
+      ],
+      "pixelSha256": "41f303a0bb883c5ec84b5ba625e7fb00dc4baea8be6d21609f03a7583bd024b1"
+    },
+    {
+      "id": "thunder_city_ginger_tea",
+      "name": "姜蜜茶砖",
+      "icon": "res://assets/content_v310/loot/thunder_city_ginger_tea.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        537,
+        44,
+        208,
+        208
+      ],
+      "sourceCell": [
+        512,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        44,
+        83,
+        214,
+        213
+      ],
+      "pixelSha256": "f394639aa9e5e5e867a33bfd62eb4e9f98cfa32d2ba7f803bdc615e5d672004e"
+    },
+    {
+      "id": "thunder_city_shutter_latch",
+      "name": "防风窗锁扣",
+      "icon": "res://assets/content_v310/loot/thunder_city_shutter_latch.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        806,
+        48,
+        191,
+        191
+      ],
+      "sourceCell": [
+        768,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        71,
+        66,
+        195,
+        222
+      ],
+      "pixelSha256": "4e0e27228bb2dbc477fbf6652264279c4d635262a4dd05630eab808f2b054929"
+    },
+    {
+      "id": "thunder_city_rescue_cradle",
+      "name": "折叠救援吊篮",
+      "icon": "res://assets/content_v310/loot/thunder_city_rescue_cradle.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        1044,
+        50,
+        204,
+        204
+      ],
+      "sourceCell": [
+        1024,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        39,
+        95,
+        206,
+        208
+      ],
+      "pixelSha256": "0cb293e924386deec091a1e51ca5c754d537c79dcd9ea6859b8db0df2c6c3d45"
+    },
+    {
+      "id": "thunder_city_suture_roll",
+      "name": "诊所缝合器械包",
+      "icon": "res://assets/content_v310/loot/thunder_city_suture_roll.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        1307,
+        50,
+        187,
+        187
+      ],
+      "sourceCell": [
+        1280,
+        0,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        44,
+        70,
+        197,
+        218
+      ],
+      "pixelSha256": "f1a4d04c1082fb4ca88ea4dab5cdc5c3a63b3e597dbb4f64d2cad4c349f81ec1"
+    },
+    {
+      "id": "thunder_city_flood_gauge",
+      "name": "浮筒水位计",
+      "icon": "res://assets/content_v310/loot/thunder_city_flood_gauge.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        48,
+        298,
+        182,
+        182
+      ],
+      "sourceCell": [
+        0,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        79,
+        58,
+        199,
+        207
+      ],
+      "pixelSha256": "d480643c2b81b1f5e12e70931d25dfc3ea43f5c192c45c154b31b3439cc822af"
+    },
+    {
+      "id": "thunder_city_street_stamps",
+      "name": "街名压印铜模",
+      "icon": "res://assets/content_v310/loot/thunder_city_street_stamps.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        286,
+        288,
+        194,
+        194
+      ],
+      "sourceCell": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        59,
+        49,
+        194,
+        208
+      ],
+      "pixelSha256": "6594120f68d5376ad4f644defa36832eab46cc792a0351e7534769ba28efbdd7"
+    },
+    {
+      "id": "thunder_city_flood_diary",
+      "name": "三十年汛期簿",
+      "icon": "res://assets/content_v310/loot/thunder_city_flood_diary.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        546,
+        284,
+        194,
+        194
+      ],
+      "sourceCell": [
+        512,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        51,
+        54,
+        210,
+        197
+      ],
+      "pixelSha256": "db5afbeada0b3014facb2803900e712f02c6b172f9175bab1d621c8b7e0fd55e"
+    },
+    {
+      "id": "thunder_city_lung_model",
+      "name": "玻璃呼吸示教器",
+      "icon": "res://assets/content_v310/loot/thunder_city_lung_model.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        806,
+        290,
+        192,
+        192
+      ],
+      "sourceCell": [
+        768,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        57,
+        51,
+        211,
+        208
+      ],
+      "pixelSha256": "d8fb890b705992ccce0927b8f646bae918b34fb8ecad2ad1f5ae106249809327"
+    },
+    {
+      "id": "thunder_city_rescue_kite",
+      "name": "屋顶投绳风筝",
+      "icon": "res://assets/content_v310/loot/thunder_city_rescue_kite.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        1054,
+        288,
+        192,
+        192
+      ],
+      "sourceCell": [
+        1024,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        62,
+        50,
+        190,
+        207
+      ],
+      "pixelSha256": "db68d2b7178557241b564c4e6167d5ccd465ffaf3ea29df518051f2132c740a8"
+    },
+    {
+      "id": "thunder_city_opera_relief",
+      "name": "雨夜歌剧浮雕",
+      "icon": "res://assets/content_v310/loot/thunder_city_opera_relief.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        1303,
+        284,
+        199,
+        199
+      ],
+      "sourceCell": [
+        1280,
+        256,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        56,
+        46,
+        189,
+        209
+      ],
+      "pixelSha256": "2c9e27131d229a46175de655ee1fe082e0c1da1fb4ba0a292e640618b4c8129c"
+    },
+    {
+      "id": "thunder_city_gate_seal",
+      "name": "城门总钥印",
+      "icon": "res://assets/content_v310/loot/thunder_city_gate_seal.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        40,
+        536,
+        188,
+        188
+      ],
+      "sourceCell": [
+        0,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        80,
+        41,
+        187,
+        195
+      ],
+      "pixelSha256": "dd16478c1e8e920993659bd5d02b4ef82e9af6c33d0a324331cd1895a60a63e0"
+    },
+    {
+      "id": "thunder_city_physician_case",
+      "name": "首席医师针匣",
+      "icon": "res://assets/content_v310/loot/thunder_city_physician_case.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        291,
+        534,
+        197,
+        197
+      ],
+      "sourceCell": [
+        256,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        53,
+        54,
+        214,
+        187
+      ],
+      "pixelSha256": "13edd2cdc756ff007d3c8e3dd5d4f9c618dbb4136be017fbea84727a0dbac35f"
+    },
+    {
+      "id": "thunder_city_fulgurite_slides",
+      "name": "雷玻璃切片册",
+      "icon": "res://assets/content_v310/loot/thunder_city_fulgurite_slides.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        545,
+        537,
+        187,
+        187
+      ],
+      "sourceCell": [
+        512,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        55,
+        42,
+        198,
+        195
+      ],
+      "pixelSha256": "b6b4ee9f65c4c9cd6a71bd1d04a66c67e243887f2ce51b45a2c1d1fd4b8624ee"
+    },
+    {
+      "id": "thunder_city_rain_recorder",
+      "name": "自记降雨钟",
+      "icon": "res://assets/content_v310/loot/thunder_city_rain_recorder.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        794,
+        528,
+        204,
+        204
+      ],
+      "sourceCell": [
+        768,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        45,
+        41,
+        212,
+        195
+      ],
+      "pixelSha256": "0d5b0e57c06a7973b157fbb230deeccd4b045f1adb4aa8a511ed14069b387424"
+    },
+    {
+      "id": "thunder_city_canal_model",
+      "name": "旧城水道沙盘",
+      "icon": "res://assets/content_v310/loot/thunder_city_canal_model.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        1046,
+        531,
+        200,
+        200
+      ],
+      "sourceCell": [
+        1024,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        40,
+        47,
+        204,
+        191
+      ],
+      "pixelSha256": "798fda6992024a01c2f4b72345e7433026ae9e81534f6b5c1fe6eaed58a1c3d0"
+    },
+    {
+      "id": "thunder_city_gate_winch",
+      "name": "初代城门绞盘",
+      "icon": "res://assets/content_v310/loot/thunder_city_gate_winch.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        1291,
+        520,
+        220,
+        220
+      ],
+      "sourceCell": [
+        1280,
+        512,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        31,
+        39,
+        211,
+        196
+      ],
+      "pixelSha256": "8453b0b5d6b877fe9de430969461c29b578306633112ee119e45622a54828e0b"
+    },
+    {
+      "id": "thunder_city_serum_prototype",
+      "name": "初代镇雷血清",
+      "icon": "res://assets/content_v310/loot/thunder_city_serum_prototype.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        42,
+        787,
+        194,
+        194
+      ],
+      "sourceCell": [
+        0,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        59,
+        45,
+        218,
+        187
+      ],
+      "pixelSha256": "f961f4bbc03f410f3e4c396449f57da7247e0850da7ab9674711f7de0b46849d"
+    },
+    {
+      "id": "thunder_city_rescue_registry",
+      "name": "封城救援总册",
+      "icon": "res://assets/content_v310/loot/thunder_city_rescue_registry.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        284,
+        778,
+        203,
+        203
+      ],
+      "sourceCell": [
+        256,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        46,
+        36,
+        212,
+        188
+      ],
+      "pixelSha256": "322eae7b59f4650098842b8794ab8cb1ec86798cc65c7c89721c02ff79b0404a"
+    },
+    {
+      "id": "thunder_city_storm_standard",
+      "name": "王立风暴标尺",
+      "icon": "res://assets/content_v310/loot/thunder_city_storm_standard.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        538,
+        784,
+        192,
+        192
+      ],
+      "sourceCell": [
+        512,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        62,
+        34,
+        181,
+        191
+      ],
+      "pixelSha256": "bd7e2cac89cdba85bb3ce0057ac6a945562be19c61f59552c4e30d790c666da8"
+    },
+    {
+      "id": "thunder_city_first_bell",
+      "name": "鸣雷城开城钟",
+      "icon": "res://assets/content_v310/loot/thunder_city_first_bell.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        798,
+        779,
+        199,
+        199
+      ],
+      "sourceCell": [
+        768,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        48,
+        32,
+        211,
+        189
+      ],
+      "pixelSha256": "97027fca42df90419bb4adba0a3f329041070deb516f8d1b20a040651f1ad12f"
+    },
+    {
+      "id": "thunder_city_canal_charter",
+      "name": "地下水道铸铜总图",
+      "icon": "res://assets/content_v310/loot/thunder_city_canal_charter.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        1054,
+        781,
+        196,
+        196
+      ],
+      "sourceCell": [
+        1024,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        61,
+        31,
+        194,
+        191
+      ],
+      "pixelSha256": "489ba45e61b34b456258fe02527137f5f886a02c0b6ad16f5a327ec20ff552ca"
+    },
+    {
+      "id": "thunder_city_founding_dose",
+      "name": "诊所创办纪念药瓶",
+      "icon": "res://assets/content_v310/loot/thunder_city_founding_dose.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/atlas.png",
+      "region": [
+        1309,
+        782,
+        193,
+        193
+      ],
+      "sourceCell": [
+        1280,
+        768,
+        256,
+        256
+      ],
+      "visibleBounds": [
+        60,
+        31,
+        191,
+        189
+      ],
+      "pixelSha256": "3f2294bb81d80e47db043e91ff84091b9c15295e79586980164db083b387887e"
+    },
+    {
+      "id": "thunder_city_glass",
+      "name": "防雷窗玻璃",
+      "icon": "res://assets/content_v310/loot/thunder_city_glass.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/legacy_redesign.png",
+      "region": [
+        60,
+        68,
+        335,
+        335
+      ],
+      "sourceCell": [
+        0,
+        0,
+        444,
+        444
+      ],
+      "visibleBounds": [
+        112,
+        98,
+        344,
+        372
+      ],
+      "pixelSha256": "6d3be51339f470dbd82c17fbb730889d8cd4a1d6224056929602a755260bc244"
+    },
+    {
+      "id": "thunder_city_badge",
+      "name": "城防巡逻棋盘",
+      "icon": "res://assets/content_v310/loot/thunder_city_badge.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/legacy_redesign.png",
+      "region": [
+        481,
+        54,
+        366,
+        366
+      ],
+      "sourceCell": [
+        444,
+        0,
+        443,
+        444
+      ],
+      "visibleBounds": [
+        70,
+        113,
+        370,
+        361
+      ],
+      "pixelSha256": "92b68d8d33a8b4765d953f1cabfc978d6958efeb4bece53e46025fe6012702f7"
+    },
+    {
+      "id": "thunder_city_ruler",
+      "name": "巷道坡度测绘箱",
+      "icon": "res://assets/content_v310/loot/thunder_city_ruler.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/legacy_redesign.png",
+      "region": [
+        931,
+        52,
+        354,
+        354
+      ],
+      "sourceCell": [
+        887,
+        0,
+        443,
+        444
+      ],
+      "visibleBounds": [
+        112,
+        84,
+        329,
+        374
+      ],
+      "pixelSha256": "ab5c0aa7ca4c60056dd613f65a17abe75fda5c1a2ab5a49cd04570a266c58e77"
+    },
+    {
+      "id": "thunder_city_amulet",
+      "name": "雨祭门灯",
+      "icon": "res://assets/content_v310/loot/thunder_city_amulet.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/legacy_redesign.png",
+      "region": [
+        1356,
+        50,
+        361,
+        361
+      ],
+      "sourceCell": [
+        1330,
+        0,
+        444,
+        444
+      ],
+      "visibleBounds": [
+        119,
+        82,
+        295,
+        378
+      ],
+      "pixelSha256": "5175b3cd8c8d9950020f12c0032887e044e1c40eb941c38032f1756619e911d7"
+    },
+    {
+      "id": "thunder_city_amber",
+      "name": "雷击木年轮标本",
+      "icon": "res://assets/content_v310/loot/thunder_city_amber.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/legacy_redesign.png",
+      "region": [
+        45,
+        470,
+        365,
+        365
+      ],
+      "sourceCell": [
+        0,
+        444,
+        444,
+        443
+      ],
+      "visibleBounds": [
+        109,
+        59,
+        346,
+        358
+      ],
+      "pixelSha256": "a7e876d1175fd68b0859da0d94fbdb82ded17b3157f0d21c88c824d374daf8eb"
+    },
+    {
+      "id": "thunder_city_plans",
+      "name": "王城分层营造册",
+      "icon": "res://assets/content_v310/loot/thunder_city_plans.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/legacy_redesign.png",
+      "region": [
+        468,
+        471,
+        368,
+        368
+      ],
+      "sourceCell": [
+        444,
+        444,
+        443,
+        443
+      ],
+      "visibleBounds": [
+        57,
+        85,
+        358,
+        337
+      ],
+      "pixelSha256": "82dd888097c4d952b7f9533df4f8e5f3db1075a01d36bc1eec4c68bb0fb05815"
+    },
+    {
+      "id": "thunder_city_crown",
+      "name": "护城骑士誓约浮雕",
+      "icon": "res://assets/content_v310/loot/thunder_city_crown.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/legacy_redesign.png",
+      "region": [
+        923,
+        468,
+        369,
+        369
+      ],
+      "sourceCell": [
+        887,
+        444,
+        443,
+        443
+      ],
+      "visibleBounds": [
+        69,
+        72,
+        371,
+        346
+      ],
+      "pixelSha256": "c7422b6d55d40897c281f04a5a07ef2c7f4b1dfdc3870f0cacdac80272a47309"
+    },
+    {
+      "id": "thunder_city_boundary",
+      "name": "晴穹礼仪长笛",
+      "icon": "res://assets/content_v310/loot/thunder_city_boundary.tres",
+      "atlas": "assets/extraction/v300/thunder_loot/ceremonial_flute_vertical.png",
+      "region": [
+        115,
+        59,
+        487,
+        1956
+      ],
+      "sourceCell": [
+        0,
+        0,
+        724,
+        2172
+      ],
+      "visibleBounds": [
+        135,
+        79,
+        582,
+        1995
+      ],
+      "pixelSha256": "57155ac38962e5d5537dfeb21ae1b955159b2766de02b6c0f0fa5f60f59a8458"
+    }
+  ],
+  "totalSourceBytes": 23914069
+}

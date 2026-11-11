@@ -1,0 +1,20 @@
+{
+  "ruins": {
+    "beforeValue": 106821875,
+    "afterValue": 108408786,
+    "changePercent": 1.4855674458063906,
+    "maxDistinctAfter": 329
+  },
+  "thunder_city": {
+    "beforeValue": 106825133,
+    "afterValue": 109676211,
+    "changePercent": 2.6689206181470526,
+    "maxDistinctAfter": 353
+  },
+  "conditionChangePercentRange": [
+    0.5441390631975906,
+    3.697337742772455
+  ],
+  "containers": 144000,
+  "scope": "act3, unrestricted pool, ruins/thunder_city, danger 0/3/5, ordinary/boss, before/after"
+}

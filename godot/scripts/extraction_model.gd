@@ -159,12 +159,25 @@ func environment_music_track() -> String:
 		return theme_music_track(theme, int(depth_id.trim_prefix("district_")))
 	return {1:"sunset_walk",2:"medieval_exploration",3:"dungeon_mystic"}.get(int(run().get("act",1)),"sunset_walk")
 
-func _environment_loot_id(base_id: String) -> String:
+func _environment_loot_id(base_id: String, categories: Array = []) -> String:
 	var theme := environment_theme()
 	if theme.is_empty(): return base_id
+	# New city objects are genuine conditional candidates, not one-to-one reskins.
+	# Draw within the original economic family so neither rarity nor essential
+	# supply/equipment rates change. Only newly generated containers use this.
+	var base: Dictionary = item_def(base_id)
+	var anchor := str(base.get("economyAnchor", base_id))
+	for id in data.items:
+		var candidate: Dictionary = data.items[id]
+		if candidate.get("lootTheme", "") != theme or candidate.get("economyAnchor", "") != anchor: continue
+		if not categories.is_empty() and not _matches_loot_categories(candidate, categories): continue
+		if candidate.get("kind", "") != base.get("kind", ""): continue
+		if _rand() < float(candidate.get("themeSubstitutionChance", 0.2)): return str(id)
 	for id in data.items:
 		var definition: Dictionary = data.items[id]
 		if definition.get("variantOf", "") == base_id and definition.get("environmentTheme", "") == theme:
+			# A corrected city object must not appear in an incompatible cupboard.
+			if not categories.is_empty() and not _matches_loot_categories(definition, categories): continue
 			return str(id)
 	return base_id
 
@@ -641,7 +654,7 @@ func _container(title: String, count: int, quality: int, categories: Array = [],
 		if i == count - 1: rarity = maxi(rarity, clampi(last_item_min_rarity, 0, 5))
 		var pool: Array = []
 		for key in data.items:
-			if int(data.items[key].rarity) == rarity and not data.items[key].has("variantOf"): pool.append(key)
+			if int(data.items[key].rarity) == rarity and not data.items[key].has("variantOf") and not data.items[key].has("lootTheme"): pool.append(key)
 		var preferred: Array = []
 		for key in pool:
 			if _matches_loot_categories(data.items[key], categories): preferred.append(key)
@@ -654,7 +667,7 @@ func _container(title: String, count: int, quality: int, categories: Array = [],
 			for key in pool:
 				item_roll-=float(data.items[key].get("dropWeight",1.0))
 				if item_roll<=0:picked=str(key);break
-			container.items.append(_make_item(_environment_loot_id(picked)))
+			container.items.append(_make_item(_environment_loot_id(picked, categories)))
 	var packed: Array = []
 	for item in container.items:
 		_place(packed, item, Vector2i(6, 8))
@@ -807,6 +820,10 @@ func equipment_conflict(item: Dictionary, replace_uid: String = "") -> String:
 
 func _same_equipment_family(a: Dictionary, b: Dictionary) -> bool:
 	if a.itemId == b.itemId: return true
+	# Alternate physical designs share the original tactical stacking limit.
+	var family_a := str(item_def(str(a.itemId)).get("economyAnchor", a.itemId))
+	var family_b := str(item_def(str(b.itemId)).get("economyAnchor", b.itemId))
+	if family_a == family_b: return true
 	return _damage_reduction_item(a) and _damage_reduction_item(b)
 
 func _damage_reduction_item(item: Dictionary) -> bool:

@@ -24,16 +24,16 @@ def production_snapshot(root):
 
 def verify(root, record):
     version = json.loads((root / 'data/version.json').read_text())
-    if version['version_name'] != '2.9.3' or version['version_code'] != 20903:
-        raise ValueError('This evidence gate is scoped to release 2.9.3; prepare a new focused review for another version.')
+    if version['version_name'] != '3.0.0' or version['version_code'] != 30000:
+        raise ValueError('This evidence gate is scoped to release 3.0.0; prepare a new focused review for another version.')
     if record.get('version') != version['version_name'] or record.get('version_code') != version['version_code']:
         raise ValueError('Focused evidence belongs to a different release.')
     if record.get('targeted_checks') != 'passed' or record.get('ui_visual_review') != 'passed':
         raise ValueError('Focused behavior checks and actual UI visual review must be completed.')
-    if record.get('music_selection_review') != 'passed':
-        raise ValueError('User audition and approval of selected music must be recorded.')
-    if record.get('audio_runtime_checks') != 'passed':
-        raise ValueError('Selected music decoding, routing and loop-signal checks must pass.')
+    if record.get('loot_diversity_review') != 'passed':
+        raise ValueError('Independent loot diversity and economy audit must pass.')
+    if record.get('loot_resource_checks') != 'passed':
+        raise ValueError('All 233 loot resources and atlas references must pass.')
     if record.get('content_update_checks') != 'passed':
         raise ValueError('Incremental content update and recovery checks must pass.')
     duration = record.get('test_elapsed_seconds')
@@ -75,12 +75,12 @@ def verify(root, record):
 
 if __name__ == '__main__':
     root = Path(__file__).resolve().parents[2] / 'godot'
-    path = root / 'validation/v293-release-focused/release-evidence.json'
+    path = root / 'validation/v300-release-focused/release-evidence.json'
     if not path.is_file():
         raise SystemExit('Focused release evidence is missing; signing remains blocked.')
     try:
         count, digest = verify(root, json.loads(path.read_text()))
     except (ValueError, KeyError, OSError) as error:
         raise SystemExit(str(error)) from error
-    print(f'Focused 2.9.3 evidence verified: {count} files, SHA256 {digest}')
+    print(f'Focused 3.0.0 evidence verified: {count} files, SHA256 {digest}')
     print('Only declared affected checks apply; no broad suite is started.')

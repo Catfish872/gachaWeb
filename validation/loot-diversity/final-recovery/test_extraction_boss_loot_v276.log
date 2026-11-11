@@ -1,0 +1,23 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+PASS: start boss reward fixture
+PASS: boss-only bonus is gold 1 red 0.15
+PASS: boss settlement keeps one four-item quality-two container
+PASS: bonus gated by explicit boss flag
+PASS: ordinary box and RNG ignore boss bonuses
+PASS: boss keeps four items and 6x8 bounds act 1
+PASS: last draw floor act 1
+PASS: boss keeps four items and 6x8 bounds act 2
+PASS: last draw floor act 2
+PASS: boss keeps four items and 6x8 bounds act 3
+PASS: last draw floor act 3
+PASS: known four-shape counterexample exercises fallback
+PASS: fallback retains four items without RNG
+PASS: fallback preserves draw identity/order 0
+PASS: fallback fits without overlap 0
+PASS: fallback preserves draw identity/order 1
+PASS: fallback fits without overlap 1
+PASS: fallback preserves draw identity/order 2
+PASS: fallback fits without overlap 2
+PASS: fallback preserves draw identity/order 3
+PASS: fallback fits without overlap 3

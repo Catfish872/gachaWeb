@@ -1,0 +1,51 @@
+{
+  "start": "2026-11-11T09:40:44.287917+00:00",
+  "end": "2026-11-11T09:40:51.170654+00:00",
+  "seconds": 6.882737,
+  "checks": [
+    {
+      "command": "python3 godot/tools/build/validate_version.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 .github/scripts/test_focused_evidence.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 .github/scripts/test_release_preflight.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 .github/scripts/test_upload_content_objects.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 godot/tests/test_content_release.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 godot/tests/test_content_signing.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 godot/tests/test_android_build.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 godot/tests/test_android_manifest.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 godot/tests/test_android_kvm.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 tools/verify_loot_diversity.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 tools/verify_loot_art_v300.py",
+      "exit_code": 0
+    }
+  ]
+}

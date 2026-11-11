@@ -1,0 +1,8 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+FAIL old loot appraisal retained
+FAIL legacy key values exact
+FAIL new deep loot premium
+FAIL released asset price retained extraction_1793523875851_1_570460239_item_22
+FAIL released asset price retained extraction_1793523875851_1_570460239_item_58
+EXTRACTION V8 687 checks 5 failures

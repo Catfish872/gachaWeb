@@ -13,13 +13,13 @@ class FocusedEvidenceTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         for folder in ('data', 'scripts', 'assets'):
             (self.root / folder).mkdir()
-        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '2.9.3', 'version_code': 20903}))
+        (self.root / 'data/version.json').write_text(json.dumps({'version_name': '3.0.0', 'version_code': 30000}))
         for name in ('main.tscn', 'content_bootstrap.tscn', 'project.godot', 'export_presets.cfg'):
             (self.root / name).write_text(name)
         files, digest = production_snapshot(self.root)
-        self.record = {'version': '2.9.3', 'version_code': 20903,
+        self.record = {'version': '3.0.0', 'version_code': 30000,
                        'targeted_checks': 'passed', 'ui_visual_review': 'passed',
-                       'music_selection_review': 'passed', 'audio_runtime_checks': 'passed',
+                       'loot_diversity_review': 'passed', 'loot_resource_checks': 'passed',
                        'content_update_checks': 'passed',
                        'test_elapsed_seconds': 120, 'scope': ['changed room UI'],
                        'production_sha256': digest, 'production_file_count': len(files),
@@ -88,12 +88,12 @@ class FocusedEvidenceTests(unittest.TestCase):
             verify(self.root, self.record)
 
     def test_pending_music_selection_stops(self):
-        self.record['music_selection_review'] = 'pending'
+        self.record['loot_diversity_review'] = 'pending'
         with self.assertRaises(ValueError):
             verify(self.root, self.record)
 
     def test_pending_audio_runtime_stops(self):
-        self.record['audio_runtime_checks'] = 'pending'
+        self.record['loot_resource_checks'] = 'pending'
         with self.assertRaises(ValueError):
             verify(self.root, self.record)
 

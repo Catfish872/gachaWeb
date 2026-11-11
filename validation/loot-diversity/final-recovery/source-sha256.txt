@@ -1,0 +1,3 @@
+262d0ab8fdb49288a9633de77c9d5af3b71efe73369cdd3917d9bcd7c841af37  godot/data/extraction.json
+17e9924c476c9349d6249cd51fb0e6c9f282402761fa91274b6e354cd2cbb6cc  godot/scripts/extraction_model.gd
+692f08394a4eab540894f8fb8ed9b227efaf2983543f2a589ca615d8fa4b4a11  godot/scripts/ui/extraction_view.gd

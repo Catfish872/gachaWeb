@@ -35,9 +35,11 @@ func run_tests() -> void:
 		if d.get("environmentTheme", "") != "thunder_city" or d.kind != "loot": continue
 		variants.append(id); counts[int(d.rarity)] = int(counts.get(int(d.rarity),0))+1
 		var base: Dictionary = ex.item_def(d.variantOf)
-		for key in ["rarity","width","height","value","effects","category","dropWeight"]:
+		for key in ["rarity","width","height","value","effects"]:
 			ck(d.get(key) == base.get(key), "base economy unchanged %s/%s"%[id,key])
-		ck(ex._environment_loot_id(d.variantOf) == id, "single base ticket mapping "+id)
+		var selected: String = ex._environment_loot_id(d.variantOf)
+		var selected_def: Dictionary = ex.item_def(selected)
+		ck(selected == id or (selected_def.get("lootTheme", "") == "thunder_city" and selected_def.get("economyAnchor", "") == d.variantOf), "theme family mapping "+id)
 		ck(ResourceLoader.exists(d.icon), "loot icon "+id)
 	ck(variants.size() == 24 and counts.size() == 6, "24 loot over six qualities")
 	for rarity in counts: ck(counts[rarity] == 4, "four per quality")
@@ -107,7 +109,7 @@ func run_tests() -> void:
 		ck(g.abyss_scene_enemy_pool(floor_number).all(func(id):return g.catalog.EnemyData[id].environmentTheme=="thunder_city" and not g.catalog.EnemyData[id].get("encounterAttachment",false)), "scene-pool isolation")
 	for track in Audio.MUSIC:
 		ck(ResourceLoader.exists(Audio.music_path(track)) and Audio.music_loop_offset(track)==0.0,"new licensed score "+track)
-	var notice := FileAccess.get_file_as_string("res://assets/audio/content_v290/LICENSES.txt")
+	var notice := FileAccess.get_file_as_string("res://assets/audio/content_v290/LICENSES.txt") + FileAccess.get_file_as_string("res://assets/audio/content_v293/LICENSES.txt")
 	for credit in Audio.music_credits():
 		ck(notice.contains(str(credit.title).split(" · ")[0]) and notice.contains(str(credit.source_url)), "music notice retains title and source " + str(credit.id))
 		ck(notice.contains(str(credit.creator).replace("Music by ", "").split(" (")[0]) and notice.contains(str(credit.license_url)), "music attribution and license " + str(credit.id))

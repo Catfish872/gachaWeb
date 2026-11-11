@@ -1,0 +1,22 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+FAIL: 128 real item definitions
+FAIL: DOT follows existing shield bypass
+FAIL: equipment source does not expire
+FAIL: healing does not repair equipment shield
+FAIL: v6 physical value preserved
+FAIL: exact highest total value
+FAIL: manual chosen object preview
+FAIL: deposit fee and banked value
+FAIL: full equipment shield cannot waste repair event
+FAIL: repair event adds capacity
+FAIL: forge needs actual shield reserve
+FAIL: key event with full bag
+ERROR: Can't take value from empty array.
+   at: back (core/variant/array.cpp:360)
+   GDScript backtrace (most recent call first):
+       [0] _init (res://tests/test_extraction_v7.gd:148)
+SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.
+          at: _init (res://tests/test_extraction_v7.gd:148)
+          GDScript backtrace (most recent call first):
+              [0] _init (res://tests/test_extraction_v7.gd:148)

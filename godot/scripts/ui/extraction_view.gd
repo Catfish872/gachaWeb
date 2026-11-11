@@ -916,7 +916,10 @@ static func _item_title(app,parent: Node,d: Dictionary) -> void:
 		var provenance=app._panel(parent,app.GOLD.darkened(.6),5)
 		app._label(provenance,"深层珍藏 · 第 %d 幕" % int(d.originAct),12,app.GOLD)
 	var description:=str(d.get("description",""))
-	if not description.is_empty() and d.get("kind","")!="loot":app._label(parent,description,13,app.TEXT,true)
+	if not description.is_empty():
+		var lore=app._label(parent,description,13,app.TEXT,true)
+		lore.name="ExtractionItemDescription"
+		lore.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	if description.is_empty() and float(d.get("heal",0))>0:app._label(parent,"全队恢复 %d%% 生命" % roundi(float(d.heal)*100),13,app.CYAN,true)
 
 static func _container(app,id: String) -> Dictionary:

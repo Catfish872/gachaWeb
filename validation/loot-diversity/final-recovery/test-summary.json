@@ -1,0 +1,115 @@
+{
+  "test_loot_resources": {
+    "exitCode": 0,
+    "log": "test_loot_resources.log"
+  },
+  "test_loot_diversity": {
+    "exitCode": 0,
+    "log": "test_loot_diversity.log"
+  },
+  "test_loot_description_ui": {
+    "exitCode": 0,
+    "log": "test_loot_description_ui.log"
+  },
+  "test_thunder_world_v290": {
+    "exitCode": 0,
+    "log": "test_thunder_world_v290.log"
+  },
+  "test_extraction": {
+    "exitCode": 1,
+    "log": "test_extraction.log",
+    "baselineFailureSignaturesIdentical": true,
+    "failureSignatures": {
+      "FAIL 128 distinct catalog items": 1,
+      "FAIL 128-item rarity distribution": 1
+    }
+  },
+  "test_extraction_background_v272": {
+    "exitCode": 0,
+    "log": "test_extraction_background_v272.log"
+  },
+  "test_extraction_balance": {
+    "exitCode": 1,
+    "log": "test_extraction_balance.log",
+    "baselineFailureSignaturesIdentical": true,
+    "failureSignatures": {
+      "FAIL: later act monotone budgets": 5
+    }
+  },
+  "test_extraction_boss_loot_v276": {
+    "exitCode": 0,
+    "log": "test_extraction_boss_loot_v276.log"
+  },
+  "test_extraction_depth_v241": {
+    "exitCode": 1,
+    "log": "test_extraction_depth_v241.log",
+    "baselineFailureSignaturesIdentical": true,
+    "failureSignatures": {
+      "FAIL actual ATK DEF exact once": 96,
+      "FAIL old key UID and appraisal retained": 1,
+      "FAIL sale retains actual legacy appraisal rather than new purchase price": 1
+    }
+  },
+  "test_extraction_equipment_v276": {
+    "exitCode": 0,
+    "log": "test_extraction_equipment_v276.log"
+  },
+  "test_extraction_map": {
+    "exitCode": 0,
+    "log": "test_extraction_map.log"
+  },
+  "test_extraction_presentation_v283": {
+    "exitCode": 0,
+    "log": "test_extraction_presentation_v283.log"
+  },
+  "test_extraction_rewards_v268": {
+    "exitCode": 0,
+    "log": "test_extraction_rewards_v268.log"
+  },
+  "test_extraction_ui": {
+    "exitCode": 0,
+    "log": "test_extraction_ui.log"
+  },
+  "test_extraction_v6": {
+    "exitCode": 1,
+    "log": "test_extraction_v6.log",
+    "baselineFailureSignaturesIdentical": true,
+    "failureSignatures": {
+      "FAIL: old physical value": 1,
+      "FAIL: all 26 existing blessings available": 1
+    }
+  },
+  "test_extraction_v7": {
+    "exitCode": 124,
+    "log": "test_extraction_v7.log",
+    "baselineFailureSignaturesIdentical": true,
+    "failureSignatures": {
+      "FAIL: 128 real item definitions": 1,
+      "FAIL: DOT follows existing shield bypass": 1,
+      "FAIL: equipment source does not expire": 1,
+      "FAIL: healing does not repair equipment shield": 1,
+      "FAIL: v6 physical value preserved": 1,
+      "FAIL: exact highest total value": 1,
+      "FAIL: manual chosen object preview": 1,
+      "FAIL: deposit fee and banked value": 1,
+      "FAIL: full equipment shield cannot waste repair event": 1,
+      "FAIL: repair event adds capacity": 1,
+      "FAIL: forge needs actual shield reserve": 1,
+      "FAIL: key event with full bag": 1,
+      "ERROR: Can't take value from empty array.": 1,
+      "SCRIPT ERROR: Trying to assign value of type 'Nil' to a variable of type 'Dictionary'.": 1
+    }
+  },
+  "test_extraction_v8": {
+    "exitCode": 1,
+    "log": "test_extraction_v8.log",
+    "baselineFailureSignaturesIdentical": true,
+    "failureSignatures": {
+      "FAIL old loot appraisal retained": 1,
+      "FAIL legacy key values exact": 1,
+      "FAIL new deep loot premium": 1,
+      "FAIL released asset price retained extraction_1793523875851_1_570460239_item_22": 1,
+      "FAIL released asset price retained extraction_1793523875851_1_570460239_item_58": 1
+    }
+  }
+}

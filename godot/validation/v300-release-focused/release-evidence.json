@@ -1,0 +1,41 @@
+{
+  "version": "3.0.0",
+  "version_code": 30000,
+  "targeted_checks": "passed",
+  "ui_visual_review": "passed",
+  "loot_diversity_review": "passed",
+  "loot_resource_checks": "passed",
+  "content_update_checks": "passed",
+  "scope": [
+    "201 generic and 24 thunder loot candidates; 8 legacy thunder redraws",
+    "233 icons, complete descriptions, drop economy",
+    "Version metadata and unchanged-platform incremental release"
+  ],
+  "test_elapsed_seconds": 514.882737,
+  "production_sha256": "509b5e248c5501980cc117d0948f0b1d13cbe22719c25938b26c74a4687e8c36",
+  "production_file_count": 1743,
+  "test_segments": [
+    {
+      "started_utc": "2026-11-11T09:28:50Z",
+      "completed_utc": "2026-11-11T09:37:18Z",
+      "elapsed_seconds": 508,
+      "source_reference": "validation/loot-diversity/final-recovery/source-sha256.txt",
+      "scope": [
+        "Recovered gameplay, imports, economy samples; six historical failures reproduced on 86fb4d3"
+      ]
+    },
+    {
+      "started_utc": "2026-11-11T09:40:44.287917+00:00",
+      "completed_utc": "2026-11-11T09:40:51.170654+00:00",
+      "elapsed_seconds": 6.882737,
+      "production_sha256": "509b5e248c5501980cc117d0948f0b1d13cbe22719c25938b26c74a4687e8c36",
+      "scope": [
+        "Final version metadata, release gates, content signing, all loot references and diversity"
+      ]
+    }
+  ],
+  "historical_test_failures": "6 historical suites reproduce baseline failures/timeouts; see test-summary.json. 11 affected suites pass.",
+  "android_device_test": "not performed",
+  "visual_evidence": "validation/loot-recovery-ui/REVIEW.md",
+  "platform_compatibility": "unchanged from 2.9.3"
+}
